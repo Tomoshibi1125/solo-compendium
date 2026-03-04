@@ -1864,6 +1864,6 @@ export function searchAssets(
 			a.name.toLowerCase().includes(q) ||
 			a.tags.some((t) => t.includes(q)) ||
 			(a.rank && a.rank.toLowerCase() === q) ||
-			(a.description && a.description.toLowerCase().includes(q)),
+			a.description?.toLowerCase().includes(q),
 	);
 }

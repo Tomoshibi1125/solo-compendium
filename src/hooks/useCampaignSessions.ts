@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
@@ -68,7 +68,7 @@ type CreateSessionLogInput = {
 const KEY = ["campaigns", "sessions"] as const;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-const isOfflineError = (error: unknown): boolean => {
+const _isOfflineError = (error: unknown): boolean => {
 	const message =
 		typeof error === "object" && error && "message" in error
 			? String((error as { message?: unknown }).message ?? "")
@@ -149,7 +149,7 @@ export const useCampaignSessionLogs = (
 };
 
 export const useUpsertCampaignSession = () => {
-	const queryClient = useQueryClient();
+	const _queryClient = useQueryClient();
 	const { toast } = useToast();
 
 	return useOptimisticMutation<
@@ -231,7 +231,7 @@ export const useUpsertCampaignSession = () => {
 };
 
 export const useDeleteCampaignSession = () => {
-	const queryClient = useQueryClient();
+	const _queryClient = useQueryClient();
 	const { toast } = useToast();
 
 	return useOptimisticMutation<
@@ -274,7 +274,7 @@ export const useDeleteCampaignSession = () => {
 };
 
 export const useAddCampaignSessionLog = () => {
-	const queryClient = useQueryClient();
+	const _queryClient = useQueryClient();
 	const { toast } = useToast();
 
 	return useOptimisticMutation<

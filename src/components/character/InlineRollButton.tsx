@@ -1,11 +1,9 @@
 import { Dice1 } from "lucide-react";
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useAuth } from "@/lib/auth/authContext";
 import type { AdvantageState } from "@/lib/rollAdvantage";
-import { rollCheck } from "@/lib/rollEngine";
 
 interface InlineRollButtonProps {
 	characterId: string;

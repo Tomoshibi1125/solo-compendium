@@ -50,7 +50,7 @@ export function useFilterPersistence<T extends Record<string, unknown>>(
 /**
  * Clear persisted filters for a specific key
  */
-export function clearPersistedFilters(key: string): void {
+export function clearPersistedFilters(_key: string): void {
 	// Note: This function is now a no-op since filters are managed internally
 	// by the useFilterPersistence hook using useUserLocalState
 	// Individual filter clearing would need to be done through the hook's interface

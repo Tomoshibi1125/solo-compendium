@@ -2,6 +2,7 @@ import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SystemSigilLogo } from "@/components/ui/SystemSigilLogo";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { supabase } from "@/integrations/supabase/client";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
@@ -25,7 +26,7 @@ export default function AuthCallback() {
 			if (error) {
 				logger.error("Auth callback error:", error, errorDescription);
 				navigate(
-					"/login?error=" + encodeURIComponent(errorDescription || error),
+					`/login?error=${encodeURIComponent(errorDescription || error)}`,
 				);
 				return;
 			}
@@ -51,7 +52,7 @@ export default function AuthCallback() {
 
 				if (!user) {
 					navigate(
-						"/login?error=" + encodeURIComponent("Authentication failed"),
+						`/login?error=${encodeURIComponent("Authentication failed")}`,
 					);
 					return;
 				}
@@ -122,12 +123,12 @@ export default function AuthCallback() {
 				navigate(role === "dm" ? "/dm-tools" : "/player-tools");
 			} catch (error) {
 				logger.error("Error completing auth callback:", error);
-				navigate("/login?error=" + encodeURIComponent("Authentication failed"));
+				navigate(`/login?error=${encodeURIComponent("Authentication failed")}`);
 			}
 		};
 
 		handleAuthCallback();
-	}, [navigate, searchParams]);
+	}, [navigate, searchParams, normalizeRole]);
 
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
@@ -140,12 +141,21 @@ export default function AuthCallback() {
 
 						<div className="flex flex-col items-center justify-center py-8">
 							<Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
-							<h2 className="text-lg font-semibold text-foreground mb-2">
-								Completing Authentication
-							</h2>
-							<p className="text-sm text-muted-foreground text-center">
-								Please wait while we verify your credentials...
-							</p>
+							<SystemHeading
+								level={2}
+								variant="sovereign"
+								dimensional
+								className="mb-2"
+							>
+								Authenticating Link
+							</SystemHeading>
+							<DataStreamText
+								variant="system"
+								speed="slow"
+								className="text-center"
+							>
+								Please wait while the system verifies credentials...
+							</DataStreamText>
 						</div>
 					</div>
 				</SystemWindow>

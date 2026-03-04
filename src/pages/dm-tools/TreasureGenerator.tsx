@@ -13,6 +13,11 @@ import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -249,13 +254,23 @@ READ-ALOUD DISCOVERY:
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						TREASURE GENERATOR
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Generate treasure hoards appropriate for each Rift Rank. Rewards
-						scale with difficulty.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Material Requisition
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Synthesize valuable physical matter appropriate for cleared
+						dimensional constructs. Requisition quotas are scaled linearly with
+						Rift Rank.
+					</DataStreamText>
 				</div>
 
 				<SystemWindow title="GENERATE TREASURE" className="mb-6">
@@ -391,9 +406,9 @@ READ-ALOUD DISCOVERY:
 							)}
 
 							<div className="pt-4 border-t border-border">
-								<p className="text-muted-foreground font-heading leading-relaxed">
+								<SystemText className="block text-muted-foreground font-heading leading-relaxed">
 									{treasure.description}
-								</p>
+								</SystemText>
 							</div>
 
 							{enhancedText && (
@@ -434,10 +449,10 @@ READ-ALOUD DISCOVERY:
 
 				<SystemWindow title="TREASURE GUIDE" variant="quest">
 					<div className="space-y-4 text-sm">
-						<p className="text-muted-foreground font-heading">
+						<SystemText className="block text-muted-foreground font-heading">
 							Treasure generation follows the Rift Rank system. Higher ranks
 							yield significantly more valuable rewards.
-						</p>
+						</SystemText>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							{GATE_RANKS.map((rank) => {
 								const table = TREASURE_TABLES[rank];

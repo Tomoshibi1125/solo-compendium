@@ -7,7 +7,7 @@ import {
 	Shield,
 	Trash2,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CampaignExtrasPanel } from "@/components/campaign/CampaignExtrasPanel";
 import { Layout } from "@/components/layout/Layout";
@@ -16,6 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -293,20 +298,29 @@ const PartyTracker = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						PARTY TRACKER
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Track campaign party status, HP, conditions, and quick notes with
-						shared persistence.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Vanguard Synchronization
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						A persistent localized tracker for Vanguard operational status,
+						active parameters, condition anomalies, and observational notes.
+					</DataStreamText>
 				</div>
 
 				{campaignsLoading ? (
 					<SystemWindow title="LOADING CAMPAIGNS">
-						<p className="text-sm text-muted-foreground">
+						<SystemText className="block text-sm text-muted-foreground">
 							Loading campaigns...
-						</p>
+						</SystemText>
 					</SystemWindow>
 				) : manageableCampaigns.length === 0 ? (
 					<SystemWindow title="NO CAMPAIGNS AVAILABLE">
@@ -382,15 +396,15 @@ const PartyTracker = () => {
 							<div className="lg:col-span-2 space-y-6">
 								{trackerLoading ? (
 									<SystemWindow title="LOADING PARTY DATA">
-										<p className="text-sm text-muted-foreground">
+										<SystemText className="block text-sm text-muted-foreground">
 											Loading party state...
-										</p>
+										</SystemText>
 									</SystemWindow>
 								) : members.length === 0 ? (
 									<SystemWindow title="NO PARTY MEMBERS">
-										<p className="text-muted-foreground text-center py-8">
+										<SystemText className="block text-muted-foreground text-center py-8">
 											Add party members to start tracking.
-										</p>
+										</SystemText>
 									</SystemWindow>
 								) : (
 									members.map((member) => (
@@ -527,9 +541,9 @@ const PartyTracker = () => {
 												{member.notes && (
 													<div className="p-3 rounded-lg bg-muted/30 border border-border">
 														<Label className="mb-1 block text-xs">Notes</Label>
-														<p className="text-sm text-muted-foreground">
+														<SystemText className="block text-sm text-muted-foreground">
 															{member.notes}
-														</p>
+														</SystemText>
 													</div>
 												)}
 											</div>
@@ -562,7 +576,7 @@ const PartyTracker = () => {
 													onChange={(e) =>
 														setNewMember({
 															...newMember,
-															level: parseInt(e.target.value) || 1,
+															level: parseInt(e.target.value, 10) || 1,
 														})
 													}
 													min={1}
@@ -578,7 +592,7 @@ const PartyTracker = () => {
 													onChange={(e) =>
 														setNewMember({
 															...newMember,
-															ac: parseInt(e.target.value) || 10,
+															ac: parseInt(e.target.value, 10) || 10,
 														})
 													}
 													min={1}
@@ -595,7 +609,7 @@ const PartyTracker = () => {
 													onChange={(e) =>
 														setNewMember({
 															...newMember,
-															hp: parseInt(e.target.value) || 0,
+															hp: parseInt(e.target.value, 10) || 0,
 														})
 													}
 													min={0}
@@ -610,7 +624,7 @@ const PartyTracker = () => {
 													onChange={(e) =>
 														setNewMember({
 															...newMember,
-															maxHp: parseInt(e.target.value) || 1,
+															maxHp: parseInt(e.target.value, 10) || 1,
 														})
 													}
 													min={1}

@@ -24,6 +24,11 @@ import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	DEFAULT_TOKENS,
@@ -287,7 +292,7 @@ const VTTMap = () => {
 		);
 	};
 
-	const handleWallCreated = (
+	const _handleWallCreated = (
 		x1: number,
 		y1: number,
 		x2: number,
@@ -383,13 +388,22 @@ const VTTMap = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						VTT MAP VIEWER
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Place tokens on maps for virtual tabletop gameplay. Drag tokens,
-						rotate, and organize by layers.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Topology Visualizer
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Project localized dimensional terrain. Establish entity positions,
+						environmental variables, and structural boundaries.
+					</DataStreamText>
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -613,9 +627,9 @@ const VTTMap = () => {
 						<SystemWindow title="TOKEN LIBRARY">
 							<div className="space-y-2 max-h-96 overflow-y-auto">
 								{availableTokens.length === 0 ? (
-									<p className="text-xs text-muted-foreground text-center py-4">
+									<SystemText className="block text-xs text-muted-foreground text-center py-4">
 										No tokens available. Go to Token Library to create tokens.
-									</p>
+									</SystemText>
 								) : (
 									availableTokens.map((token) => {
 										const size = SIZE_VALUES[token.size];
@@ -760,10 +774,10 @@ const VTTMap = () => {
 									);
 								})}
 								{visibleTokens.length === 0 && (
-									<p className="text-muted-foreground text-center py-2 text-xs">
+									<SystemText className="block text-muted-foreground text-center py-2 text-xs">
 										No tokens on this layer. Select a token and click the map to
 										place it.
-									</p>
+									</SystemText>
 								)}
 							</div>
 						</SystemWindow>
@@ -779,7 +793,6 @@ const VTTMap = () => {
 								onMouseUp={handleTokenDragEnd}
 								onKeyDown={handleMapKeyDown}
 								role="application"
-								tabIndex={0}
 								aria-label="Map canvas. Click to place a selected token or press Enter to place at center."
 								data-testid="vtt-map"
 								className={cn(

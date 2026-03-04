@@ -4,17 +4,14 @@ import {
 	Backpack,
 	BookOpen,
 	Check,
-	CheckCircle2,
 	Copy,
 	Crown,
 	Dice6,
 	Download,
 	Edit,
 	Heart,
-	Loader2,
 	Moon,
 	Move,
-	Plus,
 	Redo2,
 	ScrollText,
 	Share2,
@@ -23,7 +20,6 @@ import {
 	Sparkles,
 	Sun,
 	Swords,
-	Trash2,
 	Undo2,
 	User,
 	Zap,
@@ -91,19 +87,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { SystemHeading, SystemText } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { useAttunement } from "@/hooks/useAttunement";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useUpdateCharacterAbilities } from "@/hooks/useCharacterAbilities";
 import {
@@ -144,7 +132,6 @@ import {
 } from "@/lib/characterResources";
 import { getActiveConditionEffects, getAllConditions } from "@/lib/conditions";
 import {
-	CUSTOM_MODIFIER_TYPES,
 	type CustomModifier,
 	normalizeCustomModifiers,
 	resolveAdvantageFromCustomModifiers,
@@ -668,7 +655,7 @@ const CharacterSheet = () => {
 		const hpMaxBonus =
 			sumCustomModifiers(customModifiers, "hp-max") +
 			sumCustomModifiers(customModifiers, "hp_max");
-		const finalHPMax =
+		const _finalHPMax =
 			calculateHPMax(
 				character.level,
 				character.hit_dice_size || 8,
@@ -909,6 +896,7 @@ const CharacterSheet = () => {
 		broadcastDiceRoll,
 		recordRoll,
 		character?.name,
+		character,
 	]);
 
 	if (isLoading) {
@@ -952,10 +940,10 @@ const CharacterSheet = () => {
 						title="ASCENDANT NOT FOUND"
 						className="max-w-lg mx-auto"
 					>
-						<p className="text-muted-foreground mb-4">
+						<SystemText className="block text-muted-foreground mb-4">
 							The Ascendant you're looking for doesn't exist or you don't have
 							access to it.
-						</p>
+						</SystemText>
 						<Button onClick={() => navigate("/characters")}>
 							Back to Ascendants
 						</Button>
@@ -1122,11 +1110,11 @@ const CharacterSheet = () => {
 		characterResources.temp_hp_sources.length > 0
 			? tempHpTotal
 			: character.hp_temp || 0;
-	const modifiersEditable = isEditMode && !isReadOnly;
+	const _modifiersEditable = isEditMode && !isReadOnly;
 
 	const handleHPChange = async () => {
-		const newHP = parseInt(hpEditValue);
-		if (isNaN(newHP) || newHP < 0) {
+		const newHP = parseInt(hpEditValue, 10);
+		if (Number.isNaN(newHP) || newHP < 0) {
 			toast({
 				title: "Invalid HP",
 				description: "Please enter a valid number.",
@@ -1168,8 +1156,8 @@ const CharacterSheet = () => {
 
 	const applyHpDelta = async (direction: "damage" | "heal") => {
 		if (!character || isReadOnly) return;
-		const delta = parseInt(hpDeltaValue);
-		if (isNaN(delta) || delta <= 0) {
+		const delta = parseInt(hpDeltaValue, 10);
+		if (Number.isNaN(delta) || delta <= 0) {
 			toast({
 				title: "Invalid amount",
 				description: "Enter a positive number.",
@@ -1582,7 +1570,7 @@ const CharacterSheet = () => {
 			.catch(console.error);
 	};
 
-	const openProficiencyDialog = () => {
+	const _openProficiencyDialog = () => {
 		if (!character) return;
 		setArmorProficienciesDraft(
 			(character.armor_proficiencies || []).join(", "),
@@ -1629,7 +1617,7 @@ const CharacterSheet = () => {
 		await saveSheetState({ customModifiers: next });
 	};
 
-	const handleAddCustomModifier = async () => {
+	const _handleAddCustomModifier = async () => {
 		const next: CustomModifier[] = [
 			...customModifiersDraft,
 			{
@@ -1646,13 +1634,13 @@ const CharacterSheet = () => {
 		await persistCustomModifiers(next);
 	};
 
-	const handleRemoveCustomModifier = async (id: string) => {
+	const _handleRemoveCustomModifier = async (id: string) => {
 		const next = customModifiersDraft.filter((modifier) => modifier.id !== id);
 		setCustomModifiersDraft(next);
 		await persistCustomModifiers(next);
 	};
 
-	const handleUpdateCustomModifier = (
+	const _handleUpdateCustomModifier = (
 		id: string,
 		updates: Partial<CustomModifier>,
 		persist = false,
@@ -1787,11 +1775,11 @@ const CharacterSheet = () => {
 				{isLocal && (
 					<SystemWindow title="GUEST MODE" variant="alert" className="mb-6">
 						<div className="space-y-2">
-							<p className="text-sm text-muted-foreground">
+							<SystemText className="block text-sm text-muted-foreground">
 								This Ascendant is stored locally on this device. Sign in to sync
 								across devices and unlock online features like rune inscription,
 								portraits, and Umbral Legion persistence.
-							</p>
+							</SystemText>
 							<div className="flex gap-2">
 								<Link to="/auth">
 									<Button variant="outline" size="sm">
@@ -1830,9 +1818,14 @@ const CharacterSheet = () => {
 									<span className="text-xs font-mono text-primary/50 uppercase tracking-widest hidden sm:inline">
 										NAMED_ENTITY:
 									</span>
-									<h1 className="font-system tracking-widest uppercase text-2xl sm:text-3xl font-bold truncate text-white drop-shadow-[0_0_8px_currentColor]">
+									<SystemHeading
+										level={1}
+										variant="sovereign"
+										dimensional
+										className="text-2xl sm:text-3xl truncate"
+									>
 										{character.name}
-									</h1>
+									</SystemHeading>
 								</div>
 
 								{/* Hunter Rank Badge */}
@@ -2785,7 +2778,7 @@ const CharacterSheet = () => {
 										Passive Perception
 									</div>
 									<div className="font-display font-bold text-lg">
-										{skills["Perception"]?.passive ?? 10}
+										{skills.Perception?.passive ?? 10}
 									</div>
 								</div>
 								<div className="text-center p-2 rounded-lg bg-muted/50 border border-border">
@@ -2793,7 +2786,7 @@ const CharacterSheet = () => {
 										Passive Investigation
 									</div>
 									<div className="font-display font-bold text-lg">
-										{skills["Investigation"]?.passive ?? 10}
+										{skills.Investigation?.passive ?? 10}
 									</div>
 								</div>
 								<div className="text-center p-2 rounded-lg bg-muted/50 border border-border">
@@ -2801,7 +2794,7 @@ const CharacterSheet = () => {
 										Passive Insight
 									</div>
 									<div className="font-display font-bold text-lg">
-										{skills["Insight"]?.passive ?? 10}
+										{skills.Insight?.passive ?? 10}
 									</div>
 								</div>
 							</div>
@@ -2821,9 +2814,9 @@ const CharacterSheet = () => {
 									| string[]
 									| undefined
 							}
-							passivePerception={skills["Perception"]?.passive ?? 10}
-							passiveInvestigation={skills["Investigation"]?.passive ?? 10}
-							passiveInsight={skills["Insight"]?.passive ?? 10}
+							passivePerception={skills.Perception?.passive ?? 10}
+							passiveInvestigation={skills.Investigation?.passive ?? 10}
+							passiveInsight={skills.Insight?.passive ?? 10}
 						/>
 
 						<DeathSaveTracker
@@ -3451,10 +3444,10 @@ const CharacterSheet = () => {
 						{/* Runes */}
 						{isLocal ? (
 							<SystemWindow title="RUNES" variant="alert">
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									Sign in to inscribe and manage runes. Your guest Ascendant can
 									still use equipment, powers, and core automation.
-								</p>
+								</SystemText>
 							</SystemWindow>
 						) : (
 							<RunesList characterId={character.id} />
@@ -3466,10 +3459,10 @@ const CharacterSheet = () => {
 								title={`${MONARCH_LABEL.toUpperCase()} UNLOCKS`}
 								variant="alert"
 							>
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									Sign in to access {MONARCH_LABEL} progression and unlock
 									tracking.
-								</p>
+								</SystemText>
 							</SystemWindow>
 						) : (
 							<MonarchUnlocksPanel characterId={character.id} />
@@ -3488,9 +3481,9 @@ const CharacterSheet = () => {
 						{/* Umbral Legion */}
 						{isLocal ? (
 							<SystemWindow title="Umbral Legion" variant="alert">
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									Sign in to manage Umbral Legion progression and persistence.
-								</p>
+								</SystemText>
 							</SystemWindow>
 						) : (
 							<ShadowSoldiersPanel
@@ -3508,9 +3501,9 @@ const CharacterSheet = () => {
 							variant={isLocal ? "alert" : "default"}
 						>
 							{isLocal ? (
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									Sign in to upload and sync portraits.
-								</p>
+								</SystemText>
 							) : (
 								<PortraitUpload
 									characterId={character.id}
@@ -3580,9 +3573,9 @@ const CharacterSheet = () => {
 					<TabsContent value="quests" className="space-y-6 mt-0">
 						{isLocal ? (
 							<SystemWindow title="QUESTS">
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									Sign in to access Daily Quests.
-								</p>
+								</SystemText>
 							</SystemWindow>
 						) : (
 							<QuestLog characterId={character.id} />
@@ -3674,10 +3667,10 @@ const CharacterSheet = () => {
 										)}
 									</Button>
 								</div>
-								<p className="text-xs text-muted-foreground">
+								<SystemText className="block text-xs text-muted-foreground">
 									Anyone with this link can view your character in read-only
 									mode.
-								</p>
+								</SystemText>
 							</div>
 						)}
 					</div>
@@ -3754,7 +3747,7 @@ const CharacterSheet = () => {
 						vitScore={character.abilities.VIT}
 						hpCurrent={character.hp_current}
 						hpMax={character.hp_max}
-						onHitDieSpent={(result) => {
+						onHitDieSpent={(_result) => {
 							handleResourceAdjust("hit_dice_current", -1);
 						}}
 						onFinishRest={(totalRecovered, hitDiceSpent) => {

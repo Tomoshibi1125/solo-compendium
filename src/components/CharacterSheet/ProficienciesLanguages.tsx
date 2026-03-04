@@ -1,5 +1,4 @@
 import { Languages, Shield, Sword, Wrench } from "lucide-react";
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 
 interface ProficienciesLanguagesProps {

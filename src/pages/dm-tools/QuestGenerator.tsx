@@ -15,6 +15,11 @@ import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -448,13 +453,23 @@ ${quest.description}
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						QUEST GENERATOR
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Generate missions and contracts for Ascendants. Create diverse
-						quests with objectives, complications, and rewards.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Directive Matrix
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Synthesize operational directives and localized contracts.
+						Extrapolate operational parameters, complication probabilities, and
+						calculated systemic compensation.
+					</DataStreamText>
 				</div>
 
 				<SystemWindow title="GENERATE QUEST" className="mb-6">
@@ -530,9 +545,9 @@ ${quest.description}
 							</div>
 
 							<div className="pt-2 border-t border-border">
-								<p className="text-muted-foreground font-heading leading-relaxed mb-4">
+								<SystemText className="block text-muted-foreground font-heading leading-relaxed mb-4">
 									{quest.description}
-								</p>
+								</SystemText>
 
 								<div className="space-y-3">
 									<div>

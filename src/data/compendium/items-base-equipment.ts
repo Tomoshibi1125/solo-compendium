@@ -30,7 +30,9 @@ function baseItem(
 		properties.weapon = {
 			damage: partial.damage,
 			damageType: partial.damage_type || "bludgeoning",
-			range: partial.range ? parseInt(partial.range) || undefined : undefined,
+			range: partial.range
+				? parseInt(partial.range, 10) || undefined
+				: undefined,
 			finesse: partial.simple_properties?.includes("finesse"),
 		};
 	}

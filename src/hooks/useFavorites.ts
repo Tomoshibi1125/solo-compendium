@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useUserLocalState } from "@/hooks/useToolState";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
-import { error as logError, warn as logWarn } from "@/lib/logger";
+import { error as logError } from "@/lib/logger";
 
 const STORAGE_KEY = "favorites";
 

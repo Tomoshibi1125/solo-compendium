@@ -169,7 +169,7 @@ Generated: ${new Date().toLocaleDateString()}
 				return null;
 			}
 		},
-		[user, toast],
+		[toast, exportCharacterJson],
 	);
 
 	const importCharacterJson = useCallback(

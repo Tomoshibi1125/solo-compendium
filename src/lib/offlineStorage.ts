@@ -116,7 +116,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["compendium"], "readwrite");
+			const transaction = this.db?.transaction(["compendium"], "readwrite");
 			const store = transaction.objectStore("compendium");
 			const request = store.put({
 				...item,
@@ -134,7 +134,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["compendium"], "readonly");
+			const transaction = this.db?.transaction(["compendium"], "readonly");
 			const store = transaction.objectStore("compendium");
 			const request = store.get(id);
 
@@ -151,7 +151,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["compendium"], "readonly");
+			const transaction = this.db?.transaction(["compendium"], "readonly");
 			const store = transaction.objectStore("compendium");
 
 			let request: IDBRequest;
@@ -181,7 +181,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["characters"], "readwrite");
+			const transaction = this.db?.transaction(["characters"], "readwrite");
 			const store = transaction.objectStore("characters");
 			const request = store.put({
 				...character,
@@ -197,7 +197,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["characters"], "readonly");
+			const transaction = this.db?.transaction(["characters"], "readonly");
 			const store = transaction.objectStore("characters");
 			const request = store.get(id);
 
@@ -211,7 +211,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["characters"], "readonly");
+			const transaction = this.db?.transaction(["characters"], "readonly");
 			const store = transaction.objectStore("characters");
 			const index = store.index("userId");
 			const request = index.getAll(userId);
@@ -226,7 +226,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["diceRolls"], "readwrite");
+			const transaction = this.db?.transaction(["diceRolls"], "readwrite");
 			const store = transaction.objectStore("diceRolls");
 			const request = store.put({
 				...roll,
@@ -242,7 +242,7 @@ export class OfflineStorageManager {
 		if (!this.db) await this.init();
 
 		return new Promise((resolve, reject) => {
-			const transaction = this.db!.transaction(["diceRolls"], "readonly");
+			const transaction = this.db?.transaction(["diceRolls"], "readonly");
 			const store = transaction.objectStore("diceRolls");
 			const index = store.index("timestamp");
 			const request = index.openCursor(null, "prev");
@@ -272,7 +272,7 @@ export class OfflineStorageManager {
 
 		for (const storeName of stores) {
 			await new Promise<void>((resolve, reject) => {
-				const transaction = this.db!.transaction([storeName], "readwrite");
+				const transaction = this.db?.transaction([storeName], "readwrite");
 				const store = transaction.objectStore(storeName);
 				const request = store.clear();
 
@@ -291,7 +291,7 @@ export class OfflineStorageManager {
 			let completedStores = 0;
 
 			stores.forEach((storeName) => {
-				const transaction = this.db!.transaction([storeName], "readonly");
+				const transaction = this.db?.transaction([storeName], "readonly");
 				const store = transaction.objectStore(storeName);
 				const request = store.count();
 

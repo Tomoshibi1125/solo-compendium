@@ -155,7 +155,7 @@ class DomainEventBusImpl {
 		if (!this.handlers.has(type)) {
 			this.handlers.set(type, new Set());
 		}
-		this.handlers.get(type)!.add(handler);
+		this.handlers.get(type)?.add(handler);
 	}
 
 	off<T extends DomainEvent>(type: T["type"], handler: EventHandler<T>): void {

@@ -399,7 +399,7 @@ export function useRemoveRuneInscription() {
 
 			if (error) throw error;
 		},
-		onSuccess: async (_result, variables) => {
+		onSuccess: async (_result, _variables) => {
 			queryClient.invalidateQueries({
 				queryKey: ["character-rune-inscriptions"],
 			});

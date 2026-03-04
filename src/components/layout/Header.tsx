@@ -1,5 +1,4 @@
 import {
-	Bell,
 	BookOpen,
 	Dice6,
 	FlaskConical,
@@ -15,10 +14,9 @@ import {
 	Users,
 	X,
 } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,

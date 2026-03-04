@@ -11,6 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
@@ -199,13 +204,22 @@ const RandomEventGenerator = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						RANDOM EVENT GENERATOR
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Generate random events, NPC encounters, and complications to keep
-						sessions dynamic and unpredictable.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Systemic Entropy Generator
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Induce non-deterministic anomalies, unpredicted conceptual entities,
+						and localized destabilization protocols into active regions.
+					</DataStreamText>
 				</div>
 
 				<SystemWindow title="GENERATE EVENT" className="mb-6">
@@ -305,9 +319,9 @@ Provide ALL of the following sections with full detail:
 											<h4 className="font-heading font-semibold mb-1">
 												Impact
 											</h4>
-											<p className="text-sm text-muted-foreground">
+											<SystemText className="block text-sm text-muted-foreground">
 												{event.impact}
-											</p>
+											</SystemText>
 										</div>
 									</div>
 								</div>
@@ -359,28 +373,28 @@ Provide ALL of the following sections with full detail:
 								<h4 className="font-heading font-semibold text-purple-400 mb-2">
 									World Events
 								</h4>
-								<p className="text-muted-foreground text-xs">
+								<SystemText className="block text-muted-foreground text-xs">
 									Large-scale events that affect the world or region. Use these
 									for major plot developments.
-								</p>
+								</SystemText>
 							</div>
 							<div className="p-4 rounded-lg border border-blue-400/30 bg-blue-400/10">
 								<h4 className="font-heading font-semibold text-blue-400 mb-2">
 									NPC Encounters
 								</h4>
-								<p className="text-muted-foreground text-xs">
+								<SystemText className="block text-muted-foreground text-xs">
 									Random encounters with NPCs that can provide opportunities,
 									information, or complications.
-								</p>
+								</SystemText>
 							</div>
 							<div className="p-4 rounded-lg border border-orange-400/30 bg-orange-400/10">
 								<h4 className="font-heading font-semibold text-orange-400 mb-2">
 									Complications
 								</h4>
-								<p className="text-muted-foreground text-xs">
+								<SystemText className="block text-muted-foreground text-xs">
 									Unexpected complications that add difficulty or urgency to
 									current situations.
-								</p>
+								</SystemText>
 							</div>
 						</div>
 					</div>

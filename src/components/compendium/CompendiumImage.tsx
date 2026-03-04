@@ -86,9 +86,7 @@ export function CompendiumImage({
 		}
 		return ["thumbnail", "small", "medium"];
 	}, [size]);
-	const isSupabaseUrl = Boolean(
-		imageSrc && imageSrc.includes("supabase.co/storage"),
-	);
+	const isSupabaseUrl = Boolean(imageSrc?.includes("supabase.co/storage"));
 	const isLocalWebp = Boolean(
 		imageSrc && !isSupabaseUrl && imageSrc.toLowerCase().endsWith(".webp"),
 	);

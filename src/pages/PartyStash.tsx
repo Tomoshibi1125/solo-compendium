@@ -6,6 +6,11 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCampaignGold } from "@/hooks/useCampaignGold";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
@@ -62,13 +67,18 @@ export default function PartyStash() {
 			<Layout>
 				<div className="container p-8 text-center max-w-2xl mx-auto">
 					<SystemWindow title="PARTY STASH">
-						<h2 className="text-xl mb-4 font-arise gradient-text-shadow">
-							No Campaign Selected
-						</h2>
-						<p className="text-muted-foreground mb-4">
-							Please select a campaign from your DM tools or player dashboard to
-							view its Party Stash.
-						</p>
+						<SystemHeading
+							level={2}
+							variant="gate"
+							dimensional
+							className="mb-4"
+						>
+							No Domain Selected
+						</SystemHeading>
+						<DataStreamText variant="system" speed="slow" className="mb-4">
+							Select a domain from your Protocol Warden interface or Ascendant
+							dashboard to access the shared dimensional stash.
+						</DataStreamText>
 						<Button onClick={() => navigate("/campaigns")}>
 							Find Campaign
 						</Button>
@@ -99,12 +109,17 @@ export default function PartyStash() {
 						Back
 					</Button>
 					<div>
-						<h1 className="font-arise text-4xl gradient-text-shadow">
-							PARTY STASH
-						</h1>
-						<p className="text-muted-foreground">
-							Manage shared loot, gold, and bag of holding contents.
-						</p>
+						<SystemHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="mb-1"
+						>
+							Dimensional Stash
+						</SystemHeading>
+						<DataStreamText variant="system" speed="fast">
+							Manage shared wealth, artifacts, and dimensional inventory bounds.
+						</DataStreamText>
 					</div>
 				</div>
 
@@ -125,7 +140,7 @@ export default function PartyStash() {
 								min={1}
 								value={newItemQuantity}
 								onChange={(e) =>
-									setNewItemQuantity(parseInt(e.target.value) || 1)
+									setNewItemQuantity(parseInt(e.target.value, 10) || 1)
 								}
 							/>
 						</div>
@@ -137,7 +152,9 @@ export default function PartyStash() {
 
 				<SystemWindow title="PARTY WEALTH" className="relative">
 					{isGoldLoading ? (
-						<p className="text-muted-foreground p-4">Counting coins...</p>
+						<SystemText className="block text-muted-foreground p-4">
+							Counting coins...
+						</SystemText>
 					) : (
 						<div className="space-y-4">
 							<div className="grid grid-cols-5 gap-4 bg-black/40 p-4 rounded-[2px] border border-primary/20 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]">
@@ -161,7 +178,7 @@ export default function PartyStash() {
 												onChange={(e) =>
 													setGoldEdits((prev) => ({
 														...prev,
-														[coin]: parseInt(e.target.value) || 0,
+														[coin]: parseInt(e.target.value, 10) || 0,
 													}))
 												}
 												className="w-full text-center font-mono mt-2"
@@ -204,7 +221,9 @@ export default function PartyStash() {
 
 				<SystemWindow title="STASH INVENTORY">
 					{isLoading ? (
-						<p className="text-muted-foreground p-4">Loading stash...</p>
+						<SystemText className="block text-muted-foreground p-4">
+							Loading stash...
+						</SystemText>
 					) : inventory.length === 0 ? (
 						<div className="text-center py-12 text-muted-foreground">
 							<Package className="w-12 h-12 mx-auto mb-4 opacity-50" />

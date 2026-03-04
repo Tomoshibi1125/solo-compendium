@@ -85,7 +85,7 @@ export const RiftStatusIndicator = ({
 				centerY,
 				radius,
 			);
-			gradient.addColorStop(0, tierConfig.color + "20");
+			gradient.addColorStop(0, `${tierConfig.color}20`);
 			gradient.addColorStop(1, "transparent");
 
 			ctx.fillStyle = gradient;

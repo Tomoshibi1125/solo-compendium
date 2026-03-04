@@ -1,6 +1,5 @@
 import { aiService } from "@/lib/ai/aiService";
 import { AppError } from "@/lib/appError";
-import { REGENT_LABEL } from "@/lib/vernacular";
 
 export interface ProtocolWardenContext {
 	campaignName?: string;

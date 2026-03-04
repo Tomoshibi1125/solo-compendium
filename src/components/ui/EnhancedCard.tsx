@@ -1,14 +1,4 @@
-import {
-	ChevronRight,
-	Edit,
-	ExternalLink,
-	Eye,
-	Heart,
-	MoreHorizontal,
-	Share,
-	Star,
-	Trash2,
-} from "lucide-react";
+import { ChevronRight, Edit, Eye, Star, Trash2 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";

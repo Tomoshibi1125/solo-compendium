@@ -174,7 +174,14 @@ export function useCharacterRoll({
 
 			return { d20, modifier, total, isCritical, isFumble };
 		},
-		[characterId, characterName, proficiencyBonus, recordRoll, toast],
+		[
+			characterId,
+			characterName,
+			proficiencyBonus,
+			recordRoll,
+			toast,
+			rollInCampaign,
+		],
 	);
 
 	// Convenience methods for common rolls
@@ -183,7 +190,7 @@ export function useCharacterRoll({
 			const modifier = getAbilityModifier(ability);
 			return roll(ability, modifier, "ability", undefined, campaignId);
 		},
-		[roll],
+		[roll, getAbilityModifier],
 	);
 
 	const rollSavingThrow = useCallback(
@@ -191,7 +198,7 @@ export function useCharacterRoll({
 			const modifier = getSaveModifier(ability);
 			return roll(`${ability} Save`, modifier, "save", undefined, campaignId);
 		},
-		[roll],
+		[roll, getSaveModifier],
 	);
 
 	const rollSkillCheck = useCallback(
@@ -199,7 +206,7 @@ export function useCharacterRoll({
 			const modifier = getSkillModifier(skill);
 			return roll(skill, modifier, "skill", undefined, campaignId);
 		},
-		[roll],
+		[roll, getSkillModifier],
 	);
 
 	return {

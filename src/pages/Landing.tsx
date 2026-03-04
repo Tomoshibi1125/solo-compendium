@@ -1,5 +1,5 @@
 import { ArrowRight, Shield, Sword, Zap } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
@@ -31,9 +31,14 @@ const Landing = () => {
 				<div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
 					<div className="absolute inset-0 bg-[linear-gradient(rgba(155,109,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(155,109,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
 					<div className="relative z-10 font-system tracking-widest text-primary drop-shadow-[0_0_10px_currentColor] animate-pulse">
-						<h1 className="text-4xl uppercase mb-4 text-center">
+						<SystemHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="mb-4 text-center"
+						>
 							System Integration
-						</h1>
+						</SystemHeading>
 						<div className="h-1 w-64 bg-primary/20 rounded-full overflow-hidden border border-primary/40 relative">
 							<div
 								className="absolute top-0 bottom-0 left-0 bg-primary animate-[shimmer_2s_ease-out_forwards] w-full"
@@ -265,7 +270,7 @@ const Landing = () => {
 				<section className="mx-auto max-w-6xl px-6 pb-16">
 					<div className="text-center mb-12">
 						<SystemHeading level={2} variant="sovereign" dimensional>
-							Experience True Power
+							Ascendant Protocol: Active
 						</SystemHeading>
 						<SystemText
 							variant="body"
@@ -273,7 +278,7 @@ const Landing = () => {
 							className="mt-4 text-gray-300 max-w-2xl mx-auto"
 						>
 							Ascend to sovereignty, master dimensional rifts, and command the
-							shadows in the ultimate tabletop RPG experience.
+							shadows. The System awaits those worthy of dominion.
 						</SystemText>
 					</div>
 
@@ -320,7 +325,8 @@ const Landing = () => {
 					{/* Call to Action */}
 					<div className="text-center mt-12">
 						<SystemText variant="system" size="sm" className="mb-6 opacity-80">
-							Join the ranks of sovereigns and rift masters
+							Awaken your potential — join the ranks of sovereigns and rift
+							masters
 						</SystemText>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<Link to="/login">
@@ -338,7 +344,7 @@ const Landing = () => {
 									size="lg"
 									className="border-gate-national/60 text-gate-national hover:border-gate-national px-8"
 								>
-									Explore the System
+									Enter the Rift
 								</Button>
 							</Link>
 						</div>

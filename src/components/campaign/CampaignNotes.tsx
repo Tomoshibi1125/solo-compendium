@@ -38,12 +38,6 @@ import {
 	useUpdateCampaignNote,
 } from "@/hooks/useCampaignNotes";
 import { useHasDMAccess } from "@/hooks/useCampaigns";
-import {
-	canEditNote,
-	canViewNote,
-	filterVisibleNotes,
-	type SecuredNote,
-} from "@/lib/notePrivacy";
 
 interface CampaignNotesProps {
 	campaignId: string;

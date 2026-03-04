@@ -396,11 +396,11 @@
 }
 
 .sa-tabs [role="tab"][data-state="active"] {
-	background: rgba(var(--sa-accent-rgb), 0.14) !important;
-	border-color: rgba(var(--sa-accent-rgb), 0.28) !important;
+	background: rgba(var(--sa-accent-rgb), 0.14);
+	border-color: rgba(var(--sa-accent-rgb), 0.28);
 	box-shadow:
 		0 0 12px rgba(var(--sa-accent-rgb), 0.15),
-		inset 0 1px 0 rgba(var(--sa-accent-rgb), 0.2) !important;
+		inset 0 1px 0 rgba(var(--sa-accent-rgb), 0.2);
 	color: #fff;
 	text-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.35);
 }
@@ -717,11 +717,11 @@
 	.sa-scan-border,
 	.sa-panel,
 	.sa-card {
-		background: white !important;
-		border-color: #ccc !important;
-		backdrop-filter: none !important;
-		box-shadow: none !important;
-		clip-path: none !important;
+		background: white;
+		border-color: #ccc;
+		backdrop-filter: none;
+		box-shadow: none;
+		clip-path: none;
 	}
 
 	.sa-page-header::before,

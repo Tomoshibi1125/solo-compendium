@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { RegentSelection } from "@/components/character/RegentSelection";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SystemText } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -17,7 +17,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { monarchs } from "@/data/compendium/monarchs";
 import { useToast } from "@/hooks/use-toast";
 import { useCreateCharacter } from "@/hooks/useCharacters";
 import {
@@ -53,7 +52,6 @@ import { getJobASI } from "@/lib/characterCreation";
 import {
 	calculateTotalChoices,
 	getChoiceGrantDetails,
-	type TotalChoices,
 } from "@/lib/choiceCalculations";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
@@ -163,7 +161,7 @@ const CharacterNew = () => {
 				name: job.name,
 				display_name: job.name,
 				description: job.description,
-				hit_die: parseInt(job.hitDie?.replace("1d", "") || "8"),
+				hit_die: parseInt(job.hitDie?.replace("1d", "") || "8", 10),
 				primary_abilities: (job.primaryAbility
 					? [mapAbilityToSA(job.primaryAbility)]
 					: (job.primary_abilities || []).map(mapAbilityToSA)) as Array<
@@ -795,7 +793,7 @@ const CharacterNew = () => {
 	}, [jobData, staticJobData, selectedPath, pathsAvailableAtCreation]);
 
 	// Get choice grant details for UI display
-	const choiceGrantDetails = useMemo(() => {
+	const _choiceGrantDetails = useMemo(() => {
 		const selectedPathRow =
 			selectedPath && selectedPath !== "none"
 				? pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)
@@ -914,7 +912,7 @@ const CharacterNew = () => {
 
 						{/* Step Description */}
 						<div className="mt-4 text-center">
-							<p className="text-sm text-muted-foreground">
+							<SystemText className="block text-sm text-muted-foreground">
 								{currentStep === "concept" &&
 									"Create your character's identity and appearance"}
 								{currentStep === "job" &&
@@ -929,7 +927,7 @@ const CharacterNew = () => {
 									"Choose your starting equipment"}
 								{currentStep === "review" &&
 									"Review and finalize your character"}
-							</p>
+							</SystemText>
 						</div>
 					</div>
 				</div>
@@ -943,10 +941,10 @@ const CharacterNew = () => {
 									<Label className="text-base mb-2 block font-heading text-primary">
 										Quick Start Templates
 									</Label>
-									<p className="text-sm text-muted-foreground mb-4">
+									<SystemText className="block text-sm text-muted-foreground mb-4">
 										Choose a preset to instantly configure your job, abilities,
 										and equipment.
-									</p>
+									</SystemText>
 									<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 										{templates.map((t) => (
 											<Button
@@ -1082,7 +1080,7 @@ const CharacterNew = () => {
 													max={18}
 													value={rolledStats[index] || 0}
 													onChange={(e) => {
-														const value = parseInt(e.target.value) || 0;
+														const value = parseInt(e.target.value, 10) || 0;
 														const newStats = [...rolledStats];
 														newStats[index] = value;
 														setRolledStats(newStats);
@@ -1093,10 +1091,10 @@ const CharacterNew = () => {
 											</div>
 										))}
 									</div>
-									<p className="text-xs text-muted-foreground">
+									<SystemText className="block text-xs text-muted-foreground">
 										Enter 6 ability scores manually, or roll 4d6 (drop lowest)
 										for each stat. Then assign them to abilities below.
-									</p>
+									</SystemText>
 								</div>
 							)}
 							<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -1219,9 +1217,9 @@ const CharacterNew = () => {
 											jobData.display_name || jobData.name,
 										)}
 									</h4>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										{formatMonarchVernacular(jobData.description)}
-									</p>
+									</SystemText>
 									<div className="text-xs text-muted-foreground">
 										Hit Die: d{jobData.hit_die} | Primary:{" "}
 										{jobData.primary_abilities
@@ -1395,131 +1393,118 @@ const CharacterNew = () => {
 									)}
 								</div>
 							)}
-							{jobData &&
-								jobData.skill_choices &&
-								jobData.skill_choices.length > 0 && (
-									<div className="mt-4 space-y-2">
-										<Label>
-											Select {totalChoices.skills} Skill
-											{totalChoices.skills > 1 ? "s" : ""} *
-										</Label>
-										{totalChoices.skills >
-											(jobData?.skill_choice_count || 0) && (
-											<p className="text-xs text-primary mb-2">
-												+
-												{totalChoices.skills -
-													(jobData?.skill_choice_count || 0)}{" "}
-												additional skills from awakening features
-											</p>
-										)}
-										{/* Show other choice types if available */}
-										{(totalChoices.feats > 0 ||
-											totalChoices.spells > 0 ||
-											totalChoices.powers > 0 ||
-											totalChoices.techniques > 0 ||
-											totalChoices.runes > 0 ||
-											totalChoices.items > 0 ||
-											totalChoices.tools > 0 ||
-											totalChoices.languages > 0) && (
-											<div className="text-xs text-amber-600 dark:text-amber-400 mb-2">
-												Additional choices available:
-												{totalChoices.feats > 0 &&
-													`${totalChoices.feats} feats`}
-												{totalChoices.spells > 0 &&
-													`${totalChoices.spells} spells`}
-												{totalChoices.powers > 0 &&
-													`${totalChoices.powers} powers`}
-												{totalChoices.techniques > 0 &&
-													`${totalChoices.techniques} techniques`}
-												{totalChoices.runes > 0 &&
-													`${totalChoices.runes} runes`}
-												{totalChoices.items > 0 &&
-													`${totalChoices.items} items`}
-												{totalChoices.tools > 0 &&
-													`${totalChoices.tools} tools`}
-												{totalChoices.languages > 0 &&
-													`${totalChoices.languages} languages`}
-											</div>
-										)}
-										{/* Show expertise information if applicable */}
-										{totalChoices.expertise > 0 && (
-											<p className="text-xs text-amber-600 dark:text-amber-400 mb-2">
-												⚠️ {totalChoices.expertise} expertise selections
-												available - will be handled after character creation
-											</p>
-										)}
-										<div className="grid grid-cols-2 gap-2">
-											{jobData.skill_choices.map((skill) => (
-												<div
-													key={skill}
-													className="flex items-center space-x-2"
-												>
-													<Checkbox
-														id={`skill-${skill}`}
-														checked={selectedSkills.includes(skill)}
-														onCheckedChange={(checked) => {
-															if (checked) {
-																if (
-																	selectedSkills.length < totalChoices.skills
-																) {
-																	setSelectedSkills([...selectedSkills, skill]);
-																}
-															} else {
-																setSelectedSkills(
-																	selectedSkills.filter((s) => s !== skill),
-																);
-															}
-														}}
-														disabled={
-															!selectedSkills.includes(skill) &&
-															selectedSkills.length >= totalChoices.skills
-														}
-													/>
-													<label
-														htmlFor={`skill-${skill}`}
-														className="text-sm font-heading cursor-pointer"
-													>
-														{formatMonarchVernacular(skill)}
-													</label>
-												</div>
-											))}
+							{jobData?.skill_choices && jobData.skill_choices.length > 0 && (
+								<div className="mt-4 space-y-2">
+									<Label>
+										Select {totalChoices.skills} Skill
+										{totalChoices.skills > 1 ? "s" : ""} *
+									</Label>
+									{totalChoices.skills > (jobData?.skill_choice_count || 0) && (
+										<p className="text-xs text-primary mb-2">
+											+
+											{totalChoices.skills - (jobData?.skill_choice_count || 0)}{" "}
+											additional skills from awakening features
+										</p>
+									)}
+									{/* Show other choice types if available */}
+									{(totalChoices.feats > 0 ||
+										totalChoices.spells > 0 ||
+										totalChoices.powers > 0 ||
+										totalChoices.techniques > 0 ||
+										totalChoices.runes > 0 ||
+										totalChoices.items > 0 ||
+										totalChoices.tools > 0 ||
+										totalChoices.languages > 0) && (
+										<div className="text-xs text-amber-600 dark:text-amber-400 mb-2">
+											Additional choices available:
+											{totalChoices.feats > 0 && `${totalChoices.feats} feats`}
+											{totalChoices.spells > 0 &&
+												`${totalChoices.spells} spells`}
+											{totalChoices.powers > 0 &&
+												`${totalChoices.powers} powers`}
+											{totalChoices.techniques > 0 &&
+												`${totalChoices.techniques} techniques`}
+											{totalChoices.runes > 0 && `${totalChoices.runes} runes`}
+											{totalChoices.items > 0 && `${totalChoices.items} items`}
+											{totalChoices.tools > 0 && `${totalChoices.tools} tools`}
+											{totalChoices.languages > 0 &&
+												`${totalChoices.languages} languages`}
 										</div>
-										{selectedSkills.length > 0 && (
-											<p className="text-xs text-muted-foreground mt-2">
-												Selected:{" "}
-												{selectedSkills.map(formatMonarchVernacular).join(", ")}{" "}
-												({selectedSkills.length}/{totalChoices.skills})
-											</p>
-										)}
+									)}
+									{/* Show expertise information if applicable */}
+									{totalChoices.expertise > 0 && (
+										<p className="text-xs text-amber-600 dark:text-amber-400 mb-2">
+											⚠️ {totalChoices.expertise} expertise selections available
+											- will be handled after character creation
+										</p>
+									)}
+									<div className="grid grid-cols-2 gap-2">
+										{jobData.skill_choices.map((skill) => (
+											<div key={skill} className="flex items-center space-x-2">
+												<Checkbox
+													id={`skill-${skill}`}
+													checked={selectedSkills.includes(skill)}
+													onCheckedChange={(checked) => {
+														if (checked) {
+															if (selectedSkills.length < totalChoices.skills) {
+																setSelectedSkills([...selectedSkills, skill]);
+															}
+														} else {
+															setSelectedSkills(
+																selectedSkills.filter((s) => s !== skill),
+															);
+														}
+													}}
+													disabled={
+														!selectedSkills.includes(skill) &&
+														selectedSkills.length >= totalChoices.skills
+													}
+												/>
+												<label
+													htmlFor={`skill-${skill}`}
+													className="text-sm font-heading cursor-pointer"
+												>
+													{formatMonarchVernacular(skill)}
+												</label>
+											</div>
+										))}
 									</div>
-								)}
+									{selectedSkills.length > 0 && (
+										<SystemText className="block text-xs text-muted-foreground mt-2">
+											Selected:{" "}
+											{selectedSkills.map(formatMonarchVernacular).join(", ")} (
+											{selectedSkills.length}/{totalChoices.skills})
+										</SystemText>
+									)}
+								</div>
+							)}
 						</div>
 					)}
 
 					{currentStep === "path" && (
 						<div className="space-y-4">
 							{!selectedJob ? (
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									Please select a job first to see available paths.
-								</p>
+								</SystemText>
 							) : !isPathStepEnabled ? (
 								<>
 									<Label>Select Path</Label>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										This job unlocks its path later (level{" "}
 										{pathUnlockLevel ?? 3}). You will choose it when you reach
 										that level.
-									</p>
+									</SystemText>
 								</>
 							) : pathsAvailableAtCreation.length === 0 ? (
 								<>
 									<Label>
 										Select Path (Optional - No paths available for this job)
 									</Label>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										This job doesn't have any paths available yet. You can
 										select a path later when leveling up.
-									</p>
+									</SystemText>
 								</>
 							) : (
 								<>
@@ -1570,13 +1555,13 @@ const CharacterNew = () => {
 														"",
 												)}
 											</h4>
-											<p className="text-sm text-muted-foreground">
+											<SystemText className="block text-sm text-muted-foreground">
 												{formatMonarchVernacular(
 													pathsAvailableAtCreation.find(
 														(p: Path) => p.id === selectedPath,
 													)?.description || "",
 												)}
-											</p>
+											</SystemText>
 										</div>
 									)}
 								</>
@@ -1624,7 +1609,7 @@ const CharacterNew = () => {
 											(b: Background) => b.id === selectedBackground,
 										);
 										if (!bg) return null;
-										const hasSuggestedChars =
+										const _hasSuggestedChars =
 											(bg.personality_traits &&
 												bg.personality_traits.length > 0) ||
 											(bg.ideals && bg.ideals.length > 0) ||
@@ -1646,9 +1631,9 @@ const CharacterNew = () => {
 																"",
 														)}
 													</h4>
-													<p className="text-sm leading-relaxed text-muted-foreground">
+													<SystemText className="block text-sm leading-relaxed text-muted-foreground">
 														{formatMonarchVernacular(bg.description || "")}
-													</p>
+													</SystemText>
 												</div>
 
 												{/* Proficiencies Grid */}
@@ -1711,10 +1696,10 @@ const CharacterNew = () => {
 								</div>
 							) : (
 								<>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										Choose your starting equipment. The first option in each
 										group is selected by default.
-									</p>
+									</SystemText>
 									<div className="space-y-4">
 										{staticJobData.startingEquipment.map(
 											(group, groupIndex) => {
@@ -1739,9 +1724,9 @@ const CharacterNew = () => {
 															</div>
 														) : (
 															<div className="space-y-2">
-																<p className="text-xs font-heading text-muted-foreground uppercase tracking-wider mb-3">
+																<SystemText className="block text-xs font-heading text-muted-foreground uppercase tracking-wider mb-3">
 																	Choose one:
-																</p>
+																</SystemText>
 																{group.map((option) => (
 																	<button
 																		key={option}

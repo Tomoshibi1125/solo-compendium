@@ -53,7 +53,7 @@ export function ShareToVTTButton({
 				title: "Shared to VTT",
 				description: `Successfully shared ${itemName} to campaign.`,
 			});
-		} catch (error) {
+		} catch (_error) {
 			toast({
 				title: "Share Failed",
 				description: "Failed to share to the VTT.",

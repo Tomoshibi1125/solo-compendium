@@ -1,4 +1,4 @@
-import { Heart, Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
+import { Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/select";
 import { useCampaignExtras } from "@/hooks/useCampaignExtras";
 import type { Database } from "@/integrations/supabase/types";
-import { cn } from "@/lib/utils";
 import { formatMonarchVernacular } from "@/lib/vernacular";
 
 type CampaignExtra = Database["public"]["Tables"]["campaign_extras"]["Row"];

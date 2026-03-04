@@ -648,15 +648,15 @@ export function generateSovereign(
 	const powerMultiplier = getPowerMultiplier();
 	const fusionStability = "Stable (Unified, Sovereign-Grade)";
 
-	const pathShortName = path.name
+	const _pathShortName = path.name
 		.replace(/^Path of the\s*/i, "")
 		.replace(/\s*Path$/i, "");
 	const displayRegentAName = formatRegentVernacular(regentA.name);
 	const displayRegentBName = formatRegentVernacular(regentB.name);
-	const displayRegentATitle = formatRegentVernacular(
+	const _displayRegentATitle = formatRegentVernacular(
 		regentA.title || regentA.name,
 	);
-	const displayRegentBTitle = formatRegentVernacular(
+	const _displayRegentBTitle = formatRegentVernacular(
 		regentB.title || regentB.name,
 	);
 
@@ -901,7 +901,7 @@ function parseAISovereignText(
 		extractSection("FUSION STABILITY") || fallback.fusion_stability;
 
 	// Try to parse abilities from the AI text; fall back to deterministic abilities
-	const abilities = fallback.abilities.map((ability, index) => {
+	const abilities = fallback.abilities.map((ability, _index) => {
 		// Look for ability descriptions in the AI text that match the level
 		const levelPattern = new RegExp(
 			`Level\\s*${ability.level}[:\\s]*([\\s\\S]*?)(?=Level\\s*\\d|$)`,
@@ -948,7 +948,7 @@ function parseAISovereignText(
 
 // Calculate the total number of possible combinations
 export function calculateTotalCombinations(
-	jobCount: number,
+	_jobCount: number,
 	pathCount: number,
 	regentCount: number,
 ): number {

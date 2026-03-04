@@ -1,71 +1,31 @@
 import {
 	AlertTriangle,
 	ArrowLeft,
-	BarChart3,
-	BookOpen,
-	Calendar,
-	ChevronRight,
-	Clock,
 	Copy,
 	Crown,
-	Database,
-	Dice6,
 	DoorOpen,
 	Download,
-	Eye,
-	EyeOff,
-	Flame,
 	Gem,
-	Globe,
 	Grid,
-	Image as ImageIcon,
-	Layers,
 	Loader2,
-	Maximize2,
 	Minus,
 	Plus,
 	RefreshCw,
-	Save,
-	Settings2,
 	Sparkles,
 	Square,
-	Sword,
-	Target,
-	Trash2,
-	Upload,
-	Users,
-	UsersRound,
-	Zap,
 } from "lucide-react";
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -74,7 +34,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -184,8 +143,6 @@ const deserializeDungeonMap = (
 };
 
 const GATE_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
-
-import type { LucideIcon } from "lucide-react";
 
 const CELL_TYPES: {
 	type: CellType;
@@ -586,7 +543,7 @@ ${
 	dungeonMap.rooms
 		.filter((r) => r.type === "trap")
 		.map(
-			(trap, i) => `TRAP ${i + 1}:
+			(_trap, i) => `TRAP ${i + 1}:
 • Type: [Mechanical, magical, or environmental trap]
 • Trigger: [How the trap is activated]
 • DC: [Difficulty class to detect or disable]
@@ -617,7 +574,7 @@ ${
 	dungeonMap.rooms
 		.filter((r) => r.type === "secret")
 		.map(
-			(secret, i) => `SECRET ${i + 1}:
+			(_secret, i) => `SECRET ${i + 1}:
 • Location: [Hidden area or concealed object]
 • Investigation DC: [Difficulty to discover]
 • Nature: [What the secret is - passage, treasure, lore]
@@ -632,7 +589,7 @@ ${
 	dungeonMap.rooms
 		.filter((r) => r.type === "puzzle")
 		.map(
-			(puzzle, i) => `PUZZLE ${i + 1}:
+			(_puzzle, i) => `PUZZLE ${i + 1}:
 • Type: [Mechanical, magical, or logic puzzle]
 • Solution: [How to solve the puzzle]
 • Hints: [3 progressive hints players can receive]
@@ -647,7 +604,7 @@ ${
 	dungeonMap.rooms
 		.filter((r) => r.type === "boss")
 		.map(
-			(boss, i) => `BOSS CHAMBER ${i + 1}:
+			(_boss, i) => `BOSS CHAMBER ${i + 1}:
 • Boss: [Boss name and type]
 • Stat Block: [AC, HP, abilities, attacks]
 • Legendary Actions: [1-3 legendary actions]
@@ -673,7 +630,7 @@ ${
 	dungeonMap.rooms
 		.filter((r) => r.type === "treasure")
 		.map(
-			(treasure, i) => `TREASURE ROOM ${i + 1}:
+			(_treasure, i) => `TREASURE ROOM ${i + 1}:
 • Contents: [Types and quantities of treasure]
 • Protection: [Traps or guardians protecting the treasure]
 • Value: [Total GP value of treasure]
@@ -731,13 +688,22 @@ READ-ALOUD ENTRANCE:
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						RIFT MAP GENERATOR
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Generate full Rift/dungeon maps for VTT-style gameplay. Create
-						visual layouts with rooms, corridors, and special chambers.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Rift Topology Protocol
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Synthesize structural parameters for dimensional Rifts. Establish
+						spatial grids defining chambers, pathways, and node singularities.
+					</DataStreamText>
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -770,7 +736,7 @@ READ-ALOUD ENTRANCE:
 											onChange={(e) =>
 												setMapSize({
 													...mapSize,
-													width: parseInt(e.target.value) || 20,
+													width: parseInt(e.target.value, 10) || 20,
 												})
 											}
 											min={10}
@@ -786,7 +752,7 @@ READ-ALOUD ENTRANCE:
 											onChange={(e) =>
 												setMapSize({
 													...mapSize,
-													height: parseInt(e.target.value) || 20,
+													height: parseInt(e.target.value, 10) || 20,
 												})
 											}
 											min={10}
@@ -834,7 +800,7 @@ READ-ALOUD ENTRANCE:
 												className={cn(
 													"w-full p-2 rounded-lg border text-left transition-all",
 													selectedCellType === cellType.type
-														? cellType.color + " border-current"
+														? `${cellType.color} border-current`
 														: "border-border hover:bg-muted/50",
 												)}
 											>
@@ -1018,10 +984,10 @@ READ-ALOUD ENTRANCE:
 							<SystemWindow title="NO MAP GENERATED">
 								<div className="text-center py-12">
 									<Grid className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-									<p className="text-muted-foreground font-heading mb-4">
+									<SystemText className="block text-muted-foreground font-heading mb-4">
 										Configure map settings and click "Generate Map" to create a
 										Rift layout.
-									</p>
+									</SystemText>
 									<Button onClick={handleGenerate} className="btn-umbral">
 										<RefreshCw className="w-4 h-4 mr-2" />
 										Generate Your First Map

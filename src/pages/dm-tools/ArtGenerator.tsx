@@ -31,6 +31,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
+import {
 	Select,
 	SelectContent,
 	SelectItem,
@@ -467,10 +472,17 @@ export default function ArtGeneratorDM() {
 						Back to Warden Tools
 					</Button>
 					<div className="flex-1">
-						<h1 className="text-3xl font-bold">Art Generator</h1>
-						<p className="text-muted-foreground">
-							Generate custom art for your campaign content
-						</p>
+						<SystemHeading
+							level={1}
+							variant="gate"
+							dimensional
+							className="text-3xl"
+						>
+							Visualization Matrix
+						</SystemHeading>
+						<DataStreamText variant="system" speed="slow">
+							Synthesize dimensional visual records for your localized domains
+						</DataStreamText>
 					</div>
 					<div className="w-64">
 						<Select
@@ -544,9 +556,7 @@ export default function ArtGeneratorDM() {
 										.map((item) => {
 											const artSrc =
 												item.artUrl ||
-												(item.artId && item.artId.startsWith("http")
-													? item.artId
-													: null);
+												(item.artId?.startsWith("http") ? item.artId : null);
 
 											return (
 												<Card
@@ -663,9 +673,9 @@ export default function ArtGeneratorDM() {
 										<h3 className="text-lg font-semibold mt-4 mb-2">
 											No {type} Art Generated Yet
 										</h3>
-										<p className="text-muted-foreground mb-4">
+										<SystemText className="block text-muted-foreground mb-4">
 											Create your first {type} art to get started
-										</p>
+										</SystemText>
 										<Button onClick={() => createNewContent(type)}>
 											<Camera className="w-4 h-4 mr-2" />
 											Generate {formatContentTypeLabel(type)} Art

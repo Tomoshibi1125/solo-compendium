@@ -185,15 +185,7 @@ export const useUserToolState = <T>(
 			}
 			await saveUserToolState(user.id, toolKey, payload);
 		},
-		[
-			allowLocalFallback,
-			isAuthed,
-			isEnabled,
-			state,
-			storageKey,
-			toolKey,
-			user?.id,
-		],
+		[isAuthed, isEnabled, state, storageKey, toolKey, user?.id],
 	);
 
 	return {
@@ -278,16 +270,7 @@ export const useCampaignToolState = <T>(
 				payload,
 			);
 		},
-		[
-			allowLocalFallback,
-			campaignId,
-			isAuthed,
-			isEnabled,
-			state,
-			storageKey,
-			toolKey,
-			user?.id,
-		],
+		[campaignId, isAuthed, isEnabled, state, storageKey, toolKey, user?.id],
 	);
 
 	return {

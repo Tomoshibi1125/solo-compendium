@@ -17,6 +17,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -351,13 +356,22 @@ READ-ALOUD DISCOVERY:
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						RELIC WORKSHOP
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Design custom relics balanced within the System Ascendant 5e SRD
-						system guidelines.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Relic Synthesis Chamber
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Forge specialized armaments and conceptual objects functioning
+						outside normative System constraints.
+					</DataStreamText>
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -539,10 +553,10 @@ READ-ALOUD DISCOVERY:
 
 						<SystemWindow title="PROPERTIES">
 							{currentRelic.properties.length === 0 ? (
-								<p className="text-muted-foreground text-center py-4">
+								<SystemText className="block text-muted-foreground text-center py-4">
 									No properties yet. Add properties to define the relic's
 									abilities.
-								</p>
+								</SystemText>
 							) : (
 								<div className="space-y-2">
 									{currentRelic.properties.map((prop) => (
@@ -557,9 +571,9 @@ READ-ALOUD DISCOVERY:
 														{prop.name}
 													</span>
 												</div>
-												<p className="text-sm text-muted-foreground">
+												<SystemText className="block text-sm text-muted-foreground">
 													{prop.description}
-												</p>
+												</SystemText>
 											</div>
 											<Button
 												variant="ghost"
@@ -581,9 +595,9 @@ READ-ALOUD DISCOVERY:
 								<Badge className={getRarityColor(currentRelic.rarity)}>
 									{currentRelic.rarity.toUpperCase().replace("-", " ")}
 								</Badge>
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									{guideline.description}
-								</p>
+								</SystemText>
 								<div className="space-y-2 text-xs">
 									<div>
 										Properties:{" "}
@@ -618,9 +632,9 @@ READ-ALOUD DISCOVERY:
 										{currentRelic.attunement && " • Requires Attunement"}
 									</div>
 									{currentRelic.description && (
-										<p className="text-sm text-muted-foreground">
+										<SystemText className="block text-sm text-muted-foreground">
 											{currentRelic.description}
-										</p>
+										</SystemText>
 									)}
 									{currentRelic.properties.length > 0 && (
 										<div className="space-y-2 pt-2 border-t border-border">
@@ -642,9 +656,9 @@ READ-ALOUD DISCOVERY:
 									)}
 								</div>
 							) : (
-								<p className="text-muted-foreground text-sm text-center py-4">
+								<SystemText className="block text-muted-foreground text-sm text-center py-4">
 									Relic preview will appear here
-								</p>
+								</SystemText>
 							)}
 						</SystemWindow>
 					</div>

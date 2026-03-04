@@ -557,16 +557,16 @@
 @media (max-width: 768px) {
 	/* Map fills the screen */
 	.vtt-mobile-map-fullscreen {
-		position: fixed !important;
-		top: 0 !important;
-		left: 0 !important;
-		right: 0 !important;
-		bottom: 0 !important;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
 		z-index: 40;
-		border-radius: 0 !important;
-		border: none !important;
-		height: 100dvh !important;
-		width: 100vw !important;
+		border-radius: 0;
+		border: none;
+		height: 100dvh;
+		width: 100vw;
 	}
 
 	/* Tokens are larger for touch */

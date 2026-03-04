@@ -6,6 +6,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -17,7 +18,6 @@ import {
 import { cn } from "@/lib/utils";
 import {
 	formatMonarchVernacular,
-	normalizeMonarchSearch,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
 
@@ -189,13 +189,22 @@ const Favorites = () => {
 			<div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
 				{/* Header */}
 				<div className="mb-8">
-					<h1 className="font-display text-4xl font-bold mb-2 gradient-text-system">
-						FAVORITES
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Your favorite compendium entries - {favoritesCount}{" "}
-						{favoritesCount === 1 ? "item" : "items"}
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Favorites
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="text-muted-foreground"
+					>
+						Your curated compendium entries — {favoritesCount}{" "}
+						{favoritesCount === 1 ? "artifact" : "artifacts"} saved
+					</DataStreamText>
 				</div>
 
 				{/* Search and Filter */}
@@ -234,18 +243,26 @@ const Favorites = () => {
 				{isBusy ? (
 					<SystemWindow title="LOADING FAVORITES" className="max-w-lg mx-auto">
 						<div className="p-4 text-center">
-							<p className="text-muted-foreground">Loading your favorites...</p>
+							<DataStreamText
+								variant="system"
+								className="text-muted-foreground"
+							>
+								Loading your favorites...
+							</DataStreamText>
 						</div>
 					</SystemWindow>
 				) : filteredItems.length === 0 ? (
 					<SystemWindow title="NO FAVORITES" className="max-w-lg mx-auto">
 						<div className="p-4 text-center">
 							<Heart className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-							<p className="text-muted-foreground mb-4">
+							<DataStreamText
+								variant="system"
+								className="text-muted-foreground mb-4"
+							>
 								{favoritesCount === 0
-									? "You haven't added any favorites yet. Browse the compendium and click the heart icon to add items to your favorites."
-									: "No favorites match your search criteria."}
-							</p>
+									? "You haven't bound any imprints yet. Browse the archives and click the heart icon to add manifestations to your favorites."
+									: "No imprints match your search protocols."}
+							</DataStreamText>
 							{favoritesCount === 0 && (
 								<Link to="/compendium">
 									<Button>Browse Compendium</Button>
@@ -284,15 +301,22 @@ const Favorites = () => {
 														</Badge>
 													)}
 												</div>
-												<h3 className="font-semibold text-lg mb-1">
+												<SystemHeading
+													level={3}
+													variant="sovereign"
+													className="font-semibold text-lg mb-1"
+												>
 													{formatMonarchVernacular(
 														item.displayName || item.name,
 													)}
-												</h3>
+												</SystemHeading>
 												{item.description && (
-													<p className="text-sm text-muted-foreground mb-2">
+													<DataStreamText
+														variant="system"
+														className="text-sm text-muted-foreground mb-2"
+													>
 														{formatMonarchVernacular(item.description)}
-													</p>
+													</DataStreamText>
 												)}
 												{item.tags && item.tags.length > 0 && (
 													<div className="flex flex-wrap gap-1">

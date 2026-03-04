@@ -175,7 +175,7 @@ export function VTTCharacterPanel({
 			const formula = `1d20${modifier >= 0 ? "+" : ""}${modifier}`;
 			onRoll(formula);
 		},
-		[campaignId, character?.name, characterId, ddbEnhancements, onChat, onRoll],
+		[campaignId, character?.name, ddbEnhancements, onChat, onRoll],
 	);
 
 	const rollCustom = useCallback(
@@ -528,7 +528,7 @@ export function VTTCharacterPanel({
 						<div className="p-1.5 rounded border border-border/50 bg-muted/20">
 							<div className="text-[9px] text-muted-foreground">Perception</div>
 							<div className="font-bold text-sm text-foreground">
-								{10 + (skills["Perception"]?.modifier ?? 0)}
+								{10 + (skills.Perception?.modifier ?? 0)}
 							</div>
 						</div>
 						<div className="p-1.5 rounded border border-border/50 bg-muted/20">
@@ -536,13 +536,13 @@ export function VTTCharacterPanel({
 								Investigation
 							</div>
 							<div className="font-bold text-sm text-foreground">
-								{10 + (skills["Investigation"]?.modifier ?? 0)}
+								{10 + (skills.Investigation?.modifier ?? 0)}
 							</div>
 						</div>
 						<div className="p-1.5 rounded border border-border/50 bg-muted/20">
 							<div className="text-[9px] text-muted-foreground">Insight</div>
 							<div className="font-bold text-sm text-foreground">
-								{10 + (skills["Insight"]?.modifier ?? 0)}
+								{10 + (skills.Insight?.modifier ?? 0)}
 							</div>
 						</div>
 					</div>

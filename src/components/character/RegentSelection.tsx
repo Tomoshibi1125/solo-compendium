@@ -1,7 +1,6 @@
 import { AlertCircle, CheckCircle, Crown, Lock } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -36,11 +35,11 @@ export function RegentSelection({
 	disabled = false,
 	className,
 }: RegentSelectionProps) {
-	const [showRequirements, setShowRequirements] = useState(false);
+	const [_showRequirements, _setShowRequirements] = useState(false);
 
 	const selectedRegentData = monarchs.find((r) => r.id === selectedRegent);
 
-	const isRegentAvailable = (regentId: string) => {
+	const isRegentAvailable = (_regentId: string) => {
 		// In a real implementation, this would check quest completion and DM approval
 		// For now, we'll assume all regents are available for selection
 		return true;
@@ -85,7 +84,7 @@ export function RegentSelection({
 			}));
 	};
 
-	const getSpellSlots = (regentId: string, level: number) => {
+	const _getSpellSlots = (regentId: string, level: number) => {
 		const regent = monarchs.find((r) => r.id === regentId);
 		if (!regent || !regent.spellcasting) return null;
 
@@ -143,7 +142,9 @@ export function RegentSelection({
 					<label className="text-sm font-medium">Regent Level</label>
 					<Select
 						value={selectedLevel.toString()}
-						onValueChange={(value: string) => onLevelChange(parseInt(value))}
+						onValueChange={(value: string) =>
+							onLevelChange(parseInt(value, 10))
+						}
 						disabled={disabled || !selectedRegent}
 					>
 						<SelectTrigger>

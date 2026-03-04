@@ -29,6 +29,7 @@ import { TableOfContents } from "@/components/compendium/TableOfContents";
 import { TechniqueDetail } from "@/components/compendium/TechniqueDetail";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { SystemText } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -313,9 +314,9 @@ const CompendiumDetail = () => {
 			default:
 				return (
 					<SystemWindow title="NOT IMPLEMENTED" variant="alert">
-						<p className="text-sm text-muted-foreground">
+						<SystemText className="block text-sm text-muted-foreground">
 							Detail view for {type} is not yet implemented.
-						</p>
+						</SystemText>
 					</SystemWindow>
 				);
 		}

@@ -1,5 +1,5 @@
 import { Bot, Loader2, Save, Send, User } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,7 +41,7 @@ export function WardenChatbot() {
 		if (scrollRef.current) {
 			scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 		}
-	}, [messages]);
+	}, []);
 
 	const handleSend = async () => {
 		if (!input.trim() || isLoading) return;
@@ -125,7 +125,7 @@ DM: ${userMessage.content}`;
 		if (!jsonMatch) return null;
 		try {
 			return JSON.parse(jsonMatch[1]);
-		} catch (e) {
+		} catch (_e) {
 			return null;
 		}
 	};
@@ -148,7 +148,7 @@ DM: ${userMessage.content}`;
 				title: "Saved",
 				description: "NPC data has been saved to the NPC Generator tool.",
 			});
-		} catch (err) {
+		} catch (_err) {
 			toast({
 				title: "Save Failed",
 				description: "Failed to write NPC data to local storage.",

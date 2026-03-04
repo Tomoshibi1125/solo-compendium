@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useUserLocalState } from "@/hooks/useToolState";
-import { logger } from "@/lib/logger";
 
 const STORAGE_KEY = "search-history";
 const MAX_HISTORY_ITEMS = 20;

@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { SystemText } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -406,9 +407,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
 								<Target className="w-4 h-4 text-accent" />
 								<span>{template?.name || "Daily Quest"}</span>
 							</div>
-							<p className="text-xs text-muted-foreground mt-1">
+							<SystemText className="block text-xs text-muted-foreground mt-1">
 								{template?.description || "Complete the daily objective."}
-							</p>
+							</SystemText>
 						</div>
 						<Badge
 							variant={
@@ -439,9 +440,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
 						)}
 					</div>
 
-					<p className="text-xs text-muted-foreground">
+					<SystemText className="block text-xs text-muted-foreground">
 						{formatRequirement(template)}
-					</p>
+					</SystemText>
 
 					<div className="space-y-2">
 						<div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -525,9 +526,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
 						<div className="flex items-center justify-between">
 							<div>
 								<h3 className="font-medium">Enable Daily Quests</h3>
-								<p className="text-xs text-muted-foreground">
+								<SystemText className="block text-xs text-muted-foreground">
 									Assign new quests after long rest.
-								</p>
+								</SystemText>
 							</div>
 							<Switch
 								checked={configForm.enabled}

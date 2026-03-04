@@ -284,7 +284,13 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 		};
 
 		fetchRelatedData();
-	}, [data.id]);
+	}, [
+		data.id,
+		data.monster_actions,
+		data.monster_traits,
+		mapStaticAction,
+		mapStaticTrait,
+	]);
 
 	const speeds = [
 		data.speed_walk && `${data.speed_walk} ft.`,

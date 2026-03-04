@@ -14,6 +14,11 @@ import { AudioPlayer } from "@/components/audio/AudioPlayer";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -146,10 +151,17 @@ export default function AudioManagerDM() {
 						Back to Warden Tools
 					</Button>
 					<div className="flex-1">
-						<h1 className="text-3xl font-bold">Audio Manager</h1>
-						<p className="text-muted-foreground">
-							Legal-safe sounds and music for your campaigns
-						</p>
+						<SystemHeading
+							level={1}
+							variant="gate"
+							dimensional
+							className="text-3xl"
+						>
+							Acoustic Resonance
+						</SystemHeading>
+						<DataStreamText variant="system" speed="slow">
+							Sanctioned auditory records for localized domains
+						</DataStreamText>
 					</div>
 				</div>
 
@@ -160,9 +172,9 @@ export default function AudioManagerDM() {
 								<Music className="w-5 h-5 text-blue-500" />
 								<div>
 									<div className="text-2xl font-bold">Audio Library</div>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										Manage your sound collection
-									</p>
+									</SystemText>
 								</div>
 							</div>
 						</CardContent>
@@ -173,9 +185,9 @@ export default function AudioManagerDM() {
 								<PlayCircle className="w-5 h-5 text-green-500" />
 								<div>
 									<div className="text-2xl font-bold">Player</div>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										Control playback
-									</p>
+									</SystemText>
 								</div>
 							</div>
 						</CardContent>
@@ -186,9 +198,9 @@ export default function AudioManagerDM() {
 								<Volume2 className="w-5 h-5 text-purple-500" />
 								<div>
 									<div className="text-2xl font-bold">Settings</div>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										Audio preferences
-									</p>
+									</SystemText>
 								</div>
 							</div>
 						</CardContent>
@@ -199,9 +211,9 @@ export default function AudioManagerDM() {
 								<Sparkles className="w-5 h-5 text-orange-500" />
 								<div>
 									<div className="text-2xl font-bold">AI Analysis</div>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										Tag and categorize audio
-									</p>
+									</SystemText>
 								</div>
 							</div>
 						</CardContent>
@@ -356,9 +368,9 @@ export default function AudioManagerDM() {
 								<div className="flex items-center justify-between">
 									<div>
 										<h4 className="font-medium">Crossfade</h4>
-										<p className="text-sm text-muted-foreground">
+										<SystemText className="block text-sm text-muted-foreground">
 											Smooth transitions between tracks
-										</p>
+										</SystemText>
 									</div>
 									<Button
 										variant={
@@ -378,9 +390,9 @@ export default function AudioManagerDM() {
 								<div className="flex items-center justify-between">
 									<div>
 										<h4 className="font-medium">Loop Playlist</h4>
-										<p className="text-sm text-muted-foreground">
+										<SystemText className="block text-sm text-muted-foreground">
 											Repeat tracks automatically
-										</p>
+										</SystemText>
 									</div>
 									<Button
 										variant={repeat === "all" ? "default" : "outline"}
@@ -393,9 +405,9 @@ export default function AudioManagerDM() {
 								<div className="flex items-center justify-between">
 									<div>
 										<h4 className="font-medium">Shuffle</h4>
-										<p className="text-sm text-muted-foreground">
+										<SystemText className="block text-sm text-muted-foreground">
 											Random track order
-										</p>
+										</SystemText>
 									</div>
 									<Button
 										variant={shuffle ? "default" : "outline"}

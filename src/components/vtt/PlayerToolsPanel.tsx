@@ -6,33 +6,20 @@
 import {
 	BookOpen,
 	Dice1,
-	Edit,
 	Eye,
 	EyeOff,
 	Footprints,
-	Heart,
 	MessageSquare,
-	Minus,
 	Plus,
-	Settings,
 	Shield,
 	Sword,
 	Target,
-	User,
-	Users,
 	Zap,
 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SystemWindow } from "@/components/ui/SystemWindow";
@@ -88,9 +75,11 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 				// Offline fallback
 				const match = quickRollValue.match(/(\d+)d(\d+)(?:\s*([+-]\s*\d+))?/);
 				if (match) {
-					const numDice = parseInt(match[1]);
-					const dieSize = parseInt(match[2]);
-					const modifier = match[3] ? parseInt(match[3].replace(/\s/g, "")) : 0;
+					const numDice = parseInt(match[1], 10);
+					const dieSize = parseInt(match[2], 10);
+					const modifier = match[3]
+						? parseInt(match[3].replace(/\s/g, ""), 10)
+						: 0;
 					let total = modifier;
 					for (let i = 0; i < numDice; i++) {
 						total += Math.floor(Math.random() * dieSize) + 1;
@@ -102,7 +91,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 					});
 				}
 			}
-		} catch (error) {
+		} catch (_error) {
 			toast({
 				title: "Invalid Roll",
 				description: "Please use format like '1d20', '2d6+3', etc.",

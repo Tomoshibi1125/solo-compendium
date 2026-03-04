@@ -98,7 +98,7 @@ Make it detailed, engaging, and suitable for level ${partyLevel} players. Includ
 				title: "Quest generated!",
 				description: "Your AI-generated quest is ready.",
 			});
-		} catch (error) {
+		} catch (_error) {
 			toast({
 				title: "Generation failed",
 				description: "Could not generate quest. Please try again.",

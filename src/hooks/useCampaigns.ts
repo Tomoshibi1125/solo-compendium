@@ -105,7 +105,7 @@ const createShareCode = () => {
 const isLocalMode = () => !isSupabaseConfigured;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-const supabaseAny = supabase as unknown as {
+const _supabaseAny = supabase as unknown as {
 	rpc: (
 		fn: string,
 		args?: Record<string, unknown>,

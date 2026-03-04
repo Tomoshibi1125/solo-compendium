@@ -124,12 +124,8 @@ const CatchAllRedirect = () => {
 		return <Navigate to={setupRouteEnabled ? "/setup" : "/login"} replace />;
 	}
 
-	if (user?.role === "dm") {
-		return <Navigate to="/dm-tools" replace />;
-	}
-
 	if (user) {
-		return <Navigate to="/player-tools" replace />;
+		return <Navigate to="/landing" replace />;
 	}
 
 	return <Navigate to="/login" replace />;

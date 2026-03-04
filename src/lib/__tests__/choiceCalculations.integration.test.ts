@@ -3,7 +3,7 @@
  * Verifies that CharacterNew and JobDetail correctly calculate skill choices from awakening features
  */
 
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
 	type ChoiceGrant,
 	calculateTotalChoices,

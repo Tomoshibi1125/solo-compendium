@@ -204,7 +204,7 @@ export function ActionsList({
 		range: undefined,
 	}));
 
-	const allAttacks = [...weaponActions, ...wildshapeActions];
+	const _allAttacks = [...weaponActions, ...wildshapeActions];
 
 	const standardActions: ActionItem[] = [
 		{

@@ -405,7 +405,7 @@ export class VttMusicEngine {
 			const interval = config.melodyDuration * 1000 * (60 / (config.bpm ?? 80));
 			this.melodyInterval = setInterval(() => {
 				if (!this.context || !this.masterGain) return;
-				const freq = config.melody![noteIndex % config.melody!.length];
+				const freq = config.melody?.[noteIndex % config.melody?.length];
 				const osc = this.context.createOscillator();
 				osc.type = config.melodyType ?? "sine";
 				osc.frequency.value = freq;

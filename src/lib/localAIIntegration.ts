@@ -440,7 +440,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 		return availableQuests
 			.filter((quest) => quest.requirements.level <= character.level)
 			.slice(0, 3)
-			.map((quest, index) => ({
+			.map((quest, _index) => ({
 				quest: quest.id,
 				name: quest.name,
 				difficulty:

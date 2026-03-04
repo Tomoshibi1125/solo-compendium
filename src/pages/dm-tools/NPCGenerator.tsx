@@ -11,6 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
@@ -301,13 +306,22 @@ ${npc.description}`;
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to System Tools
 					</Button>
-					<h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-						NPC GENERATOR
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Generate NPCs with personalities, motivations, secrets, and quirks
-						for your System Ascendant campaign.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Construct Synthesis Protocol
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading text-sm"
+					>
+						Instantiate semi-autonomous conceptual entities possessing distinct
+						motivations, encrypted parameters, and idiosyncratic behaviors.
+					</DataStreamText>
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -384,9 +398,9 @@ ${npc.description}`;
 										<span className="text-xs font-display text-muted-foreground">
 											DESCRIPTION
 										</span>
-										<p className="text-sm text-muted-foreground mt-2">
+										<SystemText className="block text-sm text-muted-foreground mt-2">
 											{npc.description}
-										</p>
+										</SystemText>
 									</div>
 
 									{enhancedText && (

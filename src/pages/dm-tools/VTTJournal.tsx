@@ -6,6 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -347,13 +352,22 @@ const VTTJournal = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Campaign
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						JOURNAL & NOTES
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Keep session logs, notes, lore, and handouts organized. Share
-						entries with players or keep them private.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						System Archives
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Preserve temporal logs, analytical data, and localized lore.
+						Regulate access parameters for allied entities.
+					</DataStreamText>
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -447,13 +461,13 @@ const VTTJournal = () => {
 						<SystemWindow title="ENTRIES">
 							<div className="space-y-2 max-h-[600px] overflow-y-auto">
 								{isLoading ? (
-									<p className="text-xs text-muted-foreground text-center py-4">
+									<SystemText className="block text-xs text-muted-foreground text-center py-4">
 										Loading entries...
-									</p>
+									</SystemText>
 								) : visibleEntries.length === 0 ? (
-									<p className="text-xs text-muted-foreground text-center py-4">
+									<SystemText className="block text-xs text-muted-foreground text-center py-4">
 										No entries yet. {isGM && "Create your first entry!"}
-									</p>
+									</SystemText>
 								) : (
 									visibleEntries.map((entry) => (
 										<button
@@ -594,9 +608,9 @@ const VTTJournal = () => {
 							<SystemWindow title="SELECT AN ENTRY">
 								<div className="text-center py-12">
 									<FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-									<p className="text-muted-foreground font-heading">
+									<SystemText className="block text-muted-foreground font-heading">
 										Select an entry from the list to view its contents.
-									</p>
+									</SystemText>
 								</div>
 							</SystemWindow>
 						)}

@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { AbilityScore } from "@/types/system-rules";
 
 export interface CharacterTemplate {

@@ -12,7 +12,7 @@
  *  - Stabilize at 3 successes
  */
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { rollCheck } from "@/lib/rollEngine";

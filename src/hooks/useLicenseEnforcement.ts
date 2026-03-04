@@ -11,8 +11,8 @@ interface UseLicenseEnforcementReturn {
 
 export function useLicenseEnforcement(): UseLicenseEnforcementReturn {
 	const { user } = useAuth();
-	const [canAccessSRD, setCanAccessSRD] = useState(true); // Base System Ascendant SRD is always free
-	const [canAccessHomebrew, setCanAccessHomebrew] = useState(true); // Public homebrew is accessible
+	const [canAccessSRD, _setCanAccessSRD] = useState(true); // Base System Ascendant SRD is always free
+	const [canAccessHomebrew, _setCanAccessHomebrew] = useState(true); // Public homebrew is accessible
 	const [canAccessMarketplace, setCanAccessMarketplace] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 

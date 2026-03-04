@@ -1,13 +1,10 @@
 import {
 	ArrowLeft,
-	Copy,
 	Download,
 	ImageIcon,
 	Plus,
-	RefreshCw,
 	Search,
 	Trash2,
-	Upload,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +14,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -55,7 +57,7 @@ const TokenLibrary = () => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
 	const [isCreating, setIsCreating] = useState(false);
-	const [imagePreview, setImagePreview] = useState<string | null>(null);
+	const [_imagePreview, setImagePreview] = useState<string | null>(null);
 	const nameInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -106,7 +108,7 @@ const TokenLibrary = () => {
 		void saveTokenLibrary(debouncedTokens);
 	}, [debouncedTokens, isHydrating, saveTokenLibrary, tokensLoading]);
 
-	const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+	const _handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
 
@@ -197,7 +199,7 @@ const TokenLibrary = () => {
 		}
 	};
 
-	const handleRemoveImage = () => {
+	const _handleRemoveImage = () => {
 		setImagePreview(null);
 		setNewToken((prev: Partial<Token>) => ({ ...prev, imageUrl: undefined }));
 		if (imageInputRef.current) {
@@ -341,9 +343,9 @@ const TokenLibrary = () => {
 			<Layout>
 				<div className="container mx-auto px-4 py-8 max-w-7xl">
 					<SystemWindow title="LOADING TOKEN LIBRARY">
-						<p className="text-sm text-muted-foreground">
+						<SystemText className="block text-sm text-muted-foreground">
 							Loading tokens and settings...
-						</p>
+						</SystemText>
 					</SystemWindow>
 				</div>
 			</Layout>
@@ -362,13 +364,23 @@ const TokenLibrary = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						TOKEN LIBRARY
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Manage tokens and assets for your VTT sessions. Create custom
-						tokens, organize by category, and export/import libraries.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Entity Manifestation
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Manage physical representations for dimensional anomalies and allied
+						entities within localized fields. Create custom manifestations,
+						categorize parameters, and sync local records.
+					</DataStreamText>
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -546,12 +558,12 @@ const TokenLibrary = () => {
 									{filteredTokens.length === 0 ? (
 										<div className="text-center py-12">
 											<ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-											<p className="text-muted-foreground font-heading mb-4">
+											<SystemText className="block text-muted-foreground font-heading mb-4">
 												No tokens found.{" "}
 												{searchQuery
 													? "Try a different search."
 													: "Create your first token!"}
-											</p>
+											</SystemText>
 										</div>
 									) : (
 										<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -713,9 +725,9 @@ const TokenLibrary = () => {
 											{selectedToken.notes && (
 												<div>
 													<Label>Notes</Label>
-													<p className="text-sm text-muted-foreground mt-1">
+													<SystemText className="block text-sm text-muted-foreground mt-1">
 														{selectedToken.notes}
-													</p>
+													</SystemText>
 												</div>
 											)}
 

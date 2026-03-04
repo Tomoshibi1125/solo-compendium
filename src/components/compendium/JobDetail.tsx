@@ -111,7 +111,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 	}, [data]);
 
 	// Get choice grant details for UI display
-	const choiceGrantDetails = useMemo(() => {
+	const _choiceGrantDetails = useMemo(() => {
 		const staticJob = staticJobs.find((job) => job.name === data.name);
 		if (!staticJob) return [];
 
@@ -297,16 +297,16 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							totalChoices.items > 0 ||
 							totalChoices.tools > 0 ||
 							totalChoices.languages > 0) && (
-							<Badge variant="outline" className="text-xs ml-2">
-								+
-								{Object.values(totalChoices).reduce(
-									(sum, val, idx) =>
-										idx === 0 ? val - data.skill_choice_count : sum + val,
-									0,
-								)}{" "}
-								more choices
-							</Badge>
-						)}
+								<Badge variant="outline" className="text-xs ml-2">
+									+
+									{Object.values(totalChoices).reduce(
+										(sum, val, idx) =>
+											idx === 0 ? val - data.skill_choice_count : sum + val,
+										0,
+									)}{" "}
+									more choices
+								</Badge>
+							)}
 					</div>
 				</SystemWindow>
 			</div>
@@ -349,8 +349,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						<p className="font-heading">
 							{data.armor_proficiencies
 								? data.armor_proficiencies
-										.map(formatMonarchVernacular)
-										.join(", ")
+									.map(formatMonarchVernacular)
+									.join(", ")
 								: "None"}
 						</p>
 					</div>
@@ -361,8 +361,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						<p className="font-heading">
 							{data.weapon_proficiencies
 								? data.weapon_proficiencies
-										.map(formatMonarchVernacular)
-										.join(", ")
+									.map(formatMonarchVernacular)
+									.join(", ")
 								: "None"}
 						</p>
 					</div>
@@ -373,8 +373,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						<p className="font-heading">
 							{data.tool_proficiencies
 								? data.tool_proficiencies
-										.map(formatMonarchVernacular)
-										.join(", ")
+									.map(formatMonarchVernacular)
+									.join(", ")
 								: "None"}
 						</p>
 					</div>
@@ -546,24 +546,24 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 											<td className="py-1.5 px-2 font-heading font-semibold">
 												{levelIdx + 1}
 											</td>
-											{data.spellcasting!.cantripsKnown && (
+											{data.spellcasting?.cantripsKnown && (
 												<td className="text-center py-1.5 px-2 font-heading">
-													{data.spellcasting!.cantripsKnown[levelIdx] ?? "—"}
+													{data.spellcasting?.cantripsKnown[levelIdx] ?? "—"}
 												</td>
 											)}
-											{data.spellcasting!.spellsKnown && (
+											{data.spellcasting?.spellsKnown && (
 												<td className="text-center py-1.5 px-2 font-heading">
-													{data.spellcasting!.spellsKnown[levelIdx] ?? "—"}
+													{data.spellcasting?.spellsKnown[levelIdx] ?? "—"}
 												</td>
 											)}
-											{Object.keys(data.spellcasting!.spellSlots!)
+											{Object.keys(data.spellcasting?.spellSlots ?? {})
 												.sort((a, b) => Number(a) - Number(b))
 												.map((slotLevel) => (
 													<td
 														key={slotLevel}
 														className="text-center py-1.5 px-2 font-heading"
 													>
-														{data.spellcasting!.spellSlots![slotLevel][
+														{data.spellcasting?.spellSlots?.[slotLevel][
 															levelIdx
 														] || "—"}
 													</td>

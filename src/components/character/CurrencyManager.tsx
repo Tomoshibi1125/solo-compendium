@@ -162,7 +162,10 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 										autoFocus
 										onKeyDown={(e) => {
 											if (e.key === "Enter") {
-												handleSetCurrency(type.id, parseInt(editValue) || 0);
+												handleSetCurrency(
+													type.id,
+													parseInt(editValue, 10) || 0,
+												);
 											} else if (e.key === "Escape") {
 												setEditing(null);
 											}
@@ -172,7 +175,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 										size="sm"
 										variant="ghost"
 										onClick={() =>
-											handleSetCurrency(type.id, parseInt(editValue) || 0)
+											handleSetCurrency(type.id, parseInt(editValue, 10) || 0)
 										}
 									>
 										Save

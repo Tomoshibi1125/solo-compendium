@@ -82,7 +82,7 @@ export function parseChoiceGrants(
 				type: "skills",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -107,7 +107,7 @@ export function parseChoiceGrants(
 				type: "feats",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -133,7 +133,7 @@ export function parseChoiceGrants(
 				type: "spells",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -158,7 +158,7 @@ export function parseChoiceGrants(
 				type: "powers",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -183,7 +183,7 @@ export function parseChoiceGrants(
 				type: "techniques",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -209,7 +209,7 @@ export function parseChoiceGrants(
 				type: "runes",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -234,7 +234,7 @@ export function parseChoiceGrants(
 				type: "items",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -258,7 +258,7 @@ export function parseChoiceGrants(
 				type: "tools",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -283,7 +283,7 @@ export function parseChoiceGrants(
 				type: "languages",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -307,7 +307,7 @@ export function parseChoiceGrants(
 				type: "expertise",
 				count,
 				source,
-				description: description.substring(0, 100) + "...",
+				description: `${description.substring(0, 100)}...`,
 			});
 			break;
 		}
@@ -372,7 +372,7 @@ export function calculateTotalChoices(
 	}
 
 	// Path features
-	if (pathData && pathData.features) {
+	if (pathData?.features) {
 		for (const feature of pathData.features) {
 			if (feature.level <= level) {
 				const grants = parseChoiceGrants(

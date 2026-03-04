@@ -166,7 +166,7 @@ export function PowersList({
 		cantripsKnownLimit !== null && cantripCount > cantripsKnownLimit;
 
 	const handleReorderGroup = useCallback(
-		async (level: string, newOrder: typeof powers) => {
+		async (_level: string, newOrder: typeof powers) => {
 			try {
 				const updates = newOrder.map((power, index) => ({
 					id: power.id,

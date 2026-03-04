@@ -5,20 +5,15 @@
 
 import {
 	Award,
-	Bell,
 	BookOpen,
 	ChevronRight,
-	Compass,
 	Crown,
 	Dice6,
-	Filter,
 	FlaskConical,
-	Gem,
 	Grid3x3,
 	Heart,
 	HelpCircle,
 	List,
-	LogOut,
 	Map,
 	Search,
 	Settings,
@@ -33,7 +28,7 @@ import {
 	Users,
 	Zap,
 } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
@@ -46,9 +41,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { SystemSigilLogo } from "@/components/ui/SystemSigilLogo";
-import { SystemWindow } from "@/components/ui/SystemWindow";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import {
 	Select,
 	SelectContent,
@@ -56,7 +49,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { cn } from "@/lib/utils";
 import { formatMonarchVernacular } from "@/lib/vernacular";
@@ -292,13 +284,17 @@ const PlayerTools = () => {
 					<div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center">
 						<User className="w-16 h-16 text-muted-foreground/50" />
 						<div>
-							<h2 className="text-2xl font-heading font-bold mb-2">
+							<SystemHeading level={2} variant="sovereign" className="mb-2">
 								No Character Found
-							</h2>
-							<p className="text-muted-foreground max-w-md">
+							</SystemHeading>
+							<DataStreamText
+								variant="system"
+								speed="slow"
+								className="max-w-md"
+							>
 								You need to create a character before accessing Player Tools.
 								Build your Ascendant and start your journey through the System.
-							</p>
+							</DataStreamText>
 						</div>
 						<Button size="lg" onClick={() => navigate("/characters/new")}>
 							<Sparkles className="w-5 h-5 mr-2" />
@@ -317,10 +313,21 @@ const PlayerTools = () => {
 				<div className="player-tools-header">
 					<div className="flex items-center justify-between">
 						<div>
-							<h1 className="player-tools-title">Player Tools</h1>
-							<p className="player-tools-subtitle">
+							<SystemHeading
+								level={1}
+								variant="sovereign"
+								dimensional
+								className="player-tools-title"
+							>
+								Player Tools
+							</SystemHeading>
+							<DataStreamText
+								variant="system"
+								speed="slow"
+								className="player-tools-subtitle"
+							>
 								Manage your Ascendant's journey through the System
-							</p>
+							</DataStreamText>
 						</div>
 
 						<div className="flex items-center gap-4">
@@ -457,7 +464,13 @@ const PlayerTools = () => {
 											<div className="category-header">
 												<div className="flex items-center gap-2">
 													<Icon className="w-5 h-5" />
-													<h2 className="category-title">{category.name}</h2>
+													<SystemHeading
+														level={2}
+														variant="gate"
+														className="category-title"
+													>
+														{category.name}
+													</SystemHeading>
 													<Badge variant="secondary">
 														{categoryTools.length}
 													</Badge>
@@ -594,12 +607,19 @@ const ToolCard = ({
 								<Icon className="w-5 h-5" />
 							</div>
 							<div className="flex-1">
-								<h3 className="font-system text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]">
+								<SystemHeading
+									level={3}
+									variant="sovereign"
+									className="font-system text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+								>
 									{tool.name}
-								</h3>
-								<p className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase">
+								</SystemHeading>
+								<DataStreamText
+									variant="system"
+									className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase"
+								>
 									{tool.description}
-								</p>
+								</DataStreamText>
 							</div>
 						</div>
 						<div className="flex items-center gap-3">
@@ -676,12 +696,19 @@ const ToolCard = ({
 					>
 						<Icon className="w-6 h-6" />
 					</div>
-					<h3 className="font-system text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]">
+					<SystemHeading
+						level={3}
+						variant="sovereign"
+						className="font-system text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+					>
 						{tool.name}
-					</h3>
-					<p className="text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed">
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						className="text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed"
+					>
 						{tool.description}
-					</p>
+					</DataStreamText>
 				</div>
 				<div className="flex items-center justify-between mt-auto relative z-10">
 					<div className="flex gap-2">

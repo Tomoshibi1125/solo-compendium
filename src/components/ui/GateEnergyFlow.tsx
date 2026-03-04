@@ -64,7 +64,7 @@ export const GateEnergyFlow = ({
 			});
 		}
 		return streams;
-	}, [tier, finalIntensity]);
+	}, [finalIntensity]);
 
 	// Get glow color for tier
 	const getTierGlowColor = (streamTier: EnergyStream["tier"]) => {

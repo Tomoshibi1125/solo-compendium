@@ -19,6 +19,11 @@ import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -237,9 +242,9 @@ export function ContentAudit() {
 					<SystemWindow title="CONTENT AUDIT" variant="alert">
 						<div className="text-center py-8">
 							<AlertTriangle className="w-12 h-12 text-destructive mx-auto mb-4" />
-							<p className="text-muted-foreground">
+							<SystemText className="block text-muted-foreground">
 								Failed to load audit report. Please try again.
-							</p>
+							</SystemText>
 							<Button onClick={handleRefresh} className="mt-4">
 								<RefreshCw className="w-4 h-4 mr-2" />
 								Retry
@@ -258,13 +263,24 @@ export function ContentAudit() {
 					{/* Header */}
 					<div className="flex items-center justify-between">
 						<div>
-							<h1 className="text-3xl font-bold mb-2">Content Audit</h1>
-							<p className="text-muted-foreground">
+							<SystemHeading
+								level={1}
+								variant="sovereign"
+								dimensional
+								className="mb-2"
+							>
+								Content Audit
+							</SystemHeading>
+							<DataStreamText
+								variant="system"
+								speed="slow"
+								className="text-muted-foreground"
+							>
 								Comprehensive database content analysis and quality metrics
-							</p>
-							<p className="text-xs text-muted-foreground mt-1">
+							</DataStreamText>
+							<SystemText className="block text-xs text-muted-foreground mt-1">
 								Last updated: {new Date(report.timestamp).toLocaleString()}
-							</p>
+							</SystemText>
 						</div>
 						<div className="flex gap-2">
 							<Button onClick={handleRefresh} variant="outline" size="sm">
@@ -296,9 +312,9 @@ export function ContentAudit() {
 					{report.tables.filter((t) => t.totalCount === 0).length > 0 && (
 						<SystemWindow title="EMPTY TABLES" variant="alert">
 							<div className="space-y-2">
-								<p className="text-sm text-muted-foreground mb-2">
+								<SystemText className="block text-sm text-muted-foreground mb-2">
 									The following tables have no entries:
-								</p>
+								</SystemText>
 								<div className="flex flex-wrap gap-2">
 									{report.tables
 										.filter((t) => t.totalCount === 0)
@@ -342,10 +358,10 @@ function LinkIntegritySection() {
 		return (
 			<SystemWindow title="LINK INTEGRITY CHECK">
 				<div className="space-y-4">
-					<p className="text-sm text-muted-foreground">
+					<SystemText className="block text-sm text-muted-foreground">
 						Check for broken compendium references in character data (job, path,
 						background, runes).
-					</p>
+					</SystemText>
 					<Button onClick={handleCheck} disabled={isChecking}>
 						{isChecking ? (
 							<>

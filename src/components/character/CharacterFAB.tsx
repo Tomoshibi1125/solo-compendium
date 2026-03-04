@@ -1,15 +1,6 @@
-import {
-	Dice5,
-	Moon,
-	Plus,
-	PlusCircle,
-	ScrollText,
-	Tent,
-	X,
-} from "lucide-react";
+import { Dice5, Moon, Plus, PlusCircle, Tent } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 import { AddEquipmentDialog } from "./AddEquipmentDialog";

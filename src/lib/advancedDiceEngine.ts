@@ -462,7 +462,7 @@ export function rollKeepLowest(formula: string, keepCount: number): RollResult {
  */
 export function applyAbilityModifier(
 	roll: RollResult,
-	ability: string,
+	_ability: string,
 	score: number,
 ): RollResult {
 	const abilityModifier = Math.floor((score - 10) / 2);

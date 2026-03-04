@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useCharacters } from "@/hooks/useCharacters";
 import { useUserLocalState } from "@/hooks/useToolState";
 

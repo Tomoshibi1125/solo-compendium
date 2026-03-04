@@ -151,14 +151,13 @@ export function getHexGridSVGPaths(config: HexGridConfig): string[] {
 		const corners = hex.corners;
 		if (corners.length < 6) return;
 
-		const d =
-			corners
-				.map((c, i) =>
-					i === 0
-						? `M ${c.x.toFixed(1)} ${c.y.toFixed(1)}`
-						: `L ${c.x.toFixed(1)} ${c.y.toFixed(1)}`,
-				)
-				.join(" ") + " Z";
+		const d = `${corners
+			.map((c, i) =>
+				i === 0
+					? `M ${c.x.toFixed(1)} ${c.y.toFixed(1)}`
+					: `L ${c.x.toFixed(1)} ${c.y.toFixed(1)}`,
+			)
+			.join(" ")} Z`;
 
 		paths.push(d);
 	});

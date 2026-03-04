@@ -1,6 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Activity } from "lucide-react";
-import React from "react";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useFeatures } from "@/hooks/useFeatures";
@@ -152,7 +150,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 
 		// DDB Parity: Broadcast usage
 		const runeDetails = limitedRunes.find((r) => r.id === id);
-		if (runeDetails && runeDetails.rune) {
+		if (runeDetails?.rune) {
 			const isSpending = newUses < actualCurrent;
 			const actionType = isSpending ? "spend" : "regain";
 			playerTools

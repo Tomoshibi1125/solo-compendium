@@ -1217,7 +1217,6 @@ function Die({
 		bounds.spawnY,
 		isRolling,
 		position,
-		rollId,
 		unlockBody,
 	]);
 
@@ -1750,7 +1749,7 @@ export function Dice3DRoller({
 		}),
 		[dpr, three],
 	);
-	const themeStyle = useMemo(() => {
+	const _themeStyle = useMemo(() => {
 		const glowStrength = clamp(
 			0.14 + themeConfig.glowIntensity * 0.18,
 			0.14,

@@ -18,6 +18,7 @@ import { PowersList } from "@/components/character/PowersList";
 import { RunesList } from "@/components/character/RunesList";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -231,8 +232,17 @@ export default function PlayerToolDetail() {
 						Back to Player Tools
 					</Button>
 					<div className="flex-1">
-						<h1 className="text-3xl font-bold">{tool.title}</h1>
-						<p className="text-muted-foreground">{tool.subtitle}</p>
+						<SystemHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="text-2xl sm:text-3xl mb-1"
+						>
+							{tool.title}
+						</SystemHeading>
+						<DataStreamText variant="system" speed="slow">
+							{tool.subtitle}
+						</DataStreamText>
 					</div>
 					{toolId === "compendium-viewer" && (
 						<Button onClick={() => navigate("/compendium")} className="gap-2">

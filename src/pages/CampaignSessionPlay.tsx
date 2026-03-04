@@ -11,6 +11,11 @@ import { Link, useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	useCampaignCombatSession,
@@ -98,12 +103,18 @@ const CampaignSessionPlay = () => {
 			>
 				<div className="flex items-center justify-between gap-3 flex-wrap">
 					<div>
-						<h1 className="font-arise text-3xl font-bold gradient-text-shadow">
-							SESSION PLAY
-						</h1>
-						<p className="text-sm text-muted-foreground">
-							Live session view: initiative, round, and Virtual Tabletop.
-						</p>
+						<SystemHeading
+							level={1}
+							variant="gate"
+							dimensional
+							className="mb-2"
+						>
+							Active Engagement
+						</SystemHeading>
+						<DataStreamText variant="system" speed="slow" className="text-sm">
+							Live engagement matrix: initiative queues, temporal tracking, and
+							dimensional topology.
+						</DataStreamText>
 					</div>
 					<div className="flex gap-2">
 						<Button variant="outline" asChild>
@@ -123,13 +134,15 @@ const CampaignSessionPlay = () => {
 
 				<SystemWindow title="LIVE COMBAT SESSION">
 					{isLoading ? (
-						<p className="text-sm text-muted-foreground">Loading session...</p>
+						<SystemText className="block text-sm text-muted-foreground">
+							Loading session...
+						</SystemText>
 					) : error ? (
 						<p className="text-sm text-destructive">Failed to load session.</p>
 					) : !session ? (
-						<p className="text-sm text-muted-foreground">
+						<SystemText className="block text-sm text-muted-foreground">
 							No active session found.
-						</p>
+						</SystemText>
 					) : (
 						<div className="space-y-4">
 							{/* Status Bar */}
@@ -146,9 +159,9 @@ const CampaignSessionPlay = () => {
 							{/* Combatant Initiative List */}
 							<div className="space-y-2" data-testid="session-initiative-list">
 								{sorted.length === 0 ? (
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										No combatants yet.
-									</p>
+									</SystemText>
 								) : (
 									sorted.map((c, idx) => {
 										const isCurrentTurn = idx === currentTurnIndex;

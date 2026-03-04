@@ -86,7 +86,7 @@ export const SovereignAuthorityDisplay = ({
 				centerY,
 				radius,
 			);
-			gradient.addColorStop(0, tierConfig.color + "30");
+			gradient.addColorStop(0, `${tierConfig.color}30`);
 			gradient.addColorStop(1, "transparent");
 
 			ctx.fillStyle = gradient;

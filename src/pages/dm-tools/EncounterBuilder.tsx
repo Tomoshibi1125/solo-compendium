@@ -7,7 +7,6 @@ import {
 	Search,
 	Sparkles,
 	Sword,
-	Trash2,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -16,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -214,7 +214,7 @@ const EncounterBuilder = () => {
 	const campaignId = searchParams.get("campaignId")?.trim() || null;
 	const isCampaignScoped = !!campaignId;
 	const persistenceContext = campaignId ? `campaign:${campaignId}` : "user";
-	const isAuthed = isSupabaseConfigured && !!user?.id;
+	const _isAuthed = isSupabaseConfigured && !!user?.id;
 	const hydratedContextRef = useRef<string | null>(null);
 	const hasUserInteractedRef = useRef(false);
 	const [searchQuery, setSearchQuery] = useState("");
@@ -327,7 +327,7 @@ const EncounterBuilder = () => {
 
 	useEffect(() => {
 		hasUserInteractedRef.current = false;
-	}, [persistenceContext]);
+	}, []);
 
 	// Load persisted encounter (best-effort)
 	useEffect(() => {
@@ -769,13 +769,22 @@ const EncounterBuilder = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to System Tools
 					</Button>
-					<h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-						RIFT ENCOUNTER BUILDER
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Design balanced encounters for Ascendants entering Rifts. The System
-						watches.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Hostile Entity Matrix
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Configure hostile engagements for Awakened entities entering
+						localized Rifts. The System observes all.
+					</DataStreamText>
 				</div>
 
 				{!campaignsLoading && manageableCampaigns.length > 0 && (
@@ -844,7 +853,7 @@ const EncounterBuilder = () => {
 										value={hunterLevel || 1}
 										onChange={(e) => {
 											markUserInteraction();
-											setHunterLevel(parseInt(e.target.value) || 1);
+											setHunterLevel(parseInt(e.target.value, 10) || 1);
 										}}
 										className="font-display"
 									/>
@@ -864,7 +873,7 @@ const EncounterBuilder = () => {
 										value={hunterCount || 1}
 										onChange={(e) => {
 											markUserInteraction();
-											setHunterCount(parseInt(e.target.value) || 1);
+											setHunterCount(parseInt(e.target.value, 10) || 1);
 										}}
 										className="font-display"
 									/>

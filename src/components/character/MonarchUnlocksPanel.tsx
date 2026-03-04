@@ -3,7 +3,6 @@ import {
 	CheckCircle,
 	Crown,
 	Flame,
-	Info,
 	Lock,
 	Scroll,
 	Skull,
@@ -25,18 +24,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
@@ -44,7 +34,6 @@ import {
 	useSetPrimaryMonarch,
 	useUnlockMonarch,
 } from "@/hooks/useRegentUnlocks";
-import { useRecordRoll } from "@/hooks/useRollHistory";
 import { supabase } from "@/integrations/supabase/client";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
@@ -265,7 +254,7 @@ export function MonarchUnlocksPanel({
 			},
 			{
 				onSuccess: () => {
-					const contextMsg = `Unlocked ${REGENT_LABEL} Overlay: ${regentName}`;
+					const _contextMsg = `Unlocked ${REGENT_LABEL} Overlay: ${regentName}`;
 
 					ddbEnhancements
 						.trackCustomFeatureUsage(
@@ -330,7 +319,7 @@ export function MonarchUnlocksPanel({
 								if (!regent) return null;
 
 								const themeStyle =
-									themeColors[regent.theme] || themeColors["Shadow"];
+									themeColors[regent.theme] || themeColors.Shadow;
 								const icon = themeIcons[regent.theme] || (
 									<Crown className="h-4 w-4" />
 								);

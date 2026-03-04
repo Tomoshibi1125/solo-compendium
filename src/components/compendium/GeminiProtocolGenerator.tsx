@@ -362,6 +362,13 @@ export function GeminiProtocolGenerator() {
 		selectedPath,
 		selectedRegentA,
 		selectedRegentB,
+		autoMode,
+		campaignId,
+		characterId,
+		existingSovereign,
+		recordRoll.mutate,
+		rollInCampaign,
+		toast,
 	]);
 
 	const handleRandomize = async () => {

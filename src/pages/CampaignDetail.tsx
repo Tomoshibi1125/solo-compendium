@@ -27,6 +27,11 @@ import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { RoleBadge } from "@/components/ui/RoleBadge";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -84,7 +89,7 @@ const CampaignDetail = () => {
 		return () => {
 			supabase.removeChannel(channel);
 		};
-	}, [guestEnabled, id, isE2E, loading, queryClient, user]);
+	}, [id, loading, queryClient, user]);
 
 	const handleCopyShareLink = () => {
 		if (!campaign) return;
@@ -138,15 +143,24 @@ const CampaignDetail = () => {
 
 				<div className="mb-6 sm:mb-8">
 					<div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-2">
-						<h1 className="font-display text-2xl sm:text-4xl font-bold gradient-text-shadow leading-tight">
+						<SystemHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="leading-tight"
+						>
 							{campaign.name.toUpperCase()}
-						</h1>
+						</SystemHeading>
 						{!loadingRole && userRole && <RoleBadge role={userRole} />}
 					</div>
 					{campaign.description && (
-						<p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
+						<DataStreamText
+							variant="system"
+							speed="slow"
+							className="text-sm sm:text-base leading-relaxed"
+						>
 							{campaign.description}
-						</p>
+						</DataStreamText>
 					)}
 				</div>
 
@@ -242,14 +256,23 @@ const CampaignDetail = () => {
 						<SystemWindow title="VIRTUAL TABLETOP" variant="quest">
 							<div className="space-y-6 text-center py-12">
 								<Layers className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
-								<h2 className="font-arise text-2xl font-bold mb-4">
+								<SystemHeading
+									level={2}
+									variant="gate"
+									dimensional
+									className="mb-4 text-center mx-auto"
+								>
 									Full-Featured VTT System
-								</h2>
-								<p className="text-muted-foreground font-heading max-w-2xl mx-auto mb-6">
+								</SystemHeading>
+								<DataStreamText
+									variant="system"
+									speed="slow"
+									className="max-w-2xl mx-auto mb-6"
+								>
 									Access the complete Virtual Tabletop system with maps, tokens,
 									initiative tracking, dice rolling, chat, fog of war, and more.
 									Everything you need for running sessions online.
-								</p>
+								</DataStreamText>
 								<Button className="btn-umbral" size="lg" asChild>
 									<Link to={`/campaigns/${id}/vtt`}>
 										<Layers className="w-5 h-5 mr-2" />
@@ -261,28 +284,28 @@ const CampaignDetail = () => {
 										<h3 className="font-heading font-semibold mb-2">
 											Token Management
 										</h3>
-										<p className="text-xs text-muted-foreground">
+										<SystemText className="block text-xs text-muted-foreground">
 											Place character tokens, monsters, and NPCs. Drag, rotate,
 											and manage HP directly on tokens.
-										</p>
+										</SystemText>
 									</div>
 									<div className="p-4 rounded-lg border border-border bg-muted/30">
 										<h3 className="font-heading font-semibold mb-2">
 											Initiative Tracking
 										</h3>
-										<p className="text-xs text-muted-foreground">
+										<SystemText className="block text-xs text-muted-foreground">
 											Track combat initiative with automatic sorting. Manage
 											turn order and combat flow.
-										</p>
+										</SystemText>
 									</div>
 									<div className="p-4 rounded-lg border border-border bg-muted/30">
 										<h3 className="font-heading font-semibold mb-2">
 											Dice & Chat
 										</h3>
-										<p className="text-xs text-muted-foreground">
+										<SystemText className="block text-xs text-muted-foreground">
 											Roll dice with full notation support. Chat with party
 											members in real-time.
-										</p>
+										</SystemText>
 									</div>
 								</div>
 							</div>
@@ -313,9 +336,9 @@ const CampaignDetail = () => {
 												Copy Share Link
 											</Button>
 											<div className="pt-4 border-t border-border">
-												<p className="text-xs text-muted-foreground mb-2">
+												<SystemText className="block text-xs text-muted-foreground mb-2">
 													Share this link with Ascendants:
-												</p>
+												</SystemText>
 												<p className="text-sm font-mono bg-muted p-2 rounded break-all">
 													{window.location.origin}/campaigns/join/
 													{campaign.share_code}
@@ -324,14 +347,14 @@ const CampaignDetail = () => {
 										</>
 									) : (
 										<div className="text-center py-6">
-											<p className="text-sm text-muted-foreground font-heading mb-2">
+											<SystemText className="block text-sm text-muted-foreground font-heading mb-2">
 												Share code and invite links are only visible to the
 												Protocol Warden (System).
-											</p>
-											<p className="text-xs text-muted-foreground">
+											</SystemText>
+											<SystemText className="block text-xs text-muted-foreground">
 												Ask your Protocol Warden (System) for the share code to
 												invite others.
-											</p>
+											</SystemText>
 										</div>
 									)}
 								</div>
@@ -347,9 +370,9 @@ const CampaignDetail = () => {
 										<Loader2 className="w-6 h-6 animate-spin text-primary" />
 									</div>
 								) : members.length === 0 ? (
-									<p className="text-muted-foreground text-center py-8">
+									<SystemText className="block text-muted-foreground text-center py-8">
 										No members yet
-									</p>
+									</SystemText>
 								) : (
 									<div className="space-y-2">
 										{members.map((member) => {
@@ -371,12 +394,12 @@ const CampaignDetail = () => {
 																	"No Ascendant linked"}
 															</p>
 															{member.characters && (
-																<p className="text-xs text-muted-foreground">
+																<SystemText className="block text-xs text-muted-foreground">
 																	Level {member.characters.level}{" "}
 																	{formatMonarchVernacular(
 																		member.characters.job || "Unknown",
 																	)}
-																</p>
+																</SystemText>
 															)}
 														</div>
 													</div>

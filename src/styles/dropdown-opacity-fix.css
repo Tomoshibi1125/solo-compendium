@@ -7,57 +7,57 @@
 
 /* Force solid backgrounds for all dropdown menus */
 [data-radix-dropdown-menu-content] {
-	background: hsl(var(--popover)) !important;
-	opacity: 1 !important;
+	background: hsl(var(--popover));
+	opacity: 1;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
 	[data-radix-dropdown-menu-content] {
-		-webkit-backdrop-filter: none !important;
-		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
 	}
 }
 
 /* Force solid backgrounds for all select dropdowns */
 [data-radix-select-content] {
-	background: hsl(var(--popover)) !important;
-	opacity: 1 !important;
+	background: hsl(var(--popover));
+	opacity: 1;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
 	[data-radix-select-content] {
-		-webkit-backdrop-filter: none !important;
-		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
 	}
 }
 
 /* Ensure popover components have solid backgrounds */
 [data-radix-popover-content] {
-	background: hsl(var(--popover)) !important;
-	opacity: 1 !important;
+	background: hsl(var(--popover));
+	opacity: 1;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
 	[data-radix-popover-content] {
-		-webkit-backdrop-filter: none !important;
-		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
 	}
 }
 
 /* Additional safety for any remaining transparent elements */
 .bg-popover {
-	background-color: hsl(var(--popover)) !important;
-	opacity: 1 !important;
+	background-color: hsl(var(--popover));
+	opacity: 1;
 }
 
 /* Ensure border visibility for better contrast */
 [data-radix-dropdown-menu-content],
 [data-radix-select-content],
 [data-radix-popover-content] {
-	border: 1px solid hsl(var(--border)) !important;
+	border: 1px solid hsl(var(--border));
 	box-shadow:
 		0 10px 25px -5px rgba(0, 0, 0, 0.3),
-		0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+		0 10px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 /* Add backdrop blur to the overlay behind dropdowns for better readability */
@@ -89,7 +89,7 @@
 	[data-radix-dropdown-menu-content],
 	[data-radix-select-content],
 	[data-radix-popover-content] {
-		background: hsl(var(--background)) !important;
-		border: 2px solid hsl(var(--foreground)) !important;
+		background: hsl(var(--background));
+		border: 2px solid hsl(var(--foreground));
 	}
 }

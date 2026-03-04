@@ -261,7 +261,7 @@ export function applyRuneBonuses(
 
 		if (bonuses.damage_bonus && typeof bonuses.damage_bonus === "string") {
 			// Combine damage bonuses (would need dice parsing for full implementation)
-			modifiedStats.damageBonus = `${modifiedStats.damageBonus ? modifiedStats.damageBonus + " + " : ""}${bonuses.damage_bonus}`;
+			modifiedStats.damageBonus = `${modifiedStats.damageBonus ? `${modifiedStats.damageBonus} + ` : ""}${bonuses.damage_bonus}`;
 		}
 	}
 

@@ -58,7 +58,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 	);
 
 	const handleReorderGroup = useCallback(
-		async (source: string, newOrder: typeof features) => {
+		async (_source: string, newOrder: typeof features) => {
 			try {
 				const updates = newOrder.map((feature, index) => ({
 					id: feature.id,

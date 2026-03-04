@@ -140,7 +140,6 @@ export function computeZoneVolume(
 			return zone.volume;
 		case "exponential":
 			return zone.volume * (1 - ratio) ** 2;
-		case "linear":
 		default:
 			return zone.volume * (1 - ratio);
 	}

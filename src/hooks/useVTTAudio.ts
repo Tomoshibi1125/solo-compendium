@@ -234,7 +234,7 @@ export class VTTAudioManager {
 	private updateAllVolumes() {
 		if (!this.settings) return;
 
-		for (const [trackId, audio] of this.audioElements) {
+		for (const [_trackId, audio] of this.audioElements) {
 			let volumeMultiplier = 1;
 			// Apply category-specific volume
 			const trackType = audio.dataset.type as "music" | "ambient" | "sfx";

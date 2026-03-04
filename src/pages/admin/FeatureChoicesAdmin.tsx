@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -442,12 +443,21 @@ export default function FeatureChoicesAdmin() {
 							<Layers className="w-6 h-6 text-arise" />
 						</div>
 						<div className="flex-1">
-							<h1 className="font-arise text-3xl font-bold gradient-text-system tracking-wider">
+							<SystemHeading
+								level={1}
+								variant="sovereign"
+								dimensional
+								className="tracking-wider"
+							>
 								SELECTION PROTOCOLS
-							</h1>
-							<p className="text-muted-foreground font-heading">
+							</SystemHeading>
+							<DataStreamText
+								variant="system"
+								speed="slow"
+								className="text-muted-foreground"
+							>
 								Configure D&D Beyond-style class feature choice points
-							</p>
+							</DataStreamText>
 						</div>
 
 						<Button

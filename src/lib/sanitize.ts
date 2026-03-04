@@ -67,7 +67,7 @@ export function sanitizeNumber(
 	max?: number,
 ): number | null {
 	const num = typeof value === "number" ? value : Number(value);
-	if (isNaN(num)) return null;
+	if (Number.isNaN(num)) return null;
 	if (min !== undefined && num < min) return min;
 	if (max !== undefined && num > max) return max;
 	return num;

@@ -24,37 +24,37 @@
 /* Mobile breakpoints */
 @media (max-width: 475px) {
 	.mobile-hidden {
-		display: none !important;
+		display: none;
 	}
 
 	.mobile-block {
-		display: block !important;
+		display: block;
 	}
 
 	.mobile-flex {
-		display: flex !important;
+		display: flex;
 	}
 
 	.mobile-text-xs {
-		font-size: 0.75rem !important;
+		font-size: 0.75rem;
 	}
 
 	.mobile-text-sm {
-		font-size: 0.875rem !important;
+		font-size: 0.875rem;
 	}
 
 	.mobile-text-base {
-		font-size: 1rem !important;
+		font-size: 1rem;
 	}
 }
 
 @media (min-width: 476px) {
 	.mobile-hidden {
-		display: block !important;
+		display: block;
 	}
 
 	.mobile-block {
-		display: none !important;
+		display: none;
 	}
 }
 
@@ -628,7 +628,7 @@
 	}
 
 	.mobile-text-xs {
-		font-size: 0.6875rem !important;
+		font-size: 0.6875rem;
 	}
 }
 
@@ -2535,8 +2535,8 @@
 	/* Full-width dialogs on mobile */
 	[role="dialog"] > div,
 	[data-radix-popper-content-wrapper] {
-		max-width: calc(100vw - 1rem) !important;
-		width: calc(100vw - 1rem) !important;
+		max-width: calc(100vw - 1rem);
+		width: calc(100vw - 1rem);
 		max-height: 85vh;
 		overflow-y: auto;
 	}
@@ -2570,7 +2570,7 @@
 	input[type="tel"],
 	textarea,
 	select {
-		font-size: 1rem !important;
+		font-size: 1rem;
 	}
 
 	/* Larger select triggers for touch */
@@ -2682,7 +2682,7 @@ html.reduce-motion {
 	/* When virtual keyboard is open, reduce padding */
 	.fixed.bottom-0,
 	.sticky.bottom-0 {
-		padding-bottom: 0 !important;
+		padding-bottom: 0;
 	}
 
 	header.sticky {

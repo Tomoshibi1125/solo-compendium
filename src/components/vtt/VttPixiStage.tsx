@@ -919,8 +919,10 @@ export function VttPixiStage({
 		lightSources,
 		zoom,
 		weather,
-		worldSize.h,
-		worldSize.w,
+		gridConfig?.type, // Expose the app + effects container so parent components can trigger particle presets
+		onStageReady,
+		onTokenDragStart,
+		updateToken,
 	]);
 
 	useEffect(() => {
@@ -1212,9 +1214,10 @@ export function VttPixiStage({
 		gridSize,
 		onRequestZoom,
 		onTokenDragEnd,
-		onTokenDragStart,
 		updateToken,
 		zoom,
+		drawMode,
+		onWallCreated,
 	]);
 
 	useEffect(() => {

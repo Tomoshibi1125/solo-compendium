@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-	ArrowLeft,
 	Crown,
 	Heart,
 	Loader2,
@@ -38,20 +37,13 @@ import type { Database } from "@/integrations/supabase/types";
 import { getLevelingMode } from "@/lib/campaignSettings";
 import { autoUpdateFeatureUses } from "@/lib/characterCreation";
 import { calculateFeatureUses } from "@/lib/characterEngine";
-import {
-	calculateTotalChoices,
-	getChoiceGrantDetails,
-} from "@/lib/choiceCalculations";
+import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import {
 	buildCorePayload,
 	type CharacterLevelUpEvent,
 	DomainEventBus,
 } from "@/lib/domainEvents";
-import {
-	isASILevel,
-	isPathUnlockLevel,
-	type PathUnlockMeta,
-} from "@/lib/levelGating";
+import { isASILevel } from "@/lib/levelGating";
 import { logger } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
@@ -420,17 +412,17 @@ export const LevelUpWizardModal = ({
 			const newHitDiceMax = newLevel;
 
 			const characterUpdates: Database["public"]["Tables"]["characters"]["Update"] =
-				{
-					level: newLevel,
-					proficiency_bonus: newProficiencyBonus,
-					hp_max: newHP,
-					hp_current: character.hp_current + hpIncrease,
-					hit_dice_max: newHitDiceMax,
-					hit_dice_current: newHitDiceMax,
-					system_favor_die: newSystemFavorDie,
-					system_favor_max: newSystemFavorMax,
-					system_favor_current: newSystemFavorMax,
-				};
+			{
+				level: newLevel,
+				proficiency_bonus: newProficiencyBonus,
+				hp_max: newHP,
+				hp_current: character.hp_current + hpIncrease,
+				hit_dice_max: newHitDiceMax,
+				hit_dice_current: newHitDiceMax,
+				system_favor_die: newSystemFavorDie,
+				system_favor_max: newSystemFavorMax,
+				system_favor_current: newSystemFavorMax,
+			};
 
 			// Apply path selection if chosen during this level-up
 			if (showPathSelection && selectedPath) {
@@ -616,12 +608,8 @@ export const LevelUpWizardModal = ({
 				logger.error("Failed to auto-update feature uses:", error);
 			}
 
-			// D&D Beyond parity: auto-recalculate all derived stats (spell save DC, passive perception, etc.)
-			try {
-				// These are now handled dynamically by system via characterEngine.ts
-			} catch (error) {
-				logger.error("Failed to auto-recalculate derived stats:", error);
-			}
+			// D&D Beyond parity: derived stats (spell save DC, passive perception, etc.)
+			// are now handled dynamically by the system via characterEngine.ts
 
 			// Emit domain event
 			try {
@@ -771,7 +759,8 @@ export const LevelUpWizardModal = ({
 														20,
 														Math.max(
 															character.level + 1,
-															parseInt(e.target.value) || character.level + 1,
+															parseInt(e.target.value, 10) ||
+															character.level + 1,
 														),
 													),
 												)
@@ -819,7 +808,7 @@ export const LevelUpWizardModal = ({
 													max={maxHP}
 													value={hpIncrease || ""}
 													onChange={(e) =>
-														setHpIncrease(parseInt(e.target.value) || null)
+														setHpIncrease(parseInt(e.target.value, 10) || null)
 													}
 													placeholder={`Average: ${averageHP}`}
 													className={cn(
@@ -902,9 +891,9 @@ export const LevelUpWizardModal = ({
 																(p) => p.id === selectedPath,
 															) as { display_name?: string | null } | undefined
 														)?.display_name ||
-															availablePaths.find((p) => p.id === selectedPath)
-																?.name ||
-															"",
+														availablePaths.find((p) => p.id === selectedPath)
+															?.name ||
+														"",
 													)}
 												</h4>
 												<p className="text-sm text-muted-foreground">
@@ -935,7 +924,7 @@ export const LevelUpWizardModal = ({
 											).map((ability) => {
 												const currentScore =
 													(character.abilities as Record<string, number>)[
-														ability
+													ability
 													] ?? 10;
 												const bonus = asiChoices[ability] || 0;
 												const totalSpent = Object.values(asiChoices).reduce(

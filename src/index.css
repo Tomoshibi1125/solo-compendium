@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 @import "./styles/mobile-responsive.css";
 
 /* ============================================================
@@ -147,6 +148,83 @@
 	--silver-commander: 220 20% 72%;
 }
 
+/* ============================================================
+   Global SA Form Element Overrides
+   Forces ALL inputs, selects, textareas to use SA glassmorphism
+   ============================================================ */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+		[type="color"]
+	):not([type="file"]),
+select,
+textarea {
+	background: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(12px);
+	border: 1px solid hsl(var(--primary) / 0.3);
+	border-radius: 2px;
+	color: hsl(var(--foreground));
+	box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
+	transition: all 0.2s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+		[type="color"]
+	):not([type="file"])::placeholder,
+textarea::placeholder {
+	color: hsl(var(--muted-foreground));
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+		[type="color"]
+	):not([type="file"]):focus,
+select:focus,
+textarea:focus {
+	border-color: hsl(var(--primary) / 0.6);
+	box-shadow:
+		0 0 10px hsl(var(--primary) / 0.3),
+		inset 0 0 10px hsl(var(--primary) / 0.1);
+	outline: none;
+}
+
+/* SA badge system — rigid brackets, not soft pills */
+.system-badge,
+[data-badge] {
+	font-family: "JetBrains Mono", "Fira Code", monospace;
+	font-size: 0.65rem;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	border-radius: 2px;
+	border: 1px solid hsl(var(--primary) / 0.3);
+	background: hsl(var(--primary) / 0.1);
+	padding: 0.15rem 0.5rem;
+}
+
+/* Global heading enforcement — SA system fonts */
+h1,
+h2,
+h3 {
+	letter-spacing: 0.05em;
+}
+
+/* SA scrollbar theming */
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+	background: hsl(var(--primary) / 0.3);
+	border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: hsl(var(--primary) / 0.5);
+}
+
 .system-grid-overlay {
 	background-image:
 		linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px),
@@ -231,9 +309,9 @@
 	}
 
 	body {
-		background: white !important;
+		background: white;
 
-		color: black !important;
+		color: black;
 
 		font-size: 11pt;
 
@@ -251,7 +329,7 @@
 	[class~="print:hidden"],
 	aside,
 	.sidebar {
-		display: none !important;
+		display: none;
 	}
 
 	/* Character sheet print styles */
@@ -269,9 +347,9 @@
 
 	.glass-card,
 	.SystemWindow {
-		border: 2px solid #000 !important;
+		border: 2px solid #000;
 
-		background: white !important;
+		background: white;
 
 		page-break-inside: avoid;
 
@@ -279,16 +357,16 @@
 
 		padding: 0.75rem;
 
-		box-shadow: none !important;
+		box-shadow: none;
 	}
 
 	/* Stat block specific */
 
 	[class*="stat-block"],
 	.stat-block {
-		border: 2px solid #000 !important;
+		border: 2px solid #000;
 
-		background: white !important;
+		background: white;
 
 		page-break-inside: avoid;
 
@@ -302,17 +380,17 @@
 	.gradient-text-monarch,
 	.gradient-text-arise,
 	.gradient-text-supreme {
-		-webkit-text-fill-color: black !important;
+		-webkit-text-fill-color: black;
 
-		color: black !important;
+		color: black;
 
-		background: none !important;
+		background: none;
 	}
 
 	/* Images */
 
 	img {
-		max-width: 100% !important;
+		max-width: 100%;
 
 		page-break-inside: avoid;
 	}
@@ -320,11 +398,11 @@
 	/* Remove animations and transitions */
 
 	* {
-		animation: none !important;
+		animation: none;
 
-		transition: none !important;
+		transition: none;
 
-		box-shadow: none !important;
+		box-shadow: none;
 	}
 
 	/* Tables */
@@ -354,13 +432,13 @@
 	h6 {
 		page-break-after: avoid;
 
-		color: black !important;
+		color: black;
 	}
 
 	/* Links */
 
 	a {
-		color: black !important;
+		color: black;
 
 		text-decoration: underline;
 	}
@@ -369,7 +447,7 @@
 
 	.detail-layout,
 	[class~="lg:flex-row"] {
-		flex-direction: column !important;
+		flex-direction: column;
 	}
 
 	/* Ensure proper spacing */

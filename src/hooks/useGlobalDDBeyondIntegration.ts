@@ -1,11 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignAnalytics } from "@/hooks/useCampaignAnalytics";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
-import {
-	useCharacterExport,
-	useCharacterImport,
-} from "@/hooks/useCharacterExportImport";
+import { useCharacterExport } from "@/hooks/useCharacterExportImport";
 import { useCharacterRoll } from "@/hooks/useCharacterRoll";
 import { useCombatSessionManager } from "@/hooks/useCombatSessionManager";
 import { useEncounterRewards } from "@/hooks/useEncounterRewards";
@@ -14,7 +11,7 @@ import { useVTTManager } from "@/hooks/useVTTManager";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { logger } from "@/lib/logger";
-import { quickRoll, rollCheck } from "@/lib/rollEngine";
+import { rollCheck } from "@/lib/rollEngine";
 
 interface CharacterSheetEnhancements {
 	rollAbilityCheck: (ability: string) => Promise<unknown>;
@@ -188,7 +185,7 @@ export function useGlobalDDBeyondIntegration() {
 		} = useCampaignAnalytics();
 		const { saveVTTScene, loadVTTScene, uploadVTTAsset } = useVTTManager();
 
-		const broadcastSystemMessage = async (
+		const _broadcastSystemMessage = async (
 			campaignId: string,
 			content: string,
 		) => {
@@ -276,7 +273,7 @@ export function useGlobalDDBeyondIntegration() {
 							description: "XP and loot from the encounter have been awarded.",
 						});
 					}
-				} catch (error) {
+				} catch (_error) {
 					toast({
 						title: "Error",
 						description: "Failed to award encounter rewards.",
@@ -394,7 +391,7 @@ export function useGlobalDDBeyondIntegration() {
 				characterId: string,
 				featureName: string,
 				action: string,
-				system: "SA" | "5e",
+				_system: "SA" | "5e",
 				options,
 			) => {
 				if (options?.skipBroadcast) return;

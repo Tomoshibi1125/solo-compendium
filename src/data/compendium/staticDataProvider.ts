@@ -606,9 +606,7 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 			? (monster.stats as Record<string, unknown>)
 			: null;
 	const abilityScores =
-		statsObj &&
-		statsObj.abilityScores &&
-		typeof statsObj.abilityScores === "object"
+		statsObj?.abilityScores && typeof statsObj.abilityScores === "object"
 			? (statsObj.abilityScores as Record<string, unknown>)
 			: null;
 
@@ -631,9 +629,7 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 			? (statsObj.proficiencyBonus as number)
 			: null;
 	const savingThrows =
-		statsObj &&
-		statsObj.savingThrows &&
-		typeof statsObj.savingThrows === "object"
+		statsObj?.savingThrows && typeof statsObj.savingThrows === "object"
 			? (statsObj.savingThrows as Record<string, unknown>)
 			: null;
 

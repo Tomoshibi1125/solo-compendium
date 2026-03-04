@@ -12,6 +12,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -157,13 +162,18 @@ const CampaignJoin = () => {
 					</Button>
 				</Link>
 
-				<h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-					JOIN CAMPAIGN
-				</h1>
-				<p className="text-muted-foreground font-heading mb-8">
-					Use a share code or invite token from your Protocol Warden (System) to
-					join their campaign.
-				</p>
+				<SystemHeading
+					level={1}
+					variant="sovereign"
+					dimensional
+					className="mb-2 text-3xl sm:text-4xl"
+				>
+					Establish Nexus Link
+				</SystemHeading>
+				<DataStreamText variant="system" speed="slow" className="mb-8">
+					Implement an access cipher or localized token from a Protocol Warden
+					to merge with their domain.
+				</DataStreamText>
 
 				{isInviteFlow && !authLoading && !user && (
 					<SystemWindow
@@ -171,10 +181,10 @@ const CampaignJoin = () => {
 						variant="quest"
 						className="mb-6"
 					>
-						<p className="text-sm text-muted-foreground mb-4">
+						<SystemText className="block text-sm text-muted-foreground mb-4">
 							Secure invite tokens require an authenticated account. Sign in to
 							redeem this invite.
-						</p>
+						</SystemText>
 						<Button
 							className="w-full"
 							onClick={() =>
@@ -198,10 +208,10 @@ const CampaignJoin = () => {
 									placeholder="Paste invite token"
 									className="mt-1 font-mono text-center"
 								/>
-								<p className="text-xs text-muted-foreground mt-2">
+								<SystemText className="block text-xs text-muted-foreground mt-2">
 									Tokens are included in invite links from your Protocol Warden
 									(System).
-								</p>
+								</SystemText>
 							</div>
 							<Button
 								type="submit"
@@ -240,10 +250,10 @@ const CampaignJoin = () => {
 									className="mt-1 font-mono text-center text-2xl tracking-widest"
 									maxLength={6}
 								/>
-								<p className="text-xs text-muted-foreground mt-2">
+								<SystemText className="block text-xs text-muted-foreground mt-2">
 									Enter the 6-character code your Protocol Warden (System)
 									provided
-								</p>
+								</SystemText>
 							</div>
 							<Button
 								type="submit"
@@ -275,9 +285,9 @@ const CampaignJoin = () => {
 									{campaign.name}
 								</h3>
 								{campaign.description && (
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										{campaign.description}
-									</p>
+									</SystemText>
 								)}
 							</div>
 							<div className="flex items-center justify-between p-2 bg-muted/50 rounded">
@@ -300,9 +310,9 @@ const CampaignJoin = () => {
 									{invite.campaign_name}
 								</h3>
 								{invite.campaign_description && (
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										{invite.campaign_description}
-									</p>
+									</SystemText>
 								)}
 							</div>
 							<div className="flex items-center justify-between p-2 bg-muted/50 rounded">
@@ -338,9 +348,9 @@ const CampaignJoin = () => {
 								</div>
 							)}
 							{inviteStatus && (
-								<p className="text-sm text-muted-foreground">
+								<SystemText className="block text-sm text-muted-foreground">
 									{campaignInviteStatusMessage(inviteStatus)}
-								</p>
+								</SystemText>
 							)}
 							<Button
 								variant="ghost"
@@ -357,10 +367,10 @@ const CampaignJoin = () => {
 				{(campaign || invite) && characters.length > 0 && (
 					<SystemWindow title="SELECT ASCENDANT (OPTIONAL)" className="mb-6">
 						<div className="space-y-4">
-							<p className="text-sm text-muted-foreground">
+							<SystemText className="block text-sm text-muted-foreground">
 								Optionally link one of your Ascendants to this campaign. You can
 								change this later.
-							</p>
+							</SystemText>
 							<Select
 								value={selectedCharacter}
 								onValueChange={setSelectedCharacter}
@@ -385,10 +395,10 @@ const CampaignJoin = () => {
 				{(campaign || invite) && user && characters.length === 0 && (
 					<SystemWindow title="NO ASCENDANTS FOUND" className="mb-6">
 						<div className="space-y-3">
-							<p className="text-sm text-muted-foreground">
+							<SystemText className="block text-sm text-muted-foreground">
 								You can join now without a linked Ascendant, or create one first
 								and return automatically.
-							</p>
+							</SystemText>
 							<Button variant="outline" className="w-full" asChild>
 								<Link
 									to={`/characters/new?next=${encodeURIComponent(resumePath)}`}

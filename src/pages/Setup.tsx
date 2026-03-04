@@ -1,6 +1,11 @@
 import { AlertTriangle, Copy, RefreshCw } from "lucide-react";
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { getRuntimeEnvValue } from "@/lib/runtimeEnv";
@@ -44,13 +49,23 @@ export default function Setup() {
 						<div className="flex items-start gap-3">
 							<AlertTriangle className="w-6 h-6 text-destructive mt-0.5" />
 							<div>
-								<h1 className="text-xl font-semibold">
-									Supabase configuration missing
-								</h1>
-								<p className="text-sm text-muted-foreground">
-									This app requires Supabase to power accounts, characters, and
-									the compendium. Add the required env vars and reload.
-								</p>
+								<SystemHeading
+									level={1}
+									variant="gate"
+									dimensional
+									className="text-xl"
+								>
+									System Link Severed
+								</SystemHeading>
+								<DataStreamText
+									variant="system"
+									speed="fast"
+									className="text-sm"
+								>
+									This interface requires a connection to the primary database
+									(Supabase) to process Ascendant and Compendium records. Supply
+									the required protocols and reboot.
+								</DataStreamText>
 							</div>
 						</div>
 
@@ -139,10 +154,10 @@ export default function Setup() {
 					</div>
 				</SystemWindow>
 
-				<p className="text-xs text-muted-foreground text-center">
+				<SystemText className="block text-xs text-muted-foreground text-center">
 					Tip: once configured, you can return here anytime at{" "}
 					<code>/setup</code>.
-				</p>
+				</SystemText>
 			</div>
 		</div>
 	);

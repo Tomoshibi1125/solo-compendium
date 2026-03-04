@@ -116,8 +116,8 @@ export function CharacterResourcesPanel({
 	};
 
 	const handleAddTempHP = () => {
-		const amount = parseInt(tempHPAmount);
-		if (isNaN(amount) || amount <= 0) {
+		const amount = parseInt(tempHPAmount, 10);
+		if (Number.isNaN(amount) || amount <= 0) {
 			toast({
 				title: "Invalid Amount",
 				description: "Please enter a valid positive number.",

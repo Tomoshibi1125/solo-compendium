@@ -5,8 +5,8 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SystemHeading, SystemText } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
@@ -129,9 +129,14 @@ export default function Profile() {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-2xl space-y-6">
-				<h1 className="font-arise text-3xl sm:text-4xl font-bold gradient-text-shadow tracking-widest uppercase mb-4">
-					PROFILE & SETTINGS
-				</h1>
+				<SystemHeading
+					level={1}
+					variant="sovereign"
+					dimensional
+					className="mb-4"
+				>
+					Profile & Settings
+				</SystemHeading>
 
 				{/* Avatar + Name */}
 				<SystemWindow title="IDENTITY">
@@ -232,9 +237,9 @@ export default function Profile() {
 									</button>
 								))}
 							</div>
-							<p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+							<SystemText className="block text-xs font-mono text-muted-foreground uppercase tracking-wider">
 								Adjusts the base UI font size. Saved across sessions.
-							</p>
+							</SystemText>
 						</div>
 					</div>
 				</SystemWindow>

@@ -18,6 +18,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -142,12 +147,22 @@ const Admin = () => {
 							<Database className="w-6 h-6 text-arise" />
 						</div>
 						<div className="flex-1">
-							<h1 className="font-arise text-4xl font-bold gradient-text-system tracking-wider">
-								SYSTEM CONSOLE
-							</h1>
-							<p className="text-muted-foreground font-heading">
-								Import and validate homebrew content for the compendium
-							</p>
+							<SystemHeading
+								level={1}
+								variant="sovereign"
+								dimensional
+								className="tracking-wider"
+							>
+								System Console
+							</SystemHeading>
+							<DataStreamText
+								variant="system"
+								speed="slow"
+								className="font-heading"
+							>
+								Import and validate operational parameters for the System
+								Compendium.
+							</DataStreamText>
 						</div>
 						<div className="flex gap-2">
 							<Link to="/dm-tools/content-audit">
@@ -313,10 +328,10 @@ const Admin = () => {
 							variant="quest"
 							className="border-amber-500/30"
 						>
-							<p className="text-sm text-muted-foreground mb-4 font-heading">
+							<SystemText className="block text-sm text-muted-foreground mb-4 font-heading">
 								Load a sample JSON template to get started with custom content
 								creation.
-							</p>
+							</SystemText>
 							<Button
 								variant="outline"
 								onClick={() => {
@@ -372,9 +387,9 @@ const Admin = () => {
 													<span className="font-arise font-semibold text-green-400 tracking-wide">
 														VALID
 													</span>
-													<p className="text-xs text-muted-foreground">
+													<SystemText className="block text-xs text-muted-foreground">
 														Content bundle is ready for import
-													</p>
+													</SystemText>
 												</div>
 											</>
 										) : (
@@ -384,9 +399,9 @@ const Admin = () => {
 													<span className="font-arise font-semibold text-destructive tracking-wide">
 														INVALID
 													</span>
-													<p className="text-xs text-muted-foreground">
+													<SystemText className="block text-xs text-muted-foreground">
 														Please fix errors before importing
-													</p>
+													</SystemText>
 												</div>
 											</>
 										)}
@@ -465,9 +480,9 @@ const Admin = () => {
 													<span className="font-arise font-semibold text-green-400 tracking-wide">
 														{dryRun ? "DRY RUN COMPLETE" : "IMPORT SUCCESSFUL"}
 													</span>
-													<p className="text-xs text-muted-foreground">
+													<SystemText className="block text-xs text-muted-foreground">
 														Content has been processed
-													</p>
+													</SystemText>
 												</div>
 											</>
 										) : (
@@ -477,9 +492,9 @@ const Admin = () => {
 													<span className="font-arise font-semibold text-destructive tracking-wide">
 														IMPORT FAILED
 													</span>
-													<p className="text-xs text-muted-foreground">
+													<SystemText className="block text-xs text-muted-foreground">
 														Check errors below
-													</p>
+													</SystemText>
 												</div>
 											</>
 										)}
@@ -586,9 +601,9 @@ const Admin = () => {
 							>
 								<div className="text-center py-12">
 									<Database className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
-									<p className="text-muted-foreground font-heading">
+									<SystemText className="block text-muted-foreground font-heading">
 										Upload or paste JSON content to begin validation
-									</p>
+									</SystemText>
 								</div>
 							</SystemWindow>
 						)}

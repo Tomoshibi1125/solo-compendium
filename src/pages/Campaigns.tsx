@@ -24,6 +24,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -92,13 +97,21 @@ const Campaigns = () => {
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
 					<div className="min-w-0 flex-1">
-						<h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider leading-tight">
-							GUILD REGISTRY
-						</h1>
-						<p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
-							Create or join guilds to hunt with others across the System's
-							domain
-						</p>
+						<SystemHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="mb-2 leading-tight"
+						>
+							Guild Registry
+						</SystemHeading>
+						<DataStreamText
+							variant="system"
+							speed="slow"
+							className="text-sm sm:text-base"
+						>
+							Establish or join guilds to hunt across the System's domain
+						</DataStreamText>
 					</div>
 					<Button
 						onClick={() => setCreateDialogOpen(true)}
@@ -112,19 +125,27 @@ const Campaigns = () => {
 
 				{/* My Campaigns (Protocol Warden) */}
 				<div className="mb-8">
-					<h2 className="font-arise text-2xl font-bold mb-4 gradient-text-gold flex items-center gap-2 tracking-wide">
+					<SystemHeading
+						level={2}
+						variant="sovereign"
+						className="mb-4 flex items-center gap-2"
+					>
 						<Crown className="w-5 h-5 text-amber-400" />
-						GUILDS I LEAD
-					</h2>
+						Guilds I Lead
+					</SystemHeading>
 					{loadingMy ? (
 						<div className="flex flex-col items-center justify-center py-12 gap-4">
 							<div className="relative">
 								<div className="w-12 h-12 border-4 border-amber-500/20 rounded-full" />
 								<div className="absolute inset-0 w-12 h-12 border-4 border-t-amber-400 rounded-full animate-spin" />
 							</div>
-							<p className="text-muted-foreground font-heading animate-pulse">
+							<DataStreamText
+								variant="system"
+								speed="fast"
+								className="text-muted-foreground font-heading animate-pulse"
+							>
 								Loading guilds...
-							</p>
+							</DataStreamText>
 						</div>
 					) : myCampaigns.length === 0 ? (
 						<SystemWindow
@@ -132,10 +153,14 @@ const Campaigns = () => {
 							className="text-center py-8 border-amber-500/30"
 						>
 							<Crown className="w-12 h-12 mx-auto text-amber-400/50 mb-4" />
-							<p className="text-muted-foreground mb-4">
+							<DataStreamText
+								variant="system"
+								speed="slow"
+								className="text-muted-foreground mb-4"
+							>
 								You haven't established any guilds yet. Create one to unite
 								Ascendants under your banner.
-							</p>
+							</DataStreamText>
 							<Button
 								onClick={() => setCreateDialogOpen(true)}
 								className="bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg min-h-[44px]"
@@ -171,9 +196,9 @@ const Campaigns = () => {
 										</span>
 									</div>
 
-									<p className="text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
+									<SystemText className="block text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
 										{campaign.description || "No description provided."}
-									</p>
+									</SystemText>
 
 									<div className="space-y-3 relative">
 										<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-amber-500/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">
@@ -215,27 +240,31 @@ const Campaigns = () => {
 
 				{/* Joined Campaigns (Ascendant) */}
 				<div>
-					<h2 className="font-arise text-2xl font-bold mb-4 gradient-text-system flex items-center gap-2 tracking-wide">
+					<SystemHeading
+						level={2}
+						variant="gate"
+						className="mb-4 flex items-center gap-2"
+					>
 						<Users className="w-5 h-5 text-arise" />
-						GUILDS I'VE JOINED
-					</h2>
+						Guilds I've Joined
+					</SystemHeading>
 					{loadingJoined ? (
 						<div className="flex flex-col items-center justify-center py-12 gap-4">
 							<div className="relative">
 								<div className="w-12 h-12 border-4 border-arise/20 rounded-full" />
 								<div className="absolute inset-0 w-12 h-12 border-4 border-t-arise rounded-full animate-spin" />
 							</div>
-							<p className="text-muted-foreground font-heading animate-pulse">
+							<SystemText className="block text-muted-foreground font-heading animate-pulse">
 								Searching guilds...
-							</p>
+							</SystemText>
 						</div>
 					) : joinedCampaigns.length === 0 ? (
 						<SystemWindow title="NO JOINED GUILDS" className="text-center py-8">
 							<Shield className="w-12 h-12 mx-auto text-arise/50 mb-4" />
-							<p className="text-muted-foreground mb-4">
+							<SystemText className="block text-muted-foreground mb-4">
 								You haven't joined any guilds yet. Ask your Guild Master for a
 								share code or link.
-							</p>
+							</SystemText>
 							<Link to="/campaigns/join">
 								<Button className="bg-gradient-to-r from-arise to-shadow-purple min-h-[44px]">
 									<UserPlus className="w-4 h-4 mr-2" />
@@ -267,9 +296,9 @@ const Campaigns = () => {
 										</div>
 									</div>
 
-									<p className="text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
+									<SystemText className="block text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
 										{campaign.description || "No description provided."}
-									</p>
+									</SystemText>
 
 									<div className="space-y-3 relative">
 										<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-arise/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">

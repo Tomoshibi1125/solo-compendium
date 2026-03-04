@@ -841,5 +841,5 @@ export function useAudioShortcuts() {
 
 		window.addEventListener("keydown", handleKeyDown);
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [play, pause, stop, next, previous, setVolume, setMasterVolume]);
+	}, [play, pause, next, previous, setMasterVolume]);
 }

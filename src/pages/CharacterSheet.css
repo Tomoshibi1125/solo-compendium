@@ -640,11 +640,11 @@
 }
 
 [role="tab"][data-state="active"] {
-	background: rgba(139, 92, 246, 0.15) !important;
-	border-color: rgba(139, 92, 246, 0.3) !important;
+	background: rgba(139, 92, 246, 0.15);
+	border-color: rgba(139, 92, 246, 0.3);
 	box-shadow:
 		0 0 10px rgba(139, 92, 246, 0.1),
-		inset 0 1px 0 rgba(139, 92, 246, 0.2) !important;
+		inset 0 1px 0 rgba(139, 92, 246, 0.2);
 	color: white;
 }
 
@@ -774,7 +774,7 @@ button[aria-label*="roll"]:hover {
    ------------------------------------------------------------------ */
 @media (orientation: landscape) and (max-height: 500px) {
 	.character-sheet-stats-grid {
-		display: flex !important;
+		display: flex;
 		flex-direction: row;
 		overflow-x: auto;
 		gap: 0.5rem;
@@ -797,11 +797,11 @@ button[aria-label*="roll"]:hover {
 	}
 
 	[role="tablist"] {
-		padding: 0.25rem !important;
+		padding: 0.25rem;
 	}
 
 	[role="tab"] {
-		padding-top: 0.5rem !important;
-		padding-bottom: 0.5rem !important;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
 	}
 }

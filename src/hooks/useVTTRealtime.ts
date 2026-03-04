@@ -21,7 +21,6 @@ import {
 	type ChatParticipant,
 	createPing,
 	formatInlineRoll,
-	generateCharacterMacros,
 	hasInlineRolls,
 	type MapPing,
 	parseInlineRolls,
@@ -250,17 +249,17 @@ function parseDiceTerm(term: string): DiceTermResult {
 		return { expression: term, rolls: [], kept: [], dropped: [], subtotal: 0 };
 	}
 
-	let count = parseInt(explodingMatch[1]);
-	const sides = parseInt(explodingMatch[2]);
+	let count = parseInt(explodingMatch[1], 10);
+	const sides = parseInt(explodingMatch[2], 10);
 	const exploding = !!explodingMatch[3];
 	const keepHighest = explodingMatch[4]
-		? parseInt(explodingMatch[4])
+		? parseInt(explodingMatch[4], 10)
 		: undefined;
 	const keepLowest = explodingMatch[5]
-		? parseInt(explodingMatch[5])
+		? parseInt(explodingMatch[5], 10)
 		: undefined;
 	const rerollOnceBelow = explodingMatch[6]
-		? parseInt(explodingMatch[6])
+		? parseInt(explodingMatch[6], 10)
 		: undefined;
 
 	const rolls: number[] = [];
@@ -388,7 +387,7 @@ export function rollDiceFormulaDetailed(
 				token.sign < 0 ? "- " : displayParts.length > 0 ? "+ " : "";
 			displayParts.push(`${prefix}${formatTermDisplay(result)}`);
 		} else {
-			const num = parseInt(token.raw) * token.sign;
+			const num = parseInt(token.raw, 10) * token.sign;
 			modifier += num;
 			total += num;
 			const prefix = num < 0 ? "- " : displayParts.length > 0 ? "+ " : "";
@@ -528,8 +527,8 @@ export function useVTTRealtime({
 				eventHandlersRef.current.set(eventType, new Set());
 			}
 			eventHandlersRef.current
-				.get(eventType)!
-				.add(handler as (payload: any) => void);
+				.get(eventType)
+				?.add(handler as (payload: any) => void);
 			return () => {
 				eventHandlersRef.current
 					.get(eventType)
@@ -794,7 +793,6 @@ export function useVTTRealtime({
 				case "desc":
 					sendChatMessage(cmd.message, "desc");
 					break;
-				case "chat":
 				default: {
 					// Roll20 parity: resolve [[2d6+3]] inline dice expressions before sending
 					if (hasInlineRolls(cmd.message)) {
@@ -1139,7 +1137,17 @@ export function useVTTRealtime({
 			setIsConnected(false);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [channelName, campaignId]);
+	}, [
+		channelName,
+		campaignId, // External handlers
+		emit,
+		isDM,
+		presenceUsers.get,
+		presenceUsers.values,
+		userColor,
+		userId,
+		userName,
+	]);
 
 	const activeUsers = useMemo(
 		() => Array.from(presenceUsers.values()),

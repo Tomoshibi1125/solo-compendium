@@ -4,57 +4,37 @@
  */
 
 import {
-	Activity,
 	AlertTriangle,
-	Archive,
 	BarChart3,
-	Bell,
-	Zap as Bolt,
 	BookOpen,
 	Calendar,
 	ChevronRight,
 	Clock,
-	Compass,
-	Crown,
-	Crown as CrownIcon,
 	Database,
 	Dice6,
-	Eye,
-	FileText,
-	Filter,
 	Flame,
 	Gem,
 	Globe,
 	Grid,
 	Grid3x3,
-	Hammer,
 	HelpCircle,
 	Image as ImageIcon,
-	Layers,
 	List,
-	LogOut,
 	Map,
-	Moon,
-	Music,
 	Palette,
 	Scroll,
 	Search,
 	Settings,
 	Settings2,
 	Shield,
-	Sparkles,
-	Star,
-	Sun,
 	Sword,
 	Target,
-	TrendingUp,
-	Trophy,
 	Users,
 	UsersRound,
 	Volume2,
 	Zap,
 } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
@@ -66,10 +46,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { GatePortal } from "@/components/ui/GatePortal";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
 import { SystemSigilLogo } from "@/components/ui/SystemSigilLogo";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -78,7 +57,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import "./DMTools.css";
 
@@ -413,13 +391,22 @@ const DMTools = () => {
 						<div className="flex items-center gap-4">
 							<SystemSigilLogo size="lg" className="flex-shrink-0" />
 							<div>
-								<h1 className="dm-tools-title system-text-glow">
-									PRIME ARCHITECT'S DOMAIN
-								</h1>
-								<p className="dm-tools-subtitle">
+								<SystemHeading
+									level={1}
+									variant="gate"
+									dimensional
+									className="dm-tools-title system-text-glow"
+								>
+									Prime Architect's Domain
+								</SystemHeading>
+								<DataStreamText
+									variant="system"
+									speed="slow"
+									className="dm-tools-subtitle block"
+								>
 									Divine tools granted to guide Ascendants through the Rifts. In
 									this post-reset world, the System's will shapes reality.
-								</p>
+								</DataStreamText>
 							</div>
 						</div>
 
@@ -556,7 +543,13 @@ const DMTools = () => {
 											<div className="category-header">
 												<div className="flex items-center gap-2">
 													<Icon className="w-5 h-5" />
-													<h2 className="category-title">{category.name}</h2>
+													<SystemHeading
+														level={2}
+														variant="gate"
+														className="category-title"
+													>
+														{category.name}
+													</SystemHeading>
 													<Badge variant="secondary">
 														{categoryTools.length}
 													</Badge>
@@ -684,12 +677,19 @@ const DMToolCard = ({
 							<Icon className="w-5 h-5" />
 						</div>
 						<div className="flex-1">
-							<h3 className="font-system text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]">
+							<SystemHeading
+								level={3}
+								variant="sovereign"
+								className="font-system text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+							>
 								{tool.name}
-							</h3>
-							<p className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase">
+							</SystemHeading>
+							<DataStreamText
+								variant="system"
+								className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase"
+							>
 								{tool.description}
-							</p>
+							</DataStreamText>
 						</div>
 					</div>
 					<div className="flex items-center gap-3">
@@ -743,12 +743,19 @@ const DMToolCard = ({
 				>
 					<Icon className="w-6 h-6" />
 				</div>
-				<h3 className="font-system text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]">
+				<SystemHeading
+					level={3}
+					variant="sovereign"
+					className="font-system text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+				>
 					{tool.name}
-				</h3>
-				<p className="text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed">
+				</SystemHeading>
+				<DataStreamText
+					variant="system"
+					className="text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed"
+				>
 					{tool.description}
-				</p>
+				</DataStreamText>
 			</div>
 			<div className="flex items-center justify-between mt-auto relative z-10">
 				<Badge

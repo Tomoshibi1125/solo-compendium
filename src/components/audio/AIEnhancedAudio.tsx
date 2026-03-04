@@ -56,7 +56,7 @@ export function AIEnhancedAudio({
 
 	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
-		if (file && file.type.startsWith("audio/")) {
+		if (file?.type.startsWith("audio/")) {
 			setSelectedFile(file);
 			const url = URL.createObjectURL(file);
 			setAudioUrl(url);

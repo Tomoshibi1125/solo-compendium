@@ -14,7 +14,6 @@ import {
 	MapPin,
 	Package,
 	ScrollText,
-	Search,
 	Share2,
 	Skull,
 	Sparkles,
@@ -44,6 +43,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Pagination } from "@/components/ui/pagination";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -402,7 +406,22 @@ const Compendium = () => {
 		setShowMiniBossOnly(filters.showMiniBossOnly);
 		setMinCR(filters.minCR);
 		setMaxCR(filters.maxCR);
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps -- Intentional one-time hydration from localStorage-backed state.
+	}, [
+		filters.maxCR,
+		filters.maxLevel,
+		filters.minCR,
+		filters.minLevel,
+		filters.selectedCategory,
+		filters.selectedGateRanks,
+		filters.selectedRarities,
+		filters.selectedSchools,
+		filters.selectedSourceBooks,
+		filters.showBossOnly,
+		filters.showFavoritesOnly,
+		filters.showMiniBossOnly,
+		filters.sortBy,
+		filters.viewMode,
+	]); // eslint-disable-line react-hooks/exhaustive-deps -- Intentional one-time hydration from localStorage-backed state.
 
 	// Save filters when they change
 	useEffect(() => {
@@ -523,14 +542,14 @@ const Compendium = () => {
 			filtered = filtered.filter((e) => {
 				if (!e.cr) return false;
 				const crNum = parseFloat(e.cr);
-				return !isNaN(crNum) && crNum >= minCR;
+				return !Number.isNaN(crNum) && crNum >= minCR;
 			});
 		}
 		if (maxCR !== "") {
 			filtered = filtered.filter((e) => {
 				if (!e.cr) return false;
 				const crNum = parseFloat(e.cr);
-				return !isNaN(crNum) && crNum <= maxCR;
+				return !Number.isNaN(crNum) && crNum <= maxCR;
 			});
 		}
 
@@ -598,26 +617,14 @@ const Compendium = () => {
 		const start = (currentPage - 1) * itemsPerPage;
 		const end = start + itemsPerPage;
 		return filteredAndSortedEntries.slice(start, end);
-	}, [filteredAndSortedEntries, currentPage, itemsPerPage]);
+	}, [filteredAndSortedEntries, currentPage]);
 
 	const totalPages = Math.ceil(filteredAndSortedEntries.length / itemsPerPage);
 
 	// Reset to page 1 when filters change
 	useEffect(() => {
 		setCurrentPage(1);
-	}, [
-		selectedCategory,
-		debouncedSearchQuery,
-		showFavoritesOnly,
-		selectedSourceBooks,
-		selectedSchools,
-		selectedGateRanks,
-		selectedRarities,
-		minLevel,
-		maxLevel,
-		minCR,
-		maxCR,
-	]);
+	}, []);
 
 	// Load URL parameters on mount
 	useEffect(() => {
@@ -894,13 +901,22 @@ const Compendium = () => {
 
 				{/* Header with System UI styling */}
 				<div className="mb-6 sm:mb-8 relative z-10">
-					<h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider system-text-glow">
-						COMPENDIUM
-					</h1>
-					<p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
-						Browse the complete collection of System Ascendant knowledge, from
-						character foundations to world entities.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2 tracking-wider"
+					>
+						Compendium
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="text-sm sm:text-base leading-relaxed block"
+					>
+						Browse the complete collection of System knowledge, from character
+						foundations to world entities.
+					</DataStreamText>
 				</div>
 
 				{/* Search and Controls */}
@@ -1020,11 +1036,11 @@ const Compendium = () => {
 					{/* Results Grid */}
 					<div className="flex-1 min-w-0">
 						<div className="mb-4 flex items-center justify-between flex-wrap gap-2">
-							<p className="text-sm text-muted-foreground font-heading">
+							<SystemText className="block text-sm text-muted-foreground font-heading">
 								Showing {paginatedEntries.length} of{" "}
 								{filteredAndSortedEntries.length}{" "}
 								{filteredAndSortedEntries.length === 1 ? "result" : "results"}
-							</p>
+							</SystemText>
 							<div className="flex gap-2">
 								<Dialog
 									open={showGeminiProtocol}
@@ -1080,9 +1096,9 @@ const Compendium = () => {
 									<p className="text-destructive font-heading">
 										Compendium data is unavailable
 									</p>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										Configure Supabase to load compendium content.
-									</p>
+									</SystemText>
 									<Button
 										variant="outline"
 										size="sm"
@@ -1109,9 +1125,9 @@ const Compendium = () => {
 									<p className="text-destructive font-heading">
 										Failed to load compendium data
 									</p>
-									<p className="text-sm text-muted-foreground">
+									<SystemText className="block text-sm text-muted-foreground">
 										Please try refreshing the page or check your connection.
-									</p>
+									</SystemText>
 									<Button
 										variant="outline"
 										size="sm"
@@ -1220,9 +1236,9 @@ const Compendium = () => {
 															</span>
 														)}
 												</h3>
-												<p className="text-sm text-muted-foreground line-clamp-2">
+												<SystemText className="block text-sm text-muted-foreground line-clamp-2">
 													{highlightText(entry.description, searchQuery)}
-												</p>
+												</SystemText>
 												<div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
 													{entry.cr && <span>CR {entry.cr}</span>}
 													{entry.school && <span>• {entry.school}</span>}
@@ -1268,9 +1284,9 @@ const Compendium = () => {
 																</span>
 															)}
 													</h3>
-													<p className="text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
+													<SystemText className="block text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
 														{highlightText(entry.description, searchQuery)}
-													</p>
+													</SystemText>
 												</div>
 												<div className="flex items-center gap-2 flex-shrink-0">
 													{entry.source_book && (

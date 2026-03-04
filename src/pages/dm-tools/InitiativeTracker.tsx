@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -957,12 +958,21 @@ const InitiativeTracker = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to System Tools
 					</Button>
-					<h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
 						RIFT COMBAT TRACKER
-					</h1>
-					<p className="text-muted-foreground font-heading">
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="text-muted-foreground"
+					>
 						Track initiative, HP, and conditions during Rift combat encounters.
-					</p>
+					</DataStreamText>
 				</div>
 
 				{!campaignsLoading && manageableCampaigns.length > 0 && (
@@ -1055,7 +1065,7 @@ const InitiativeTracker = () => {
 														value={resolutionConditionDuration}
 														onChange={(e) =>
 															setResolutionConditionDuration(
-																parseInt(e.target.value) || 0,
+																parseInt(e.target.value, 10) || 0,
 															)
 														}
 													/>
@@ -1245,7 +1255,7 @@ const InitiativeTracker = () => {
 														onChange={(e) =>
 															updateHP(
 																combatant.id,
-																parseInt(e.target.value) || 0,
+																parseInt(e.target.value, 10) || 0,
 															)
 														}
 														aria-label={`HP for ${combatant.name}`}
@@ -1266,7 +1276,7 @@ const InitiativeTracker = () => {
 														onChange={(e) =>
 															updateMaxHP(
 																combatant.id,
-																parseInt(e.target.value) || 0,
+																parseInt(e.target.value, 10) || 0,
 															)
 														}
 														aria-label={`Max HP for ${combatant.name}`}
@@ -1373,7 +1383,7 @@ const InitiativeTracker = () => {
 														value={manualConditionDuration}
 														onChange={(e) =>
 															setManualConditionDuration(
-																parseInt(e.target.value) || 0,
+																parseInt(e.target.value, 10) || 0,
 															)
 														}
 														aria-label={`Condition duration in rounds for ${combatant.name}`}
@@ -1452,7 +1462,7 @@ const InitiativeTracker = () => {
 										onChange={(e) =>
 											setNewCombatant({
 												...newCombatant,
-												initiative: parseInt(e.target.value) || 0,
+												initiative: parseInt(e.target.value, 10) || 0,
 											})
 										}
 										className="font-display"
@@ -1473,7 +1483,7 @@ const InitiativeTracker = () => {
 											onChange={(e) =>
 												setNewCombatant({
 													...newCombatant,
-													hp: parseInt(e.target.value) || 0,
+													hp: parseInt(e.target.value, 10) || 0,
 												})
 											}
 											className="font-display"
@@ -1493,7 +1503,7 @@ const InitiativeTracker = () => {
 											onChange={(e) =>
 												setNewCombatant({
 													...newCombatant,
-													maxHp: parseInt(e.target.value) || 0,
+													maxHp: parseInt(e.target.value, 10) || 0,
 												})
 											}
 											className="font-display"
@@ -1514,7 +1524,7 @@ const InitiativeTracker = () => {
 										onChange={(e) =>
 											setNewCombatant({
 												...newCombatant,
-												ac: parseInt(e.target.value) || 0,
+												ac: parseInt(e.target.value, 10) || 0,
 											})
 										}
 										className="font-display"

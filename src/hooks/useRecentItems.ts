@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { useUserLocalState } from "@/hooks/useToolState";
-import { error as logError } from "@/lib/logger";
 
 export interface RecentItem {
 	id: string;

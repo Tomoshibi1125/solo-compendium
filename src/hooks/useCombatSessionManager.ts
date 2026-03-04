@@ -94,7 +94,7 @@ export function useCombatSessionManager() {
 				};
 			}
 		},
-		[user, toast],
+		[user, toast, generateSessionSummary],
 	);
 
 	const generateSessionSummary = useCallback(async (sessionId: string) => {

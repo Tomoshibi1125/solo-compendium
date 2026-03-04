@@ -237,7 +237,6 @@ export function calculateQuestReward(
 		case "generous":
 			multiplier *= 1.5;
 			break;
-		case "standard":
 		default:
 			// No change
 			break;

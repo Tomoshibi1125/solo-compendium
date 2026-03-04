@@ -17,7 +17,7 @@ describe("Tool-style item mechanics (skill bonuses)", () => {
 			],
 		);
 
-		expect(res.skillBonuses["Investigation"]).toBe(2);
+		expect(res.skillBonuses.Investigation).toBe(2);
 	});
 
 	test("Wildcard skill bonus applies via skills[*]", () => {

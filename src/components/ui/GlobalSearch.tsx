@@ -16,7 +16,6 @@ import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import {
 	formatMonarchVernacular,
-	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
 

@@ -137,7 +137,6 @@ export function applySearchOperators<T extends FilterableQuery<T>>(
 			case "<=":
 				query = query.lte(column, value);
 				break;
-			case "=":
 			default:
 				query = query.eq(column, value);
 				break;
@@ -159,7 +158,7 @@ export function applySearchOperators<T extends FilterableQuery<T>>(
 		const { operator, value } = parsed.operators.cr;
 		// CR is stored as text, so we need to parse it
 		const crValue = parseFloat(value);
-		if (!isNaN(crValue)) {
+		if (!Number.isNaN(crValue)) {
 			switch (operator) {
 				case ">":
 					query = query.gt("cr", value);
@@ -173,7 +172,6 @@ export function applySearchOperators<T extends FilterableQuery<T>>(
 				case "<=":
 					query = query.lte("cr", value);
 					break;
-				case "=":
 				default:
 					query = query.eq("cr", value);
 					break;

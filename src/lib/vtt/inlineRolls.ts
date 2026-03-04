@@ -45,11 +45,11 @@ export function rollDiceExpression(formula: string): InlineRollResult | null {
 	const match = normalized.match(DICE_REGEX);
 	if (!match) return null;
 
-	const count = parseInt(match[1]) || 1;
-	const sides = parseInt(match[2]);
+	const count = parseInt(match[1], 10) || 1;
+	const sides = parseInt(match[2], 10);
 	const keepMode = match[3] as "kh" | "kl" | undefined;
-	const keepCount = match[4] ? parseInt(match[4]) : undefined;
-	const modifier = match[5] ? parseInt(match[5]) : 0;
+	const keepCount = match[4] ? parseInt(match[4], 10) : undefined;
+	const modifier = match[5] ? parseInt(match[5], 10) : 0;
 
 	// Roll dice
 	const dice: number[] = [];

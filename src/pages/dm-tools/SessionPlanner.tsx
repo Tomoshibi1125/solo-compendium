@@ -1,11 +1,16 @@
 import { ArrowLeft, ExternalLink } from "lucide-react";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPanel";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -95,19 +100,29 @@ const SessionPlanner = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-						SESSION PLANNER
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Campaign-backed session schedule and session logs with offline sync.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Temporal Synchronization
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Campaign-backed session schedule and temporal records with local
+						storage buffering.
+					</DataStreamText>
 				</div>
 
 				{isLoading ? (
 					<SystemWindow title="LOADING CAMPAIGNS">
-						<p className="text-sm text-muted-foreground">
+						<SystemText className="block text-sm text-muted-foreground">
 							Loading campaigns...
-						</p>
+						</SystemText>
 					</SystemWindow>
 				) : manageableCampaigns.length === 0 ? (
 					<SystemWindow title="NO CAMPAIGNS AVAILABLE">

@@ -3,7 +3,7 @@
  * All calculations follow SRD 5e rules exactly
  */
 
-import type { AbilityScore, Character } from "./5eRulesEngine";
+import type { AbilityScore } from "./5eRulesEngine";
 import {
 	getAbilityModifier,
 	getProficiencyBonus as getProficiencyBonusFromRules,
@@ -132,7 +132,7 @@ export function calculateCharacterStats(
 	const speed = stats.speed ?? 30;
 
 	// Passive Perception (standard 5e: 10 + Perception skill)
-	const passivePerception = 10 + (skills["perception"] || 0);
+	const passivePerception = 10 + (skills.perception || 0);
 
 	// Carrying capacity (standard 5e: STR score × 15)
 	const carryingCapacity = abilities.STR * 15;

@@ -48,7 +48,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 				setCurrentUserId(null);
 			}
 		});
-	}, [guestEnabled]);
+	}, []);
 
 	// Real-time updates handler
 	const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});
@@ -73,7 +73,13 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 				handleManualNarration(newMessage);
 			}
 		};
-	}, [campaignId, queryClient, isAutoNarrating, currentUserId]);
+	}, [
+		campaignId,
+		queryClient,
+		isAutoNarrating,
+		currentUserId, // Automatically narrate incoming mechanics if toggle is enabled
+		handleManualNarration,
+	]);
 
 	useCampaignMessagesRealtime(campaignId, (msg) =>
 		handleNewMessage.current(msg),
@@ -82,7 +88,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 	// Auto-scroll to bottom
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, [messages]);
+	}, []);
 
 	const handleSend = async (e: React.FormEvent) => {
 		e.preventDefault();

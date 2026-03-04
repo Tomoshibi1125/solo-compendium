@@ -126,15 +126,7 @@ export function Auth() {
 		return () => {
 			subscription.unsubscribe();
 		};
-	}, [
-		profile,
-		profileLoading,
-		navigate,
-		authView,
-		isConfigured,
-		isE2E,
-		consumePendingNext,
-	]);
+	}, [profile, profileLoading, navigate, authView, consumePendingNext]);
 
 	// Handle role selection
 	const handleRoleSelect = async () => {

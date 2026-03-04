@@ -3,13 +3,11 @@ import {
 	calculateCharacterStats,
 	calculateHPMax,
 	getCasterType,
-	getProficiencyBonus,
 	getSpellcastingAbility,
 	getSpellSlotsPerLevel,
 	getSpellsKnownLimit,
 	getSpellsPreparedLimit,
 } from "../5eCharacterCalculations";
-import type { AbilityScore } from "../5eRulesEngine";
 
 describe("5e Character Calculations", () => {
 	const mockCharacterStats = {

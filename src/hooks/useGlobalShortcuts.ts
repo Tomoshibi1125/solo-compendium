@@ -7,7 +7,7 @@ import { error as logError } from "@/lib/logger";
  * Hook to enable global keyboard shortcuts
  */
 export function useGlobalShortcuts(enabled: boolean = true) {
-	const navigate = useNavigate();
+	const _navigate = useNavigate();
 
 	useEffect(() => {
 		if (!enabled) return;
@@ -66,5 +66,5 @@ export function useGlobalShortcuts(enabled: boolean = true) {
 
 		window.addEventListener("keydown", handleKeyDown);
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [enabled, navigate]);
+	}, [enabled]);
 }

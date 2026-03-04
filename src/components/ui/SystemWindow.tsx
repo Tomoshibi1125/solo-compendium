@@ -59,7 +59,7 @@ export function SystemWindow({
 			"border-shadow-purple/40 from-shadow-purple/10 via-card to-void-black/80",
 	};
 
-	const glowColors = {
+	const _glowColors = {
 		default: "hsl(var(--primary))",
 		alert: "hsl(var(--destructive))",
 		quest: "hsl(var(--accent))",

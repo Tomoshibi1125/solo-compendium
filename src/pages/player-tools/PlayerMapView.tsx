@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { SystemHeading, SystemText } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlayerToolsPanel } from "@/components/vtt/PlayerToolsPanel";
@@ -23,8 +24,6 @@ import type { LibraryToken } from "@/data/tokenLibraryDefaults";
 import {
 	type AmbientSoundZone,
 	getWeatherCSSAnimation,
-	type HexGridConfig,
-	snapToHexCenter,
 	type TerrainZone,
 	type VTTDrawing,
 	WEATHER_PRESETS,
@@ -133,7 +132,7 @@ const PlayerMapView = ({
 	const [draggedTokenId, setDraggedTokenId] = useState<string | null>(null);
 	const [isMobile, setIsMobile] = useState(false);
 	const [mobilePanel, setMobilePanel] = useState<string | null>(null);
-	const touchRef = useRef<{ startDist: number; startZoom: number } | null>(
+	const _touchRef = useRef<{ startDist: number; startZoom: number } | null>(
 		null,
 	);
 
@@ -402,7 +401,7 @@ const PlayerMapView = ({
 	const sceneWidth = currentScene?.width ?? 20;
 	const sceneHeight = currentScene?.height ?? 20;
 
-	const overlayStyles = useMemo(() => {
+	const _overlayStyles = useMemo(() => {
 		const parts: string[] = [];
 		const sceneWidthPx = sceneWidth * gridSize * zoom;
 		const sceneHeightPx = sceneHeight * gridSize * zoom;
@@ -464,9 +463,14 @@ const PlayerMapView = ({
 							<ArrowLeft className="w-4 h-4 mr-2" />
 							Back to Player Tools
 						</Button>
-						<h1 className="font-arise text-2xl font-bold gradient-text-shadow mt-1">
+						<SystemHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="mt-1"
+						>
 							BATTLE MAP {currentScene ? `— ${currentScene.name}` : ""}
-						</h1>
+						</SystemHeading>
 					</div>
 
 					<div className="flex items-center gap-2">
@@ -496,9 +500,9 @@ const PlayerMapView = ({
 
 				{!effectiveCampaignId ? (
 					<SystemWindow title="NO CAMPAIGN" variant="alert">
-						<p className="text-sm text-muted-foreground">
+						<SystemText className="block text-sm text-muted-foreground">
 							Open this page from a campaign to view the shared map.
-						</p>
+						</SystemText>
 					</SystemWindow>
 				) : (
 					<div
@@ -761,10 +765,9 @@ const PlayerMapView = ({
 																	top: `${top}%`,
 																	backgroundColor:
 																		WEATHER_PRESETS[
-																			currentScene!
-																				.weather as keyof typeof WEATHER_PRESETS
+																			currentScene?.weather as keyof typeof WEATHER_PRESETS
 																		].particleColor,
-																	animation: `weather-particle-${currentScene!.weather} ${animDuration}s linear infinite`,
+																	animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
 																	animationDelay: `${delay}s`,
 																}}
 															/>
@@ -948,9 +951,9 @@ const PlayerMapView = ({
 															style={
 																{
 																	"--cursor-left":
-																		(u.cursor!.x + 0.5) * gridSize * zoom,
+																		(u.cursor?.x + 0.5) * gridSize * zoom,
 																	"--cursor-top":
-																		(u.cursor!.y + 0.5) * gridSize * zoom,
+																		(u.cursor?.y + 0.5) * gridSize * zoom,
 																} as React.CSSProperties
 															}
 														>
@@ -1057,10 +1060,10 @@ const PlayerMapView = ({
 										}
 										return (
 											<SystemWindow title="CHARACTER" compact>
-												<p className="text-xs text-muted-foreground text-center py-4">
+												<SystemText className="block text-xs text-muted-foreground text-center py-4">
 													No character linked. Join the campaign with a
 													character to see your sheet here.
-												</p>
+												</SystemText>
 											</SystemWindow>
 										);
 									})()}
@@ -1256,9 +1259,9 @@ const PlayerMapView = ({
 									<SystemWindow title="INITIATIVE">
 										<div className="space-y-2">
 											{tokensInInitiative.length === 0 ? (
-												<p className="text-xs text-muted-foreground text-center py-4">
+												<SystemText className="block text-xs text-muted-foreground text-center py-4">
 													No tokens in initiative order yet.
-												</p>
+												</SystemText>
 											) : (
 												tokensInInitiative.map((token, index) => {
 													const hpPercent =
@@ -1316,7 +1319,7 @@ const PlayerMapView = ({
 										<VTTAssetBrowser
 											campaignId={campaignId}
 											readOnly={false}
-											onUseAsToken={(imageUrl, name) => {
+											onUseAsToken={(_imageUrl, name) => {
 												vttRealtime.sendChatMessage(
 													`wants to use "${name}" as their token`,
 													"system",
@@ -1359,9 +1362,9 @@ const PlayerMapView = ({
 										</div>
 									))}
 									{visibleTokens.length === 0 && (
-										<p className="text-xs text-muted-foreground text-center py-2">
+										<SystemText className="block text-xs text-muted-foreground text-center py-2">
 											No tokens yet.
-										</p>
+										</SystemText>
 									)}
 								</div>
 							</SystemWindow>
@@ -1514,9 +1517,9 @@ const PlayerMapView = ({
 								{mobilePanel === "init" && (
 									<div className="space-y-1 max-h-[40vh] overflow-y-auto">
 										{tokensInInitiative.length === 0 ? (
-											<p className="text-xs text-muted-foreground text-center py-4">
+											<SystemText className="block text-xs text-muted-foreground text-center py-4">
 												No initiative order yet.
-											</p>
+											</SystemText>
 										) : (
 											tokensInInitiative.map((token) => (
 												<div
@@ -1551,16 +1554,16 @@ const PlayerMapView = ({
 											);
 										}
 										return (
-											<p className="text-xs text-muted-foreground text-center py-4">
+											<SystemText className="block text-xs text-muted-foreground text-center py-4">
 												No character linked.
-											</p>
+											</SystemText>
 										);
 									})()}
 								{mobilePanel === "assets" && (
 									<VTTAssetBrowser
 										campaignId={effectiveCampaignId}
 										readOnly={false}
-										onUseAsToken={(imageUrl, name) => {
+										onUseAsToken={(_imageUrl, name) => {
 											vttRealtime.sendChatMessage(
 												`wants to use "${name}" as their token`,
 												"system",

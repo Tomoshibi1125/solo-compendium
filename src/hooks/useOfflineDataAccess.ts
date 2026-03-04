@@ -1,7 +1,5 @@
 import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/lib/auth/authContext";
 
 interface OfflineDataCache {
 	compendium: Record<string, any>;
@@ -154,7 +152,7 @@ export function useOfflineDataAccess() {
 				title: "Cache Cleared",
 				description: "Offline cache has been cleared",
 			});
-		} catch (error) {
+		} catch (_error) {
 			toast({
 				title: "Error",
 				description: "Failed to clear cache",
@@ -184,7 +182,7 @@ export function useOfflineDataAccess() {
 			});
 
 			return Math.round(totalSize / 1024); // Return size in KB
-		} catch (error) {
+		} catch (_error) {
 			return 0;
 		}
 	}, []);

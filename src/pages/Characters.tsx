@@ -9,7 +9,6 @@ import {
 	Trash2,
 	Upload,
 	User,
-	Users,
 	Zap,
 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -30,6 +29,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacters, useDeleteCharacter } from "@/hooks/useCharacters";
@@ -116,13 +120,22 @@ const Characters = () => {
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
 					<div className="min-w-0 flex-1">
-						<h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text-shadow tracking-wider leading-tight">
-							ASCENDANT ROSTER
-						</h1>
-						<p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
+						<SystemHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="leading-tight"
+						>
+							Ascendant Roster
+						</SystemHeading>
+						<DataStreamText
+							variant="system"
+							speed="slow"
+							className="text-sm sm:text-base mt-1"
+						>
 							Manage your awakened Ascendants and prepare them for the System's
 							challenges.
-						</p>
+						</DataStreamText>
 					</div>
 					<div className="flex gap-2">
 						<Link to="/party-stash">
@@ -168,11 +181,11 @@ const Characters = () => {
 
 				{isGuestMode && (
 					<SystemWindow title="GUEST MODE" variant="alert" className="mb-6">
-						<p className="text-sm text-muted-foreground">
+						<SystemText className="block text-sm text-muted-foreground">
 							You are playing in guest mode. Ascendants are stored locally on
 							this device only. Sign in to sync across devices and enable all
 							online features.
-						</p>
+						</SystemText>
 					</SystemWindow>
 				)}
 
@@ -182,9 +195,9 @@ const Characters = () => {
 							<div className="w-16 h-16 border-4 border-arise/20 rounded-full" />
 							<div className="absolute inset-0 w-16 h-16 border-4 border-t-arise rounded-full animate-spin" />
 						</div>
-						<p className="text-muted-foreground font-heading animate-pulse">
+						<SystemText className="block text-muted-foreground font-heading animate-pulse">
 							Scanning Ascendant Database...
-						</p>
+						</SystemText>
 					</div>
 				) : characters.length === 0 ? (
 					<SystemWindow
@@ -194,10 +207,10 @@ const Characters = () => {
 					>
 						<div className="mb-6">
 							<Skull className="w-16 h-16 mx-auto text-muted-foreground mb-4 opacity-50" />
-							<p className="text-muted-foreground">
+							<SystemText className="block text-muted-foreground">
 								No awakened Ascendants in the System registry. Begin your
 								journey in the Prime Architect's domain.
-							</p>
+							</SystemText>
 						</div>
 						<Link to="/characters/new">
 							<Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple">
@@ -326,11 +339,11 @@ const Characters = () => {
 											<h3 className="font-system text-xl font-bold uppercase tracking-widest mb-1 group-hover:text-arise transition-colors drop-shadow-[0_0_8px_currentColor]">
 												{character.name}
 											</h3>
-											<p className="text-xs font-mono tracking-wider text-muted-foreground mb-4 uppercase">
+											<SystemText className="block text-xs font-mono tracking-wider text-muted-foreground mb-4 uppercase">
 												{formatMonarchVernacular(character.job || "Unawakened")}
 												{character.path &&
 													` - ${formatMonarchVernacular(character.path)}`}
-											</p>
+											</SystemText>
 
 											{/* HP Bar */}
 											<div className="mb-4">
@@ -436,9 +449,9 @@ const Characters = () => {
 
 						{/* Character Builder Preview */}
 						<div className="mt-12">
-							<h2 className="font-arise text-2xl font-bold mb-4 gradient-text-system tracking-wide">
-								AWAKENING PROTOCOL
-							</h2>
+							<SystemHeading level={2} variant="gate" className="mb-4">
+								Awakening Protocol
+							</SystemHeading>
 							<SystemWindow title="STEP-BY-STEP CREATION" variant="quest">
 								<div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
 									{[
@@ -466,10 +479,10 @@ const Characters = () => {
 										</div>
 									))}
 								</div>
-								<p className="text-sm text-muted-foreground mt-6">
+								<SystemText className="block text-sm text-muted-foreground mt-6">
 									The System guides you through each awakening step, validating
 									your choices against the Prime Architect's laws.
-								</p>
+								</SystemText>
 								<Link to="/characters/new" className="inline-block mt-4">
 									<Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple">
 										<Zap className="w-4 h-4" />

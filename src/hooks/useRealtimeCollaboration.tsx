@@ -293,7 +293,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 				} as CollaborationEvent,
 			});
 		},
-		[channel, isConnected, campaignId],
+		[channel, isConnected, campaignId, currentUserId, currentUserName],
 	);
 
 	const broadcastTextChange = useCallback(
@@ -313,7 +313,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 				} as CollaborationEvent,
 			});
 		},
-		[channel, isConnected, campaignId],
+		[channel, isConnected, campaignId, currentUserId, currentUserName],
 	);
 
 	const broadcastCharacterUpdate = useCallback(
@@ -333,7 +333,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 				} as CollaborationEvent,
 			});
 		},
-		[channel, isConnected, campaignId],
+		[channel, isConnected, campaignId, currentUserId, currentUserName],
 	);
 
 	const broadcastDiceRoll = useCallback(
@@ -353,7 +353,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 				} as CollaborationEvent,
 			});
 		},
-		[channel, isConnected, campaignId],
+		[channel, isConnected, campaignId, currentUserId, currentUserName],
 	);
 
 	const broadcastMapUpdate = useCallback(
@@ -373,7 +373,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 				} as CollaborationEvent,
 			});
 		},
-		[channel, isConnected, campaignId],
+		[channel, isConnected, campaignId, currentUserId, currentUserName],
 	);
 
 	const broadcastCombatState = useCallback(
@@ -393,7 +393,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 				} as CollaborationEvent,
 			});
 		},
-		[channel, isConnected, campaignId],
+		[channel, isConnected, campaignId, currentUserId, currentUserName],
 	);
 
 	// Update user presence
@@ -407,7 +407,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 				...state,
 			});
 		},
-		[channel, isConnected],
+		[channel, isConnected, currentUserId, currentUserName],
 	);
 
 	return {

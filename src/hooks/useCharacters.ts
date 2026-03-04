@@ -258,7 +258,7 @@ export const useCreateCharacter = () => {
 
 // Update character
 export const useUpdateCharacter = () => {
-	const queryClient = useQueryClient();
+	const _queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { addToSyncQueue } = useBackgroundSync();
 

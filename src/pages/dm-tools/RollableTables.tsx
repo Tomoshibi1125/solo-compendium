@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -277,7 +278,7 @@ For EACH result, provide:
 				title: "Shared to Campaign",
 				description: `${title} shared with players.`,
 			});
-		} catch (e) {
+		} catch (_e) {
 			toast({
 				title: "Error",
 				description: "Failed to share to campaign.",
@@ -298,13 +299,22 @@ For EACH result, provide:
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to System Tools
 					</Button>
-					<h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-						PROTOCOL WARDEN TABLES
-					</h1>
-					<p className="text-muted-foreground font-heading">
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Protocol Warden Tables
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
 						Rollable tables from the Protocol Warden's Guide, adapted for the
 						post-reset world.
-					</p>
+					</DataStreamText>
 				</div>
 
 				<Tabs

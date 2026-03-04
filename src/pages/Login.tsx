@@ -9,6 +9,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { OAuthButtons } from "@/components/auth/OAuthButton";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { type OAuthProvider, useOAuth } from "@/hooks/useOAuth";
 import { useAuth } from "@/lib/auth/authContext";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
@@ -70,10 +75,8 @@ export default function Login() {
 				}
 				if (safeNext) {
 					navigate(safeNext);
-				} else if (role === "dm") {
-					navigate("/dm-tools");
 				} else {
-					navigate("/player-tools");
+					navigate("/landing");
 				}
 			}
 		} catch {
@@ -104,27 +107,37 @@ export default function Login() {
 			localStorage.removeItem("pending-auth-next");
 		}
 		setLocalGuestRole(role);
-		navigate(role === "dm" ? "/dm-tools" : "/player-tools");
+		navigate("/landing");
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
+		<div
+			className="min-h-screen bg-background flex items-center justify-center p-4"
+			data-sa-zone="auth"
+		>
 			{/* Background Art */}
 			<div className="absolute inset-0 bg-cover bg-center opacity-20 login-page-bg" />
 
+			{/* Hex grid + data rain overlays */}
+			<div className="absolute inset-0 pointer-events-none">
+				<div className="absolute inset-0 hex-grid-overlay opacity-[0.03]" />
+				<div className="absolute inset-0 data-rain-overlay opacity-[0.02]" />
+			</div>
+
 			{/* Umbral Energy Effects */}
-			<div className="absolute inset-0">
-				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
-				<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
+			<div className="absolute inset-0 pointer-events-none">
+				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full filter blur-3xl opacity-10 animate-pulse" />
+				<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-shadow-blue rounded-full filter blur-3xl opacity-10 animate-pulse" />
+				<div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-primary/5 to-transparent" />
 			</div>
 
 			<div className="relative z-10 w-full max-w-md">
 				<div className="mb-6 flex justify-start">
 					<Link
 						to="/landing"
-						className="text-sm text-gray-300 hover:text-white transition-colors"
+						className="text-sm text-muted-foreground hover:text-primary transition-colors font-system tracking-wider uppercase text-[0.7rem]"
 					>
-						View landing page
+						[ View Landing Page ]
 					</Link>
 				</div>
 				{/* Logo and Title */}
@@ -133,20 +146,27 @@ export default function Login() {
 						<OptimizedImage
 							src="/ui-art/shadow-soldier-emblem.webp"
 							alt="Umbral Legionnaire Emblem"
-							className="w-20 h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/50"
+							className="w-20 h-20 rounded-full border-2 border-primary shadow-lg shadow-primary/50"
 							size="small"
 						/>
 					</div>
-					<h1 className="text-4xl font-bold text-white mb-2">
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
 						System Ascendant
-					</h1>
-					<p className="text-gray-400 text-lg">
-						{isSignUp ? "Join the Shadow Realm" : "Enter the Shadow Realm"}
-					</p>
+					</SystemHeading>
+					<DataStreamText variant="system" speed="slow" className="text-lg">
+						{isSignUp
+							? "Initiate Awakening Protocol"
+							: "Restore System Connection"}
+					</DataStreamText>
 				</div>
 
-				{/* Login Form */}
-				<div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700 shadow-2xl">
+				{/* Login Form — SA glassmorphic card */}
+				<div className="sa-card p-8 system-materialize">
 					{oauthEnabled && (
 						<div className="mb-6 space-y-4">
 							<OAuthButtons
@@ -155,10 +175,10 @@ export default function Login() {
 							/>
 							<div className="relative">
 								<div className="absolute inset-0 flex items-center">
-									<div className="w-full border-t border-gray-700"></div>
+									<div className="w-full sa-divider"></div>
 								</div>
 								<div className="relative flex justify-center text-xs">
-									<span className="bg-gray-800/60 px-2 text-gray-400">
+									<span className="bg-card/80 px-2 text-muted-foreground font-system tracking-wider uppercase text-[0.65rem]">
 										or continue with email
 									</span>
 								</div>
@@ -172,10 +192,10 @@ export default function Login() {
 								type="button"
 								onClick={() => setRole("player")}
 								aria-label="Select Player role"
-								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
 									role === "player"
-										? "bg-blue-600 text-white shadow-lg shadow-blue-600/50"
-										: "bg-gray-700 text-gray-300 hover:bg-gray-600"
+										? "bg-primary text-primary-foreground shadow-lg shadow-primary/50 border border-primary/60"
+										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-primary/30"
 								}`}
 							>
 								<Users className="w-4 h-4" />
@@ -185,10 +205,10 @@ export default function Login() {
 								type="button"
 								onClick={() => setRole("dm")}
 								aria-label="Select Protocol Warden role"
-								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
 									role === "dm"
-										? "bg-purple-600 text-white shadow-lg shadow-purple-600/50"
-										: "bg-gray-700 text-gray-300 hover:bg-gray-600"
+										? "bg-shadow-purple text-white shadow-lg shadow-shadow-purple/50 border border-shadow-purple/60"
+										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-shadow-purple/30"
 								}`}
 							>
 								<Shield className="w-4 h-4" />
@@ -201,7 +221,7 @@ export default function Login() {
 							<div>
 								<label
 									htmlFor="display-name"
-									className="block text-sm font-medium text-gray-300 mb-2"
+									className="block text-sm font-heading font-medium text-foreground mb-2 tracking-wider uppercase"
 								>
 									Display Name
 								</label>
@@ -210,7 +230,7 @@ export default function Login() {
 									type="text"
 									value={displayName}
 									onChange={(e) => setDisplayName(e.target.value)}
-									className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+									className="w-full px-4 py-3 bg-black/40 backdrop-blur-md border border-primary/30 rounded-[2px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/60 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] transition-all font-body"
 									placeholder="Character name (e.g., Kael Voss)"
 									required
 								/>
@@ -221,7 +241,7 @@ export default function Login() {
 						<div>
 							<label
 								htmlFor="email"
-								className="block text-sm font-medium text-gray-300 mb-2"
+								className="block text-sm font-heading font-medium text-foreground mb-2 tracking-wider uppercase"
 							>
 								Email Address
 							</label>
@@ -231,7 +251,7 @@ export default function Login() {
 								type="email"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
-								className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+								className="w-full px-4 py-3 bg-black/40 backdrop-blur-md border border-primary/30 rounded-[2px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/60 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] transition-all font-body"
 								placeholder="ascendant@system-ascendant.world"
 								required
 							/>
@@ -241,7 +261,7 @@ export default function Login() {
 						<div>
 							<label
 								htmlFor="password"
-								className="block text-sm font-medium text-gray-300 mb-2"
+								className="block text-sm font-heading font-medium text-foreground mb-2 tracking-wider uppercase"
 							>
 								Password
 							</label>
@@ -252,7 +272,7 @@ export default function Login() {
 									type={showPassword ? "text" : "password"}
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
-									className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-12"
+									className="w-full px-4 py-3 bg-black/40 backdrop-blur-md border border-primary/30 rounded-[2px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/60 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] transition-all font-body pr-12"
 									placeholder="Ascendant access code"
 									required
 								/>
@@ -260,7 +280,7 @@ export default function Login() {
 									type="button"
 									onClick={() => setShowPassword(!showPassword)}
 									aria-label={showPassword ? "Hide password" : "Show password"}
-									className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
+									className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
 								>
 									{showPassword ? (
 										<EyeOff className="w-5 h-5" />
@@ -273,14 +293,14 @@ export default function Login() {
 
 						{/* Error Message */}
 						{error && (
-							<div className="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded-lg">
+							<div className="bg-destructive/20 border border-destructive/50 text-destructive-foreground px-4 py-3 rounded-[2px] font-system text-sm">
 								{error}
 							</div>
 						)}
 
 						{/* Notice Message */}
 						{notice && (
-							<div className="bg-green-900/40 border border-green-700 text-green-200 px-4 py-3 rounded-lg">
+							<div className="bg-success/20 border border-success/50 text-success-foreground px-4 py-3 rounded-[2px] font-system text-sm">
 								{notice}
 							</div>
 						)}
@@ -289,7 +309,7 @@ export default function Login() {
 						<button
 							type="submit"
 							disabled={loading || oauthLoading}
-							className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-lg shadow-purple-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
+							className="w-full bg-gradient-to-r from-primary to-shadow-blue text-primary-foreground font-heading font-bold py-3 px-4 rounded-[2px] hover:from-primary/90 hover:to-shadow-blue/90 transition-all duration-200 shadow-lg shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed tracking-wider uppercase sa-btn-glow"
 						>
 							{loading ? (
 								<span className="flex items-center justify-center gap-2">
@@ -308,10 +328,10 @@ export default function Login() {
 							<div className="space-y-3">
 								<div className="relative">
 									<div className="absolute inset-0 flex items-center">
-										<div className="w-full border-t border-gray-700"></div>
+										<div className="w-full sa-divider"></div>
 									</div>
 									<div className="relative flex justify-center text-xs">
-										<span className="bg-gray-800/60 px-2 text-gray-400">
+										<span className="bg-card/80 px-2 text-muted-foreground font-system tracking-wider uppercase text-[0.65rem]">
 											or continue as guest
 										</span>
 									</div>
@@ -319,21 +339,21 @@ export default function Login() {
 								<button
 									type="button"
 									onClick={handleContinueAsGuest}
-									className="w-full border border-gray-600 text-gray-200 font-semibold py-3 px-4 rounded-lg hover:border-gray-500 hover:bg-gray-700/60 transition-all duration-200"
+									className="w-full border border-primary/30 text-foreground font-heading font-semibold py-3 px-4 rounded-[2px] hover:border-primary/50 hover:bg-primary/10 transition-all duration-200 tracking-wider uppercase sa-btn-glow"
 								>
 									Continue as Guest (
 									{role === "dm" ? "Protocol Warden" : "Player"})
 								</button>
-								<p className="text-xs text-gray-400 text-center">
+								<SystemText className="block text-xs text-muted-foreground text-center font-system tracking-wider">
 									Guest mode saves data only in this browser.
-								</p>
+								</SystemText>
 							</div>
 						)}
 					</form>
 
 					{/* Toggle Sign Up/In */}
 					<div className="mt-6 text-center">
-						<p className="text-gray-400">
+						<SystemText className="block text-muted-foreground font-body">
 							{isSignUp ? "Already have an account?" : "Don't have an account?"}
 							<button
 								type="button"
@@ -341,20 +361,20 @@ export default function Login() {
 								aria-label={
 									isSignUp ? "Switch to sign in" : "Switch to sign up"
 								}
-								className="ml-2 text-purple-400 hover:text-purple-300 font-medium"
+								className="ml-2 text-primary hover:text-primary/80 font-heading font-medium tracking-wider"
 							>
 								{isSignUp ? "Sign In" : "Sign Up"}
 							</button>
-						</p>
+						</SystemText>
 					</div>
 				</div>
 
 				{/* Footer */}
-				<div className="mt-8 text-center text-gray-500 text-sm">
+				<div className="mt-8 text-center text-muted-foreground text-sm font-system tracking-wider">
 					<p>System Ascendant SRD Companion</p>
-					<p className="mt-1">
+					<SystemText className="block mt-1 text-muted-foreground/60">
 						Enter the shadows, become the ultimate ascendant
-					</p>
+					</SystemText>
 				</div>
 			</div>
 		</div>

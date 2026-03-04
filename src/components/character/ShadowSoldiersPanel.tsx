@@ -175,7 +175,7 @@ export function ShadowSoldiersPanel({
 		// Parse requirements
 		const req = s.summon_requirements || "";
 		const levelMatch = req.match(/Level (\d+)\+/);
-		const requiredLevel = levelMatch ? parseInt(levelMatch[1]) : 0;
+		const requiredLevel = levelMatch ? parseInt(levelMatch[1], 10) : 0;
 
 		return characterLevel >= requiredLevel && hasUmbralRegent;
 	});

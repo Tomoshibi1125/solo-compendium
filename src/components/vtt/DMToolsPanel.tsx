@@ -6,27 +6,18 @@
 import {
 	BookOpen,
 	Coins,
-	Crown,
 	Dice1,
 	DoorOpen,
-	Edit,
 	Eye,
 	EyeOff,
-	Gem,
 	Heart,
 	MapPin,
 	Minus,
-	Music,
-	Package,
-	Plus,
 	Settings,
-	Shield,
 	Skull,
 	Sparkles,
 	Sword,
-	Trash2,
 	Users,
-	Zap,
 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
@@ -53,7 +44,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
-import ArtGenerator from "@/pages/dm-tools/ArtGenerator";
 import DungeonMapGenerator from "@/pages/dm-tools/DungeonMapGenerator";
 import EncounterBuilder from "@/pages/dm-tools/EncounterBuilder";
 import GateGenerator from "@/pages/dm-tools/GateGenerator";
@@ -110,8 +100,8 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
 				// Offline fallback: simple local parser
 				const match = quickRollValue.match(/(\d+)d(\d+)/);
 				if (match) {
-					const numDice = parseInt(match[1]);
-					const dieSize = parseInt(match[2]);
+					const numDice = parseInt(match[1], 10);
+					const dieSize = parseInt(match[2], 10);
 					let total = 0;
 					for (let i = 0; i < numDice; i++) {
 						total += Math.floor(Math.random() * dieSize) + 1;
@@ -123,7 +113,7 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
 					});
 				}
 			}
-		} catch (error) {
+		} catch (_error) {
 			toast({
 				title: "Invalid Roll",
 				description: "Please use format like '1d20', '2d6', etc.",

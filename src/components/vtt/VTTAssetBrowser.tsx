@@ -137,7 +137,7 @@ export function VTTAssetBrowser({
 	// Reset pagination when filters change
 	useEffect(() => {
 		setVisibleCount(PAGE_SIZE);
-	}, [debouncedSearch, activeCategory]);
+	}, []);
 
 	const allResults = useMemo(
 		() => searchAssets(debouncedSearch, activeCategory ?? undefined),
@@ -155,7 +155,7 @@ export function VTTAssetBrowser({
 		return ids
 			.map((id) => VTT_ASSET_LIBRARY.find((a) => a.id === id))
 			.filter(Boolean) as VTTAsset[];
-	}, [showRecent]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const trackAndPreview = useCallback((asset: VTTAsset) => {
 		setPreviewAsset((prev) => (prev?.id === asset.id ? null : asset));

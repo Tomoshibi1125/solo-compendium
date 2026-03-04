@@ -15,7 +15,7 @@ export function usePWA(): UsePWAReturn {
 		typeof navigator !== "undefined" ? navigator.onLine : true,
 	);
 	const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-	const [syncQueueLength, setSyncQueueLength] = useState(0);
+	const [syncQueueLength, _setSyncQueueLength] = useState(0);
 
 	useEffect(() => {
 		// Check if app is already installed

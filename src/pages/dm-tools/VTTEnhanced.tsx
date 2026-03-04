@@ -51,12 +51,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import "@/styles/vtt-enhanced.css";
 import "@/styles/vtt-enhanced-dynamic.css";
 import { useQuery } from "@tanstack/react-query";
 import { QuestGenerator } from "@/components/dm-tools/QuestGenerator";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { SystemHeading, SystemText } from "@/components/ui/SystemText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DMToolsPanel } from "@/components/vtt/DMToolsPanel";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
@@ -91,27 +91,18 @@ import {
 	useVTTAudioTracks,
 	vttAudioManager,
 } from "@/hooks/useVTTAudio";
-import {
-	useVTTRealtime,
-	type VTTInitiativeState,
-	type VTTPing,
-} from "@/hooks/useVTTRealtime";
+import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { getBestImageFormat } from "@/lib/imageOptimization";
 import { cn } from "@/lib/utils";
 import {
-	AMBIENT_SOUND_PRESETS,
 	type AmbientSoundZone,
-	computeLightLevel,
 	createDrawing,
-	createWall,
-	type DrawingPoint,
 	getWeatherCSSAnimation,
 	type HexGridConfig,
 	type LightSource,
 	type MusicMood,
-	measureDistance,
 	snapToHexCenter,
 	type TerrainZone,
 	type VTTDrawing,
@@ -240,7 +231,7 @@ type GridPosition = {
 	gridY: number;
 };
 
-const SIZE_VALUES = {
+const _SIZE_VALUES = {
 	small: 32,
 	medium: 48,
 	large: 64,
@@ -261,7 +252,7 @@ const LAYER_OPTIONS = [
 	{ id: 3, label: "Warden" },
 ];
 
-const toRgba = (hex: string, alpha: number) => {
+const _toRgba = (hex: string, alpha: number) => {
 	const clean = hex.replace("#", "");
 	if (clean.length !== 6) {
 		return `rgba(0, 0, 0, ${alpha})`;
@@ -476,15 +467,12 @@ const VTTEnhanced = () => {
 		[currentScene?.id],
 	);
 
-	const handleRequestZoom = useCallback(
-		(nextZoom: number) => {
-			setZoom((prev) => {
-				if (Math.abs(prev - nextZoom) < 0.001) return prev;
-				return Math.max(0.5, Math.min(2, nextZoom));
-			});
-		},
-		[setZoom],
-	);
+	const handleRequestZoom = useCallback((nextZoom: number) => {
+		setZoom((prev) => {
+			if (Math.abs(prev - nextZoom) < 0.001) return prev;
+			return Math.max(0.5, Math.min(2, nextZoom));
+		});
+	}, []);
 	const {
 		state: libraryTokens,
 		isLoading: libraryLoading,
@@ -1085,7 +1073,7 @@ const VTTEnhanced = () => {
 				setIsUploadingMap(false);
 			}
 		},
-		[campaignId, currentScene, isAuthed, toast, updateScene],
+		[campaignId, currentScene, isAuthed, toast, updateScene, uploadVTTAsset],
 	);
 
 	const resizeScene = useCallback(
@@ -1285,12 +1273,10 @@ const VTTEnhanced = () => {
 			selectedCharacterId,
 			selectedLibraryTokenId,
 			selectedTool,
-			setActiveTokenId,
-			setMeasurementEnd,
-			setMeasurementStart,
-			setSelectedCharacterId,
-			setSelectedLibraryTokenId,
 			toast,
+			characterOwnerMap.get,
+			updateScene,
+			vttRealtime.userId,
 		],
 	);
 
@@ -1419,9 +1405,6 @@ const VTTEnhanced = () => {
 			handleMapGridAction,
 			isGM,
 			removeToken,
-			selectedTool,
-			setActiveTokenId,
-			setSelectedTool,
 			updateToken,
 		],
 	);
@@ -1450,7 +1433,7 @@ const VTTEnhanced = () => {
 		[isGM, removeAnnotation],
 	);
 
-	const handleTokenKeyDown = useCallback(
+	const _handleTokenKeyDown = useCallback(
 		(token: PlacedToken, e: React.KeyboardEvent<HTMLDivElement>) => {
 			if (e.key === "Enter" || e.key === " ") {
 				e.preventDefault();
@@ -1472,7 +1455,7 @@ const VTTEnhanced = () => {
 				window.open(`/characters/${token.characterId}`, "_blank");
 			}
 		},
-		[isGM, removeToken, setActiveTokenId, updateToken],
+		[isGM, removeToken, updateToken],
 	);
 
 	const lastDmCursorBroadcast = useRef(0);
@@ -1541,7 +1524,7 @@ const VTTEnhanced = () => {
 		}
 	};
 
-	const handleTokenDragStart = (token: PlacedToken, e: React.MouseEvent) => {
+	const _handleTokenDragStart = (token: PlacedToken, e: React.MouseEvent) => {
 		if (token.locked || !isGM) return;
 		e.stopPropagation();
 		setDraggedToken(token);
@@ -1567,7 +1550,7 @@ const VTTEnhanced = () => {
 		[],
 	);
 
-	const updateTokenHP = (tokenId: string, delta: number) => {
+	const _updateTokenHP = (tokenId: string, delta: number) => {
 		const token = currentScene?.tokens.find((t) => t.id === tokenId);
 		if (!token || token.hp === undefined || token.maxHp === undefined) return;
 		const newHp = Math.max(0, Math.min(token.maxHp, token.hp + delta));
@@ -1765,6 +1748,7 @@ const VTTEnhanced = () => {
 		sceneWidth,
 		selectedTool,
 		zoom,
+		isGM,
 	]);
 
 	const tokensInInitiative = useMemo(
@@ -1805,9 +1789,14 @@ const VTTEnhanced = () => {
 									<span className="hidden sm:inline">Back to Campaign</span>
 									<span className="sm:hidden">Back</span>
 								</Button>
-								<h1 className="font-arise text-xl sm:text-2xl lg:text-3xl font-bold gradient-text-shadow leading-tight">
+								<SystemHeading
+									level={1}
+									variant="sovereign"
+									dimensional
+									className="leading-tight"
+								>
 									VTT — {currentScene?.name || "No Scene"}
-								</h1>
+								</SystemHeading>
 								<div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1">
 									<Badge
 										variant={
@@ -1922,9 +1911,9 @@ const VTTEnhanced = () => {
 													<span>Drag asset onto map</span>
 												</div>
 												<DialogFooter>
-													<p className="text-xs text-muted-foreground">
+													<SystemText className="block text-xs text-muted-foreground">
 														Click the map first to enable keyboard shortcuts.
-													</p>
+													</SystemText>
 												</DialogFooter>
 											</DialogContent>
 										</Dialog>
@@ -2714,9 +2703,9 @@ const VTTEnhanced = () => {
 									<SystemWindow title="AUDIO TRACKS">
 										<div className="space-y-4">
 											{audioTracks.length === 0 ? (
-												<p className="text-xs text-muted-foreground text-center py-2">
+												<SystemText className="block text-xs text-muted-foreground text-center py-2">
 													No tracks uploaded for this session yet.
-												</p>
+												</SystemText>
 											) : (
 												<div className="space-y-2 max-h-48 overflow-y-auto">
 													{audioTracks.map((track) => (
@@ -2871,9 +2860,9 @@ const VTTEnhanced = () => {
 										<TabsContent value="characters" className="mt-3">
 											<div className="space-y-2 max-h-60 overflow-y-auto">
 												{resolvedCharacters.length === 0 && (
-													<p className="text-xs text-muted-foreground text-center py-4">
+													<SystemText className="block text-xs text-muted-foreground text-center py-4">
 														No characters yet.
-													</p>
+													</SystemText>
 												)}
 												{resolvedCharacters.map((char) => {
 													const portraitUrl =
@@ -2927,9 +2916,9 @@ const VTTEnhanced = () => {
 												/>
 												<div className="space-y-2 max-h-60 overflow-y-auto">
 													{filteredLibraryTokens.length === 0 && (
-														<p className="text-xs text-muted-foreground text-center py-4">
+														<SystemText className="block text-xs text-muted-foreground text-center py-4">
 															No tokens match.
-														</p>
+														</SystemText>
 													)}
 													{filteredLibraryTokens.map((token) => {
 														const isOverlayPreview =
@@ -3164,7 +3153,6 @@ const VTTEnhanced = () => {
 											}
 										}}
 										role="application"
-										tabIndex={0}
 										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										className={cn(
 											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto",
@@ -3481,10 +3469,9 @@ const VTTEnhanced = () => {
 																		top: `${top}%`,
 																		backgroundColor:
 																			WEATHER_PRESETS[
-																				currentScene!
-																					.weather as keyof typeof WEATHER_PRESETS
+																				currentScene?.weather as keyof typeof WEATHER_PRESETS
 																			].particleColor,
-																		animation: `weather-particle-${currentScene!.weather} ${animDuration}s linear infinite`,
+																		animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
 																		animationDelay: `${delay}s`,
 																	}}
 																/>
@@ -3505,8 +3492,8 @@ const VTTEnhanced = () => {
 																className="absolute transition-all duration-100 vtt-cursor"
 																style={
 																	{
-																		["--cursor-x" as string]: `${(u.cursor!.x + 0.5) * gridSize * zoom}px`,
-																		["--cursor-y" as string]: `${(u.cursor!.y + 0.5) * gridSize * zoom}px`,
+																		["--cursor-x" as string]: `${(u.cursor?.x + 0.5) * gridSize * zoom}px`,
+																		["--cursor-y" as string]: `${(u.cursor?.y + 0.5) * gridSize * zoom}px`,
 																	} as React.CSSProperties
 																}
 															>
@@ -3961,7 +3948,7 @@ const VTTEnhanced = () => {
 												onClick={() => {
 													if (activeToken && damageAmount) {
 														const damage = parseInt(damageAmount, 10);
-														if (!isNaN(damage) && damage > 0) {
+														if (!Number.isNaN(damage) && damage > 0) {
 															const currentHP = activeToken.hp ?? 0;
 															const newHP = Math.max(0, currentHP - damage);
 															updateToken(activeToken.id, { hp: newHP });
@@ -4171,7 +4158,7 @@ const VTTEnhanced = () => {
 																	onChange={(e) =>
 																		updateTokenInitiative(
 																			token.id,
-																			parseInt(e.target.value) || 0,
+																			parseInt(e.target.value, 10) || 0,
 																		)
 																	}
 																	className="w-16 h-7 text-xs"
@@ -4186,10 +4173,10 @@ const VTTEnhanced = () => {
 													);
 												})}
 												{tokensInInitiative.length === 0 && (
-													<p className="text-xs text-muted-foreground text-center py-4">
+													<SystemText className="block text-xs text-muted-foreground text-center py-4">
 														No tokens in initiative.{" "}
 														{isGM && "Set initiative values on tokens."}
-													</p>
+													</SystemText>
 												)}
 											</div>
 										</SystemWindow>
@@ -4638,10 +4625,10 @@ const VTTEnhanced = () => {
 											className="h-[400px] flex flex-col"
 										>
 											<div className="flex-1 overflow-y-auto space-y-2 mb-2">
-												<p className="text-xs text-muted-foreground text-center py-4">
+												<SystemText className="block text-xs text-muted-foreground text-center py-4">
 													Quick access to journal entries. Full journal editor
 													available separately.
-												</p>
+												</SystemText>
 											</div>
 											<Link to={`/campaigns/${campaignId}/journal`}>
 												<Button variant="outline" className="w-full" size="sm">

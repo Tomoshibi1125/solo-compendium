@@ -31,16 +31,11 @@ import {
 	getProficiencyBonus,
 	SKILLS,
 } from "./5eRulesEngine";
-import { getActiveConditionNames } from "./conditionSystem";
 import {
 	aggregateFeatAndStyleEffects,
 	computeAttacksPerAction,
 } from "./featEffectParser";
-import {
-	type CharacterSenses,
-	computeSenses,
-	formatSenses,
-} from "./sensesEngine";
+import { type CharacterSenses, computeSenses } from "./sensesEngine";
 import {
 	bridgeAllFeatEffects,
 	mergeAndSortEffects,
@@ -351,7 +346,7 @@ export interface RollModifierSummary {
  */
 function aggregateAwakeningFeatures(
 	jobs: CharacterJob[],
-	totalLevel: number,
+	_totalLevel: number,
 ): FeatureInstance[] {
 	const features: FeatureInstance[] = [];
 
@@ -498,7 +493,7 @@ function parseAwakeningEffects(
  */
 function aggregateJobTraits(
 	jobs: CharacterJob[],
-	totalLevel: number,
+	_totalLevel: number,
 ): FeatureInstance[] {
 	const traits: FeatureInstance[] = [];
 
@@ -564,7 +559,7 @@ function parseJobTraitEffects(
 		type: string;
 		frequency?: string;
 	},
-	jobLevel: number,
+	_jobLevel: number,
 ): Effect[] {
 	const effects: Effect[] = [];
 	const desc = trait.description.toLowerCase();
@@ -661,7 +656,7 @@ function aggregateRegentFeatures(jobs: CharacterJob[]): FeatureInstance[] {
  */
 function parseRegentFeatureEffects(
 	feature: { name: string; description: string; type: string },
-	jobLevel: number,
+	_jobLevel: number,
 ): Effect[] {
 	const effects: Effect[] = [];
 	const desc = feature.description.toLowerCase();
@@ -1056,7 +1051,7 @@ function applyEffectsToStat(
 		} else {
 			// Typed bonuses: collect, keep highest per type
 			if (!grouped.has(bucket)) grouped.set(bucket, []);
-			grouped.get(bucket)!.push(val);
+			grouped.get(bucket)?.push(val);
 		}
 	}
 
@@ -1172,7 +1167,7 @@ function computeSkills(
  * Handles unarmored, light/medium/heavy armor, shields, and effects
  */
 function computeArmorClass(
-	baseAbilities: Record<AbilityScore, number>,
+	_baseAbilities: Record<AbilityScore, number>,
 	abilityModifiers: Record<AbilityScore, number>,
 	equippedItems: EquipmentInstance[],
 	effects: Effect[],
@@ -1575,7 +1570,7 @@ export function computeCharacterStats(
 	const spellSlots = computeSpellSlots(base.jobs, base.level);
 
 	// 11. Compute passive perception
-	const passivePerception = 10 + skills["perception"].modifier;
+	const _passivePerception = 10 + skills.perception.modifier;
 
 	// Encumbrance already computed above (step 12)
 
@@ -1690,7 +1685,7 @@ function summarizeRollModifiers(
  * Build effects summary for UI display
  */
 function buildEffectsSummary(
-	effects: Effect[],
+	_effects: Effect[],
 	base: CharacterBaseData,
 ): ComputedEffect[] {
 	const computed: ComputedEffect[] = [];
@@ -1865,9 +1860,7 @@ export function calculateFeatureUses(
 			// Use Function constructor with strict mode and no global access
 			// Note: This is safer than eval as it creates an isolated scope, but still requires validation
 			// Input is validated to only contain math operations before execution
-			const result = new Function(
-				'"use strict"; return (' + expression + ")",
-			)();
+			const result = new Function(`"use strict"; return (${expression})`)();
 			return Math.floor(Number(result));
 		}
 	} catch {
@@ -1875,8 +1868,8 @@ export function calculateFeatureUses(
 	}
 
 	// Try parsing as a number
-	const num = parseInt(lowerFormula);
-	if (!isNaN(num)) return num;
+	const num = parseInt(lowerFormula, 10);
+	if (!Number.isNaN(num)) return num;
 
 	return null;
 }

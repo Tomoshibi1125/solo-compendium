@@ -69,7 +69,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			/(?:ac\s+(\d+)|(\+?\d+)\s+ac|ac\s+(\+?\d+))/i,
 		);
 		if (acMatch) {
-			const value = parseInt(acMatch[1] || acMatch[2] || acMatch[3] || "0");
+			const value = parseInt(acMatch[1] || acMatch[2] || acMatch[3] || "0", 10);
 			if (lowerProp.includes("ac") && !lowerProp.includes("+")) {
 				modifiers.ac = value; // Set AC (e.g., "AC 15")
 			} else {
@@ -82,7 +82,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			/(\+?\d+)\s+to\s+attack|(\+?\d+)\s+attack/i,
 		);
 		if (attackMatch) {
-			const value = parseInt(attackMatch[1] || attackMatch[2] || "0");
+			const value = parseInt(attackMatch[1] || attackMatch[2] || "0", 10);
 			modifiers.attack = (modifiers.attack || 0) + value;
 		}
 
@@ -91,7 +91,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			/(\+?\d+)\s+to\s+damage|(\+?\d+)\s+damage/i,
 		);
 		if (damageMatch) {
-			const value = parseInt(damageMatch[1] || damageMatch[2] || "0");
+			const value = parseInt(damageMatch[1] || damageMatch[2] || "0", 10);
 			modifiers.damage = (modifiers.damage || 0) + value;
 		}
 
@@ -126,7 +126,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 				new RegExp(`(\\+?\\d+)\\s+(?:to\\s+)?${key}`, "i"),
 			);
 			if (abilityMatch) {
-				const value = parseInt(abilityMatch[1] || "0");
+				const value = parseInt(abilityMatch[1] || "0", 10);
 				modifiers[ability] =
 					((modifiers[ability] as number | undefined) || 0) + value;
 			}
@@ -135,7 +135,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 		// Speed modifiers: "+10 speed", "+5 ft speed"
 		const speedMatch = lowerProp.match(/(\+?\d+)\s*(?:ft\s*)?speed/i);
 		if (speedMatch) {
-			const value = parseInt(speedMatch[1] || "0");
+			const value = parseInt(speedMatch[1] || "0", 10);
 			modifiers.speed = (modifiers.speed || 0) + value;
 		}
 
@@ -144,7 +144,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			/(\+?\d+)\s+to\s+(?:all\s+)?(?:saving\s+)?throws?/i,
 		);
 		if (saveMatch) {
-			const value = parseInt(saveMatch[1] || "0");
+			const value = parseInt(saveMatch[1] || "0", 10);
 			if (!modifiers.savingThrows) modifiers.savingThrows = {};
 			// Apply to all saves if "all saves" mentioned
 			if (lowerProp.includes("all")) {
@@ -195,7 +195,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 		// Skill modifiers: "+2 to Stealth", "+1 to all skills"
 		const skillMatch = lowerProp.match(/(\+?\d+)\s+to\s+(?:all\s+)?skills?/i);
 		if (skillMatch) {
-			const value = parseInt(skillMatch[1] || "0");
+			const value = parseInt(skillMatch[1] || "0", 10);
 			if (!modifiers.skills) modifiers.skills = {};
 			if (lowerProp.includes("all")) {
 				// Expand "*" into all 18 SRD5e/SA skills

@@ -1,5 +1,4 @@
 import { CheckCircle, Crown, Lock } from "lucide-react";
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -70,7 +69,7 @@ export function RegentFeaturesDisplay({
 			}));
 	};
 
-	const getSpellSlots = () => {
+	const _getSpellSlots = () => {
 		if (!regentData?.spellcasting) return null;
 
 		return regentData.spellcasting.spell_slots[`1st`]?.[regentLevel - 1] || 0;

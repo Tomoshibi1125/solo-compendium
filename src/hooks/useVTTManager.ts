@@ -129,7 +129,7 @@ export function useVTTManager() {
 	);
 
 	const listVTTScenes = useCallback(
-		async (campaignId: string): Promise<VTTScene[]> => {
+		async (_campaignId: string): Promise<VTTScene[]> => {
 			if (!isSupabaseConfigured) {
 				return [];
 			}
@@ -147,7 +147,7 @@ export function useVTTManager() {
 	);
 
 	const deleteVTTScene = useCallback(
-		async (campaignId: string, sceneId: string): Promise<boolean> => {
+		async (_campaignId: string, _sceneId: string): Promise<boolean> => {
 			if (!user || !isSupabaseConfigured) {
 				throw new Error("Must be logged in to delete VTT scenes");
 			}
@@ -322,7 +322,7 @@ export function useVTTManager() {
 				}
 
 				// Delete from storage if it's a custom asset
-				if (asset.image_url && asset.image_url.includes("compendium-images")) {
+				if (asset.image_url?.includes("compendium-images")) {
 					const urlParts = asset.image_url.split("/");
 					const fileName = urlParts[urlParts.length - 1];
 					if (fileName) {

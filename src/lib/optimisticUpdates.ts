@@ -5,7 +5,6 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 /**
  * A generic hook for creating zero-latency optimistic updates coupled with aggressive background sync.
@@ -58,7 +57,7 @@ export function useOptimisticMutation<
 			// 4. Return context object with the snapshotted value
 			return { previousData, mutationKey: resolvedKey } as TContext;
 		},
-		onError: (err, newTodo, context) => {
+		onError: (err, _newTodo, context) => {
 			// If the mutation fails, roll back to the previous value
 			const typedContext = context as
 				| { previousData: any; mutationKey: MutationKey }
@@ -76,7 +75,7 @@ export function useOptimisticMutation<
 			});
 			console.error("Optimistic mutation failed:", err);
 		},
-		onSettled: (data, error, variables, context) => {
+		onSettled: (_data, _error, variables, context) => {
 			// Always refetch after error or success to ensure 100% server sync
 			if (navigator.onLine) {
 				const resolvedKey =

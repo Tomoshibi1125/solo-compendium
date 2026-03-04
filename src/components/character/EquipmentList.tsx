@@ -1,14 +1,4 @@
-import {
-	AlertTriangle,
-	Coins,
-	Gem,
-	Heart,
-	Package,
-	Plus,
-	Shield,
-	Weight,
-	Zap,
-} from "lucide-react";
+import { Coins, Gem, Heart, Package, Plus, Shield, Zap } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -26,7 +16,6 @@ import {
 	calculateEncumbrance,
 	calculateTotalWeight,
 } from "@/lib/encumbrance";
-import { cn } from "@/lib/utils";
 import { formatMonarchVernacular } from "@/lib/vernacular";
 import { AddEquipmentDialog } from "./AddEquipmentDialog";
 import { EncumbranceWidget } from "./EncumbranceWidget";
@@ -130,7 +119,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 	);
 
 	const handleReorderGroup = useCallback(
-		async (type: string, newOrder: Equipment[]) => {
+		async (_type: string, newOrder: Equipment[]) => {
 			try {
 				// Update display_order for all items in this group
 				const updates = newOrder.map((item, index) => ({

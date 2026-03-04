@@ -28,6 +28,11 @@ import { DICE_THEMES, type DiceTheme } from "@/components/dice/diceThemes";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -357,7 +362,7 @@ const DiceRoller = () => {
 			pendingRollRef.current = null;
 			setIsRolling(false);
 		},
-		[recordRoll],
+		[recordRoll, campaignId, rollInCampaign],
 	);
 
 	const startPendingRoll = useCallback(
@@ -498,9 +503,9 @@ const DiceRoller = () => {
 		}
 		pendingRollRef.current = null;
 
-		const count = parseInt(match[1]);
-		const sides = parseInt(match[2]);
-		const mod = match[3] ? parseInt(match[3]) : 0;
+		const count = parseInt(match[1], 10);
+		const sides = parseInt(match[2], 10);
+		const mod = match[3] ? parseInt(match[3], 10) : 0;
 
 		// Prepare 3D dice array (percentile d100 uses two d10s)
 		const { dice: diceArray, slots } = buildDice3DState([{ sides, count }]);
@@ -551,16 +556,20 @@ const DiceRoller = () => {
 				<div className="mb-8">
 					<div className="flex items-center justify-between mb-4">
 						<div>
-							<h1 className="font-arise text-4xl font-black mb-2 gradient-text-system text-glow flex items-center gap-3">
+							<SystemHeading
+								level={1}
+								variant="gate"
+								dimensional
+								className="mb-2 flex items-center gap-3"
+							>
 								<Sparkles className="w-8 h-8 text-shadow-purple animate-pulse" />
-								DICE ROLLER
+								Dice Roller
 								<Zap className="w-8 h-8 text-shadow-blue animate-pulse" />
-							</h1>
-							<p className="text-muted-foreground font-heading">
-								Roll dice with the{" "}
-								<span className="text-primary">System's</span> guidance - may
-								the Prime Architect's favor be with you
-							</p>
+							</SystemHeading>
+							<DataStreamText variant="system" speed="slow">
+								Roll dice with the System's guidance — may the Prime Architect's
+								favor be with you
+							</DataStreamText>
 						</div>
 						<div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
 							{campaigns.length > 0 && (
@@ -606,9 +615,12 @@ const DiceRoller = () => {
 						{pendingResolution && (
 							<SystemWindow title="PENDING RESOLUTION" variant="default">
 								<div className="space-y-3">
-									<div className="text-sm text-muted-foreground">
+									<DataStreamText
+										variant="system"
+										className="text-sm text-muted-foreground"
+									>
 										{pendingResolution.name}
-									</div>
+									</DataStreamText>
 									<div className="flex flex-wrap gap-2">
 										<Button variant="outline" onClick={rollPendingResolution}>
 											Roll Resolution
@@ -666,8 +678,14 @@ const DiceRoller = () => {
 							>
 								<Suspense
 									fallback={
-										<div className="flex h-[400px] items-center justify-center text-sm text-muted-foreground">
-											Loading 3D dice...
+										<div className="flex h-[400px] items-center justify-center">
+											<DataStreamText
+												variant="system"
+												speed="slow"
+												className="text-sm text-muted-foreground"
+											>
+												Loading 3D manifestation constructs...
+											</DataStreamText>
 										</div>
 									}
 								>
@@ -705,9 +723,13 @@ const DiceRoller = () => {
 												>
 													<div className="flex items-center gap-2 mb-1">
 														<Icon className={cn("w-4 h-4", swatch?.icon)} />
-														<span className="font-heading text-sm font-semibold">
+														<SystemHeading
+															level={3}
+															variant="sovereign"
+															className="font-heading text-sm font-semibold"
+														>
 															{theme.name}
-														</span>
+														</SystemHeading>
 													</div>
 													<div
 														className={cn(
@@ -898,9 +920,9 @@ const DiceRoller = () => {
 											{lastRoll.total}
 										</div>
 									</div>
-									<p className="text-muted-foreground font-heading text-lg">
+									<SystemText className="block text-muted-foreground font-heading text-lg">
 										{lastRoll.dice}
-									</p>
+									</SystemText>
 									<div className="flex flex-wrap justify-center gap-2 mt-4">
 										{lastRoll.rolls.map((roll, idx) => (
 											<span
@@ -950,9 +972,9 @@ const DiceRoller = () => {
 						>
 							<div className="space-y-2 max-h-[60vh] overflow-y-auto">
 								{rollHistory.length === 0 ? (
-									<p className="text-center text-muted-foreground py-8 font-heading">
+									<SystemText className="block text-center text-muted-foreground py-8 font-heading">
 										No rolls yet
-									</p>
+									</SystemText>
 								) : (
 									rollHistory.map((roll) => (
 										<div
@@ -967,9 +989,9 @@ const DiceRoller = () => {
 													{roll.timestamp.toLocaleTimeString()}
 												</span>
 											</div>
-											<p className="text-sm text-muted-foreground font-heading">
+											<SystemText className="block text-sm text-muted-foreground font-heading">
 												{roll.dice}
-											</p>
+											</SystemText>
 										</div>
 									))
 								)}

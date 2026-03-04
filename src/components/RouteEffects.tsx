@@ -188,7 +188,7 @@ export function RouteEffects() {
 
 	useEffect(() => {
 		setDynamicTitle(null);
-	}, [pathname]);
+	}, []);
 
 	useEffect(() => {
 		let active = true;

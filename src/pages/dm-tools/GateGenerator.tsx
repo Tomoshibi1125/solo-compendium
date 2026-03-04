@@ -5,6 +5,11 @@ import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
@@ -217,7 +222,7 @@ APPEARANCE:
 MONSTERS:
 ${rift.complications
 	.map(
-		(complication, i) => `${i + 1}. [Monster type related to ${rift.theme}]
+		(_complication, i) => `${i + 1}. [Monster type related to ${rift.theme}]
    • Challenge Rating: [Appropriate to ${rift.rank} Rank]
    • Armor Class: [${rift.rank} Rank appropriate]
    • Hit Points: [${rift.rank} Rank appropriate]
@@ -292,13 +297,22 @@ READ-ALOUD ENTRY:
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to System Tools
 					</Button>
-					<h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-						RIFT GENERATOR
-					</h1>
-					<p className="text-muted-foreground font-heading">
-						Generate random rifts with themes, biomes, bosses, and complications
-						for your sessions.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						Dimensional Rift Synthesis
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="font-heading"
+					>
+						Compute localized anomalies embedding structural motifs,
+						environmental strata, Guardian constructs, and entropy vectors.
+					</DataStreamText>
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -326,9 +340,9 @@ READ-ALOUD ENTRY:
 											</Button>
 										))}
 									</div>
-									<p className="text-xs text-muted-foreground mt-2">
+									<SystemText className="block text-xs text-muted-foreground mt-2">
 										Leave empty for random rank
-									</p>
+									</SystemText>
 								</div>
 								<Button
 									onClick={handleGenerate}
@@ -408,9 +422,9 @@ READ-ALOUD ENTRY:
 											<span className="text-xs font-display text-muted-foreground">
 												DESCRIPTION
 											</span>
-											<p className="text-sm text-muted-foreground mt-2">
+											<SystemText className="block text-sm text-muted-foreground mt-2">
 												{rift.description}
-											</p>
+											</SystemText>
 										</div>
 
 										{enhancedText && (

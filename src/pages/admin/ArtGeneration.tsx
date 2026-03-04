@@ -17,6 +17,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	useArtPipeline,
@@ -282,10 +287,16 @@ export default function ArtGenerationAdmin() {
 		<div className="container mx-auto p-6 space-y-6">
 			<div className="flex items-center justify-between">
 				<div>
-					<h1 className="text-3xl font-bold">Art Generation</h1>
-					<p className="text-muted-foreground">
+					<SystemHeading level={1} variant="sovereign" dimensional>
+						Art Generation
+					</SystemHeading>
+					<DataStreamText
+						variant="system"
+						speed="slow"
+						className="text-muted-foreground"
+					>
 						Manage AI-assisted art generation
-					</p>
+					</DataStreamText>
 				</div>
 				<div className="flex items-center gap-2">
 					<Badge variant={enabled && isAvailable ? "default" : "secondary"}>
@@ -498,13 +509,13 @@ export default function ArtGenerationAdmin() {
 										<div className="space-y-2">
 											<h4 className="font-medium">Queue Details:</h4>
 											<div className="space-y-1 text-sm">
-												{queueMonitor.running?.map((item, i) => (
+												{queueMonitor.running?.map((_item, i) => (
 													<div key={i} className="flex justify-between">
 														<span>Running {i + 1}</span>
 														<Badge variant="default">Active</Badge>
 													</div>
 												))}
-												{queueMonitor.pending?.map((item, i) => (
+												{queueMonitor.pending?.map((_item, i) => (
 													<div key={i} className="flex justify-between">
 														<span>Pending {i + 1}</span>
 														<Badge variant="secondary">Queued</Badge>
@@ -515,9 +526,9 @@ export default function ArtGenerationAdmin() {
 									)}
 								</div>
 							) : (
-								<p className="text-muted-foreground">
+								<SystemText className="block text-muted-foreground">
 									Queue status not available
-								</p>
+								</SystemText>
 							)}
 						</CardContent>
 					</Card>

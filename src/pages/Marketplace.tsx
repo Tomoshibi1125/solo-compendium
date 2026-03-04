@@ -1,18 +1,24 @@
 import { Layout } from "@/components/layout/Layout";
 import { MarketplaceWorkbench } from "@/components/marketplace/MarketplaceWorkbench";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 
 export default function MarketplacePage() {
 	return (
 		<Layout>
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
 				<div className="mb-6 sm:mb-8">
-					<h1 className="text-2xl sm:text-4xl font-bold mb-4 leading-tight">
-						Marketplace
-					</h1>
-					<p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed">
-						Browse, publish, download, and review campaign-ready content with
-						entitlement-aware access.
-					</p>
+					<SystemHeading
+						level={1}
+						variant="sovereign"
+						dimensional
+						className="mb-2"
+					>
+						System Exchange
+					</SystemHeading>
+					<DataStreamText variant="system" speed="slow" className="mb-6">
+						Browse, acquire, and deploy authorized modules into your active
+						dimensional domains.
+					</DataStreamText>
 				</div>
 				<MarketplaceWorkbench />
 			</div>

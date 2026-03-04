@@ -3,7 +3,6 @@
 // Nine Regents inspired by Solo Leveling's Nine Monarchs
 
 import type { Character } from "../types/character";
-import { LocalAIIntegration } from "./localAIIntegration";
 import { NINE_REGENTS } from "./nineRegents";
 
 type AbilityScore = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
@@ -179,18 +178,6 @@ export class RegentGeminiSystem {
 		return highest;
 	}
 
-	private static getRegentType(stat: AbilityScore): RegentType {
-		const statToRegent: Record<AbilityScore, RegentType> = {
-			STR: RegentType.STRENGTH_REGENT,
-			AGI: RegentType.AGILITY_REGENT,
-			VIT: RegentType.VITALITY_REGENT,
-			INT: RegentType.INTELLIGENCE_REGENT,
-			SENSE: RegentType.SENSE_REGENT,
-			PRE: RegentType.PRESENCE_REGENT,
-		};
-		return statToRegent[stat];
-	}
-
 	private static getHighestAbilityScore(
 		abilities: Record<AbilityScore, number>,
 	): number {
@@ -242,7 +229,7 @@ export class RegentGeminiSystem {
 	private static calculateFusionSynergy(
 		regent1: RegentPath,
 		regent2: RegentPath,
-		jobType: string,
+		_jobType: string,
 	): "Perfect" | "Good" | "Average" {
 		// Perfect synergy examples:
 		// - Shadow + Mimic (both deception/adaptation)
@@ -370,7 +357,7 @@ export class RegentGeminiSystem {
 	private static async aiAnalyzeRegentChoice(
 		character: Character,
 		regent: RegentPath,
-		jobType: string,
+		_jobType: string,
 	): Promise<{ reasoning: string; alignment: number; compatibility: number }> {
 		const abilities = RegentGeminiSystem.getCharacterAbilities(character);
 		const job = RegentGeminiSystem.getCharacterJob(character);
@@ -560,7 +547,7 @@ export class RegentGeminiSystem {
 	private static async aiMergeSpells(
 		regent1: RegentPath,
 		regent2: RegentPath,
-		character: Character,
+		_character: Character,
 		baseJob: Job,
 		basePath?: string,
 	): Promise<Spell[]> {
@@ -698,7 +685,7 @@ export class RegentGeminiSystem {
 	private static async aiGenerateSpecialAbilities(
 		regent1: RegentPath,
 		regent2: RegentPath,
-		character: Character,
+		_character: Character,
 		baseJob: Job,
 		basePath?: string,
 	): Promise<string[]> {
@@ -741,28 +728,12 @@ export class RegentGeminiSystem {
 	}
 
 	private static calculatePlaystyleMatch(
-		character: Character,
-		regent: RegentPath,
+		_character: Character,
+		_regent: RegentPath,
 	): number {
 		// AI analyzes character's playstyle preferences
 		// This would integrate with character's actual gameplay data
 		return Math.floor(Math.random() * 30) + 70; // Simulated 70-100% match
-	}
-
-	private static calculateFusionType(
-		regent1: RegentPath,
-		regent2: RegentPath,
-	): "Perfect" | "Good" | "Average" {
-		const levelDiff = Math.abs(
-			(regent1.requirements.level ?? 0) - (regent2.requirements.level ?? 0),
-		);
-		const statDiff = Math.abs(
-			regent1.requirements.statThreshold - regent2.requirements.statThreshold,
-		);
-
-		if (levelDiff <= 2 && statDiff <= 2) return "Perfect";
-		if (levelDiff <= 5 && statDiff <= 5) return "Good";
-		return "Average";
 	}
 
 	private static getCharacterJob(character: Character): Job {

@@ -27,7 +27,6 @@ import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import {
 	formatMonarchVernacular,
-	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
 

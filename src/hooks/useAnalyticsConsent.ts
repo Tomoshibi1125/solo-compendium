@@ -5,7 +5,7 @@
  * Respects user privacy by requiring explicit opt-in.
  */
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useUserLocalState } from "@/hooks/useToolState";
 
 const CONSENT_STORAGE_KEY = "analytics-consent";

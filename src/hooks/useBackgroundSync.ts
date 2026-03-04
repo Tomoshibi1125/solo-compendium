@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
-import { enqueueOfflineSync } from "@/lib/offlineSync";
 
 interface BackgroundSyncManager {
 	isOnline: boolean;
@@ -63,7 +62,7 @@ export function useBackgroundSync() {
 		};
 
 		checkSupport();
-	}, []);
+	}, [handleSyncEvent]);
 
 	// Handle sync events
 	const handleSyncEvent = useCallback(
@@ -88,7 +87,7 @@ export function useBackgroundSync() {
 				setState((prev) => ({ ...prev, isSyncing: false }));
 			}
 		},
-		[user, state.isOnline, toast],
+		[user, state.isOnline, toast, processSyncQueue],
 	);
 
 	// Process sync queue
@@ -149,32 +148,41 @@ export function useBackgroundSync() {
 				variant: "destructive",
 			});
 		}
-	}, [toast]);
+	}, [toast, processSyncItem]);
 
 	// Process individual sync item
-	const processSyncItem = useCallback(async (item: OfflineSyncItem) => {
-		const { type, action, data } = item;
+	const processSyncItem = useCallback(
+		async (item: OfflineSyncItem) => {
+			const { type, action, data } = item;
 
-		switch (type) {
-			case "character":
-				await processCharacterSync(action, data);
-				break;
-			case "campaign":
-				await processCampaignSync(action, data);
-				break;
-			case "roll":
-				await processRollSync(action, data);
-				break;
-			case "homebrew":
-				await processHomebrewSync(action, data);
-				break;
-			case "marketplace":
-				await processMarketplaceSync(action, data);
-				break;
-			default:
-				console.warn(`Unknown sync type: ${type}`);
-		}
-	}, []);
+			switch (type) {
+				case "character":
+					await processCharacterSync(action, data);
+					break;
+				case "campaign":
+					await processCampaignSync(action, data);
+					break;
+				case "roll":
+					await processRollSync(action, data);
+					break;
+				case "homebrew":
+					await processHomebrewSync(action, data);
+					break;
+				case "marketplace":
+					await processMarketplaceSync(action, data);
+					break;
+				default:
+					console.warn(`Unknown sync type: ${type}`);
+			}
+		},
+		[
+			processCampaignSync,
+			processCharacterSync,
+			processHomebrewSync,
+			processMarketplaceSync,
+			processRollSync,
+		],
+	);
 
 	// Process character sync
 	const processCharacterSync = async (action: string, data: any) => {

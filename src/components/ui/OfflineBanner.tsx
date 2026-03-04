@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
  */
 export function OfflineBanner() {
 	const [isOffline, setIsOffline] = useState(() => !navigator.onLine);
-	const [dismissedAt, setDismissedAt] = useState<number | null>(null);
+	const [_dismissedAt, setDismissedAt] = useState<number | null>(null);
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {

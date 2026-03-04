@@ -62,7 +62,7 @@ function findStaticItemByName(
 	);
 }
 
-function findStaticBackgroundByName(
+function _findStaticBackgroundByName(
 	backgroundName: string | null | undefined,
 ): StaticBackground | null {
 	if (!backgroundName) return null;
@@ -73,7 +73,7 @@ function findStaticBackgroundByName(
 	);
 }
 
-function splitCompoundEquipmentEntry(entry: string): string[] {
+function _splitCompoundEquipmentEntry(entry: string): string[] {
 	const trimmed = entry.trim();
 	if (!trimmed) return [];
 
@@ -122,8 +122,8 @@ function buildItemProperties(item: (typeof staticItems)[number]): string[] {
 			props.push("+2 AC");
 		} else {
 			// e.g. "16" from "16", or "14 + Dex modifier (max 2)" → extract leading number
-			const acNum = parseInt(item.armor_class);
-			if (!isNaN(acNum) && acNum > 10) {
+			const acNum = parseInt(item.armor_class, 10);
+			if (!Number.isNaN(acNum) && acNum > 10) {
 				props.push(`AC ${acNum}`);
 			}
 		}
@@ -205,7 +205,7 @@ function isChoiceFeatureText(value: string | null | undefined): boolean {
 	return /\b(choose|select|pick)\b/i.test(value);
 }
 
-function isChoiceFeatureRow(feature: {
+function _isChoiceFeatureRow(feature: {
 	name?: string | null;
 	description?: string | null;
 	prerequisites?: string | null;
@@ -1757,7 +1757,7 @@ function getPathFeatureModifiers(
 function getRegentFeatureModifiers(
 	regentName: string,
 	featureName: string,
-	level: number,
+	_level: number,
 ): FeatureModifier[] {
 	const regent = regentName.trim().toLowerCase();
 	const feature = featureName.trim().toLowerCase();
@@ -2716,8 +2716,7 @@ export async function addStartingEquipment(
 		) {
 			const equipmentGroup = staticJob.startingEquipment[groupIndex];
 			// Use player's choice if provided, otherwise default to first option
-			const itemName =
-				(equipmentChoices && equipmentChoices[groupIndex]) ?? equipmentGroup[0];
+			const itemName = equipmentChoices?.[groupIndex] ?? equipmentGroup[0];
 			if (!itemName) continue;
 
 			// Look up item in static compendium for proper metadata
