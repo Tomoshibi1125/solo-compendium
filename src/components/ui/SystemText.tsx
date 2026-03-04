@@ -4,15 +4,15 @@ import { cn } from "@/lib/utils";
 interface SystemTextProps {
 	children: ReactNode;
 	variant?:
-		| "heading"
-		| "subheading"
-		| "body"
-		| "system"
-		| "data"
-		| "sovereign"
-		| "rift"
-		| "gate"
-		| "shadow";
+	| "heading"
+	| "subheading"
+	| "body"
+	| "system"
+	| "data"
+	| "sovereign"
+	| "rift"
+	| "gate"
+	| "shadow";
 	size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
 	glow?: boolean;
 	dimensional?: boolean;
@@ -87,16 +87,17 @@ const sizeVariants = {
 	"4xl": "text-4xl",
 };
 
-const glowVariants = {
-	heading: "text-shadow-sovereign",
-	subheading: "text-shadow-arise",
-	body: "text-shadow-system",
-	system: "text-shadow-system",
-	data: "text-shadow-system",
-	sovereign: "text-shadow-sovereign",
-	rift: "text-shadow-rift",
-	gate: "text-shadow-gate",
-	shadow: "text-shadow-shadow",
+/* Crisp text-shadow (no blur-causing filter) */
+const dimensionalShadows: Record<string, string> = {
+	heading: "0 0 8px hsl(260 30% 78% / 0.5), 0 0 20px hsl(275 72% 59% / 0.2)",
+	subheading: "0 0 6px hsl(275 72% 59% / 0.4)",
+	body: "",
+	system: "0 0 8px hsl(145 85% 45% / 0.4), 0 0 16px hsl(145 85% 45% / 0.15)",
+	data: "0 0 6px hsl(275 72% 59% / 0.3)",
+	sovereign: "0 0 10px hsl(260 30% 78% / 0.4), 0 0 24px hsl(275 72% 59% / 0.15)",
+	rift: "0 0 8px hsl(330 90% 52% / 0.4), 0 0 20px hsl(330 90% 52% / 0.15)",
+	gate: "0 0 8px hsl(220 35% 75% / 0.4), 0 0 16px hsl(220 35% 75% / 0.15)",
+	shadow: "0 0 6px hsl(270 60% 20% / 0.5)",
 };
 
 export const SystemText = ({
@@ -108,7 +109,6 @@ export const SystemText = ({
 	className,
 }: SystemTextProps) => {
 	const variantStyles = textVariants[variant];
-	const glowStyle = glow ? glowVariants[variant] : "";
 
 	return (
 		<span
@@ -118,17 +118,11 @@ export const SystemText = ({
 				variantStyles.tracking,
 				variantStyles.color,
 				sizeVariants[size],
-				glow && glowStyle,
-				dimensional && "animate-pulse",
 				className,
 			)}
 			style={
-				dimensional
-					? {
-							filter:
-								"drop-shadow(0 0 8px currentColor) drop-shadow(0 0 16px currentColor)",
-							animation: "dimensional-pulse 3s ease-in-out infinite",
-						}
+				dimensional || glow
+					? { textShadow: dimensionalShadows[variant] || "" }
 					: undefined
 			}
 		>
@@ -168,27 +162,22 @@ export const SystemHeading = ({
 		system: {
 			font: "font-display",
 			color: "text-system-green",
-			shadow: "text-shadow-system",
 		},
 		sovereign: {
 			font: "font-display",
 			color: "text-monarch-gold",
-			shadow: "text-shadow-sovereign",
 		},
 		rift: {
 			font: "font-display",
 			color: "text-gate-national",
-			shadow: "text-shadow-rift",
 		},
 		gate: {
 			font: "font-heading",
 			color: "text-gate-s",
-			shadow: "text-shadow-gate",
 		},
 		shadow: {
 			font: "font-system",
 			color: "text-shadow-deep",
-			shadow: "text-shadow-shadow",
 		},
 	};
 
@@ -209,16 +198,11 @@ export const SystemHeading = ({
 				styles.font,
 				styles.color,
 				sizeStyles[level],
-				dimensional && styles.shadow,
-				dimensional && "animate-dimensional-pulse",
 				className,
 			)}
 			style={
 				dimensional
-					? {
-							filter:
-								"drop-shadow(0 0 12px currentColor) drop-shadow(0 0 24px currentColor)",
-						}
+					? { textShadow: dimensionalShadows[variant] || "" }
 					: undefined
 			}
 		>
@@ -241,41 +225,29 @@ export const DataStreamText = ({
 	speed = "normal",
 	className,
 }: DataStreamTextProps) => {
-	const speedStyles = {
-		slow: "animate-pulse",
-		normal: "animate-pulse",
-		fast: "animate-pulse",
-	};
-
 	const variantStyles = {
 		system: {
 			color: "text-system-green",
-			shadow: "text-shadow-system",
 		},
 		sovereign: {
 			color: "text-monarch-gold",
-			shadow: "text-shadow-sovereign",
 		},
 		rift: {
 			color: "text-gate-national",
-			shadow: "text-shadow-rift",
 		},
 	};
 
 	const styles = variantStyles[variant];
-	const speedStyle = speedStyles[speed];
 
 	return (
 		<span
 			className={cn(
 				"font-system font-medium tracking-wider",
 				styles.color,
-				styles.shadow,
-				speedStyle,
 				className,
 			)}
 			style={{
-				filter: "drop-shadow(0 0 6px currentColor)",
+				textShadow: dimensionalShadows[variant] || "",
 			}}
 		>
 			{children}

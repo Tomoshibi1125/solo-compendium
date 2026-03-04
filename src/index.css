@@ -15,21 +15,21 @@
 	/* ── Core UI tokens ──────────────────────────────────────── */
 	--background: 262 45% 4%;
 	/* True system void */
-	--foreground: 43 20% 85%;
-	/* Soft pale bone/gold (complementary to amethyst) */
+	--foreground: 240 10% 88%;
+	/* Cool pale bone (neutral, easy on eyes) */
 
 	--card: 262 35% 7%;
 	/* Dark obsidian pane */
-	--card-foreground: 43 20% 85%;
+	--card-foreground: 240 10% 88%;
 
 	--popover: 262 35% 10%;
 	/* Hovering dark glass */
-	--popover-foreground: 43 20% 85%;
+	--popover-foreground: 240 10% 88%;
 
 	--primary: 275 72% 59%;
 	/* Vivid amethyst neon */
-	--primary-foreground: 43 40% 95%;
-	/* Bright pale gold */
+	--primary-foreground: 240 15% 95%;
+	/* Bright cool white */
 
 	--secondary: 262 30% 10%;
 	/* Void charcoal */
@@ -51,9 +51,9 @@
 	/* Gate-D hunter green */
 	--success-foreground: 145 20% 95%;
 
-	--warning: 43 96% 58%;
-	/* Rank-S sovereign gold */
-	--warning-foreground: 43 20% 8%;
+	--warning: 220 60% 60%;
+	/* Cool sky-blue warning */
+	--warning-foreground: 220 20% 8%;
 
 	--border: 262 25% 14%;
 	/* Subtle void border */
@@ -64,9 +64,9 @@
 
 	/* ── Sidebar ─────────────────────────────────────────────── */
 	--sidebar-background: 262 45% 4%;
-	--sidebar-foreground: 43 20% 85%;
+	--sidebar-foreground: 240 10% 88%;
 	--sidebar-primary: 275 72% 59%;
-	--sidebar-primary-foreground: 43 40% 95%;
+	--sidebar-primary-foreground: 240 15% 95%;
 	--sidebar-accent: 190 100% 45%;
 	--sidebar-accent-foreground: 190 10% 5%;
 	--sidebar-border: 262 25% 12%;
@@ -82,8 +82,8 @@
 	--shadow-dark: 268 50% 8%;
 	/* Near-true void */
 
-	--monarch-gold: 43 95% 60%;
-	/* Sovereign gold */
+	--monarch-gold: 260 30% 78%;
+	/* Cool lavender-silver (sovereign) */
 	--monarch-silver: 220 15% 78%;
 	/* Cold silver */
 
@@ -111,10 +111,10 @@
 	/* Purple */
 	--gate-a: 350 85% 55%;
 	/* Red */
-	--gate-s: 43 95% 60%;
-	/* Gold */
-	--gate-ss: 38 65% 75%;
-	/* Platinum */
+	--gate-s: 220 35% 75%;
+	/* Cool platinum */
+	--gate-ss: 230 25% 82%;
+	/* Pale silver-blue */
 	--gate-national: 330 90% 52%;
 	/* Crimson-violet sovereign */
 
@@ -124,8 +124,8 @@
 	--gate-c-glow: 210 90% 65%;
 	--gate-b-glow: 270 80% 70%;
 	--gate-a-glow: 350 90% 62%;
-	--gate-s-glow: 43 100% 68%;
-	--gate-ss-glow: 38 75% 82%;
+	--gate-s-glow: 220 45% 80%;
+	--gate-ss-glow: 230 35% 88%;
 	--gate-national-glow: 330 95% 60%;
 
 	/* ── Entity accent colors ────────────────────────────────── */
@@ -144,7 +144,7 @@
 
 	/* ── Named Shadow Soldiers ───────────────────────────────── */
 	--crimson-knight: 350 75% 52%;
-	--gilded-reaper: 43 92% 58%;
+	--gilded-reaper: 260 40% 62%;
 	--silver-commander: 220 20% 72%;
 }
 
@@ -153,9 +153,7 @@
    Forces ALL inputs, selects, textareas to use SA glassmorphism
    ============================================================ */
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
-		[type="color"]
-	):not([type="file"]),
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),
 select,
 textarea {
 	background: rgba(0, 0, 0, 0.4);
@@ -167,16 +165,12 @@ textarea {
 	transition: all 0.2s ease;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
-		[type="color"]
-	):not([type="file"])::placeholder,
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"])::placeholder,
 textarea::placeholder {
 	color: hsl(var(--muted-foreground));
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
-		[type="color"]
-	):not([type="file"]):focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):focus,
 select:focus,
 textarea:focus {
 	border-color: hsl(var(--primary) / 0.6);
@@ -240,14 +234,10 @@ h3 {
 }
 
 .hero-bg-image {
-	background-image: -webkit-image-set(
-		url("/ui/landing-page-hero.avif") type("image/avif"),
-		url("/ui/landing-page-hero.webp") type("image/webp")
-	);
-	background-image: image-set(
-		url("/ui/landing-page-hero.avif") type("image/avif"),
-		url("/ui/landing-page-hero.webp") type("image/webp")
-	);
+	background-image: -webkit-image-set(url("/ui/landing-page-hero.avif") type("image/avif"),
+			url("/ui/landing-page-hero.webp") type("image/webp"));
+	background-image: image-set(url("/ui/landing-page-hero.avif") type("image/avif"),
+			url("/ui/landing-page-hero.webp") type("image/webp"));
 	filter: brightness(0.3) saturate(1.2) contrast(1.1);
 }
 
@@ -452,7 +442,7 @@ h3 {
 
 	/* Ensure proper spacing */
 
-	.space-y-6 > * + * {
+	.space-y-6>*+* {
 		margin-top: 1rem;
 	}
 }

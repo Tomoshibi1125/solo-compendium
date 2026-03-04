@@ -47,143 +47,6 @@ export function useBackgroundSync() {
 		};
 	}, []);
 
-	// Check if background sync is supported
-	useEffect(() => {
-		const checkSupport = () => {
-			const supported = "serviceWorker" in navigator && "SyncManager" in window;
-			setState((prev) => ({ ...prev, isSupported: supported }));
-
-			if (supported) {
-				// Register sync event listener
-				navigator.serviceWorker.ready.then((registration) => {
-					registration.addEventListener("sync", handleSyncEvent);
-				});
-			}
-		};
-
-		checkSupport();
-	}, [handleSyncEvent]);
-
-	// Handle sync events
-	const handleSyncEvent = useCallback(
-		async (event: any) => {
-			if (!user || !state.isOnline) return;
-
-			setState((prev) => ({ ...prev, isSyncing: true }));
-
-			try {
-				if (event.tag === "offline-sync-queue") {
-					await processSyncQueue();
-				}
-			} catch (error) {
-				console.error("Background sync failed:", error);
-				toast({
-					title: "Sync Failed",
-					description:
-						"Background sync encountered an error. Some data may not be synchronized.",
-					variant: "destructive",
-				});
-			} finally {
-				setState((prev) => ({ ...prev, isSyncing: false }));
-			}
-		},
-		[user, state.isOnline, toast, processSyncQueue],
-	);
-
-	// Process sync queue
-	const processSyncQueue = useCallback(async () => {
-		const queueData = localStorage.getItem("offlineSyncQueue") || "[]";
-		const queue: OfflineSyncItem[] = JSON.parse(queueData);
-
-		if (queue.length === 0) return;
-
-		const processedItems: string[] = [];
-		const failedItems: OfflineSyncItem[] = [];
-
-		for (const item of queue) {
-			try {
-				await processSyncItem(item);
-				processedItems.push(item.id);
-			} catch (error) {
-				console.error(`Failed to sync item ${item.id}:`, error);
-
-				// Increment retry count
-				const failedItem = { ...item, retryCount: item.retryCount + 1 };
-
-				// If retry count is less than 3, add back to queue
-				if (failedItem.retryCount < 3) {
-					failedItems.push(failedItem);
-				} else {
-					console.error(
-						`Item ${item.id} exceeded max retry count, dropping from queue`,
-					);
-				}
-			}
-		}
-
-		// Update queue in localStorage
-		const updatedQueue = queue
-			.filter((item) => !processedItems.includes(item.id))
-			.concat(failedItems);
-		localStorage.setItem("offlineSyncQueue", JSON.stringify(updatedQueue));
-
-		// Update state
-		setState((prev) => ({
-			...prev,
-			syncQueue: updatedQueue,
-			lastSyncTime: new Date().toISOString(),
-		}));
-
-		if (processedItems.length > 0) {
-			toast({
-				title: "Sync Complete",
-				description: `Successfully synchronized ${processedItems.length} items.`,
-			});
-		}
-
-		if (failedItems.length > 0) {
-			toast({
-				title: "Partial Sync",
-				description: `${failedItems.length} items failed to sync and will be retried later.`,
-				variant: "destructive",
-			});
-		}
-	}, [toast, processSyncItem]);
-
-	// Process individual sync item
-	const processSyncItem = useCallback(
-		async (item: OfflineSyncItem) => {
-			const { type, action, data } = item;
-
-			switch (type) {
-				case "character":
-					await processCharacterSync(action, data);
-					break;
-				case "campaign":
-					await processCampaignSync(action, data);
-					break;
-				case "roll":
-					await processRollSync(action, data);
-					break;
-				case "homebrew":
-					await processHomebrewSync(action, data);
-					break;
-				case "marketplace":
-					await processMarketplaceSync(action, data);
-					break;
-				default:
-					console.warn(`Unknown sync type: ${type}`);
-			}
-		},
-		[
-			processCampaignSync,
-			processCharacterSync,
-			processHomebrewSync,
-			processMarketplaceSync,
-			processRollSync,
-		],
-	);
-
 	// Process character sync
 	const processCharacterSync = async (action: string, data: any) => {
 		switch (action) {
@@ -283,6 +146,137 @@ export function useBackgroundSync() {
 				break;
 		}
 	};
+
+	// Process individual sync item
+	const processSyncItem = useCallback(
+		async (item: OfflineSyncItem) => {
+			const { type, action, data } = item;
+
+			switch (type) {
+				case "character":
+					await processCharacterSync(action, data);
+					break;
+				case "campaign":
+					await processCampaignSync(action, data);
+					break;
+				case "roll":
+					await processRollSync(action, data);
+					break;
+				case "homebrew":
+					await processHomebrewSync(action, data);
+					break;
+				case "marketplace":
+					await processMarketplaceSync(action, data);
+					break;
+				default:
+					console.warn(`Unknown sync type: ${type}`);
+			}
+		},
+		[],
+	);
+
+	// Process sync queue
+	const processSyncQueue = useCallback(async () => {
+		const queueData = localStorage.getItem("offlineSyncQueue") || "[]";
+		const queue: OfflineSyncItem[] = JSON.parse(queueData);
+
+		if (queue.length === 0) return;
+
+		const processedItems: string[] = [];
+		const failedItems: OfflineSyncItem[] = [];
+
+		for (const item of queue) {
+			try {
+				await processSyncItem(item);
+				processedItems.push(item.id);
+			} catch (error) {
+				console.error(`Failed to sync item ${item.id}:`, error);
+
+				// Increment retry count
+				const failedItem = { ...item, retryCount: item.retryCount + 1 };
+
+				// If retry count is less than 3, add back to queue
+				if (failedItem.retryCount < 3) {
+					failedItems.push(failedItem);
+				} else {
+					console.error(
+						`Item ${item.id} exceeded max retry count, dropping from queue`,
+					);
+				}
+			}
+		}
+
+		// Update queue in localStorage
+		const updatedQueue = queue
+			.filter((item) => !processedItems.includes(item.id))
+			.concat(failedItems);
+		localStorage.setItem("offlineSyncQueue", JSON.stringify(updatedQueue));
+
+		// Update state
+		setState((prev) => ({
+			...prev,
+			syncQueue: updatedQueue,
+			lastSyncTime: new Date().toISOString(),
+		}));
+
+		if (processedItems.length > 0) {
+			toast({
+				title: "Sync Complete",
+				description: `Successfully synchronized ${processedItems.length} items.`,
+			});
+		}
+
+		if (failedItems.length > 0) {
+			toast({
+				title: "Partial Sync",
+				description: `${failedItems.length} items failed to sync and will be retried later.`,
+				variant: "destructive",
+			});
+		}
+	}, [toast, processSyncItem]);
+
+	// Handle sync events
+	const handleSyncEvent = useCallback(
+		async (event: any) => {
+			if (!user || !state.isOnline) return;
+
+			setState((prev) => ({ ...prev, isSyncing: true }));
+
+			try {
+				if (event.tag === "offline-sync-queue") {
+					await processSyncQueue();
+				}
+			} catch (error) {
+				console.error("Background sync failed:", error);
+				toast({
+					title: "Sync Failed",
+					description:
+						"Background sync encountered an error. Some data may not be synchronized.",
+					variant: "destructive",
+				});
+			} finally {
+				setState((prev) => ({ ...prev, isSyncing: false }));
+			}
+		},
+		[user, state.isOnline, toast, processSyncQueue],
+	);
+
+	// Check if background sync is supported
+	useEffect(() => {
+		const checkSupport = () => {
+			const supported = "serviceWorker" in navigator && "SyncManager" in window;
+			setState((prev) => ({ ...prev, isSupported: supported }));
+
+			if (supported) {
+				// Register sync event listener
+				navigator.serviceWorker.ready.then((registration) => {
+					registration.addEventListener("sync", handleSyncEvent);
+				});
+			}
+		};
+
+		checkSupport();
+	}, [handleSyncEvent]);
 
 	// Add item to sync queue
 	const addToSyncQueue = useCallback(
