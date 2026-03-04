@@ -7,7 +7,7 @@ export interface Monster {
   name: string;
   type: string;
   rank: 'D' | 'C' | 'B' | 'A' | 'S';
-  // SRD 5e stats
+  // System Ascendant core stats
   stats: {
     abilityScores: {
       strength?: number;
@@ -221,7 +221,7 @@ export const monsters = [
       ]
     },
     "environment": [
-      "Shadow Realm",
+      "Abyssal Realm",
       "Abyss"
     ],
     "organization": "Umbral Legion",

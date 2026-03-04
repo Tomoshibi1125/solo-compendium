@@ -549,8 +549,8 @@ const EncounterBuilder = () => {
 			difficulty: {
 				difficulty,
 				total_xp: totalXP,
-				hunter_level: hunterLevel,
-				hunter_count: hunterCount,
+				ascendant_level: hunterLevel,
+				ascendant_count: hunterCount,
 			},
 			entries,
 			loot: [],
@@ -840,13 +840,13 @@ const EncounterBuilder = () => {
 							<div className="space-y-4">
 								<div>
 									<label
-										htmlFor="encounter-hunter-level"
+										htmlFor="encounter-ascendant-level"
 										className="text-xs font-display text-muted-foreground mb-1 block"
 									>
 										ASCENDANT LEVEL
 									</label>
 									<Input
-										id="encounter-hunter-level"
+										id="encounter-ascendant-level"
 										type="number"
 										min="1"
 										max="20"
@@ -860,13 +860,13 @@ const EncounterBuilder = () => {
 								</div>
 								<div>
 									<label
-										htmlFor="encounter-hunter-count"
+										htmlFor="encounter-ascendant-count"
 										className="text-xs font-display text-muted-foreground mb-1 block"
 									>
 										ASCENDANT COUNT
 									</label>
 									<Input
-										id="encounter-hunter-count"
+										id="encounter-ascendant-count"
 										type="number"
 										min="1"
 										max="10"

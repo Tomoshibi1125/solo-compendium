@@ -7,6 +7,12 @@ import {
 } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
+	Bloom,
+	EffectComposer,
+	Noise,
+	Vignette,
+} from "@react-three/postprocessing";
+import {
 	ConvexHullCollider,
 	CuboidCollider,
 	Physics,
@@ -1863,6 +1869,14 @@ export function Dice3DRoller({
 					reducedMotion={reducedMotion}
 					quality={quality}
 				/>
+
+				{quality.enableBloomField && !reducedMotion && (
+					<EffectComposer>
+						<Bloom luminanceThreshold={0.5} mipmapBlur intensity={0.5} />
+						<Noise opacity={0.015} />
+						<Vignette eskil={false} offset={0.1} darkness={0.8} />
+					</EffectComposer>
+				)}
 			</Canvas>
 
 			<div className="dice-vignette" />

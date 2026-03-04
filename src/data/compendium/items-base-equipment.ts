@@ -78,7 +78,7 @@ const padded = baseItem({
 const leather = baseItem({
 	id: "base-armor-leather",
 	name: "Leather Armor",
-	description: "Cured hunter-grade leather breastpiece and shoulder pads.",
+	description: "Cured ascendant-grade leather breastpiece and shoulder pads.",
 	item_type: "armor",
 	armor_type: "Light",
 	armor_class: "11 + Dex modifier",
@@ -171,7 +171,7 @@ const chainMail = baseItem({
 	id: "base-armor-chain-mail",
 	name: "Chain Mail",
 	description:
-		"Full suit of interlocking steel rings. Standard Hunter Bureau field issue.",
+		"Full suit of interlocking steel rings. Standard Ascendant Bureau field issue.",
 	item_type: "armor",
 	armor_type: "Heavy",
 	armor_class: "16",
@@ -199,7 +199,7 @@ const plate = baseItem({
 	id: "base-armor-plate",
 	name: "Plate Armor",
 	description:
-		"Full articulated plate from head to toe. Top-tier Hunter Bureau deployment gear.",
+		"Full articulated plate from head to toe. Top-tier Ascendant Bureau deployment gear.",
 	item_type: "armor",
 	armor_type: "Heavy",
 	armor_class: "18",
@@ -225,7 +225,7 @@ const shield = baseItem({
 const club = baseItem({
 	id: "base-weapon-club",
 	name: "Club",
-	description: "A heavy stick. Even awakened hunters sometimes start simple.",
+	description: "A heavy stick. Even awakened ascendants sometimes start simple.",
 	item_type: "weapon",
 	weapon_type: "simple melee",
 	damage: "1d4",
@@ -351,7 +351,7 @@ const spear = baseItem({
 	id: "base-weapon-spear",
 	name: "Spear",
 	description:
-		"The oldest weapon in the hunter arsenal. Still deadly in the right hands.",
+		"The oldest weapon in the ascendant arsenal. Still deadly in the right hands.",
 	item_type: "weapon",
 	weapon_type: "simple melee",
 	damage: "1d6",
@@ -368,7 +368,7 @@ const lightCrossbow = baseItem({
 	id: "base-weapon-light-crossbow",
 	name: "Light Crossbow",
 	description:
-		"A compact crossbow. Effective ranged option for non-martial hunters.",
+		"A compact crossbow. Effective ranged option for non-martial ascendants.",
 	item_type: "weapon",
 	weapon_type: "simple ranged",
 	damage: "1d8",
@@ -521,7 +521,7 @@ const longsword = baseItem({
 	id: "base-weapon-longsword",
 	name: "Longsword",
 	description:
-		"A versatile straight blade. The most common hunter weapon in circulation.",
+		"A versatile straight blade. The most common ascendant weapon in circulation.",
 	item_type: "weapon",
 	weapon_type: "martial melee",
 	damage: "1d8",

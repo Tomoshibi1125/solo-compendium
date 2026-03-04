@@ -51,7 +51,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 	}, []);
 
 	// Real-time updates handler
-	const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});
+	const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => { });
 
 	useEffect(() => {
 		handleNewMessage.current = (newMessage: CampaignMessage) => {
@@ -104,7 +104,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 		}
 	};
 
-	const handleManualNarration = async (msg: CampaignMessage) => {
+	async function handleManualNarration(msg: CampaignMessage) {
 		if (isNarratingMsg) return;
 		try {
 			setIsNarratingMsg(msg.id);

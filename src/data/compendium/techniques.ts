@@ -1,6 +1,6 @@
 // Techniques Compendium - Authoritative System Ascendant Content
 // Combat maneuvers and martial techniques
-// Based on System Ascendant canon with SRD 5e mechanics
+// Based on System Ascendant mechanics
 
 export interface Technique {
 	id: string;
@@ -8,13 +8,13 @@ export interface Technique {
 	description: string;
 	type: "offensive" | "defensive" | "mobility" | "utility" | "finishing";
 	style:
-		| "unarmed"
-		| "weapon"
-		| "ranged"
-		| "dual-wielding"
-		| "two-handed"
-		| "shield"
-		| "any";
+	| "unarmed"
+	| "weapon"
+	| "ranged"
+	| "dual-wielding"
+	| "two-handed"
+	| "shield"
+	| "any";
 	prerequisites?: {
 		level?: number;
 		class?: string;

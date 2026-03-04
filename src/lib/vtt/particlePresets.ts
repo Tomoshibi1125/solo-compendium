@@ -2658,7 +2658,7 @@ export const PARTICLE_PRESETS: Record<string, ParticlePreset> = {
 		},
 	},
 	shadowRealmRift: {
-		label: "Shadow Realm Rift",
+		label: "Abyssal Realm Rift",
 		category: "sa-specific",
 		config: {
 			...ringSpawn(0, 0, 50),
@@ -3333,7 +3333,7 @@ export const PARTICLE_PRESETS: Record<string, ParticlePreset> = {
 
 	// ═══════════════════════ ADDITIONAL SA-SPECIFIC ═══════════════════════
 	hunterAwakening: {
-		label: "Hunter Awakening",
+		label: "Ascendant Awakening",
 		category: "sa-specific",
 		config: {
 			...ringSpawn(0, 0, 40),

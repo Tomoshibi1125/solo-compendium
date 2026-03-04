@@ -9,7 +9,7 @@ import type { LevelingMode } from "@/lib/campaignSettings";
 import { getProficiencyBonus, getSystemFavorDie } from "@/types/system-rules";
 import { LevelUpWizardModal } from "./character/LevelUpWizardModal";
 
-// SRD 5e experience thresholds by level (index = level, value = total XP needed)
+// System Ascendant experience thresholds by level (index = level, value = total XP needed)
 const XP_THRESHOLDS = [
 	0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
 	120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,

@@ -4,6 +4,7 @@ import path from "path";
 import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
 import { config as dotenvConfig } from "dotenv";
+import { GoogleGenAI } from "@google/genai";
 
 // Load .env for server-side use (GEMINI_API_KEY is not VITE_ prefixed)
 dotenvConfig();
@@ -72,53 +73,21 @@ function devAIProxy(): Plugin {
           return;
         }
 
-        const geminiModel = 'gemini-2.0-flash';
-        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
-
-        const geminiBody: Record<string, unknown> = {
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            maxOutputTokens: Math.min((maxTokens as number) || 4096, 4096),
-            temperature: 0.8,
-          },
-          safetySettings: [
-            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
-            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
-            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
-          ],
-        };
-
-        if (systemPrompt && typeof systemPrompt === 'string') {
-          geminiBody.systemInstruction = { parts: [{ text: systemPrompt }] };
-        }
+        const geminiModel = 'gemini-2.5-flash';
+        const ai = new GoogleGenAI({ apiKey });
 
         try {
-          const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 30000);
-
-          const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(geminiBody),
-            signal: controller.signal,
+          const response = await ai.models.generateContent({
+            model: geminiModel,
+            contents: prompt,
+            config: {
+              systemInstruction: systemPrompt,
+              maxOutputTokens: Math.min((maxTokens as number) || 4096, 4096),
+              temperature: 0.8
+            }
           });
 
-          clearTimeout(timer);
-
-          const data = await response.json() as Record<string, unknown>;
-
-          if (!response.ok) {
-            const errorData = data as { error?: { message?: string } };
-            res.statusCode = 502;
-            res.end(JSON.stringify({
-              error: errorData?.error?.message || `Gemini API error: ${response.status}`,
-              available: true,
-            }));
-            return;
-          }
-
-          const text = (data as any)?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+          const text = response.text || '';
 
           if (!text.trim()) {
             res.statusCode = 502;
@@ -133,9 +102,9 @@ function devAIProxy(): Plugin {
             text,
             model: geminiModel,
             usage: {
-              promptTokens: (data as any)?.usageMetadata?.promptTokenCount,
-              completionTokens: (data as any)?.usageMetadata?.candidatesTokenCount,
-              totalTokens: (data as any)?.usageMetadata?.totalTokenCount,
+              promptTokens: response.usageMetadata?.promptTokenCount,
+              completionTokens: response.usageMetadata?.candidatesTokenCount,
+              totalTokens: response.usageMetadata?.totalTokenCount,
             },
           }));
         } catch (err: unknown) {
@@ -231,22 +200,6 @@ export default defineConfig(({ mode: _mode }) => {
   const isDiceEntry = (id: string) =>
     diceEntryMatchers.some((needle) => id.includes(needle));
 
-  const isDiceDependency = (
-    id: string,
-    getModuleInfo: (id: string) => { importers?: string[] } | null,
-    seen = new Set<string>()
-  ): boolean => {
-    if (seen.has(id)) return false;
-    seen.add(id);
-    const info = getModuleInfo(id);
-    if (!info?.importers?.length) return false;
-    for (const importer of info.importers) {
-      const normalizedImporter = normalizeId(importer);
-      if (isDiceEntry(normalizedImporter)) return true;
-      if (isDiceDependency(importer, getModuleInfo, seen)) return true;
-    }
-    return false;
-  };
 
 
   return {
@@ -286,24 +239,11 @@ export default defineConfig(({ mode: _mode }) => {
               return 'dice-3d';
             }
             if (normalizedId.includes('node_modules')) {
-              if (isDiceDependency(id, getModuleInfo)) {
-                if (normalizedId.includes('/node_modules/three/examples/')) return 'dice-3d-three-examples';
-                if (normalizedId.includes('/node_modules/three-stdlib/controls/')) return 'dice-3d-stdlib-controls';
-                if (normalizedId.includes('/node_modules/three-stdlib/loaders/')) return 'dice-3d-stdlib-loaders';
-                if (normalizedId.includes('/node_modules/three-stdlib/shaders/')) return 'dice-3d-stdlib-shaders';
-                if (normalizedId.includes('/node_modules/three-stdlib/libs/')) return 'dice-3d-stdlib-libs';
-                if (normalizedId.includes('/node_modules/three-stdlib/utils/')) return 'dice-3d-stdlib-utils';
-                if (normalizedId.includes('/node_modules/three-stdlib/')) return 'dice-3d-stdlib';
-                if (normalizedId.includes('/node_modules/three/')) return 'dice-3d-three';
-                if (normalizedId.includes('/node_modules/@react-three/rapier/')) return 'dice-3d-rapier';
-                if (normalizedId.includes('/node_modules/@react-three/fiber/')) return 'dice-3d-fiber';
-                if (normalizedId.includes('/node_modules/@react-three/drei/')) return 'dice-3d-drei';
-                if (normalizedId.includes('/node_modules/@react-three/postprocessing/')) return 'dice-3d-postprocessing';
-                if (normalizedId.includes('/node_modules/postprocessing/')) return 'dice-3d-postprocessing';
-                if (normalizedId.includes('/node_modules/@dimforge/rapier3d/')) return 'dice-3d-rapier';
-                if (normalizedId.includes('/node_modules/@dimforge/rapier3d-compat/')) return 'dice-3d-rapier';
-                return 'dice-3d-vendor';
-              }
+              // ── Core shared libraries MUST be checked first ──
+              // These are imported by almost everything (including dice/3D code).
+              // If isDiceDependency runs first it will incorrectly pull React,
+              // the router, Radix UI, etc. into a dice-3d-* chunk, causing a
+              // "Cannot access 'n' before initialization" TDZ crash at runtime.
               if (
                 normalizedId.includes('/node_modules/react/') ||
                 normalizedId.includes('/node_modules/react-dom/') ||
@@ -315,6 +255,8 @@ export default defineConfig(({ mode: _mode }) => {
               if (normalizedId.includes('/node_modules/react-router/') || normalizedId.includes('/node_modules/react-router-dom/')) {
                 return 'router-vendor';
               }
+              if (normalizedId.includes('/@tanstack/')) return 'query-vendor';
+              if (normalizedId.includes('/@supabase/')) return 'supabase-vendor';
               if (normalizedId.includes('/node_modules/@dnd-kit/')) return 'dnd-vendor';
               if (normalizedId.includes('/node_modules/react-hook-form/') || normalizedId.includes('/node_modules/@hookform/')) {
                 return 'forms-vendor';
@@ -331,6 +273,8 @@ export default defineConfig(({ mode: _mode }) => {
               if (
                 normalizedId.includes('/@radix-ui/') ||
                 normalizedId.includes('/@floating-ui/') ||
+                normalizedId.includes('/node_modules/cmdk/') ||
+                normalizedId.includes('/node_modules/vaul/') ||
                 normalizedId.includes('/react-remove-scroll') ||
                 normalizedId.includes('/react-dismissable-layer') ||
                 normalizedId.includes('/aria-hidden') ||
@@ -338,8 +282,8 @@ export default defineConfig(({ mode: _mode }) => {
                 normalizedId.includes('/use-callback-ref') ||
                 normalizedId.includes('/use-sidecar') ||
                 normalizedId.includes('/use-sync-external-store') ||
-                normalizedId.includes('/node_modules/cmdk/') ||
-                normalizedId.includes('/node_modules/vaul/')
+                normalizedId.includes('/get-nonce/') ||
+                normalizedId.includes('/tslib/')
               ) return 'ui-vendor';
               if (normalizedId.includes('/node_modules/@tsparticles/')) return 'particles-vendor';
               if (normalizedId.includes('/node_modules/pixi.js/') || normalizedId.includes('/node_modules/pixi-filters/')) {
@@ -352,6 +296,12 @@ export default defineConfig(({ mode: _mode }) => {
               ) {
                 return 'media-vendor';
               }
+              if (normalizedId.includes('/node_modules/framer-motion/')) return 'motion-vendor';
+              if (normalizedId.includes('/node_modules/@react-spring/')) return 'motion-vendor';
+
+
+
+              // ── Remaining 3D / niche vendors ──
               if (
                 normalizedId.includes('/node_modules/@react-three/xr/') ||
                 normalizedId.includes('/node_modules/@pmndrs/xr/')
@@ -364,12 +314,10 @@ export default defineConfig(({ mode: _mode }) => {
               ) {
                 return 'physics-vendor';
               }
-              if (normalizedId.includes('/node_modules/framer-motion/')) return 'motion-vendor';
               if (normalizedId.includes('/node_modules/three-mesh-bvh/')) return 'three-bvh-vendor';
               if (normalizedId.includes('/node_modules/three.quarks/')) return 'three-particles-vendor';
               if (normalizedId.includes('/node_modules/maath/')) return 'three-math-vendor';
               if (normalizedId.includes('/node_modules/lamina/')) return 'three-shaders-vendor';
-              if (normalizedId.includes('/node_modules/@react-spring/')) return 'motion-vendor';
               if (normalizedId.includes('/node_modules/three/')) return 'three-vendor';
               if (normalizedId.includes('/node_modules/three-stdlib/')) return 'three-stdlib-vendor';
               if (normalizedId.includes('/node_modules/@react-three/')) return 'react-three-vendor';
@@ -382,8 +330,6 @@ export default defineConfig(({ mode: _mode }) => {
               ) {
                 return 'rapier-vendor';
               }
-              if (normalizedId.includes('/@tanstack/')) return 'query-vendor';
-              if (normalizedId.includes('/@supabase/')) return 'supabase-vendor';
               return 'vendor';
             }
           },

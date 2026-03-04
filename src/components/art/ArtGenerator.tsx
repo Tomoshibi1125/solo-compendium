@@ -173,7 +173,7 @@ export function ArtGenerator({
 		"underwater",
 		"void",
 		"celestial",
-		"shadow realm",
+		"abyssal realm",
 	];
 
 	return (

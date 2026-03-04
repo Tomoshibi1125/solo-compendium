@@ -15,9 +15,9 @@ export default {
         lg: "2rem",
       },
       screens: {
-      "xs": "475px",
-      "2xl": "1400px",
-    },
+        "xs": "475px",
+        "2xl": "1400px",
+      },
     },
     extend: {
       fontFamily: {
@@ -86,9 +86,9 @@ export default {
           deep: "hsl(var(--shadow-deep))",
           dark: "hsl(var(--shadow-dark))",
         },
-        monarch: {
-          gold: "hsl(var(--monarch-gold))",
-          silver: "hsl(var(--monarch-silver))",
+        solar: {
+          core: "hsl(var(--solar-core))",
+          glow: "hsl(var(--solar-glow))",
         },
         gate: {
           red: "hsl(var(--gate-red))",
@@ -259,7 +259,7 @@ export default {
       textShadow: {
         'system': '0 0 10px hsl(var(--system-green) / 0.8), 0 0 20px hsl(var(--system-green) / 0.4)',
         'arise': '0 0 10px hsl(var(--arise-violet) / 0.8), 0 0 20px hsl(var(--arise-violet) / 0.4)',
-        'sovereign': '0 0 15px hsl(var(--monarch-gold) / 0.9), 0 0 30px hsl(var(--monarch-gold) / 0.5), 0 0 45px hsl(var(--shadow-purple) / 0.3)',
+        'sovereign': '0 0 15px hsl(var(--solar-glow) / 0.9), 0 0 30px hsl(var(--solar-core) / 0.5), 0 0 45px hsl(var(--shadow-purple) / 0.3)',
         'rift': '0 0 12px hsl(var(--gate-national-glow) / 0.8), 0 0 24px hsl(var(--gate-national-glow) / 0.4), 0 0 36px hsl(var(--void-black) / 0.6)',
         'gate': '0 0 10px hsl(var(--gate-s-glow) / 0.7), 0 0 20px hsl(var(--gate-s-glow) / 0.4)',
         'shadow': '0 0 8px hsl(var(--shadow-deep) / 0.8), 0 0 16px hsl(var(--shadow-deep) / 0.4), 0 0 24px hsl(var(--void-black) / 0.6)',
@@ -269,10 +269,10 @@ export default {
         "gradient-system": "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--arise-violet)) 100%)",
         "gradient-shadow": "linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--void-black)) 100%)",
         "gradient-arise": "linear-gradient(180deg, hsl(var(--arise-violet)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--shadow-blue)) 100%)",
-        "gradient-monarch": "linear-gradient(135deg, hsl(var(--monarch-gold)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--shadow-blue)) 100%)",
+        "gradient-solar": "linear-gradient(135deg, hsl(var(--solar-core)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--shadow-blue)) 100%)",
       },
       boxShadow: {
-        "monarch": "0 0 20px hsl(var(--shadow-blue) / 0.3), 0 0 40px hsl(var(--shadow-purple) / 0.2)",
+        "solar": "0 0 20px hsl(var(--shadow-blue) / 0.3), 0 0 40px hsl(var(--solar-glow) / 0.2)",
         "arise": "0 0 30px hsl(var(--arise-violet) / 0.4), 0 0 60px hsl(var(--shadow-purple) / 0.3)",
         "system": "0 0 20px hsl(var(--system-green) / 0.3), inset 0 0 10px hsl(var(--system-green) / 0.1)",
       },

@@ -93,7 +93,7 @@ const NPC_SECRETS = [
 ];
 
 const GATE_THEMES = [
-	"Shadow Realm (undead focus)",
+	"Abyssal Realm (undead focus)",
 	"Elemental Chaos (elemental focus)",
 	"Beast Domain (animal focus)",
 	"Construct Forge (construct focus)",

@@ -124,7 +124,7 @@ const rarityColors: Record<string, string> = {
 	rare: "text-shadow-blue border-shadow-blue/40",
 	very_rare: "text-shadow-purple border-shadow-purple/40",
 	legendary:
-		"text-monarch-gold border-monarch-gold/40 shadow-[0_0_8px_hsl(var(--monarch-gold)/0.3)]",
+		"text-solar-glow border-solar-glow/40 shadow-[0_0_8px_hsl(var(--solar-glow)/0.3)]",
 };
 
 // Enhanced gate rank colors with System Ascendant theme
@@ -224,6 +224,7 @@ const Compendium = () => {
 				"conditions",
 				"shadow-soldiers",
 				"items",
+				"sigils",
 			] as const;
 
 			for (const category of categories) {
@@ -265,6 +266,9 @@ const Compendium = () => {
 							case "runes":
 								data = await staticDataProvider.getRunes(parsedQuery.text);
 								break;
+							case "sigils":
+								data = await staticDataProvider.getSigils(parsedQuery.text);
+								break;
 							case "relics":
 								data = await staticDataProvider.getRelics(parsedQuery.text);
 								break;
@@ -303,6 +307,7 @@ const Compendium = () => {
 								level: item.level ?? undefined,
 								created_at: item.created_at,
 								source_book: item.source_book,
+								source_kind: (item as any).source_kind || "sa",
 								image_url: item.image_url,
 								isFavorite: favorites.has(`${category}:${item.id}`) || false,
 								// Include type-specific fields
@@ -391,6 +396,7 @@ const Compendium = () => {
 	});
 
 	// Load persisted filters on mount
+	// eslint-disable-next-line react-hooks/exhaustive-deps -- Intentional one-time hydration from localStorage-backed state.
 	useEffect(() => {
 		setSelectedCategory(filters.selectedCategory);
 		setViewMode(filters.viewMode);
@@ -406,22 +412,7 @@ const Compendium = () => {
 		setShowMiniBossOnly(filters.showMiniBossOnly);
 		setMinCR(filters.minCR);
 		setMaxCR(filters.maxCR);
-	}, [
-		filters.maxCR,
-		filters.maxLevel,
-		filters.minCR,
-		filters.minLevel,
-		filters.selectedCategory,
-		filters.selectedGateRanks,
-		filters.selectedRarities,
-		filters.selectedSchools,
-		filters.selectedSourceBooks,
-		filters.showBossOnly,
-		filters.showFavoritesOnly,
-		filters.showMiniBossOnly,
-		filters.sortBy,
-		filters.viewMode,
-	]); // eslint-disable-line react-hooks/exhaustive-deps -- Intentional one-time hydration from localStorage-backed state.
+	}, []);
 
 	// Save filters when they change
 	useEffect(() => {

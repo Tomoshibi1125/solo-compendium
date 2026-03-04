@@ -1,0 +1,7 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["src/main.tsx", "src/index.tsx", "vite.config.ts", "tailwind.config.ts", "postcss.config.mjs", "playwright.config.ts", "vitest.config.ts"],
+  "project": ["src/**/*.ts", "src/**/*.tsx"],
+  "ignore": ["public/**", "scripts/**", "test/**", "tests/**", "supabase/functions/**", "**/*.test.ts", "**/*.test.tsx"],
+  "ignoreDependencies": ["@biomejs/biome", "sharp", "@types/howler", "dotenv"]
+}

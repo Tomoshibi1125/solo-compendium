@@ -73,7 +73,7 @@ const QUEST_COMPLICATIONS = [
 	"Escalation: Situation worsens during mission",
 	"Information blackout: Limited communication",
 	"Political interference: Awakened Council politics",
-	"Monarch involvement: Umbral Monarch fragments detected",
+	"Monarch involvement: Umbral Regent fragments detected",
 ] as const;
 
 const QUEST_REWARDS = [

@@ -63,7 +63,7 @@ export function WardenChatbot() {
 				.map((m) => `${m.role === "user" ? "DM" : "Warden"}: ${m.content}`)
 				.join("\n");
 
-			const fullPrompt = `You are "The Warden", an omnipresent, dark-fantasy AI assistant for a Dungeon Master running a game in the "System Ascendant" universe (Solo Leveling inspired).
+			const fullPrompt = `You are "The Warden", an omnipresent, dark-fantasy AI assistant for a Dungeon Master running a game in the "System Ascendant" universe.
 If the DM asks for stats, provide them as a valid JSON block enclosed in \`\`\`json ... \`\`\`. The JSON should match this interface:
 {
   "name": "String",

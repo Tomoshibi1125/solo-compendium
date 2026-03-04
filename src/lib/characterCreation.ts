@@ -1693,8 +1693,8 @@ function getPathFeatureModifiers(
 
 	// 11. STALKER PATHS
 	if (job === "stalker") {
-		if (path === "hunter" || path === "path of the apex stalker") {
-			if (feature === "hunter's prey")
+		if (path === "ascendant" || path === "path of the apex stalker") {
+			if (feature === "ascendant's prey")
 				return [
 					{
 						type: "choice:1",
@@ -2021,7 +2021,7 @@ function getRegentFeatureModifiers(
 			];
 	}
 
-	// 5. Titan Regent (maps to Steel Monarch in compendium)
+	// 5. Titan Regent (maps to Steel Regent in compendium)
 	if (regent === "titan regent" || regent === "steel monarch") {
 		if (
 			feature === "true invulnerability" ||
@@ -2196,7 +2196,7 @@ function getRegentFeatureModifiers(
 			];
 	}
 
-	// 8. Radiant Regent (maps to Flame Monarch in compendium)
+	// 8. Radiant Regent (maps to Flame Regent in compendium)
 	if (regent === "radiant regent" || regent === "flame monarch") {
 		if (feature === "flame step")
 			return [
@@ -2455,7 +2455,7 @@ export async function addJobAwakeningBenefitsForLevel(
 		.select("regent_id")
 		.eq("character_id", characterId);
 	if (regentChoices && regentChoices.length > 0) {
-		const { monarchs: staticRegents } = await import(
+		const { regents: staticRegents } = await import(
 			"@/data/compendium/monarchs"
 		);
 		for (const choice of regentChoices as Array<{ regent_id: string }>) {
@@ -2726,27 +2726,27 @@ export async function addStartingEquipment(
 			const shouldAutoEquip = ["armor", "shield", "weapon"].includes(itemType);
 			const equipData = compendiumItem
 				? {
-						name: compendiumItem.name,
-						item_type: itemType,
-						weight: compendiumItem.weight ?? null,
-						description: compendiumItem.description ?? null,
-						properties: buildItemProperties(compendiumItem),
-						rarity:
-							(compendiumItem.rarity as
-								| "common"
-								| "uncommon"
-								| "rare"
-								| "legendary"
-								| "very_rare") ?? null,
-						quantity: 1,
-						is_equipped: shouldAutoEquip,
-					}
+					name: compendiumItem.name,
+					item_type: itemType,
+					weight: compendiumItem.weight ?? null,
+					description: compendiumItem.description ?? null,
+					properties: buildItemProperties(compendiumItem),
+					rarity:
+						(compendiumItem.rarity as
+							| "common"
+							| "uncommon"
+							| "rare"
+							| "legendary"
+							| "very_rare") ?? null,
+					quantity: 1,
+					is_equipped: shouldAutoEquip,
+				}
 				: {
-						name: itemName,
-						item_type: "gear",
-						quantity: 1,
-						is_equipped: false,
-					};
+					name: itemName,
+					item_type: "gear",
+					quantity: 1,
+					is_equipped: false,
+				};
 
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(characterId, equipData);

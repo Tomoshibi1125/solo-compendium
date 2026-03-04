@@ -36,6 +36,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	techniques: "Techniques",
 	artifacts: "Artifacts",
 	locations: "Locations",
+	sigils: "Sigils",
 };
 
 const PLAYER_TOOL_LABELS: Record<string, string> = {

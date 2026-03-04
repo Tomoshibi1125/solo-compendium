@@ -660,7 +660,7 @@
 	background-clip: text;
 }
 
-.gradient-text-monarch {
+.gradient-text-regent {
 	background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 50%, #9b6dff 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;

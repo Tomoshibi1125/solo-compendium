@@ -117,28 +117,28 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			}
 
 			if (data.monarch_a_id) {
-				const monarch = await resolveRef("regents", data.monarch_a_id);
-				if (monarch) {
+				const regent = await resolveRef("regents", data.monarch_a_id);
+				if (regent) {
 					const rawName =
-						(monarch as { display_name?: string | null; name: string })
-							.display_name || monarch.name;
+						(regent as { display_name?: string | null; name: string })
+							.display_name || regent.name;
 					components.push({
 						type: "monarch",
-						id: monarch.id,
+						id: regent.id || "",
 						name: formatRegentVernacular(rawName),
 					});
 				}
 			}
 
 			if (data.monarch_b_id) {
-				const monarch = await resolveRef("regents", data.monarch_b_id);
-				if (monarch) {
+				const regent = await resolveRef("regents", data.monarch_b_id);
+				if (regent) {
 					const rawName =
-						(monarch as { display_name?: string | null; name: string })
-							.display_name || monarch.name;
+						(regent as { display_name?: string | null; name: string })
+							.display_name || regent.name;
 					components.push({
 						type: "monarch",
-						id: monarch.id,
+						id: regent.id || "",
 						name: formatRegentVernacular(rawName),
 					});
 				}

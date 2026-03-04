@@ -1791,7 +1791,7 @@ const CharacterSheet = () => {
 					</SystemWindow>
 				)}
 
-				{/* SA Hunter Profile Header */}
+				{/* SA Ascendant Profile Header */}
 				<div className="mb-6 rounded-[2px] border border-primary/40 bg-black/80 shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--primary)/0.15)] relative overflow-hidden backdrop-blur-md">
 					<div className="absolute top-0 left-0 w-full h-[2px] bg-primary/40 shadow-[0_0_10px_hsl(var(--primary)/0.5)]" />
 					<div className="flex flex-col md:flex-row items-stretch">
@@ -1828,7 +1828,7 @@ const CharacterSheet = () => {
 									</SystemHeading>
 								</div>
 
-								{/* Hunter Rank Badge */}
+								{/* Ascendant Rank Badge */}
 								<div
 									className={cn(
 										"font-system tracking-widest font-bold uppercase px-3 py-1 rounded-[2px] border flex items-center gap-2 bg-background/80 backdrop-blur-sm",
@@ -3453,7 +3453,7 @@ const CharacterSheet = () => {
 							<RunesList characterId={character.id} />
 						)}
 
-						{/* Monarch Unlocks */}
+						{/* Regent Unlocks */}
 						{isLocal ? (
 							<SystemWindow
 								title={`${MONARCH_LABEL.toUpperCase()} UNLOCKS`}

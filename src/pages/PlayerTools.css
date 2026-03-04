@@ -1,5 +1,5 @@
 /* ============================================================
-   SA Hunter Toolkit — Player Tools
+   SA Ascendant Toolkit — Player Tools
    Green/cyan personal dashboard aesthetic
    ============================================================ */
 
@@ -13,7 +13,7 @@
 	margin-top: 2rem;
 }
 
-/* Header: Hunter Dashboard HUD */
+/* Header: Ascendant Dashboard HUD */
 .player-tools-header {
 	position: relative;
 	margin-bottom: 2rem;
@@ -45,10 +45,10 @@
 		transparent
 	);
 	background-size: 200% 100%;
-	animation: hunter-scan 4s linear infinite;
+	animation: ascendant-scan 4s linear infinite;
 }
 
-@keyframes hunter-scan {
+@keyframes ascendant-scan {
 	0% {
 		background-position: 200% 0;
 	}
@@ -73,7 +73,7 @@
 	margin-bottom: 1.5rem;
 }
 
-/* Character Status Bar: Active Hunter HUD */
+/* Character Status Bar: Active Ascendant HUD */
 .character-status-bar {
 	background: linear-gradient(
 		135deg,

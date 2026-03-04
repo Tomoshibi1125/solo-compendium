@@ -27,7 +27,7 @@ export interface CampaignMember {
 	campaign_id: string;
 	user_id: string;
 	character_id: string | null;
-	role: "hunter" | "co-system";
+	role: "ascendant" | "co-system";
 	joined_at: string;
 }
 
@@ -603,7 +603,7 @@ export const useJoinCampaign = () => {
 						campaign_id: campaignId,
 						user_id: userId,
 						character_id: characterId || null,
-						role: "hunter",
+						role: "ascendant",
 						joined_at: new Date().toISOString(),
 					});
 				} else if (characterId) {
@@ -633,7 +633,7 @@ export const useJoinCampaign = () => {
 							campaign_id: campaignId,
 							user_id: userId,
 							character_id: characterId || null,
-							role: "hunter",
+							role: "ascendant",
 							joined_at: new Date().toISOString(),
 						});
 					} else if (characterId) {
@@ -663,7 +663,7 @@ export const useJoinCampaign = () => {
 					campaign_id: campaignId,
 					user_id: user.id,
 					character_id: null,
-					role: "hunter",
+					role: "ascendant",
 				});
 
 				if (error) throw error;
@@ -892,7 +892,7 @@ export const useCampaignRole = (campaignId: string) => {
 	const { user, loading } = useAuth();
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "role"],
-		queryFn: async (): Promise<"system" | "co-system" | "hunter" | null> => {
+		queryFn: async (): Promise<"system" | "co-system" | "ascendant" | null> => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
 				const campaign = loadLocalCampaigns().find(
@@ -904,7 +904,7 @@ export const useCampaignRole = (campaignId: string) => {
 						entry.campaign_id === campaignId && entry.user_id === userId,
 				);
 				if (member?.role === "co-system") return "co-system";
-				if (member) return "hunter";
+				if (member) return "ascendant";
 				return null;
 			}
 			if (!user) {
@@ -919,7 +919,7 @@ export const useCampaignRole = (campaignId: string) => {
 							entry.campaign_id === campaignId && entry.user_id === userId,
 					);
 					if (member?.role === "co-system") return "co-system";
-					if (member) return "hunter";
+					if (member) return "ascendant";
 					return null;
 				}
 				return null;
@@ -954,7 +954,7 @@ export const useCampaignRole = (campaignId: string) => {
 					member as Database["public"]["Tables"]["campaign_members"]["Row"]
 				).role === "co-system"
 					? "co-system"
-					: "hunter";
+					: "ascendant";
 			}
 
 			return null;

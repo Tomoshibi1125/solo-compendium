@@ -1,0 +1,7 @@
+[dotenv@17.3.1] injecting env (4) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[31mERROR[39m: Error loading text
+Reason: Cannot find module 'text'
+Require stack:
+- C:\Users\jjcal\Documents\solo-compendium\_index.js
+Module load error? Visit https://knip.dev/reference/known-issues
+Configuration file load error? Visit https://knip.dev/reference/known-issues

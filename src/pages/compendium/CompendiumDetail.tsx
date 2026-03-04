@@ -22,6 +22,7 @@ import { RelatedContent } from "@/components/compendium/RelatedContent";
 import { RelicDetail } from "@/components/compendium/RelicDetail";
 import { RuneDetail } from "@/components/compendium/RuneDetail";
 import { ShadowSoldierDetail } from "@/components/compendium/ShadowSoldierDetail";
+import { SigilDetail } from "@/components/compendium/SigilDetail";
 import { SkillDetail } from "@/components/compendium/SkillDetail";
 import { SovereignDetail } from "@/components/compendium/SovereignDetail";
 import { SpellDetail } from "@/components/compendium/SpellDetail";
@@ -58,6 +59,7 @@ type ConditionDetailData = Parameters<typeof ConditionDetail>[0]["data"];
 type MonarchDetailData = Parameters<typeof MonarchDetail>[0]["data"];
 type RegentDetailData = Parameters<typeof RegentDetail>[0]["data"];
 type FeatDetailData = Parameters<typeof FeatDetail>[0]["data"];
+type SigilDetailData = Parameters<typeof SigilDetail>[0]["data"];
 type SkillDetailData = Parameters<typeof SkillDetail>[0]["data"];
 type EquipmentDetailData = Parameters<typeof EquipmentDetail>[0]["data"];
 type ShadowSoldierDetailData = Parameters<
@@ -216,6 +218,12 @@ const CompendiumDetail = () => {
 				{ id: "rune-effect", title: "Effect", level: 2 },
 				{ id: "rune-inscription", title: "Inscription", level: 2 },
 			);
+		} else if (type === "sigils") {
+			items.push(
+				{ id: "sigil-effect", title: "Effect", level: 2 },
+				{ id: "sigil-bonuses", title: "Passive Bonuses", level: 2 },
+				{ id: "sigil-inscription", title: "Inscription", level: 2 },
+			);
 		} else if (type === "shadow-soldiers") {
 			items.push(
 				{ id: "soldier-description", title: "Overview", level: 2 },
@@ -279,6 +287,8 @@ const CompendiumDetail = () => {
 				return <PowerDetail data={data as PowerDetailData} />;
 			case "runes":
 				return <RuneDetail data={data as RuneDetailData} />;
+			case "sigils":
+				return <SigilDetail data={data as SigilDetailData} />;
 			case "relics":
 				return <RelicDetail data={data as RelicDetailData} />;
 			case "monsters":
@@ -420,7 +430,8 @@ const CompendiumDetail = () => {
 		jobs: "Jobs",
 		paths: "Paths",
 		powers: "Powers",
-		runes: "Runes",
+		runes: "Runestones",
+		sigils: "Sigils",
 		relics: "Relics",
 		monsters: "Monsters",
 		backgrounds: "Backgrounds",

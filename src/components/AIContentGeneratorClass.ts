@@ -4,13 +4,13 @@ import { logger } from "@/lib/logger";
 export interface GeneratedContent {
 	id: string;
 	type:
-		| "npc"
-		| "encounter"
-		| "location"
-		| "quest"
-		| "dialogue"
-		| "item"
-		| "backstory";
+	| "npc"
+	| "encounter"
+	| "location"
+	| "quest"
+	| "dialogue"
+	| "item"
+	| "backstory";
 	title: string;
 	content: string;
 	metadata?: {
@@ -37,7 +37,7 @@ export interface ContentGenerationOptions {
 }
 
 const AI_CONTENT_PROMPTS = {
-	npc: "Generate a detailed SRD NPC with name, appearance, personality, background, motivations, and dialogue examples.",
+	npc: "Generate a detailed System Ascendant NPC with name, appearance, personality, background, motivations, and dialogue examples.",
 	encounter:
 		"Create a combat encounter with enemies, environment, tactics, treasure, and story context.",
 	location:
@@ -126,7 +126,7 @@ export class AIContentGenerator {
 			enhancedPrompt += `\n- Include detailed descriptions`;
 		}
 
-		enhancedPrompt += `\n\nFormat the response clearly with sections and appropriate SRD terminology.`;
+		enhancedPrompt += `\n\nFormat the response clearly with sections and appropriate System Ascendant terminology.`;
 		enhancedPrompt += `\n\nKeep the flavor aligned with System Ascendant: cinematic, high-stakes, and system-driven.`;
 
 		return enhancedPrompt;

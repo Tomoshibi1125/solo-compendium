@@ -2,7 +2,7 @@
  * Centralized Character Calculation Engine
  *
  * SINGLE SOURCE OF TRUTH for all derived character stats.
- * Uses 5e SRD mechanics with System Ascendant terminology.
+ * Uses System Ascendant mechanics.
  *
  * Philosophy:
  * - Pure functions: input base data, output computed stats
@@ -81,18 +81,18 @@ export type EffectTarget =
 
 export interface EffectSource {
 	sourceType:
-		| "equipment"
-		| "feature"
-		| "condition"
-		| "rune"
-		| "level"
-		| "job"
-		| "path"
-		| "awakening"
-		| "trait"
-		| "feat"
-		| "race"
-		| "item";
+	| "equipment"
+	| "feature"
+	| "condition"
+	| "rune"
+	| "level"
+	| "job"
+	| "path"
+	| "awakening"
+	| "trait"
+	| "feat"
+	| "race"
+	| "item";
 	sourceId: string;
 	sourceName?: string;
 }
@@ -285,10 +285,10 @@ export interface ComputedCharacterStats {
 	carryingCapacity: number;
 	currentWeight: number;
 	encumbranceTier:
-		| "normal"
-		| "encumbered"
-		| "heavily-encumbered"
-		| "over-capacity";
+	| "normal"
+	| "encumbered"
+	| "heavily-encumbered"
+	| "over-capacity";
 
 	// System Favor (homebrew inspiration mechanic)
 	systemFavorMax: number;
@@ -1438,7 +1438,7 @@ function computeEncumbrance(
 	currentWeight: number;
 	tier: "normal" | "encumbered" | "heavily-encumbered" | "over-capacity";
 } {
-	const capacity = strScore * 15; // 5e SRD formula
+	const capacity = strScore * 15; // System Ascendant scaling
 
 	// Find containers with special rules
 	const inactiveContainerIds = new Set(

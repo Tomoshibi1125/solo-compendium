@@ -741,7 +741,7 @@ const JOB_PORTRAITS: VTTAsset[] = JOB_PORTRAIT_MAP.map(({ file, display }) => ({
 	name: display,
 	category: "portrait" as VTTAssetCategory,
 	imageUrl: `/generated/compendium/jobs/${file}.webp`,
-	tags: ["portrait", "job", "hunter", "player", display.toLowerCase()],
+	tags: ["portrait", "job", "ascendant", "player", display.toLowerCase()],
 }));
 
 // ── Portraits — Backgrounds (character archetype tokens) ─────────────────
@@ -751,7 +751,7 @@ const BACKGROUND_PORTRAITS: VTTAsset[] = [
 	"bringer-of-dawn",
 	"champion-of-light",
 	"cosmic-wanderer",
-	"demon-hunter",
+	"demon-ascendant",
 	"dimensional-traveler",
 	"dragon-slayer",
 	"essence-user",
@@ -759,7 +759,7 @@ const BACKGROUND_PORTRAITS: VTTAsset[] = [
 	"forgotten-king",
 	"gate-survivor",
 	"guild-master",
-	"hunter-academy-graduate",
+	"ascendant-academy-graduate",
 	"regents-chosen",
 	"reality-bender",
 	"rune-master",

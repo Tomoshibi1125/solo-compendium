@@ -35,7 +35,7 @@ const JOB_SENSES: Record<string, SenseSource[]> = {
 	shadow: [
 		{
 			type: "job",
-			name: "Shadow Monarch (Regent)",
+			name: "Shadow Regent (Regent)",
 			sense: "darkvision",
 			range: 120,
 		},

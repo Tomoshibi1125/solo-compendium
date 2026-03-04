@@ -438,7 +438,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		name: "Archer NPC",
 		category: "token",
 		path: "/generated/tokens/npcs/archer.svg",
-		tags: ["archer", "npc", "ranged", "hunter"],
+		tags: ["archer", "npc", "ranged", "ascendant"],
 		format: "svg",
 		attribution: "game-icons.net / Lorc / CC BY 3.0",
 	},

@@ -1,6 +1,5 @@
 /**
  * THE NINE REGENTS
- * Inspired by Solo Leveling's Nine Monarchs
  * S-Rank powers unlocked through gate trials
  *
  * NAMING CONVENTION:
@@ -32,7 +31,7 @@
 import { type RegentPath, RegentType } from "./regentTypes";
 
 export const NINE_REGENTS: RegentPath[] = [
-	// 1. SHADOW REGENT (Shadow Monarch - Ashborn)
+	// 1. SHADOW REGENT (Shadow Regent - Ashborn)
 	// COSMIC THEME: Death, necromancy, shadow army, dimensional shadow storage
 	// DISTINCT FROM: Assassin (stealth/precision), Revenant (life drain), Summoner (creature summoning)
 	// UNIQUE POWER: Extract souls as permanent shadow soldiers, shadow dimension with infinite storage
@@ -42,7 +41,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.INTELLIGENCE_REGENT,
 		compendiumId: "umbral-monarch-overlay",
 		description:
-			"Ruler of death and the shadow realm. Command an eternal army extracted from fallen foes. Your System displays [SHADOW MONARCH PROTOCOL]. Hunter Bureau: S-Rank necromancy threat.",
+			"Ruler of death and the abyssal realm. Command an eternal army extracted from fallen foes. Your System displays [SHADOW REGENT PROTOCOL]. Ascendant Bureau: S-Rank necromancy threat.",
 		abilities: [
 			"Shadow Extraction",
 			"Shadow Storage Dimension",
@@ -89,7 +88,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 2. DRAGON REGENT (Destruction Monarch - Antares)
+	// 2. DRAGON REGENT (Destruction Regent - Antares)
 	// COSMIC THEME: Draconic apocalypse, fire that destroys concepts, dragon transformation
 	// DISTINCT FROM: Destroyer (human fighter), Berserker (rage/overload), Mage (elemental spells)
 	// UNIQUE POWER: Become actual dragon, breath destroys matter itself, apocalypse-level fire
@@ -99,7 +98,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.STRENGTH_REGENT,
 		compendiumId: "dragon-regent-overlay",
 		description:
-			"Incarnation of primordial destruction. Transform into dragon of apocalypse. Your presence melts asphalt. Hunter Bureau: Kaiju-class extinction event.",
+			"Incarnation of primordial destruction. Transform into dragon of apocalypse. Your presence melts asphalt. Ascendant Bureau: Kaiju-class extinction event.",
 		abilities: [
 			"Breath of Annihilation",
 			"True Dragon Form",
@@ -146,7 +145,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 3. FROST REGENT (Frost Monarch - Legia)
+	// 3. FROST REGENT (Frost Regent - Legia)
 	// COSMIC THEME: Eternal winter, absolute zero, ice age, glacial entropy
 	// DISTINCT FROM: Mage (ice spells), Herald (cold resistance)
 	// UNIQUE POWER: Create ice age, reach absolute zero temperature, freeze time itself
@@ -156,7 +155,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.INTELLIGENCE_REGENT,
 		compendiumId: "frost-regent-overlay",
 		description:
-			"Herald of the eternal winter. Bring ice age to modern cities. Thermometers break showing impossible temperatures. Hunter Bureau: Climate catastrophe event.",
+			"Herald of the eternal winter. Bring ice age to modern cities. Thermometers break showing impossible temperatures. Ascendant Bureau: Climate catastrophe event.",
 		abilities: [
 			"Ice Age Protocol",
 			"Absolute Zero Touch",
@@ -203,7 +202,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 4. BEAST REGENT (Beast Monarch - Rakan)
+	// 4. BEAST REGENT (Beast Regent - Rakan)
 	// COSMIC THEME: Primal chaos, primordial beast, evolutionary apex predator
 	// DISTINCT FROM: Berserker (rage transformation), Stalker (tracking), Summoner (pets)
 	// UNIQUE POWER: Evolve into primordial apex predator, command all beasts worldwide
@@ -213,7 +212,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.STRENGTH_REGENT,
 		compendiumId: "beast-regent-overlay",
 		description:
-			"Avatar of primordial evolution. All beasts recognize you as alpha. Transform into apex predator from before human history. Hunter Bureau: Alpha-class biodiversity threat.",
+			"Avatar of primordial evolution. All beasts recognize you as alpha. Transform into apex predator from before human history. Ascendant Bureau: Alpha-class biodiversity threat.",
 		abilities: [
 			"Apex Evolution",
 			"Worldwide Beast Command",
@@ -260,7 +259,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 5. TITAN REGENT (Iron Body Monarch - Tarnak)
+	// 5. TITAN REGENT (Iron Body Regent - Tarnak)
 	// COSMIC THEME: Conceptual invulnerability, immovable object, physics-breaking defense
 	// DISTINCT FROM: Destroyer (tank), Berserker (damage reduction), Holy Knight (defense)
 	// UNIQUE POWER: Become literally invulnerable, immune to physics, cannot be killed
@@ -270,7 +269,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.VITALITY_REGENT,
 		compendiumId: "steel-flesh-monarch-overlay",
 		description:
-			"Embodiment of absolute defense. Invulnerable to all harm. Laws of physics bend around you. Hunter Bureau: Unkillable entity - containment impossible.",
+			"Embodiment of absolute defense. Invulnerable to all harm. Laws of physics bend around you. Ascendant Bureau: Unkillable entity - containment impossible.",
 		abilities: [
 			"Conceptual Invulnerability",
 			"Immovable",
@@ -316,7 +315,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 6. PLAGUE REGENT (Plague Monarch - Querehsha)
+	// 6. PLAGUE REGENT (Plague Regent - Querehsha)
 	// COSMIC THEME: Primordial disease, pandemic incarnate, biological apocalypse
 	// DISTINCT FROM: Revenant (death magic/life drain), Mage (poison spells)
 	// UNIQUE POWER: Create supernatural pandemic, become living biological weapon, insect god
@@ -326,7 +325,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.INTELLIGENCE_REGENT,
 		compendiumId: "plague-regent-overlay",
 		description:
-			"Incarnation of plague and pestilence. Walking biological apocalypse. CDC tracks 47 unknown pathogens in your wake. Hunter Bureau: Pandemic-class bioweapon.",
+			"Incarnation of plague and pestilence. Walking biological apocalypse. CDC tracks 47 unknown pathogens in your wake. Ascendant Bureau: Pandemic-class bioweapon.",
 		abilities: [
 			"Pandemic Protocol",
 			"Swarm Incarnation",
@@ -383,7 +382,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.INTELLIGENCE_REGENT,
 		compendiumId: "architect-regent-overlay",
 		description:
-			"Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your System HUD shows universe blueprint. Hunter Bureau: Dimensional sovereignty threat.",
+			"Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your System HUD shows universe blueprint. Ascendant Bureau: Dimensional sovereignty threat.",
 		abilities: [
 			"Reality Blueprint",
 			"Dimensional Genesis",
@@ -431,7 +430,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 8. RADIANT REGENT (White Flames Monarch - Baran)
+	// 8. RADIANT REGENT (White Flames Regent - Baran)
 	// COSMIC THEME: Purifying apocalypse, holy annihilation, divine fire that erases evil
 	// DISTINCT FROM: Herald (healing/support), Holy Knight (smites), Idol (inspiration)
 	// UNIQUE POWER: White flames that erase evil from existence, purify on cosmic scale
@@ -441,7 +440,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.PRESENCE_REGENT,
 		compendiumId: "flame-monarch-overlay",
 		description:
-			"Purifying flame incarnate. White fire that erases evil. Visible from space. Every religion claims you as prophet/devil. Hunter Bureau: Apocalypse-class sanctification event.",
+			"Purifying flame incarnate. White fire that erases evil. Visible from space. Every religion claims you as prophet/devil. Ascendant Bureau: Apocalypse-class sanctification event.",
 		abilities: [
 			"White Flame Apocalypse",
 			"Purification Protocol",
@@ -489,7 +488,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 9. MIMIC REGENT (Transfiguration Monarch - Yogumunt)
+	// 9. MIMIC REGENT (Transfiguration Regent - Yogumunt)
 	// COSMIC THEME: Perfect transformation, reality mimicry, adaptation incarnate
 	// DISTINCT FROM: Assassin (disguise), Esper (illusion), Contractor (shapeshifting limits)
 	// UNIQUE POWER: Become ANYTHING perfectly, copy reality itself, adaptive evolution
@@ -499,7 +498,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.AGILITY_REGENT,
 		compendiumId: "mimic-regent-overlay",
 		description:
-			"Embodiment of infinite forms. Copy anything - creatures, objects, concepts. No detection possible. Hunter Bureau: Identity unknown - all records contradictory.",
+			"Embodiment of infinite forms. Copy anything - creatures, objects, concepts. No detection possible. Ascendant Bureau: Identity unknown - all records contradictory.",
 		abilities: [
 			"Perfect Mimicry",
 			"Reality Copy",

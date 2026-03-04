@@ -9,7 +9,7 @@ export const items: Item[] = [
 		id: "item-0001",
 		name: "Shadow Blade of Kael",
 		description:
-			"An awakened weapon recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened weapon recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0001.webp",
@@ -64,7 +64,7 @@ export const items: Item[] = [
 		id: "item-0002",
 		name: "Eternal Blade of Kael",
 		description:
-			"An ancient armor recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0002.webp",
@@ -94,7 +94,7 @@ export const items: Item[] = [
 		id: "item-0003",
 		name: "Void Blade of Kael",
 		description:
-			"An blessed consumable recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0003.webp",
@@ -119,7 +119,7 @@ export const items: Item[] = [
 		id: "item-0004",
 		name: "Abyssal Blade of Kael",
 		description:
-			"An crafted accessory recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0004.webp",
@@ -144,7 +144,7 @@ export const items: Item[] = [
 		id: "item-0005",
 		name: "Demonic Blade of Kael",
 		description:
-			"An blessed scroll recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An blessed scroll recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0005.webp",
@@ -169,7 +169,7 @@ export const items: Item[] = [
 		id: "item-0006",
 		name: "Celestial Blade of Kael",
 		description:
-			"An blessed weapon recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0006.webp",
@@ -195,7 +195,7 @@ export const items: Item[] = [
 		id: "item-0007",
 		name: "Divine Blade of Kael",
 		description:
-			"An awakened armor recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0007.webp",
@@ -225,7 +225,7 @@ export const items: Item[] = [
 		id: "item-0008",
 		name: "Ancient Blade of Kael",
 		description:
-			"An enchanted consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0008.webp",
@@ -250,7 +250,7 @@ export const items: Item[] = [
 		id: "item-0009",
 		name: "Forgotten Blade of Kael",
 		description:
-			"An crafted accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0009.webp",
@@ -275,7 +275,7 @@ export const items: Item[] = [
 		id: "item-0010",
 		name: "Cursed Blade of Kael",
 		description:
-			"An ancient scroll recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0010.webp",
@@ -300,7 +300,7 @@ export const items: Item[] = [
 		id: "item-0011",
 		name: "Blessed Blade of Kael",
 		description:
-			"An crafted weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0011.webp",
@@ -326,7 +326,7 @@ export const items: Item[] = [
 		id: "item-0012",
 		name: "Sacred Blade of Kael",
 		description:
-			"An awakened armor recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0012.webp",
@@ -356,7 +356,7 @@ export const items: Item[] = [
 		id: "item-0013",
 		name: "Profane Blade of Kael",
 		description:
-			"An forged consumable recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged consumable recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0013.webp",
@@ -381,7 +381,7 @@ export const items: Item[] = [
 		id: "item-0014",
 		name: "Mystic Blade of Kael",
 		description:
-			"An enchanted accessory recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0014.webp",
@@ -406,7 +406,7 @@ export const items: Item[] = [
 		id: "item-0015",
 		name: "Arcane Blade of Kael",
 		description:
-			"An crafted scroll recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from a legendary ascendant's collection. Infused with ice energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0015.webp",
@@ -431,7 +431,7 @@ export const items: Item[] = [
 		id: "item-0016",
 		name: "Infernal Blade of Kael",
 		description:
-			"An ancient weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0016.webp",
@@ -457,7 +457,7 @@ export const items: Item[] = [
 		id: "item-0017",
 		name: "Frozen Blade of Kael",
 		description:
-			"An imbued armor recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0017.webp",
@@ -487,7 +487,7 @@ export const items: Item[] = [
 		id: "item-0018",
 		name: "Thunder Blade of Kael",
 		description:
-			"An forged consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0018.webp",
@@ -512,7 +512,7 @@ export const items: Item[] = [
 		id: "item-0019",
 		name: "Holy Blade of Kael",
 		description:
-			"An cursed accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0019.webp",
@@ -537,7 +537,7 @@ export const items: Item[] = [
 		id: "item-0020",
 		name: "Dark Blade of Kael",
 		description:
-			"An imbued scroll recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0020.webp",
@@ -562,7 +562,7 @@ export const items: Item[] = [
 		id: "item-0021",
 		name: "Shadow Sword of Kael",
 		description:
-			"An forged weapon recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0021.webp",
@@ -588,7 +588,7 @@ export const items: Item[] = [
 		id: "item-0022",
 		name: "Eternal Sword of Kael",
 		description:
-			"An imbued armor recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0022.webp",
@@ -618,7 +618,7 @@ export const items: Item[] = [
 		id: "item-0023",
 		name: "Void Sword of Kael",
 		description:
-			"An forged consumable recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged consumable recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0023.webp",
@@ -643,7 +643,7 @@ export const items: Item[] = [
 		id: "item-0024",
 		name: "Abyssal Sword of Kael",
 		description:
-			"An awakened accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0024.webp",
@@ -668,7 +668,7 @@ export const items: Item[] = [
 		id: "item-0025",
 		name: "Demonic Sword of Kael",
 		description:
-			"An enchanted scroll recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0025.webp",
@@ -693,7 +693,7 @@ export const items: Item[] = [
 		id: "item-0026",
 		name: "Celestial Sword of Kael",
 		description:
-			"An ancient weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0026.webp",
@@ -719,7 +719,7 @@ export const items: Item[] = [
 		id: "item-0027",
 		name: "Divine Sword of Kael",
 		description:
-			"An cursed armor recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0027.webp",
@@ -749,7 +749,7 @@ export const items: Item[] = [
 		id: "item-0028",
 		name: "Ancient Sword of Kael",
 		description:
-			"An ancient consumable recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0028.webp",
@@ -774,7 +774,7 @@ export const items: Item[] = [
 		id: "item-0029",
 		name: "Forgotten Sword of Kael",
 		description:
-			"An cursed accessory recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0029.webp",
@@ -799,7 +799,7 @@ export const items: Item[] = [
 		id: "item-0030",
 		name: "Cursed Sword of Kael",
 		description:
-			"An cursed scroll recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0030.webp",
@@ -824,7 +824,7 @@ export const items: Item[] = [
 		id: "item-0031",
 		name: "Blessed Sword of Kael",
 		description:
-			"An ancient weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0031.webp",
@@ -850,7 +850,7 @@ export const items: Item[] = [
 		id: "item-0032",
 		name: "Sacred Sword of Kael",
 		description:
-			"An awakened armor recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0032.webp",
@@ -880,7 +880,7 @@ export const items: Item[] = [
 		id: "item-0033",
 		name: "Profane Sword of Kael",
 		description:
-			"An crafted consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0033.webp",
@@ -905,7 +905,7 @@ export const items: Item[] = [
 		id: "item-0034",
 		name: "Mystic Sword of Kael",
 		description:
-			"An imbued accessory recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued accessory recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0034.webp",
@@ -930,7 +930,7 @@ export const items: Item[] = [
 		id: "item-0035",
 		name: "Arcane Sword of Kael",
 		description:
-			"An imbued scroll recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0035.webp",
@@ -955,7 +955,7 @@ export const items: Item[] = [
 		id: "item-0036",
 		name: "Infernal Sword of Kael",
 		description:
-			"An imbued weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0036.webp",
@@ -981,7 +981,7 @@ export const items: Item[] = [
 		id: "item-0037",
 		name: "Frozen Sword of Kael",
 		description:
-			"An imbued armor recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0037.webp",
@@ -1011,7 +1011,7 @@ export const items: Item[] = [
 		id: "item-0038",
 		name: "Thunder Sword of Kael",
 		description:
-			"An crafted consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0038.webp",
@@ -1036,7 +1036,7 @@ export const items: Item[] = [
 		id: "item-0039",
 		name: "Holy Sword of Kael",
 		description:
-			"An crafted accessory recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0039.webp",
@@ -1061,7 +1061,7 @@ export const items: Item[] = [
 		id: "item-0040",
 		name: "Dark Sword of Kael",
 		description:
-			"An enchanted scroll recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0040.webp",
@@ -1086,7 +1086,7 @@ export const items: Item[] = [
 		id: "item-0041",
 		name: "Shadow Dagger of Kael",
 		description:
-			"An ancient weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0041.webp",
@@ -1113,7 +1113,7 @@ export const items: Item[] = [
 		id: "item-0042",
 		name: "Eternal Dagger of Kael",
 		description:
-			"An forged armor recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged armor recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0042.webp",
@@ -1143,7 +1143,7 @@ export const items: Item[] = [
 		id: "item-0043",
 		name: "Void Dagger of Kael",
 		description:
-			"An awakened consumable recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0043.webp",
@@ -1168,7 +1168,7 @@ export const items: Item[] = [
 		id: "item-0044",
 		name: "Abyssal Dagger of Kael",
 		description:
-			"An ancient accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0044.webp",
@@ -1193,7 +1193,7 @@ export const items: Item[] = [
 		id: "item-0045",
 		name: "Demonic Dagger of Kael",
 		description:
-			"An crafted scroll recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from a legendary ascendant's collection. Infused with poison energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0045.webp",
@@ -1218,7 +1218,7 @@ export const items: Item[] = [
 		id: "item-0046",
 		name: "Celestial Dagger of Kael",
 		description:
-			"An crafted weapon recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0046.webp",
@@ -1245,7 +1245,7 @@ export const items: Item[] = [
 		id: "item-0047",
 		name: "Divine Dagger of Kael",
 		description:
-			"An awakened armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0047.webp",
@@ -1275,7 +1275,7 @@ export const items: Item[] = [
 		id: "item-0048",
 		name: "Ancient Dagger of Kael",
 		description:
-			"An cursed consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0048.webp",
@@ -1300,7 +1300,7 @@ export const items: Item[] = [
 		id: "item-0049",
 		name: "Forgotten Dagger of Kael",
 		description:
-			"An ancient accessory recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a legendary ascendant's collection. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0049.webp",
@@ -1325,7 +1325,7 @@ export const items: Item[] = [
 		id: "item-0050",
 		name: "Cursed Dagger of Kael",
 		description:
-			"An awakened scroll recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0050.webp",
@@ -1350,7 +1350,7 @@ export const items: Item[] = [
 		id: "item-0051",
 		name: "Blessed Dagger of Kael",
 		description:
-			"An awakened weapon recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0051.webp",
@@ -1377,7 +1377,7 @@ export const items: Item[] = [
 		id: "item-0052",
 		name: "Sacred Dagger of Kael",
 		description:
-			"An enchanted armor recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0052.webp",
@@ -1407,7 +1407,7 @@ export const items: Item[] = [
 		id: "item-0053",
 		name: "Profane Dagger of Kael",
 		description:
-			"An enchanted consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0053.webp",
@@ -1432,7 +1432,7 @@ export const items: Item[] = [
 		id: "item-0054",
 		name: "Mystic Dagger of Kael",
 		description:
-			"An forged accessory recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0054.webp",
@@ -1457,7 +1457,7 @@ export const items: Item[] = [
 		id: "item-0055",
 		name: "Arcane Dagger of Kael",
 		description:
-			"An imbued scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0055.webp",
@@ -1482,7 +1482,7 @@ export const items: Item[] = [
 		id: "item-0056",
 		name: "Infernal Dagger of Kael",
 		description:
-			"An imbued weapon recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0056.webp",
@@ -1509,7 +1509,7 @@ export const items: Item[] = [
 		id: "item-0057",
 		name: "Frozen Dagger of Kael",
 		description:
-			"An crafted armor recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a legendary ascendant's collection. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0057.webp",
@@ -1539,7 +1539,7 @@ export const items: Item[] = [
 		id: "item-0058",
 		name: "Thunder Dagger of Kael",
 		description:
-			"An ancient consumable recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0058.webp",
@@ -1564,7 +1564,7 @@ export const items: Item[] = [
 		id: "item-0059",
 		name: "Holy Dagger of Kael",
 		description:
-			"An cursed accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0059.webp",
@@ -1589,7 +1589,7 @@ export const items: Item[] = [
 		id: "item-0060",
 		name: "Dark Dagger of Kael",
 		description:
-			"An enchanted scroll recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0060.webp",
@@ -1614,7 +1614,7 @@ export const items: Item[] = [
 		id: "item-0061",
 		name: "Shadow Axe of Kael",
 		description:
-			"An awakened weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0061.webp",
@@ -1640,7 +1640,7 @@ export const items: Item[] = [
 		id: "item-0062",
 		name: "Eternal Axe of Kael",
 		description:
-			"An ancient armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0062.webp",
@@ -1670,7 +1670,7 @@ export const items: Item[] = [
 		id: "item-0063",
 		name: "Void Axe of Kael",
 		description:
-			"An enchanted consumable recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0063.webp",
@@ -1695,7 +1695,7 @@ export const items: Item[] = [
 		id: "item-0064",
 		name: "Abyssal Axe of Kael",
 		description:
-			"An crafted accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0064.webp",
@@ -1720,7 +1720,7 @@ export const items: Item[] = [
 		id: "item-0065",
 		name: "Demonic Axe of Kael",
 		description:
-			"An enchanted scroll recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0065.webp",
@@ -1745,7 +1745,7 @@ export const items: Item[] = [
 		id: "item-0066",
 		name: "Celestial Axe of Kael",
 		description:
-			"An forged weapon recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0066.webp",
@@ -1771,7 +1771,7 @@ export const items: Item[] = [
 		id: "item-0067",
 		name: "Divine Axe of Kael",
 		description:
-			"An awakened armor recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0067.webp",
@@ -1801,7 +1801,7 @@ export const items: Item[] = [
 		id: "item-0068",
 		name: "Ancient Axe of Kael",
 		description:
-			"An crafted consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0068.webp",
@@ -1826,7 +1826,7 @@ export const items: Item[] = [
 		id: "item-0069",
 		name: "Forgotten Axe of Kael",
 		description:
-			"An ancient accessory recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0069.webp",
@@ -1851,7 +1851,7 @@ export const items: Item[] = [
 		id: "item-0070",
 		name: "Cursed Axe of Kael",
 		description:
-			"An enchanted scroll recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a legendary ascendant's collection. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0070.webp",
@@ -1876,7 +1876,7 @@ export const items: Item[] = [
 		id: "item-0071",
 		name: "Blessed Axe of Kael",
 		description:
-			"An cursed weapon recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0071.webp",
@@ -1902,7 +1902,7 @@ export const items: Item[] = [
 		id: "item-0072",
 		name: "Sacred Axe of Kael",
 		description:
-			"An imbued armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0072.webp",
@@ -1932,7 +1932,7 @@ export const items: Item[] = [
 		id: "item-0073",
 		name: "Profane Axe of Kael",
 		description:
-			"An enchanted consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0073.webp",
@@ -1957,7 +1957,7 @@ export const items: Item[] = [
 		id: "item-0074",
 		name: "Mystic Axe of Kael",
 		description:
-			"An cursed accessory recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0074.webp",
@@ -1982,7 +1982,7 @@ export const items: Item[] = [
 		id: "item-0075",
 		name: "Arcane Axe of Kael",
 		description:
-			"An enchanted scroll recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0075.webp",
@@ -2007,7 +2007,7 @@ export const items: Item[] = [
 		id: "item-0076",
 		name: "Infernal Axe of Kael",
 		description:
-			"An ancient weapon recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a legendary ascendant's collection. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0076.webp",
@@ -2033,7 +2033,7 @@ export const items: Item[] = [
 		id: "item-0077",
 		name: "Frozen Axe of Kael",
 		description:
-			"An enchanted armor recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0077.webp",
@@ -2063,7 +2063,7 @@ export const items: Item[] = [
 		id: "item-0078",
 		name: "Thunder Axe of Kael",
 		description:
-			"An awakened consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0078.webp",
@@ -2088,7 +2088,7 @@ export const items: Item[] = [
 		id: "item-0079",
 		name: "Holy Axe of Kael",
 		description:
-			"An cursed accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0079.webp",
@@ -2113,7 +2113,7 @@ export const items: Item[] = [
 		id: "item-0080",
 		name: "Dark Axe of Kael",
 		description:
-			"An forged scroll recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0080.webp",
@@ -2138,7 +2138,7 @@ export const items: Item[] = [
 		id: "item-0081",
 		name: "Shadow Hammer of Kael",
 		description:
-			"An enchanted weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0081.webp",
@@ -2164,7 +2164,7 @@ export const items: Item[] = [
 		id: "item-0082",
 		name: "Eternal Hammer of Kael",
 		description:
-			"An enchanted armor recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0082.webp",
@@ -2194,7 +2194,7 @@ export const items: Item[] = [
 		id: "item-0083",
 		name: "Void Hammer of Kael",
 		description:
-			"An crafted consumable recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0083.webp",
@@ -2219,7 +2219,7 @@ export const items: Item[] = [
 		id: "item-0084",
 		name: "Abyssal Hammer of Kael",
 		description:
-			"An crafted accessory recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0084.webp",
@@ -2244,7 +2244,7 @@ export const items: Item[] = [
 		id: "item-0085",
 		name: "Demonic Hammer of Kael",
 		description:
-			"An imbued scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0085.webp",
@@ -2269,7 +2269,7 @@ export const items: Item[] = [
 		id: "item-0086",
 		name: "Celestial Hammer of Kael",
 		description:
-			"An cursed weapon recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0086.webp",
@@ -2295,7 +2295,7 @@ export const items: Item[] = [
 		id: "item-0087",
 		name: "Divine Hammer of Kael",
 		description:
-			"An crafted armor recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0087.webp",
@@ -2325,7 +2325,7 @@ export const items: Item[] = [
 		id: "item-0088",
 		name: "Ancient Hammer of Kael",
 		description:
-			"An ancient consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0088.webp",
@@ -2350,7 +2350,7 @@ export const items: Item[] = [
 		id: "item-0089",
 		name: "Forgotten Hammer of Kael",
 		description:
-			"An ancient accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0089.webp",
@@ -2375,7 +2375,7 @@ export const items: Item[] = [
 		id: "item-0090",
 		name: "Cursed Hammer of Kael",
 		description:
-			"An blessed scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An blessed scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0090.webp",
@@ -2400,7 +2400,7 @@ export const items: Item[] = [
 		id: "item-0091",
 		name: "Blessed Hammer of Kael",
 		description:
-			"An ancient weapon recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0091.webp",
@@ -2426,7 +2426,7 @@ export const items: Item[] = [
 		id: "item-0092",
 		name: "Sacred Hammer of Kael",
 		description:
-			"An crafted armor recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0092.webp",
@@ -2456,7 +2456,7 @@ export const items: Item[] = [
 		id: "item-0093",
 		name: "Profane Hammer of Kael",
 		description:
-			"An enchanted consumable recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0093.webp",
@@ -2481,7 +2481,7 @@ export const items: Item[] = [
 		id: "item-0094",
 		name: "Mystic Hammer of Kael",
 		description:
-			"An awakened accessory recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0094.webp",
@@ -2506,7 +2506,7 @@ export const items: Item[] = [
 		id: "item-0095",
 		name: "Arcane Hammer of Kael",
 		description:
-			"An crafted scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0095.webp",
@@ -2531,7 +2531,7 @@ export const items: Item[] = [
 		id: "item-0096",
 		name: "Infernal Hammer of Kael",
 		description:
-			"An imbued weapon recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0096.webp",
@@ -2557,7 +2557,7 @@ export const items: Item[] = [
 		id: "item-0097",
 		name: "Frozen Hammer of Kael",
 		description:
-			"An cursed armor recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0097.webp",
@@ -2587,7 +2587,7 @@ export const items: Item[] = [
 		id: "item-0098",
 		name: "Thunder Hammer of Kael",
 		description:
-			"An awakened consumable recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a legendary ascendant's collection. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0098.webp",
@@ -2612,7 +2612,7 @@ export const items: Item[] = [
 		id: "item-0099",
 		name: "Holy Hammer of Kael",
 		description:
-			"An awakened accessory recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0099.webp",
@@ -2637,7 +2637,7 @@ export const items: Item[] = [
 		id: "item-0100",
 		name: "Dark Hammer of Kael",
 		description:
-			"An cursed scroll recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a legendary ascendant's collection. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0100.webp",
@@ -2662,7 +2662,7 @@ export const items: Item[] = [
 		id: "item-0101",
 		name: "Shadow Staff of Kael",
 		description:
-			"An crafted weapon recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0101.webp",
@@ -2689,7 +2689,7 @@ export const items: Item[] = [
 		id: "item-0102",
 		name: "Eternal Staff of Kael",
 		description:
-			"An crafted armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0102.webp",
@@ -2719,7 +2719,7 @@ export const items: Item[] = [
 		id: "item-0103",
 		name: "Void Staff of Kael",
 		description:
-			"An blessed consumable recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0103.webp",
@@ -2744,7 +2744,7 @@ export const items: Item[] = [
 		id: "item-0104",
 		name: "Abyssal Staff of Kael",
 		description:
-			"An cursed accessory recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0104.webp",
@@ -2769,7 +2769,7 @@ export const items: Item[] = [
 		id: "item-0105",
 		name: "Demonic Staff of Kael",
 		description:
-			"An enchanted scroll recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0105.webp",
@@ -2794,7 +2794,7 @@ export const items: Item[] = [
 		id: "item-0106",
 		name: "Celestial Staff of Kael",
 		description:
-			"An forged weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0106.webp",
@@ -2821,7 +2821,7 @@ export const items: Item[] = [
 		id: "item-0107",
 		name: "Divine Staff of Kael",
 		description:
-			"An crafted armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0107.webp",
@@ -2851,7 +2851,7 @@ export const items: Item[] = [
 		id: "item-0108",
 		name: "Ancient Staff of Kael",
 		description:
-			"An enchanted consumable recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0108.webp",
@@ -2876,7 +2876,7 @@ export const items: Item[] = [
 		id: "item-0109",
 		name: "Forgotten Staff of Kael",
 		description:
-			"An forged accessory recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0109.webp",
@@ -2901,7 +2901,7 @@ export const items: Item[] = [
 		id: "item-0110",
 		name: "Cursed Staff of Kael",
 		description:
-			"An enchanted scroll recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0110.webp",
@@ -2926,7 +2926,7 @@ export const items: Item[] = [
 		id: "item-0111",
 		name: "Blessed Staff of Kael",
 		description:
-			"An blessed weapon recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0111.webp",
@@ -2953,7 +2953,7 @@ export const items: Item[] = [
 		id: "item-0112",
 		name: "Sacred Staff of Kael",
 		description:
-			"An blessed armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0112.webp",
@@ -2983,7 +2983,7 @@ export const items: Item[] = [
 		id: "item-0113",
 		name: "Profane Staff of Kael",
 		description:
-			"An forged consumable recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged consumable recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0113.webp",
@@ -3008,7 +3008,7 @@ export const items: Item[] = [
 		id: "item-0114",
 		name: "Mystic Staff of Kael",
 		description:
-			"An ancient accessory recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0114.webp",
@@ -3033,7 +3033,7 @@ export const items: Item[] = [
 		id: "item-0115",
 		name: "Arcane Staff of Kael",
 		description:
-			"An forged scroll recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0115.webp",
@@ -3058,7 +3058,7 @@ export const items: Item[] = [
 		id: "item-0116",
 		name: "Infernal Staff of Kael",
 		description:
-			"An crafted weapon recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0116.webp",
@@ -3085,7 +3085,7 @@ export const items: Item[] = [
 		id: "item-0117",
 		name: "Frozen Staff of Kael",
 		description:
-			"An enchanted armor recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a legendary ascendant's collection. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0117.webp",
@@ -3115,7 +3115,7 @@ export const items: Item[] = [
 		id: "item-0118",
 		name: "Thunder Staff of Kael",
 		description:
-			"An crafted consumable recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0118.webp",
@@ -3140,7 +3140,7 @@ export const items: Item[] = [
 		id: "item-0119",
 		name: "Holy Staff of Kael",
 		description:
-			"An enchanted accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0119.webp",
@@ -3165,7 +3165,7 @@ export const items: Item[] = [
 		id: "item-0120",
 		name: "Dark Staff of Kael",
 		description:
-			"An ancient scroll recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0120.webp",
@@ -3190,7 +3190,7 @@ export const items: Item[] = [
 		id: "item-0121",
 		name: "Shadow Wand of Kael",
 		description:
-			"An cursed weapon recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0121.webp",
@@ -3217,7 +3217,7 @@ export const items: Item[] = [
 		id: "item-0122",
 		name: "Eternal Wand of Kael",
 		description:
-			"An enchanted armor recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0122.webp",
@@ -3247,7 +3247,7 @@ export const items: Item[] = [
 		id: "item-0123",
 		name: "Void Wand of Kael",
 		description:
-			"An blessed consumable recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0123.webp",
@@ -3272,7 +3272,7 @@ export const items: Item[] = [
 		id: "item-0124",
 		name: "Abyssal Wand of Kael",
 		description:
-			"An awakened accessory recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0124.webp",
@@ -3297,7 +3297,7 @@ export const items: Item[] = [
 		id: "item-0125",
 		name: "Demonic Wand of Kael",
 		description:
-			"An blessed scroll recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An blessed scroll recovered from a legendary ascendant's collection. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0125.webp",
@@ -3322,7 +3322,7 @@ export const items: Item[] = [
 		id: "item-0126",
 		name: "Celestial Wand of Kael",
 		description:
-			"An enchanted weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0126.webp",
@@ -3349,7 +3349,7 @@ export const items: Item[] = [
 		id: "item-0127",
 		name: "Divine Wand of Kael",
 		description:
-			"An ancient armor recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0127.webp",
@@ -3379,7 +3379,7 @@ export const items: Item[] = [
 		id: "item-0128",
 		name: "Ancient Wand of Kael",
 		description:
-			"An blessed consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0128.webp",
@@ -3404,7 +3404,7 @@ export const items: Item[] = [
 		id: "item-0129",
 		name: "Forgotten Wand of Kael",
 		description:
-			"An crafted accessory recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0129.webp",
@@ -3429,7 +3429,7 @@ export const items: Item[] = [
 		id: "item-0130",
 		name: "Cursed Wand of Kael",
 		description:
-			"An crafted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0130.webp",
@@ -3454,7 +3454,7 @@ export const items: Item[] = [
 		id: "item-0131",
 		name: "Blessed Wand of Kael",
 		description:
-			"An ancient weapon recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a legendary ascendant's collection. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0131.webp",
@@ -3481,7 +3481,7 @@ export const items: Item[] = [
 		id: "item-0132",
 		name: "Sacred Wand of Kael",
 		description:
-			"An ancient armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0132.webp",
@@ -3511,7 +3511,7 @@ export const items: Item[] = [
 		id: "item-0133",
 		name: "Profane Wand of Kael",
 		description:
-			"An blessed consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0133.webp",
@@ -3536,7 +3536,7 @@ export const items: Item[] = [
 		id: "item-0134",
 		name: "Mystic Wand of Kael",
 		description:
-			"An enchanted accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0134.webp",
@@ -3561,7 +3561,7 @@ export const items: Item[] = [
 		id: "item-0135",
 		name: "Arcane Wand of Kael",
 		description:
-			"An awakened scroll recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0135.webp",
@@ -3586,7 +3586,7 @@ export const items: Item[] = [
 		id: "item-0136",
 		name: "Infernal Wand of Kael",
 		description:
-			"An awakened weapon recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0136.webp",
@@ -3613,7 +3613,7 @@ export const items: Item[] = [
 		id: "item-0137",
 		name: "Frozen Wand of Kael",
 		description:
-			"An crafted armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0137.webp",
@@ -3643,7 +3643,7 @@ export const items: Item[] = [
 		id: "item-0138",
 		name: "Thunder Wand of Kael",
 		description:
-			"An enchanted consumable recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a legendary ascendant's collection. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0138.webp",
@@ -3668,7 +3668,7 @@ export const items: Item[] = [
 		id: "item-0139",
 		name: "Holy Wand of Kael",
 		description:
-			"An ancient accessory recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0139.webp",
@@ -3693,7 +3693,7 @@ export const items: Item[] = [
 		id: "item-0140",
 		name: "Dark Wand of Kael",
 		description:
-			"An forged scroll recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0140.webp",
@@ -3718,7 +3718,7 @@ export const items: Item[] = [
 		id: "item-0141",
 		name: "Shadow Orb of Kael",
 		description:
-			"An imbued weapon recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a legendary ascendant's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0141.webp",
@@ -3744,7 +3744,7 @@ export const items: Item[] = [
 		id: "item-0142",
 		name: "Eternal Orb of Kael",
 		description:
-			"An imbued armor recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0142.webp",
@@ -3774,7 +3774,7 @@ export const items: Item[] = [
 		id: "item-0143",
 		name: "Void Orb of Kael",
 		description:
-			"An enchanted consumable recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0143.webp",
@@ -3799,7 +3799,7 @@ export const items: Item[] = [
 		id: "item-0144",
 		name: "Abyssal Orb of Kael",
 		description:
-			"An enchanted accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0144.webp",
@@ -3824,7 +3824,7 @@ export const items: Item[] = [
 		id: "item-0145",
 		name: "Demonic Orb of Kael",
 		description:
-			"An blessed scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An blessed scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0145.webp",
@@ -3849,7 +3849,7 @@ export const items: Item[] = [
 		id: "item-0146",
 		name: "Celestial Orb of Kael",
 		description:
-			"An ancient weapon recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0146.webp",
@@ -3875,7 +3875,7 @@ export const items: Item[] = [
 		id: "item-0147",
 		name: "Divine Orb of Kael",
 		description:
-			"An ancient armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0147.webp",
@@ -3905,7 +3905,7 @@ export const items: Item[] = [
 		id: "item-0148",
 		name: "Ancient Orb of Kael",
 		description:
-			"An ancient consumable recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0148.webp",
@@ -3930,7 +3930,7 @@ export const items: Item[] = [
 		id: "item-0149",
 		name: "Forgotten Orb of Kael",
 		description:
-			"An enchanted accessory recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from a legendary ascendant's collection. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0149.webp",
@@ -3955,7 +3955,7 @@ export const items: Item[] = [
 		id: "item-0150",
 		name: "Cursed Orb of Kael",
 		description:
-			"An awakened scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0150.webp",
@@ -3980,7 +3980,7 @@ export const items: Item[] = [
 		id: "item-0151",
 		name: "Blessed Orb of Kael",
 		description:
-			"An imbued weapon recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0151.webp",
@@ -4006,7 +4006,7 @@ export const items: Item[] = [
 		id: "item-0152",
 		name: "Sacred Orb of Kael",
 		description:
-			"An ancient armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0152.webp",
@@ -4036,7 +4036,7 @@ export const items: Item[] = [
 		id: "item-0153",
 		name: "Profane Orb of Kael",
 		description:
-			"An awakened consumable recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0153.webp",
@@ -4061,7 +4061,7 @@ export const items: Item[] = [
 		id: "item-0154",
 		name: "Mystic Orb of Kael",
 		description:
-			"An cursed accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0154.webp",
@@ -4086,7 +4086,7 @@ export const items: Item[] = [
 		id: "item-0155",
 		name: "Arcane Orb of Kael",
 		description:
-			"An cursed scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0155.webp",
@@ -4111,7 +4111,7 @@ export const items: Item[] = [
 		id: "item-0156",
 		name: "Infernal Orb of Kael",
 		description:
-			"An forged weapon recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0156.webp",
@@ -4137,7 +4137,7 @@ export const items: Item[] = [
 		id: "item-0157",
 		name: "Frozen Orb of Kael",
 		description:
-			"An ancient armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0157.webp",
@@ -4167,7 +4167,7 @@ export const items: Item[] = [
 		id: "item-0158",
 		name: "Thunder Orb of Kael",
 		description:
-			"An ancient consumable recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0158.webp",
@@ -4192,7 +4192,7 @@ export const items: Item[] = [
 		id: "item-0159",
 		name: "Holy Orb of Kael",
 		description:
-			"An forged accessory recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0159.webp",
@@ -4217,7 +4217,7 @@ export const items: Item[] = [
 		id: "item-0160",
 		name: "Dark Orb of Kael",
 		description:
-			"An ancient scroll recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from a legendary ascendant's collection. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0160.webp",
@@ -4242,7 +4242,7 @@ export const items: Item[] = [
 		id: "item-0161",
 		name: "Shadow Armor of Kael",
 		description:
-			"An ancient weapon recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0161.webp",
@@ -4268,7 +4268,7 @@ export const items: Item[] = [
 		id: "item-0162",
 		name: "Eternal Armor of Kael",
 		description:
-			"An enchanted armor recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0162.webp",
@@ -4298,7 +4298,7 @@ export const items: Item[] = [
 		id: "item-0163",
 		name: "Void Armor of Kael",
 		description:
-			"An crafted consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0163.webp",
@@ -4323,7 +4323,7 @@ export const items: Item[] = [
 		id: "item-0164",
 		name: "Abyssal Armor of Kael",
 		description:
-			"An cursed accessory recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0164.webp",
@@ -4348,7 +4348,7 @@ export const items: Item[] = [
 		id: "item-0165",
 		name: "Demonic Armor of Kael",
 		description:
-			"An imbued scroll recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0165.webp",
@@ -4373,7 +4373,7 @@ export const items: Item[] = [
 		id: "item-0166",
 		name: "Celestial Armor of Kael",
 		description:
-			"An forged weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0166.webp",
@@ -4399,7 +4399,7 @@ export const items: Item[] = [
 		id: "item-0167",
 		name: "Divine Armor of Kael",
 		description:
-			"An imbued armor recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0167.webp",
@@ -4429,7 +4429,7 @@ export const items: Item[] = [
 		id: "item-0168",
 		name: "Ancient Armor of Kael",
 		description:
-			"An cursed consumable recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0168.webp",
@@ -4454,7 +4454,7 @@ export const items: Item[] = [
 		id: "item-0169",
 		name: "Forgotten Armor of Kael",
 		description:
-			"An awakened accessory recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0169.webp",
@@ -4479,7 +4479,7 @@ export const items: Item[] = [
 		id: "item-0170",
 		name: "Cursed Armor of Kael",
 		description:
-			"An forged scroll recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from a legendary ascendant's collection. Infused with ice energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0170.webp",
@@ -4504,7 +4504,7 @@ export const items: Item[] = [
 		id: "item-0171",
 		name: "Blessed Armor of Kael",
 		description:
-			"An imbued weapon recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0171.webp",
@@ -4530,7 +4530,7 @@ export const items: Item[] = [
 		id: "item-0172",
 		name: "Sacred Armor of Kael",
 		description:
-			"An ancient armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0172.webp",
@@ -4560,7 +4560,7 @@ export const items: Item[] = [
 		id: "item-0173",
 		name: "Profane Armor of Kael",
 		description:
-			"An awakened consumable recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0173.webp",
@@ -4585,7 +4585,7 @@ export const items: Item[] = [
 		id: "item-0174",
 		name: "Mystic Armor of Kael",
 		description:
-			"An forged accessory recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0174.webp",
@@ -4610,7 +4610,7 @@ export const items: Item[] = [
 		id: "item-0175",
 		name: "Arcane Armor of Kael",
 		description:
-			"An ancient scroll recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0175.webp",
@@ -4635,7 +4635,7 @@ export const items: Item[] = [
 		id: "item-0176",
 		name: "Infernal Armor of Kael",
 		description:
-			"An cursed weapon recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0176.webp",
@@ -4661,7 +4661,7 @@ export const items: Item[] = [
 		id: "item-0177",
 		name: "Frozen Armor of Kael",
 		description:
-			"An crafted armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0177.webp",
@@ -4691,7 +4691,7 @@ export const items: Item[] = [
 		id: "item-0178",
 		name: "Thunder Armor of Kael",
 		description:
-			"An blessed consumable recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0178.webp",
@@ -4716,7 +4716,7 @@ export const items: Item[] = [
 		id: "item-0179",
 		name: "Holy Armor of Kael",
 		description:
-			"An imbued accessory recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued accessory recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0179.webp",
@@ -4741,7 +4741,7 @@ export const items: Item[] = [
 		id: "item-0180",
 		name: "Dark Armor of Kael",
 		description:
-			"An imbued scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0180.webp",
@@ -4766,7 +4766,7 @@ export const items: Item[] = [
 		id: "item-0181",
 		name: "Shadow Shield of Kael",
 		description:
-			"An awakened weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0181.webp",
@@ -4792,7 +4792,7 @@ export const items: Item[] = [
 		id: "item-0182",
 		name: "Eternal Shield of Kael",
 		description:
-			"An blessed armor recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed armor recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0182.webp",
@@ -4822,7 +4822,7 @@ export const items: Item[] = [
 		id: "item-0183",
 		name: "Void Shield of Kael",
 		description:
-			"An blessed consumable recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0183.webp",
@@ -4847,7 +4847,7 @@ export const items: Item[] = [
 		id: "item-0184",
 		name: "Abyssal Shield of Kael",
 		description:
-			"An enchanted accessory recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from a legendary ascendant's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0184.webp",
@@ -4872,7 +4872,7 @@ export const items: Item[] = [
 		id: "item-0185",
 		name: "Demonic Shield of Kael",
 		description:
-			"An cursed scroll recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0185.webp",
@@ -4897,7 +4897,7 @@ export const items: Item[] = [
 		id: "item-0186",
 		name: "Celestial Shield of Kael",
 		description:
-			"An enchanted weapon recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted weapon recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0186.webp",
@@ -4923,7 +4923,7 @@ export const items: Item[] = [
 		id: "item-0187",
 		name: "Divine Shield of Kael",
 		description:
-			"An blessed armor recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed armor recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0187.webp",
@@ -4953,7 +4953,7 @@ export const items: Item[] = [
 		id: "item-0188",
 		name: "Ancient Shield of Kael",
 		description:
-			"An awakened consumable recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0188.webp",
@@ -4978,7 +4978,7 @@ export const items: Item[] = [
 		id: "item-0189",
 		name: "Forgotten Shield of Kael",
 		description:
-			"An forged accessory recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0189.webp",
@@ -5003,7 +5003,7 @@ export const items: Item[] = [
 		id: "item-0190",
 		name: "Cursed Shield of Kael",
 		description:
-			"An blessed scroll recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An blessed scroll recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0190.webp",
@@ -5028,7 +5028,7 @@ export const items: Item[] = [
 		id: "item-0191",
 		name: "Blessed Shield of Kael",
 		description:
-			"An imbued weapon recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0191.webp",
@@ -5054,7 +5054,7 @@ export const items: Item[] = [
 		id: "item-0192",
 		name: "Sacred Shield of Kael",
 		description:
-			"An imbued armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0192.webp",
@@ -5084,7 +5084,7 @@ export const items: Item[] = [
 		id: "item-0193",
 		name: "Profane Shield of Kael",
 		description:
-			"An enchanted consumable recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a legendary ascendant's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0193.webp",
@@ -5109,7 +5109,7 @@ export const items: Item[] = [
 		id: "item-0194",
 		name: "Mystic Shield of Kael",
 		description:
-			"An blessed accessory recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed accessory recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0194.webp",
@@ -5134,7 +5134,7 @@ export const items: Item[] = [
 		id: "item-0195",
 		name: "Arcane Shield of Kael",
 		description:
-			"An imbued scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0195.webp",
@@ -5159,7 +5159,7 @@ export const items: Item[] = [
 		id: "item-0196",
 		name: "Infernal Shield of Kael",
 		description:
-			"An imbued weapon recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0196.webp",
@@ -5185,7 +5185,7 @@ export const items: Item[] = [
 		id: "item-0197",
 		name: "Frozen Shield of Kael",
 		description:
-			"An enchanted armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0197.webp",
@@ -5215,7 +5215,7 @@ export const items: Item[] = [
 		id: "item-0198",
 		name: "Thunder Shield of Kael",
 		description:
-			"An ancient consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0198.webp",
@@ -5240,7 +5240,7 @@ export const items: Item[] = [
 		id: "item-0199",
 		name: "Holy Shield of Kael",
 		description:
-			"An imbued accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0199.webp",
@@ -5265,7 +5265,7 @@ export const items: Item[] = [
 		id: "item-0200",
 		name: "Dark Shield of Kael",
 		description:
-			"An imbued scroll recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0200.webp",

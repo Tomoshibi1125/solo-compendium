@@ -404,8 +404,8 @@ export const AMBIENT_SOUND_PRESETS: Record<
 		category: "effect",
 		falloff: "exponential",
 	},
-	hunter_training: {
-		label: "Hunter Training Ground",
+	ascendant_training: {
+		label: "Ascendant Training Ground",
 		radius: 6,
 		category: "effect",
 		falloff: "linear",

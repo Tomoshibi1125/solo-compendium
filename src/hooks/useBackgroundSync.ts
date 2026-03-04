@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
@@ -235,10 +235,16 @@ export function useBackgroundSync() {
 		}
 	}, [toast, processSyncItem]);
 
-	// Handle sync events
+	// Use refs to avoid dependency cycles in callbacks
+	const isOnlineRef = useRef(state.isOnline);
+	const userRef = useRef(user);
+	isOnlineRef.current = state.isOnline;
+	userRef.current = user;
+
+	// Handle sync events — stable reference via refs
 	const handleSyncEvent = useCallback(
 		async (event: any) => {
-			if (!user || !state.isOnline) return;
+			if (!userRef.current || !isOnlineRef.current) return;
 
 			setState((prev) => ({ ...prev, isSyncing: true }));
 
@@ -258,25 +264,21 @@ export function useBackgroundSync() {
 				setState((prev) => ({ ...prev, isSyncing: false }));
 			}
 		},
-		[user, state.isOnline, toast, processSyncQueue],
+		[toast, processSyncQueue],
 	);
 
-	// Check if background sync is supported
+	// Check if background sync is supported (runs once)
 	useEffect(() => {
-		const checkSupport = () => {
-			const supported = "serviceWorker" in navigator && "SyncManager" in window;
-			setState((prev) => ({ ...prev, isSupported: supported }));
+		const supported = "serviceWorker" in navigator && "SyncManager" in window;
+		setState((prev) => ({ ...prev, isSupported: supported }));
 
-			if (supported) {
-				// Register sync event listener
-				navigator.serviceWorker.ready.then((registration) => {
-					registration.addEventListener("sync", handleSyncEvent);
-				});
-			}
-		};
-
-		checkSupport();
-	}, [handleSyncEvent]);
+		if (supported) {
+			navigator.serviceWorker.ready.then((registration) => {
+				registration.addEventListener("sync", handleSyncEvent);
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	// Add item to sync queue
 	const addToSyncQueue = useCallback(
@@ -371,11 +373,16 @@ export function useBackgroundSync() {
 	}, []);
 
 	// Auto-sync when coming back online
+	const isSyncingRef = useRef(false);
+	isSyncingRef.current = state.isSyncing;
 	useEffect(() => {
-		if (state.isOnline && state.syncQueue.length > 0 && !state.isSyncing) {
+		if (state.isOnline && state.syncQueue.length > 0 && !isSyncingRef.current) {
 			forceSyncNow();
 		}
-	}, [state.isOnline, state.syncQueue.length, state.isSyncing, forceSyncNow]);
+		// Only re-run when online status changes, NOT when syncQueue changes
+		// (syncing itself updates the queue, which would cause an infinite loop)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state.isOnline]);
 
 	return {
 		...state,

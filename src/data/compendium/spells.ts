@@ -36,7 +36,7 @@ export interface Spell {
   
   // System Ascendant 5e mechanics
   atHigherLevels: string;           // Higher level casting effects
-  classes: string[];                // Which Hunter classes can cast
+  classes: string[];                // Which Ascendant classes can cast
   
   // Additional mechanics (System Ascendant themed)
   savingThrow?: {
@@ -58,7 +58,7 @@ export interface Spell {
   
   // System Ascendant specific fields
   essenceRequirement?: string;      // Essence cost instead of material components
-  hunterClass?: string[];           // Specific Hunter class requirements
+  hunterClass?: string[];           // Specific Ascendant class requirements
   systemAwakening?: boolean;        // Requires System Awakening to use
 }
 
@@ -333,7 +333,7 @@ export const spells = [
   {
     "id": "spell-0006",
     "name": "Divine Bolt",
-    "description": "Weave minor holy energy into a protective manifestation as celestial power descends. Divine Bolt shields against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as celestial power descends. Divine Bolt shields against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0006.webp",
@@ -376,7 +376,7 @@ export const spells = [
   {
     "id": "spell-0007",
     "name": "Arcane Bolt",
-    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Bolt channels the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Bolt channels the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0007.webp",
@@ -550,7 +550,7 @@ export const spells = [
   {
     "id": "spell-0011",
     "name": "Holy Bolt",
-    "description": "Harness minor holy energy as sacred energy surges. Holy Bolt manipulates the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as sacred energy surges. Holy Bolt manipulates the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0011.webp",
@@ -593,7 +593,7 @@ export const spells = [
   {
     "id": "spell-0012",
     "name": "Dark Bolt",
-    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Dark Bolt rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Dark Bolt rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0012.webp",
@@ -767,7 +767,7 @@ export const spells = [
   {
     "id": "spell-0016",
     "name": "Demonic Blast",
-    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Demonic Blast heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Demonic Blast heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0016.webp",
@@ -809,7 +809,7 @@ export const spells = [
   {
     "id": "spell-0017",
     "name": "Celestial Blast",
-    "description": "Channel moderate holy energy as radiance pours forth around your hands. Celestial Blast blasts the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as radiance pours forth around your hands. Celestial Blast blasts the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0017.webp",
@@ -983,7 +983,7 @@ export const spells = [
   {
     "id": "spell-0021",
     "name": "Frozen Blast",
-    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Blast pierces the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Blast pierces the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0021.webp",
@@ -1029,7 +1029,7 @@ export const spells = [
   {
     "id": "spell-0022",
     "name": "Thunder Blast",
-    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Blast wards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Blast wards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0022.webp",
@@ -1203,7 +1203,7 @@ export const spells = [
   {
     "id": "spell-0026",
     "name": "Void Storm",
-    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Storm deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Storm deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0026.webp",
@@ -1246,7 +1246,7 @@ export const spells = [
   {
     "id": "spell-0027",
     "name": "Abyssal Storm",
-    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Storm alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Storm alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0027.webp",
@@ -1420,7 +1420,7 @@ export const spells = [
   {
     "id": "spell-0031",
     "name": "Arcane Storm",
-    "description": "Harness minor lightning energy as electricity arcs. Arcane Storm weaves the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor lightning energy as electricity arcs. Arcane Storm weaves the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0031.webp",
@@ -1463,7 +1463,7 @@ export const spells = [
   {
     "id": "spell-0032",
     "name": "Infernal Storm",
-    "description": "Draw upon moderate fire energy as flames erupt around the wounded. Infernal Storm regenerates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as flames erupt around the wounded. Infernal Storm regenerates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0032.webp",
@@ -1637,7 +1637,7 @@ export const spells = [
   {
     "id": "spell-0036",
     "name": "Dark Storm",
-    "description": "Draw upon minor lightning energy as thunder rumbles around the wounded. Dark Storm purifies damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor lightning energy as thunder rumbles around the wounded. Dark Storm purifies damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0036.webp",
@@ -1679,7 +1679,7 @@ export const spells = [
   {
     "id": "spell-0037",
     "name": "Shadow Wave",
-    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Wave shreds the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Wave shreds the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0037.webp",
@@ -1853,7 +1853,7 @@ export const spells = [
   {
     "id": "spell-0041",
     "name": "Celestial Wave",
-    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Wave strikes the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Wave strikes the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0041.webp",
@@ -1899,7 +1899,7 @@ export const spells = [
   {
     "id": "spell-0042",
     "name": "Divine Wave",
-    "description": "Weave moderate holy energy into a protective manifestation as divine light blazes. Divine Wave fortifies against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as divine light blazes. Divine Wave fortifies against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0042.webp",
@@ -2073,7 +2073,7 @@ export const spells = [
   {
     "id": "spell-0046",
     "name": "Voltaic Barrier",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Voltaic Barrier fortifies against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Voltaic Barrier fortifies against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0046.webp",
@@ -2116,7 +2116,7 @@ export const spells = [
   {
     "id": "spell-0047",
     "name": "Holy Wave",
-    "description": "Harness moderate holy energy as radiance pours forth. Holy Wave reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as radiance pours forth. Holy Wave reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0047.webp",
@@ -2290,7 +2290,7 @@ export const spells = [
   {
     "id": "spell-0051",
     "name": "Abyssal Nova",
-    "description": "Harness minor abyssal energy as hellfire ignites. Abyssal Nova transforms the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as hellfire ignites. Abyssal Nova transforms the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0051.webp",
@@ -2333,7 +2333,7 @@ export const spells = [
   {
     "id": "spell-0052",
     "name": "Demonic Nova",
-    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Nova revitalizes damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Nova revitalizes damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0052.webp",
@@ -2507,7 +2507,7 @@ export const spells = [
   {
     "id": "spell-0056",
     "name": "Infernal Nova",
-    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Nova rejuvenates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Nova rejuvenates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0056.webp",
@@ -2549,7 +2549,7 @@ export const spells = [
   {
     "id": "spell-0057",
     "name": "Frozen Nova",
-    "description": "Channel moderate ice energy as cold bites deep around your hands. Frozen Nova strikes the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as cold bites deep around your hands. Frozen Nova strikes the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0057.webp",
@@ -2723,7 +2723,7 @@ export const spells = [
   {
     "id": "spell-0061",
     "name": "Shadow Barrier",
-    "description": "Channel minor shadow energy as darkness coalesces around your hands. Shadow Barrier strikes the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as darkness coalesces around your hands. Shadow Barrier strikes the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0061.webp",
@@ -2769,7 +2769,7 @@ export const spells = [
   {
     "id": "spell-0062",
     "name": "Void Barrier",
-    "description": "Weave moderate void energy into a protective manifestation as the void beckons. Void Barrier fortifies against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as the void beckons. Void Barrier fortifies against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0062.webp",
@@ -2943,7 +2943,7 @@ export const spells = [
   {
     "id": "spell-0066",
     "name": "Divine Barrier",
-    "description": "Weave minor holy energy into a protective manifestation as sacred energy surges. Divine Barrier barriers against against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as sacred energy surges. Divine Barrier barriers against against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0066.webp",
@@ -2986,7 +2986,7 @@ export const spells = [
   {
     "id": "spell-0067",
     "name": "Arcane Barrier",
-    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Barrier crafts the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Barrier crafts the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0067.webp",
@@ -3160,7 +3160,7 @@ export const spells = [
   {
     "id": "spell-0071",
     "name": "Holy Barrier",
-    "description": "Harness minor holy energy as celestial power descends. Holy Barrier transforms the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as celestial power descends. Holy Barrier transforms the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0071.webp",
@@ -3203,7 +3203,7 @@ export const spells = [
   {
     "id": "spell-0072",
     "name": "Dark Barrier",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Barrier purifies damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Barrier purifies damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0072.webp",
@@ -3377,7 +3377,7 @@ export const spells = [
   {
     "id": "spell-0076",
     "name": "Demonic Shield",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Shield heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Shield heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0076.webp",
@@ -3419,7 +3419,7 @@ export const spells = [
   {
     "id": "spell-0077",
     "name": "Celestial Shield",
-    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Shield shreds the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Shield shreds the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0077.webp",
@@ -3593,7 +3593,7 @@ export const spells = [
   {
     "id": "spell-0081",
     "name": "Frozen Shield",
-    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Shield devastates the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Shield devastates the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0081.webp",
@@ -3639,7 +3639,7 @@ export const spells = [
   {
     "id": "spell-0082",
     "name": "Thunder Shield",
-    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Shield deflects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Shield deflects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0082.webp",
@@ -3813,7 +3813,7 @@ export const spells = [
   {
     "id": "spell-0086",
     "name": "Void Curse",
-    "description": "Weave minor void energy into a protective manifestation as dimensional rift tears open. Void Curse guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as dimensional rift tears open. Void Curse guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0086.webp",
@@ -3856,7 +3856,7 @@ export const spells = [
   {
     "id": "spell-0087",
     "name": "Abyssal Curse",
-    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Curse alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Curse alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0087.webp",
@@ -4030,7 +4030,7 @@ export const spells = [
   {
     "id": "spell-0091",
     "name": "Arcane Curse",
-    "description": "Harness minor arcane energy as magical weave tightens. Arcane Curse reshapes the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as magical weave tightens. Arcane Curse reshapes the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0091.webp",
@@ -4073,7 +4073,7 @@ export const spells = [
   {
     "id": "spell-0092",
     "name": "Infernal Curse",
-    "description": "Draw upon moderate fire energy as embers spiral around the wounded. Infernal Curse regenerates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as embers spiral around the wounded. Infernal Curse regenerates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0092.webp",
@@ -4247,7 +4247,7 @@ export const spells = [
   {
     "id": "spell-0096",
     "name": "Dark Curse",
-    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Dark Curse heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Dark Curse heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0096.webp",
@@ -4289,7 +4289,7 @@ export const spells = [
   {
     "id": "spell-0097",
     "name": "Shadow Blessing",
-    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Blessing blasts the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Blessing blasts the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0097.webp",
@@ -4463,7 +4463,7 @@ export const spells = [
   {
     "id": "spell-0101",
     "name": "Celestial Blessing",
-    "description": "Channel minor holy energy as divine light blazes around your hands. Celestial Blessing assaults the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as divine light blazes around your hands. Celestial Blessing assaults the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0101.webp",
@@ -4509,7 +4509,7 @@ export const spells = [
   {
     "id": "spell-0102",
     "name": "Divine Blessing",
-    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Blessing guards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Blessing guards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0102.webp",
@@ -4683,7 +4683,7 @@ export const spells = [
   {
     "id": "spell-0106",
     "name": "Thunder Blessing",
-    "description": "Weave minor lightning energy into a protective manifestation as static crackles. Thunder Blessing wards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as static crackles. Thunder Blessing wards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0106.webp",
@@ -4726,7 +4726,7 @@ export const spells = [
   {
     "id": "spell-0107",
     "name": "Holy Blessing",
-    "description": "Harness moderate holy energy as divine light blazes. Holy Blessing transforms the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as divine light blazes. Holy Blessing transforms the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0107.webp",
@@ -4900,7 +4900,7 @@ export const spells = [
   {
     "id": "spell-0111",
     "name": "Abyssal Healing",
-    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Healing channels the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Healing channels the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0111.webp",
@@ -4943,7 +4943,7 @@ export const spells = [
   {
     "id": "spell-0112",
     "name": "Demonic Healing",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Healing rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Healing rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0112.webp",
@@ -5117,7 +5117,7 @@ export const spells = [
   {
     "id": "spell-0116",
     "name": "Infernal Healing",
-    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Healing heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Healing heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0116.webp",
@@ -5159,7 +5159,7 @@ export const spells = [
   {
     "id": "spell-0117",
     "name": "Frozen Healing",
-    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Healing rends the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Healing rends the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0117.webp",
@@ -5333,7 +5333,7 @@ export const spells = [
   {
     "id": "spell-0121",
     "name": "Shadow Restoration",
-    "description": "Channel minor shadow energy as darkness coalesces around your hands. Shadow Restoration pierces the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as darkness coalesces around your hands. Shadow Restoration pierces the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0121.webp",
@@ -5379,7 +5379,7 @@ export const spells = [
   {
     "id": "spell-0122",
     "name": "Void Restoration",
-    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Restoration protects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Restoration protects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0122.webp",
@@ -5553,7 +5553,7 @@ export const spells = [
   {
     "id": "spell-0126",
     "name": "Divine Restoration",
-    "description": "Weave minor holy energy into a protective manifestation as sacred energy surges. Divine Restoration deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as sacred energy surges. Divine Restoration deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0126.webp",
@@ -5596,7 +5596,7 @@ export const spells = [
   {
     "id": "spell-0127",
     "name": "Arcane Restoration",
-    "description": "Harness moderate arcane energy as raw power coalesces. Arcane Restoration manipulates the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as raw power coalesces. Arcane Restoration manipulates the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0127.webp",
@@ -5770,7 +5770,7 @@ export const spells = [
   {
     "id": "spell-0131",
     "name": "Holy Restoration",
-    "description": "Harness minor holy energy as divine light blazes. Holy Restoration transforms the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as divine light blazes. Holy Restoration transforms the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0131.webp",
@@ -5813,7 +5813,7 @@ export const spells = [
   {
     "id": "spell-0132",
     "name": "Dark Restoration",
-    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Dark Restoration restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Dark Restoration restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0132.webp",
@@ -5987,7 +5987,7 @@ export const spells = [
   {
     "id": "spell-0136",
     "name": "Demonic Destruction",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Destruction regenerates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Destruction regenerates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0136.webp",
@@ -6029,7 +6029,7 @@ export const spells = [
   {
     "id": "spell-0137",
     "name": "Celestial Destruction",
-    "description": "Channel moderate holy energy as sacred energy surges around your hands. Celestial Destruction assaults the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as sacred energy surges around your hands. Celestial Destruction assaults the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0137.webp",
@@ -6203,7 +6203,7 @@ export const spells = [
   {
     "id": "spell-0141",
     "name": "Frozen Destruction",
-    "description": "Channel minor ice energy as cold bites deep around your hands. Frozen Destruction blasts the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as cold bites deep around your hands. Frozen Destruction blasts the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0141.webp",
@@ -6249,7 +6249,7 @@ export const spells = [
   {
     "id": "spell-0142",
     "name": "Thunder Destruction",
-    "description": "Weave moderate lightning energy into a protective manifestation as static crackles. Thunder Destruction protects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as static crackles. Thunder Destruction protects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0142.webp",
@@ -6423,7 +6423,7 @@ export const spells = [
   {
     "id": "spell-0146",
     "name": "Void Summoning",
-    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Summoning guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Summoning guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0146.webp",
@@ -6466,7 +6466,7 @@ export const spells = [
   {
     "id": "spell-0147",
     "name": "Abyssal Summoning",
-    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Summoning crafts the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Summoning crafts the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0147.webp",
@@ -6640,7 +6640,7 @@ export const spells = [
   {
     "id": "spell-0151",
     "name": "Arcane Summoning",
-    "description": "Harness minor arcane energy as arcane sigils flare. Arcane Summoning alters the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as arcane sigils flare. Arcane Summoning alters the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0151.webp",
@@ -6683,7 +6683,7 @@ export const spells = [
   {
     "id": "spell-0152",
     "name": "Infernal Summoning",
-    "description": "Draw upon moderate fire energy as heat distorts the air around the wounded. Infernal Summoning rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as heat distorts the air around the wounded. Infernal Summoning rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0152.webp",
@@ -6857,7 +6857,7 @@ export const spells = [
   {
     "id": "spell-0156",
     "name": "Dark Summoning",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Summoning revitalizes damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Summoning revitalizes damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0156.webp",
@@ -6899,7 +6899,7 @@ export const spells = [
   {
     "id": "spell-0157",
     "name": "Shadow Binding",
-    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Binding assaults the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Binding assaults the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0157.webp",
@@ -7073,7 +7073,7 @@ export const spells = [
   {
     "id": "spell-0161",
     "name": "Celestial Binding",
-    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Binding hammers the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Binding hammers the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0161.webp",
@@ -7119,7 +7119,7 @@ export const spells = [
   {
     "id": "spell-0162",
     "name": "Divine Binding",
-    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Binding barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Binding barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0162.webp",
@@ -7293,7 +7293,7 @@ export const spells = [
   {
     "id": "spell-0166",
     "name": "Thunder Binding",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Binding fortifies against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Binding fortifies against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0166.webp",
@@ -7336,7 +7336,7 @@ export const spells = [
   {
     "id": "spell-0167",
     "name": "Holy Binding",
-    "description": "Harness moderate holy energy as divine light blazes. Holy Binding alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as divine light blazes. Holy Binding alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0167.webp",
@@ -7510,7 +7510,7 @@ export const spells = [
   {
     "id": "spell-0171",
     "name": "Abyssal Teleportation",
-    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Teleportation weaves the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Teleportation weaves the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0171.webp",
@@ -7553,7 +7553,7 @@ export const spells = [
   {
     "id": "spell-0172",
     "name": "Demonic Teleportation",
-    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Demonic Teleportation rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Demonic Teleportation rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0172.webp",
@@ -7727,7 +7727,7 @@ export const spells = [
   {
     "id": "spell-0176",
     "name": "Infernal Teleportation",
-    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Teleportation mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Teleportation mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0176.webp",
@@ -7769,7 +7769,7 @@ export const spells = [
   {
     "id": "spell-0177",
     "name": "Frozen Teleportation",
-    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Teleportation hammers the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Teleportation hammers the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0177.webp",
@@ -7943,7 +7943,7 @@ export const spells = [
   {
     "id": "spell-0181",
     "name": "Shadow Transformation",
-    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Transformation assaults the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Transformation assaults the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0181.webp",
@@ -7989,7 +7989,7 @@ export const spells = [
   {
     "id": "spell-0182",
     "name": "Void Transformation",
-    "description": "Weave moderate void energy into a protective manifestation as entropy accelerates. Void Transformation protects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as entropy accelerates. Void Transformation protects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0182.webp",
@@ -8163,7 +8163,7 @@ export const spells = [
   {
     "id": "spell-0186",
     "name": "Divine Transformation",
-    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Transformation guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Transformation guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0186.webp",
@@ -8206,7 +8206,7 @@ export const spells = [
   {
     "id": "spell-0187",
     "name": "Arcane Transformation",
-    "description": "Harness moderate arcane energy as magical weave tightens. Arcane Transformation alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as magical weave tightens. Arcane Transformation alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0187.webp",
@@ -8380,7 +8380,7 @@ export const spells = [
   {
     "id": "spell-0191",
     "name": "Holy Transformation",
-    "description": "Harness minor holy energy as divine light blazes. Holy Transformation crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as divine light blazes. Holy Transformation crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0191.webp",
@@ -8423,7 +8423,7 @@ export const spells = [
   {
     "id": "spell-0192",
     "name": "Dark Transformation",
-    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Transformation purifies damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Transformation purifies damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0192.webp",
@@ -8597,7 +8597,7 @@ export const spells = [
   {
     "id": "spell-0196",
     "name": "Demonic Bolt",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Bolt mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Bolt mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0196.webp",
@@ -8639,7 +8639,7 @@ export const spells = [
   {
     "id": "spell-0197",
     "name": "Celestial Bolt",
-    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Bolt rends the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Bolt rends the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0197.webp",
@@ -8813,7 +8813,7 @@ export const spells = [
   {
     "id": "spell-0201",
     "name": "Frozen Bolt",
-    "description": "Channel minor ice energy as permafrost spreads around your hands. Frozen Bolt shreds the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as permafrost spreads around your hands. Frozen Bolt shreds the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0201.webp",
@@ -8859,7 +8859,7 @@ export const spells = [
   {
     "id": "spell-0202",
     "name": "Thunder Bolt",
-    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Bolt barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Bolt barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0202.webp",
@@ -9033,7 +9033,7 @@ export const spells = [
   {
     "id": "spell-0206",
     "name": "Void Blast",
-    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Blast barriers against against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Blast barriers against against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0206.webp",
@@ -9076,7 +9076,7 @@ export const spells = [
   {
     "id": "spell-0207",
     "name": "Abyssal Blast",
-    "description": "Harness moderate abyssal energy as hellfire ignites. Abyssal Blast reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as hellfire ignites. Abyssal Blast reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0207.webp",
@@ -9250,7 +9250,7 @@ export const spells = [
   {
     "id": "spell-0211",
     "name": "Arcane Blast",
-    "description": "Harness minor arcane energy as magical weave tightens. Arcane Blast alters the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as magical weave tightens. Arcane Blast alters the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0211.webp",
@@ -9293,7 +9293,7 @@ export const spells = [
   {
     "id": "spell-0212",
     "name": "Infernal Blast",
-    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Blast regenerates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Blast regenerates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0212.webp",
@@ -9467,7 +9467,7 @@ export const spells = [
   {
     "id": "spell-0216",
     "name": "Dark Blast",
-    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Dark Blast mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Dark Blast mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0216.webp",
@@ -9509,7 +9509,7 @@ export const spells = [
   {
     "id": "spell-0217",
     "name": "Shadow Storm",
-    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Storm devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Storm devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0217.webp",
@@ -9683,7 +9683,7 @@ export const spells = [
   {
     "id": "spell-0221",
     "name": "Celestial Storm",
-    "description": "Channel minor lightning energy as thunder rumbles around your hands. Celestial Storm blasts the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor lightning energy as thunder rumbles around your hands. Celestial Storm blasts the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0221.webp",
@@ -9729,7 +9729,7 @@ export const spells = [
   {
     "id": "spell-0222",
     "name": "Divine Storm",
-    "description": "Weave moderate lightning energy into a protective manifestation as thunder rumbles. Divine Storm shields against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as thunder rumbles. Divine Storm shields against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0222.webp",
@@ -9903,7 +9903,7 @@ export const spells = [
   {
     "id": "spell-0226",
     "name": "Thunder Storm",
-    "description": "Weave minor lightning energy into a protective manifestation as static crackles. Thunder Storm deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as static crackles. Thunder Storm deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0226.webp",
@@ -9946,7 +9946,7 @@ export const spells = [
   {
     "id": "spell-0227",
     "name": "Holy Storm",
-    "description": "Harness moderate lightning energy as thunder rumbles. Holy Storm crafts the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate lightning energy as thunder rumbles. Holy Storm crafts the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0227.webp",
@@ -10120,7 +10120,7 @@ export const spells = [
   {
     "id": "spell-0231",
     "name": "Abyssal Wave",
-    "description": "Harness minor abyssal energy as hellfire ignites. Abyssal Wave reshapes the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as hellfire ignites. Abyssal Wave reshapes the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0231.webp",
@@ -10163,7 +10163,7 @@ export const spells = [
   {
     "id": "spell-0232",
     "name": "Demonic Wave",
-    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Demonic Wave revitalizes damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Demonic Wave revitalizes damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0232.webp",
@@ -10337,7 +10337,7 @@ export const spells = [
   {
     "id": "spell-0236",
     "name": "Infernal Wave",
-    "description": "Draw upon minor fire energy as flames erupt around the wounded. Infernal Wave heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as flames erupt around the wounded. Infernal Wave heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0236.webp",
@@ -10379,7 +10379,7 @@ export const spells = [
   {
     "id": "spell-0237",
     "name": "Frozen Wave",
-    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Wave shreds the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Wave shreds the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0237.webp",
@@ -10553,7 +10553,7 @@ export const spells = [
   {
     "id": "spell-0241",
     "name": "Shadow Nova",
-    "description": "Channel minor shadow energy as umbral power surges around your hands. Shadow Nova pierces the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as umbral power surges around your hands. Shadow Nova pierces the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0241.webp",
@@ -10599,7 +10599,7 @@ export const spells = [
   {
     "id": "spell-0242",
     "name": "Void Nova",
-    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Nova barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Nova barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0242.webp",
@@ -10773,7 +10773,7 @@ export const spells = [
   {
     "id": "spell-0246",
     "name": "Divine Nova",
-    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Nova barriers against against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Nova barriers against against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0246.webp",
@@ -10816,7 +10816,7 @@ export const spells = [
   {
     "id": "spell-0247",
     "name": "Arcane Nova",
-    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Nova alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Nova alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0247.webp",
@@ -10990,7 +10990,7 @@ export const spells = [
   {
     "id": "spell-0251",
     "name": "Holy Nova",
-    "description": "Harness minor holy energy as celestial power descends. Holy Nova crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as celestial power descends. Holy Nova crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0251.webp",
@@ -11033,7 +11033,7 @@ export const spells = [
   {
     "id": "spell-0252",
     "name": "Dark Nova",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Nova rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Nova rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0252.webp",
@@ -11207,7 +11207,7 @@ export const spells = [
   {
     "id": "spell-0256",
     "name": "Demonic Barrier",
-    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Demonic Barrier rejuvenates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Demonic Barrier rejuvenates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0256.webp",
@@ -11249,7 +11249,7 @@ export const spells = [
   {
     "id": "spell-0257",
     "name": "Celestial Barrier",
-    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Barrier pierces the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Barrier pierces the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0257.webp",
@@ -11423,7 +11423,7 @@ export const spells = [
   {
     "id": "spell-0261",
     "name": "Frozen Barrier",
-    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Barrier assaults the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Barrier assaults the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0261.webp",
@@ -11469,7 +11469,7 @@ export const spells = [
   {
     "id": "spell-0262",
     "name": "Thunder Barrier",
-    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Barrier shields against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Barrier shields against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0262.webp",
@@ -11643,7 +11643,7 @@ export const spells = [
   {
     "id": "spell-0266",
     "name": "Void Shield",
-    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Shield deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as the void beckons. Void Shield deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0266.webp",
@@ -11686,7 +11686,7 @@ export const spells = [
   {
     "id": "spell-0267",
     "name": "Abyssal Shield",
-    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Shield weaves the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Shield weaves the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0267.webp",
@@ -11860,7 +11860,7 @@ export const spells = [
   {
     "id": "spell-0271",
     "name": "Arcane Shield",
-    "description": "Harness minor arcane energy as raw power coalesces. Arcane Shield channels the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as raw power coalesces. Arcane Shield channels the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0271.webp",
@@ -11903,7 +11903,7 @@ export const spells = [
   {
     "id": "spell-0272",
     "name": "Infernal Shield",
-    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Shield revitalizes damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Shield revitalizes damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0272.webp",
@@ -12077,7 +12077,7 @@ export const spells = [
   {
     "id": "spell-0276",
     "name": "Dark Shield",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Shield heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Shield heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0276.webp",
@@ -12119,7 +12119,7 @@ export const spells = [
   {
     "id": "spell-0277",
     "name": "Shadow Curse",
-    "description": "Channel moderate shadow energy as shadows gather around your hands. Shadow Curse devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as shadows gather around your hands. Shadow Curse devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0277.webp",
@@ -12293,7 +12293,7 @@ export const spells = [
   {
     "id": "spell-0281",
     "name": "Celestial Curse",
-    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Curse blasts the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Curse blasts the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0281.webp",
@@ -12339,7 +12339,7 @@ export const spells = [
   {
     "id": "spell-0282",
     "name": "Divine Curse",
-    "description": "Weave moderate holy energy into a protective manifestation as sacred energy surges. Divine Curse fortifies against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as sacred energy surges. Divine Curse fortifies against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0282.webp",
@@ -12513,7 +12513,7 @@ export const spells = [
   {
     "id": "spell-0286",
     "name": "Thunder Curse",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Curse guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Curse guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0286.webp",
@@ -12556,7 +12556,7 @@ export const spells = [
   {
     "id": "spell-0287",
     "name": "Holy Curse",
-    "description": "Harness moderate holy energy as divine light blazes. Holy Curse manipulates the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as divine light blazes. Holy Curse manipulates the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0287.webp",
@@ -12730,7 +12730,7 @@ export const spells = [
   {
     "id": "spell-0291",
     "name": "Abyssal Blessing",
-    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Blessing weaves the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Blessing weaves the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0291.webp",
@@ -12773,7 +12773,7 @@ export const spells = [
   {
     "id": "spell-0292",
     "name": "Demonic Blessing",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Blessing restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Blessing restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0292.webp",
@@ -12947,7 +12947,7 @@ export const spells = [
   {
     "id": "spell-0296",
     "name": "Infernal Blessing",
-    "description": "Draw upon minor fire energy as infernal energy blazes around the wounded. Infernal Blessing rejuvenates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as infernal energy blazes around the wounded. Infernal Blessing rejuvenates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0296.webp",
@@ -12989,7 +12989,7 @@ export const spells = [
   {
     "id": "spell-0297",
     "name": "Frozen Blessing",
-    "description": "Channel moderate ice energy as frost crystallizes around your hands. Frozen Blessing pierces the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as frost crystallizes around your hands. Frozen Blessing pierces the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0297.webp",
@@ -13163,7 +13163,7 @@ export const spells = [
   {
     "id": "spell-0301",
     "name": "Shadow Healing",
-    "description": "Channel minor shadow energy as umbral power surges around your hands. Shadow Healing devastates the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as umbral power surges around your hands. Shadow Healing devastates the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0301.webp",
@@ -13209,7 +13209,7 @@ export const spells = [
   {
     "id": "spell-0302",
     "name": "Void Healing",
-    "description": "Weave moderate void energy into a protective manifestation as entropy accelerates. Void Healing shields against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as entropy accelerates. Void Healing shields against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0302.webp",
@@ -13383,7 +13383,7 @@ export const spells = [
   {
     "id": "spell-0306",
     "name": "Divine Healing",
-    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Healing guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Healing guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0306.webp",
@@ -13426,7 +13426,7 @@ export const spells = [
   {
     "id": "spell-0307",
     "name": "Arcane Healing",
-    "description": "Harness moderate arcane energy as raw power coalesces. Arcane Healing alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as raw power coalesces. Arcane Healing alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0307.webp",
@@ -13600,7 +13600,7 @@ export const spells = [
   {
     "id": "spell-0311",
     "name": "Holy Healing",
-    "description": "Harness minor holy energy as celestial power descends. Holy Healing manipulates the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as celestial power descends. Holy Healing manipulates the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0311.webp",
@@ -13643,7 +13643,7 @@ export const spells = [
   {
     "id": "spell-0312",
     "name": "Dark Healing",
-    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Dark Healing purifies damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Dark Healing purifies damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0312.webp",
@@ -13817,7 +13817,7 @@ export const spells = [
   {
     "id": "spell-0316",
     "name": "Demonic Restoration",
-    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Demonic Restoration restores damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Demonic Restoration restores damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0316.webp",
@@ -13859,7 +13859,7 @@ export const spells = [
   {
     "id": "spell-0317",
     "name": "Celestial Restoration",
-    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Restoration devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Restoration devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0317.webp",
@@ -14033,7 +14033,7 @@ export const spells = [
   {
     "id": "spell-0321",
     "name": "Frozen Restoration",
-    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Restoration pierces the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Restoration pierces the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0321.webp",
@@ -14079,7 +14079,7 @@ export const spells = [
   {
     "id": "spell-0322",
     "name": "Thunder Restoration",
-    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Restoration barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Restoration barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0322.webp",
@@ -14253,7 +14253,7 @@ export const spells = [
   {
     "id": "spell-0326",
     "name": "Void Destruction",
-    "description": "Weave minor void energy into a protective manifestation as reality thins. Void Destruction deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as reality thins. Void Destruction deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0326.webp",
@@ -14296,7 +14296,7 @@ export const spells = [
   {
     "id": "spell-0327",
     "name": "Abyssal Destruction",
-    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Destruction transforms the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Destruction transforms the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0327.webp",
@@ -14470,7 +14470,7 @@ export const spells = [
   {
     "id": "spell-0331",
     "name": "Arcane Destruction",
-    "description": "Harness minor arcane energy as raw power coalesces. Arcane Destruction crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as raw power coalesces. Arcane Destruction crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0331.webp",
@@ -14513,7 +14513,7 @@ export const spells = [
   {
     "id": "spell-0332",
     "name": "Infernal Destruction",
-    "description": "Draw upon moderate fire energy as embers spiral around the wounded. Infernal Destruction purifies damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as embers spiral around the wounded. Infernal Destruction purifies damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0332.webp",
@@ -14687,7 +14687,7 @@ export const spells = [
   {
     "id": "spell-0336",
     "name": "Dark Destruction",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Destruction heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Destruction heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0336.webp",
@@ -14729,7 +14729,7 @@ export const spells = [
   {
     "id": "spell-0337",
     "name": "Shadow Summoning",
-    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Summoning strikes the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Summoning strikes the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0337.webp",
@@ -14903,7 +14903,7 @@ export const spells = [
   {
     "id": "spell-0341",
     "name": "Celestial Summoning",
-    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Summoning rends the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Summoning rends the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0341.webp",
@@ -14949,7 +14949,7 @@ export const spells = [
   {
     "id": "spell-0342",
     "name": "Divine Summoning",
-    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Summoning protects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Summoning protects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0342.webp",
@@ -15123,7 +15123,7 @@ export const spells = [
   {
     "id": "spell-0346",
     "name": "Thunder Summoning",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Summoning shields against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Summoning shields against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0346.webp",
@@ -15166,7 +15166,7 @@ export const spells = [
   {
     "id": "spell-0347",
     "name": "Holy Summoning",
-    "description": "Harness moderate holy energy as radiance pours forth. Holy Summoning reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as radiance pours forth. Holy Summoning reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0347.webp",
@@ -15340,7 +15340,7 @@ export const spells = [
   {
     "id": "spell-0351",
     "name": "Abyssal Binding",
-    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Binding manipulates the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Binding manipulates the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0351.webp",
@@ -15383,7 +15383,7 @@ export const spells = [
   {
     "id": "spell-0352",
     "name": "Demonic Binding",
-    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Demonic Binding restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Demonic Binding restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0352.webp",
@@ -15557,7 +15557,7 @@ export const spells = [
   {
     "id": "spell-0356",
     "name": "Infernal Binding",
-    "description": "Draw upon minor fire energy as embers spiral around the wounded. Infernal Binding heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as embers spiral around the wounded. Infernal Binding heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0356.webp",
@@ -15599,7 +15599,7 @@ export const spells = [
   {
     "id": "spell-0357",
     "name": "Frozen Binding",
-    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Binding devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Binding devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0357.webp",
@@ -15773,7 +15773,7 @@ export const spells = [
   {
     "id": "spell-0361",
     "name": "Shadow Teleportation",
-    "description": "Channel minor shadow energy as void energy pulses around your hands. Shadow Teleportation rends the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as void energy pulses around your hands. Shadow Teleportation rends the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0361.webp",
@@ -15819,7 +15819,7 @@ export const spells = [
   {
     "id": "spell-0362",
     "name": "Void Teleportation",
-    "description": "Weave moderate void energy into a protective manifestation as the void beckons. Void Teleportation wards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as the void beckons. Void Teleportation wards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0362.webp",
@@ -15993,7 +15993,7 @@ export const spells = [
   {
     "id": "spell-0366",
     "name": "Divine Teleportation",
-    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Teleportation guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Teleportation guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0366.webp",
@@ -16036,7 +16036,7 @@ export const spells = [
   {
     "id": "spell-0367",
     "name": "Arcane Teleportation",
-    "description": "Harness moderate arcane energy as mana crystallizes. Arcane Teleportation channels the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as mana crystallizes. Arcane Teleportation channels the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0367.webp",
@@ -16210,7 +16210,7 @@ export const spells = [
   {
     "id": "spell-0371",
     "name": "Holy Teleportation",
-    "description": "Harness minor holy energy as divine light blazes. Holy Teleportation crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as divine light blazes. Holy Teleportation crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0371.webp",
@@ -16253,7 +16253,7 @@ export const spells = [
   {
     "id": "spell-0372",
     "name": "Dark Teleportation",
-    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Teleportation restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Teleportation restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0372.webp",
@@ -16427,7 +16427,7 @@ export const spells = [
   {
     "id": "spell-0376",
     "name": "Demonic Transformation",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Transformation revitalizes damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Transformation revitalizes damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0376.webp",
@@ -16469,7 +16469,7 @@ export const spells = [
   {
     "id": "spell-0377",
     "name": "Celestial Transformation",
-    "description": "Channel moderate holy energy as radiance pours forth around your hands. Celestial Transformation devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as radiance pours forth around your hands. Celestial Transformation devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0377.webp",
@@ -16643,7 +16643,7 @@ export const spells = [
   {
     "id": "spell-0381",
     "name": "Frozen Transformation",
-    "description": "Channel minor ice energy as cold bites deep around your hands. Frozen Transformation hammers the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as cold bites deep around your hands. Frozen Transformation hammers the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0381.webp",
@@ -16689,7 +16689,7 @@ export const spells = [
   {
     "id": "spell-0382",
     "name": "Thunder Transformation",
-    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Transformation guards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Transformation guards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0382.webp",
@@ -16863,7 +16863,7 @@ export const spells = [
   {
     "id": "spell-0386",
     "name": "Void Bolt",
-    "description": "Weave minor void energy into a protective manifestation as reality thins. Void Bolt barriers against against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as reality thins. Void Bolt barriers against against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0386.webp",
@@ -16906,7 +16906,7 @@ export const spells = [
   {
     "id": "spell-0387",
     "name": "Abyssal Bolt",
-    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Bolt manipulates the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Bolt manipulates the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0387.webp",
@@ -17080,7 +17080,7 @@ export const spells = [
   {
     "id": "spell-0391",
     "name": "Arcane Bolt",
-    "description": "Harness minor arcane energy as magical weave tightens. Arcane Bolt crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as magical weave tightens. Arcane Bolt crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0391.webp",
@@ -17123,7 +17123,7 @@ export const spells = [
   {
     "id": "spell-0392",
     "name": "Infernal Bolt",
-    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Bolt restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Bolt restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0392.webp",
@@ -17297,7 +17297,7 @@ export const spells = [
   {
     "id": "spell-0396",
     "name": "Dark Bolt",
-    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Dark Bolt mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Dark Bolt mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0396.webp",
@@ -17339,7 +17339,7 @@ export const spells = [
   {
     "id": "spell-0397",
     "name": "Shadow Blast",
-    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Blast devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as darkness coalesces around your hands. Shadow Blast devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0397.webp",
@@ -17513,7 +17513,7 @@ export const spells = [
   {
     "id": "spell-0401",
     "name": "Celestial Blast",
-    "description": "Channel minor holy energy as radiance pours forth around your hands. Celestial Blast shreds the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as radiance pours forth around your hands. Celestial Blast shreds the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0401.webp",
@@ -17559,7 +17559,7 @@ export const spells = [
   {
     "id": "spell-0402",
     "name": "Divine Blast",
-    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Blast barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Blast barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0402.webp",
@@ -17733,7 +17733,7 @@ export const spells = [
   {
     "id": "spell-0406",
     "name": "Thunder Blast",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Blast shields against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Blast shields against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0406.webp",
@@ -17776,7 +17776,7 @@ export const spells = [
   {
     "id": "spell-0407",
     "name": "Holy Blast",
-    "description": "Harness moderate holy energy as celestial power descends. Holy Blast weaves the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as celestial power descends. Holy Blast weaves the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0407.webp",
@@ -17950,7 +17950,7 @@ export const spells = [
   {
     "id": "spell-0411",
     "name": "Abyssal Storm",
-    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Storm weaves the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Storm weaves the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0411.webp",
@@ -17993,7 +17993,7 @@ export const spells = [
   {
     "id": "spell-0412",
     "name": "Demonic Storm",
-    "description": "Draw upon moderate lightning energy as thunder rumbles around the wounded. Demonic Storm restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate lightning energy as thunder rumbles around the wounded. Demonic Storm restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0412.webp",
@@ -18167,7 +18167,7 @@ export const spells = [
   {
     "id": "spell-0416",
     "name": "Infernal Storm",
-    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Storm rejuvenates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Storm rejuvenates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0416.webp",
@@ -18209,7 +18209,7 @@ export const spells = [
   {
     "id": "spell-0417",
     "name": "Frozen Storm",
-    "description": "Channel moderate ice energy as cold bites deep around your hands. Frozen Storm pierces the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as cold bites deep around your hands. Frozen Storm pierces the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0417.webp",
@@ -18383,7 +18383,7 @@ export const spells = [
   {
     "id": "spell-0421",
     "name": "Shadow Wave",
-    "description": "Channel minor shadow energy as void energy pulses around your hands. Shadow Wave blasts the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as void energy pulses around your hands. Shadow Wave blasts the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0421.webp",
@@ -18429,7 +18429,7 @@ export const spells = [
   {
     "id": "spell-0422",
     "name": "Void Wave",
-    "description": "Weave moderate void energy into a protective manifestation as entropy accelerates. Void Wave barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as entropy accelerates. Void Wave barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0422.webp",
@@ -18603,7 +18603,7 @@ export const spells = [
   {
     "id": "spell-0426",
     "name": "Divine Wave",
-    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Wave guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Wave guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0426.webp",
@@ -18646,7 +18646,7 @@ export const spells = [
   {
     "id": "spell-0427",
     "name": "Arcane Wave",
-    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Wave channels the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Wave channels the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0427.webp",
@@ -18820,7 +18820,7 @@ export const spells = [
   {
     "id": "spell-0431",
     "name": "Holy Wave",
-    "description": "Harness minor holy energy as sacred energy surges. Holy Wave manipulates the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as sacred energy surges. Holy Wave manipulates the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0431.webp",
@@ -18863,7 +18863,7 @@ export const spells = [
   {
     "id": "spell-0432",
     "name": "Dark Wave",
-    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Wave heals damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Wave heals damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0432.webp",
@@ -19037,7 +19037,7 @@ export const spells = [
   {
     "id": "spell-0436",
     "name": "Demonic Nova",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Nova restores damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Nova restores damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0436.webp",
@@ -19079,7 +19079,7 @@ export const spells = [
   {
     "id": "spell-0437",
     "name": "Celestial Nova",
-    "description": "Channel moderate holy energy as celestial power descends around your hands. Celestial Nova assaults the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as celestial power descends around your hands. Celestial Nova assaults the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0437.webp",
@@ -19253,7 +19253,7 @@ export const spells = [
   {
     "id": "spell-0441",
     "name": "Frozen Nova",
-    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Nova hammers the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Nova hammers the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0441.webp",
@@ -19299,7 +19299,7 @@ export const spells = [
   {
     "id": "spell-0442",
     "name": "Thunder Nova",
-    "description": "Weave moderate lightning energy into a protective manifestation as thunder rumbles. Thunder Nova wards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as thunder rumbles. Thunder Nova wards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0442.webp",
@@ -19473,7 +19473,7 @@ export const spells = [
   {
     "id": "spell-0446",
     "name": "Void Barrier",
-    "description": "Weave minor void energy into a protective manifestation as reality thins. Void Barrier guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as reality thins. Void Barrier guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0446.webp",
@@ -19516,7 +19516,7 @@ export const spells = [
   {
     "id": "spell-0447",
     "name": "Abyssal Barrier",
-    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Barrier reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Barrier reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0447.webp",
@@ -19690,7 +19690,7 @@ export const spells = [
   {
     "id": "spell-0451",
     "name": "Arcane Barrier",
-    "description": "Harness minor arcane energy as magical weave tightens. Arcane Barrier crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as magical weave tightens. Arcane Barrier crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0451.webp",
@@ -19733,7 +19733,7 @@ export const spells = [
   {
     "id": "spell-0452",
     "name": "Infernal Barrier",
-    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Barrier purifies damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Barrier purifies damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0452.webp",
@@ -19907,7 +19907,7 @@ export const spells = [
   {
     "id": "spell-0456",
     "name": "Dark Barrier",
-    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Dark Barrier purifies damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Dark Barrier purifies damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0456.webp",
@@ -19949,7 +19949,7 @@ export const spells = [
   {
     "id": "spell-0457",
     "name": "Shadow Shield",
-    "description": "Channel moderate shadow energy as void energy pulses around your hands. Shadow Shield devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as void energy pulses around your hands. Shadow Shield devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0457.webp",
@@ -20123,7 +20123,7 @@ export const spells = [
   {
     "id": "spell-0461",
     "name": "Celestial Shield",
-    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Shield hammers the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Shield hammers the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0461.webp",
@@ -20169,7 +20169,7 @@ export const spells = [
   {
     "id": "spell-0462",
     "name": "Divine Shield",
-    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Shield deflects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Shield deflects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0462.webp",
@@ -20343,7 +20343,7 @@ export const spells = [
   {
     "id": "spell-0466",
     "name": "Thunder Shield",
-    "description": "Weave minor lightning energy into a protective manifestation as electricity arcs. Thunder Shield fortifies against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as electricity arcs. Thunder Shield fortifies against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0466.webp",
@@ -20386,7 +20386,7 @@ export const spells = [
   {
     "id": "spell-0467",
     "name": "Holy Shield",
-    "description": "Harness moderate holy energy as celestial power descends. Holy Shield reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as celestial power descends. Holy Shield reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0467.webp",
@@ -20560,7 +20560,7 @@ export const spells = [
   {
     "id": "spell-0471",
     "name": "Abyssal Curse",
-    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Curse reshapes the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Curse reshapes the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0471.webp",
@@ -20603,7 +20603,7 @@ export const spells = [
   {
     "id": "spell-0472",
     "name": "Demonic Curse",
-    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Curse revitalizes damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Curse revitalizes damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0472.webp",
@@ -20777,7 +20777,7 @@ export const spells = [
   {
     "id": "spell-0476",
     "name": "Infernal Curse",
-    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Curse mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Curse mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0476.webp",
@@ -20819,7 +20819,7 @@ export const spells = [
   {
     "id": "spell-0477",
     "name": "Frozen Curse",
-    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Curse shreds the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Curse shreds the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0477.webp",
@@ -20993,7 +20993,7 @@ export const spells = [
   {
     "id": "spell-0481",
     "name": "Shadow Blessing",
-    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Blessing rends the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Blessing rends the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0481.webp",
@@ -21039,7 +21039,7 @@ export const spells = [
   {
     "id": "spell-0482",
     "name": "Void Blessing",
-    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Blessing deflects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Blessing deflects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0482.webp",
@@ -21213,7 +21213,7 @@ export const spells = [
   {
     "id": "spell-0486",
     "name": "Divine Blessing",
-    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Blessing barriers against against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Blessing barriers against against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0486.webp",
@@ -21256,7 +21256,7 @@ export const spells = [
   {
     "id": "spell-0487",
     "name": "Arcane Blessing",
-    "description": "Harness moderate arcane energy as mana crystallizes. Arcane Blessing crafts the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as mana crystallizes. Arcane Blessing crafts the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0487.webp",
@@ -21430,7 +21430,7 @@ export const spells = [
   {
     "id": "spell-0491",
     "name": "Holy Blessing",
-    "description": "Harness minor holy energy as radiance pours forth. Holy Blessing weaves the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as radiance pours forth. Holy Blessing weaves the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0491.webp",
@@ -21473,7 +21473,7 @@ export const spells = [
   {
     "id": "spell-0492",
     "name": "Dark Blessing",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Blessing purifies damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Blessing purifies damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0492.webp",
@@ -21647,7 +21647,7 @@ export const spells = [
   {
     "id": "spell-0496",
     "name": "Demonic Healing",
-    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Demonic Healing mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Demonic Healing mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0496.webp",
@@ -21689,7 +21689,7 @@ export const spells = [
   {
     "id": "spell-0497",
     "name": "Celestial Healing",
-    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Healing pierces the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Healing pierces the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0497.webp",
@@ -21863,7 +21863,7 @@ export const spells = [
   {
     "id": "spell-0501",
     "name": "Frozen Healing",
-    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Healing rends the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Healing rends the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0501.webp",
@@ -21909,7 +21909,7 @@ export const spells = [
   {
     "id": "spell-0502",
     "name": "Thunder Healing",
-    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Healing deflects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Healing deflects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0502.webp",
@@ -22083,7 +22083,7 @@ export const spells = [
   {
     "id": "spell-0506",
     "name": "Void Restoration",
-    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Restoration guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Restoration guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0506.webp",
@@ -22126,7 +22126,7 @@ export const spells = [
   {
     "id": "spell-0507",
     "name": "Abyssal Restoration",
-    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Restoration manipulates the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Restoration manipulates the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0507.webp",
@@ -22300,7 +22300,7 @@ export const spells = [
   {
     "id": "spell-0511",
     "name": "Arcane Restoration",
-    "description": "Harness minor arcane energy as magical weave tightens. Arcane Restoration transforms the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as magical weave tightens. Arcane Restoration transforms the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0511.webp",
@@ -22343,7 +22343,7 @@ export const spells = [
   {
     "id": "spell-0512",
     "name": "Infernal Restoration",
-    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Restoration regenerates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Restoration regenerates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0512.webp",
@@ -22517,7 +22517,7 @@ export const spells = [
   {
     "id": "spell-0516",
     "name": "Dark Restoration",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Restoration mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Restoration mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0516.webp",
@@ -22559,7 +22559,7 @@ export const spells = [
   {
     "id": "spell-0517",
     "name": "Shadow Destruction",
-    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Destruction assaults the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Destruction assaults the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0517.webp",
@@ -22733,7 +22733,7 @@ export const spells = [
   {
     "id": "spell-0521",
     "name": "Celestial Destruction",
-    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Destruction shreds the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Destruction shreds the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0521.webp",
@@ -22779,7 +22779,7 @@ export const spells = [
   {
     "id": "spell-0522",
     "name": "Divine Destruction",
-    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Destruction barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Destruction barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0522.webp",
@@ -22953,7 +22953,7 @@ export const spells = [
   {
     "id": "spell-0526",
     "name": "Thunder Destruction",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Destruction shields against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Destruction shields against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0526.webp",
@@ -22996,7 +22996,7 @@ export const spells = [
   {
     "id": "spell-0527",
     "name": "Holy Destruction",
-    "description": "Harness moderate holy energy as divine light blazes. Holy Destruction reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as divine light blazes. Holy Destruction reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0527.webp",
@@ -23170,7 +23170,7 @@ export const spells = [
   {
     "id": "spell-0531",
     "name": "Abyssal Summoning",
-    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Summoning reshapes the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as demonic resonance builds. Abyssal Summoning reshapes the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0531.webp",
@@ -23213,7 +23213,7 @@ export const spells = [
   {
     "id": "spell-0532",
     "name": "Demonic Summoning",
-    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Demonic Summoning revitalizes damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Demonic Summoning revitalizes damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0532.webp",
@@ -23387,7 +23387,7 @@ export const spells = [
   {
     "id": "spell-0536",
     "name": "Infernal Summoning",
-    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Summoning purifies damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as heat distorts the air around the wounded. Infernal Summoning purifies damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0536.webp",
@@ -23429,7 +23429,7 @@ export const spells = [
   {
     "id": "spell-0537",
     "name": "Frozen Summoning",
-    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Summoning devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Summoning devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0537.webp",
@@ -23603,7 +23603,7 @@ export const spells = [
   {
     "id": "spell-0541",
     "name": "Shadow Binding",
-    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Binding hammers the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Binding hammers the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0541.webp",
@@ -23649,7 +23649,7 @@ export const spells = [
   {
     "id": "spell-0542",
     "name": "Void Binding",
-    "description": "Weave moderate void energy into a protective manifestation as the void beckons. Void Binding guards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as the void beckons. Void Binding guards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0542.webp",
@@ -23823,7 +23823,7 @@ export const spells = [
   {
     "id": "spell-0546",
     "name": "Divine Binding",
-    "description": "Weave minor holy energy into a protective manifestation as celestial power descends. Divine Binding deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as celestial power descends. Divine Binding deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0546.webp",
@@ -23866,7 +23866,7 @@ export const spells = [
   {
     "id": "spell-0547",
     "name": "Arcane Binding",
-    "description": "Harness moderate arcane energy as mana crystallizes. Arcane Binding alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as mana crystallizes. Arcane Binding alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0547.webp",
@@ -24040,7 +24040,7 @@ export const spells = [
   {
     "id": "spell-0551",
     "name": "Holy Binding",
-    "description": "Harness minor holy energy as divine light blazes. Holy Binding manipulates the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as divine light blazes. Holy Binding manipulates the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0551.webp",
@@ -24083,7 +24083,7 @@ export const spells = [
   {
     "id": "spell-0552",
     "name": "Dark Binding",
-    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Dark Binding heals damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as magical weave tightens around the wounded. Dark Binding heals damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0552.webp",
@@ -24257,7 +24257,7 @@ export const spells = [
   {
     "id": "spell-0556",
     "name": "Demonic Teleportation",
-    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Demonic Teleportation heals damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Demonic Teleportation heals damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0556.webp",
@@ -24299,7 +24299,7 @@ export const spells = [
   {
     "id": "spell-0557",
     "name": "Celestial Teleportation",
-    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Teleportation hammers the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as divine light blazes around your hands. Celestial Teleportation hammers the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0557.webp",
@@ -24473,7 +24473,7 @@ export const spells = [
   {
     "id": "spell-0561",
     "name": "Frozen Teleportation",
-    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Teleportation shreds the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as glacial power flows around your hands. Frozen Teleportation shreds the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0561.webp",
@@ -24519,7 +24519,7 @@ export const spells = [
   {
     "id": "spell-0562",
     "name": "Thunder Teleportation",
-    "description": "Weave moderate lightning energy into a protective manifestation as static crackles. Thunder Teleportation fortifies against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as static crackles. Thunder Teleportation fortifies against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0562.webp",
@@ -24693,7 +24693,7 @@ export const spells = [
   {
     "id": "spell-0566",
     "name": "Void Transformation",
-    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Transformation guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Transformation guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0566.webp",
@@ -24736,7 +24736,7 @@ export const spells = [
   {
     "id": "spell-0567",
     "name": "Abyssal Transformation",
-    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Transformation alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as the abyss responds. Abyssal Transformation alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0567.webp",
@@ -24910,7 +24910,7 @@ export const spells = [
   {
     "id": "spell-0571",
     "name": "Arcane Transformation",
-    "description": "Harness minor arcane energy as mana crystallizes. Arcane Transformation crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as mana crystallizes. Arcane Transformation crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0571.webp",
@@ -24953,7 +24953,7 @@ export const spells = [
   {
     "id": "spell-0572",
     "name": "Infernal Transformation",
-    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Transformation restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Transformation restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0572.webp",
@@ -25127,7 +25127,7 @@ export const spells = [
   {
     "id": "spell-0576",
     "name": "Dark Transformation",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Transformation rejuvenates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Transformation rejuvenates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0576.webp",
@@ -25169,7 +25169,7 @@ export const spells = [
   {
     "id": "spell-0577",
     "name": "Shadow Bolt",
-    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Bolt shreds the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Bolt shreds the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0577.webp",
@@ -25343,7 +25343,7 @@ export const spells = [
   {
     "id": "spell-0581",
     "name": "Celestial Bolt",
-    "description": "Channel minor holy energy as radiance pours forth around your hands. Celestial Bolt pierces the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as radiance pours forth around your hands. Celestial Bolt pierces the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0581.webp",
@@ -25389,7 +25389,7 @@ export const spells = [
   {
     "id": "spell-0582",
     "name": "Divine Bolt",
-    "description": "Weave moderate holy energy into a protective manifestation as sacred energy surges. Divine Bolt deflects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as sacred energy surges. Divine Bolt deflects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0582.webp",
@@ -25563,7 +25563,7 @@ export const spells = [
   {
     "id": "spell-0586",
     "name": "Thunder Bolt",
-    "description": "Weave minor lightning energy into a protective manifestation as static crackles. Thunder Bolt fortifies against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as static crackles. Thunder Bolt fortifies against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0586.webp",
@@ -25606,7 +25606,7 @@ export const spells = [
   {
     "id": "spell-0587",
     "name": "Holy Bolt",
-    "description": "Harness moderate holy energy as radiance pours forth. Holy Bolt reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as radiance pours forth. Holy Bolt reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0587.webp",
@@ -25780,7 +25780,7 @@ export const spells = [
   {
     "id": "spell-0591",
     "name": "Abyssal Blast",
-    "description": "Harness minor abyssal energy as abyssal energy erupts. Abyssal Blast channels the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as abyssal energy erupts. Abyssal Blast channels the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0591.webp",
@@ -25823,7 +25823,7 @@ export const spells = [
   {
     "id": "spell-0592",
     "name": "Demonic Blast",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Blast regenerates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Blast regenerates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0592.webp",
@@ -25997,7 +25997,7 @@ export const spells = [
   {
     "id": "spell-0596",
     "name": "Infernal Blast",
-    "description": "Draw upon minor fire energy as embers spiral around the wounded. Infernal Blast purifies damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as embers spiral around the wounded. Infernal Blast purifies damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0596.webp",
@@ -26039,7 +26039,7 @@ export const spells = [
   {
     "id": "spell-0597",
     "name": "Frozen Blast",
-    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Blast blasts the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as glacial power flows around your hands. Frozen Blast blasts the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0597.webp",
@@ -26213,7 +26213,7 @@ export const spells = [
   {
     "id": "spell-0601",
     "name": "Shadow Storm",
-    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Storm shreds the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Storm shreds the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0601.webp",
@@ -26259,7 +26259,7 @@ export const spells = [
   {
     "id": "spell-0602",
     "name": "Void Storm",
-    "description": "Weave moderate void energy into a protective manifestation as dimensional rift tears open. Void Storm wards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as dimensional rift tears open. Void Storm wards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0602.webp",
@@ -26433,7 +26433,7 @@ export const spells = [
   {
     "id": "spell-0606",
     "name": "Divine Storm",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Divine Storm protects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Divine Storm protects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0606.webp",
@@ -26476,7 +26476,7 @@ export const spells = [
   {
     "id": "spell-0607",
     "name": "Arcane Storm",
-    "description": "Harness moderate lightning energy as electricity arcs. Arcane Storm weaves the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate lightning energy as electricity arcs. Arcane Storm weaves the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0607.webp",
@@ -26650,7 +26650,7 @@ export const spells = [
   {
     "id": "spell-0611",
     "name": "Holy Storm",
-    "description": "Harness minor lightning energy as thunder rumbles. Holy Storm weaves the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor lightning energy as thunder rumbles. Holy Storm weaves the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0611.webp",
@@ -26693,7 +26693,7 @@ export const spells = [
   {
     "id": "spell-0612",
     "name": "Dark Storm",
-    "description": "Draw upon moderate lightning energy as thunder rumbles around the wounded. Dark Storm heals damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate lightning energy as thunder rumbles around the wounded. Dark Storm heals damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0612.webp",
@@ -26867,7 +26867,7 @@ export const spells = [
   {
     "id": "spell-0616",
     "name": "Demonic Wave",
-    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Demonic Wave mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as magical weave tightens around the wounded. Demonic Wave mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0616.webp",
@@ -26909,7 +26909,7 @@ export const spells = [
   {
     "id": "spell-0617",
     "name": "Celestial Wave",
-    "description": "Channel moderate holy energy as celestial power descends around your hands. Celestial Wave pierces the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as celestial power descends around your hands. Celestial Wave pierces the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0617.webp",
@@ -27083,7 +27083,7 @@ export const spells = [
   {
     "id": "spell-0621",
     "name": "Frozen Wave",
-    "description": "Channel minor ice energy as permafrost spreads around your hands. Frozen Wave devastates the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as permafrost spreads around your hands. Frozen Wave devastates the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0621.webp",
@@ -27129,7 +27129,7 @@ export const spells = [
   {
     "id": "spell-0622",
     "name": "Voltaic Barrier",
-    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Voltaic Barrier deflects against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Voltaic Barrier deflects against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0622.webp",
@@ -27303,7 +27303,7 @@ export const spells = [
   {
     "id": "spell-0626",
     "name": "Void Nova",
-    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Nova shields against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Nova shields against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0626.webp",
@@ -27346,7 +27346,7 @@ export const spells = [
   {
     "id": "spell-0627",
     "name": "Abyssal Nova",
-    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Nova transforms the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as demonic resonance builds. Abyssal Nova transforms the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0627.webp",
@@ -27520,7 +27520,7 @@ export const spells = [
   {
     "id": "spell-0631",
     "name": "Arcane Nova",
-    "description": "Harness minor arcane energy as raw power coalesces. Arcane Nova crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as raw power coalesces. Arcane Nova crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0631.webp",
@@ -27563,7 +27563,7 @@ export const spells = [
   {
     "id": "spell-0632",
     "name": "Infernal Nova",
-    "description": "Draw upon moderate fire energy as flames erupt around the wounded. Infernal Nova mends damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as flames erupt around the wounded. Infernal Nova mends damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0632.webp",
@@ -27737,7 +27737,7 @@ export const spells = [
   {
     "id": "spell-0636",
     "name": "Dark Nova",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Nova revitalizes damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Nova revitalizes damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0636.webp",
@@ -27779,7 +27779,7 @@ export const spells = [
   {
     "id": "spell-0637",
     "name": "Shadow Barrier",
-    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Barrier blasts the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Barrier blasts the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0637.webp",
@@ -27953,7 +27953,7 @@ export const spells = [
   {
     "id": "spell-0641",
     "name": "Celestial Barrier",
-    "description": "Channel minor holy energy as divine light blazes around your hands. Celestial Barrier devastates the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as divine light blazes around your hands. Celestial Barrier devastates the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0641.webp",
@@ -27999,7 +27999,7 @@ export const spells = [
   {
     "id": "spell-0642",
     "name": "Divine Barrier",
-    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Barrier barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Barrier barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0642.webp",
@@ -28173,7 +28173,7 @@ export const spells = [
   {
     "id": "spell-0646",
     "name": "Thunder Barrier",
-    "description": "Weave minor lightning energy into a protective manifestation as voltage surges. Thunder Barrier deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as voltage surges. Thunder Barrier deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0646.webp",
@@ -28216,7 +28216,7 @@ export const spells = [
   {
     "id": "spell-0647",
     "name": "Holy Barrier",
-    "description": "Harness moderate holy energy as sacred energy surges. Holy Barrier transforms the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as sacred energy surges. Holy Barrier transforms the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0647.webp",
@@ -28390,7 +28390,7 @@ export const spells = [
   {
     "id": "spell-0651",
     "name": "Abyssal Shield",
-    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Shield manipulates the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as the abyss responds. Abyssal Shield manipulates the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0651.webp",
@@ -28433,7 +28433,7 @@ export const spells = [
   {
     "id": "spell-0652",
     "name": "Demonic Shield",
-    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Shield rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Shield rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0652.webp",
@@ -28607,7 +28607,7 @@ export const spells = [
   {
     "id": "spell-0656",
     "name": "Infernal Shield",
-    "description": "Draw upon minor fire energy as embers spiral around the wounded. Infernal Shield restores damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as embers spiral around the wounded. Infernal Shield restores damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0656.webp",
@@ -28649,7 +28649,7 @@ export const spells = [
   {
     "id": "spell-0657",
     "name": "Frozen Shield",
-    "description": "Channel moderate ice energy as frost crystallizes around your hands. Frozen Shield devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as frost crystallizes around your hands. Frozen Shield devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0657.webp",
@@ -28823,7 +28823,7 @@ export const spells = [
   {
     "id": "spell-0661",
     "name": "Shadow Curse",
-    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Curse devastates the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Curse devastates the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0661.webp",
@@ -28869,7 +28869,7 @@ export const spells = [
   {
     "id": "spell-0662",
     "name": "Void Curse",
-    "description": "Weave moderate void energy into a protective manifestation as dimensional rift tears open. Void Curse guards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as dimensional rift tears open. Void Curse guards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0662.webp",
@@ -29043,7 +29043,7 @@ export const spells = [
   {
     "id": "spell-0666",
     "name": "Divine Curse",
-    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Curse deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as divine light blazes. Divine Curse deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0666.webp",
@@ -29086,7 +29086,7 @@ export const spells = [
   {
     "id": "spell-0667",
     "name": "Arcane Curse",
-    "description": "Harness moderate arcane energy as magical weave tightens. Arcane Curse channels the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as magical weave tightens. Arcane Curse channels the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0667.webp",
@@ -29260,7 +29260,7 @@ export const spells = [
   {
     "id": "spell-0671",
     "name": "Holy Curse",
-    "description": "Harness minor holy energy as divine light blazes. Holy Curse channels the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as divine light blazes. Holy Curse channels the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0671.webp",
@@ -29303,7 +29303,7 @@ export const spells = [
   {
     "id": "spell-0672",
     "name": "Dark Curse",
-    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Curse rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Curse rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0672.webp",
@@ -29477,7 +29477,7 @@ export const spells = [
   {
     "id": "spell-0676",
     "name": "Demonic Blessing",
-    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Demonic Blessing mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as raw power coalesces around the wounded. Demonic Blessing mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0676.webp",
@@ -29519,7 +29519,7 @@ export const spells = [
   {
     "id": "spell-0677",
     "name": "Celestial Blessing",
-    "description": "Channel moderate holy energy as sacred energy surges around your hands. Celestial Blessing shreds the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as sacred energy surges around your hands. Celestial Blessing shreds the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0677.webp",
@@ -29693,7 +29693,7 @@ export const spells = [
   {
     "id": "spell-0681",
     "name": "Frozen Blessing",
-    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Blessing blasts the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as frost crystallizes around your hands. Frozen Blessing blasts the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0681.webp",
@@ -29739,7 +29739,7 @@ export const spells = [
   {
     "id": "spell-0682",
     "name": "Thunder Blessing",
-    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Blessing guards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as electricity arcs. Thunder Blessing guards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0682.webp",
@@ -29913,7 +29913,7 @@ export const spells = [
   {
     "id": "spell-0686",
     "name": "Void Healing",
-    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Healing fortifies against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Healing fortifies against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0686.webp",
@@ -29956,7 +29956,7 @@ export const spells = [
   {
     "id": "spell-0687",
     "name": "Abyssal Healing",
-    "description": "Harness moderate abyssal energy as hellfire ignites. Abyssal Healing transforms the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as hellfire ignites. Abyssal Healing transforms the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0687.webp",
@@ -30130,7 +30130,7 @@ export const spells = [
   {
     "id": "spell-0691",
     "name": "Arcane Healing",
-    "description": "Harness minor arcane energy as arcane sigils flare. Arcane Healing alters the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as arcane sigils flare. Arcane Healing alters the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0691.webp",
@@ -30173,7 +30173,7 @@ export const spells = [
   {
     "id": "spell-0692",
     "name": "Infernal Healing",
-    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Healing rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as infernal energy blazes around the wounded. Infernal Healing rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0692.webp",
@@ -30347,7 +30347,7 @@ export const spells = [
   {
     "id": "spell-0696",
     "name": "Dark Healing",
-    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Dark Healing restores damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as mana crystallizes around the wounded. Dark Healing restores damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0696.webp",
@@ -30389,7 +30389,7 @@ export const spells = [
   {
     "id": "spell-0697",
     "name": "Shadow Restoration",
-    "description": "Channel moderate shadow energy as void energy pulses around your hands. Shadow Restoration strikes the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as void energy pulses around your hands. Shadow Restoration strikes the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0697.webp",
@@ -30563,7 +30563,7 @@ export const spells = [
   {
     "id": "spell-0701",
     "name": "Celestial Restoration",
-    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Restoration assaults the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as sacred energy surges around your hands. Celestial Restoration assaults the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0701.webp",
@@ -30609,7 +30609,7 @@ export const spells = [
   {
     "id": "spell-0702",
     "name": "Divine Restoration",
-    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Restoration wards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as celestial power descends. Divine Restoration wards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0702.webp",
@@ -30783,7 +30783,7 @@ export const spells = [
   {
     "id": "spell-0706",
     "name": "Thunder Restoration",
-    "description": "Weave minor lightning energy into a protective manifestation as voltage surges. Thunder Restoration protects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as voltage surges. Thunder Restoration protects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0706.webp",
@@ -30826,7 +30826,7 @@ export const spells = [
   {
     "id": "spell-0707",
     "name": "Holy Restoration",
-    "description": "Harness moderate holy energy as radiance pours forth. Holy Restoration alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as radiance pours forth. Holy Restoration alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0707.webp",
@@ -31000,7 +31000,7 @@ export const spells = [
   {
     "id": "spell-0711",
     "name": "Abyssal Destruction",
-    "description": "Harness minor abyssal energy as hellfire ignites. Abyssal Destruction manipulates the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as hellfire ignites. Abyssal Destruction manipulates the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0711.webp",
@@ -31043,7 +31043,7 @@ export const spells = [
   {
     "id": "spell-0712",
     "name": "Demonic Destruction",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Destruction heals damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Demonic Destruction heals damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0712.webp",
@@ -31217,7 +31217,7 @@ export const spells = [
   {
     "id": "spell-0716",
     "name": "Infernal Destruction",
-    "description": "Draw upon minor fire energy as infernal energy blazes around the wounded. Infernal Destruction regenerates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as infernal energy blazes around the wounded. Infernal Destruction regenerates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0716.webp",
@@ -31259,7 +31259,7 @@ export const spells = [
   {
     "id": "spell-0717",
     "name": "Frozen Destruction",
-    "description": "Channel moderate ice energy as cold bites deep around your hands. Frozen Destruction devastates the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as cold bites deep around your hands. Frozen Destruction devastates the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0717.webp",
@@ -31433,7 +31433,7 @@ export const spells = [
   {
     "id": "spell-0721",
     "name": "Shadow Summoning",
-    "description": "Channel minor shadow energy as darkness coalesces around your hands. Shadow Summoning blasts the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as darkness coalesces around your hands. Shadow Summoning blasts the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0721.webp",
@@ -31479,7 +31479,7 @@ export const spells = [
   {
     "id": "spell-0722",
     "name": "Void Summoning",
-    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Summoning barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as reality thins. Void Summoning barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0722.webp",
@@ -31653,7 +31653,7 @@ export const spells = [
   {
     "id": "spell-0726",
     "name": "Divine Summoning",
-    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Summoning guards against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as radiance pours forth. Divine Summoning guards against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0726.webp",
@@ -31696,7 +31696,7 @@ export const spells = [
   {
     "id": "spell-0727",
     "name": "Arcane Summoning",
-    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Summoning alters the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Summoning alters the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0727.webp",
@@ -31870,7 +31870,7 @@ export const spells = [
   {
     "id": "spell-0731",
     "name": "Holy Summoning",
-    "description": "Harness minor holy energy as radiance pours forth. Holy Summoning transforms the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as radiance pours forth. Holy Summoning transforms the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0731.webp",
@@ -31913,7 +31913,7 @@ export const spells = [
   {
     "id": "spell-0732",
     "name": "Dark Summoning",
-    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Summoning restores damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as raw power coalesces around the wounded. Dark Summoning restores damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0732.webp",
@@ -32087,7 +32087,7 @@ export const spells = [
   {
     "id": "spell-0736",
     "name": "Demonic Binding",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Binding mends damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Demonic Binding mends damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0736.webp",
@@ -32129,7 +32129,7 @@ export const spells = [
   {
     "id": "spell-0737",
     "name": "Celestial Binding",
-    "description": "Channel moderate holy energy as celestial power descends around your hands. Celestial Binding assaults the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate holy energy as celestial power descends around your hands. Celestial Binding assaults the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0737.webp",
@@ -32303,7 +32303,7 @@ export const spells = [
   {
     "id": "spell-0741",
     "name": "Frozen Binding",
-    "description": "Channel minor ice energy as permafrost spreads around your hands. Frozen Binding pierces the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor ice energy as permafrost spreads around your hands. Frozen Binding pierces the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0741.webp",
@@ -32349,7 +32349,7 @@ export const spells = [
   {
     "id": "spell-0742",
     "name": "Thunder Binding",
-    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Binding wards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate lightning energy into a protective manifestation as voltage surges. Thunder Binding wards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0742.webp",
@@ -32523,7 +32523,7 @@ export const spells = [
   {
     "id": "spell-0746",
     "name": "Void Teleportation",
-    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Teleportation shields against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor void energy into a protective manifestation as entropy accelerates. Void Teleportation shields against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0746.webp",
@@ -32566,7 +32566,7 @@ export const spells = [
   {
     "id": "spell-0747",
     "name": "Abyssal Teleportation",
-    "description": "Harness moderate abyssal energy as hellfire ignites. Abyssal Teleportation reshapes the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate abyssal energy as hellfire ignites. Abyssal Teleportation reshapes the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0747.webp",
@@ -32740,7 +32740,7 @@ export const spells = [
   {
     "id": "spell-0751",
     "name": "Arcane Teleportation",
-    "description": "Harness minor arcane energy as magical weave tightens. Arcane Teleportation crafts the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor arcane energy as magical weave tightens. Arcane Teleportation crafts the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0751.webp",
@@ -32783,7 +32783,7 @@ export const spells = [
   {
     "id": "spell-0752",
     "name": "Infernal Teleportation",
-    "description": "Draw upon moderate fire energy as embers spiral around the wounded. Infernal Teleportation regenerates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate fire energy as embers spiral around the wounded. Infernal Teleportation regenerates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0752.webp",
@@ -32957,7 +32957,7 @@ export const spells = [
   {
     "id": "spell-0756",
     "name": "Dark Teleportation",
-    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Teleportation purifies damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor arcane energy as arcane sigils flare around the wounded. Dark Teleportation purifies damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0756.webp",
@@ -32999,7 +32999,7 @@ export const spells = [
   {
     "id": "spell-0757",
     "name": "Shadow Transformation",
-    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Transformation assaults the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate shadow energy as umbral power surges around your hands. Shadow Transformation assaults the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0757.webp",
@@ -33173,7 +33173,7 @@ export const spells = [
   {
     "id": "spell-0761",
     "name": "Celestial Transformation",
-    "description": "Channel minor holy energy as radiance pours forth around your hands. Celestial Transformation shreds the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor holy energy as radiance pours forth around your hands. Celestial Transformation shreds the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0761.webp",
@@ -33219,7 +33219,7 @@ export const spells = [
   {
     "id": "spell-0762",
     "name": "Divine Transformation",
-    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Transformation wards against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate holy energy into a protective manifestation as radiance pours forth. Divine Transformation wards against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0762.webp",
@@ -33393,7 +33393,7 @@ export const spells = [
   {
     "id": "spell-0766",
     "name": "Thunder Transformation",
-    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Transformation shields against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor lightning energy into a protective manifestation as thunder rumbles. Thunder Transformation shields against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0766.webp",
@@ -33436,7 +33436,7 @@ export const spells = [
   {
     "id": "spell-0767",
     "name": "Holy Transformation",
-    "description": "Harness moderate holy energy as sacred energy surges. Holy Transformation transforms the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate holy energy as sacred energy surges. Holy Transformation transforms the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0767.webp",
@@ -33610,7 +33610,7 @@ export const spells = [
   {
     "id": "spell-0771",
     "name": "Abyssal Bolt",
-    "description": "Harness minor abyssal energy as abyssal energy erupts. Abyssal Bolt transforms the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor abyssal energy as abyssal energy erupts. Abyssal Bolt transforms the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0771.webp",
@@ -33653,7 +33653,7 @@ export const spells = [
   {
     "id": "spell-0772",
     "name": "Demonic Bolt",
-    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Bolt rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as mana crystallizes around the wounded. Demonic Bolt rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0772.webp",
@@ -33827,7 +33827,7 @@ export const spells = [
   {
     "id": "spell-0776",
     "name": "Infernal Bolt",
-    "description": "Draw upon minor fire energy as flames erupt around the wounded. Infernal Bolt regenerates damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor fire energy as flames erupt around the wounded. Infernal Bolt regenerates damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0776.webp",
@@ -33869,7 +33869,7 @@ export const spells = [
   {
     "id": "spell-0777",
     "name": "Frozen Bolt",
-    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Bolt strikes the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate ice energy as permafrost spreads around your hands. Frozen Bolt strikes the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0777.webp",
@@ -34043,7 +34043,7 @@ export const spells = [
   {
     "id": "spell-0781",
     "name": "Shadow Blast",
-    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Blast strikes the target with concentrated destructive force. Hunters learn this early in their awakening.",
+    "description": "Channel minor shadow energy as shadows gather around your hands. Shadow Blast strikes the target with concentrated destructive force. Ascendants learn this early in their awakening.",
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0781.webp",
@@ -34089,7 +34089,7 @@ export const spells = [
   {
     "id": "spell-0782",
     "name": "Void Blast",
-    "description": "Weave moderate void energy into a protective manifestation as dimensional rift tears open. Void Blast barriers against against incoming harm with layered magical barriers. A staple in any serious hunter's arsenal.",
+    "description": "Weave moderate void energy into a protective manifestation as dimensional rift tears open. Void Blast barriers against against incoming harm with layered magical barriers. A staple in any serious ascendant's arsenal.",
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0782.webp",
@@ -34263,7 +34263,7 @@ export const spells = [
   {
     "id": "spell-0786",
     "name": "Divine Blast",
-    "description": "Weave minor holy energy into a protective manifestation as celestial power descends. Divine Blast deflects against incoming harm with layered magical barriers. Hunters learn this early in their awakening.",
+    "description": "Weave minor holy energy into a protective manifestation as celestial power descends. Divine Blast deflects against incoming harm with layered magical barriers. Ascendants learn this early in their awakening.",
     "type": "Defense",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0786.webp",
@@ -34306,7 +34306,7 @@ export const spells = [
   {
     "id": "spell-0787",
     "name": "Arcane Blast",
-    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Blast manipulates the fabric of reality to produce extraordinary effects. A staple in any serious hunter's arsenal.",
+    "description": "Harness moderate arcane energy as arcane sigils flare. Arcane Blast manipulates the fabric of reality to produce extraordinary effects. A staple in any serious ascendant's arsenal.",
     "type": "Utility",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0787.webp",
@@ -34480,7 +34480,7 @@ export const spells = [
   {
     "id": "spell-0791",
     "name": "Holy Blast",
-    "description": "Harness minor holy energy as celestial power descends. Holy Blast reshapes the fabric of reality to produce extraordinary effects. Hunters learn this early in their awakening.",
+    "description": "Harness minor holy energy as celestial power descends. Holy Blast reshapes the fabric of reality to produce extraordinary effects. Ascendants learn this early in their awakening.",
     "type": "Utility",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0791.webp",
@@ -34523,7 +34523,7 @@ export const spells = [
   {
     "id": "spell-0792",
     "name": "Dark Blast",
-    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Blast rejuvenates damaged tissue and restores vitality. A staple in any serious hunter's arsenal.",
+    "description": "Draw upon moderate arcane energy as arcane sigils flare around the wounded. Dark Blast rejuvenates damaged tissue and restores vitality. A staple in any serious ascendant's arsenal.",
     "type": "Healing",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0792.webp",
@@ -34697,7 +34697,7 @@ export const spells = [
   {
     "id": "spell-0796",
     "name": "Demonic Storm",
-    "description": "Draw upon minor lightning energy as static crackles around the wounded. Demonic Storm revitalizes damaged tissue and restores vitality. Hunters learn this early in their awakening.",
+    "description": "Draw upon minor lightning energy as static crackles around the wounded. Demonic Storm revitalizes damaged tissue and restores vitality. Ascendants learn this early in their awakening.",
     "type": "Healing",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0796.webp",
@@ -34739,7 +34739,7 @@ export const spells = [
   {
     "id": "spell-0797",
     "name": "Celestial Storm",
-    "description": "Channel moderate lightning energy as static crackles around your hands. Celestial Storm pierces the target with concentrated destructive force. A staple in any serious hunter's arsenal.",
+    "description": "Channel moderate lightning energy as static crackles around your hands. Celestial Storm pierces the target with concentrated destructive force. A staple in any serious ascendant's arsenal.",
     "type": "Attack",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0797.webp",

@@ -1,6 +1,6 @@
 // Powers Compendium - Authoritative System Ascendant Content
 // Supernatural abilities and extraordinary powers
-// Based on System Ascendant canon with SRD 5e mechanics
+// Based on System Ascendant mechanics
 
 export interface Power {
 	id: string;

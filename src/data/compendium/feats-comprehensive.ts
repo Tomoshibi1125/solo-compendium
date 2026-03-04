@@ -398,7 +398,7 @@ export const comprehensiveFeats: Feat[] = [
 		id: "endurance-optimization",
 		name: "Endurance Optimization",
 		description:
-			"You have survived more gate collapses than most hunters see in a lifetime. Your endurance is legendary.",
+			"You have survived more gate collapses than most ascendants see in a lifetime. Your endurance is legendary.",
 		prerequisites: { ability: "Constitution", score: 13 },
 		benefits: [
 			"You have advantage on saving throws against exhaustion.",
@@ -707,7 +707,7 @@ export const comprehensiveFeats: Feat[] = [
 		id: "gate-raider-stamina",
 		name: "Gate Raider Stamina",
 		description:
-			"You have survived more gate collapses than most hunters see in a lifetime. Your endurance is legendary.",
+			"You have survived more gate collapses than most ascendants see in a lifetime. Your endurance is legendary.",
 		prerequisites: { ability: "Constitution", score: 13 },
 		benefits: [
 			"You have advantage on saving throws against exhaustion.",
@@ -1027,7 +1027,7 @@ export const comprehensiveFeats: Feat[] = [
 		id: "guild-command-protocol",
 		name: "Guild Command Protocol",
 		description:
-			"You have the natural charisma and tactical mind to lead a guild of hunters.",
+			"You have the natural charisma and tactical mind to lead a guild of ascendants.",
 		prerequisites: { ability: "Charisma", score: 15 },
 		benefits: [
 			"You can coordinate up to 10 allies. Allies who can see and hear you have advantage on saves against fear.",
@@ -1338,10 +1338,10 @@ export const comprehensiveFeats: Feat[] = [
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "hunter-guild-leader",
+		id: "ascendant-guild-leader",
 		name: "Guild Leader Protocol",
 		description:
-			"You have the natural charisma and tactical mind to lead a guild of hunters.",
+			"You have the natural charisma and tactical mind to lead a guild of ascendants.",
 		prerequisites: { ability: "Charisma", score: 15 },
 		benefits: [
 			"You can coordinate up to 10 allies. Allies who can see and hear you have advantage on saves against fear.",
@@ -2060,7 +2060,7 @@ export const comprehensiveFeats: Feat[] = [
 		],
 		mechanics: { type: "passive", frequency: "at-will" },
 		flavor:
-			"Other hunters vomit at the threshold. You just check your gear and walk in.",
+			"Other ascendants vomit at the threshold. You just check your gear and walk in.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2117,7 +2117,7 @@ export const comprehensiveFeats: Feat[] = [
 		],
 		mechanics: { type: "triggered", frequency: "at-will", action: "free" },
 		flavor:
-			"Every death refills your reserves. The System designed hunters to be perpetual engines.",
+			"Every death refills your reserves. The System designed ascendants to be perpetual engines.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2289,7 +2289,7 @@ export const comprehensiveFeats: Feat[] = [
 		],
 		mechanics: { type: "passive", frequency: "at-will" },
 		flavor:
-			"Other hunters remove their armor to rest. You barely notice yours.",
+			"Other ascendants remove their armor to rest. You barely notice yours.",
 		source: "System Ascendant Canon",
 	},
 

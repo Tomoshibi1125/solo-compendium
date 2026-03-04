@@ -10,26 +10,27 @@ export interface CompendiumEntry {
 	id: string;
 	name: string;
 	type:
-		| "jobs"
-		| "paths"
-		| "powers"
-		| "runes"
-		| "relics"
-		| "monsters"
-		| "backgrounds"
-		| "conditions"
-		| "regents"
-		| "monarchs"
-		| "feats"
-		| "skills"
-		| "equipment"
-		| "shadow-soldiers"
-		| "techniques"
-		| "items"
-		| "spells"
-		| "artifacts"
-		| "locations"
-		| "sovereigns";
+	| "jobs"
+	| "paths"
+	| "powers"
+	| "runes"
+	| "relics"
+	| "monsters"
+	| "backgrounds"
+	| "conditions"
+	| "regents"
+	| "monarchs"
+	| "feats"
+	| "skills"
+	| "equipment"
+	| "shadow-soldiers"
+	| "techniques"
+	| "items"
+	| "spells"
+	| "artifacts"
+	| "locations"
+	| "sigils"
+	| "sovereigns";
 	rarity?: string;
 	description: string; // Required in Compendium.tsx
 	level?: number;
@@ -76,6 +77,7 @@ const STARTUP_CATEGORIES = [
 	"techniques",
 	"artifacts",
 	"locations",
+	"sigils",
 ] as const;
 
 type StartupCategory = (typeof STARTUP_CATEGORIES)[number];

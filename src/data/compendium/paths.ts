@@ -49,7 +49,7 @@ export const paths: Path[] = [
 		pathType: "champion",
 		requirements: { level: 3, skills: ["Athletics"] },
 		description:
-			"Former Olympic athletes, pro fighters, and CrossFit champions who pushed their System-enhanced bodies toward physical perfection. In the hunter world, they dominate competitive gate-clearance rankings and sponsor deals. Every muscle fiber is optimized, every strike calibrated for maximum lethality — they are the poster children of the Hunter Bureau's recruitment campaigns.",
+			"Former Olympic athletes, pro fighters, and CrossFit champions who pushed their System-enhanced bodies toward physical perfection. In the ascendant world, they dominate competitive gate-clearance rankings and sponsor deals. Every muscle fiber is optimized, every strike calibrated for maximum lethality — they are the poster children of the Ascendant Bureau's recruitment campaigns.",
 		features: [
 			{
 				name: "Optimized Lethality",
@@ -107,7 +107,7 @@ export const paths: Path[] = [
 		pathType: "tactician",
 		requirements: { level: 3, skills: ["Athletics", "Insight"] },
 		description:
-			"Ex-military strategists, chess grandmasters, and esports coaches who process combat data at superhuman speed. Many work as raid commanders for top guilds or consult for the Hunter Bureau's tactical division. The System grants them tactical charge dice — bursts of calculated energy that fuel devastating maneuvers. They treat every gate like a real-time strategy game, and they never lose.",
+			"Ex-military strategists, chess grandmasters, and esports coaches who process combat data at superhuman speed. Many work as raid commanders for top guilds or consult for the Ascendant Bureau's tactical division. The System grants them tactical charge dice — bursts of calculated energy that fuel devastating maneuvers. They treat every gate like a real-time strategy game, and they never lose.",
 		features: [
 			{
 				name: "Tactical Charge",
@@ -290,7 +290,7 @@ export const paths: Path[] = [
 		pathType: "precision",
 		requirements: { level: 3, skills: ["Athletics", "Perception"] },
 		description:
-			"Combat veterans, extreme sports athletes, and survivors of near-fatal gate incidents whose iron will lets them override the System's safety limiters. They're the hunters you send into gates that have already killed the first team. Many are famous for viral clips of impossible last-second victories. They fight with perfect focus even when their bodies should have failed — the System's emergency reserves fuel moments of transcendent precision.",
+			"Combat veterans, extreme sports athletes, and survivors of near-fatal gate incidents whose iron will lets them override the System's safety limiters. They're the ascendants you send into gates that have already killed the first team. Many are famous for viral clips of impossible last-second victories. They fight with perfect focus even when their bodies should have failed — the System's emergency reserves fuel moments of transcendent precision.",
 		features: [
 			{
 				name: "Limit Break",
@@ -415,7 +415,7 @@ export const paths: Path[] = [
 		pathType: "frenzy",
 		requirements: { level: 3, skills: ["Athletics", "Intimidation"] },
 		description:
-			"Underground fighters, adrenaline addicts, and rage-prone individuals with the most unstable mana connections. In underground hunter fight clubs and viral gate-clearance challenges, Feedback Loopers are the headliners — pain feeds back as damage, each hit amplifies the next. The loop burns out eventually, leaving them collapsed in a crater of their own making while chat spams emotes.",
+			"Underground fighters, adrenaline addicts, and rage-prone individuals with the most unstable mana connections. In underground ascendant fight clubs and viral gate-clearance challenges, Feedback Loopers are the headliners — pain feeds back as damage, each hit amplifies the next. The loop burns out eventually, leaving them collapsed in a crater of their own making while chat spams emotes.",
 		features: [
 			{
 				name: "Escalating Loop",
@@ -468,7 +468,7 @@ export const paths: Path[] = [
 		pathType: "totem",
 		requirements: { level: 3, skills: ["Nature", "Survival"] },
 		description:
-			"Animal trainers, wildlife researchers, and zoo workers who formed mana bonds with apex predators inside gates. In a world where gate fauna is a growing field of study, Gate Beasts blur the line between hunter and animal. Many work with the Hunter Bureau's Wildlife Division or star in nature documentaries about gate ecosystems. In Overload, they channel bonded creatures — tank-beast endurance, raptor evasion, or pack-leader coordination.",
+			"Animal trainers, wildlife researchers, and zoo workers who formed mana bonds with apex predators inside gates. In a world where gate fauna is a growing field of study, Gate Beasts blur the line between ascendant and animal. Many work with the Ascendant Bureau's Wildlife Division or star in nature documentaries about gate ecosystems. In Overload, they channel bonded creatures — tank-beast endurance, raptor evasion, or pack-leader coordination.",
 		features: [
 			{
 				name: "Bonded Aspect",
@@ -521,7 +521,7 @@ export const paths: Path[] = [
 		pathType: "ancestral",
 		requirements: { level: 3, skills: ["Athletics", "History"] },
 		description:
-			"Veteran hunters, retired soldiers, and survivors of multiple gate disasters whose bodies are covered in luminous scar tissue from repeated Overloads. In modern guilds, they're the grizzled veterans — the ones who've been through it all and whose scars literally glow in the dark. Instagram influencers have tried to replicate the look; it doesn't work without nearly dying a dozen times first.",
+			"Veteran ascendants, retired soldiers, and survivors of multiple gate disasters whose bodies are covered in luminous scar tissue from repeated Overloads. In modern guilds, they're the grizzled veterans — the ones who've been through it all and whose scars literally glow in the dark. Instagram influencers have tried to replicate the look; it doesn't work without nearly dying a dozen times first.",
 		features: [
 			{
 				name: "Scar Aggro",
@@ -538,7 +538,7 @@ export const paths: Path[] = [
 			{
 				name: "Scar Memory",
 				description:
-					"Your scars record everything you've survived like biological dashcam footage. Cast Clairvoyance as ritual without components — your scars replay environmental data from locations you've been injured. The Hunter Bureau's forensics division sometimes asks Mana Scar veterans to 'read' old battlefields.",
+					"Your scars record everything you've survived like biological dashcam footage. Cast Clairvoyance as ritual without components — your scars replay environmental data from locations you've been injured. The Ascendant Bureau's forensics division sometimes asks Mana Scar veterans to 'read' old battlefields.",
 				level: 10,
 			},
 			{
@@ -574,7 +574,7 @@ export const paths: Path[] = [
 		pathType: "elemental",
 		requirements: { level: 3, skills: ["Athletics", "Nature"] },
 		description:
-			"Survivors of catastrophic gate breaches — power plant workers, storm chasers, and disaster survivors who absorbed raw elemental energy during the event. When they enter Overload, their mana vents as environmental destruction — fire, lightning, or freezing cold radiating from their body. The Hunter Bureau deploys them carefully; Rift Storms are as dangerous to city infrastructure as they are to gate monsters.",
+			"Survivors of catastrophic gate breaches — power plant workers, storm chasers, and disaster survivors who absorbed raw elemental energy during the event. When they enter Overload, their mana vents as environmental destruction — fire, lightning, or freezing cold radiating from their body. The Ascendant Bureau deploys them carefully; Rift Storms are as dangerous to city infrastructure as they are to gate monsters.",
 		features: [
 			{
 				name: "Elemental Vent",
@@ -686,7 +686,7 @@ export const paths: Path[] = [
 		pathType: "wild-magic",
 		requirements: { level: 3, skills: ["Athletics", "Arcana"] },
 		description:
-			"People who were standing too close to a gate breach when it detonated — their System connection is permanently corrupted. In modern society, Mana Glitches are walking chaos engines. Their Overload triggers random mana discharges that have variously destroyed a parking garage, turned a bus stop invisible, and accidentally cured a bystander's cancer. The Hunter Bureau classifies them as anomalous threats, but their unpredictability makes them terrifyingly effective.",
+			"People who were standing too close to a gate breach when it detonated — their System connection is permanently corrupted. In modern society, Mana Glitches are walking chaos engines. Their Overload triggers random mana discharges that have variously destroyed a parking garage, turned a bus stop invisible, and accidentally cured a bystander's cancer. The Ascendant Bureau classifies them as anomalous threats, but their unpredictability makes them terrifyingly effective.",
 		features: [
 			{
 				name: "Mana Detection",
@@ -746,7 +746,7 @@ export const paths: Path[] = [
 		pathType: "thief",
 		requirements: { level: 3, skills: ["Stealth", "Sleight of Hand"] },
 		description:
-			'Ex-shoplifters, parkour YouTubers, and escape room champions whose phase-shifted hands can reach through locked doors and security cases. In the hunter economy, Gate Runners are the fastest looters alive — they strip a cleared gate of valuables before the raid party finishes their post-combat selfies. Many fence gate artifacts on the dark web or run "speed-clear" streams.',
+			'Ex-shoplifters, parkour YouTubers, and escape room champions whose phase-shifted hands can reach through locked doors and security cases. In the ascendant economy, Gate Runners are the fastest looters alive — they strip a cleared gate of valuables before the raid party finishes their post-combat selfies. Many fence gate artifacts on the dark web or run "speed-clear" streams.',
 		features: [
 			{
 				name: "Phase Hands",
@@ -923,7 +923,7 @@ export const paths: Path[] = [
 		pathType: "mastermind",
 		requirements: { level: 3, skills: ["Insight", "Deception"] },
 		description:
-			"Former intelligence analysts, political fixers, investigative journalists, and corporate lobbyists who operate from the spaces between dimensions. They gather intelligence through dimensional eavesdropping — listening through walls, reading screens from another plane, attending meetings as invisible observers. In the hunter world, Shadow Brokers ARE the information economy.",
+			"Former intelligence analysts, political fixers, investigative journalists, and corporate lobbyists who operate from the spaces between dimensions. They gather intelligence through dimensional eavesdropping — listening through walls, reading screens from another plane, attending meetings as invisible observers. In the ascendant world, Shadow Brokers ARE the information economy.",
 		features: [
 			{
 				name: "Intelligence Network",
@@ -1041,7 +1041,7 @@ export const paths: Path[] = [
 		pathType: "scout",
 		requirements: { level: 3, skills: ["Stealth", "Survival"] },
 		description:
-			"Ex-military recon specialists, urban explorers, and search-and-rescue volunteers who serve as the advance force in gate operations. They phase-step past monsters, map corridors using dimensional sight that works like built-in sonar, and relay intel via encrypted comms before the main raid party arrives. The Hunter Bureau's Gate Mapping Division is staffed almost entirely by Vanguard Scouts.",
+			"Ex-military recon specialists, urban explorers, and search-and-rescue volunteers who serve as the advance force in gate operations. They phase-step past monsters, map corridors using dimensional sight that works like built-in sonar, and relay intel via encrypted comms before the main raid party arrives. The Ascendant Bureau's Gate Mapping Division is staffed almost entirely by Vanguard Scouts.",
 		features: [
 			{
 				name: "Phase Skirmish",
@@ -1101,7 +1101,7 @@ export const paths: Path[] = [
 		pathType: "open-hand",
 		requirements: { level: 3, skills: ["Athletics", "Acrobatics"] },
 		description:
-			"Boxing champions, MMA title holders, and bare-knuckle fighters who optimized their impulse gates for pure unarmed devastation. They headline hunter fight leagues broadcast on pay-per-view and their highlight reels crash servers. Every strike carries focused kinetic force that can shatter concrete, hurl enemies through walls, or lock a nervous system with a touch.",
+			"Boxing champions, MMA title holders, and bare-knuckle fighters who optimized their impulse gates for pure unarmed devastation. They headline ascendant fight leagues broadcast on pay-per-view and their highlight reels crash servers. Every strike carries focused kinetic force that can shatter concrete, hurl enemies through walls, or lock a nervous system with a touch.",
 		features: [
 			{
 				name: "Impact Technique",
@@ -1154,7 +1154,7 @@ export const paths: Path[] = [
 		pathType: "shadow",
 		requirements: { level: 3, skills: ["Stealth", "Acrobatics"] },
 		description:
-			"Parkour athletes, nightclub bouncers, and covert operatives who route impulse energy through shadow-frequency nerve clusters. In the modern hunter world, Phantom Steps are urban legends — security cameras capture a flicker in a dark alley, then a gate monster collapses with shattered ribs and no visible attacker. Many work night shifts for private security firms or as off-the-books assets for intelligence agencies.",
+			"Parkour athletes, nightclub bouncers, and covert operatives who route impulse energy through shadow-frequency nerve clusters. In the modern ascendant world, Phantom Steps are urban legends — security cameras capture a flicker in a dark alley, then a gate monster collapses with shattered ribs and no visible attacker. Many work night shifts for private security firms or as off-the-books assets for intelligence agencies.",
 		features: [
 			{
 				name: "Shadow Impulse",
@@ -1313,7 +1313,7 @@ export const paths: Path[] = [
 		pathType: "kensei",
 		requirements: { level: 3, skills: ["Athletics", "Acrobatics"] },
 		description:
-			"Fencers, kendo champions, knife makers, and weapons collectors who discovered their impulse gates extend through held weapons. Their bonded weapons move faster than the eye can track, vibrating at frequencies that cut through gate-monster armor like butter. Many teach at prestigious hunter academies or appear in luxury weapon brand commercials.",
+			"Fencers, kendo champions, knife makers, and weapons collectors who discovered their impulse gates extend through held weapons. Their bonded weapons move faster than the eye can track, vibrating at frequencies that cut through gate-monster armor like butter. Many teach at prestigious ascendant academies or appear in luxury weapon brand commercials.",
 		features: [
 			{
 				name: "Neural Weapon Bond",
@@ -1366,7 +1366,7 @@ export const paths: Path[] = [
 		pathType: "mercy",
 		requirements: { level: 3, skills: ["Medicine", "Insight"] },
 		description:
-			"Surgeons, physical therapists, acupuncturists, and combat medics who understand impulse pathways intimately. In the modern hunter world, Nerve Surgeons are the most sought-after raid members — they heal teammates mid-combat with a touch and shut down enemy motor functions with precisely placed strikes. Many run rehabilitation clinics for gate-injured hunters by day and clear gates by night.",
+			"Surgeons, physical therapists, acupuncturists, and combat medics who understand impulse pathways intimately. In the modern ascendant world, Nerve Surgeons are the most sought-after raid members — they heal teammates mid-combat with a touch and shut down enemy motor functions with precisely placed strikes. Many run rehabilitation clinics for gate-injured ascendants by day and clear gates by night.",
 		features: [
 			{
 				name: "Medical Training",
@@ -1809,7 +1809,7 @@ export const paths: Path[] = [
 		pathType: "wild-magic",
 		requirements: { level: 1, skills: ["Arcana"] },
 		description:
-			"Espers with the most volatile anomalous connections — the ones whose awakening caused a blackout, a freak hailstorm, or turned their dorm room ceiling into glass. Their flux reactor occasionally overflows, triggering random cascading effects that have variously healed bystanders, set fire to dumpsters, and turned a traffic light into a bird. The Hunter Bureau flags them as unstable assets.",
+			"Espers with the most volatile anomalous connections — the ones whose awakening caused a blackout, a freak hailstorm, or turned their dorm room ceiling into glass. Their flux reactor occasionally overflows, triggering random cascading effects that have variously healed bystanders, set fire to dumpsters, and turned a traffic light into a bird. The Ascendant Bureau flags them as unstable assets.",
 		features: [
 			{
 				name: "Cascade Trigger",
@@ -2117,7 +2117,7 @@ export const paths: Path[] = [
 		pathType: "necromancy",
 		requirements: { level: 2, skills: ["Arcana", "Medicine"] },
 		description:
-			"Former morticians, forensic pathologists, and biohazard cleanup workers who push offensive entropy to its most destructive extreme. In gate raids, every kill accelerates the chain reaction — necrotic energy cascades outward from corpses, withering nearby enemies. The Hunter Bureau deploys them against high-density gate infestations. The longer a fight goes, the more bodies fuel their power.",
+			"Former morticians, forensic pathologists, and biohazard cleanup workers who push offensive entropy to its most destructive extreme. In gate raids, every kill accelerates the chain reaction — necrotic energy cascades outward from corpses, withering nearby enemies. The Ascendant Bureau deploys them against high-density gate infestations. The longer a fight goes, the more bodies fuel their power.",
 		features: [
 			{
 				name: "Efficient Entropy",
@@ -2235,7 +2235,7 @@ export const paths: Path[] = [
 		pathType: "war-magic",
 		requirements: { level: 2, skills: ["Arcana", "Athletics"] },
 		description:
-			"Former riot police, bodyguards, and defensive driving instructors who weaponize entropy defensively. Their armor corrodes incoming attacks, enemy weapons rust mid-swing, and zones around them become no-man's-lands of accelerated decay. The Hunter Bureau assigns them as VIP protection — nothing hostile survives long near a Wither Guard.",
+			"Former riot police, bodyguards, and defensive driving instructors who weaponize entropy defensively. Their armor corrodes incoming attacks, enemy weapons rust mid-swing, and zones around them become no-man's-lands of accelerated decay. The Ascendant Bureau assigns them as VIP protection — nothing hostile survives long near a Wither Guard.",
 		features: [
 			{
 				name: "Entropic Deflection",
@@ -2466,7 +2466,7 @@ export const paths: Path[] = [
 		pathType: "land",
 		requirements: { level: 2, skills: ["Nature"] },
 		description:
-			"Park rangers, botanists, and environmental scientists who attune to a specific gate ecosystem type. They recover mana by absorbing ambient gate energy more efficiently than any other Summoner — literally photosynthesizing in gate biomes. The Hunter Bureau's Ecology Division relies on them for biome-specific gate assessments.",
+			"Park rangers, botanists, and environmental scientists who attune to a specific gate ecosystem type. They recover mana by absorbing ambient gate energy more efficiently than any other Summoner — literally photosynthesizing in gate biomes. The Ascendant Bureau's Ecology Division relies on them for biome-specific gate assessments.",
 		features: [
 			{
 				name: "Biome Cantrip",
@@ -2948,7 +2948,7 @@ export const paths: Path[] = [
 		pathType: "war",
 		requirements: { level: 1, skills: ["Athletics", "Religion"] },
 		description:
-			"Former military chaplains, police officers, and firefighter-paramedics who serve as frontline conduits of hunter guilds — armored, armed, and broadcasting System combat transmissions alongside Destroyers and Berserkers. They stream their gate raids in full plate armor while healing teammates mid-swing.",
+			"Former military chaplains, police officers, and firefighter-paramedics who serve as frontline conduits of ascendant guilds — armored, armed, and broadcasting System combat transmissions alongside Destroyers and Berserkers. They stream their gate raids in full plate armor while healing teammates mid-swing.",
 		features: [
 			{
 				name: "Bonus Proficiencies",
@@ -3306,7 +3306,7 @@ export const paths: Path[] = [
 		pathType: "great-old-one",
 		requirements: { level: 1, skills: ["Arcana", "Investigation"] },
 		description:
-			"Conspiracy theorists, deep-web researchers, and amateur astronomers who stumbled into contact with alien intelligences from beyond the known gate network. Their patrons are so vast and ancient that fragments of their consciousness shatter mortal minds. Intelligence agencies monitor them closely. Their contracts grant psionic abilities no other hunter can access.",
+			"Conspiracy theorists, deep-web researchers, and amateur astronomers who stumbled into contact with alien intelligences from beyond the known gate network. Their patrons are so vast and ancient that fragments of their consciousness shatter mortal minds. Intelligence agencies monitor them closely. Their contracts grant psionic abilities no other ascendant can access.",
 		features: [
 			{
 				name: "Awakened Mind",
@@ -3534,18 +3534,18 @@ export const paths: Path[] = [
 
 	// ── STALKER PATHS ── features at 3,7,11,15 ──
 	{
-		id: "stalker--hunter",
-		name: "Path of the Specialist Hunter",
+		id: "stalker--ascendant",
+		name: "Path of the Specialist Ascendant",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
-		pathType: "hunter",
+		pathType: "ascendant",
 		requirements: { level: 3, skills: ["Survival", "Perception"] },
 		description:
-			"Former pest control professionals, game wardens, and police tactical officers who adapt their tactics to exploit specific prey types. The Hunter Bureau assigns them to gate-specific threat categories. They choose specialized kill techniques at each tier — anti-large, anti-horde, or anti-boss — making them the most versatile Stalker path.",
+			"Former pest control professionals, game wardens, and police tactical officers who adapt their tactics to exploit specific prey types. The Ascendant Bureau assigns them to gate-specific threat categories. They choose specialized kill techniques at each tier — anti-large, anti-horde, or anti-boss — making them the most versatile Stalker path.",
 		features: [
 			{
-				name: "Hunter's Prey",
+				name: "Ascendant's Prey",
 				description:
 					"Choose one: Colossus Slayer (1d8 extra on hit vs creature below max HP, once/turn), Giant Killer (reaction attack when Large+ creature within 5 ft attacks you), or Horde Breaker (additional attack on a different creature within 5 ft of original target).",
 				level: 3,
@@ -3563,7 +3563,7 @@ export const paths: Path[] = [
 				level: 11,
 			},
 			{
-				name: "Superior Hunter's Defense",
+				name: "Superior Ascendant's Defense",
 				description:
 					"Choose one: Evasion (AGI saves: success = no damage, fail = half), Stand Against the Tide (reaction: redirect missed melee to another creature), or Uncanny Dodge (reaction: halve damage from attack you can see).",
 				level: 15,
@@ -3595,7 +3595,7 @@ export const paths: Path[] = [
 		pathType: "beast-master",
 		requirements: { level: 3, skills: ["Animal Handling", "Nature"] },
 		description:
-			"Dog handlers, falconers, and exotic animal trainers who form deep mana-bonds with gate-spawned creatures. Their bonded companions are registered with the Hunter Bureau's Wildlife Division and have their own social media followings. Two predators sharing one hunting instinct — coordinated well enough to clear gates that would require a full party.",
+			"Dog handlers, falconers, and exotic animal trainers who form deep mana-bonds with gate-spawned creatures. Their bonded companions are registered with the Ascendant Bureau's Wildlife Division and have their own social media followings. Two predators sharing one hunting instinct — coordinated well enough to clear gates that would require a full party.",
 		features: [
 			{
 				name: "Primal Companion",
@@ -3641,14 +3641,14 @@ export const paths: Path[] = [
 
 	{
 		id: "stalker--gloom-stalker",
-		name: "Path of the Shadow Hunter",
+		name: "Path of the Shadow Ascendant",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
 		pathType: "gloom-stalker",
 		requirements: { level: 3, skills: ["Stealth", "Perception"] },
 		description:
-			"Night-shift security guards, cave divers, and blackout rescue specialists who thrive in absolute darkness. They become invisible in shadow and strike with devastating ambush tactics. The Hunter Bureau sends them into unknown zero-light gate zones where other hunters can't operate — their helmet cams capture footage that looks like found-footage horror films.",
+			"Night-shift security guards, cave divers, and blackout rescue specialists who thrive in absolute darkness. They become invisible in shadow and strike with devastating ambush tactics. The Ascendant Bureau sends them into unknown zero-light gate zones where other ascendants can't operate — their helmet cams capture footage that looks like found-footage horror films.",
 		features: [
 			{
 				name: "Dread Ambusher",
@@ -3707,7 +3707,7 @@ export const paths: Path[] = [
 		pathType: "horizon-walker",
 		requirements: { level: 3, skills: ["Arcana", "Survival"] },
 		description:
-			"Border patrol agents, customs officers, and immigration lawyers (ironically) who patrol the boundaries between gate dimensions. They sense dimensional portals the way dogs sense earthquakes and teleport through combat via micro-rifts. The Hunter Bureau's Containment Division employs them to seal unauthorized gate crossings.",
+			"Border patrol agents, customs officers, and immigration lawyers (ironically) who patrol the boundaries between gate dimensions. They sense dimensional portals the way dogs sense earthquakes and teleport through combat via micro-rifts. The Ascendant Bureau's Containment Division employs them to seal unauthorized gate crossings.",
 		features: [
 			{
 				name: "Detect Portal",
@@ -3766,10 +3766,10 @@ export const paths: Path[] = [
 		pathType: "monster-slayer",
 		requirements: { level: 3, skills: ["Investigation", "Survival"] },
 		description:
-			"Former detectives, forensic analysts, and competitive gamers who study their prey obsessively — learning to counter every ability and exploit every vulnerability. The Hunter Bureau calls them for S-Rank gate boss encounters where standard tactics have failed. They watch boss-fight footage the way football coaches watch game tape.",
+			"Former detectives, forensic analysts, and competitive gamers who study their prey obsessively — learning to counter every ability and exploit every vulnerability. The Ascendant Bureau calls them for S-Rank gate boss encounters where standard tactics have failed. They watch boss-fight footage the way football coaches watch game tape.",
 		features: [
 			{
-				name: "Hunter's Sense",
+				name: "Ascendant's Sense",
 				description:
 					"Action: learn one creature's immunities, resistances, and vulnerabilities. SENSE mod uses/long rest.",
 				level: 3,
@@ -3803,7 +3803,7 @@ export const paths: Path[] = [
 			{
 				name: "Exploit Weakness",
 				description:
-					"After using Hunter's Sense, your attacks against that creature ignore resistances and treat immunities as resistance for 1 min. Once/long rest.",
+					"After using Ascendant's Sense, your attacks against that creature ignore resistances and treat immunities as resistance for 1 min. Once/long rest.",
 				cooldown: 3,
 				cost: "Free",
 			},
@@ -3944,7 +3944,7 @@ export const paths: Path[] = [
 		pathType: "vengeance",
 		requirements: { level: 3, skills: ["Intimidation"] },
 		description:
-			"Victims of gate disasters, bereaved family members, and wrongfully discharged soldiers who pursue the System's enemies with relentless fury. They are strike-team specialists recruited by the Hunter Bureau for assassination missions — less defensive than Sacred Oath, but devastating against single high-value targets. Their covenant burns with righteous anger.",
+			"Victims of gate disasters, bereaved family members, and wrongfully discharged soldiers who pursue the System's enemies with relentless fury. They are strike-team specialists recruited by the Ascendant Bureau for assassination missions — less defensive than Sacred Oath, but devastating against single high-value targets. Their covenant burns with righteous anger.",
 		features: [
 			{
 				name: "Channel Divinity: Abjure Enemy",
@@ -4003,7 +4003,7 @@ export const paths: Path[] = [
 		pathType: "ancients",
 		requirements: { level: 3, skills: ["Nature", "Religion"] },
 		description:
-			"Environmental activists, conservation officers, and indigenous community leaders who swear to protect life against the encroaching corruption of the gates. Their covenant predates the hunter guilds — a primal pact with the System's original purpose. They chain themselves to threatened gate biomes the way others chain themselves to old-growth trees.",
+			"Environmental activists, conservation officers, and indigenous community leaders who swear to protect life against the encroaching corruption of the gates. Their covenant predates the ascendant guilds — a primal pact with the System's original purpose. They chain themselves to threatened gate biomes the way others chain themselves to old-growth trees.",
 		features: [
 			{
 				name: "Channel Divinity: Nature's Wrath",
@@ -4062,7 +4062,7 @@ export const paths: Path[] = [
 		pathType: "conquest",
 		requirements: { level: 3, skills: ["Intimidation", "Athletics"] },
 		description:
-			"Corporate CEOs, drill sergeants, and authoritarian politicians who rule through overwhelming System authority. Their covenant radiates domination — boardrooms fall silent when they enter, and enemies freeze in place through sheer force of will. The Hunter Bureau uses them to maintain order in lawless gate-adjacent zones.",
+			"Corporate CEOs, drill sergeants, and authoritarian politicians who rule through overwhelming System authority. Their covenant radiates domination — boardrooms fall silent when they enter, and enemies freeze in place through sheer force of will. The Ascendant Bureau uses them to maintain order in lawless gate-adjacent zones.",
 		features: [
 			{
 				name: "Channel Divinity: Conquering Presence",
@@ -4557,7 +4557,7 @@ export const paths: Path[] = [
 		pathType: "system-hacker",
 		requirements: { level: 3, skills: ["Arcana", "Investigation"] },
 		description:
-			"Ethical hackers, penetration testers, and jailbreak enthusiasts who interface directly with the System's core architecture. They treat reality like software — finding exploits, suppressing enemy abilities, and rewriting the laws of magic in a localized area. The Hunter Bureau officially condemns their methods while quietly hiring them for classified operations.",
+			"Ethical hackers, penetration testers, and jailbreak enthusiasts who interface directly with the System's core architecture. They treat reality like software — finding exploits, suppressing enemy abilities, and rewriting the laws of magic in a localized area. The Ascendant Bureau officially condemns their methods while quietly hiring them for classified operations.",
 		features: [
 			{
 				name: "Tool Proficiency",

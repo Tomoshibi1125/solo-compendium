@@ -14,7 +14,7 @@ export interface CampaignInviteRecord {
 	id: string;
 	campaign_id: string;
 	token: string;
-	role: "hunter" | "co-system";
+	role: "ascendant" | "co-system";
 	expires_at: string | null;
 	max_uses: number;
 	used_count: number;
@@ -35,7 +35,7 @@ export interface CampaignInviteSummary {
 	campaign_id: string;
 	campaign_name: string;
 	campaign_description: string | null;
-	role: "hunter" | "co-system";
+	role: "ascendant" | "co-system";
 	expires_at: string | null;
 	max_uses: number;
 	used_count: number;
@@ -49,7 +49,7 @@ export interface CampaignInviteCreateResult {
 	token: string;
 	join_code?: string | null;
 	invite_url?: string | null;
-	role: "hunter" | "co-system";
+	role: "ascendant" | "co-system";
 	expires_at: string | null;
 	max_uses: number;
 	used_count: number;
@@ -98,7 +98,7 @@ export interface CampaignInviteAuditLog {
 
 type CreateInviteArgs = {
 	campaignId: string;
-	role?: "hunter" | "co-system";
+	role?: "ascendant" | "co-system";
 	expiresAt?: string | null;
 	maxUses?: number;
 	inviteEmail?: string;
@@ -145,7 +145,7 @@ const shouldFallbackToLegacyRevokeRpc = (error: unknown): boolean => {
 
 const createInviteViaApi = async ({
 	campaignId,
-	role = "hunter",
+	role = "ascendant",
 	expiresAt,
 	maxUses = 1,
 	inviteEmail,
@@ -228,7 +228,7 @@ export const useCreateCampaignInvite = () => {
 	return useMutation({
 		mutationFn: async ({
 			campaignId,
-			role = "hunter",
+			role = "ascendant",
 			expiresAt,
 			maxUses = 1,
 			inviteEmail,

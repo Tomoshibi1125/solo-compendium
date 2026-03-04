@@ -1,7 +1,7 @@
 /**
  * Concentration Tracking Hook
  *
- * Bridges the pure-logic concentration module (src/lib/srd5e/concentration.ts)
+ * Bridges the pure-logic concentration module (src/lib/system_ascendant/concentration.ts)
  * to React state with Supabase persistence via the character's conditions array.
  *
  * D&D Beyond parity:
@@ -20,7 +20,7 @@ import {
 	getConcentrationStatus,
 	initializeConcentration,
 	startConcentration,
-} from "@/lib/srd5e/concentration";
+} from "@/lib/system_ascendant/concentration";
 import { getAbilityModifier, getProficiencyBonus } from "@/types/system-rules";
 
 // ---------------------------------------------------------------------------

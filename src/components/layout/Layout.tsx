@@ -5,6 +5,7 @@ import {
 	OfflineStatus,
 	PWAInstallPrompt,
 } from "@/components/pwa/PWAComponents";
+import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { OfflineBanner } from "@/components/ui/OfflineBanner";
 import { useAccessibility } from "@/hooks/useAccessibility";
 import { usePWA } from "@/hooks/usePWA";
@@ -101,16 +102,9 @@ export function Layout({ children, className }: LayoutProps) {
 		>
 			{/* Offline connectivity banner */}
 			<OfflineBanner />
-			{/* Global Background Effects */}
+			{/* Global Cosmic Architecture */}
 			<div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-				<div className="absolute inset-0 bg-background" />
-				{!reducedMotion && (
-					<>
-						<div className="absolute inset-0 hex-grid-overlay opacity-[0.03]" />
-						<div className="absolute inset-0 data-rain-overlay opacity-[0.02]" />
-						<div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-amethyst-purple/5 to-transparent" />
-					</>
-				)}
+				<CosmicBackground variant="shadow" intensity="low" animated={!reducedMotion} />
 			</div>
 
 			<a href="#main-content" className="skip-link">
@@ -120,10 +114,10 @@ export function Layout({ children, className }: LayoutProps) {
 				user={
 					user
 						? {
-								email: user.email,
-								name: user.displayName ?? user.email?.split("@")[0] ?? "User",
-								avatar: user.avatar,
-							}
+							email: user.email,
+							name: user.displayName ?? user.email?.split("@")[0] ?? "User",
+							avatar: user.avatar,
+						}
 						: undefined
 				}
 				onLogout={() => {

@@ -1,1 +1,1 @@
-export { monarchs as regents } from "@/data/compendium/monarchs";
+export { regents } from "@/data/compendium/monarchs";

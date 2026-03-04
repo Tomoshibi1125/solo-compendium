@@ -122,8 +122,8 @@ export function CampaignProtocolControls({
 
 	const exportCampaign = useCampaignExport();
 
-	const [inviteRole, setInviteRole] = useState<"hunter" | "co-system">(
-		"hunter",
+	const [inviteRole, setInviteRole] = useState<"ascendant" | "co-system">(
+		"ascendant",
 	);
 	const [inviteExpiresAt, setInviteExpiresAt] = useState("");
 	const [inviteMaxUses, setInviteMaxUses] = useState(1);
@@ -343,14 +343,14 @@ export function CampaignProtocolControls({
 							<Select
 								value={inviteRole}
 								onValueChange={(value) =>
-									setInviteRole(value as "hunter" | "co-system")
+									setInviteRole(value as "ascendant" | "co-system")
 								}
 							>
 								<SelectTrigger id="invite-role">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="hunter">Ascendant</SelectItem>
+									<SelectItem value="ascendant">Ascendant</SelectItem>
 									<SelectItem value="co-system">Co-System</SelectItem>
 								</SelectContent>
 							</Select>

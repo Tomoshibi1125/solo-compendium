@@ -462,7 +462,7 @@ export function MonarchUnlocksPanel({
 						</DialogTrigger>
 						<DialogContent className="bg-card border-monarch-gold/40 max-w-lg">
 							<DialogHeader>
-								<DialogTitle className="font-display text-xl gradient-text-monarch flex items-center gap-2">
+								<DialogTitle className="font-display text-xl gradient-text-regent flex items-center gap-2">
 									<Crown className="h-5 w-5" />
 									The System Analyzes Your Potential...
 								</DialogTitle>

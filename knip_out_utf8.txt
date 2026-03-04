@@ -1,0 +1,867 @@
+﻿[dotenv@17.3.1] injecting env (4) from .env -- tip: ΓÜÖ∩╕Å  enable debug logging with { debug: true }
+[93m[4mUnused files[24m[39m (104)
+final_fix.js                                                                                 
+fix_errors4.js                                                                               
+gen_runestones.mjs                                                                           
+gen_sigils.mjs                                                                               
+get_error.js                                                                                 
+get_error.mjs                                                                                
+mass-replace-shadow.js                                                                       
+mass_replace_terms.js                                                                        
+migrate-runes.js                                                                             
+old_runes.ts                                                                                 
+rename_runes.mjs                                                                             
+repair_vars.js                                                                               
+swap_hooks.js                                                                                
+test_all.ts                                                                                  
+test_rarity.mjs                                                                              
+test_rune.ts                                                                                 
+test_runes.ts                                                                                
+api/ai.js                                                                                    
+api/createInvite.js                                                                          
+scripts/download-tokens.ts                                                                   
+scripts/enrich-items.mjs                                                                     
+scripts/enrich-spells.mjs                                                                    
+scripts/generate-ai-tokens.ts                                                                
+scripts/upgrade-typography.cjs                                                               
+scripts/upgrade-typography.js                                                                
+public/draco/draco_decoder.js                                                                
+public/draco/draco_wasm_wrapper.js                                                           
+src/lib/conditionSystem.ts                                                                   
+src/lib/localAIIntegration.ts                                                                
+src/lib/notePrivacy.ts                                                                       
+src/lib/rapierCompat.ts                                                                      
+src/components/character/RegentSelection.tsx                                                 
+src/components/ui/GatePortal.tsx                                                             
+supabase/functions/signup/index.ts                                                           
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Dirt 1 64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Dirt 2 64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Glass 1 64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Grass 1 64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Metal 1 64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Sand 1 64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Sand 2 64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Stone 1 64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Stone 2 64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Stone 3 64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Wood 1 64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor - Wood 2 64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Dirt_01-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Dirt_02-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Dirt_03-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Dirt_04-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Glass_01-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Glass_02-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Grass_01-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Grass_02-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Metal_01-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Metal_02-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Sand_01-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Sand_02-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Sand_03-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Sand_04-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Stone_01-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Stone_02-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Stone_03-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Stone_04-64x64.tsx  
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Wood_01-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Floors/Tiled Tsx/Floor-Wood_02-64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Brick 1 64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Brick 2 64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Brick 3 64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Concrete 1 64x64.tsx
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Dirt 1 64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Glass 1 64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Glass 2 64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Metal 1 64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Sand 1 64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall - Stone 1 64x64.tsx   
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Brick_01-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Brick_02-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Brick_03-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Brick_04-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Concrete_01-64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Concrete_02-64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Concrete_03-64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Concrete_04-64x64.tsx 
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Dirt_01-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Dirt_02-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Dirt_03-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Dirt_04-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Glass_01-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Glass_02-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Glass_03-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Glass_04-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Metal_01-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Metal_02-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Metal_03-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Metal_04-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Sand_01-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Sand_02-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Sand_03-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Sand_04-64x64.tsx     
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Stone_01-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Stone_02-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Stone_03-64x64.tsx    
+public/generated/maps/tilesets/dungeon-pack/Tiles/Walls/Tiled Tsx/Wall-Stone_04-64x64.tsx    
+[93m[4mUnused dependencies[24m[39m (8)
+@dimforge/rapier3d           package.json:33:6 
+@google/genai                package.json:37:6 
+@react-three/postprocessing  package.json:58:6 
+@tanstack/react-virtual      package.json:65:6 
+framer-motion                package.json:76:6 
+howler                       package.json:78:6 
+postprocessing               package.json:86:6 
+zustand                      package.json:101:6
+[93m[4mUnused devDependencies[24m[39m (3)
+@biomejs/biome  package.json:104:6
+@types/howler   package.json:108:6
+sharp           package.json:116:6
+[93m[4mUnused exports[24m[39m (420)
+createLogger                     function  src/lib/logger.ts:70:17                               
+debug                                      src/lib/logger.ts:115:14                              
+logAndToastError                 function  src/lib/logger.ts:117:17                              
+isMobile                         function  src/lib/mobile.ts:8:17                                
+isTouchDevice                    function  src/lib/mobile.ts:17:17                               
+getViewportSize                  function  src/lib/mobile.ts:24:17                               
+isSmallViewport                  function  src/lib/mobile.ts:34:17                               
+preventDoubleTapZoom             function  src/lib/mobile.ts:41:17                               
+setSentryUser                    function  src/lib/sentry.ts:109:17                              
+addBreadcrumb                    function  src/lib/sentry.ts:162:17                              
+default                                    src/data/compendium/monsters.ts:49293:16              
+useStaticDataFallback                      src/data/compendium/staticDataProvider.ts:1796:14     
+useUpdateJournalEntry                      src/hooks/useCharacterJournal.ts:118:14               
+buildToolStorageKey                        src/hooks/useToolState.ts:9:14                        
+loadUserToolState                          src/hooks/useToolState.ts:36:14                       
+loadCampaignToolState                      src/hooks/useToolState.ts:73:14                       
+withPermission                   function  src/lib/auth/authContext.tsx:529:17                   
+getProficiencyBonus                        src/lib/5eCharacterCalculations.ts:13:14              
+LEGACY_5E_TO_SA                            src/lib/5eRulesEngine.ts:19:14                        
+SYSTEM_FAVOR_OPTIONS                       src/lib/5eRulesEngine.ts:421:14                       
+getAvailableFavorOptions         function  src/lib/5eRulesEngine.ts:503:17                       
+getAIServiceForCapability        function  src/lib/ai/types.ts:277:17                            
+validateAIRequest                function  src/lib/ai/types.ts:286:17                            
+parseChoiceGrants                function  src/lib/choiceCalculations.ts:58:17                   
+breakConcentrationConditions     function  src/lib/conditionEffects.ts:415:17                    
+tickRoundDurations               function  src/lib/conditionEffects.ts:426:17                    
+filterExpiredConditions          function  src/lib/conditionEffects.ts:458:17                    
+AMBIENT_SOUND_PRESETS                      src/lib/vtt/index.ts:10:2                             
+computeAllZoneStates                       src/lib/vtt/index.ts:13:2                             
+computeZoneVolume                          src/lib/vtt/index.ts:14:2                             
+createAmbientSoundZone                     src/lib/vtt/index.ts:15:2                             
+distanceToZone                             src/lib/vtt/index.ts:16:2                             
+isListenerInZone                           src/lib/vtt/index.ts:17:2                             
+pointsToSVGPath                            src/lib/vtt/index.ts:29:2                             
+getHexGridSVGPaths                         src/lib/vtt/index.ts:37:2                             
+hexDistance                                src/lib/vtt/index.ts:41:2                             
+hexesInRadius                              src/lib/vtt/index.ts:42:2                             
+hexNeighbors                               src/lib/vtt/index.ts:43:2                             
+hexToPixel                                 src/lib/vtt/index.ts:44:2                             
+pixelToHex                                 src/lib/vtt/index.ts:45:2                             
+rollDiceExpression                         src/lib/vtt/index.ts:56:2                             
+isCellVisible                              src/lib/vtt/index.ts:63:2                             
+DEFAULT_PING_CONFIG                        src/lib/vtt/index.ts:75:2                             
+getPingAnimationCSS                        src/lib/vtt/index.ts:76:2                             
+isOnCooldown                               src/lib/vtt/index.ts:77:2                             
+pruneExpiredPings                          src/lib/vtt/index.ts:80:2                             
+getParticlePreset                          src/lib/vtt/index.ts:84:15                            
+listParticleCategories                     src/lib/vtt/index.ts:85:20                            
+listParticlePresets                        src/lib/vtt/index.ts:86:17                            
+PARTICLE_PRESETS                           src/lib/vtt/index.ts:87:2                             
+createDefaultMacroBar                      src/lib/vtt/index.ts:93:2                             
+createMacro                                src/lib/vtt/index.ts:94:2                             
+generateCharacterMacros                    src/lib/vtt/index.ts:95:2                             
+getMacroByHotkey                           src/lib/vtt/index.ts:96:2                             
+loadMacrosFromLocal                        src/lib/vtt/index.ts:97:2                             
+saveMacrosToLocal                          src/lib/vtt/index.ts:101:2                            
+createTerrainZone                          src/lib/vtt/index.ts:105:2                            
+getCoverBonusAtPosition                    src/lib/vtt/index.ts:106:2                            
+getMovementCostAtPosition                  src/lib/vtt/index.ts:107:2                            
+getWeatherMechanics                        src/lib/vtt/index.ts:109:2                            
+isPointInTerrainZone                       src/lib/vtt/index.ts:110:2                            
+TERRAIN_PRESETS                            src/lib/vtt/index.ts:111:2                            
+ALL_ASSETS                                 src/lib/vtt/index.ts:121:2                            
+AUDIO_ASSETS                               src/lib/vtt/index.ts:123:2                            
+EFFECT_ASSETS                              src/lib/vtt/index.ts:124:2                            
+getAssetSummary                            src/lib/vtt/index.ts:125:2                            
+getAssetsByCategory                        src/lib/vtt/index.ts:126:2                            
+getAssetsByTier                            src/lib/vtt/index.ts:127:2                            
+getMapsForTier                             src/lib/vtt/index.ts:128:2                            
+getMonsterTokensForTier                    src/lib/vtt/index.ts:129:2                            
+MAP_ASSETS                                 src/lib/vtt/index.ts:130:2                            
+MUSIC_ASSETS                               src/lib/vtt/index.ts:131:2                            
+PROP_ASSETS                                src/lib/vtt/index.ts:132:2                            
+searchAssets                               src/lib/vtt/index.ts:133:2                            
+TOKEN_ASSETS                               src/lib/vtt/index.ts:134:2                            
+createWhisperMessage                       src/lib/vtt/index.ts:145:2                            
+formatWhisperLabel                         src/lib/vtt/index.ts:146:2                            
+isMessageVisibleTo                         src/lib/vtt/index.ts:147:2                            
+filterAccessibleFeatures         function  src/lib/levelGating.ts:137:17                         
+getSpellsKnown                   function  src/lib/levelGating.ts:300:17                         
+getSpellsPrepared                function  src/lib/levelGating.ts:310:17                         
+getAccessibleSourcebookSet       function  src/lib/sourcebookAccess.ts:141:23                    
+combineModifiers                 function  src/lib/equipmentModifiers.ts:265:17                  
+NetworkErrorFallback             function  src/components/NetworkErrorHandling.tsx:95:17         
+LoadingIndicator                 function  src/components/NetworkErrorHandling.tsx:160:17        
+SlowNetworkWarning               function  src/components/NetworkErrorHandling.tsx:175:17        
+ServerErrorFallback              function  src/components/NetworkErrorHandling.tsx:187:17        
+TimeoutErrorFallback             function  src/components/NetworkErrorHandling.tsx:235:17        
+OfflineModeIndicator             function  src/components/NetworkErrorHandling.tsx:269:17        
+NetworkStatusIndicator           function  src/components/NetworkErrorHandling.tsx:281:17        
+ResourceLoadingFailure           function  src/components/NetworkErrorHandling.tsx:331:17        
+default                                    src/components/NetworkErrorHandling.tsx:359:16        
+default                                    src/components/ui/CosmicBackground.tsx:297:16         
+GlobalEffects                              src/components/ui/GlobalEffects.tsx:21:14             
+toast                                      src/components/ui/sonner.tsx:29:19                    
+validateEnvOrThrow               function  src/lib/envValidation.ts:73:17                        
+getEnvVar                        function  src/lib/envValidation.ts:92:17                        
+isDevelopment                    function  src/lib/envValidation.ts:109:17                       
+isProduction                     function  src/lib/envValidation.ts:116:17                       
+getShortcutsByCategory           function  src/lib/globalShortcuts.ts:256:17                     
+getGlobalShortcuts               function  src/lib/globalShortcuts.ts:265:17                     
+formatShortcut                   function  src/lib/globalShortcuts.ts:272:17                     
+badgeVariants                              src/components/ui/badge.tsx:37:17                     
+CardFooter                                 src/components/ui/card.tsx:85:2                       
+SKILLS                                     src/types/system-rules.ts:24:14                       
+DC_LADDER                                  src/types/system-rules.ts:133:14                      
+RARITY_LABELS                              src/types/system-rules.ts:169:14                      
+default                                    src/components/CharacterLevelUp.tsx:156:16            
+AlertTitle                                 src/components/ui/alert.tsx:63:17                     
+validateRef                      function  src/lib/compendiumResolver.ts:330:23                  
+mergeHomebrewEntries             function  src/lib/compendiumResolver.ts:364:23                  
+createLocalId                    function  src/lib/guestStore.ts:100:17                          
+upsertLocalCharacter             function  src/lib/guestStore.ts:199:17                          
+normalizeMonarchSearch                     src/lib/vernacular.ts:38:14                           
+PREMADE_MAPS                               src/data/premadeMaps.ts:38:14                         
+tokensCompendium                           src/data/tokens.ts:20:14                              
+BASE_LIBRARY_TOKENS                        src/data/tokenLibraryDefaults.ts:116:14               
+default                                    src/data/compendium/locations.ts:5790:16              
+ToastAction                                src/components/ui/toast.tsx:134:2                     
+reducer                                    src/hooks/use-toast.ts:62:14                          
+calculateAC                      function  src/hooks/useArmorClass.ts:57:17                      
+useArmorClass                    function  src/hooks/useArmorClass.ts:150:17                     
+useAttunement                    function  src/hooks/useAttunement.ts:69:17                      
+Constants                                  src/integrations/supabase/types.ts:7617:14            
+useUpdateSharePermissions                  src/hooks/useCampaignCharacters.ts:224:14             
+getOfflineQueue                            src/lib/offlineSyncQueue.ts:38:14                     
+unregisterOfflineSyncProcessor             src/lib/offlineSync.ts:52:14                          
+useCampaignEncounterEntries                src/hooks/useCampaignEncounters.ts:49:14              
+getErrorInfo                     function  src/lib/errorHandling.ts:56:17                        
+isNetworkError                   function  src/lib/errorHandling.ts:70:17                        
+isAuthError                      function  src/lib/errorHandling.ts:85:17                        
+createMutationErrorHandler       function  src/lib/errorHandling.ts:143:17                       
+createQueryErrorHandler          function  src/lib/errorHandling.ts:159:17                       
+useAddPlayerCharacterToCampaign            src/hooks/useCampaignInvites.ts:307:14                
+saveLocalRollEvent                         src/hooks/useCampaignRollFeed.ts:37:14                
+normalizeRules                             src/hooks/useCampaignRules.ts:62:25                   
+useIsCampaignDM                            src/hooks/useCampaigns.ts:773:14                      
+useIsDM                                    src/hooks/useCampaigns.ts:967:14                      
+createLocalBackup                function  src/hooks/useCharacterBackup.ts:27:17                 
+loadLocalBackups                 function  src/hooks/useCharacterBackup.ts:62:17                 
+restoreFromBackup                function  src/hooks/useCharacterBackup.ts:78:17                 
+deleteLocalBackup                function  src/hooks/useCharacterBackup.ts:87:17                 
+useAutoBackup                    function  src/hooks/useCharacterBackup.ts:334:17                
+useCharacterImport               function  src/hooks/useCharacterExportImport.ts:288:17          
+applyAbilityModifier                       src/lib/rollEngine.ts:17:2                            
+applyExpertise                             src/lib/rollEngine.ts:18:2                            
+applyProficiencyBonus                      src/lib/rollEngine.ts:19:2                            
+rollCompounding                            src/lib/rollEngine.ts:20:2                            
+rollCritical                               src/lib/rollEngine.ts:21:2                            
+rollDicePool                               src/lib/rollEngine.ts:22:2                            
+rollExploding                              src/lib/rollEngine.ts:23:2                            
+rollKeepHighest                            src/lib/rollEngine.ts:24:2                            
+rollKeepLowest                             src/lib/rollEngine.ts:25:2                            
+rollPenetrating                            src/lib/rollEngine.ts:26:2                            
+rollWithAdvantage                          src/lib/rollEngine.ts:27:2                            
+rollWithMinimum                            src/lib/rollEngine.ts:28:2                            
+rollWithReroll                             src/lib/rollEngine.ts:29:2                            
+validateDiceString               function  src/lib/rollEngine.ts:33:17                           
+parseFormula                     function  src/lib/rollEngine.ts:61:17                           
+rollDie                          function  src/lib/rollEngine.ts:78:17                           
+roll                             function  src/lib/rollEngine.ts:85:17                           
+quickRoll                        function  src/lib/rollEngine.ts:134:17                          
+rollAttack                       function  src/lib/rollEngine.ts:161:17                          
+rollMultiple                     function  src/lib/rollEngine.ts:189:17                          
+formatRollResult                 function  src/lib/rollEngine.ts:201:17                          
+useUndoRedo                      function  src/lib/undoRedo.ts:128:17                            
+maintainConcentration            function  src/lib/system_ascendant/concentration.ts:49:17       
+takeConcentrationDamage          function  src/lib/system_ascendant/concentration.ts:79:17       
+makeConcentrationSave            function  src/lib/system_ascendant/concentration.ts:111:17      
+QuestRequirementSchema                     src/lib/dailyQuests/types.ts:9:14                     
+clearPersistedFilters            function  src/hooks/useFilterPersistence.ts:53:17               
+useHomebrewCharacterIntegration  function  src/hooks/useHomebrewContent.ts:474:17                
+useMarketplaceReviews                      src/hooks/useMarketplaceData.ts:194:14                
+createNotification               function  src/hooks/useNotifications.ts:146:17                  
+useStartupData                             src/hooks/useStartupData.ts:120:14                    
+ActiveUsersList                  function  src/hooks/useRealtimeCollaboration.tsx:427:17         
+CollaborativeCursors             function  src/hooks/useRealtimeCollaboration.tsx:453:17         
+useCampaignRegentUnlocks         function  src/hooks/useRegentUnlocks.ts:186:17                  
+useAvailableRegents              function  src/hooks/useRegentUnlocks.ts:233:17                  
+useMonarchUnlocks                          src/hooks/useRegentUnlocks.ts:273:14                  
+autoLearnRunes                   function  src/lib/runeAutomation.ts:11:23                       
+canInscribeRune                  function  src/lib/runeAutomation.ts:40:23                       
+getAvailableRunesForEquipment    function  src/lib/runeAutomation.ts:167:23                      
+useCompendiumRunes               function  src/hooks/useRunes.ts:53:17                           
+useEquipmentRunes                function  src/hooks/useRunes.ts:213:17                          
+useInscribeRune                  function  src/hooks/useRunes.ts:280:17                          
+useRemoveRuneInscription         function  src/hooks/useRunes.ts:383:17                          
+useToggleRuneActive              function  src/hooks/useRunes.ts:415:17                          
+useUseRune                       function  src/hooks/useRunes.ts:452:17                          
+useLearnRune                     function  src/hooks/useRunes.ts:522:17                          
+checkRuneRequirements            function  src/hooks/useRunes.ts:688:17                          
+getFusionDescription             function  src/lib/geminiProtocol.ts:962:17                      
+getFusionMethodDescription       function  src/lib/geminiProtocol.ts:967:17                      
+useSavedSovereigns               function  src/hooks/useSavedSovereigns.ts:28:17                 
+useMySovereigns                  function  src/hooks/useSavedSovereigns.ts:49:17                 
+useDeleteSovereign               function  src/hooks/useSavedSovereigns.ts:186:17                
+useIncreaseBondLevel             function  src/hooks/useShadowSoldiers.ts:215:17                 
+useRecoverSpellSlots                       src/hooks/useSpellSlots.ts:435:14                     
+spellEffectsToEngineEffects      function  src/lib/spellEffectPipeline.ts:205:17                 
+advanceRound                     function  src/lib/spellEffectPipeline.ts:230:17                 
+dropConcentration                function  src/lib/spellEffectPipeline.ts:257:17                 
+getKnownSpellEffects             function  src/lib/spellEffectPipeline.ts:282:17                 
+buildActiveSpellEffectEntry      function  src/hooks/useSpellCasting.ts:264:17                   
+getSystemFavorDie                          src/lib/characterCalculations.ts:23:2                 
+ABILITY_DISPLAY_NAMES                      src/lib/characterCalculations.ts:40:2                 
+getAvailableFavorOptions                   src/lib/characterCalculations.ts:43:2                 
+getProficiencyBonus                        src/lib/characterCalculations.ts:44:2                 
+getSystemFavorMax                          src/lib/characterCalculations.ts:45:2                 
+LEGACY_5E_TO_SA                            src/lib/characterCalculations.ts:46:2                 
+SKILLS                                     src/lib/characterCalculations.ts:47:2                 
+useVTTAudioSettings                        src/hooks/useVTTAudio.ts:61:14                        
+useUpdateVTTAudioSettings                  src/hooks/useVTTAudio.ts:187:14                       
+VTTAudioManager                  class     src/hooks/useVTTAudio.ts:225:14                       
+rollDiceFormula                  function  src/hooks/useVTTRealtime.ts:327:17                    
+rollDiceFormulaDetailed          function  src/hooks/useVTTRealtime.ts:338:17                    
+parseChatCommand                 function  src/hooks/useVTTRealtime.ts:432:17                    
+parseFormula                     function  src/lib/advancedDiceEngine.ts:80:17                   
+rollWithAdvantage                function  src/lib/advancedDiceEngine.ts:104:17                  
+rollCritical                     function  src/lib/advancedDiceEngine.ts:148:17                  
+rollWithReroll                   function  src/lib/advancedDiceEngine.ts:175:17                  
+rollWithMinimum                  function  src/lib/advancedDiceEngine.ts:216:17                  
+rollExploding                    function  src/lib/advancedDiceEngine.ts:245:17                  
+rollCompounding                  function  src/lib/advancedDiceEngine.ts:281:17                  
+rollPenetrating                  function  src/lib/advancedDiceEngine.ts:322:17                  
+rollDicePool                     function  src/lib/advancedDiceEngine.ts:363:17                  
+rollKeepHighest                  function  src/lib/advancedDiceEngine.ts:396:17                  
+rollKeepLowest                   function  src/lib/advancedDiceEngine.ts:431:17                  
+applyAbilityModifier             function  src/lib/advancedDiceEngine.ts:463:17                  
+applyProficiencyBonus            function  src/lib/advancedDiceEngine.ts:483:17                  
+applyExpertise                   function  src/lib/advancedDiceEngine.ts:502:17                  
+formatRollResult                 function  src/lib/advancedDiceEngine.ts:524:17                  
+validateDiceString               function  src/lib/advancedDiceEngine.ts:554:17                  
+setAnalyticsConfigOverride       function  src/lib/analytics.ts:38:17                            
+trackEvent                       function  src/lib/analytics.ts:82:17                            
+identifyUser                     function  src/lib/analytics.ts:164:17                           
+resetUser                        function  src/lib/analytics.ts:187:17                           
+AnalyticsEvents                            src/lib/analytics.ts:244:14                           
+bulkUpdateCharacters             function  src/lib/bulkOperations.ts:18:23                       
+bulkAddEquipment                 function  src/lib/bulkOperations.ts:70:23                       
+computeCharacterStats            function  src/lib/characterEngine.ts:1497:17                    
+parseFightingStyleEffects        function  src/lib/featEffectParser.ts:298:17                    
+parseFeatEffects                 function  src/lib/featEffectParser.ts:306:17                    
+hasFeatEffects                   function  src/lib/featEffectParser.ts:389:17                    
+hasFightingStyleEffects          function  src/lib/featEffectParser.ts:396:17                    
+formatSenses                     function  src/lib/sensesEngine.ts:168:17                        
+bridgeFeatEffect                 function  src/lib/unifiedEffectSystem.ts:113:17                 
+bridgeSpellEffect                function  src/lib/unifiedEffectSystem.ts:136:17                 
+bridgeEquipmentEffects           function  src/lib/unifiedEffectSystem.ts:160:17                 
+bridgeAllSpellEffects            function  src/lib/unifiedEffectSystem.ts:275:17                 
+RegentType                                 src/lib/regentGeminiSystem.ts:18:10                   
+RegentQuestManager               class     src/lib/regentGeminiSystem.ts:783:14                  
+CURRENT_SCHEMA_VERSION                     src/lib/characterSchema.ts:6:14                       
+CONDITIONS                                 src/lib/conditions.ts:20:14                           
+getCondition                     function  src/lib/conditions.ts:229:17                          
+JobSchema                                  src/lib/contentValidator.ts:4:14                      
+JobPathSchema                              src/lib/contentValidator.ts:35:14                     
+JobFeatureSchema                           src/lib/contentValidator.ts:51:14                     
+PowerSchema                                src/lib/contentValidator.ts:66:14                     
+RelicSchema                                src/lib/contentValidator.ts:90:14                     
+MonsterSchema                              src/lib/contentValidator.ts:113:14                    
+BackgroundSchema                           src/lib/contentValidator.ts:158:14                    
+parseYAMLContent                 function  src/lib/contentImporter.ts:557:23                     
+calculatePushDragLift            function  src/lib/encumbrance.ts:26:17                          
+getEncumbranceSpeedPenalty       function  src/lib/encumbrance.ts:150:17                         
+XP_THRESHOLDS                              src/lib/experience.ts:6:14                            
+CR_XP_MAP                                  src/lib/experience.ts:30:14                           
+ENCOUNTER_MULTIPLIERS                      src/lib/experience.ts:68:14                           
+getLevelFromXP                   function  src/lib/experience.ts:77:17                           
+getXPForLevel                    function  src/lib/experience.ts:88:17                           
+getXPToNextLevel                 function  src/lib/experience.ts:92:17                           
+getEncounterMultiplier           function  src/lib/experience.ts:117:17                          
+calculateEncounterXP             function  src/lib/experience.ts:126:17                          
+getEncounterDifficulty           function  src/lib/experience.ts:147:17                          
+exportCharacter                  function  src/lib/export.ts:24:23                               
+exportCharacterToMarkdown        function  src/lib/export.ts:103:17                              
+exportCompendiumEntries          function  src/lib/export.ts:131:23                              
+downloadFile                     function  src/lib/export.ts:169:17                              
+printCharacterSheet              function  src/lib/export.ts:222:17                              
+getAllFeatureFlags               function  src/lib/featureFlags.ts:63:17                         
+useFeatureFlags                  function  src/lib/featureFlags.ts:81:17                         
+prepareSearchText                function  src/lib/fullTextSearch.ts:28:17                       
+toTsQuery                        function  src/lib/fullTextSearch.ts:46:17                       
+searchWithRPC                    function  src/lib/fullTextSearch.ts:54:23                       
+hybridSearchQuery                function  src/lib/fullTextSearch.ts:89:17                       
+supportsWebP                     function  src/lib/imageOptimization.ts:12:17                    
+supportsAVIF                     function  src/lib/imageOptimization.ts:28:17                    
+IMAGE_SIZES                                src/lib/imageOptimization.ts:65:14                    
+getImageDimensions               function  src/lib/imageOptimization.ts:257:17                   
+preloadImage                     function  src/lib/imageOptimization.ts:273:17                   
+checkLinkIntegrity               function  src/lib/linkIntegrity.ts:28:23                        
+sanitizeHTML                     function  src/lib/sanitize.ts:31:17                             
+sanitizeText                     function  src/lib/sanitize.ts:56:17                             
+sanitizeNumber                   function  src/lib/sanitize.ts:64:17                             
+sanitizeStringArray              function  src/lib/sanitize.ts:77:17                             
+sanitizeObjectKeys               function  src/lib/sanitize.ts:87:17                             
+applySearchOperators             function  src/lib/searchOperators.ts:109:17                     
+formatSearchQuery                function  src/lib/searchOperators.ts:198:17                     
+SKILLS                                     src/lib/skills.ts:9:14                                
+calculatePassiveSkill            function  src/lib/skills.ts:51:17                               
+SYSTEM_FAVOR_OPTIONS                       src/lib/systemFavor.ts:15:14                          
+getSystemFavorMax                function  src/lib/systemFavor.ts:102:17                         
+getSystemFavorDie                function  src/lib/systemFavor.ts:109:17                         
+RARITY_CHANCES                             src/lib/treasureGenerator.ts:4:14                     
+generateRarity                   function  src/lib/treasureGenerator.ts:12:17                    
+default                                    src/components/ui/SystemText.tsx:258:16               
+SelectGroup                                src/components/ui/select.tsx:156:2                    
+SelectLabel                                src/components/ui/select.tsx:160:2                    
+SelectSeparator                            src/components/ui/select.tsx:162:2                    
+SelectScrollUpButton                       src/components/ui/select.tsx:163:2                    
+SelectScrollDownButton                     src/components/ui/select.tsx:164:2                    
+DialogPortal                               src/components/ui/dialog.tsx:114:2                    
+DialogOverlay                              src/components/ui/dialog.tsx:115:2                    
+DialogClose                                src/components/ui/dialog.tsx:116:2                    
+AlertDialogPortal                          src/components/ui/alert-dialog.tsx:130:2              
+AlertDialogOverlay                         src/components/ui/alert-dialog.tsx:131:2              
+AlertDialogTrigger                         src/components/ui/alert-dialog.tsx:132:2              
+default                                    src/components/ui/RiftStatusIndicator.tsx:248:16      
+AscensionMeter                             src/components/ui/SovereignAuthorityDisplay.tsx:249:14
+default                                    src/components/ui/SovereignAuthorityDisplay.tsx:366:16
+default                                    src/components/ui/SystemHologram.tsx:319:16           
+OAuthButton                      function  src/components/auth/OAuthButton.tsx:13:17             
+TEST_USERS                                 src/test/utils/testUsers.ts:9:14                      
+createTestUsers                  function  src/test/utils/testUsers.ts:27:23                     
+authenticateTestUser             function  src/test/utils/testUsers.ts:73:23                     
+cleanupTestUsers                 function  src/test/utils/testUsers.ts:120:23                    
+useAIService                     function  src/lib/ai/hooks.ts:29:17                             
+useAIImageAnalysis               function  src/lib/ai/hooks.ts:147:17                            
+useAIContentFiltering            function  src/lib/ai/hooks.ts:359:17                            
+useAIVariations                  function  src/lib/ai/hooks.ts:407:17                            
+useAIBatchProcessor              function  src/lib/ai/hooks.ts:454:17                            
+ArtPipelineService               class     src/lib/artPipeline/service.ts:25:14                  
+GENERATION_PRESETS                         src/lib/artPipeline/types.ts:100:14                   
+useAudioShortcuts                function  src/lib/audio/hooks.ts:793:17                         
+SOUND_CATEGORIES                           src/lib/audio/types.ts:88:14                          
+MOOD_TAGS                                  src/lib/audio/types.ts:104:14                         
+AUDIO_SOURCES                              src/lib/audio/types.ts:125:14                         
+DEFAULT_PLAYLISTS                          src/lib/audio/types.ts:135:14                         
+getLicenseInfo                   function  src/lib/audio/types.ts:207:17                         
+isValidAudioFile                 function  src/lib/audio/types.ts:218:17                         
+ScrollBar                                  src/components/ui/scroll-area.tsx:46:22               
+asRecord                         function  src/integrations/supabase/supabaseExtended.ts:215:17  
+asJsonArray                      function  src/integrations/supabase/supabaseExtended.ts:225:17  
+getFallbackUrl                   function  src/data/compendium/assetManifest.ts:68:17            
+validateAsset                    function  src/data/compendium/assetManifest.ts:75:23            
+assetManifest                              src/data/compendium/assetManifest.ts:120:14           
+createAssetManifest              function  src/data/compendium/assetManifest.ts:127:17           
+StatRow                          function  src/components/compendium/StatBlock.tsx:88:17         
+default                                    src/components/compendium/NotesManager.tsx:425:16     
+DropdownMenuCheckboxItem                   src/components/ui/dropdown-menu.tsx:196:2             
+DropdownMenuRadioItem                      src/components/ui/dropdown-menu.tsx:197:2             
+DropdownMenuShortcut                       src/components/ui/dropdown-menu.tsx:200:2             
+DropdownMenuGroup                          src/components/ui/dropdown-menu.tsx:201:2             
+DropdownMenuPortal                         src/components/ui/dropdown-menu.tsx:202:2             
+DropdownMenuSub                            src/components/ui/dropdown-menu.tsx:203:2             
+DropdownMenuSubContent                     src/components/ui/dropdown-menu.tsx:204:2             
+DropdownMenuSubTrigger                     src/components/ui/dropdown-menu.tsx:205:2             
+DropdownMenuRadioGroup                     src/components/ui/dropdown-menu.tsx:206:2             
+SheetClose                                 src/components/ui/sheet.tsx:129:2                     
+SheetFooter                                src/components/ui/sheet.tsx:132:2                     
+SheetOverlay                               src/components/ui/sheet.tsx:134:2                     
+SheetPortal                                src/components/ui/sheet.tsx:135:2                     
+Command                                    src/components/ui/command.tsx:143:2                   
+CommandSeparator                           src/components/ui/command.tsx:151:2                   
+default                                    src/components/ui/GateEnergyFlow.tsx:163:16           
+default                                    src/components/vtt/VTTInitiativePanel.tsx:428:16      
+default                                    src/data/compendium/artifacts.ts:985:16               
+default                                    src/data/compendium/powers.ts:794:16                  
+default                                    src/data/compendium/techniques.ts:1146:16             
+AudioService                     class     src/lib/audio/audioService.ts:16:14                   
+createAmbientSoundZone           function  src/lib/vtt/ambientSoundZone.ts:62:17                 
+distanceToZone                   function  src/lib/vtt/ambientSoundZone.ts:88:17                 
+isListenerInZone                 function  src/lib/vtt/ambientSoundZone.ts:111:17                
+computeZoneVolume                function  src/lib/vtt/ambientSoundZone.ts:123:17                
+computeAllZoneStates             function  src/lib/vtt/ambientSoundZone.ts:152:17                
+AMBIENT_SOUND_PRESETS                      src/lib/vtt/ambientSoundZone.ts:173:14                
+pointsToSVGPath                  function  src/lib/vtt/drawingEngine.ts:52:17                    
+pixelToHex                       function  src/lib/vtt/hexGrid.ts:61:17                          
+hexToPixel                       function  src/lib/vtt/hexGrid.ts:76:17                          
+hexDistance                      function  src/lib/vtt/hexGrid.ts:95:17                          
+hexesInRadius                    function  src/lib/vtt/hexGrid.ts:110:17                         
+getHexGridSVGPaths               function  src/lib/vtt/hexGrid.ts:146:17                         
+hexNeighbors                     function  src/lib/vtt/hexGrid.ts:183:17                         
+rollDiceExpression               function  src/lib/vtt/inlineRolls.ts:43:17                      
+isCellVisible                    function  src/lib/vtt/lightingEngine.ts:183:17                  
+DEFAULT_PING_CONFIG                        src/lib/vtt/mapPing.ts:28:14                          
+pruneExpiredPings                function  src/lib/vtt/mapPing.ts:70:17                          
+isOnCooldown                     function  src/lib/vtt/mapPing.ts:80:17                          
+getPingAnimationCSS              function  src/lib/vtt/mapPing.ts:94:17                          
+PARTICLE_PRESETS                           src/lib/vtt/particlePresets.ts:83:14                  
+getPreset                        function  src/lib/vtt/particlePresets.ts:3483:17                
+listPresets                      function  src/lib/vtt/particlePresets.ts:3490:17                
+listCategories                   function  src/lib/vtt/particlePresets.ts:3499:17                
+createMacro                      function  src/lib/vtt/rollMacros.ts:62:17                       
+generateCharacterMacros          function  src/lib/vtt/rollMacros.ts:88:17                       
+saveMacrosToLocal                function  src/lib/vtt/rollMacros.ts:151:17                      
+loadMacrosFromLocal              function  src/lib/vtt/rollMacros.ts:162:17                      
+createDefaultMacroBar            function  src/lib/vtt/rollMacros.ts:175:17                      
+getMacroByHotkey                 function  src/lib/vtt/rollMacros.ts:186:17                      
+TERRAIN_PRESETS                            src/lib/vtt/terrainWeatherEngine.ts:84:14             
+createTerrainZone                function  src/lib/vtt/terrainWeatherEngine.ts:324:17            
+isPointInTerrainZone             function  src/lib/vtt/terrainWeatherEngine.ts:342:17            
+getMovementCostAtPosition        function  src/lib/vtt/terrainWeatherEngine.ts:364:17            
+getCoverBonusAtPosition          function  src/lib/vtt/terrainWeatherEngine.ts:382:17            
+getWeatherMechanics              function  src/lib/vtt/terrainWeatherEngine.ts:399:17            
+MAP_ASSETS                                 src/lib/vtt/vttAssetManifest.ts:46:14                 
+TOKEN_ASSETS                               src/lib/vtt/vttAssetManifest.ts:322:14                
+PROP_ASSETS                                src/lib/vtt/vttAssetManifest.ts:458:14                
+EFFECT_ASSETS                              src/lib/vtt/vttAssetManifest.ts:623:14                
+AUDIO_ASSETS                               src/lib/vtt/vttAssetManifest.ts:798:14                
+MUSIC_ASSETS                               src/lib/vtt/vttAssetManifest.ts:950:14                
+getAssetsByCategory              function  src/lib/vtt/vttAssetManifest.ts:1010:17               
+searchAssets                     function  src/lib/vtt/vttAssetManifest.ts:1015:17               
+getAssetsByTier                  function  src/lib/vtt/vttAssetManifest.ts:1024:17               
+getMapsForTier                   function  src/lib/vtt/vttAssetManifest.ts:1029:17               
+getMonsterTokensForTier          function  src/lib/vtt/vttAssetManifest.ts:1034:17               
+ALL_ASSETS                                 src/lib/vtt/vttAssetManifest.ts:1043:14               
+getAssetSummary                  function  src/lib/vtt/vttAssetManifest.ts:1053:17               
+isMessageVisibleTo               function  src/lib/vtt/whisperSystem.ts:118:17                   
+createWhisperMessage             function  src/lib/vtt/whisperSystem.ts:129:17                   
+formatWhisperLabel               function  src/lib/vtt/whisperSystem.ts:154:17                   
+[93m[4mUnused exported types[24m[39m (300)
+Logger                      interface  src/lib/logger.ts:10:18                             
+Spell                       interface  src/data/compendium/spells.ts:5:18                  
+Monster                     interface  src/data/compendium/monsters.ts:5:18                
+StaticDataProvider          interface  src/data/compendium/staticDataProvider.ts:225:18    
+Role                        type       tests/pages/AuthPage.ts:3:13                        
+PreferredCampaignSelection  type       src/hooks/usePreferredCampaignSelection.ts:4:13     
+UserRole                    type       src/lib/auth/authContext.tsx:20:13                  
+AuthUser                    interface  src/lib/auth/authContext.tsx:22:18                  
+CharacterStats              interface  src/lib/5eCharacterCalculations.ts:15:18            
+CalculatedStats             interface  src/lib/5eCharacterCalculations.ts:25:18            
+CasterType                  type       src/lib/5eCharacterCalculations.ts:173:13           
+Skill                       interface  src/lib/5eRulesEngine.ts:33:18                      
+Rarity                      type       src/lib/5eRulesEngine.ts:186:13                     
+Job                         interface  src/lib/5eRulesEngine.ts:197:18                     
+JobFeature                  interface  src/lib/5eRulesEngine.ts:223:18                     
+JobPath                     interface  src/lib/5eRulesEngine.ts:236:18                     
+Power                       interface  src/lib/5eRulesEngine.ts:248:18                     
+Relic                       interface  src/lib/5eRulesEngine.ts:268:18                     
+Character                   interface  src/lib/5eRulesEngine.ts:285:18                     
+CharacterAction             interface  src/lib/5eRulesEngine.ts:381:18                     
+SystemFavorOption           interface  src/lib/5eRulesEngine.ts:412:18                     
+AICapability                type       src/lib/ai/types.ts:38:13                           
+CampaignInviteStatus        type       src/lib/campaignInviteUtils.ts:1:13                 
+CantripScalingResult        interface  src/lib/cantripScaling.ts:13:18                     
+TotalChoices                interface  src/lib/choiceCalculations.ts:23:18                 
+ConditionEffect             interface  src/lib/conditionEffects.ts:14:18                   
+MechanicalEffect            interface  src/lib/conditionEffects.ts:20:18                   
+ExhaustionLevel             interface  src/lib/conditionEffects.ts:150:18                  
+RollModifiers               interface  src/lib/conditionEffects.ts:217:18                  
+ConditionTimers             type       src/lib/conditionTimers.ts:1:13                     
+CorePayloadFields           interface  src/lib/domainEvents.ts:37:18                       
+AmbientSoundState           type       src/lib/vtt/index.ts:11:7                           
+DrawingPoint                type       src/lib/vtt/index.ts:23:7                           
+MeasurementResult           type       src/lib/vtt/index.ts:25:7                           
+MeasurementTemplate         type       src/lib/vtt/index.ts:26:7                           
+HexCell                     type       src/lib/vtt/index.ts:38:7                           
+HexOrientation              type       src/lib/vtt/index.ts:40:7                           
+ChatSegment                 type       src/lib/vtt/index.ts:50:7                           
+InlineRollResult            type       src/lib/vtt/index.ts:53:7                           
+ParsedChatMessage           type       src/lib/vtt/index.ts:54:7                           
+TokenVision                 type       src/lib/vtt/index.ts:67:7                           
+VisibilityPolygon           type       src/lib/vtt/index.ts:69:7                           
+PingConfig                  type       src/lib/vtt/index.ts:79:7                           
+ParticleCategory            type       src/lib/vtt/index.ts:88:7                           
+ParticlePreset              type       src/lib/vtt/index.ts:89:7                           
+MacroBar                    type       src/lib/vtt/index.ts:98:7                           
+MacroCategory               type       src/lib/vtt/index.ts:99:7                           
+RollMacro                   type       src/lib/vtt/index.ts:100:7                          
+TerrainType                 type       src/lib/vtt/index.ts:112:7                          
+WeatherEffect               type       src/lib/vtt/index.ts:115:7                          
+AssetCategory               type       src/lib/vtt/index.ts:122:7                          
+VTTAsset                    type       src/lib/vtt/index.ts:135:7                          
+WhisperMessage              type       src/lib/vtt/index.ts:149:7                          
+GeminiModifier              interface  src/lib/geminiResolver.ts:23:18                     
+GeminiRuntimeState          interface  src/lib/geminiResolver.ts:31:18                     
+LevelGateVerdict            interface  src/lib/levelGating.ts:29:18                        
+LevelUpGatingSummary        interface  src/lib/levelGating.ts:322:18                       
+SourcebookAccessContext     type       src/lib/sourcebookAccess.ts:4:13                    
+EquipmentModifiers          interface  src/lib/equipmentModifiers.ts:5:18                  
+UnarmoredDefenseJob         type       src/lib/unarmoredDefense.ts:1:13                    
+GlobalShortcut              interface  src/lib/globalShortcuts.ts:6:18                     
+PerformanceTier             type       src/lib/performanceProfile.tsx:25:13                
+PerformanceProfile          type       src/lib/performanceProfile.tsx:27:13                
+GeneratedContent            interface  src/components/AIContentGeneratorClass.ts:4:18      
+ContentGenerationOptions    interface  src/components/AIContentGeneratorClass.ts:28:18     
+BadgeProps                  interface  src/components/ui/badge.tsx:27:18                   
+ButtonProps                 interface  src/components/ui/button.tsx:60:18                  
+Skill                       interface  src/types/system-rules.ts:17:18                     
+Rarity                      type       src/types/system-rules.ts:167:13                    
+Job                         interface  src/types/system-rules.ts:178:18                    
+JobFeature                  interface  src/types/system-rules.ts:196:18                    
+JobPath                     interface  src/types/system-rules.ts:209:18                    
+Power                       interface  src/types/system-rules.ts:217:18                    
+Relic                       interface  src/types/system-rules.ts:235:18                    
+Monster                     interface  src/types/system-rules.ts:251:18                    
+MonsterTrait                interface  src/types/system-rules.ts:279:18                    
+MonsterAction               interface  src/types/system-rules.ts:284:18                    
+Character                   interface  src/types/system-rules.ts:293:18                    
+GuestCharacterState         interface  src/lib/guestStore.ts:44:18                         
+GuestRole                   type       src/lib/guestStore.ts:68:13                         
+TokenRenderMode             type       src/data/tokenLibraryDefaults.ts:19:13              
+TokenBlendMode              type       src/data/tokenLibraryDefaults.ts:20:13              
+Location                    interface  src/data/compendium/locations.ts:5:18               
+AIEnhanceResult             interface  src/hooks/useAIEnhance.ts:10:18                     
+ConsentStatus               type       src/hooks/useAnalyticsConsent.ts:14:13              
+ArmorCategory               type       src/hooks/useArmorClass.ts:23:13                    
+EquippedArmor               interface  src/hooks/useArmorClass.ts:25:18                    
+EquippedShield              interface  src/hooks/useArmorClass.ts:34:18                    
+AttunableItem               interface  src/hooks/useAttunement.ts:26:18                    
+AttuneResult                interface  src/hooks/useAttunement.ts:34:18                    
+UseAttunementReturn         interface  src/hooks/useAttunement.ts:40:18                    
+TablesInsert                type       src/integrations/supabase/types.ts:7533:13          
+TablesUpdate                type       src/integrations/supabase/types.ts:7558:13          
+Enums                       type       src/integrations/supabase/types.ts:7583:13          
+CompositeTypes              type       src/integrations/supabase/types.ts:7600:13          
+AppErrorCode                type       src/lib/appError.ts:1:13                            
+CampaignCharacterShare      interface  src/hooks/useCampaignCharacters.ts:9:18             
+QueueItemType               type       src/lib/offlineSyncQueue.ts:6:13                    
+RollPayload                 interface  src/lib/offlineSyncQueue.ts:8:18                    
+MessagePayload              interface  src/lib/offlineSyncQueue.ts:20:18                   
+QueueItem                   interface  src/lib/offlineSyncQueue.ts:29:18                   
+CombatSession               type       src/hooks/useCampaignCombat.ts:40:15                
+ErrorInfo                   interface  src/lib/errorHandling.ts:10:18                      
+CampaignExtra               type       src/hooks/useCampaignExtras.ts:7:13                 
+CampaignExtraInsert         type       src/hooks/useCampaignExtras.ts:9:13                 
+CampaignExtraUpdate         type       src/hooks/useCampaignExtras.ts:11:13                
+PartyGold                   interface  src/hooks/useCampaignGold.ts:7:18                   
+CampaignInviteRecord        interface  src/hooks/useCampaignInvites.ts:13:18               
+CampaignInviteSummary       interface  src/hooks/useCampaignInvites.ts:34:18               
+CampaignInviteCreateResult  interface  src/hooks/useCampaignInvites.ts:47:18               
+CampaignInviteAuditLog      interface  src/hooks/useCampaignInvites.ts:89:18               
+CampaignNote                interface  src/hooks/useCampaignNotes.ts:10:18                 
+CampaignRollEvent           interface  src/hooks/useCampaignRollFeed.ts:6:18               
+CampaignRuleSettings        type       src/hooks/useCampaignRules.ts:61:15                 
+CampaignRuleEvent           type       src/hooks/useCampaignRules.ts:61:37                 
+Campaign                    interface  src/hooks/useCampaigns.ts:13:18                     
+CampaignSessionRecord       interface  src/hooks/useCampaignSessions.ts:20:18              
+CampaignSessionLogRecord    interface  src/hooks/useCampaignSessions.ts:33:18              
+WikiArticleInsert           type       src/hooks/useCampaignWiki.ts:9:13                   
+WikiArticleUpdate           type       src/hooks/useCampaignWiki.ts:11:13                  
+CharacterExtraWithMonster   type       src/hooks/useCharacterExtras.ts:8:13                
+AttackResult                type       src/lib/rollEngine.ts:8:2                           
+DamageResult                type       src/lib/rollEngine.ts:9:2                           
+DeathSaveResult             type       src/lib/rollEngine.ts:10:2                          
+InitiativeResult            type       src/lib/rollEngine.ts:11:2                          
+SkillCheckResult            type       src/lib/rollEngine.ts:12:2                          
+SpellSaveResult             type       src/lib/rollEngine.ts:13:2                          
+DiceRoll                    interface  src/lib/rollEngine.ts:41:18                         
+RollResult                  interface  src/lib/rollEngine.ts:48:18                         
+HistoryEntry                interface  src/lib/undoRedo.ts:6:18                            
+ConcentrationCheckResult    interface  src/hooks/useConcentration.ts:30:18                 
+UseConcentrationReturn      interface  src/hooks/useConcentration.ts:40:18                 
+QuestRequirement            type       src/lib/dailyQuests/types.ts:49:13                  
+QuestScaling                type       src/lib/dailyQuests/types.ts:58:13                  
+QuestProgress               interface  src/lib/dailyQuests/types.ts:129:18                 
+QuestAssignmentRequest      interface  src/lib/dailyQuests/types.ts:137:18                 
+QuestCompletionRequest      interface  src/lib/dailyQuests/types.ts:143:18                 
+QuestRewardResult           interface  src/lib/dailyQuests/types.ts:150:18                 
+DailyQuestSummary           interface  src/lib/dailyQuests/types.ts:157:18                 
+QuestTier                   type       src/lib/dailyQuests/types.ts:167:13                 
+QuestCategory               type       src/lib/dailyQuests/types.ts:168:13                 
+QuestStatus                 type       src/lib/dailyQuests/types.ts:174:13                 
+DeathSaveState              interface  src/hooks/useDeathSaves.ts:20:18                    
+DeathSaveRollResult         interface  src/hooks/useDeathSaves.ts:27:18                    
+UseDeathSavesReturn         interface  src/hooks/useDeathSaves.ts:36:18                    
+HitDieRollResult            interface  src/hooks/useHitDiceSpending.ts:17:18               
+UseHitDiceSpendingReturn    interface  src/hooks/useHitDiceSpending.ts:24:18               
+HomebrewVersionRecord       interface  src/hooks/useHomebrewContent.ts:51:18               
+HomebrewSaveInput           type       src/hooks/useHomebrewContent.ts:61:13               
+HomebrewMutationResult      type       src/hooks/useHomebrewContent.ts:73:13               
+MarketplaceReviewRecord     interface  src/hooks/useMarketplaceData.ts:47:18               
+MarketplaceSaveInput        type       src/hooks/useMarketplaceData.ts:59:13               
+UseOAuthReturn              interface  src/hooks/useOAuth.ts:46:18                         
+Profile                     interface  src/hooks/useProfile.ts:7:18                        
+CollaborationEvent          type       src/hooks/useRealtimeCollaboration.tsx:37:13        
+ActiveUser                  interface  src/hooks/useRealtimeCollaboration.tsx:68:18        
+RecentItem                  interface  src/hooks/useRecentItems.ts:3:18                    
+RegentUnlock                interface  src/hooks/useRegentUnlocks.ts:6:18                  
+RuneAbsorptionResult        type       src/lib/runeAutomation.ts:290:13                    
+SavedSovereign              interface  src/hooks/useSavedSovereigns.ts:7:18                
+SearchHistoryItem           interface  src/hooks/useSearchHistory.ts:7:18                  
+CharacterShadowSoldier      interface  src/hooks/useShadowSoldiers.ts:35:18                
+EffectTarget                type       src/lib/spellEffectPipeline.ts:45:13                
+CastableSpell               interface  src/hooks/useSpellCasting.ts:36:18                  
+CastSpellParams             interface  src/hooks/useSpellCasting.ts:51:18                  
+CastSpellResult             interface  src/hooks/useSpellCasting.ts:63:18                  
+CalculatedStats             type       src/lib/characterCalculations.ts:9:2                
+CasterType                  type       src/lib/characterCalculations.ts:10:2               
+CharacterStats              type       src/lib/characterCalculations.ts:11:2               
+AbilityScore                type       src/lib/characterCalculations.ts:26:2               
+Character                   type       src/lib/characterCalculations.ts:27:2               
+CharacterAction             type       src/lib/characterCalculations.ts:28:2               
+Job                         type       src/lib/characterCalculations.ts:29:2               
+JobFeature                  type       src/lib/characterCalculations.ts:30:2               
+JobPath                     type       src/lib/characterCalculations.ts:31:2               
+Power                       type       src/lib/characterCalculations.ts:32:2               
+Rarity                      type       src/lib/characterCalculations.ts:33:2               
+Relic                       type       src/lib/characterCalculations.ts:34:2               
+Skill                       type       src/lib/characterCalculations.ts:35:2               
+SystemFavorOption           type       src/lib/characterCalculations.ts:36:2               
+VTTAudioTrack               interface  src/hooks/useVTTAudio.ts:7:18                       
+VTTAudioSettings            interface  src/hooks/useVTTAudio.ts:21:18                      
+VTTChatMessage              interface  src/hooks/useVTTRealtime.ts:34:18                   
+VTTDiceRoll                 interface  src/hooks/useVTTRealtime.ts:58:18                   
+VTTTokenMove                interface  src/hooks/useVTTRealtime.ts:66:18                   
+VTTTokenUpdate              interface  src/hooks/useVTTRealtime.ts:73:18                   
+VTTSceneChange              interface  src/hooks/useVTTRealtime.ts:79:18                   
+VTTFogUpdate                interface  src/hooks/useVTTRealtime.ts:84:18                   
+VTTInitiativeState          interface  src/hooks/useVTTRealtime.ts:90:18                   
+VTTPing                     type       src/hooks/useVTTRealtime.ts:104:15                  
+VTTCursorPosition           interface  src/hooks/useVTTRealtime.ts:106:18                  
+VTTPresenceUser             interface  src/hooks/useVTTRealtime.ts:111:18                  
+VTTRulerSegment             interface  src/hooks/useVTTRealtime.ts:121:18                  
+VTTHandoutShare             interface  src/hooks/useVTTRealtime.ts:131:18                  
+VTTBroadcastEvent           type       src/hooks/useVTTRealtime.ts:140:13                  
+VTTDiceRollDetailed         interface  src/hooks/useVTTRealtime.ts:228:18                  
+ChatCommand                 type       src/hooks/useVTTRealtime.ts:424:13                  
+VTTMacro                    interface  src/hooks/useVTTRealtime.ts:466:18                  
+UseVTTRealtimeOptions       interface  src/hooks/useVTTRealtime.ts:478:18                  
+DiceRoll                    interface  src/lib/diceRoller.ts:8:18                          
+DiceRoll                    interface  src/lib/advancedDiceEngine.ts:10:18                 
+RollResult                  interface  src/lib/advancedDiceEngine.ts:17:18                 
+SkillCheckResult            interface  src/lib/advancedDiceEngine.ts:31:18                 
+AttackResult                interface  src/lib/advancedDiceEngine.ts:39:18                 
+DamageResult                interface  src/lib/advancedDiceEngine.ts:48:18                 
+InitiativeResult            interface  src/lib/advancedDiceEngine.ts:56:18                 
+SpellSaveResult             interface  src/lib/advancedDiceEngine.ts:62:18                 
+DeathSaveResult             interface  src/lib/advancedDiceEngine.ts:70:18                 
+Background                  interface  src/data/compendium/backgrounds.ts:7:18             
+Job                         interface  src/data/compendium/jobs.ts:5:18                    
+EquipmentInstance           interface  src/lib/characterEngine.ts:123:18                   
+FeatureInstance             interface  src/lib/characterEngine.ts:162:18                   
+ActiveSpellEffect           interface  src/lib/characterEngine.ts:177:18                   
+CharacterJob                interface  src/lib/characterEngine.ts:193:18                   
+CharacterBaseData           interface  src/lib/characterEngine.ts:205:18                   
+ComputedCharacterStats      interface  src/lib/characterEngine.ts:256:18                   
+ComputedEffect              interface  src/lib/characterEngine.ts:320:18                   
+RollModifierSummary         interface  src/lib/characterEngine.ts:331:18                   
+Path                        interface  src/data/compendium/paths.ts:4:18                   
+Regent                      interface  src/data/compendium/monarchs.ts:8:18                
+SenseSource                 interface  src/lib/sensesEngine.ts:19:18                       
+Feature                     type       src/lib/regentGeminiSystem.ts:12:2                  
+RegentPath                  type       src/lib/regentGeminiSystem.ts:13:2                  
+Spell                       type       src/lib/regentGeminiSystem.ts:14:2                  
+StructuredSpell             type       src/lib/regentGeminiSystem.ts:15:2                  
+Trait                       type       src/lib/regentGeminiSystem.ts:16:2                  
+GeminiSovereign             interface  src/lib/regentGeminiSystem.ts:29:18                 
+RegentChoice                interface  src/lib/regentGeminiSystem.ts:48:18                 
+RegentQuest                 interface  src/lib/regentGeminiSystem.ts:767:18                
+CharacterImportValidation   interface  src/lib/characterSchema.ts:61:18                    
+ConditionEffect             interface  src/lib/conditions.ts:6:18                          
+EncounterDifficulty         type       src/lib/encounterMath.ts:96:13                      
+EncumbranceStatus           interface  src/lib/encumbrance.ts:6:18                         
+ExportOptions               interface  src/lib/export.ts:13:18                             
+FeatureFlags                interface  src/lib/featureFlags.ts:6:18                        
+BrokenLink                  interface  src/lib/linkIntegrity.ts:11:18                      
+CharacterStats              interface  src/types/character.ts:34:18                        
+CharacterCreateRequest      interface  src/types/character.ts:43:18                        
+ParsedSearchQuery           interface  src/lib/searchOperators.ts:6:18                     
+SystemFavorOption           interface  src/lib/systemFavor.ts:6:18                         
+TextareaProps               type       src/components/ui/textarea.tsx:5:13                 
+ActionItem                  interface  src/components/character/ActionsList.tsx:26:18      
+DiceThemeConfig             interface  src/components/dice/diceThemes.ts:16:18             
+ProtocolWardenContext       interface  src/lib/ai/protocolWarden.ts:4:18                   
+CharacterRow                type       src/integrations/supabase/supabaseExtended.ts:13:13 
+EquipmentRow                type       src/integrations/supabase/supabaseExtended.ts:14:13 
+FeatureRow                  type       src/integrations/supabase/supabaseExtended.ts:16:13 
+PowerRow                    type       src/integrations/supabase/supabaseExtended.ts:18:13 
+ActiveSpellRow              type       src/integrations/supabase/supabaseExtended.ts:19:13 
+CampaignRow                 type       src/integrations/supabase/supabaseExtended.ts:21:13 
+EquipmentProperties         interface  src/integrations/supabase/supabaseExtended.ts:45:18 
+EquipmentExtended           interface  src/integrations/supabase/supabaseExtended.ts:61:18 
+FeatureExtended             interface  src/integrations/supabase/supabaseExtended.ts:80:18 
+FeatureModifier             interface  src/integrations/supabase/supabaseExtended.ts:87:18 
+CompendiumItemEffects       interface  src/integrations/supabase/supabaseExtended.ts:98:18 
+FeatPrerequisites           interface  src/integrations/supabase/supabaseExtended.ts:111:18
+ArtifactRequirements        interface  src/integrations/supabase/supabaseExtended.ts:117:18
+CombatantStats              interface  src/integrations/supabase/supabaseExtended.ts:125:18
+CampaignSettings            interface  src/integrations/supabase/supabaseExtended.ts:132:18
+SheetStateExtended          interface  src/integrations/supabase/supabaseExtended.ts:139:18
+CalculatedStatsExtended     interface  src/integrations/supabase/supabaseExtended.ts:152:18
+SpellDurationType           type       src/integrations/supabase/supabaseExtended.ts:162:13
+ChoiceDataExtended          interface  src/integrations/supabase/supabaseExtended.ts:171:18
+RegentExtended              interface  src/integrations/supabase/supabaseExtended.ts:180:18
+RegentUnlockExtended        interface  src/integrations/supabase/supabaseExtended.ts:189:18
+GeneratedSovereignExtended  interface  src/integrations/supabase/supabaseExtended.ts:195:18
+VTTWeatherType              type       src/integrations/supabase/supabaseExtended.ts:204:13
+AssetManifest               interface  src/data/compendium/assetManifest.ts:85:18          
+AssetMapping                interface  src/data/compendium/assetManifest.ts:101:18         
+ShareToVTTButtonProps       interface  src/components/compendium/ShareToVTTButton.tsx:15:18
+FaceData                    type       src/components/dice/diceGeometry.ts:13:13           
+DieModel                    type       src/components/dice/diceGeometry.ts:20:13           
+Artifact                    interface  src/data/compendium/artifacts.ts:5:18               
+Condition                   interface  src/data/compendium/conditions.ts:5:18              
+Feat                        interface  src/data/compendium/feats-comprehensive.ts:5:18     
+Power                       interface  src/data/compendium/powers.ts:5:18                  
+Relic                       interface  src/data/compendium/relics-comprehensive.ts:5:18    
+RuneCompendiumEntry         interface  src/data/compendium/runes.ts:2:18                   
+SigilEntry                  interface  src/data/compendium/sigils.ts:1:18                  
+Skill                       interface  src/data/compendium/skills-comprehensive.ts:5:18    
+Technique                   interface  src/data/compendium/techniques.ts:5:18              
+AmbientSoundState           interface  src/lib/vtt/ambientSoundZone.ts:50:18               
+MeasurementResult           interface  src/lib/vtt/drawingEngine.ts:31:18                  
+MeasurementTemplate         interface  src/lib/vtt/drawingEngine.ts:37:18                  
+HexCell                     interface  src/lib/vtt/hexGrid.ts:29:18                        
+InlineRollResult            interface  src/lib/vtt/inlineRolls.ts:16:18                    
+ParsedChatMessage           interface  src/lib/vtt/inlineRolls.ts:26:18                    
+ChatSegment                 type       src/lib/vtt/inlineRolls.ts:31:13                    
+TokenVision                 interface  src/lib/vtt/lightingEngine.ts:37:18                 
+VisibilityPolygon           interface  src/lib/vtt/lightingEngine.ts:46:18                 
+PingConfig                  interface  src/lib/vtt/mapPing.ts:21:18                        
+ParticlePreset              interface  src/lib/vtt/particlePresets.ts:16:18                
+ParticleCategory            type       src/lib/vtt/particlePresets.ts:25:13                
+RollMacro                   interface  src/lib/vtt/rollMacros.ts:9:18                      
+MacroCategory               type       src/lib/vtt/rollMacros.ts:22:13                     
+MacroBar                    interface  src/lib/vtt/rollMacros.ts:30:18                     
+WeatherEffect               interface  src/lib/vtt/terrainWeatherEngine.ts:62:18           
+AssetCategory               type       src/lib/vtt/vttAssetManifest.ts:14:13               
+VTTAsset                    interface  src/lib/vtt/vttAssetManifest.ts:26:18               
+WhisperMessage              interface  src/lib/vtt/whisperSystem.ts:9:18                   
+[93m[4mDuplicate exports[24m[39m (24)
+monsters|default                                                               src/data/compendium/monsters.ts          
+NetworkErrorBoundary|default                                                   src/components/NetworkErrorHandling.tsx  
+CosmicBackground|default                                                       src/components/ui/CosmicBackground.tsx   
+GlobalEffects|default                                                          src/components/ui/GlobalEffects.tsx      
+ContentAudit|default                                                           src/pages/admin/ContentAudit.tsx         
+CharacterLevelUp|default                                                       src/components/CharacterLevelUp.tsx      
+REGENT_LABEL|MONARCH_LABEL                                                     src/lib/vernacular.ts                    
+REGENT_LABEL_PLURAL|MONARCH_LABEL_PLURAL                                       src/lib/vernacular.ts                    
+formatRegentVernacular|formatMonarchVernacular                                 src/lib/vernacular.ts                    
+normalizeRegentSearch|normalizeMonarchSearch                                   src/lib/vernacular.ts                    
+PREMADE_MAPS|default                                                           src/data/premadeMaps.ts                  
+tokensCompendium|default                                                       src/data/tokens.ts                       
+locations|default                                                              src/data/compendium/locations.ts         
+useRegentUnlocks|useMonarchUnlocks|useCharacterMonarchUnlocks|useCharacterReΓÇª  src/hooks/useRegentUnlocks.ts            
+SystemText|default                                                             src/components/ui/SystemText.tsx         
+RiftStatusIndicator|default                                                    src/components/ui/RiftStatusIndicator.tsx
+SovereignAuthorityDisplay|default                                              ΓÇªponents/ui/SovereignAuthorityDisplay.tsx
+SystemHologram|default                                                         src/components/ui/SystemHologram.tsx     
+NotesManager|default                                                           ΓÇªc/components/compendium/NotesManager.tsx
+GateEnergyFlow|default                                                         src/components/ui/GateEnergyFlow.tsx     
+VTTInitiativePanel|default                                                     src/components/vtt/VTTInitiativePanel.tsx
+artifacts|default                                                              src/data/compendium/artifacts.ts         
+powers|default                                                                 src/data/compendium/powers.ts            
+techniques|default                                                             src/data/compendium/techniques.ts        
+[33m[4mConfiguration hints[24m (1)[39m

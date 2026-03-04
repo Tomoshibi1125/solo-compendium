@@ -1,26 +1,26 @@
 // Comprehensive Skills Compendium - Authoritative System Ascendant Content
 // ALL skills needed for the complete compendium system
-// Based on System Ascendant canon with SRD 5e mechanics
+// Based on System Ascendant mechanics
 
 export interface Skill {
 	id: string;
 	name: string;
 	description: string;
 	ability:
-		| "Strength"
-		| "Dexterity"
-		| "Constitution"
-		| "Intelligence"
-		| "Wisdom"
-		| "Charisma";
+	| "Strength"
+	| "Dexterity"
+	| "Constitution"
+	| "Intelligence"
+	| "Wisdom"
+	| "Charisma";
 	type:
-		| "combat"
-		| "exploration"
-		| "social"
-		| "magical"
-		| "shadow"
-		| "crafting"
-		| "survival";
+	| "combat"
+	| "exploration"
+	| "social"
+	| "magical"
+	| "shadow"
+	| "crafting"
+	| "survival";
 	uses: string;
 	mechanics: {
 		check: string;

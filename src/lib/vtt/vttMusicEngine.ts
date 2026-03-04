@@ -300,7 +300,7 @@ const MOOD_CONFIGS: Record<MusicMood, MoodConfig> = {
 		lfoDepth: 0.15,
 	},
 	"shadow-realm": {
-		label: "Shadow Realm (SA)",
+		label: "Abyssal Realm (SA)",
 		drones: [55.0, 73.42],
 		droneType: "sawtooth",
 		droneVolume: 0.035,
@@ -408,7 +408,7 @@ export class VttMusicEngine {
 				const freq = config.melody?.[noteIndex % config.melody?.length];
 				const osc = this.context.createOscillator();
 				osc.type = config.melodyType ?? "sine";
-				osc.frequency.value = freq;
+				osc.frequency.value = freq ?? 440;
 				const gain = this.context.createGain();
 				const vol = config.melodyVolume ?? 0.03;
 				const now = this.context.currentTime;

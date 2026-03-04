@@ -1,0 +1,267 @@
+﻿node.exe : > [debug] [2
+026-03-04T18:08:34.894Z
+] Found config in file 
+"C:\Users\jjcal\Documen
+ts\solo-compendium\verc
+el.json"
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (> [debug] [20   
+ 26...um\vercel.jso    
+n":String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+> [debug] [2026-03-04T1
+8:08:34.894Z] Vercel 
+CLI 50.26.1
+> [debug] [2026-03-04T1
+8:08:34.896Z] Agent/TTY
+/nonInteractive: 
+isAgent=false 
+agentName=none 
+stdin.isTTY=true --non-
+interactive=false 
+explicitFalse=false => 
+nonInteractive=false
+> [debug] [2026-03-04T1
+8:08:34.896Z] user 
+supplied known 
+subcommand: "build"
+WARN! Build not 
+running on Vercel. 
+System environment 
+variables will not be 
+available.
+> [debug] [2026-03-04T1
+8:08:34.975Z] Loaded 
+environment variables 
+from "C:\Users\jjcal\Do
+cuments\solo-compendium
+\.vercel\.env.preview.l
+ocal"
+> [debug] [2026-03-04T1
+8:08:34.998Z] Locating 
+files C:\Users\jjcal\Do
+cuments\solo-compendium
+> [debug] [2026-03-04T1
+8:08:35.000Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\.env
+> [debug] [2026-03-04T1
+8:08:35.000Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\.env.
+example
+> [debug] [2026-03-04T1
+8:08:35.000Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\.env.
+local
+> [debug] [2026-03-04T1
+8:08:35.000Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\.git
+> [debug] [2026-03-04T1
+8:08:35.000Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\.giti
+gnore
+> [debug] [2026-03-04T1
+8:08:35.000Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\.verc
+el
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\cover
+age
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\dist
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\node_
+modules
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\playw
+right-report
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\supab
+ase
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\test-
+results
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\tests
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\ts-er
+rors.log
+> [debug] [2026-03-04T1
+8:08:35.001Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\typec
+heck_audit.log
+> [debug] [2026-03-04T1
+8:08:35.002Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\.idea
+\.gitignore
+> [debug] [2026-03-04T1
+8:08:35.002Z] Ignoring 
+C:\Users\jjcal\Document
+s\solo-compendium\node-
+v20.10.0-win-x64\node_m
+odules
+> [debug] [2026-03-04T1
+8:08:35.066Z] Locating 
+files C:\Users\jjcal\Do
+cuments\solo-compendium
+ [67ms]
+> [debug] [2026-03-04T1
+8:08:35.382Z] Imported 
+Builder "@vercel/node" 
+from "C:\Users\jjcal\Ap
+pData\Local\npm-cache\_
+npx\69f9afb961c37556\no
+de_modules\@vercel\node
+"
+> [debug] [2026-03-04T1
+8:08:35.419Z] Imported 
+Builder 
+"@vercel/static-build" 
+from "C:\Users\jjcal\Ap
+pData\Local\npm-cache\_
+npx\69f9afb961c37556\no
+de_modules\@vercel\stat
+ic-build"
+> [debug] [2026-03-04T1
+8:08:35.419Z] Resolved 
+builders: 
+"@vercel/node => 
+5.6.10, 
+@vercel/static-build 
+=> 2.8.44"
+> [debug] [2026-03-04T1
+8:08:35.772Z] Setting 
+env VERCEL_PROJECT_SETT
+INGS_BUILD_COMMAND to 
+"npm run build:vercel"
+> [debug] [2026-03-04T1
+8:08:35.772Z] Setting 
+env VERCEL_PROJECT_SETT
+INGS_OUTPUT_DIRECTORY 
+to "dist"
+> [debug] [2026-03-04T1
+8:08:35.772Z] Setting 
+env VERCEL_PROJECT_SETT
+INGS_NODE_VERSION to 
+"24.x"
+> [debug] [2026-03-04T1
+8:08:35.772Z] Building 
+entrypoint 
+"package.json" with 
+"@vercel/static-build"
+Warning: Detected 
+"engines": { "node": 
+">=20.0.0" } in your 
+`package.json` that 
+will automatically 
+upgrade when a new 
+major Node.js Version 
+is released. Learn 
+More: https://vercel.li
+nk/node-version
+Installing dependencies...
+
+up to date in 1s
+
+241 packages are looking for funding
+  run `npm fund` for details
+Error: spawn cmd.exe 
+ENOENT
+> [debug] [2026-03-04T1
+8:08:38.130Z] 
+Telemetry event tracked
+> [debug] [2026-03-04T1
+8:08:38.192Z] 
+Telemetry subprocess 
+exited with code 0
+> [debug] [2026-03-04T1
+8:08:38.193Z] Spawning 
+C:\Users\jjcal\AppData\
+Local\npm-cache\_npx\69
+f9afb961c37556\node_mod
+ules\vercel\dist\get-la
+test-worker.cjs
+> '[debug] [2026-03-04T
+18:08:38.238Z] 
+Notifying parent we're 
+ready
+> '[debug] [2026-03-04T
+18:08:38.242Z] 
+Received message from 
+parent: {
+  cacheFile: 'C:\\Users
+\\jjcal\\AppData\\Local
+\\com.vercel.cli\\Cache
+\\package-updates\\verc
+el-latest.json',
+  distTag: 'latest',
+  name: 'vercel',
+  updateCheckInterval: 
+86400000
+}
+> '[debug] [2026-03-04T
+18:08:38.242Z] 
+Disconnecting from 
+parent
+> '[debug] [2026-03-04T
+18:08:38.243Z] 
+Checking lock file: C:\
+Users\jjcal\AppData\Loc
+al\com.vercel.cli\Cache
+\package-updates\vercel
+-latest.lock
+> '[debug] [2026-03-04T
+18:08:38.245Z] Found 
+lock file with pid: 
+5740
+> '[debug] [2026-03-04T
+18:08:38.245Z] 
+Resetting lock file: 
+Error: kill ESRCH
+> '[debug] [2026-03-04T
+18:08:38.246Z] 
+Initializing lock file 
+with pid 18036
+> '[debug] [2026-03-04T
+18:08:38.247Z] 
+Fetching https://regist
+ry.npmjs.org/-/package/
+vercel/dist-tags

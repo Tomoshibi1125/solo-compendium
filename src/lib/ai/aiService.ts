@@ -841,10 +841,10 @@ export class AIServiceManager {
 				metadata: { model: data?.model || "gemini-2.0-flash" },
 				usage: data?.usage
 					? {
-							promptTokens: data.usage.promptTokens,
-							completionTokens: data.usage.completionTokens,
-							totalTokens: data.usage.totalTokens,
-						}
+						promptTokens: data.usage.promptTokens,
+						completionTokens: data.usage.completionTokens,
+						totalTokens: data.usage.totalTokens,
+					}
 					: undefined,
 			};
 		} catch (error) {
@@ -1032,13 +1032,13 @@ export class AIServiceManager {
 			const data = await response.json();
 			const availableModels = Array.isArray(data?.models)
 				? data.models
-						.map((entry: { name?: unknown } | string) =>
-							typeof entry === "string" ? entry : entry?.name,
-						)
-						.filter(
-							(name: unknown): name is string =>
-								typeof name === "string" && name.trim().length > 0,
-						)
+					.map((entry: { name?: unknown } | string) =>
+						typeof entry === "string" ? entry : entry?.name,
+					)
+					.filter(
+						(name: unknown): name is string =>
+							typeof name === "string" && name.trim().length > 0,
+					)
 				: [];
 
 			if (availableModels.length === 0) {
@@ -1107,7 +1107,7 @@ export class AIServiceManager {
 			if (!response.ok) {
 				throw new Error(
 					data?.error?.message ||
-						`Custom AI request failed: ${response.status}`,
+					`Custom AI request failed: ${response.status}`,
 				);
 			}
 
@@ -1141,10 +1141,10 @@ export class AIServiceManager {
 			"suggest-style": `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,
 			"filter-content": `${jsonInstruction}\nAnalyze the given content for appropriateness. Respond with JSON: {"isAppropriate":true,"issues":[],"suggestions":[]}`,
 			"create-variation": `${jsonInstruction}\nCreate a variation of the given content that maintains core elements but adds a different twist. Respond with JSON: {"variation":""}`,
-			"generate-content": `You are an expert tabletop RPG game master and narrative designer for System Ascendant, a 5e SRD-based TTRPG with dark manhwa-inspired flavor.
+			"generate-content": `You are an expert tabletop RPG game master and narrative designer for System Ascendant, a d20-based TTRPG with dark manhwa-inspired flavor.
 
 CORE RULES CONTEXT:
-- Uses SRD 5e mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), spell slots, hit dice, armor class, saving throws, skill checks.
+- Uses System Ascendant mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), unique martial and caster powers, hit dice, armor class, saving throws, skill checks.
 - Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Dexterity), VIT (Vitality/Constitution), INT (Intelligence), SENSE (Sense/Wisdom), PRE (Presence/Charisma).
 - Classes are called "Jobs". The 14 canonical jobs are: Destroyer (Fighter), Berserker (Barbarian), Assassin (Rogue), Striker (Monk), Mage (Wizard), Esper (Sorcerer), Revenant (Necromancer), Summoner (Druid), Herald (Cleric), Contractor (Warlock), Stalker (Ranger), Holy Knight (Paladin), Technomancer (Artificer), Idol (Bard).
 - Subclasses are called "Paths". The DM is called "Protocol Warden".

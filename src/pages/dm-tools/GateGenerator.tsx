@@ -19,7 +19,7 @@ import { formatMonarchVernacular } from "@/lib/vernacular";
 
 const RIFT_RANKS = ["E", "D", "C", "B", "A", "S"];
 const RIFT_THEMES = [
-	"Shadow Realm",
+	"Abyssal Realm",
 	"Elemental Chaos",
 	"Beast Domain",
 	"Construct Forge",
@@ -47,7 +47,7 @@ const RIFT_BIOMES = [
 	"Dimensional pocket",
 ];
 const BOSS_TYPES = [
-	"Umbral Monarch Fragment",
+	"Umbral Regent Fragment",
 	"System Guardian",
 	"Corrupted Ascendant",
 	"Ancient Rift Beast",

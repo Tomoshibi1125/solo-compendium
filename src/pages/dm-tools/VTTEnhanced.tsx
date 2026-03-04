@@ -2515,7 +2515,7 @@ const VTTEnhanced = () => {
 																gridSize: Math.max(
 																	20,
 																	Number(e.target.value) ||
-																		DEFAULT_SCENE_SETTINGS.gridSize,
+																	DEFAULT_SCENE_SETTINGS.gridSize,
 																),
 															})
 														}
@@ -3129,10 +3129,10 @@ const VTTEnhanced = () => {
 														tokenType: isEffect ? "effect" : undefined,
 														render: isEffect
 															? {
-																	mode: "overlay" as const,
-																	blendMode: "screen" as const,
-																	opacity: 0.9,
-																}
+																mode: "overlay" as const,
+																blendMode: "screen" as const,
+																opacity: 0.9,
+															}
 															: undefined,
 														x: gx,
 														y: gy,
@@ -3158,8 +3158,8 @@ const VTTEnhanced = () => {
 											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto",
 											selectedTool !== "select" && "cursor-crosshair",
 											selectedTool === "select" &&
-												(selectedCharacterId || selectedLibraryTokenId) &&
-												"cursor-crosshair",
+											(selectedCharacterId || selectedLibraryTokenId) &&
+											"cursor-crosshair",
 										)}
 									>
 										<div className={cn("vtt-scene-container", sceneClass)}>
@@ -3432,7 +3432,7 @@ const VTTEnhanced = () => {
 											{currentScene?.weather &&
 												currentScene.weather !== "clear" &&
 												WEATHER_PRESETS[
-													currentScene.weather as keyof typeof WEATHER_PRESETS
+												currentScene.weather as keyof typeof WEATHER_PRESETS
 												] && (
 													<div
 														className="absolute inset-0 pointer-events-none z-[10] overflow-hidden mix-blend-screen opacity-80"
@@ -3441,7 +3441,7 @@ const VTTEnhanced = () => {
 														<style>
 															{getWeatherCSSAnimation(
 																WEATHER_PRESETS[
-																	currentScene.weather as keyof typeof WEATHER_PRESETS
+																currentScene.weather as keyof typeof WEATHER_PRESETS
 																],
 															)}
 														</style>
@@ -3483,42 +3483,42 @@ const VTTEnhanced = () => {
 											{/* Remote cursors overlay */}
 											{vttRealtime.activeUsers.filter((u) => u.cursor).length >
 												0 && (
-												<div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
-													{vttRealtime.activeUsers
-														.filter((u) => u.cursor)
-														.map((u) => (
-															<div
-																key={u.userId}
-																className="absolute transition-all duration-100 vtt-cursor"
-																style={
-																	{
-																		["--cursor-x" as string]: `${(u.cursor?.x + 0.5) * gridSize * zoom}px`,
-																		["--cursor-y" as string]: `${(u.cursor?.y + 0.5) * gridSize * zoom}px`,
-																	} as React.CSSProperties
-																}
-															>
+													<div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
+														{vttRealtime.activeUsers
+															.filter((u) => u.cursor)
+															.map((u) => (
 																<div
-																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+																	key={u.userId}
+																	className="absolute transition-all duration-100 vtt-cursor"
 																	style={
 																		{
-																			["--user-color" as string]: u.color,
-																		} as React.CSSProperties
-																	}
-																/>
-																<div
-																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																	style={
-																		{
-																			["--user-color" as string]: u.color,
+																			["--cursor-x" as string]: `${((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom}px`,
+																			["--cursor-y" as string]: `${((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom}px`,
 																		} as React.CSSProperties
 																	}
 																>
-																	{u.userName}
+																	<div
+																		className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+																		style={
+																			{
+																				["--user-color" as string]: u.color,
+																			} as React.CSSProperties
+																		}
+																	/>
+																	<div
+																		className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+																		style={
+																			{
+																				["--user-color" as string]: u.color,
+																			} as React.CSSProperties
+																		}
+																	>
+																		{u.userName}
+																	</div>
 																</div>
-															</div>
-														))}
-												</div>
-											)}
+															))}
+													</div>
+												)}
 										</div>
 									</div>
 								</SystemWindow>
@@ -4089,18 +4089,18 @@ const VTTEnhanced = () => {
 													const isCurrentTurn =
 														vttRealtime.initiativeState.active &&
 														index ===
-															vttRealtime.initiativeState.currentTurnIndex;
+														vttRealtime.initiativeState.currentTurnIndex;
 													return (
 														<div
 															key={token.id}
 															className={cn(
 																"p-2 rounded border flex items-center justify-between transition-all",
 																isCurrentTurn &&
-																	"bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50",
+																"bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50",
 																!isCurrentTurn &&
-																	index === 0 &&
-																	!vttRealtime.initiativeState.active &&
-																	"bg-muted/40 border-muted-foreground/30",
+																index === 0 &&
+																!vttRealtime.initiativeState.active &&
+																"bg-muted/40 border-muted-foreground/30",
 															)}
 														>
 															<div className="flex items-center gap-2 flex-1 min-w-0">
@@ -4253,15 +4253,15 @@ const VTTEnhanced = () => {
 																	className={cn(
 																		"p-2 rounded",
 																		msg.type === "chat" &&
-																			"border border-border bg-muted/20",
+																		"border border-border bg-muted/20",
 																		msg.type === "system" &&
-																			"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
+																		"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
 																		msg.type === "dice" &&
-																			"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
+																		"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
 																		msg.type === "gmroll" &&
-																			"border border-amber-500/40 bg-amber-950/30 text-amber-100",
+																		"border border-amber-500/40 bg-amber-950/30 text-amber-100",
 																		msg.type === "whisper" &&
-																			"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
+																		"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
 																	)}
 																>
 																	{msg.diceDisplayText ? (

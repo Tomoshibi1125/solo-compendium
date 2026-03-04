@@ -36,6 +36,7 @@ export const entryTypes = [
 	"techniques",
 	"artifacts",
 	"locations",
+	"sigils",
 ] as const;
 
 export type EntryType = (typeof entryTypes)[number];
@@ -65,6 +66,7 @@ const supabaseTableMap: Partial<
 	equipment: "compendium_equipment",
 	sovereigns: "compendium_sovereigns",
 	"shadow-soldiers": "compendium_shadow_soldiers",
+	sigils: "compendium_sigils" as never,
 };
 
 const legacyIdMap: Partial<Record<EntryType, Record<string, string>>> = {
@@ -91,6 +93,7 @@ type StaticDataProvider = {
 	getTechniques: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
 };
 
 let staticProviderPromise: Promise<StaticDataProvider> | null = null;
@@ -140,6 +143,9 @@ const getStaticEntries = async (
 			break;
 		case "feats":
 			entries = await provider.getFeats(search);
+			break;
+		case "sigils":
+			entries = await provider.getSigils(search);
 			break;
 		case "skills":
 			entries = await provider.getSkills(search);
@@ -237,7 +243,7 @@ export async function resolveRef(
 
 				const displayName =
 					typeof entityData.display_name === "string" &&
-					entityData.display_name.trim().length > 0
+						entityData.display_name.trim().length > 0
 						? entityData.display_name
 						: entityData.name;
 
@@ -396,8 +402,8 @@ export async function mergeHomebrewEntries(
 				.eq(
 					"user_id",
 					(condition as Record<string, any>).user_id ||
-						(condition as Record<string, any>).campaign_id ||
-						"",
+					(condition as Record<string, any>).campaign_id ||
+					"",
 				)
 				.neq("user_id", userId); // Don't include user's own content twice
 

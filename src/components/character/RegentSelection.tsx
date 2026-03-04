@@ -15,7 +15,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { monarchs } from "@/data/compendium/monarchs";
+import { regents } from "@/data/compendium/monarchs";
 import { cn } from "@/lib/utils";
 
 interface RegentSelectionProps {
@@ -37,7 +37,7 @@ export function RegentSelection({
 }: RegentSelectionProps) {
 	const [_showRequirements, _setShowRequirements] = useState(false);
 
-	const selectedRegentData = monarchs.find((r) => r.id === selectedRegent);
+	const selectedRegentData = regents.find((r) => r.id === selectedRegent);
 
 	const isRegentAvailable = (_regentId: string) => {
 		// In a real implementation, this would check quest completion and DM approval
@@ -71,7 +71,7 @@ export function RegentSelection({
 	};
 
 	const getLevelFeatures = (regentId: string, level: number) => {
-		const regent = monarchs.find((r) => r.id === regentId);
+		const regent = regents.find((r) => r.id === regentId);
 		if (!regent) return [];
 
 		return (regent.class_features ?? [])
@@ -85,7 +85,7 @@ export function RegentSelection({
 	};
 
 	const _getSpellSlots = (regentId: string, level: number) => {
-		const regent = monarchs.find((r) => r.id === regentId);
+		const regent = regents.find((r) => r.id === regentId);
 		if (!regent || !regent.spellcasting) return null;
 
 		return regent.spellcasting.spell_slots[`1st`]?.[level - 1] || 0;
@@ -115,7 +115,7 @@ export function RegentSelection({
 							<SelectValue placeholder="Choose a regent..." />
 						</SelectTrigger>
 						<SelectContent>
-							{monarchs.map((regent) => {
+							{regents.map((regent) => {
 								const status = getRegentStatus(regent.id);
 								return (
 									<SelectItem

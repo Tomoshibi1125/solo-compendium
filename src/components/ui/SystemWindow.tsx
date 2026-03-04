@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -8,20 +9,20 @@ interface SystemWindowProps {
 	className?: string;
 	contentClassName?: string;
 	variant?:
-		| "default"
-		| "alert"
-		| "quest"
-		| "monarch"
-		| "regent"
-		| "arise"
-		| "gate-e"
-		| "gate-d"
-		| "gate-c"
-		| "gate-b"
-		| "gate-a"
-		| "gate-s"
-		| "gate-ss"
-		| "gate-national";
+	| "default"
+	| "alert"
+	| "quest"
+	| "monarch"
+	| "regent"
+	| "arise"
+	| "gate-e"
+	| "gate-d"
+	| "gate-c"
+	| "gate-b"
+	| "gate-a"
+	| "gate-s"
+	| "gate-ss"
+	| "gate-national";
 	compact?: boolean;
 	animated?: boolean;
 	id?: string;
@@ -35,28 +36,28 @@ export function SystemWindow({
 	contentClassName,
 	variant = "default",
 	compact = false,
-	animated = false,
+	animated = true,
 	id,
 }: SystemWindowProps) {
 	const variantStyles = {
-		default: "border-primary/30 from-primary/8 via-card to-void-black/80",
-		alert: "border-destructive/30 from-destructive/8 via-card to-void-black/80",
-		quest: "border-accent/30 from-accent/8 via-card to-void-black/80",
+		default: "border-primary/40 from-primary/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		alert: "border-destructive/40 from-destructive/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		quest: "border-accent/40 from-accent/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		monarch:
-			"border-shadow-purple/40 from-shadow-purple/10 via-card to-void-black/80",
+			"border-shadow-purple/50 from-shadow-purple/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		arise:
-			"border-arise-violet/40 from-arise-violet/10 via-shadow-purple/5 to-void-black/80",
-		"gate-e": "border-gate-e/40 from-gate-e/10 via-card to-void-black/80",
-		"gate-d": "border-gate-d/40 from-gate-d/10 via-card to-void-black/80",
-		"gate-c": "border-gate-c/40 from-gate-c/10 via-card to-void-black/80",
-		"gate-b": "border-gate-b/40 from-gate-b/10 via-card to-void-black/80",
-		"gate-a": "border-gate-a/40 from-gate-a/10 via-card to-void-black/80",
-		"gate-s": "border-gate-s/40 from-gate-s/10 via-card to-void-black/80",
-		"gate-ss": "border-gate-ss/40 from-gate-ss/10 via-card to-void-black/80",
+			"border-arise-violet/50 from-arise-violet/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-e": "border-gate-e/40 from-gate-e/10 via-card/80 to-void-black/90",
+		"gate-d": "border-gate-d/40 from-gate-d/10 via-card/80 to-void-black/90",
+		"gate-c": "border-gate-c/40 from-gate-c/10 via-card/80 to-void-black/90",
+		"gate-b": "border-gate-b/40 from-gate-b/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-a": "border-gate-a/50 from-gate-a/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-s": "border-gate-s/50 from-gate-s/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-ss": "border-gate-ss/50 from-gate-ss/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		"gate-national":
-			"border-gate-national/40 from-gate-national/10 via-card to-void-black/80",
+			"border-gate-national/50 from-gate-national/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		regent:
-			"border-shadow-purple/40 from-shadow-purple/10 via-card to-void-black/80",
+			"border-shadow-purple/50 from-shadow-purple/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 	};
 
 	const _glowColors = {
@@ -96,12 +97,14 @@ export function SystemWindow({
 
 	const glowVar = glowVarMap[variant];
 
+	const Component = animated ? motion.div : "div";
+
 	return (
-		<div
+		<Component
 			id={id}
 			className={cn(
-				"relative bg-gradient-to-br border rounded-lg backdrop-blur-xl overflow-hidden transition-all duration-300 w-full max-w-full",
-				"system-panel hologram-flicker sw-root",
+				"relative bg-gradient-to-br border rounded-lg backdrop-blur-2xl overflow-hidden transition-all duration-300 w-full max-w-full",
+				"system-panel hologram-flicker sw-root hover:border-open/50",
 				variantStyles[variant],
 				animated && "animate-shadow-pulse",
 				id && "scroll-mt-4",
@@ -109,6 +112,14 @@ export function SystemWindow({
 			)}
 			// Single CSS custom property drives all child glow effects via external CSS
 			{...{ style: { "--sw-glow": `var(${glowVar})` } as React.CSSProperties }}
+			{...(animated
+				? {
+					initial: { opacity: 0, scale: 0.95, y: -20 },
+					animate: { opacity: 1, scale: 1, y: 0 },
+					exit: { opacity: 0, scale: 0.95, y: -20 },
+					transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+				}
+				: {})}
 		>
 			{/* Hex grid texture overlay */}
 			<div className="absolute inset-0 pointer-events-none hex-grid-overlay opacity-30" />
@@ -153,27 +164,27 @@ export function SystemWindow({
 			<CornerDecoration position="top-right" variant={variant} />
 			<CornerDecoration position="bottom-left" variant={variant} />
 			<CornerDecoration position="bottom-right" variant={variant} />
-		</div>
+		</Component>
 	);
 }
 
 interface CornerDecorationProps {
 	position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 	variant:
-		| "default"
-		| "alert"
-		| "quest"
-		| "monarch"
-		| "regent"
-		| "arise"
-		| "gate-e"
-		| "gate-d"
-		| "gate-c"
-		| "gate-b"
-		| "gate-a"
-		| "gate-s"
-		| "gate-ss"
-		| "gate-national";
+	| "default"
+	| "alert"
+	| "quest"
+	| "monarch"
+	| "regent"
+	| "arise"
+	| "gate-e"
+	| "gate-d"
+	| "gate-c"
+	| "gate-b"
+	| "gate-a"
+	| "gate-s"
+	| "gate-ss"
+	| "gate-national";
 }
 
 function CornerDecoration({ position, variant }: CornerDecorationProps) {

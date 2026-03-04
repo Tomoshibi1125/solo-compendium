@@ -1,19 +1,19 @@
 // Comprehensive Relics Compendium - Authoritative System Ascendant Content
 // ALL relics needed for the complete compendium system
-// Based on System Ascendant canon with SRD 5e mechanics
+// Based on System Ascendant mechanics
 
 export interface Relic {
 	id: string;
 	name: string;
 	description: string;
 	type:
-		| "weapon"
-		| "armor"
-		| "accessory"
-		| "consumable"
-		| "artifact"
-		| "tool"
-		| "material";
+	| "weapon"
+	| "armor"
+	| "accessory"
+	| "consumable"
+	| "artifact"
+	| "tool"
+	| "material";
 	rarity: "uncommon" | "rare" | "very_rare" | "epic" | "legendary" | "mythic";
 	attunement?: boolean;
 	requirements?: {
@@ -36,23 +36,23 @@ export interface Relic {
 		name: string;
 		description: string;
 		type:
-			| "passive"
-			| "active"
-			| "command"
-			| "consumable"
-			| "triggered"
-			| "reaction";
+		| "passive"
+		| "active"
+		| "command"
+		| "consumable"
+		| "triggered"
+		| "reaction";
 		frequency?:
-			| "at-will"
-			| "short-rest"
-			| "long-rest"
-			| "once-per-day"
-			| "once-per-week"
-			| "once-per-turn"
-			| "when-critical-hit"
-			| "when-creature-dies"
-			| "reaction"
-			| "action";
+		| "at-will"
+		| "short-rest"
+		| "long-rest"
+		| "once-per-day"
+		| "once-per-week"
+		| "once-per-turn"
+		| "when-critical-hit"
+		| "when-creature-dies"
+		| "reaction"
+		| "action";
 		action?: "action" | "bonus-action" | "reaction" | "free";
 		dc?: number;
 		charges?: number;
@@ -66,12 +66,12 @@ export interface Relic {
 	mechanics: {
 		bonus?: {
 			type:
-				| "attack"
-				| "damage"
-				| "AC"
-				| "saving-throws"
-				| "ability-checks"
-				| "skill-checks";
+			| "attack"
+			| "damage"
+			| "AC"
+			| "saving-throws"
+			| "ability-checks"
+			| "skill-checks";
 			value: number;
 			ability?: string;
 			skills?: string[];
@@ -656,7 +656,7 @@ export const comprehensiveRelics: Relic[] = [
 		id: "dimensional-compass",
 		name: "Dimensional Compass",
 		description:
-			"A compass that points toward dimensional disturbances and can guide through shadow realms.",
+			"A compass that points toward dimensional disturbances and can guide through abyssal realms.",
 		type: "accessory",
 		rarity: "very_rare",
 		attunement: false,
@@ -673,7 +673,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			{
 				name: "Shadow Navigation",
-				description: "Cannot get lost in shadow realms or dimensional spaces.",
+				description: "Cannot get lost in abyssal realms or dimensional spaces.",
 				type: "passive",
 			},
 			{

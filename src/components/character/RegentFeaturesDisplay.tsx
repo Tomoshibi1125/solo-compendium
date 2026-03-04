@@ -7,7 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { monarchs } from "@/data/compendium/monarchs";
+import { regents } from "@/data/compendium/monarchs";
 import { cn } from "@/lib/utils";
 
 interface RegentFeaturesDisplayProps {
@@ -25,7 +25,7 @@ export function RegentFeaturesDisplay({
 	regentLevel = 1,
 	className,
 }: RegentFeaturesDisplayProps) {
-	const regentData = monarchs.find((r) => r.id === regentId);
+	const regentData = regents.find((r) => r.id === regentId);
 
 	if (!regentId) {
 		return (

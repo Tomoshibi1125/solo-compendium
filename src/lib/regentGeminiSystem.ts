@@ -1,6 +1,6 @@
 // REGENT & GEMINI PROTOCOL SYSTEM
 // Advanced sovereign class system with AI-driven fusion mechanics
-// Nine Regents inspired by Solo Leveling's Nine Monarchs
+// Nine Regents — S-Rank sovereign powers unlocked through gate trials
 
 import type { Character } from "../types/character";
 import { NINE_REGENTS } from "./nineRegents";
@@ -53,7 +53,7 @@ export interface RegentChoice {
 }
 
 // Complete regent system implementation
-// The Nine Regents - Inspired by Solo Leveling's Nine Monarchs
+// The Nine Regents — S-Rank sovereign class system
 //
 // REGENT SELECTION RULES:
 // 1. On quest unlock, AI presents 3 regent choices
@@ -93,7 +93,7 @@ export class RegentGeminiSystem {
 			(regent) =>
 				!currentRegents.includes(regent.id) &&
 				regent.requirements.statThreshold <=
-					RegentGeminiSystem.getHighestAbilityScore(abilities),
+				RegentGeminiSystem.getHighestAbilityScore(abilities),
 		);
 
 		// Use AI to select and rank the best 3 options

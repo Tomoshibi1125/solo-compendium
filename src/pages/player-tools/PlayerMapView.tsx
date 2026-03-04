@@ -728,7 +728,7 @@ const PlayerMapView = ({
 										{currentScene?.weather &&
 											currentScene.weather !== "clear" &&
 											WEATHER_PRESETS[
-												currentScene.weather as keyof typeof WEATHER_PRESETS
+											currentScene.weather as keyof typeof WEATHER_PRESETS
 											] && (
 												<div
 													className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80"
@@ -737,7 +737,7 @@ const PlayerMapView = ({
 													<style>
 														{getWeatherCSSAnimation(
 															WEATHER_PRESETS[
-																currentScene.weather as keyof typeof WEATHER_PRESETS
+															currentScene.weather as keyof typeof WEATHER_PRESETS
 															],
 														)}
 													</style>
@@ -881,8 +881,8 @@ const PlayerMapView = ({
 																	"vtt-hp-bar vtt-hp-bar-fill",
 																	hpPercent! > 50 && "high",
 																	hpPercent! > 25 &&
-																		hpPercent! <= 50 &&
-																		"medium",
+																	hpPercent! <= 50 &&
+																	"medium",
 																	hpPercent! <= 25 && "low",
 																)}
 																style={
@@ -941,44 +941,44 @@ const PlayerMapView = ({
 										{/* Remote cursors */}
 										{vttRealtime.activeUsers.filter((u) => u.cursor).length >
 											0 && (
-											<div className="absolute inset-0 pointer-events-none vtt-cursors-overlay">
-												{vttRealtime.activeUsers
-													.filter((u) => u.cursor)
-													.map((u) => (
-														<div
-															key={u.userId}
-															className="absolute transition-all duration-100"
-															style={
-																{
-																	"--cursor-left":
-																		(u.cursor?.x + 0.5) * gridSize * zoom,
-																	"--cursor-top":
-																		(u.cursor?.y + 0.5) * gridSize * zoom,
-																} as React.CSSProperties
-															}
-														>
+												<div className="absolute inset-0 pointer-events-none vtt-cursors-overlay">
+													{vttRealtime.activeUsers
+														.filter((u) => u.cursor)
+														.map((u) => (
 															<div
-																className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+																key={u.userId}
+																className="absolute transition-all duration-100"
 																style={
 																	{
-																		"--cursor-dot-bg": u.color,
-																	} as React.CSSProperties
-																}
-															/>
-															<div
-																className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																style={
-																	{
-																		"--cursor-label-bg": u.color,
+																		"--cursor-left":
+																			((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom,
+																		"--cursor-top":
+																			((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom,
 																	} as React.CSSProperties
 																}
 															>
-																{u.userName}
+																<div
+																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+																	style={
+																		{
+																			"--cursor-dot-bg": u.color,
+																		} as React.CSSProperties
+																	}
+																/>
+																<div
+																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+																	style={
+																		{
+																			"--cursor-label-bg": u.color,
+																		} as React.CSSProperties
+																	}
+																>
+																	{u.userName}
+																</div>
 															</div>
-														</div>
-													))}
-											</div>
-										)}
+														))}
+												</div>
+											)}
 
 										{/* Empty state */}
 										{visibleTokens.length === 0 &&
@@ -1115,15 +1115,15 @@ const PlayerMapView = ({
 																className={cn(
 																	"p-1.5 rounded",
 																	msg.type === "chat" &&
-																		"border border-border bg-muted/20",
+																	"border border-border bg-muted/20",
 																	msg.type === "system" &&
-																		"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
+																	"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
 																	msg.type === "dice" &&
-																		"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
+																	"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
 																	msg.type === "gmroll" &&
-																		"border border-amber-500/40 bg-amber-950/30 text-amber-100",
+																	"border border-amber-500/40 bg-amber-950/30 text-amber-100",
 																	msg.type === "whisper" &&
-																		"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
+																	"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
 																)}
 															>
 																{msg.diceDisplayText ? (
@@ -1290,8 +1290,8 @@ const PlayerMapView = ({
 																				"h-full rounded-full vtt-initiative-hp-bar",
 																				hpPercent! > 50 && "high",
 																				hpPercent! > 25 &&
-																					hpPercent! <= 50 &&
-																					"medium",
+																				hpPercent! <= 50 &&
+																				"medium",
 																				hpPercent! <= 25 && "low",
 																			)}
 																			style={

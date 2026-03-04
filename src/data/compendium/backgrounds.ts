@@ -9,7 +9,7 @@ export interface Background {
 	name: string;
 	type: string;
 	rank: "D" | "C" | "B" | "A" | "S";
-	// SRD 5e background features
+	// System Ascendant background features
 	skillProficiencies: string[];
 	toolProficiencies?: string[];
 	languages?: string[];
@@ -42,7 +42,7 @@ export interface Background {
 export const backgrounds = [
 	{
 		id: "shadow-realm-exile",
-		name: "Shadow Realm Exile",
+		name: "Abyssal Realm Exile",
 		type: "Background",
 		rank: "C",
 		skillProficiencies: ["Stealth", "Perception", "Survival", "Arcana"],
@@ -52,7 +52,7 @@ export const backgrounds = [
 			"A set of dark clothes",
 			"A shadow-infused dagger",
 			"A small pouch containing 10 gp",
-			"A memento from the shadow realm",
+			"A memento from the abyssal realm",
 			"Thieves' tools",
 		],
 		features: [
@@ -75,30 +75,30 @@ export const backgrounds = [
 		personalityTraits: [
 			"I am constantly looking over my shoulder, expecting danger from the shadows.",
 			"I speak in whispers and avoid drawing attention to myself.",
-			"I trust no one completely, having learned betrayal in the shadow realm.",
+			"I trust no one completely, having learned betrayal in the abyssal realm.",
 			"I am fascinated by shadows and darkness, finding comfort in them.",
 		],
 		ideals: [
 			"Survival. I will do whatever it takes to survive, no matter the cost. (Neutral)",
 			"Freedom. No one should be trapped between worlds as I was. (Chaotic)",
 			"Power. The shadows taught me that only the strong survive. (Evil)",
-			"Knowledge. I seek to understand the mysteries of the shadow realm. (Neutral)",
+			"Knowledge. I seek to understand the mysteries of the abyssal realm. (Neutral)",
 		],
 		bonds: [
 			"I will protect anyone who is trapped between worlds.",
-			"I seek revenge on those who exiled me to the shadow realm.",
-			"I have a family member still trapped in the shadow realm.",
+			"I seek revenge on those who exiled me to the abyssal realm.",
+			"I have a family member still trapped in the abyssal realm.",
 			"I owe my life to someone who helped me escape.",
 		],
 		flaws: [
 			"I am paranoid and see threats everywhere.",
-			"I have nightmares about the shadow realm that affect my judgment.",
+			"I have nightmares about the abyssal realm that affect my judgment.",
 			"I trust shadows more than people.",
 			"I am willing to sacrifice others for my own survival.",
 		],
 		image: "/generated/compendium/backgrounds/shadow-realm-exile.webp",
 		description:
-			"Background as a Shadow Realm Exile from System Ascendant, with unique experiences and abilities.",
+			"Background as a Abyssal Realm Exile from System Ascendant, with unique experiences and abilities.",
 		dangers: [
 			"Post-Traumatic Stress",
 			"Dimensional Instability",
@@ -176,7 +176,7 @@ export const backgrounds = [
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "hunter-academy-graduate",
+		id: "ascendant-academy-graduate",
 		name: "Ascendant Academy Graduate",
 		type: "Background",
 		rank: "C",
@@ -234,7 +234,7 @@ export const backgrounds = [
 			"High Expectations",
 			"Standardized Thinking",
 		],
-		image: "/generated/compendium/backgrounds/hunter-academy-graduate.webp",
+		image: "/generated/compendium/backgrounds/ascendant-academy-graduate.webp",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -734,7 +734,7 @@ export const backgrounds = [
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "demon-hunter",
+		id: "demon-ascendant",
 		name: "Demon Slayer",
 		type: "Background",
 		rank: "D",
@@ -774,7 +774,7 @@ export const backgrounds = [
 		],
 		bonds: [
 			"A demon killed someone I loved, and I hunt their kind in memory of that person.",
-			"My order of demon hunters was destroyed, and I am the last surviving member.",
+			"My order of demon ascendants was destroyed, and I am the last surviving member.",
 			"I know the true name of a powerful demon and it knows I know.",
 			"I was briefly possessed by a demon—its whispers still echo in my mind.",
 		],
@@ -792,7 +792,7 @@ export const backgrounds = [
 			"Obsession Danger",
 			"Soul Erosion",
 		],
-		image: "/generated/compendium/backgrounds/demon-hunter.webp",
+		image: "/generated/compendium/backgrounds/demon-ascendant.webp",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1460,7 +1460,7 @@ export const backgrounds = [
 			"My first subscriber stuck with me from zero—I'd do anything for them.",
 			"A corporation tried to buy my silence about a gate incident I streamed live.",
 			"My streaming rival disappeared after exploring a gate on camera.",
-			"I accidentally captured classified Hunter Association footage and now I'm a target.",
+			"I accidentally captured classified Ascendant Association footage and now I'm a target.",
 		],
 		flaws: [
 			"I can't stop checking my viewer count, even during life-or-death moments.",
@@ -1469,7 +1469,7 @@ export const backgrounds = [
 			"I overshare everything online and have no concept of operational security.",
 		],
 		description:
-			"Before the System chose you, you were already famous—or at least internet-famous. Your live streams, reaction videos, or documentary content had built an audience of thousands, maybe millions. When gates started opening and hunters started awakening, you pointed your camera at the chaos and never looked away. Now that you've awakened yourself, your audience watches your ascension in real time.",
+			"Before the System chose you, you were already famous—or at least internet-famous. Your live streams, reaction videos, or documentary content had built an audience of thousands, maybe millions. When gates started opening and ascendants started awakening, you pointed your camera at the chaos and never looked away. Now that you've awakened yourself, your audience watches your ascension in real time.",
 		dangers: [
 			"Doxxing",
 			"Corporate Exploitation",
@@ -1519,7 +1519,7 @@ export const backgrounds = [
 			"Legacy. I want to be remembered for more than just a pretty face and catchy songs. (Any)",
 		],
 		bonds: [
-			"My former group members are scattered across different hunter guilds—I need to find them.",
+			"My former group members are scattered across different ascendant guilds—I need to find them.",
 			"My agency still holds my contract and wants me back, dead or alive.",
 			"A sasaeng fan awakened the same day I did and is obsessed with following my ascension.",
 			"I dedicated my last song to someone who disappeared into a gate—I'll find them.",
@@ -1706,7 +1706,7 @@ export const backgrounds = [
 		],
 		bonds: [
 			"My company is secretly funding gate research, and I know things that could topple governments.",
-			"My family's wealth was built on exploiting hunters, and I'm trying to make it right.",
+			"My family's wealth was built on exploiting ascendants, and I'm trying to make it right.",
 			"A business rival has awakened and is using their powers for corporate espionage.",
 			"I owe my position to a mentor who disappeared into an S-Rank gate.",
 		],
@@ -1767,8 +1767,8 @@ export const backgrounds = [
 			"Chaos. The old systems are broken—I'm just helping them fall faster. (Chaotic)",
 		],
 		bonds: [
-			"My hacker collective was targeted by a hunter guild for exposing their corruption.",
-			"I found something in the Hunter Association's classified servers that terrified me.",
+			"My hacker collective was targeted by a ascendant guild for exposing their corruption.",
+			"I found something in the Ascendant Association's classified servers that terrified me.",
 			"The System's code structure reminds me of something I've seen before, and I need to find the connection.",
 			"A fellow hacker was forcibly recruited by a shadow organization—I'm going to get them out.",
 		],
@@ -1830,7 +1830,7 @@ export const backgrounds = [
 		],
 		bonds: [
 			"My followers funded my first gate expedition through crowdfunding.",
-			"A rival influencer has been spreading lies about me and my hunter abilities.",
+			"A rival influencer has been spreading lies about me and my ascendant abilities.",
 			"I promised to document the truth about gates for the public, no matter how dangerous.",
 			"My brand manager knows my darkest secret and uses it as leverage.",
 		],
@@ -1893,14 +1893,14 @@ export const backgrounds = [
 		bonds: [
 			"My former esports team was my real family—I'd queue into an S-Rank gate for them.",
 			"My biggest rival in gaming awakened the same day I did, and we're still competing.",
-			"I was scouted by a hunter guild specifically because they saw my tactical ability in tournaments.",
+			"I was scouted by a ascendant guild specifically because they saw my tactical ability in tournaments.",
 			"My gaming sponsor is secretly a front for an organization researching System mechanics.",
 		],
 		flaws: [
 			"I sometimes forget that death in real life doesn't have a respawn timer.",
 			"I min-max everything, including relationships.",
 			"I can be incredibly toxic when we're losing—old gaming habits die hard.",
-			"I've spent so many years indoors that I'm physically underdeveloped compared to other hunters.",
+			"I've spent so many years indoors that I'm physically underdeveloped compared to other ascendants.",
 		],
 		description:
 			"You were the best—or close to it. Your reflexes were measured in milliseconds, your strategic thinking could dismantle world-class teams, and your name was known in every gaming community on the planet. When the System awakened you, it was like the ultimate game had finally begun. The HUD, the stats, the skill trees—it all felt terrifyingly familiar. As if the games you'd been playing your whole life were just training simulations for this moment.",

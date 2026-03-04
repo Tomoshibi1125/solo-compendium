@@ -1,11 +1,11 @@
 // Regents Compendium - Authoritative Source
-// Regents are quest-locked CLASS OVERLAYS (Hunter specializations), not NPC names
+// Regents are quest-locked CLASS OVERLAYS (Ascendant specializations), not NPC names
 // Unlock: DM-approved quest completion only — no gate-rank or level gating
 // Post-unlock progression: level-based (regent level = character level)
 // Kael Voss is the Supreme Deity / Prime Architect — NOT selectable as a regent
 // Shadow soldiers and umbral features are exclusive to Umbral Regent
 
-export interface Monarch {
+export interface Regent {
 	id: string;
 	name: string;
 	title: string;
@@ -18,16 +18,16 @@ export interface Monarch {
 	created_at?: string;
 	source_book?: string;
 
-	// System Ascendant 5e-style Hunter progression
+	// System Ascendant 5e-style Ascendant progression
 	hit_dice: string; // "1d12", "1d8", etc.
-	primary_ability: string[]; // Primary abilities for the Hunter
+	primary_ability: string[]; // Primary abilities for the Ascendant
 	saving_throws: string[]; // Additional saving throw proficiencies
-	skill_proficiencies: string[]; // Hunter-specific skill proficiencies
+	skill_proficiencies: string[]; // Ascendant-specific skill proficiencies
 	armor_proficiencies: string[]; // Any armor proficiencies granted
 	weapon_proficiencies: string[]; // Any weapon proficiencies granted
 	tool_proficiencies: string[]; // Any tool proficiencies granted
 
-	// Level-based progression (1-20) - Hunter Rank Advancement
+	// Level-based progression (1-20) - Ascendant Rank Advancement
 	class_features: {
 		level: number;
 		name: string;
@@ -48,10 +48,10 @@ export interface Monarch {
 		cantrips_known?: number[];
 		spells_known?: number[];
 		spell_preparation?: boolean;
-		additional_spells?: string[]; // Hunter-specific spells
+		additional_spells?: string[]; // Ascendant-specific spells
 	};
 
-	// Feature progression mapping - Hunter Level Progression
+	// Feature progression mapping - Ascendant Level Progression
 	progression_table: {
 		[level: number]: {
 			features_gained: string[];
@@ -61,7 +61,7 @@ export interface Monarch {
 		};
 	};
 
-	// Integration requirements - Quest-based Hunter Qualification
+	// Integration requirements - Quest-based Ascendant Qualification
 	regent_requirements?: {
 		level: number;
 		abilities: Record<string, number>;
@@ -69,7 +69,7 @@ export interface Monarch {
 		dm_approval: boolean;
 	};
 
-	// System Ascendant Hunter mechanics
+	// System Ascendant Ascendant mechanics
 	requirements: {
 		quest_completion: string;
 		dm_verification: boolean;
@@ -126,28 +126,28 @@ export interface Monarch {
 	};
 }
 
-export const monarchs = [
+export const regents = [
 	{
 		id: "umbral-monarch-overlay",
 		name: "Umbral Regent",
-		title: "Umbral Regent Hunter Class",
+		title: "Umbral Regent Ascendant Class",
 		theme: "Umbral and Death",
 		description:
-			"The ultimate umbral manipulation Hunter class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Hunter class available to players, granting true Regent-level power over the umbral realm and the ability to command shadows.",
+			"The ultimate umbral manipulation Ascendant class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Ascendant class available to players, granting true Regent-level power over the umbral realm and the ability to command shadows.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/umbral-sovereign.webp",
-		type: "hunter-class-overlay",
+		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
 			"umbral",
 			"death",
-			"hunter-class-overlay",
+			"ascendant-class-overlay",
 			"shadow-soldier-command",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 
-		// System Ascendant 5e-style Hunter progression
+		// System Ascendant 5e-style Ascendant progression
 		hit_dice: "1d12",
 		primary_ability: ["Charisma", "Wisdom"],
 		saving_throws: ["Wisdom", "Charisma"],
@@ -156,7 +156,7 @@ export const monarchs = [
 		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
 		tool_proficiencies: [],
 
-		// Level-based progression (1-20) - Hunter Rank Advancement
+		// Level-based progression (1-20) - Ascendant Rank Advancement
 		class_features: [
 			{
 				level: 1,
@@ -319,7 +319,7 @@ export const monarchs = [
 			],
 		},
 
-		// Feature progression mapping - Hunter Level Progression
+		// Feature progression mapping - Ascendant Level Progression
 		progression_table: {
 			1: {
 				features_gained: [
@@ -563,7 +563,7 @@ export const monarchs = [
 			},
 		},
 
-		// Integration requirements - Quest-based Hunter Qualification
+		// Integration requirements - Quest-based Ascendant Qualification
 		regent_requirements: {
 			level: 5,
 			abilities: { charisma: 13, wisdom: 13 },
@@ -852,10 +852,10 @@ export const monarchs = [
 	{
 		id: "flame-monarch-overlay",
 		name: "Flame Monarch",
-		title: "Flame Monarch Class",
+		title: "Flame Regent Class",
 		theme: "White Flames",
 		description:
-			"A powerful fire-based class overlay that grants mastery over white flames and purification fire. Users can incinerate enemies and purify corruption with sacred flames, embodying the Monarch of White Flames' absolute control over fire.",
+			"A powerful fire-based class overlay that grants mastery over white flames and purification fire. Users can incinerate enemies and purify corruption with sacred flames, embodying the Regent of White Flames' absolute control over fire.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/white-flame-monarch.webp",
 		type: "class-overlay",
@@ -863,7 +863,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Flame Monarch Trials quest series",
+			quest_completion: "Complete the Flame Regent Trials quest series",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -872,7 +872,7 @@ export const monarchs = [
 			{
 				name: "White Flame Burst",
 				description:
-					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Constitution saving throw (DC 18) or be blinded for 1 minute. This mirrors the Monarch of White Flames' devastating fire attacks.",
+					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Constitution saving throw (DC 18) or be blinded for 1 minute. This mirrors the Regent of White Flames' devastating fire attacks.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 3,
@@ -888,7 +888,7 @@ export const monarchs = [
 			{
 				name: "Flame Step",
 				description:
-					"As a bonus action, teleport through flames up to 120 feet to any unoccupied space you can see. This mirrors the Monarch of White Flames' fire-based mobility.",
+					"As a bonus action, teleport through flames up to 120 feet to any unoccupied space you can see. This mirrors the Regent of White Flames' fire-based mobility.",
 				type: "bonus-action",
 				frequency: "at-will",
 				power_level: 1,
@@ -904,7 +904,7 @@ export const monarchs = [
 			{
 				name: "Immolation Aura",
 				description:
-					"Enemies within 10 feet take 1d6 fire damage at the start of their turn. You are immune to fire damage. This represents the Monarch of White Flames' passive fire control.",
+					"Enemies within 10 feet take 1d6 fire damage at the start of their turn. You are immune to fire damage. This represents the Regent of White Flames' passive fire control.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 1,
@@ -928,7 +928,7 @@ export const monarchs = [
 			{
 				name: "Flame Dominion",
 				description:
-					"You become the ultimate master of flames, gaining immunity to all damage and the ability to command any fire creature anywhere in the multiverse. This represents the Monarch of White Flames' ultimate power.",
+					"You become the ultimate master of flames, gaining immunity to all damage and the ability to command any fire creature anywhere in the multiverse. This represents the Regent of White Flames' ultimate power.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,
@@ -1100,7 +1100,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -1154,7 +1154,7 @@ export const monarchs = [
 	{
 		id: "steel-flesh-monarch-overlay",
 		name: "Steel Monarch",
-		title: "Steel Monarch Class",
+		title: "Steel Regent Class",
 		theme: "Steel and Flesh",
 		description:
 			"A defensive class overlay that grants control over flesh manipulation and steel enhancement. Users can reinforce their bodies and manipulate organic matter, embodying the Steel Monarch's absolute mastery over biological and metallic matter.",
@@ -1172,7 +1172,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Steel Monarch Ascension trials",
+			quest_completion: "Complete the Steel Regent Ascension trials",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -1409,7 +1409,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -1455,7 +1455,7 @@ export const monarchs = [
 	{
 		id: "frost-monarch-overlay",
 		name: "Frost Monarch",
-		title: "Ice Monarch Class",
+		title: "Ice Regent Class",
 		theme: "Ice and Cold",
 		description:
 			"An ice-based class overlay that grants absolute control over cold and ice. Users can freeze enemies solid and create blizzards at will, embodying the Frost Monarch's complete mastery over the cold domain.",
@@ -1466,7 +1466,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Frost Monarch Trials quest series",
+			quest_completion: "Complete the Frost Regent Trials quest series",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -1703,7 +1703,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -1745,7 +1745,7 @@ export const monarchs = [
 	{
 		id: "destruction-monarch-overlay",
 		name: "Destruction Monarch",
-		title: "Destruction Monarch Class",
+		title: "Destruction Regent Class",
 		theme: "Destruction",
 		description:
 			"A destructive class overlay focused on pure annihilation and devastation. Users can obliterate targets with overwhelming destructive force, embodying Varkun' absolute power over destruction.",
@@ -1993,7 +1993,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -2063,10 +2063,10 @@ export const monarchs = [
 	{
 		id: "plague-monarch-overlay",
 		name: "Plague Monarch",
-		title: "Plague Monarch Class",
+		title: "Plague Regent Class",
 		theme: "Disease and Plague",
 		description:
-			"A pestilence-based class overlay that grants control over diseases and plagues. Users can inflict devastating ailments and manipulate biological corruption, embodying the Monarch of Plagues' absolute mastery over disease.",
+			"A pestilence-based class overlay that grants control over diseases and plagues. Users can inflict devastating ailments and manipulate biological corruption, embodying the Regent of Plagues' absolute mastery over disease.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/plague-monarch.webp",
 		type: "class-overlay",
@@ -2081,7 +2081,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Plague Monarch Ascension trials",
+			quest_completion: "Complete the Plague Regent Ascension trials",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -2090,7 +2090,7 @@ export const monarchs = [
 			{
 				name: "Pandemic Wave",
 				description:
-					"As an action, release a wave of plague that infects all creatures in 60-foot radius. Victims must make Constitution saves (DC 18) or contract multiple diseases. This mirrors the Monarch of Plagues' devastating plague attacks.",
+					"As an action, release a wave of plague that infects all creatures in 60-foot radius. Victims must make Constitution saves (DC 18) or contract multiple diseases. This mirrors the Regent of Plagues' devastating plague attacks.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 3,
@@ -2098,7 +2098,7 @@ export const monarchs = [
 			{
 				name: "Contagion Cloud",
 				description:
-					"As an action, create a 30-foot radius cloud of disease that deals 6d6 poison damage and imposes disadvantage on Constitution saves. This reflects the Monarch of Plagues' area disease control.",
+					"As an action, create a 30-foot radius cloud of disease that deals 6d6 poison damage and imposes disadvantage on Constitution saves. This reflects the Regent of Plagues' area disease control.",
 				type: "action",
 				frequency: "long-rest",
 				power_level: 2,
@@ -2106,7 +2106,7 @@ export const monarchs = [
 			{
 				name: "Plague Step",
 				description:
-					"As a bonus action, teleport through disease vectors (insects, spores) up to 120 feet, leaving behind a trail of infection. This mirrors the Monarch of Plagues' disease-based mobility.",
+					"As a bonus action, teleport through disease vectors (insects, spores) up to 120 feet, leaving behind a trail of infection. This mirrors the Regent of Plagues' disease-based mobility.",
 				type: "bonus-action",
 				frequency: "at-will",
 				power_level: 1,
@@ -2114,7 +2114,7 @@ export const monarchs = [
 			{
 				name: "Disease Shield",
 				description:
-					"As a reaction when targeted by an attack, infect the attacker with a debilitating disease that imposes disadvantage on attack rolls. This reflects the Monarch of Plagues' defensive disease capabilities.",
+					"As a reaction when targeted by an attack, infect the attacker with a debilitating disease that imposes disadvantage on attack rolls. This reflects the Regent of Plagues' defensive disease capabilities.",
 				type: "reaction",
 				frequency: "short-rest",
 				power_level: 2,
@@ -2122,7 +2122,7 @@ export const monarchs = [
 			{
 				name: "Miasma Aura",
 				description:
-					"Enemies within 20 feet must make Constitution saves each turn or take 1d6 poison damage and gain a level of exhaustion. This represents the Monarch of Plagues' passive disease aura.",
+					"Enemies within 20 feet must make Constitution saves each turn or take 1d6 poison damage and gain a level of exhaustion. This represents the Regent of Plagues' passive disease aura.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 1,
@@ -2130,7 +2130,7 @@ export const monarchs = [
 			{
 				name: "Plague Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute plague control. All disease creatures within gain advantage on all attacks. This mirrors the Monarch of Plagues' domain over disease.",
+					"As an action, create a 1-mile radius area of absolute plague control. All disease creatures within gain advantage on all attacks. This mirrors the Regent of Plagues' domain over disease.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
@@ -2138,7 +2138,7 @@ export const monarchs = [
 			{
 				name: "Disease Authority",
 				description:
-					"As an action, force all living creatures within 300 feet to make a Wisdom save (DC 20) or become diseased and serve your will. This reflects the Monarch of Plagues' command over disease.",
+					"As an action, force all living creatures within 300 feet to make a Wisdom save (DC 20) or become diseased and serve your will. This reflects the Regent of Plagues' command over disease.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
@@ -2146,7 +2146,7 @@ export const monarchs = [
 			{
 				name: "Plague Dominion",
 				description:
-					"You become the ultimate master of disease, gaining immunity to all damage and the ability to command any disease anywhere in the multiverse. This represents the Monarch of Plagues' ultimate power.",
+					"You become the ultimate master of disease, gaining immunity to all damage and the ability to command any disease anywhere in the multiverse. This represents the Regent of Plagues' ultimate power.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,
@@ -2162,13 +2162,13 @@ export const monarchs = [
 			{
 				name: "Pestilence Presence",
 				description:
-					"Living creatures cannot willingly approach within 30 feet of you. This reflects the Monarch of Plagues' disease aura.",
+					"Living creatures cannot willingly approach within 30 feet of you. This reflects the Regent of Plagues' disease aura.",
 				power_level: 2,
 			},
 			{
 				name: "Plague Mastery",
 				description:
-					"You can cast disease-based spells at will without expending spell slots. This represents the Monarch of Plagues' complete mastery over disease magic.",
+					"You can cast disease-based spells at will without expending spell slots. This represents the Regent of Plagues' complete mastery over disease magic.",
 				power_level: 3,
 			},
 			{
@@ -2318,7 +2318,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -2372,10 +2372,10 @@ export const monarchs = [
 	{
 		id: "blood-monarch-overlay",
 		name: "Blood Monarch",
-		title: "Blood Monarch Class",
+		title: "Blood Regent Class",
 		theme: "Blood Manipulation",
 		description:
-			"A hemomancy-based class overlay that grants control over blood and life force. Users can manipulate blood in living beings and enhance their physical abilities, embodying the Monarch of Blood's absolute mastery over blood.",
+			"A hemomancy-based class overlay that grants control over blood and life force. Users can manipulate blood in living beings and enhance their physical abilities, embodying the Regent of Blood's absolute mastery over blood.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/blood-monarch.webp",
 		type: "class-overlay",
@@ -2390,7 +2390,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Blood Monarch Ascension trials",
+			quest_completion: "Complete the Blood Regent Ascension trials",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -2399,7 +2399,7 @@ export const monarchs = [
 			{
 				name: "Blood Boil",
 				description:
-					"As an action, cause the blood of all creatures in 60-foot radius to boil. Victims take 14d8 necrotic damage and must make Constitution saves (DC 18) or be incapacitated. This mirrors the Monarch of Blood's devastating blood attacks.",
+					"As an action, cause the blood of all creatures in 60-foot radius to boil. Victims take 14d8 necrotic damage and must make Constitution saves (DC 18) or be incapacitated. This mirrors the Regent of Blood's devastating blood attacks.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 3,
@@ -2407,7 +2407,7 @@ export const monarchs = [
 			{
 				name: "Life Drain",
 				description:
-					"As an action, drain life force from up to 6 creatures within 30 feet. You regain 2d10 hit points per creature affected. This reflects the Monarch of Blood's life force manipulation.",
+					"As an action, drain life force from up to 6 creatures within 30 feet. You regain 2d10 hit points per creature affected. This reflects the Regent of Blood's life force manipulation.",
 				type: "action",
 				frequency: "long-rest",
 				power_level: 2,
@@ -2415,7 +2415,7 @@ export const monarchs = [
 			{
 				name: "Blood Step",
 				description:
-					"As a bonus action, teleport through blood vessels and life force up to 120 feet, leaving behind a trail of blood. This mirrors the Monarch of Blood's blood-based mobility.",
+					"As a bonus action, teleport through blood vessels and life force up to 120 feet, leaving behind a trail of blood. This mirrors the Regent of Blood's blood-based mobility.",
 				type: "bonus-action",
 				frequency: "at-will",
 				power_level: 1,
@@ -2423,7 +2423,7 @@ export const monarchs = [
 			{
 				name: "Hemomantic Shield",
 				description:
-					"As a reaction when targeted by an attack, create a shield of blood that absorbs the damage and heals you for half the damage prevented. This reflects the Monarch of Blood's defensive blood capabilities.",
+					"As a reaction when targeted by an attack, create a shield of blood that absorbs the damage and heals you for half the damage prevented. This reflects the Regent of Blood's defensive blood capabilities.",
 				type: "reaction",
 				frequency: "short-rest",
 				power_level: 2,
@@ -2431,7 +2431,7 @@ export const monarchs = [
 			{
 				name: "Vampiric Aura",
 				description:
-					"Enemies within 20 feet lose 1d6 hit points at the start of their turn, and you regain the same amount. This represents the Monarch of Blood's passive blood aura.",
+					"Enemies within 20 feet lose 1d6 hit points at the start of their turn, and you regain the same amount. This represents the Regent of Blood's passive blood aura.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 1,
@@ -2439,7 +2439,7 @@ export const monarchs = [
 			{
 				name: "Blood Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute blood control. All blood creatures within gain regeneration. This mirrors the Monarch of Blood's domain over blood.",
+					"As an action, create a 1-mile radius area of absolute blood control. All blood creatures within gain regeneration. This mirrors the Regent of Blood's domain over blood.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
@@ -2447,7 +2447,7 @@ export const monarchs = [
 			{
 				name: "Life Authority",
 				description:
-					"As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your blood servants. This reflects the Monarch of Blood's command over life force.",
+					"As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your blood servants. This reflects the Regent of Blood's command over life force.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
@@ -2455,7 +2455,7 @@ export const monarchs = [
 			{
 				name: "Blood Dominion",
 				description:
-					"You become the ultimate master of blood, gaining immunity to all damage and the ability to command any blood creature anywhere in the multiverse. This represents the Monarch of Blood's ultimate power.",
+					"You become the ultimate master of blood, gaining immunity to all damage and the ability to command any blood creature anywhere in the multiverse. This represents the Regent of Blood's ultimate power.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,
@@ -2471,13 +2471,13 @@ export const monarchs = [
 			{
 				name: "Life Force Presence",
 				description:
-					"Undead and constructs cannot willingly approach within 30 feet of you. This reflects the Monarch of Blood's life force aura.",
+					"Undead and constructs cannot willingly approach within 30 feet of you. This reflects the Regent of Blood's life force aura.",
 				power_level: 2,
 			},
 			{
 				name: "Hemomancy Mastery",
 				description:
-					"You can cast blood and life force-based spells at will without expending spell slots. This represents the Monarch of Blood's complete mastery over blood magic.",
+					"You can cast blood and life force-based spells at will without expending spell slots. This represents the Regent of Blood's complete mastery over blood magic.",
 				power_level: 3,
 			},
 			{
@@ -2627,7 +2627,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -2669,7 +2669,7 @@ export const monarchs = [
 	{
 		id: "berserk-monarch-overlay",
 		name: "Berserk Monarch",
-		title: "Berserk Monarch Class",
+		title: "Berserk Regent Class",
 		theme: "Berserker Rage",
 		description:
 			"A rage-based class overlay that grants uncontrollable power through berserker fury. Users become unstoppable forces of destruction when enraged, embodying the Berserk Monarch's absolute mastery over rage.",
@@ -2687,7 +2687,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Berserk Monarch Ascension trials",
+			quest_completion: "Complete the Berserk Regent Ascension trials",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -2924,7 +2924,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -2966,7 +2966,7 @@ export const monarchs = [
 	{
 		id: "dragonic-monarch-overlay",
 		name: "Dragonic Monarch",
-		title: "Dragon Monarch Class",
+		title: "Dragon Regent Class",
 		theme: "Dragon Fire",
 		description:
 			"A draconic class overlay that grants dragon-like abilities and fire manipulation. Users can breathe fire and gain dragon physical traits, embodying the Dragonic Monarch's absolute mastery over draconic power.",
@@ -2984,7 +2984,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Dragon Monarch Ascension trials",
+			quest_completion: "Complete the Dragon Regent Ascension trials",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -3221,7 +3221,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -3263,7 +3263,7 @@ export const monarchs = [
 	{
 		id: "commander-monarch-overlay",
 		name: "Commander Monarch",
-		title: "Command Monarch Class",
+		title: "Command Regent Class",
 		theme: "Shadow Command",
 		description:
 			"A leadership-based class overlay that grants command over shadow armies and tactical supremacy. Users can lead legions of umbral legionnaires, embodying the Commander Monarch's absolute mastery over shadow command.",
@@ -3281,7 +3281,7 @@ export const monarchs = [
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		requirements: {
-			quest_completion: "Complete the Command Monarch Ascension trials",
+			quest_completion: "Complete the Command Regent Ascension trials",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -3517,7 +3517,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"You achieve the full power of a Monarch at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Monarchs at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Monarch, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -3567,13 +3567,13 @@ export const monarchs = [
 	{
 		id: "dragon-regent-overlay",
 		name: "Dragon Regent",
-		title: "Dragon Regent Hunter Class",
+		title: "Dragon Regent Ascendant Class",
 		theme: "Draconic Apocalypse",
 		description:
-			"The incarnation of primordial destruction. Transform into an ancient dragon of apocalypse whose breath erases matter from existence. Asphalt melts under your feet, satellites detect thermal spikes, and the Hunter Bureau classifies you as a Kaiju-class extinction event. Your awakening tapped into the primal draconic force that predates the System itself — a power from the original gates that opened before humanity had words for fire.",
+			"The incarnation of primordial destruction. Transform into an ancient dragon of apocalypse whose breath erases matter from existence. Asphalt melts under your feet, satellites detect thermal spikes, and the Ascendant Bureau classifies you as a Kaiju-class extinction event. Your awakening tapped into the primal draconic force that predates the System itself — a power from the original gates that opened before humanity had words for fire.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/dragon-regent.webp",
-		type: "hunter-class-overlay",
+		type: "ascendant-class-overlay",
 		tags: ["regent", "dragon", "fire", "destruction", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
@@ -3889,7 +3889,7 @@ export const monarchs = [
 			{
 				name: "Monarch Power",
 				description:
-					"Full Monarch power: reshape reality, command infinite armies, transcend existence.",
+					"Full Regent power: reshape reality, command infinite armies, transcend existence.",
 				power_level: 20,
 			},
 		],
@@ -3935,13 +3935,13 @@ export const monarchs = [
 	{
 		id: "frost-regent-overlay",
 		name: "Frost Regent",
-		title: "Frost Regent Hunter Class",
+		title: "Frost Regent Ascendant Class",
 		theme: "Eternal Winter",
 		description:
-			"Herald of the eternal winter. Bring ice age to modern cities. Thermometers break showing impossible temperatures and the Hunter Bureau classifies you as a climate catastrophe event. Your power taps into the absolute zero boundary — the point where molecular motion ceases and time itself slows to a crawl. Scientists monitoring your activities have documented localized temporal distortions near frost zones.",
+			"Herald of the eternal winter. Bring ice age to modern cities. Thermometers break showing impossible temperatures and the Ascendant Bureau classifies you as a climate catastrophe event. Your power taps into the absolute zero boundary — the point where molecular motion ceases and time itself slows to a crawl. Scientists monitoring your activities have documented localized temporal distortions near frost zones.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/frost-regent.webp",
-		type: "hunter-class-overlay",
+		type: "ascendant-class-overlay",
 		tags: ["regent", "frost", "ice", "cold", "time", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
@@ -4184,7 +4184,7 @@ export const monarchs = [
 			},
 			{
 				name: "Monarch Power",
-				description: "Full Monarch power.",
+				description: "Full Regent power.",
 				power_level: 20,
 			},
 		],
@@ -4223,13 +4223,13 @@ export const monarchs = [
 	{
 		id: "beast-regent-overlay",
 		name: "Beast Regent",
-		title: "Beast Regent Hunter Class",
+		title: "Beast Regent Ascendant Class",
 		theme: "Primal Evolution",
 		description:
-			"Avatar of primordial evolution. All beasts recognize you as alpha. Transform into an apex predator from before human history. The Hunter Bureau classifies you as an Alpha-class biodiversity threat. Zoo animals break containment when you pass, police K-9 units refuse to engage, and wildlife documentarians film you instead of their subjects.",
+			"Avatar of primordial evolution. All beasts recognize you as alpha. Transform into an apex predator from before human history. The Ascendant Bureau classifies you as an Alpha-class biodiversity threat. Zoo animals break containment when you pass, police K-9 units refuse to engage, and wildlife documentarians film you instead of their subjects.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/beast-regent.webp",
-		type: "hunter-class-overlay",
+		type: "ascendant-class-overlay",
 		tags: ["regent", "beast", "primal", "evolution", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
@@ -4449,7 +4449,7 @@ export const monarchs = [
 			},
 			{
 				name: "Monarch Power",
-				description: "Full Monarch power.",
+				description: "Full Regent power.",
 				power_level: 20,
 			},
 		],
@@ -4488,13 +4488,13 @@ export const monarchs = [
 	{
 		id: "plague-regent-overlay",
 		name: "Plague Regent",
-		title: "Plague Regent Hunter Class",
+		title: "Plague Regent Ascendant Class",
 		theme: "Pandemic Incarnate",
 		description:
-			"Incarnation of plague and pestilence. Walking biological apocalypse. The CDC tracks 47 unknown pathogens in your wake. The Hunter Bureau classifies you as a Pandemic-class bioweapon. Insects obey your will, diseases are your art form, and quarantine zones form wherever you walk. Hospitals refuse your admittance, biohazard teams follow your movements, and the WHO has a dedicated task force assigned to you.",
+			"Incarnation of plague and pestilence. Walking biological apocalypse. The CDC tracks 47 unknown pathogens in your wake. The Ascendant Bureau classifies you as a Pandemic-class bioweapon. Insects obey your will, diseases are your art form, and quarantine zones form wherever you walk. Hospitals refuse your admittance, biohazard teams follow your movements, and the WHO has a dedicated task force assigned to you.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/plague-regent.webp",
-		type: "hunter-class-overlay",
+		type: "ascendant-class-overlay",
 		tags: ["regent", "plague", "disease", "swarm", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
@@ -4726,7 +4726,7 @@ export const monarchs = [
 			},
 			{
 				name: "Monarch Power",
-				description: "Full Monarch power.",
+				description: "Full Regent power.",
 				power_level: 20,
 			},
 		],
@@ -4768,13 +4768,13 @@ export const monarchs = [
 	{
 		id: "architect-regent-overlay",
 		name: "Architect Regent",
-		title: "Architect Regent Hunter Class",
+		title: "Architect Regent Ascendant Class",
 		theme: "Reality Architecture",
 		description:
-			"Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your System HUD shows universe blueprints. The Hunter Bureau classifies you as a Dimensional sovereignty threat. You build structures from nothing, create pocket dimensions for storage/bases/prisons, and place dimensional anchors worldwide for instant teleportation. Building inspectors have given up filing reports on your constructions.",
+			"Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your System HUD shows universe blueprints. The Ascendant Bureau classifies you as a Dimensional sovereignty threat. You build structures from nothing, create pocket dimensions for storage/bases/prisons, and place dimensional anchors worldwide for instant teleportation. Building inspectors have given up filing reports on your constructions.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/architect-regent.webp",
-		type: "hunter-class-overlay",
+		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
 			"architect",
@@ -5022,7 +5022,7 @@ export const monarchs = [
 			},
 			{
 				name: "Monarch Power",
-				description: "Full Monarch power.",
+				description: "Full Regent power.",
 				power_level: 20,
 			},
 		],
@@ -5073,13 +5073,13 @@ export const monarchs = [
 	{
 		id: "mimic-regent-overlay",
 		name: "Mimic Regent",
-		title: "Mimic Regent Hunter Class",
+		title: "Mimic Regent Ascendant Class",
 		theme: "Infinite Forms",
 		description:
-			"Embodiment of infinite forms. Copy anything — creatures, objects, concepts. No detection possible. The Hunter Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
+			"Embodiment of infinite forms. Copy anything — creatures, objects, concepts. No detection possible. The Ascendant Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
 		rank: "S",
 		image: "/generated/compendium/monarchs/mimic-regent.webp",
-		type: "hunter-class-overlay",
+		type: "ascendant-class-overlay",
 		tags: ["regent", "mimic", "shapeshifting", "adaptation", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
@@ -5301,7 +5301,7 @@ export const monarchs = [
 			},
 			{
 				name: "Monarch Power",
-				description: "Full Monarch power.",
+				description: "Full Regent power.",
 				power_level: 20,
 			},
 		],

@@ -20,6 +20,65 @@ export function useCombatSessionManager() {
 	const { toast } = useToast();
 	const { user } = useAuth();
 
+	const generateSessionSummary = useCallback(async (sessionId: string) => {
+		try {
+			// Get combatants from the session
+			const { data: combatants } = await supabase
+				.from("campaign_combatants")
+				.select("*")
+				.eq("session_id", sessionId);
+
+			// Get session details for round count
+			const { data: session } = await supabase
+				.from("campaign_combat_sessions")
+				.select("round, current_turn")
+				.eq("id", sessionId)
+				.single();
+
+			const totalCombatants = combatants?.length || 0;
+			const totalRounds = session?.round || 1;
+
+			const defeatedCombatants =
+				combatants?.filter((c) => {
+					const conditions = c.conditions as Record<string, any>;
+					return (
+						conditions &&
+						(conditions.defeated === true ||
+							(Array.isArray(conditions) && conditions.includes("defeated")))
+					);
+				}) || [];
+
+			const survivingCombatants =
+				combatants?.filter((c) => {
+					const conditions = c.conditions as Record<string, any>;
+					return (
+						!conditions ||
+						(conditions.defeated !== true &&
+							(!Array.isArray(conditions) || !conditions.includes("defeated")))
+					);
+				}) || [];
+
+			return {
+				totalRounds,
+				totalCombatants,
+				defeatedCombatants: defeatedCombatants.length,
+				survivingCombatants: survivingCombatants.length,
+				combatDuration: totalRounds * 6, // Assuming 6 seconds per round
+				sessionEnd: new Date().toISOString(),
+			};
+		} catch (error) {
+			console.error("Error generating session summary:", error);
+			return {
+				totalRounds: 0,
+				totalCombatants: 0,
+				defeatedCombatants: 0,
+				survivingCombatants: 0,
+				combatDuration: 0,
+				sessionEnd: new Date().toISOString(),
+			};
+		}
+	}, []);
+
 	const endCombatSession = useCallback(
 		async (sessionId: string, options: CombatSessionEndOptions = {}) => {
 			if (!user || !isSupabaseConfigured) {
@@ -97,64 +156,7 @@ export function useCombatSessionManager() {
 		[user, toast, generateSessionSummary],
 	);
 
-	const generateSessionSummary = useCallback(async (sessionId: string) => {
-		try {
-			// Get combatants from the session
-			const { data: combatants } = await supabase
-				.from("campaign_combatants")
-				.select("*")
-				.eq("session_id", sessionId);
 
-			// Get session details for round count
-			const { data: session } = await supabase
-				.from("campaign_combat_sessions")
-				.select("round, current_turn")
-				.eq("id", sessionId)
-				.single();
-
-			const totalCombatants = combatants?.length || 0;
-			const totalRounds = session?.round || 1;
-
-			const defeatedCombatants =
-				combatants?.filter((c) => {
-					const conditions = c.conditions as Record<string, any>;
-					return (
-						conditions &&
-						(conditions.defeated === true ||
-							(Array.isArray(conditions) && conditions.includes("defeated")))
-					);
-				}) || [];
-
-			const survivingCombatants =
-				combatants?.filter((c) => {
-					const conditions = c.conditions as Record<string, any>;
-					return (
-						!conditions ||
-						(conditions.defeated !== true &&
-							(!Array.isArray(conditions) || !conditions.includes("defeated")))
-					);
-				}) || [];
-
-			return {
-				totalRounds,
-				totalCombatants,
-				defeatedCombatants: defeatedCombatants.length,
-				survivingCombatants: survivingCombatants.length,
-				combatDuration: totalRounds * 6, // Assuming 6 seconds per round
-				sessionEnd: new Date().toISOString(),
-			};
-		} catch (error) {
-			console.error("Error generating session summary:", error);
-			return {
-				totalRounds: 0,
-				totalCombatants: 0,
-				defeatedCombatants: 0,
-				survivingCombatants: 0,
-				combatDuration: 0,
-				sessionEnd: new Date().toISOString(),
-			};
-		}
-	}, []);
 
 	const resumeCombatSession = useCallback(
 		async (sessionId: string) => {

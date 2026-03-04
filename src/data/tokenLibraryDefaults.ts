@@ -140,7 +140,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 	...BASE_LIBRARY_TOKENS,
 	// Ascendants
 	{
-		id: "hunter-1",
+		id: "ascendant-1",
 		name: "Ascendant (E-Rank)",
 		type: "character",
 		category: "ascendant",
@@ -150,7 +150,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "hunter-2",
+		id: "ascendant-2",
 		name: "Ascendant (D-Rank)",
 		type: "character",
 		category: "ascendant",
@@ -160,7 +160,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "hunter-3",
+		id: "ascendant-3",
 		name: "Ascendant (C-Rank)",
 		type: "character",
 		category: "ascendant",
@@ -170,7 +170,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "hunter-4",
+		id: "ascendant-4",
 		name: "Ascendant (B-Rank)",
 		type: "character",
 		category: "ascendant",
@@ -180,7 +180,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "hunter-5",
+		id: "ascendant-5",
 		name: "Ascendant (A-Rank)",
 		type: "character",
 		category: "ascendant",
@@ -190,7 +190,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "hunter-6",
+		id: "ascendant-6",
 		name: "Ascendant (S-Rank)",
 		type: "character",
 		category: "ascendant",
@@ -890,7 +890,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 const normalizeTokenCategory = (
 	category: string | undefined,
 ): TokenCategory => {
-	if (category === "hunter") return "ascendant";
+	if (category === "ascendant") return "ascendant";
 	if (!category) return "other";
 	if (category === "ascendant") return "ascendant";
 	if (category === "monster") return "monster";
@@ -909,7 +909,7 @@ const normalizeTokenTags = (tags: string[] | undefined) => {
 	let changed = false;
 	const normalized = tags
 		.map((tag) => {
-			if (tag === "hunter") {
+			if (tag === "ascendant") {
 				changed = true;
 				return "ascendant";
 			}
@@ -924,7 +924,7 @@ const normalizeTokenTags = (tags: string[] | undefined) => {
 
 const normalizeTokenEmoji = (token: LibraryToken) => {
 	if (
-		token.id.startsWith("hunter-") &&
+		token.id.startsWith("ascendant-") &&
 		token.emoji &&
 		token.emoji.startsWith("H-")
 	) {

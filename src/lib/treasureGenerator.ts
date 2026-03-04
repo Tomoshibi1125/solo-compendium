@@ -171,7 +171,7 @@ export const TREASURE_TABLES: Record<
 			"Rift Core Fragment",
 			"Prime Architect's Blessing",
 		],
-		relics: ["Complete Relic", "Relic Soul", "Umbral Monarch Fragment"],
+		relics: ["Complete Relic", "Relic Soul", "Umbral Regent Fragment"],
 	},
 };
 

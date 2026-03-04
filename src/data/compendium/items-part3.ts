@@ -9,7 +9,7 @@ export const items: Item[] = [
 		id: "item-0401",
 		name: "Shadow Soul of Kael",
 		description:
-			"An blessed weapon recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from a legendary ascendant's collection. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0401.webp",
@@ -35,7 +35,7 @@ export const items: Item[] = [
 		id: "item-0402",
 		name: "Eternal Soul of Kael",
 		description:
-			"An cursed armor recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from a legendary ascendant's collection. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0402.webp",
@@ -65,7 +65,7 @@ export const items: Item[] = [
 		id: "item-0403",
 		name: "Void Soul of Kael",
 		description:
-			"An cursed consumable recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0403.webp",
@@ -90,7 +90,7 @@ export const items: Item[] = [
 		id: "item-0404",
 		name: "Abyssal Soul of Kael",
 		description:
-			"An forged accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0404.webp",
@@ -115,7 +115,7 @@ export const items: Item[] = [
 		id: "item-0405",
 		name: "Demonic Soul of Kael",
 		description:
-			"An cursed scroll recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0405.webp",
@@ -140,7 +140,7 @@ export const items: Item[] = [
 		id: "item-0406",
 		name: "Celestial Soul of Kael",
 		description:
-			"An forged weapon recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0406.webp",
@@ -166,7 +166,7 @@ export const items: Item[] = [
 		id: "item-0407",
 		name: "Divine Soul of Kael",
 		description:
-			"An imbued armor recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0407.webp",
@@ -196,7 +196,7 @@ export const items: Item[] = [
 		id: "item-0408",
 		name: "Ancient Soul of Kael",
 		description:
-			"An crafted consumable recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from a legendary ascendant's collection. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0408.webp",
@@ -221,7 +221,7 @@ export const items: Item[] = [
 		id: "item-0409",
 		name: "Forgotten Soul of Kael",
 		description:
-			"An imbued accessory recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued accessory recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0409.webp",
@@ -246,7 +246,7 @@ export const items: Item[] = [
 		id: "item-0410",
 		name: "Cursed Soul of Kael",
 		description:
-			"An crafted scroll recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0410.webp",
@@ -271,7 +271,7 @@ export const items: Item[] = [
 		id: "item-0411",
 		name: "Blessed Soul of Kael",
 		description:
-			"An crafted weapon recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0411.webp",
@@ -297,7 +297,7 @@ export const items: Item[] = [
 		id: "item-0412",
 		name: "Sacred Soul of Kael",
 		description:
-			"An awakened armor recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a legendary ascendant's collection. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0412.webp",
@@ -327,7 +327,7 @@ export const items: Item[] = [
 		id: "item-0413",
 		name: "Profane Soul of Kael",
 		description:
-			"An blessed consumable recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0413.webp",
@@ -352,7 +352,7 @@ export const items: Item[] = [
 		id: "item-0414",
 		name: "Mystic Soul of Kael",
 		description:
-			"An blessed accessory recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed accessory recovered from a legendary ascendant's collection. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0414.webp",
@@ -377,7 +377,7 @@ export const items: Item[] = [
 		id: "item-0415",
 		name: "Arcane Soul of Kael",
 		description:
-			"An blessed scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An blessed scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0415.webp",
@@ -402,7 +402,7 @@ export const items: Item[] = [
 		id: "item-0416",
 		name: "Infernal Soul of Kael",
 		description:
-			"An awakened weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0416.webp",
@@ -428,7 +428,7 @@ export const items: Item[] = [
 		id: "item-0417",
 		name: "Frozen Soul of Kael",
 		description:
-			"An blessed armor recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed armor recovered from a legendary ascendant's collection. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0417.webp",
@@ -458,7 +458,7 @@ export const items: Item[] = [
 		id: "item-0418",
 		name: "Thunder Soul of Kael",
 		description:
-			"An imbued consumable recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued consumable recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0418.webp",
@@ -483,7 +483,7 @@ export const items: Item[] = [
 		id: "item-0419",
 		name: "Holy Soul of Kael",
 		description:
-			"An crafted accessory recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a legendary ascendant's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0419.webp",
@@ -508,7 +508,7 @@ export const items: Item[] = [
 		id: "item-0420",
 		name: "Dark Soul of Kael",
 		description:
-			"An cursed scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0420.webp",
@@ -533,7 +533,7 @@ export const items: Item[] = [
 		id: "item-0421",
 		name: "Shadow Core of Kael",
 		description:
-			"An crafted weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0421.webp",
@@ -559,7 +559,7 @@ export const items: Item[] = [
 		id: "item-0422",
 		name: "Eternal Core of Kael",
 		description:
-			"An forged armor recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged armor recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0422.webp",
@@ -589,7 +589,7 @@ export const items: Item[] = [
 		id: "item-0423",
 		name: "Void Core of Kael",
 		description:
-			"An cursed consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0423.webp",
@@ -614,7 +614,7 @@ export const items: Item[] = [
 		id: "item-0424",
 		name: "Abyssal Core of Kael",
 		description:
-			"An forged accessory recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0424.webp",
@@ -639,7 +639,7 @@ export const items: Item[] = [
 		id: "item-0425",
 		name: "Demonic Core of Kael",
 		description:
-			"An enchanted scroll recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a legendary ascendant's collection. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0425.webp",
@@ -664,7 +664,7 @@ export const items: Item[] = [
 		id: "item-0426",
 		name: "Celestial Core of Kael",
 		description:
-			"An enchanted weapon recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted weapon recovered from a legendary ascendant's collection. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0426.webp",
@@ -690,7 +690,7 @@ export const items: Item[] = [
 		id: "item-0427",
 		name: "Divine Core of Kael",
 		description:
-			"An imbued armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0427.webp",
@@ -720,7 +720,7 @@ export const items: Item[] = [
 		id: "item-0428",
 		name: "Ancient Core of Kael",
 		description:
-			"An awakened consumable recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0428.webp",
@@ -745,7 +745,7 @@ export const items: Item[] = [
 		id: "item-0429",
 		name: "Forgotten Core of Kael",
 		description:
-			"An blessed accessory recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed accessory recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0429.webp",
@@ -770,7 +770,7 @@ export const items: Item[] = [
 		id: "item-0430",
 		name: "Cursed Core of Kael",
 		description:
-			"An enchanted scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0430.webp",
@@ -795,7 +795,7 @@ export const items: Item[] = [
 		id: "item-0431",
 		name: "Blessed Core of Kael",
 		description:
-			"An enchanted weapon recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted weapon recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0431.webp",
@@ -821,7 +821,7 @@ export const items: Item[] = [
 		id: "item-0432",
 		name: "Sacred Core of Kael",
 		description:
-			"An crafted armor recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a legendary ascendant's collection. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0432.webp",
@@ -851,7 +851,7 @@ export const items: Item[] = [
 		id: "item-0433",
 		name: "Profane Core of Kael",
 		description:
-			"An awakened consumable recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0433.webp",
@@ -876,7 +876,7 @@ export const items: Item[] = [
 		id: "item-0434",
 		name: "Mystic Core of Kael",
 		description:
-			"An awakened accessory recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0434.webp",
@@ -901,7 +901,7 @@ export const items: Item[] = [
 		id: "item-0435",
 		name: "Arcane Core of Kael",
 		description:
-			"An awakened scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0435.webp",
@@ -926,7 +926,7 @@ export const items: Item[] = [
 		id: "item-0436",
 		name: "Infernal Core of Kael",
 		description:
-			"An ancient weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0436.webp",
@@ -952,7 +952,7 @@ export const items: Item[] = [
 		id: "item-0437",
 		name: "Frozen Core of Kael",
 		description:
-			"An ancient armor recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0437.webp",
@@ -982,7 +982,7 @@ export const items: Item[] = [
 		id: "item-0438",
 		name: "Thunder Core of Kael",
 		description:
-			"An imbued consumable recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued consumable recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0438.webp",
@@ -1007,7 +1007,7 @@ export const items: Item[] = [
 		id: "item-0439",
 		name: "Holy Core of Kael",
 		description:
-			"An blessed accessory recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed accessory recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0439.webp",
@@ -1032,7 +1032,7 @@ export const items: Item[] = [
 		id: "item-0440",
 		name: "Dark Core of Kael",
 		description:
-			"An blessed scroll recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An blessed scroll recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0440.webp",
@@ -1057,7 +1057,7 @@ export const items: Item[] = [
 		id: "item-0441",
 		name: "Shadow Blade of the Umbral Regent",
 		description:
-			"An blessed weapon recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0441.webp",
@@ -1083,7 +1083,7 @@ export const items: Item[] = [
 		id: "item-0442",
 		name: "Eternal Blade of the Umbral Regent",
 		description:
-			"An blessed armor recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed armor recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0442.webp",
@@ -1113,7 +1113,7 @@ export const items: Item[] = [
 		id: "item-0443",
 		name: "Void Blade of the Umbral Regent",
 		description:
-			"An enchanted consumable recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0443.webp",
@@ -1138,7 +1138,7 @@ export const items: Item[] = [
 		id: "item-0444",
 		name: "Abyssal Blade of the Umbral Regent",
 		description:
-			"An cursed accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0444.webp",
@@ -1163,7 +1163,7 @@ export const items: Item[] = [
 		id: "item-0445",
 		name: "Demonic Blade of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0445.webp",
@@ -1188,7 +1188,7 @@ export const items: Item[] = [
 		id: "item-0446",
 		name: "Celestial Blade of the Umbral Regent",
 		description:
-			"An forged weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0446.webp",
@@ -1214,7 +1214,7 @@ export const items: Item[] = [
 		id: "item-0447",
 		name: "Divine Blade of the Umbral Regent",
 		description:
-			"An enchanted armor recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a legendary ascendant's collection. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0447.webp",
@@ -1244,7 +1244,7 @@ export const items: Item[] = [
 		id: "item-0448",
 		name: "Ancient Blade of the Umbral Regent",
 		description:
-			"An awakened consumable recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0448.webp",
@@ -1269,7 +1269,7 @@ export const items: Item[] = [
 		id: "item-0449",
 		name: "Forgotten Blade of the Umbral Regent",
 		description:
-			"An forged accessory recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0449.webp",
@@ -1294,7 +1294,7 @@ export const items: Item[] = [
 		id: "item-0450",
 		name: "Cursed Blade of the Umbral Regent",
 		description:
-			"An ancient scroll recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0450.webp",
@@ -1319,7 +1319,7 @@ export const items: Item[] = [
 		id: "item-0451",
 		name: "Blessed Blade of the Umbral Regent",
 		description:
-			"An crafted weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0451.webp",
@@ -1345,7 +1345,7 @@ export const items: Item[] = [
 		id: "item-0452",
 		name: "Sacred Blade of the Umbral Regent",
 		description:
-			"An crafted armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0452.webp",
@@ -1375,7 +1375,7 @@ export const items: Item[] = [
 		id: "item-0453",
 		name: "Profane Blade of the Umbral Regent",
 		description:
-			"An ancient consumable recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a legendary ascendant's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0453.webp",
@@ -1400,7 +1400,7 @@ export const items: Item[] = [
 		id: "item-0454",
 		name: "Mystic Blade of the Umbral Regent",
 		description:
-			"An crafted accessory recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0454.webp",
@@ -1425,7 +1425,7 @@ export const items: Item[] = [
 		id: "item-0455",
 		name: "Arcane Blade of the Umbral Regent",
 		description:
-			"An imbued scroll recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0455.webp",
@@ -1450,7 +1450,7 @@ export const items: Item[] = [
 		id: "item-0456",
 		name: "Infernal Blade of the Umbral Regent",
 		description:
-			"An cursed weapon recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0456.webp",
@@ -1476,7 +1476,7 @@ export const items: Item[] = [
 		id: "item-0457",
 		name: "Frozen Blade of the Umbral Regent",
 		description:
-			"An forged armor recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged armor recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0457.webp",
@@ -1506,7 +1506,7 @@ export const items: Item[] = [
 		id: "item-0458",
 		name: "Thunder Blade of the Umbral Regent",
 		description:
-			"An forged consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0458.webp",
@@ -1531,7 +1531,7 @@ export const items: Item[] = [
 		id: "item-0459",
 		name: "Holy Blade of the Umbral Regent",
 		description:
-			"An awakened accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0459.webp",
@@ -1556,7 +1556,7 @@ export const items: Item[] = [
 		id: "item-0460",
 		name: "Dark Blade of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a legendary ascendant's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0460.webp",
@@ -1581,7 +1581,7 @@ export const items: Item[] = [
 		id: "item-0461",
 		name: "Shadow Sword of the Umbral Regent",
 		description:
-			"An forged weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0461.webp",
@@ -1607,7 +1607,7 @@ export const items: Item[] = [
 		id: "item-0462",
 		name: "Eternal Sword of the Umbral Regent",
 		description:
-			"An awakened armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0462.webp",
@@ -1637,7 +1637,7 @@ export const items: Item[] = [
 		id: "item-0463",
 		name: "Void Sword of the Umbral Regent",
 		description:
-			"An ancient consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0463.webp",
@@ -1662,7 +1662,7 @@ export const items: Item[] = [
 		id: "item-0464",
 		name: "Abyssal Sword of the Umbral Regent",
 		description:
-			"An forged accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0464.webp",
@@ -1687,7 +1687,7 @@ export const items: Item[] = [
 		id: "item-0465",
 		name: "Demonic Sword of the Umbral Regent",
 		description:
-			"An crafted scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0465.webp",
@@ -1712,7 +1712,7 @@ export const items: Item[] = [
 		id: "item-0466",
 		name: "Celestial Sword of the Umbral Regent",
 		description:
-			"An enchanted weapon recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted weapon recovered from a legendary ascendant's collection. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0466.webp",
@@ -1738,7 +1738,7 @@ export const items: Item[] = [
 		id: "item-0467",
 		name: "Divine Sword of the Umbral Regent",
 		description:
-			"An forged armor recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged armor recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0467.webp",
@@ -1768,7 +1768,7 @@ export const items: Item[] = [
 		id: "item-0468",
 		name: "Ancient Sword of the Umbral Regent",
 		description:
-			"An imbued consumable recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued consumable recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0468.webp",
@@ -1793,7 +1793,7 @@ export const items: Item[] = [
 		id: "item-0469",
 		name: "Forgotten Sword of the Umbral Regent",
 		description:
-			"An blessed accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0469.webp",
@@ -1818,7 +1818,7 @@ export const items: Item[] = [
 		id: "item-0470",
 		name: "Cursed Sword of the Umbral Regent",
 		description:
-			"An awakened scroll recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from a legendary ascendant's collection. Infused with poison energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0470.webp",
@@ -1843,7 +1843,7 @@ export const items: Item[] = [
 		id: "item-0471",
 		name: "Blessed Sword of the Umbral Regent",
 		description:
-			"An blessed weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0471.webp",
@@ -1869,7 +1869,7 @@ export const items: Item[] = [
 		id: "item-0472",
 		name: "Sacred Sword of the Umbral Regent",
 		description:
-			"An blessed armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0472.webp",
@@ -1899,7 +1899,7 @@ export const items: Item[] = [
 		id: "item-0473",
 		name: "Profane Sword of the Umbral Regent",
 		description:
-			"An enchanted consumable recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0473.webp",
@@ -1924,7 +1924,7 @@ export const items: Item[] = [
 		id: "item-0474",
 		name: "Mystic Sword of the Umbral Regent",
 		description:
-			"An crafted accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0474.webp",
@@ -1949,7 +1949,7 @@ export const items: Item[] = [
 		id: "item-0475",
 		name: "Arcane Sword of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0475.webp",
@@ -1974,7 +1974,7 @@ export const items: Item[] = [
 		id: "item-0476",
 		name: "Infernal Sword of the Umbral Regent",
 		description:
-			"An blessed weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0476.webp",
@@ -2000,7 +2000,7 @@ export const items: Item[] = [
 		id: "item-0477",
 		name: "Frozen Sword of the Umbral Regent",
 		description:
-			"An forged armor recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged armor recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0477.webp",
@@ -2030,7 +2030,7 @@ export const items: Item[] = [
 		id: "item-0478",
 		name: "Thunder Sword of the Umbral Regent",
 		description:
-			"An awakened consumable recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0478.webp",
@@ -2055,7 +2055,7 @@ export const items: Item[] = [
 		id: "item-0479",
 		name: "Holy Sword of the Umbral Regent",
 		description:
-			"An blessed accessory recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed accessory recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0479.webp",
@@ -2080,7 +2080,7 @@ export const items: Item[] = [
 		id: "item-0480",
 		name: "Dark Sword of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0480.webp",
@@ -2105,7 +2105,7 @@ export const items: Item[] = [
 		id: "item-0481",
 		name: "Shadow Dagger of the Umbral Regent",
 		description:
-			"An cursed weapon recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0481.webp",
@@ -2132,7 +2132,7 @@ export const items: Item[] = [
 		id: "item-0482",
 		name: "Eternal Dagger of the Umbral Regent",
 		description:
-			"An forged armor recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged armor recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0482.webp",
@@ -2162,7 +2162,7 @@ export const items: Item[] = [
 		id: "item-0483",
 		name: "Void Dagger of the Umbral Regent",
 		description:
-			"An cursed consumable recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0483.webp",
@@ -2187,7 +2187,7 @@ export const items: Item[] = [
 		id: "item-0484",
 		name: "Abyssal Dagger of the Umbral Regent",
 		description:
-			"An forged accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0484.webp",
@@ -2212,7 +2212,7 @@ export const items: Item[] = [
 		id: "item-0485",
 		name: "Demonic Dagger of the Umbral Regent",
 		description:
-			"An ancient scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0485.webp",
@@ -2237,7 +2237,7 @@ export const items: Item[] = [
 		id: "item-0486",
 		name: "Celestial Dagger of the Umbral Regent",
 		description:
-			"An crafted weapon recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0486.webp",
@@ -2264,7 +2264,7 @@ export const items: Item[] = [
 		id: "item-0487",
 		name: "Divine Dagger of the Umbral Regent",
 		description:
-			"An cursed armor recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0487.webp",
@@ -2294,7 +2294,7 @@ export const items: Item[] = [
 		id: "item-0488",
 		name: "Ancient Dagger of the Umbral Regent",
 		description:
-			"An ancient consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0488.webp",
@@ -2319,7 +2319,7 @@ export const items: Item[] = [
 		id: "item-0489",
 		name: "Forgotten Dagger of the Umbral Regent",
 		description:
-			"An crafted accessory recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0489.webp",
@@ -2344,7 +2344,7 @@ export const items: Item[] = [
 		id: "item-0490",
 		name: "Cursed Dagger of the Umbral Regent",
 		description:
-			"An crafted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0490.webp",
@@ -2369,7 +2369,7 @@ export const items: Item[] = [
 		id: "item-0491",
 		name: "Blessed Dagger of the Umbral Regent",
 		description:
-			"An cursed weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0491.webp",
@@ -2396,7 +2396,7 @@ export const items: Item[] = [
 		id: "item-0492",
 		name: "Sacred Dagger of the Umbral Regent",
 		description:
-			"An ancient armor recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a legendary ascendant's collection. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0492.webp",
@@ -2426,7 +2426,7 @@ export const items: Item[] = [
 		id: "item-0493",
 		name: "Profane Dagger of the Umbral Regent",
 		description:
-			"An blessed consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0493.webp",
@@ -2451,7 +2451,7 @@ export const items: Item[] = [
 		id: "item-0494",
 		name: "Mystic Dagger of the Umbral Regent",
 		description:
-			"An ancient accessory recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0494.webp",
@@ -2476,7 +2476,7 @@ export const items: Item[] = [
 		id: "item-0495",
 		name: "Arcane Dagger of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0495.webp",
@@ -2501,7 +2501,7 @@ export const items: Item[] = [
 		id: "item-0496",
 		name: "Infernal Dagger of the Umbral Regent",
 		description:
-			"An forged weapon recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0496.webp",
@@ -2528,7 +2528,7 @@ export const items: Item[] = [
 		id: "item-0497",
 		name: "Frozen Dagger of the Umbral Regent",
 		description:
-			"An cursed armor recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0497.webp",
@@ -2558,7 +2558,7 @@ export const items: Item[] = [
 		id: "item-0498",
 		name: "Thunder Dagger of the Umbral Regent",
 		description:
-			"An cursed consumable recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0498.webp",
@@ -2583,7 +2583,7 @@ export const items: Item[] = [
 		id: "item-0499",
 		name: "Holy Dagger of the Umbral Regent",
 		description:
-			"An forged accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0499.webp",
@@ -2608,7 +2608,7 @@ export const items: Item[] = [
 		id: "item-0500",
 		name: "Dark Dagger of the Umbral Regent",
 		description:
-			"An ancient scroll recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0500.webp",
@@ -2633,7 +2633,7 @@ export const items: Item[] = [
 		id: "item-0501",
 		name: "Shadow Axe of the Umbral Regent",
 		description:
-			"An ancient weapon recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0501.webp",
@@ -2659,7 +2659,7 @@ export const items: Item[] = [
 		id: "item-0502",
 		name: "Eternal Axe of the Umbral Regent",
 		description:
-			"An crafted armor recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0502.webp",
@@ -2689,7 +2689,7 @@ export const items: Item[] = [
 		id: "item-0503",
 		name: "Void Axe of the Umbral Regent",
 		description:
-			"An ancient consumable recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0503.webp",
@@ -2714,7 +2714,7 @@ export const items: Item[] = [
 		id: "item-0504",
 		name: "Abyssal Axe of the Umbral Regent",
 		description:
-			"An ancient accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0504.webp",
@@ -2739,7 +2739,7 @@ export const items: Item[] = [
 		id: "item-0505",
 		name: "Demonic Axe of the Umbral Regent",
 		description:
-			"An ancient scroll recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An ancient scroll recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0505.webp",
@@ -2764,7 +2764,7 @@ export const items: Item[] = [
 		id: "item-0506",
 		name: "Celestial Axe of the Umbral Regent",
 		description:
-			"An ancient weapon recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0506.webp",
@@ -2790,7 +2790,7 @@ export const items: Item[] = [
 		id: "item-0507",
 		name: "Divine Axe of the Umbral Regent",
 		description:
-			"An enchanted armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0507.webp",
@@ -2820,7 +2820,7 @@ export const items: Item[] = [
 		id: "item-0508",
 		name: "Ancient Axe of the Umbral Regent",
 		description:
-			"An ancient consumable recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0508.webp",
@@ -2845,7 +2845,7 @@ export const items: Item[] = [
 		id: "item-0509",
 		name: "Forgotten Axe of the Umbral Regent",
 		description:
-			"An forged accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0509.webp",
@@ -2870,7 +2870,7 @@ export const items: Item[] = [
 		id: "item-0510",
 		name: "Cursed Axe of the Umbral Regent",
 		description:
-			"An forged scroll recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0510.webp",
@@ -2895,7 +2895,7 @@ export const items: Item[] = [
 		id: "item-0511",
 		name: "Blessed Axe of the Umbral Regent",
 		description:
-			"An imbued weapon recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued weapon recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0511.webp",
@@ -2921,7 +2921,7 @@ export const items: Item[] = [
 		id: "item-0512",
 		name: "Sacred Axe of the Umbral Regent",
 		description:
-			"An imbued armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0512.webp",
@@ -2951,7 +2951,7 @@ export const items: Item[] = [
 		id: "item-0513",
 		name: "Profane Axe of the Umbral Regent",
 		description:
-			"An forged consumable recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged consumable recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0513.webp",
@@ -2976,7 +2976,7 @@ export const items: Item[] = [
 		id: "item-0514",
 		name: "Mystic Axe of the Umbral Regent",
 		description:
-			"An imbued accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0514.webp",
@@ -3001,7 +3001,7 @@ export const items: Item[] = [
 		id: "item-0515",
 		name: "Arcane Axe of the Umbral Regent",
 		description:
-			"An imbued scroll recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0515.webp",
@@ -3026,7 +3026,7 @@ export const items: Item[] = [
 		id: "item-0516",
 		name: "Infernal Axe of the Umbral Regent",
 		description:
-			"An cursed weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0516.webp",
@@ -3052,7 +3052,7 @@ export const items: Item[] = [
 		id: "item-0517",
 		name: "Frozen Axe of the Umbral Regent",
 		description:
-			"An awakened armor recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0517.webp",
@@ -3082,7 +3082,7 @@ export const items: Item[] = [
 		id: "item-0518",
 		name: "Thunder Axe of the Umbral Regent",
 		description:
-			"An crafted consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0518.webp",
@@ -3107,7 +3107,7 @@ export const items: Item[] = [
 		id: "item-0519",
 		name: "Holy Axe of the Umbral Regent",
 		description:
-			"An imbued accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0519.webp",
@@ -3132,7 +3132,7 @@ export const items: Item[] = [
 		id: "item-0520",
 		name: "Dark Axe of the Umbral Regent",
 		description:
-			"An enchanted scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0520.webp",
@@ -3157,7 +3157,7 @@ export const items: Item[] = [
 		id: "item-0521",
 		name: "Shadow Hammer of the Umbral Regent",
 		description:
-			"An forged weapon recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0521.webp",
@@ -3183,7 +3183,7 @@ export const items: Item[] = [
 		id: "item-0522",
 		name: "Eternal Hammer of the Umbral Regent",
 		description:
-			"An awakened armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0522.webp",
@@ -3213,7 +3213,7 @@ export const items: Item[] = [
 		id: "item-0523",
 		name: "Void Hammer of the Umbral Regent",
 		description:
-			"An awakened consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0523.webp",
@@ -3238,7 +3238,7 @@ export const items: Item[] = [
 		id: "item-0524",
 		name: "Abyssal Hammer of the Umbral Regent",
 		description:
-			"An cursed accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0524.webp",
@@ -3263,7 +3263,7 @@ export const items: Item[] = [
 		id: "item-0525",
 		name: "Demonic Hammer of the Umbral Regent",
 		description:
-			"An forged scroll recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from a legendary ascendant's collection. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0525.webp",
@@ -3288,7 +3288,7 @@ export const items: Item[] = [
 		id: "item-0526",
 		name: "Celestial Hammer of the Umbral Regent",
 		description:
-			"An forged weapon recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged weapon recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0526.webp",
@@ -3314,7 +3314,7 @@ export const items: Item[] = [
 		id: "item-0527",
 		name: "Divine Hammer of the Umbral Regent",
 		description:
-			"An enchanted armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0527.webp",
@@ -3344,7 +3344,7 @@ export const items: Item[] = [
 		id: "item-0528",
 		name: "Ancient Hammer of the Umbral Regent",
 		description:
-			"An blessed consumable recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0528.webp",
@@ -3369,7 +3369,7 @@ export const items: Item[] = [
 		id: "item-0529",
 		name: "Forgotten Hammer of the Umbral Regent",
 		description:
-			"An awakened accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0529.webp",
@@ -3394,7 +3394,7 @@ export const items: Item[] = [
 		id: "item-0530",
 		name: "Cursed Hammer of the Umbral Regent",
 		description:
-			"An crafted scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0530.webp",
@@ -3419,7 +3419,7 @@ export const items: Item[] = [
 		id: "item-0531",
 		name: "Blessed Hammer of the Umbral Regent",
 		description:
-			"An ancient weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0531.webp",
@@ -3445,7 +3445,7 @@ export const items: Item[] = [
 		id: "item-0532",
 		name: "Sacred Hammer of the Umbral Regent",
 		description:
-			"An ancient armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0532.webp",
@@ -3475,7 +3475,7 @@ export const items: Item[] = [
 		id: "item-0533",
 		name: "Profane Hammer of the Umbral Regent",
 		description:
-			"An imbued consumable recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued consumable recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0533.webp",
@@ -3500,7 +3500,7 @@ export const items: Item[] = [
 		id: "item-0534",
 		name: "Mystic Hammer of the Umbral Regent",
 		description:
-			"An enchanted accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0534.webp",
@@ -3525,7 +3525,7 @@ export const items: Item[] = [
 		id: "item-0535",
 		name: "Arcane Hammer of the Umbral Regent",
 		description:
-			"An crafted scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An crafted scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0535.webp",
@@ -3550,7 +3550,7 @@ export const items: Item[] = [
 		id: "item-0536",
 		name: "Infernal Hammer of the Umbral Regent",
 		description:
-			"An blessed weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0536.webp",
@@ -3576,7 +3576,7 @@ export const items: Item[] = [
 		id: "item-0537",
 		name: "Frozen Hammer of the Umbral Regent",
 		description:
-			"An forged armor recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged armor recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0537.webp",
@@ -3606,7 +3606,7 @@ export const items: Item[] = [
 		id: "item-0538",
 		name: "Thunder Hammer of the Umbral Regent",
 		description:
-			"An ancient consumable recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0538.webp",
@@ -3631,7 +3631,7 @@ export const items: Item[] = [
 		id: "item-0539",
 		name: "Holy Hammer of the Umbral Regent",
 		description:
-			"An crafted accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0539.webp",
@@ -3656,7 +3656,7 @@ export const items: Item[] = [
 		id: "item-0540",
 		name: "Dark Hammer of the Umbral Regent",
 		description:
-			"An imbued scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0540.webp",
@@ -3681,7 +3681,7 @@ export const items: Item[] = [
 		id: "item-0541",
 		name: "Shadow Staff of the Umbral Regent",
 		description:
-			"An crafted weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0541.webp",
@@ -3708,7 +3708,7 @@ export const items: Item[] = [
 		id: "item-0542",
 		name: "Eternal Staff of the Umbral Regent",
 		description:
-			"An cursed armor recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0542.webp",
@@ -3738,7 +3738,7 @@ export const items: Item[] = [
 		id: "item-0543",
 		name: "Void Staff of the Umbral Regent",
 		description:
-			"An cursed consumable recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0543.webp",
@@ -3763,7 +3763,7 @@ export const items: Item[] = [
 		id: "item-0544",
 		name: "Abyssal Staff of the Umbral Regent",
 		description:
-			"An awakened accessory recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0544.webp",
@@ -3788,7 +3788,7 @@ export const items: Item[] = [
 		id: "item-0545",
 		name: "Demonic Staff of the Umbral Regent",
 		description:
-			"An awakened scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0545.webp",
@@ -3813,7 +3813,7 @@ export const items: Item[] = [
 		id: "item-0546",
 		name: "Celestial Staff of the Umbral Regent",
 		description:
-			"An ancient weapon recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0546.webp",
@@ -3840,7 +3840,7 @@ export const items: Item[] = [
 		id: "item-0547",
 		name: "Divine Staff of the Umbral Regent",
 		description:
-			"An enchanted armor recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0547.webp",
@@ -3870,7 +3870,7 @@ export const items: Item[] = [
 		id: "item-0548",
 		name: "Ancient Staff of the Umbral Regent",
 		description:
-			"An cursed consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0548.webp",
@@ -3895,7 +3895,7 @@ export const items: Item[] = [
 		id: "item-0549",
 		name: "Forgotten Staff of the Umbral Regent",
 		description:
-			"An forged accessory recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a legendary ascendant's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0549.webp",
@@ -3920,7 +3920,7 @@ export const items: Item[] = [
 		id: "item-0550",
 		name: "Cursed Staff of the Umbral Regent",
 		description:
-			"An awakened scroll recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0550.webp",
@@ -3945,7 +3945,7 @@ export const items: Item[] = [
 		id: "item-0551",
 		name: "Blessed Staff of the Umbral Regent",
 		description:
-			"An ancient weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0551.webp",
@@ -3972,7 +3972,7 @@ export const items: Item[] = [
 		id: "item-0552",
 		name: "Sacred Staff of the Umbral Regent",
 		description:
-			"An cursed armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0552.webp",
@@ -4002,7 +4002,7 @@ export const items: Item[] = [
 		id: "item-0553",
 		name: "Profane Staff of the Umbral Regent",
 		description:
-			"An blessed consumable recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0553.webp",
@@ -4027,7 +4027,7 @@ export const items: Item[] = [
 		id: "item-0554",
 		name: "Mystic Staff of the Umbral Regent",
 		description:
-			"An enchanted accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0554.webp",
@@ -4052,7 +4052,7 @@ export const items: Item[] = [
 		id: "item-0555",
 		name: "Arcane Staff of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0555.webp",
@@ -4077,7 +4077,7 @@ export const items: Item[] = [
 		id: "item-0556",
 		name: "Infernal Staff of the Umbral Regent",
 		description:
-			"An ancient weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0556.webp",
@@ -4104,7 +4104,7 @@ export const items: Item[] = [
 		id: "item-0557",
 		name: "Frozen Staff of the Umbral Regent",
 		description:
-			"An awakened armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0557.webp",
@@ -4134,7 +4134,7 @@ export const items: Item[] = [
 		id: "item-0558",
 		name: "Thunder Staff of the Umbral Regent",
 		description:
-			"An blessed consumable recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0558.webp",
@@ -4159,7 +4159,7 @@ export const items: Item[] = [
 		id: "item-0559",
 		name: "Holy Staff of the Umbral Regent",
 		description:
-			"An ancient accessory recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0559.webp",
@@ -4184,7 +4184,7 @@ export const items: Item[] = [
 		id: "item-0560",
 		name: "Dark Staff of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0560.webp",
@@ -4209,7 +4209,7 @@ export const items: Item[] = [
 		id: "item-0561",
 		name: "Shadow Wand of the Umbral Regent",
 		description:
-			"An awakened weapon recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0561.webp",
@@ -4236,7 +4236,7 @@ export const items: Item[] = [
 		id: "item-0562",
 		name: "Eternal Wand of the Umbral Regent",
 		description:
-			"An enchanted armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0562.webp",
@@ -4266,7 +4266,7 @@ export const items: Item[] = [
 		id: "item-0563",
 		name: "Void Wand of the Umbral Regent",
 		description:
-			"An awakened consumable recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0563.webp",
@@ -4291,7 +4291,7 @@ export const items: Item[] = [
 		id: "item-0564",
 		name: "Abyssal Wand of the Umbral Regent",
 		description:
-			"An crafted accessory recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0564.webp",
@@ -4316,7 +4316,7 @@ export const items: Item[] = [
 		id: "item-0565",
 		name: "Demonic Wand of the Umbral Regent",
 		description:
-			"An enchanted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0565.webp",
@@ -4341,7 +4341,7 @@ export const items: Item[] = [
 		id: "item-0566",
 		name: "Celestial Wand of the Umbral Regent",
 		description:
-			"An blessed weapon recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed weapon recovered from a legendary ascendant's collection. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0566.webp",
@@ -4368,7 +4368,7 @@ export const items: Item[] = [
 		id: "item-0567",
 		name: "Divine Wand of the Umbral Regent",
 		description:
-			"An ancient armor recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient armor recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0567.webp",
@@ -4398,7 +4398,7 @@ export const items: Item[] = [
 		id: "item-0568",
 		name: "Ancient Wand of the Umbral Regent",
 		description:
-			"An blessed consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0568.webp",
@@ -4423,7 +4423,7 @@ export const items: Item[] = [
 		id: "item-0569",
 		name: "Forgotten Wand of the Umbral Regent",
 		description:
-			"An crafted accessory recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted accessory recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0569.webp",
@@ -4448,7 +4448,7 @@ export const items: Item[] = [
 		id: "item-0570",
 		name: "Cursed Wand of the Umbral Regent",
 		description:
-			"An forged scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0570.webp",
@@ -4473,7 +4473,7 @@ export const items: Item[] = [
 		id: "item-0571",
 		name: "Blessed Wand of the Umbral Regent",
 		description:
-			"An cursed weapon recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a legendary ascendant's collection. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0571.webp",
@@ -4500,7 +4500,7 @@ export const items: Item[] = [
 		id: "item-0572",
 		name: "Sacred Wand of the Umbral Regent",
 		description:
-			"An crafted armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0572.webp",
@@ -4530,7 +4530,7 @@ export const items: Item[] = [
 		id: "item-0573",
 		name: "Profane Wand of the Umbral Regent",
 		description:
-			"An crafted consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0573.webp",
@@ -4555,7 +4555,7 @@ export const items: Item[] = [
 		id: "item-0574",
 		name: "Mystic Wand of the Umbral Regent",
 		description:
-			"An blessed accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0574.webp",
@@ -4580,7 +4580,7 @@ export const items: Item[] = [
 		id: "item-0575",
 		name: "Arcane Wand of the Umbral Regent",
 		description:
-			"An enchanted scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An enchanted scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0575.webp",
@@ -4605,7 +4605,7 @@ export const items: Item[] = [
 		id: "item-0576",
 		name: "Infernal Wand of the Umbral Regent",
 		description:
-			"An cursed weapon recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0576.webp",
@@ -4632,7 +4632,7 @@ export const items: Item[] = [
 		id: "item-0577",
 		name: "Frozen Wand of the Umbral Regent",
 		description:
-			"An cursed armor recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed armor recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0577.webp",
@@ -4662,7 +4662,7 @@ export const items: Item[] = [
 		id: "item-0578",
 		name: "Thunder Wand of the Umbral Regent",
 		description:
-			"An awakened consumable recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a legendary ascendant's collection. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0578.webp",
@@ -4687,7 +4687,7 @@ export const items: Item[] = [
 		id: "item-0579",
 		name: "Holy Wand of the Umbral Regent",
 		description:
-			"An forged accessory recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a legendary ascendant's collection. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0579.webp",
@@ -4712,7 +4712,7 @@ export const items: Item[] = [
 		id: "item-0580",
 		name: "Dark Wand of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0580.webp",
@@ -4737,7 +4737,7 @@ export const items: Item[] = [
 		id: "item-0581",
 		name: "Shadow Orb of the Umbral Regent",
 		description:
-			"An awakened weapon recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0581.webp",
@@ -4763,7 +4763,7 @@ export const items: Item[] = [
 		id: "item-0582",
 		name: "Eternal Orb of the Umbral Regent",
 		description:
-			"An imbued armor recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued armor recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0582.webp",
@@ -4793,7 +4793,7 @@ export const items: Item[] = [
 		id: "item-0583",
 		name: "Void Orb of the Umbral Regent",
 		description:
-			"An awakened consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0583.webp",
@@ -4818,7 +4818,7 @@ export const items: Item[] = [
 		id: "item-0584",
 		name: "Abyssal Orb of the Umbral Regent",
 		description:
-			"An forged accessory recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An forged accessory recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0584.webp",
@@ -4843,7 +4843,7 @@ export const items: Item[] = [
 		id: "item-0585",
 		name: "Demonic Orb of the Umbral Regent",
 		description:
-			"An cursed scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An cursed scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0585.webp",
@@ -4868,7 +4868,7 @@ export const items: Item[] = [
 		id: "item-0586",
 		name: "Celestial Orb of the Umbral Regent",
 		description:
-			"An enchanted weapon recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted weapon recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0586.webp",
@@ -4894,7 +4894,7 @@ export const items: Item[] = [
 		id: "item-0587",
 		name: "Divine Orb of the Umbral Regent",
 		description:
-			"An blessed armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An blessed armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0587.webp",
@@ -4924,7 +4924,7 @@ export const items: Item[] = [
 		id: "item-0588",
 		name: "Ancient Orb of the Umbral Regent",
 		description:
-			"An ancient consumable recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient consumable recovered from a legendary ascendant's collection. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0588.webp",
@@ -4949,7 +4949,7 @@ export const items: Item[] = [
 		id: "item-0589",
 		name: "Forgotten Orb of the Umbral Regent",
 		description:
-			"An ancient accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+			"An ancient accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0589.webp",
@@ -4974,7 +4974,7 @@ export const items: Item[] = [
 		id: "item-0590",
 		name: "Cursed Orb of the Umbral Regent",
 		description:
-			"An imbued scroll recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An imbued scroll recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0590.webp",
@@ -4999,7 +4999,7 @@ export const items: Item[] = [
 		id: "item-0591",
 		name: "Blessed Orb of the Umbral Regent",
 		description:
-			"An awakened weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0591.webp",
@@ -5025,7 +5025,7 @@ export const items: Item[] = [
 		id: "item-0592",
 		name: "Sacred Orb of the Umbral Regent",
 		description:
-			"An awakened armor recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a legendary ascendant's collection. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0592.webp",
@@ -5055,7 +5055,7 @@ export const items: Item[] = [
 		id: "item-0593",
 		name: "Profane Orb of the Umbral Regent",
 		description:
-			"An enchanted consumable recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+			"An enchanted consumable recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0593.webp",
@@ -5080,7 +5080,7 @@ export const items: Item[] = [
 		id: "item-0594",
 		name: "Mystic Orb of the Umbral Regent",
 		description:
-			"An imbued accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+			"An imbued accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0594.webp",
@@ -5105,7 +5105,7 @@ export const items: Item[] = [
 		id: "item-0595",
 		name: "Arcane Orb of the Umbral Regent",
 		description:
-			"An awakened scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An awakened scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0595.webp",
@@ -5130,7 +5130,7 @@ export const items: Item[] = [
 		id: "item-0596",
 		name: "Infernal Orb of the Umbral Regent",
 		description:
-			"An cursed weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+			"An cursed weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0596.webp",
@@ -5156,7 +5156,7 @@ export const items: Item[] = [
 		id: "item-0597",
 		name: "Frozen Orb of the Umbral Regent",
 		description:
-			"An awakened armor recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened armor recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0597.webp",
@@ -5186,7 +5186,7 @@ export const items: Item[] = [
 		id: "item-0598",
 		name: "Thunder Orb of the Umbral Regent",
 		description:
-			"An crafted consumable recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+			"An crafted consumable recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0598.webp",
@@ -5211,7 +5211,7 @@ export const items: Item[] = [
 		id: "item-0599",
 		name: "Holy Orb of the Umbral Regent",
 		description:
-			"An awakened accessory recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+			"An awakened accessory recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant.",
 		rarity: "epic",
 		type: "accessory",
 		image: "/generated/compendium/items/item-0599.webp",
@@ -5236,7 +5236,7 @@ export const items: Item[] = [
 		id: "item-0600",
 		name: "Dark Orb of the Umbral Regent",
 		description:
-			"An forged scroll recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+			"An forged scroll recovered from a legendary ascendant's collection. Infused with lightning energy, it resonates with power when wielded by a worthy ascendant. Only a handful exist in the known world.",
 		rarity: "legendary",
 		type: "scroll",
 		image: "/generated/compendium/items/item-0600.webp",

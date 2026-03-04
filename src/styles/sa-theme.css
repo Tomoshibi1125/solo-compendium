@@ -1,13 +1,13 @@
 /* ============================================================
-   System Ascendant — Global Dungeon Hunter Aesthetic v2
+   System Ascendant — Global Dungeon Ascendant Aesthetic v2
    Glassmorphism · Neon Glows · Angular Frames · Holographic HUD
    ============================================================
    Zones:
-     [data-sa-zone="character"]  — Purple/violet hunter profile
+     [data-sa-zone="character"]  — Purple/violet ascendant profile
      [data-sa-zone="dm"]         — Red/orange warden command center
      [data-sa-zone="campaign"]   — Blue/teal guild alliance hall
      [data-sa-zone="compendium"] — Gold/amber knowledge archive
-     [data-sa-zone="player"]     — Cyan/green hunter toolkit
+     [data-sa-zone="player"]     — Cyan/green ascendant toolkit
      [data-sa-zone="auth"]       — Deep purple gate awakening
      (default)                   — Base purple SA theme
    ============================================================ */
@@ -615,7 +615,7 @@
 	);
 }
 
-/* Player Tools: Hunter Toolkit */
+/* Player Tools: Ascendant Toolkit */
 [data-sa-zone="player"] .sa-page-header {
 	background: linear-gradient(
 		135deg,

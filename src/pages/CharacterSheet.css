@@ -1,6 +1,6 @@
 /* ============================================================
    System Ascendant Character Sheet
-   Solo Leveling / Manhwa Dungeon Hunter Aesthetic
+   Solo Leveling / Manhwa Dungeon Ascendant Aesthetic
    D&D Beyond-level functionality with SA dark-tech HUD feel
    ============================================================ */
 
@@ -10,12 +10,12 @@
 	padding: 1rem;
 }
 
-/* --- SA Hunter Header --- */
+/* --- SA Ascendant Header --- */
 .character-sheet-header {
 	margin-bottom: 2rem;
 }
 
-.sa-hunter-header {
+.sa-ascendant-header {
 	position: relative;
 	background: linear-gradient(
 		135deg,
@@ -29,7 +29,7 @@
 	overflow: hidden;
 }
 
-.sa-hunter-header::before {
+.sa-ascendant-header::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -47,7 +47,7 @@
 	animation: sa-scan-line 3s linear infinite;
 }
 
-.sa-hunter-header::after {
+.sa-ascendant-header::after {
 	content: "";
 	position: absolute;
 	bottom: 0;
@@ -329,7 +329,7 @@
 	}
 }
 
-/* --- Ability Scores: SA Hunter Stats --- */
+/* --- Ability Scores: SA Ascendant Stats --- */
 .ability-scores-container {
 	background: linear-gradient(
 		135deg,
@@ -407,7 +407,7 @@
 	font-family: var(--font-display, "Courier New", monospace);
 }
 
-/* --- Skills: Hunter Proficiency Grid --- */
+/* --- Skills: Ascendant Proficiency Grid --- */
 .skills-container {
 	background: linear-gradient(
 		135deg,
@@ -740,12 +740,12 @@ button[aria-label*="roll"]:hover {
 /* --- Print Styles --- */
 @media print {
 	.character-sheet-fab,
-	.sa-hunter-header::before,
-	.sa-hunter-header::after {
+	.sa-ascendant-header::before,
+	.sa-ascendant-header::after {
 		display: none;
 	}
 
-	.sa-hunter-header {
+	.sa-ascendant-header {
 		background: white;
 		border-color: #ccc;
 	}
@@ -792,7 +792,7 @@ button[aria-label*="roll"]:hover {
 		flex-shrink: 0;
 	}
 
-	.sa-hunter-header {
+	.sa-ascendant-header {
 		padding: 0.75rem 1rem;
 	}
 

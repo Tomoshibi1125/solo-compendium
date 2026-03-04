@@ -29,15 +29,15 @@ export interface DiceThemeConfig {
 
 export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 	"umbral-ascendant": {
-		baseColor: "#1a1a2e", // Dark shadow blue-black
-		emissiveColor: "#8b5cf6", // Purple shadow energy
+		baseColor: "#0a0a0f", // Deep Obsidian Void
+		emissiveColor: "#9d4edd", // Pure Amethyst Neon
 		glowIntensity: 0.8,
 		metalness: 0.95,
 		roughness: 0.05,
-		particleColor: "#a78bfa",
+		particleColor: "#67e8f9", // Stellar Cyan Accent
 		name: "Umbral Ascendant",
-		accentColor: "#4c1d95",
-		trayColor: "#0b0b18",
+		accentColor: "#67e8f9",
+		trayColor: "#08080c",
 		bloomFieldOpacity: 0.56,
 		bloomFieldScale: 1.76,
 	},
@@ -120,15 +120,15 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldScale: 1.92,
 	},
 	"regent-monarch": {
-		baseColor: "#2d1b0f",
-		emissiveColor: "#fbbf24",
+		baseColor: "#0a0c10", // Obsidian Core
+		emissiveColor: "#22d3ee", // Solar Core Cyan
 		glowIntensity: 0.85,
 		metalness: 0.95,
 		roughness: 0.06,
-		particleColor: "#fde68a",
+		particleColor: "#67e8f9", // Stellar Cyan Edge
 		name: "Architect Regent",
-		accentColor: "#b45309",
-		trayColor: "#1f1409",
+		accentColor: "#0284c7",
+		trayColor: "#080a0e",
 		bloomFieldOpacity: 0.48,
 		bloomFieldScale: 1.6,
 	},

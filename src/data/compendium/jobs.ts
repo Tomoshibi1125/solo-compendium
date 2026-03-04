@@ -1,5 +1,5 @@
 // Jobs Compendium - System Ascendant Canonical 14-Job Roster
-// Unique SA progression 1-20 per job, using SA lore (System, gates, hunters, runes, ranks)
+// Unique SA progression 1-20 per job, using SA lore (System, gates, ascendants, runes, ranks)
 // Mechanical backbone (hit dice, spell slot math, ASI levels) kept for engine compatibility
 
 export interface Job {
@@ -98,7 +98,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"Former soldiers, MMA fighters, construction workers, and athletes whose awakening supercharged their musculature, bone density, and combat instincts. In a world where dimensional gates erupt in city centers and subway tunnels, Destroyers are the first responders — the ones the Hunter Bureau sends when a gate needs to be cracked open by force. The System feeds them real-time targeting data through an AR-like HUD overlay. Off-duty, they work as guild enforcers, private military contractors, or competitive gate-clearance streamers. Where others study or finesse, Destroyers simply annihilate.",
+			"Former soldiers, MMA fighters, construction workers, and athletes whose awakening supercharged their musculature, bone density, and combat instincts. In a world where dimensional gates erupt in city centers and subway tunnels, Destroyers are the first responders — the ones the Ascendant Bureau sends when a gate needs to be cracked open by force. The System feeds them real-time targeting data through an AR-like HUD overlay. Off-duty, they work as guild enforcers, private military contractors, or competitive gate-clearance streamers. Where others study or finesse, Destroyers simply annihilate.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
 		savingThrows: ["Strength", "Vitality"],
@@ -248,7 +248,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Apex Protocol",
 				description:
-					"Your System profile updates globally: [RANK: S — APEX COMBAT POTENTIAL]. System Mark bonus becomes +1d8. Kill Recovery triggers on every kill (no rest limit). Limiter Release lasts 2 rounds. Hunter Bureau databases flag you as a national strategic asset.",
+					"Your System profile updates globally: [RANK: S — APEX COMBAT POTENTIAL]. System Mark bonus becomes +1d8. Kill Recovery triggers on every kill (no rest limit). Limiter Release lasts 2 rounds. Ascendant Bureau databases flag you as a national strategic asset.",
 			},
 		],
 		abilities: [
@@ -279,7 +279,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"Construction workers, bouncers, street fighters, and adrenaline junkies whose awakening went wrong — their System connection is unstable, flooding their body with raw mana under stress. In a modern world coping with the gate crisis, Berserkers are walking liability insurance nightmares. In Overload State, visible mana veins crawl across their skin and their muscles swell with crystallized energy — terrifying bystanders and going viral on social media. The Hunter Bureau classifies them as high-risk assets, but no one clears gates faster. Many work solo or in guilds that specialize in controlled demolition of high-rank gates.",
+			"Construction workers, bouncers, street fighters, and adrenaline junkies whose awakening went wrong — their System connection is unstable, flooding their body with raw mana under stress. In a modern world coping with the gate crisis, Berserkers are walking liability insurance nightmares. In Overload State, visible mana veins crawl across their skin and their muscles swell with crystallized energy — terrifying bystanders and going viral on social media. The Ascendant Bureau classifies them as high-risk assets, but no one clears gates faster. Many work solo or in guilds that specialize in controlled demolition of high-rank gates.",
 		hitDie: "1d12",
 		primaryAbility: "Strength",
 		savingThrows: ["Strength", "Vitality"],
@@ -457,7 +457,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "System Singularity",
 				description:
-					"Your System status updates: [RANK: S — MANA SINGULARITY DETECTED]. STR and VIT increase by 4 (max 24). Overload grants resistance to ALL damage. Mana Shockwave extends to 10 ft. The Hunter Bureau classifies you as an extinction-level asset.",
+					"Your System status updates: [RANK: S — MANA SINGULARITY DETECTED]. STR and VIT increase by 4 (max 24). Overload grants resistance to ALL damage. Mana Shockwave extends to 10 ft. The Ascendant Bureau classifies you as an extinction-level asset.",
 			},
 		],
 		abilities: [
@@ -488,7 +488,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Former intelligence operatives, cat burglars, hackers, parkour athletes, and special forces operators whose awakening attuned them to the dimensional membrane. In modern society, Assassins are the most in-demand hunters for covert gate operations — clearing rifts that open in government buildings, corporate servers, and populated areas without causing public panic. They phase through walls, strike from impossible angles, and vanish before security cameras register anything. Many work as freelance contractors for the Hunter Bureau, private security firms, or intelligence agencies. Some operate in the grey market, using their phase abilities for espionage and corporate extraction.",
+			"Former intelligence operatives, cat burglars, hackers, parkour athletes, and special forces operators whose awakening attuned them to the dimensional membrane. In modern society, Assassins are the most in-demand ascendants for covert gate operations — clearing rifts that open in government buildings, corporate servers, and populated areas without causing public panic. They phase through walls, strike from impossible angles, and vanish before security cameras register anything. Many work as freelance contractors for the Ascendant Bureau, private security firms, or intelligence agencies. Some operate in the grey market, using their phase abilities for espionage and corporate extraction.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
 		savingThrows: ["Agility", "Intelligence"],
@@ -597,7 +597,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Shadow Cant",
 				description:
-					"A coded language used by hunters in the shadow trade — encrypted dead drops, dark web forums, burner phone protocols, and anonymous gate intelligence networks. You recognize the signs in any city.",
+					"A coded language used by ascendants in the shadow trade — encrypted dead drops, dark web forums, burner phone protocols, and anonymous gate intelligence networks. You recognize the signs in any city.",
 			},
 			{
 				level: 2,
@@ -672,7 +672,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Inevitable Strike",
 				description:
-					"Once per short rest: the System bends probability — your HUD displays [OUTCOME: GUARANTEED]. Turn any missed attack into a hit, or treat any failed check as a natural 20. Classified hunters have used this to bypass bank vaults, dodge point-blank gunfire, and land impossible shots.",
+					"Once per short rest: the System bends probability — your HUD displays [OUTCOME: GUARANTEED]. Turn any missed attack into a hit, or treat any failed check as a natural 20. Classified ascendants have used this to bypass bank vaults, dodge point-blank gunfire, and land impossible shots.",
 			},
 		],
 		abilities: [
@@ -703,7 +703,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"Martial artists, dancers, gymnasts, and professional athletes whose awakening rewired their entire nervous system into a mana-conductive network. In a world where gates can open in a crowded shopping mall, Strikers are the ideal rapid-response hunters — no weapons to carry through security, no equipment to deploy. They process sensory input hundreds of times faster than normal humans and channel kinetic force through their limbs like living railguns. Off-duty, many run dojos, compete in hunter martial arts leagues broadcast on streaming platforms, or work as celebrity bodyguards. Their body IS the weapon.",
+			"Martial artists, dancers, gymnasts, and professional athletes whose awakening rewired their entire nervous system into a mana-conductive network. In a world where gates can open in a crowded shopping mall, Strikers are the ideal rapid-response ascendants — no weapons to carry through security, no equipment to deploy. They process sensory input hundreds of times faster than normal humans and channel kinetic force through their limbs like living railguns. Off-duty, many run dojos, compete in ascendant martial arts leagues broadcast on streaming platforms, or work as celebrity bodyguards. Their body IS the weapon.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
 		savingThrows: ["Strength", "Agility"],
@@ -754,7 +754,7 @@ export const jobs: Job[] = [
 			{
 				name: "Impulse Sense",
 				description:
-					"Perceive bioelectric auras like a living MRI — read emotional states, detect injuries, and sense other awakened hunters within 120 ft. Detect invisible creatures by their nerve-impulse trail.",
+					"Perceive bioelectric auras like a living MRI — read emotional states, detect injuries, and sense other awakened ascendants within 120 ft. Detect invisible creatures by their nerve-impulse trail.",
 				type: "passive",
 			},
 			{
@@ -896,7 +896,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Perfected System",
 				description:
-					"Your System status updates: [RANK: S — PERFECTED BIOLOGICAL SYSTEM]. Roll initiative with 0 impulse → regain 4. Velocity Chain adds full speed ÷ 5. Sports scientists, military researchers, and pharmaceutical companies all want to study you. The Hunter Bureau won't let them.",
+					"Your System status updates: [RANK: S — PERFECTED BIOLOGICAL SYSTEM]. Roll initiative with 0 impulse → regain 4. Velocity Chain adds full speed ÷ 5. Sports scientists, military researchers, and pharmaceutical companies all want to study you. The Ascendant Bureau won't let them.",
 			},
 		],
 		abilities: [
@@ -927,7 +927,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"Programmers, scientists, researchers, and academics whose awakening granted direct read-access to the System's spell matrix — the source code governing magical phenomena. In modern society, Mages are recruited heavily by universities, tech companies, and government research labs. They reverse-engineer magic like software, compile spells from System data into personal digital grimoires (often stored on tablets or custom devices), and optimize casting parameters with mathematical precision. Many publish papers, consult for the Hunter Bureau's R&D division, or run private arcane-tech startups. The most versatile casters alive, limited only by how many spells they can decode.",
+			"Programmers, scientists, researchers, and academics whose awakening granted direct read-access to the System's spell matrix — the source code governing magical phenomena. In modern society, Mages are recruited heavily by universities, tech companies, and government research labs. They reverse-engineer magic like software, compile spells from System data into personal digital grimoires (often stored on tablets or custom devices), and optimize casting parameters with mathematical precision. Many publish papers, consult for the Ascendant Bureau's R&D division, or run private arcane-tech startups. The most versatile casters alive, limited only by how many spells they can decode.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
 		savingThrows: ["Intelligence", "Sense"],
@@ -1103,7 +1103,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Ordinary people — baristas, students, office workers, teenagers — whose awakening went catastrophically right. Their System connection is raw and unfiltered, mana bleeding from their body like radiation. In modern society, Espers are celebrities and pariahs in equal measure — their uncontrolled power has leveled city blocks and gone viral in disaster footage. The Hunter Bureau monitors them closely. Some become famous hunters with massive social media followings; others are quietly contained in government facilities. They reshape reality through sheer willpower, bending spells mid-cast with a thought. Unpredictable, terrifyingly powerful, and classified as high-risk anomalies.",
+			"Ordinary people — baristas, students, office workers, teenagers — whose awakening went catastrophically right. Their System connection is raw and unfiltered, mana bleeding from their body like radiation. In modern society, Espers are celebrities and pariahs in equal measure — their uncontrolled power has leveled city blocks and gone viral in disaster footage. The Ascendant Bureau monitors them closely. Some become famous ascendants with massive social media followings; others are quietly contained in government facilities. They reshape reality through sheer willpower, bending spells mid-cast with a thought. Unpredictable, terrifyingly powerful, and classified as high-risk anomalies.",
 		hitDie: "1d6",
 		primaryAbility: "Presence",
 		savingThrows: ["Vitality", "Presence"],
@@ -1154,7 +1154,7 @@ export const jobs: Job[] = [
 			{
 				name: "Mana Sensitivity",
 				description:
-					"Your open mana pathways work like a passive radar — enchanted objects hum when you walk by, hidden gates tingle at the back of your skull, and you can tell if someone's an awakened hunter from across a crowded subway car. Sense magical effects within 30 ft. Identify any observed spell's school.",
+					"Your open mana pathways work like a passive radar — enchanted objects hum when you walk by, hidden gates tingle at the back of your skull, and you can tell if someone's an awakened ascendant from across a crowded subway car. Sense magical effects within 30 ft. Identify any observed spell's school.",
 				type: "passive",
 			},
 			{
@@ -1284,7 +1284,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"Hunters who flatlined inside a gate — their heart stopped, brain activity ceased, the hospital called time of death — and then the System brought them back. EMTs, soldiers, firefighters, even civilians caught in gate breaks. The reconstruction left them permanently tethered to the entropy layer. In modern society, Revenants are deeply unsettling: food spoils near them, plants wilt, and electronics glitch. Many struggle to hold normal jobs or relationships. They find purpose in high-rank gate clearance, where their power to accelerate or reverse decay makes them invaluable. The closer a Revenant is to death, the more powerful they become.",
+			"Ascendants who flatlined inside a gate — their heart stopped, brain activity ceased, the hospital called time of death — and then the System brought them back. EMTs, soldiers, firefighters, even civilians caught in gate breaks. The reconstruction left them permanently tethered to the entropy layer. In modern society, Revenants are deeply unsettling: food spoils near them, plants wilt, and electronics glitch. Many struggle to hold normal jobs or relationships. They find purpose in high-rank gate clearance, where their power to accelerate or reverse decay makes them invaluable. The closer a Revenant is to death, the more powerful they become.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
 		savingThrows: ["Intelligence", "Sense"],
@@ -1437,7 +1437,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Entropy Sovereign",
 				description:
-					"Your System status updates: [RANK: S — ENTROPY SOVEREIGN]. Decay Field becomes at-will (no concentration). Below half HP, necrotic spells deal +INT mod bonus damage. Death Harvest has no per-round limit. The Hunter Bureau lists you as a biohazard. Insurance companies won't cover buildings you enter.",
+					"Your System status updates: [RANK: S — ENTROPY SOVEREIGN]. Decay Field becomes at-will (no concentration). Below half HP, necrotic spells deal +INT mod bonus damage. Death Harvest has no per-round limit. The Ascendant Bureau lists you as a biohazard. Insurance companies won't cover buildings you enter.",
 			},
 		],
 		abilities: [
@@ -1467,7 +1467,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Veterinarians, park rangers, marine biologists, environmental scientists, and farmers whose awakening bonded them to the alien ecosystems inside gates. In a world where gate biomes are bleeding into Earth's environment — mutant plants in Central Park, gate insects in Tokyo's sewers — Summoners are critical. They're employed by environmental agencies, the Hunter Bureau's Ecology Division, and wildlife management firms. They shapeshift into gate creatures, command gate environments, and are the only hunters who can predict boss spawns by reading ecosystem stress. Many advocate for gate conservation, arguing some gate biomes are worth preserving.",
+			"Veterinarians, park rangers, marine biologists, environmental scientists, and farmers whose awakening bonded them to the alien ecosystems inside gates. In a world where gate biomes are bleeding into Earth's environment — mutant plants in Central Park, gate insects in Tokyo's sewers — Summoners are critical. They're employed by environmental agencies, the Ascendant Bureau's Ecology Division, and wildlife management firms. They shapeshift into gate creatures, command gate environments, and are the only ascendants who can predict boss spawns by reading ecosystem stress. Many advocate for gate conservation, arguing some gate biomes are worth preserving.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
 		savingThrows: ["Intelligence", "Sense"],
@@ -1571,7 +1571,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Gate Speak",
 				description:
-					"Know the primal language shared across gate ecosystems — you read gate biome markers the way a tracker reads footprints. Leave and spot hidden biological signals. Sense the rank and type of any gate within 1 mile — the Hunter Bureau's Ecology Division relies on Summoners for gate classification.",
+					"Know the primal language shared across gate ecosystems — you read gate biome markers the way a tracker reads footprints. Leave and spot hidden biological signals. Sense the rank and type of any gate within 1 mile — the Ascendant Bureau's Ecology Division relies on Summoners for gate classification.",
 			},
 			{
 				level: 1,
@@ -1663,7 +1663,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Doctors, nurses, paramedics, chaplains, and first responders whose awakening installed a direct uplink to the System core. In a world where gate breaks can cause mass casualties in minutes, Heralds are the most valuable hunters in any raid party — and the most recruited by hospitals, military medical corps, and humanitarian organizations. They channel the System's own restorative and destructive energy, receiving encrypted transmissions that guide their healing and combat. Many run trauma clinics for gate-injured civilians, serve as guild medics, or work with the Red Cross during gate emergencies.",
+			"Doctors, nurses, paramedics, chaplains, and first responders whose awakening installed a direct uplink to the System core. In a world where gate breaks can cause mass casualties in minutes, Heralds are the most valuable ascendants in any raid party — and the most recruited by hospitals, military medical corps, and humanitarian organizations. They channel the System's own restorative and destructive energy, receiving encrypted transmissions that guide their healing and combat. Many run trauma clinics for gate-injured civilians, serve as guild medics, or work with the Red Cross during gate emergencies.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
 		savingThrows: ["Sense", "Presence"],
@@ -1805,7 +1805,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "System's Chosen",
 				description:
-					"Your System status updates: [RANK: S — PRIORITY CONDUIT]. Direct Petition succeeds automatically. Once per long rest, cast any Herald spell without a slot (max 7th). The WHO, the Hunter Bureau, and every major hospital network have you on speed dial.",
+					"Your System status updates: [RANK: S — PRIORITY CONDUIT]. Direct Petition succeeds automatically. Once per long rest, cast any Herald spell without a slot (max 7th). The WHO, the Ascendant Bureau, and every major hospital network have you on speed dial.",
 			},
 		],
 		abilities: [
@@ -1835,7 +1835,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Lawyers, negotiators, con artists, politicians, and desperate people who cut deals with powerful entities trapped inside gates. In modern society, Contractors are controversial — human rights groups debate whether pacting with gate entities constitutes trafficking, and the Hunter Bureau regulates contract terms. The entity grants power; the Contractor provides service (often gate-clearance kills that feed the entity). It's a dangerous bargain regulated by modern contract law — literal supernatural NDAs. Many Contractors work as lobbyists, fixers, or high-end consultants, leveraging their patron's influence in both the gate world and boardrooms.",
+			"Lawyers, negotiators, con artists, politicians, and desperate people who cut deals with powerful entities trapped inside gates. In modern society, Contractors are controversial — human rights groups debate whether pacting with gate entities constitutes trafficking, and the Ascendant Bureau regulates contract terms. The entity grants power; the Contractor provides service (often gate-clearance kills that feed the entity). It's a dangerous bargain regulated by modern contract law — literal supernatural NDAs. Many Contractors work as lobbyists, fixers, or high-end consultants, leveraging their patron's influence in both the gate world and boardrooms.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
 		savingThrows: ["Sense", "Presence"],
@@ -1881,7 +1881,7 @@ export const jobs: Job[] = [
 			{
 				name: "Abyssal Sight",
 				description:
-					"Your patron's influence rewired your optic nerves — you see perfectly in total darkness, including inside blacked-out gates where other hunters need flashlights. Superior darkvision 120 ft.",
+					"Your patron's influence rewired your optic nerves — you see perfectly in total darkness, including inside blacked-out gates where other ascendants need flashlights. Superior darkvision 120 ft.",
 				type: "passive",
 			},
 			{
@@ -1988,7 +1988,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Full Manifestation",
 				description:
-					"Your System status updates: [RANK: S — FULL MANIFESTATION AUTHORIZED]. Entity Manifestation lasts 10 min, grants resistance to all damage, and your aura extends to 30 ft. Regain all contract slots by demanding your entity's full power (1 min). International law firms now specialize in entity contract disputes because of hunters like you.",
+					"Your System status updates: [RANK: S — FULL MANIFESTATION AUTHORIZED]. Entity Manifestation lasts 10 min, grants resistance to all damage, and your aura extends to 30 ft. Regain all contract slots by demanding your entity's full power (1 min). International law firms now specialize in entity contract disputes because of ascendants like you.",
 			},
 		],
 		abilities: [
@@ -2018,7 +2018,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Ex-military scouts, wilderness guides, bounty hunters, private investigators, and survivalists whose awakening specialized them for tracking prey across dimensional boundaries. In a world where gate monsters occasionally escape into cities, Stalkers are employed by police departments, the Hunter Bureau's Containment Division, and private security firms. They taste mana signatures, follow monster energy trails through urban environments, and adapt to any terrain in seconds. Many work as freelance bounty hunters tracking escaped gate creatures through subway systems, forests, and abandoned buildings. Half martial, half primal caster, all predator.",
+			"Ex-military scouts, wilderness guides, bounty ascendants, private investigators, and survivalists whose awakening specialized them for tracking prey across dimensional boundaries. In a world where gate monsters occasionally escape into cities, Stalkers are employed by police departments, the Ascendant Bureau's Containment Division, and private security firms. They taste mana signatures, follow monster energy trails through urban environments, and adapt to any terrain in seconds. Many work as freelance bounty ascendants tracking escaped gate creatures through subway systems, forests, and abandoned buildings. Half martial, half primal caster, all predator.",
 		hitDie: "1d10",
 		primaryAbility: "Agility",
 		savingThrows: ["Strength", "Agility"],
@@ -2051,7 +2051,7 @@ export const jobs: Job[] = [
 			{
 				name: "Prey Lock",
 				description:
-					"Choose a designated prey type — the Hunter Bureau assigns Stalkers to specific monster categories like detectives get case specialties. Sense creatures of that type within 120 ft by mana signature, even through concrete walls. Advantage on Survival to track them across any terrain.",
+					"Choose a designated prey type — the Ascendant Bureau assigns Stalkers to specific monster categories like detectives get case specialties. Sense creatures of that type within 120 ft by mana signature, even through concrete walls. Advantage on Survival to track them across any terrain.",
 				level: 1,
 			},
 			{
@@ -2230,7 +2230,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"Police officers, firefighters, soldiers, judges, and idealists who swore a binding oath to the System itself — a literal covenant inscribed into their mana pathways. In modern society, Holy Knights are the closest thing to superhero cops. They work as guild leaders, Hunter Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully — several high-profile cases of fallen Holy Knights have made international news. They channel radiant System energy through weapons, heal allies, and project protective auras. Many stream their gate raids for public morale.",
+			"Police officers, firefighters, soldiers, judges, and idealists who swore a binding oath to the System itself — a literal covenant inscribed into their mana pathways. In modern society, Holy Knights are the closest thing to superhero cops. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully — several high-profile cases of fallen Holy Knights have made international news. They channel radiant System energy through weapons, heal allies, and project protective auras. Many stream their gate raids for public morale.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
 		savingThrows: ["Sense", "Presence"],
@@ -2435,7 +2435,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Software engineers, mechanics, electricians, hardware hackers, and makers whose awakening gave them write-access to the System's hardware layer. In modern society, Technomancers are the most commercially valuable hunters — Silicon Valley and Shenzhen are full of them. They see System blueprints embedded in every magical object and build devices that shouldn't exist: mana-powered turrets, self-repairing gear, drone swarms, and apps that interface with gate energy. Many run startups, work for defense contractors, or sell enchanted tech on the hunter black market. They keep raid parties equipped and civilization running.",
+			"Software engineers, mechanics, electricians, hardware hackers, and makers whose awakening gave them write-access to the System's hardware layer. In modern society, Technomancers are the most commercially valuable ascendants — Silicon Valley and Shenzhen are full of them. They see System blueprints embedded in every magical object and build devices that shouldn't exist: mana-powered turrets, self-repairing gear, drone swarms, and apps that interface with gate energy. Many run startups, work for defense contractors, or sell enchanted tech on the ascendant black market. They keep raid parties equipped and civilization running.",
 		hitDie: "1d8",
 		primaryAbility: "Intelligence",
 		savingThrows: ["Vitality", "Intelligence"],
@@ -2653,7 +2653,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Musicians, actors, streamers, social media influencers, DJs, motivational speakers, and content creators whose awakening attuned them to the System's harmonic frequencies. In modern society, Idols are the most publicly visible hunters — they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers. Major labels sign awakened Idols for record deals; gaming companies sponsor their raid streams. They manipulate frequencies through performance, speech, and sheer force of personality — a viral TikTok from an Idol can literally buff viewers through their screens. Every raid party wants one; no one admits they need one.",
+			"Musicians, actors, streamers, social media influencers, DJs, motivational speakers, and content creators whose awakening attuned them to the System's harmonic frequencies. In modern society, Idols are the most publicly visible ascendants — they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers. Major labels sign awakened Idols for record deals; gaming companies sponsor their raid streams. They manipulate frequencies through performance, speech, and sheer force of personality — a viral TikTok from an Idol can literally buff viewers through their screens. Every raid party wants one; no one admits they need one.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
 		savingThrows: ["Agility", "Presence"],

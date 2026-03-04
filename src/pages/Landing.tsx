@@ -60,13 +60,12 @@ const Landing = () => {
 				</div>
 			)}
 
-			{/* System Ascendant Cosmic Background */}
-			<CosmicBackground variant="gate" intensity="medium" animated />
+			<CosmicBackground variant="sovereign" intensity="high" animated />
 
 			{/* Enhanced Background Effects */}
-			<div className="absolute inset-0">
-				<div className="absolute inset-0 bg-cover bg-center opacity-20 landing-hero-bg" />
-				<div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/75 to-black" />
+			<div className="absolute inset-0 pointer-events-none">
+				<div className="absolute inset-0 bg-background/40" />
+				<div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background" />
 			</div>
 
 			<header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
@@ -146,7 +145,7 @@ const Landing = () => {
 								<Button
 									variant="outline"
 									size="lg"
-									className="h-12 border-primary/50 text-primary font-system uppercase tracking-wider backdrop-blur-sm hover:bg-primary/20 hover:text-white shadow-[inset_0_0_10px_hsl(var(--primary)/0.2)]"
+									className="h-12 border-primary/50 text-accent font-system uppercase tracking-wider backdrop-blur-sm hover:bg-primary/20 hover:text-white shadow-[inset_0_0_10px_hsl(var(--primary)/0.2)]"
 								>
 									Browse Compendium
 								</Button>
@@ -157,11 +156,11 @@ const Landing = () => {
 						<div className="relative">
 							{/* System Hologram Display */}
 							<SystemHologram
-								variant="sovereign"
+								variant="default"
 								title="SYSTEM CORE"
-								className="mb-8 relative shadow-[0_0_50px_hsl(var(--primary)/0.2)] group"
+								className="mb-8 relative shadow-[0_0_50px_hsl(var(--accent)/0.1)] group"
 							>
-								<div className="absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+								<div className="absolute -inset-1 bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
 								<div className="space-y-4 font-mono">
 									<div className="flex justify-between items-center border-b border-primary/20 pb-2">
 										<SystemText
@@ -192,7 +191,7 @@ const Landing = () => {
 											size="sm"
 											className="font-system font-bold tracking-widest drop-shadow-[0_0_8px_currentColor]"
 										>
-											MONARCH
+											SOVEREIGN
 										</SystemText>
 									</div>
 									<div className="flex justify-between items-center border-b border-primary/20 pb-2">
@@ -255,7 +254,7 @@ const Landing = () => {
 						<EnhancedCard
 							variant="rift"
 							title="Rift Exploration"
-							description="Explore dangerous rifts and track your conquests in the shadow realm."
+							description="Explore dangerous rifts and track your conquests across dimensional zones."
 							icon={<Zap className="h-6 w-6" />}
 							interactive
 							onClick={() => {
@@ -295,7 +294,7 @@ const Landing = () => {
 									x: 42.7,
 									y: -13.8,
 									z: 8.2,
-									dimension: "SHADOW PRIME",
+									dimension: "VOID PRIME",
 								}}
 								showCoordinates
 								className="w-full"
@@ -313,7 +312,7 @@ const Landing = () => {
 							</SystemHeading>
 							<SovereignAuthorityDisplay
 								authority={94}
-								tier="monarch"
+								tier="sovereign"
 								domain="UMBRAL EMPIRE"
 								decrees={47}
 								vassals={128}

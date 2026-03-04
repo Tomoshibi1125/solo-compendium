@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@config "../tailwind.config.ts";
 @import "./styles/mobile-responsive.css";
+@config "../tailwind.config.ts";
 
 /* ============================================================
    System Ascendant — Amethyst Void Palette v2
@@ -13,139 +13,139 @@
 :root,
 .dark {
 	/* ── Core UI tokens ──────────────────────────────────────── */
-	--background: 262 45% 4%;
-	/* True system void */
-	--foreground: 240 10% 88%;
-	/* Cool pale bone (neutral, easy on eyes) */
+	--background: 265 40% 4%;
+	/* Obsidian Void */
+	--foreground: 220 20% 90%;
+	/* Icy white/bone */
 
-	--card: 262 35% 7%;
+	--card: 265 35% 6%;
 	/* Dark obsidian pane */
-	--card-foreground: 240 10% 88%;
+	--card-foreground: 220 20% 90%;
 
-	--popover: 262 35% 10%;
+	--popover: 265 35% 8%;
 	/* Hovering dark glass */
-	--popover-foreground: 240 10% 88%;
+	--popover-foreground: 220 20% 90%;
 
-	--primary: 275 72% 59%;
-	/* Vivid amethyst neon */
+	--primary: 275 80% 65%;
+	/* Vivid Amethyst Neon */
 	--primary-foreground: 240 15% 95%;
-	/* Bright cool white */
 
-	--secondary: 262 30% 10%;
+	--secondary: 265 30% 10%;
 	/* Void charcoal */
-	--secondary-foreground: 260 15% 82%;
+	--secondary-foreground: 265 15% 82%;
 
-	--muted: 262 22% 15%;
+	--muted: 265 22% 15%;
 	/* Faint purple haze */
-	--muted-foreground: 262 12% 52%;
+	--muted-foreground: 265 12% 52%;
 
-	--accent: 190 100% 50%;
-	/* Mana cyan */
-	--accent-foreground: 190 10% 5%;
+	--accent: 195 90% 65%;
+	/* Stellar Cyan / Blue Giant */
+	--accent-foreground: 195 40% 10%;
 
-	--destructive: 0 90% 58%;
-	/* System error crimson */
-	--destructive-foreground: 0 15% 95%;
+	--destructive: 350 85% 60%;
+	/* Error crimson aligned with cool tones */
+	--destructive-foreground: 350 15% 95%;
 
-	--success: 145 75% 45%;
-	/* Gate-D hunter green */
-	--success-foreground: 145 20% 95%;
+	--success: 160 70% 50%;
+	/* Cool Ascendant green/teal */
+	--success-foreground: 160 20% 95%;
 
-	--warning: 220 60% 60%;
-	/* Cool sky-blue warning */
-	--warning-foreground: 220 20% 8%;
+	--warning: 195 85% 65%;
+	/* Replaced warm warning with Stellar Cyan */
+	--warning-foreground: 195 40% 10%;
 
-	--border: 262 25% 14%;
+	--border: 265 25% 15%;
 	/* Subtle void border */
-	--input: 262 25% 12%;
-	--ring: 275 72% 64%;
+	--input: 265 25% 12%;
+	--ring: 275 80% 65%;
 	/* Amethyst neon focus ring */
 	--radius: 0.5rem;
 
 	/* ── Sidebar ─────────────────────────────────────────────── */
-	--sidebar-background: 262 45% 4%;
-	--sidebar-foreground: 240 10% 88%;
-	--sidebar-primary: 275 72% 59%;
+	--sidebar-background: 265 40% 4%;
+	--sidebar-foreground: 220 20% 90%;
+	--sidebar-primary: 275 80% 65%;
 	--sidebar-primary-foreground: 240 15% 95%;
-	--sidebar-accent: 190 100% 45%;
-	--sidebar-accent-foreground: 190 10% 5%;
-	--sidebar-border: 262 25% 12%;
-	--sidebar-ring: 275 72% 64%;
+	--sidebar-accent: 195 90% 65%;
+	--sidebar-accent-foreground: 195 40% 10%;
+	--sidebar-border: 265 25% 15%;
+	--sidebar-ring: 275 80% 65%;
 
 	/* ── System Ascendant: Protocol Palette ──────────────────── */
-	--shadow-blue: 230 80% 50%;
-	/* Deep indigo pulse */
-	--shadow-purple: 275 70% 50%;
-	/* Rich violet core */
-	--shadow-deep: 270 60% 20%;
+	--shadow-blue: 220 85% 60%;
+	/* Cool stellar blue */
+	--shadow-purple: 275 80% 60%;
+	/* Rich amethyst core */
+	--shadow-deep: 270 50% 15%;
 	/* Purple abyss */
-	--shadow-dark: 268 50% 8%;
-	/* Near-true void */
+	--shadow-dark: 265 40% 6%;
+	/* Deep obsidian void */
 
-	--monarch-gold: 260 30% 78%;
-	/* Cool lavender-silver (sovereign) */
-	--monarch-silver: 220 15% 78%;
-	/* Cold silver */
+	--solar-core: 195 85% 75%;
+	/* Cool, icy cyan/blue giant core */
+	--solar-glow: 195 90% 60%;
+	/* Intenser cool blue-cyan glow */
 
 	/* ── Glass/Holographic tokens ────────────────────────────── */
-	--sa-glass-bg: rgba(10, 6, 25, 0.65);
-	/* Base holographic panel */
-	--sa-glass-border: rgba(157, 78, 221, 0.18);
+	--sa-glass-bg: rgba(6, 4, 15, 0.75);
+	/* True obsidian glass panel */
+	--sa-glass-border: rgba(168, 85, 247, 0.25);
 	/* Amethyst glass edge */
-	--sa-glass-shine: rgba(0, 212, 255, 0.06);
+	--sa-glass-shine: rgba(103, 232, 249, 0.1);
 	/* Cyan refraction layer */
-	--sa-neon-primary: 275, 78, 221;
-	/* Raw RGB for amethyst */
-	--sa-neon-cyan: 0, 212, 255;
-	/* Raw RGB for mana cyan */
+	--sa-neon-primary: 168, 85, 247;
+	/* Base RGB for amethyst glow */
+	--sa-neon-cyan: 103, 232, 249;
+	/* Base RGB for icy cyan glow */
 
 	/* ── Gate rank colors (E → National) ─────────────────────── */
-	--gate-red: 0 80% 55%;
-	--gate-e: 0 0% 55%;
-	/* Gray */
-	--gate-d: 145 65% 45%;
-	/* Green */
-	--gate-c: 210 80% 55%;
-	/* Blue */
-	--gate-b: 270 70% 62%;
-	/* Purple */
-	--gate-a: 350 85% 55%;
-	/* Red */
-	--gate-s: 220 35% 75%;
-	/* Cool platinum */
-	--gate-ss: 230 25% 82%;
-	/* Pale silver-blue */
-	--gate-national: 330 90% 52%;
-	/* Crimson-violet sovereign */
+	--gate-red: 350 85% 60%;
+	--gate-e: 220 15% 55%;
+	/* Cold slate gray */
+	--gate-d: 160 65% 50%;
+	/* Teal-green */
+	--gate-c: 210 80% 60%;
+	/* Stellar blue */
+	--gate-b: 275 80% 65%;
+	/* Amethyst purple */
+	--gate-a: 350 85% 60%;
+	/* Cool crimson */
+	--gate-s: 210 55% 85%;
+	/* Icy platinum */
+	--gate-ss: 200 70% 90%;
+	/* Supernova white-blue */
+	--gate-national: 285 85% 60%;
+	/* Void sovereignty violet */
 
-	/* Gate glow variants (brighter / more saturated) */
-	--gate-e-glow: 0 0% 70%;
-	--gate-d-glow: 145 75% 55%;
-	--gate-c-glow: 210 90% 65%;
-	--gate-b-glow: 270 80% 70%;
-	--gate-a-glow: 350 90% 62%;
-	--gate-s-glow: 220 45% 80%;
-	--gate-ss-glow: 230 35% 88%;
-	--gate-national-glow: 330 95% 60%;
+	/* Gate glow variants */
+	--gate-e-glow: 220 20% 65%;
+	--gate-d-glow: 160 75% 60%;
+	--gate-c-glow: 210 90% 70%;
+	--gate-b-glow: 275 90% 75%;
+	--gate-a-glow: 350 95% 70%;
+	--gate-s-glow: 210 65% 90%;
+	--gate-ss-glow: 200 80% 95%;
+	--gate-national-glow: 285 95% 70%;
 
 	/* ── Entity accent colors ────────────────────────────────── */
-	--hunter-blue: 210 85% 58%;
-	/* Cool hunter blue */
-	--mana-cyan: 190 100% 50%;
-	/* Arcane mana cyan */
-	--arise-violet: 275 80% 65%;
+	--ascendant-blue: 210 90% 65%;
+	/* Cool ascendant blue */
+	--mana-cyan: 195 95% 60%;
+	/* Arcane icy cyan */
+	--arise-violet: 280 85% 70%;
 	/* Arise / ascension violet */
-	--system-green: 145 85% 45%;
-	/* System matrix green */
-	--system-glow: 145 95% 55%;
-	/* Bright system pulse */
-	--void-black: 265 50% 2%;
-	/* True void core */
+	--system-green: 160 85% 50%;
+	/* System matrix teal-green */
+	--system-glow: 160 95% 60%;
+	/* Bright icy system pulse */
+	--void-black: 265 40% 2%;
+	/* Absolute obsidian */
 
 	/* ── Named Shadow Soldiers ───────────────────────────────── */
-	--crimson-knight: 350 75% 52%;
-	--gilded-reaper: 260 40% 62%;
-	--silver-commander: 220 20% 72%;
+	--crimson-knight: 350 85% 55%;
+	--gilded-reaper: 210 55% 85%;
+	/* Replaced gold with icy platinum for Reaper */
+	--silver-commander: 220 25% 75%;
 }
 
 /* ============================================================
@@ -367,7 +367,7 @@ h3 {
 
 	.gradient-text-shadow,
 	.gradient-text-system,
-	.gradient-text-monarch,
+	.gradient-text-regent,
 	.gradient-text-arise,
 	.gradient-text-supreme {
 		-webkit-text-fill-color: black;

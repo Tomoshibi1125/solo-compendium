@@ -3,6 +3,7 @@
  * Legal-safe sounds and music management for Wardens
  */
 
+import { Howl, Howler } from "howler";
 import { logger } from "@/lib/logger";
 import { loadAudioFile } from "./storage";
 import type {
@@ -14,7 +15,7 @@ import type {
 import { DEFAULT_AUDIO_SETTINGS } from "./types";
 
 export class AudioService {
-	private audio: HTMLAudioElement | null = null;
+	private audio: Howl | null = null;
 	private state: AudioPlayerState = {
 		currentTrack: null,
 		isPlaying: false,
@@ -45,43 +46,8 @@ export class AudioService {
 	}
 
 	private setupAudioElement() {
-		this.audio = new Audio();
-		this.audio.preload = "metadata";
-
-		// Event listeners
-		this.audio.addEventListener("loadstart", () => {
-			this.updateState({ isLoading: true, error: null });
-		});
-
-		this.audio.addEventListener("loadeddata", () => {
-			this.updateState({
-				isLoading: false,
-				duration: this.audio?.duration || 0,
-			});
-		});
-
-		this.audio.addEventListener("timeupdate", () => {
-			this.updateState({
-				currentTime: this.audio?.currentTime || 0,
-			});
-		});
-
-		this.audio.addEventListener("ended", () => {
-			this.handleTrackEnd();
-		});
-
-		this.audio.addEventListener("error", () => {
-			this.updateState({
-				isLoading: false,
-				error: "Failed to load audio",
-			});
-		});
-
-		this.audio.addEventListener("volumechange", () => {
-			this.updateState({
-				volume: this.audio?.volume || 0,
-			});
-		});
+		// Howler manages global audio context internally
+		Howler.autoSuspend = false;
 	}
 
 	private updateState(updates: Partial<AudioPlayerState>) {
@@ -112,10 +78,14 @@ export class AudioService {
 
 	// Public API
 	async loadTrack(track: AudioTrack) {
-		if (!this.audio) return;
-
 		try {
 			this.updateState({ isLoading: true, error: null });
+
+			if (this.audio) {
+				this.audio.unload();
+			}
+
+			let srcUrl = track.url;
 
 			// Load the audio source
 			if (track.isLocal && track.localPath) {
@@ -126,28 +96,59 @@ export class AudioService {
 					}
 					const objectUrl = URL.createObjectURL(blob);
 					this.setActiveObjectUrl(objectUrl);
-					this.audio.src = objectUrl;
+					srcUrl = objectUrl;
 				} else {
 					this.clearActiveObjectUrl();
-					this.audio.src = track.localPath;
+					srcUrl = track.localPath;
 				}
 			} else {
 				this.clearActiveObjectUrl();
-				this.audio.src = track.url;
 			}
 
-			// Set track properties
-			this.audio.volume = track.volume * this.settings.masterVolume;
-			this.audio.loop = track.loop;
+			this.audio = new Howl({
+				src: [srcUrl],
+				volume: track.volume * this.settings.masterVolume,
+				loop: track.loop,
+				html5: true, // Use streaming for large files
+				onload: () => {
+					this.updateState({
+						isLoading: false,
+						duration: this.audio?.duration() || 0,
+					});
+				},
+				onplay: () => {
+					this.updateState({ isPlaying: true });
+					this.startProgressTimer();
+				},
+				onpause: () => {
+					this.updateState({ isPlaying: false });
+					this.stopProgressTimer();
+				},
+				onstop: () => {
+					this.updateState({ isPlaying: false, currentTime: 0 });
+					this.stopProgressTimer();
+				},
+				onend: () => {
+					this.handleTrackEnd();
+				},
+				onloaderror: (_id, error) => {
+					this.updateState({
+						isLoading: false,
+						error: `Failed to load audio: ${error}`,
+					});
+				},
+				onvolume: () => {
+					this.updateState({
+						volume: (this.audio?.volume() as number) || 0,
+					});
+				}
+			});
 
 			// Update state
 			this.updateState({
 				currentTrack: track,
 				error: null,
 			});
-
-			// Load metadata
-			await this.audio.load();
 		} catch (error) {
 			this.updateState({
 				isLoading: false,
@@ -155,13 +156,11 @@ export class AudioService {
 			});
 		}
 	}
-
 	async play() {
 		if (!this.audio || !this.state.currentTrack) return;
 
 		try {
-			await this.audio.play();
-			this.updateState({ isPlaying: true });
+			this.audio.play();
 		} catch (error) {
 			this.updateState({
 				error: error instanceof Error ? error.message : "Failed to play",
@@ -171,23 +170,31 @@ export class AudioService {
 
 	pause() {
 		if (!this.audio) return;
-
 		this.audio.pause();
-		this.updateState({ isPlaying: false });
 	}
 
 	stop() {
 		if (!this.audio) return;
-
-		this.audio.pause();
-		this.audio.currentTime = 0;
-		this.updateState({
-			isPlaying: false,
-			currentTime: 0,
-		});
+		this.audio.stop();
 	}
 
-	async next() {
+	private progressTimer: ReturnType<typeof setInterval> | null = null;
+
+	private startProgressTimer() {
+		this.stopProgressTimer();
+		this.progressTimer = setInterval(() => {
+			if (this.audio && this.state.isPlaying) {
+				this.updateState({ currentTime: (this.audio.seek() as number) || 0 });
+			}
+		}, 1000);
+	}
+
+	private stopProgressTimer() {
+		if (this.progressTimer) {
+			clearInterval(this.progressTimer);
+			this.progressTimer = null;
+		}
+	} async next() {
 		const { playlist, currentTrackIndex, shuffle } = this.state;
 
 		if (!playlist || playlist.tracks.length === 0) return;
@@ -246,7 +253,7 @@ export class AudioService {
 		if (!this.audio) return;
 
 		const clampedVolume = Math.max(0, Math.min(1, volume));
-		this.audio.volume = clampedVolume;
+		this.audio.volume(clampedVolume);
 		this.updateState({ volume: clampedVolume });
 	}
 
@@ -256,14 +263,14 @@ export class AudioService {
 		this.saveSettings();
 
 		if (this.audio && this.state.currentTrack) {
-			this.audio.volume = this.state.currentTrack.volume * clampedVolume;
+			this.audio.volume(this.state.currentTrack.volume * clampedVolume);
 		}
 	}
 
 	setCurrentTime(time: number) {
 		if (!this.audio) return;
 
-		this.audio.currentTime = time;
+		this.audio.seek(time);
 		this.updateState({ currentTime: time });
 	}
 
@@ -293,65 +300,25 @@ export class AudioService {
 	fadeIn(duration = 2000, targetVolume?: number) {
 		if (!this.audio || !this.state.currentTrack) return;
 
-		const startVolume = this.audio.volume;
+		const startVolume = this.audio.volume() as number;
 		const target =
 			targetVolume ??
 			this.state.currentTrack.volume * this.settings.masterVolume;
-		const steps = 20;
-		const stepDuration = duration / steps;
-		const stepVolume = (target - startVolume) / steps;
 
-		let currentStep = 0;
-
-		this.clearFadeTimeout();
-
-		const fadeInterval = setInterval(() => {
-			currentStep++;
-			const newVolume = startVolume + stepVolume * currentStep;
-
-			if (currentStep >= steps || newVolume >= target) {
-				if (this.audio) this.audio.volume = target;
-				clearInterval(fadeInterval);
-			} else {
-				if (this.audio) this.audio.volume = newVolume;
-			}
-		}, stepDuration);
-
-		this.fadeTimeout = setTimeout(() => {
-			clearInterval(fadeInterval);
-		}, duration);
+		this.audio.fade(startVolume, target, duration);
 	}
 
 	fadeOut(duration = 2000) {
 		if (!this.audio) return;
 
-		const startVolume = this.audio.volume;
-		const steps = 20;
-		const stepDuration = duration / steps;
-		const stepVolume = startVolume / steps;
+		const startVolume = this.audio.volume() as number;
+		this.audio.fade(startVolume, 0, duration);
 
-		let currentStep = 0;
-
-		this.clearFadeTimeout();
-
-		const fadeInterval = setInterval(() => {
-			currentStep++;
-			const newVolume = startVolume - stepVolume * currentStep;
-
-			if (currentStep >= steps || newVolume <= 0) {
-				if (this.audio) this.audio.volume = 0;
-				clearInterval(fadeInterval);
-				if (this.state.isPlaying) {
-					this.pause();
-				}
-			} else {
-				if (this.audio) this.audio.volume = newVolume;
-			}
-		}, stepDuration);
-
-		this.fadeTimeout = setTimeout(() => {
-			clearInterval(fadeInterval);
-		}, duration);
+		// Stop playback after fading out
+		const id = this.audio.play(); // Assuming Howler 2.x returns the ID
+		this.audio.once('fade', () => {
+			if (this.audio) this.audio.stop(id);
+		}, id);
 	}
 
 	private clearFadeTimeout() {
@@ -407,7 +374,7 @@ export class AudioService {
 			this.audio &&
 			this.state.currentTrack
 		) {
-			this.audio.volume = this.state.currentTrack.volume * updates.masterVolume;
+			this.audio.volume(this.state.currentTrack.volume * updates.masterVolume);
 		}
 	}
 
@@ -429,11 +396,12 @@ export class AudioService {
 	destroy() {
 		this.clearFadeTimeout();
 		this.clearActiveObjectUrl();
+		this.stopProgressTimer();
 		this.listeners.clear();
 
 		if (this.audio) {
-			this.audio.pause();
-			this.audio.src = "";
+			this.audio.stop();
+			this.audio.unload();
 			this.audio = null;
 		}
 	}

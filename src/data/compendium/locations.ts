@@ -321,7 +321,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0021.webp",
 		description:
-			"A ruined city swallowed by the shadow realm during an ancient cataclysm. Now its broken streets serve as a training ground for D-rank ascendants, where the ghosts of former citizens still reenact their final moments in eternal loops.",
+			"A ruined city swallowed by the abyssal realm during an ancient cataclysm. Now its broken streets serve as a training ground for D-rank ascendants, where the ghosts of former citizens still reenact their final moments in eternal loops.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -551,7 +551,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0036.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -562,7 +562,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0037.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -578,7 +578,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0038.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -594,7 +594,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0039.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -605,7 +605,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0040.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -626,7 +626,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0041.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -647,7 +647,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0042.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -658,7 +658,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0043.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -674,7 +674,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0044.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -685,7 +685,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0045.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -696,7 +696,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0046.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -707,7 +707,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0047.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -723,7 +723,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0048.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -739,7 +739,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0049.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -755,7 +755,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0050.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -771,7 +771,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0051.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -787,7 +787,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0052.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -798,7 +798,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0053.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -809,7 +809,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0054.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -820,7 +820,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0055.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -836,7 +836,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0056.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -847,7 +847,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0057.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -863,7 +863,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0058.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -874,7 +874,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0059.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -890,7 +890,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0060.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -906,7 +906,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0061.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -927,7 +927,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0062.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -938,7 +938,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0063.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -949,7 +949,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0064.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -960,7 +960,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0065.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -981,7 +981,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0066.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -992,7 +992,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0067.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1008,7 +1008,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0068.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1019,7 +1019,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0069.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1030,7 +1030,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0070.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1041,7 +1041,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0071.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1052,7 +1052,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0072.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1068,7 +1068,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0073.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1084,7 +1084,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0074.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1095,7 +1095,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0075.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1111,7 +1111,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0076.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1122,7 +1122,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0077.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1138,7 +1138,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0078.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1154,7 +1154,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0079.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1165,7 +1165,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0080.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1176,7 +1176,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0081.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1187,7 +1187,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0082.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1198,7 +1198,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0083.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1209,7 +1209,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0084.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1225,7 +1225,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0085.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1236,7 +1236,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0086.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1247,7 +1247,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0087.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1268,7 +1268,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0088.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1284,7 +1284,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0089.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1295,7 +1295,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0090.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1306,7 +1306,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0091.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1317,7 +1317,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0092.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1333,7 +1333,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0093.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1349,7 +1349,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0094.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1365,7 +1365,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0095.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1381,7 +1381,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0096.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1397,7 +1397,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0097.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -1413,7 +1413,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0098.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1424,7 +1424,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0099.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1440,7 +1440,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0100.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -1456,7 +1456,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0101.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1467,7 +1467,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0102.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1478,7 +1478,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0103.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1489,7 +1489,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0104.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1500,7 +1500,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0105.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1516,7 +1516,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0106.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1527,7 +1527,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0107.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1538,7 +1538,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0108.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1554,7 +1554,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0109.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -1570,7 +1570,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0110.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -1586,7 +1586,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0111.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1597,7 +1597,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0112.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -1613,7 +1613,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0113.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1624,7 +1624,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0114.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1640,7 +1640,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0115.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1656,7 +1656,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0116.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1667,7 +1667,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0117.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1678,7 +1678,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0118.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1699,7 +1699,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0119.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1715,7 +1715,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0120.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1731,7 +1731,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0121.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1752,7 +1752,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0122.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1763,7 +1763,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0123.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1779,7 +1779,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0124.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1790,7 +1790,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0125.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1801,7 +1801,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0126.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -1817,7 +1817,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0127.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1838,7 +1838,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0128.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1854,7 +1854,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0129.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1865,7 +1865,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0130.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -1881,7 +1881,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0131.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1902,7 +1902,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0132.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1913,7 +1913,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0133.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1924,7 +1924,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0134.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1935,7 +1935,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0135.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1946,7 +1946,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0136.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -1962,7 +1962,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0137.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1973,7 +1973,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0138.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -1984,7 +1984,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0139.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2000,7 +2000,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0140.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2016,7 +2016,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0141.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2027,7 +2027,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0142.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2043,7 +2043,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0143.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2059,7 +2059,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0144.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2070,7 +2070,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0145.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2086,7 +2086,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0146.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2102,7 +2102,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0147.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2113,7 +2113,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0148.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2124,7 +2124,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0149.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2140,7 +2140,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0150.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2151,7 +2151,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0151.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2162,7 +2162,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0152.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2173,7 +2173,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0153.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2189,7 +2189,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0154.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2200,7 +2200,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0155.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2211,7 +2211,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0156.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2227,7 +2227,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0157.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2243,7 +2243,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0158.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2264,7 +2264,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0159.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2275,7 +2275,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0160.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2291,7 +2291,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0161.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2307,7 +2307,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0162.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2323,7 +2323,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0163.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2334,7 +2334,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0164.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2350,7 +2350,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0165.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2361,7 +2361,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0166.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2372,7 +2372,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0167.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2388,7 +2388,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0168.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2399,7 +2399,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0169.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2415,7 +2415,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0170.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2431,7 +2431,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0171.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2442,7 +2442,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0172.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2453,7 +2453,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0173.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2469,7 +2469,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0174.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2480,7 +2480,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0175.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2496,7 +2496,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0176.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2517,7 +2517,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0177.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2533,7 +2533,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0178.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2549,7 +2549,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0179.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2560,7 +2560,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0180.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2571,7 +2571,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0181.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2587,7 +2587,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0182.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2598,7 +2598,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0183.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2609,7 +2609,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0184.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2625,7 +2625,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0185.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2636,7 +2636,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0186.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2652,7 +2652,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0187.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2673,7 +2673,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0188.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2689,7 +2689,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0189.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2705,7 +2705,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0190.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2716,7 +2716,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0191.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2727,7 +2727,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0192.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2748,7 +2748,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0193.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2759,7 +2759,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0194.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2770,7 +2770,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0195.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2786,7 +2786,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0196.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2802,7 +2802,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0197.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2818,7 +2818,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0198.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2834,7 +2834,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0199.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2845,7 +2845,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0200.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2866,7 +2866,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0201.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2877,7 +2877,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0202.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -2893,7 +2893,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0203.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2909,7 +2909,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0204.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2925,7 +2925,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0205.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -2936,7 +2936,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0206.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -2952,7 +2952,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0207.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -2968,7 +2968,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0208.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2979,7 +2979,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0209.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2990,7 +2990,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0210.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3006,7 +3006,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0211.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3027,7 +3027,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0212.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3043,7 +3043,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0213.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3054,7 +3054,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0214.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3070,7 +3070,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0215.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3086,7 +3086,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0216.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3107,7 +3107,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0217.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3123,7 +3123,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0218.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -3139,7 +3139,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0219.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3155,7 +3155,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0220.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -3171,7 +3171,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0221.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3187,7 +3187,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0222.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3203,7 +3203,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0223.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3214,7 +3214,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0224.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3225,7 +3225,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0225.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3241,7 +3241,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0226.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3252,7 +3252,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0227.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3263,7 +3263,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0228.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3274,7 +3274,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0229.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3285,7 +3285,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0230.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3301,7 +3301,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0231.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3322,7 +3322,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0232.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3343,7 +3343,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0233.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3354,7 +3354,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0234.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3365,7 +3365,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0235.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -3381,7 +3381,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0236.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3397,7 +3397,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0237.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3413,7 +3413,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0238.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3429,7 +3429,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0239.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3440,7 +3440,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0240.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3456,7 +3456,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0241.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3467,7 +3467,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0242.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -3483,7 +3483,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0243.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3494,7 +3494,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0244.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3505,7 +3505,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0245.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3516,7 +3516,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0246.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3532,7 +3532,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0247.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3543,7 +3543,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0248.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3554,7 +3554,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0249.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3565,7 +3565,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0250.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3581,7 +3581,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0251.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3602,7 +3602,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0252.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3613,7 +3613,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0253.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3624,7 +3624,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0254.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3640,7 +3640,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0255.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3656,7 +3656,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0256.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3672,7 +3672,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0257.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3693,7 +3693,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0258.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -3709,7 +3709,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0259.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3720,7 +3720,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0260.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -3736,7 +3736,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0261.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -3747,7 +3747,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0262.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3763,7 +3763,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0263.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -3779,7 +3779,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0264.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3800,7 +3800,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0265.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3821,7 +3821,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0266.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3832,7 +3832,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0267.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3848,7 +3848,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0268.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3864,7 +3864,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0269.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3885,7 +3885,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0270.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3901,7 +3901,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0271.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3912,7 +3912,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0272.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3923,7 +3923,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0273.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3944,7 +3944,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0274.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3965,7 +3965,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0275.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3981,7 +3981,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0276.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -3997,7 +3997,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0277.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4013,7 +4013,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0278.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4029,7 +4029,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0279.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -4045,7 +4045,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0280.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4056,7 +4056,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0281.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4077,7 +4077,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0282.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -4093,7 +4093,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0283.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4109,7 +4109,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0284.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4120,7 +4120,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0285.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4136,7 +4136,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0286.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4157,7 +4157,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0287.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4173,7 +4173,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0288.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4184,7 +4184,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0289.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -4200,7 +4200,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0290.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4216,7 +4216,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0291.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4227,7 +4227,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0292.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -4243,7 +4243,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0293.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4254,7 +4254,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0294.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4270,7 +4270,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0295.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4286,7 +4286,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0296.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4302,7 +4302,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0297.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4313,7 +4313,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0298.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4329,7 +4329,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0299.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4345,7 +4345,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0300.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4361,7 +4361,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0301.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4372,7 +4372,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0302.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4388,7 +4388,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0303.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4399,7 +4399,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0304.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4410,7 +4410,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0305.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4421,7 +4421,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0306.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4432,7 +4432,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0307.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -4448,7 +4448,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0308.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4459,7 +4459,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0309.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4475,7 +4475,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0310.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4491,7 +4491,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0311.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4502,7 +4502,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0312.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4513,7 +4513,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0313.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4524,7 +4524,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0314.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4535,7 +4535,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0315.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4556,7 +4556,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0316.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4567,7 +4567,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0317.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4583,7 +4583,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0318.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4599,7 +4599,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0319.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4610,7 +4610,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0320.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4621,7 +4621,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0321.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4632,7 +4632,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0322.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4648,7 +4648,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0323.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4664,7 +4664,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0324.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4680,7 +4680,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0325.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4701,7 +4701,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0326.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4712,7 +4712,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0327.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -4728,7 +4728,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0328.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4739,7 +4739,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0329.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4750,7 +4750,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0330.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4766,7 +4766,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0331.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4782,7 +4782,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0332.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4793,7 +4793,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0333.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4804,7 +4804,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0334.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4815,7 +4815,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0335.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4826,7 +4826,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0336.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4837,7 +4837,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0337.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4853,7 +4853,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0338.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4864,7 +4864,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0339.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4880,7 +4880,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0340.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4896,7 +4896,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0341.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4912,7 +4912,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0342.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4923,7 +4923,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0343.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -4939,7 +4939,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0344.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4950,7 +4950,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0345.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -4961,7 +4961,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0346.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -4972,7 +4972,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0347.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -4988,7 +4988,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0348.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -5004,7 +5004,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0349.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -5020,7 +5020,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0350.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5031,7 +5031,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0351.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5042,7 +5042,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0352.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -5058,7 +5058,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0353.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5074,7 +5074,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0354.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5095,7 +5095,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0355.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5106,7 +5106,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0356.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5117,7 +5117,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0357.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5128,7 +5128,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0358.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5139,7 +5139,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0359.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5160,7 +5160,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0360.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5171,7 +5171,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0361.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5182,7 +5182,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0362.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5193,7 +5193,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0363.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -5209,7 +5209,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0364.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5220,7 +5220,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0365.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5231,7 +5231,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0366.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5242,7 +5242,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0367.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5253,7 +5253,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0368.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -5269,7 +5269,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0369.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5280,7 +5280,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0370.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5291,7 +5291,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0371.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -5307,7 +5307,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0372.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5318,7 +5318,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0373.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -5334,7 +5334,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0374.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5345,7 +5345,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0375.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5356,7 +5356,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0376.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5372,7 +5372,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0377.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -5388,7 +5388,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0378.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5399,7 +5399,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0379.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5410,7 +5410,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0380.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5421,7 +5421,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0381.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5442,7 +5442,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0382.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5453,7 +5453,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0383.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5469,7 +5469,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0384.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -5485,7 +5485,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0385.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5496,7 +5496,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0386.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5507,7 +5507,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0387.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5528,7 +5528,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0388.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5544,7 +5544,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0389.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -5560,7 +5560,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0390.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5576,7 +5576,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0391.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5592,7 +5592,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0392.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -5608,7 +5608,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0393.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5619,7 +5619,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0394.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -5630,7 +5630,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0395.webp",
 		description:
-			"A legendary mountain that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5646,7 +5646,7 @@ export const locations = [
 		rank: "D",
 		image: "/generated/compendium/locations/location-0396.webp",
 		description:
-			"A legendary temple that exists in the shadow realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -5662,7 +5662,7 @@ export const locations = [
 		rank: "C",
 		image: "/generated/compendium/locations/location-0397.webp",
 		description:
-			"A legendary dungeon that exists in the shadow realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5683,7 +5683,7 @@ export const locations = [
 		rank: "B",
 		image: "/generated/compendium/locations/location-0398.webp",
 		description:
-			"A legendary castle that exists in the shadow realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -5699,7 +5699,7 @@ export const locations = [
 		rank: "A",
 		image: "/generated/compendium/locations/location-0399.webp",
 		description:
-			"A legendary city that exists in the shadow realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow Demons", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -5710,7 +5710,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0400.webp",
 		description:
-			"A legendary forest that exists in the shadow realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow Demons",
 			"Void Beasts",
@@ -5770,7 +5770,7 @@ export const locations = [
 		rank: "S",
 		image: "/generated/compendium/locations/location-0403.webp",
 		description:
-			"The throne room of the supreme abyssal deity who rules over all shadow realms. This S rank location is the seat of ultimate power.",
+			"The throne room of the supreme abyssal deity who rules over all abyssal realms. This S rank location is the seat of ultimate power.",
 		encounters: [
 			"Supreme Abyssal Deity",
 			"Eternal Shadow Council",

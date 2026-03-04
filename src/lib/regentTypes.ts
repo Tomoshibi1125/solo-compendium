@@ -37,7 +37,7 @@ export interface RegentPath {
 	abilities: string[];
 	features: Feature[];
 	spells: Spell[];
-	/** Monarch compendium entry ID in monarchs.ts */
+	/** Regent compendium entry ID in monarchs.ts */
 	compendiumId?: string;
 	requirements: {
 		/** @deprecated Regents are quest/DM-gated — level is advisory only */

@@ -135,12 +135,12 @@ const THEME_SWATCH_CLASSES: Partial<
 		bar: "bg-muted-foreground/40",
 	},
 	"dragon-monarch": { icon: "text-pink-400", bar: "bg-pink-400/40" },
-	"regent-monarch": { icon: "text-monarch-gold", bar: "bg-monarch-gold/40" },
+	"regent-monarch": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 	"supreme-deity": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
 	"gate-portal": { icon: "text-red-400", bar: "bg-red-400/40" },
 	"system-interface": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
 	"arise-violet": { icon: "text-arise-violet", bar: "bg-arise-violet/40" },
-	"monarch-gold": { icon: "text-monarch-gold", bar: "bg-monarch-gold/40" },
+	"monarch-gold": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 };
 
 const Dice3DRoller = lazy(() =>
@@ -916,7 +916,7 @@ const DiceRoller = () => {
 								<div className="text-center py-6 relative z-10">
 									<div className="relative inline-block">
 										<div className="absolute inset-0 bg-gradient-to-r from-shadow-blue/30 via-shadow-purple/30 to-arise-violet/30 blur-2xl rounded-full animate-pulse" />
-										<div className="text-7xl font-arise font-black gradient-text-monarch text-glow-gold mb-3 drop-shadow-lg relative">
+										<div className="text-7xl font-arise font-black gradient-text-regent text-glow-gold mb-3 drop-shadow-lg relative">
 											{lastRoll.total}
 										</div>
 									</div>

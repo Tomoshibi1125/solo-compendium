@@ -31,7 +31,7 @@ const typeLabels: Record<string, string> = {
 	shield: "Shield",
 	gear: "Adventuring Gear",
 	tools: "Tools",
-	hunter_gear: "Ascendant Gear",
+	ascendant_gear: "Ascendant Gear",
 };
 
 export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
