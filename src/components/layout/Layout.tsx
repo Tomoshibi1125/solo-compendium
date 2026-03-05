@@ -11,7 +11,6 @@ import { useAccessibility } from "@/hooks/useAccessibility";
 import { usePWA } from "@/hooks/usePWA";
 import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
-import { Header } from "./Header";
 
 interface LayoutProps {
 	children?: React.ReactNode;
@@ -110,20 +109,6 @@ export function Layout({ children, className }: LayoutProps) {
 			<a href="#main-content" className="skip-link">
 				Skip to content
 			</a>
-			<Header
-				user={
-					user
-						? {
-							email: user.email,
-							name: user.displayName ?? user.email?.split("@")[0] ?? "User",
-							avatar: user.avatar,
-						}
-						: undefined
-				}
-				onLogout={() => {
-					void signOut();
-				}}
-			/>
 			<main
 				id="main-content"
 				tabIndex={-1}

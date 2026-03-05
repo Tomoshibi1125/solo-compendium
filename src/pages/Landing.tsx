@@ -68,45 +68,7 @@ const Landing = () => {
 				<div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background" />
 			</div>
 
-			<header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-				<div className="flex items-center gap-3">
-					<OptimizedImage
-						src="/ui-art/shadow-soldier-emblem.webp"
-						alt="Umbral Legionnaire Emblem"
-						className="h-10 w-10 rounded-full border border-gate-s/60 shadow-lg shadow-gate-s/40"
-						size="thumbnail"
-					/>
-					<div className="leading-tight">
-						<SystemText
-							variant="system"
-							size="xs"
-							className="uppercase tracking-[0.2em] opacity-80"
-						>
-							System Ascendant
-						</SystemText>
-						<SystemText variant="sovereign" size="lg" dimensional>
-							The System
-						</SystemText>
-					</div>
-				</div>
-				<div className="flex items-center gap-3">
-					<Link to="/login">
-						<Button
-							variant="gate-e"
-							className="border-gate-e/60 text-gate-e hover:border-gate-e"
-						>
-							Login
-						</Button>
-					</Link>
-					<Link to="/compendium">
-						<Button variant="arise" className="font-semibold">
-							Browse Compendium
-						</Button>
-					</Link>
-				</div>
-			</header>
-
-			<main className="relative z-10">
+			<main className="relative z-10 pt-16">
 				<section className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-10 lg:flex-row lg:items-center">
 					<div className="flex-1">
 						<div className="mb-6">

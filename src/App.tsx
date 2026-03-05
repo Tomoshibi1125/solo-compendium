@@ -9,6 +9,7 @@ import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { NetworkErrorBoundary } from "@/components/NetworkErrorHandling";
+import { NavBar } from "@/components/navigation/NavBar";
 import PerformancePreload from "@/components/PerformancePreload";
 import { OfflineStatus } from "@/components/pwa/PWAComponents";
 import { RouteEffects } from "@/components/RouteEffects";
@@ -220,7 +221,7 @@ const AppContent = () => {
 					path="/"
 					element={
 						<Suspense fallback={<PageLoader />}>
-							{isE2E ? <Navigate to="/compendium" replace /> : <Login />}
+							{isE2E ? <Navigate to="/compendium" replace /> : <Landing />}
 						</Suspense>
 					}
 				/>
@@ -727,8 +728,8 @@ const AppContent = () => {
 const App = () => {
 	const routerBase = normalizeBasePath(
 		getRuntimeEnvValue("VITE_ROUTER_BASE") ||
-			getRuntimeEnvValue("VITE_BASE_PATH") ||
-			import.meta.env.BASE_URL,
+		getRuntimeEnvValue("VITE_BASE_PATH") ||
+		import.meta.env.BASE_URL,
 	);
 	const { isOnline, queueLength } = useOfflineSyncStatus();
 
@@ -751,6 +752,7 @@ const App = () => {
 									<Toaster />
 									<Sonner />
 									<BrowserRouter basename={routerBase}>
+										<NavBar />
 										<RouteEffects />
 										<PageViewTracker />
 										<AppContent />
