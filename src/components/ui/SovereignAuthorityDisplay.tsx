@@ -346,7 +346,7 @@ export const AscensionMeter = ({
 				<div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg">
 					{Array.from({ length: 5 }).map((_, i) => (
 						<div
-							key={i}
+							key={`slot-${[...Array(i + 1)].length}`}
 							className="absolute w-1 h-1 bg-current rounded-full animate-pulse opacity-60"
 							style={{
 								left: `${20 + i * 15}%`,

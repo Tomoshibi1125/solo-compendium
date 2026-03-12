@@ -71,9 +71,9 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 			{effects.length > 0 && (
 				<SystemWindow title="EFFECTS">
 					<ul className="space-y-3">
-						{effects.map((effect, i) => (
+						{effects.map((effect, _i) => (
 							<li
-								key={i}
+								key={effect}
 								className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4"
 							>
 								<span className="text-foreground">
@@ -88,9 +88,9 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 			{data.condition_removal && data.condition_removal.length > 0 && (
 				<SystemWindow title="REMOVAL">
 					<ul className="space-y-3">
-						{data.condition_removal.map((step, i) => (
+						{data.condition_removal.map((step, _i) => (
 							<li
-								key={i}
+								key={step}
 								className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4"
 							>
 								<span className="text-foreground">

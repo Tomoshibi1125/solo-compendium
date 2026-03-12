@@ -4,8 +4,8 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
-type VTTToken = Database["public"]["Tables"]["vtt_tokens"]["Row"];
-type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+export type VTTToken = Database["public"]["Tables"]["vtt_tokens"]["Row"];
+type _Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
 
 interface VTTAsset {
 	id: string;
@@ -19,7 +19,7 @@ interface VTTAsset {
 	uploadedAt?: string;
 }
 
-interface VTTScene {
+export interface VTTScene {
 	id: string;
 	name: string;
 	backgroundImage?: string;
@@ -30,7 +30,7 @@ interface VTTScene {
 		type: "text" | "drawing";
 		content: string;
 		position: { x: number; y: number };
-		style?: any;
+		style?: Record<string, unknown>;
 	}>;
 	settings?: {
 		gridSize: number;
@@ -190,7 +190,7 @@ export function useVTTManager() {
 				const filePath = `vtt/${assetType}s/${campaignId}/${fileName}`;
 
 				// Upload to Supabase Storage
-				const { data, error } = await supabase.storage
+				const { error } = await supabase.storage
 					.from("compendium-images")
 					.upload(filePath, file);
 
@@ -274,16 +274,16 @@ export function useVTTManager() {
 					return [];
 				}
 
-				return data.map((token: any) => ({
+				return data.map((token: VTTToken) => ({
 					id: token.id,
 					name: token.name,
-					type: "token", // Default to token type since type field doesn't exist
+					type: "token" as const, // Default to token type since type field doesn't exist
 					imageUrl: token.image_url || "",
 					thumbnailUrl: token.image_url || "",
 					campaignId: token.session_id,
 					isCustom: true,
 					uploadedBy: token.created_by,
-					uploadedAt: token.created_at,
+					uploadedAt: token.created_at ?? undefined,
 				}));
 			} catch (error) {
 				console.error("Error loading VTT assets:", error);

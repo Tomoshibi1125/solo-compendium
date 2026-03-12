@@ -115,7 +115,7 @@ const _supabaseAny = supabase as unknown as {
 const isMissingAddCharacterRpc = (error: unknown): boolean => {
 	if (!error || typeof error !== "object") return false;
 	const message = String(
-		(error as { message?: unknown }).message ?? "",
+		(error as { message?: string }).message ?? "",
 	).toLowerCase();
 	return (
 		message.includes("add_player_character_to_campaign") &&

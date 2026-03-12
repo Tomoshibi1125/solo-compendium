@@ -54,7 +54,6 @@ import {
 	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
-import { useAuth } from "@/lib/auth/authContext";
 import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 
@@ -208,7 +207,6 @@ const applyRollsToDice3D = (
 };
 
 const DiceRoller = () => {
-	const { user } = useAuth();
 	const { rollInCampaign, getCampaignsForRolling } = useCampaignDice();
 	const recordRoll = useRecordRoll();
 	const [selectedDice, setSelectedDice] = useState<
@@ -219,7 +217,7 @@ const DiceRoller = () => {
 	const [campaignId, setCampaignId] = useState<string | null>(null);
 
 	// Auto-select preferred campaign if none is explicitly selected
-	const { campaignId: preferredCampaignId, setPreferredCampaignId } =
+	const { campaignId: preferredCampaignId } =
 		usePreferredCampaignSelection("dice-roller");
 	useEffect(() => {
 		if (preferredCampaignId && campaignId === null) {
@@ -336,7 +334,7 @@ const DiceRoller = () => {
 					roll_type: newRoll.type ?? "normal",
 					rolls: newRoll.rolls,
 					context: "dice",
-					modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
+					modifiers: newRoll.modifier ? { modifier: newRoll.modifier } as Record<string, import("@/integrations/supabase/types").Json> : undefined,
 					character_id: undefined,
 				});
 			} else {
@@ -347,7 +345,7 @@ const DiceRoller = () => {
 						roll_type: newRoll.type ?? "normal",
 						rolls: newRoll.rolls,
 						context: "dice",
-						modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
+						modifiers: newRoll.modifier ? { modifier: newRoll.modifier } as Record<string, import("@/integrations/supabase/types").Json> : undefined,
 						campaign_id: campaignId || undefined,
 						character_id: null,
 					},
@@ -588,7 +586,12 @@ const DiceRoller = () => {
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="none">Local Only</SelectItem>
-											{campaigns.map((c: any) => (
+											{campaigns
+												.filter(
+													(c): c is { id: string; name: string } =>
+														c.id !== null && c.name !== null,
+												)
+												.map((c) => (
 												<SelectItem key={c.id} value={c.id}>
 													{c.name}
 												</SelectItem>
@@ -712,6 +715,7 @@ const DiceRoller = () => {
 											const swatch = THEME_SWATCH_CLASSES[key as DiceTheme];
 											return (
 												<button
+													type="button"
 													key={key}
 													onClick={() => setDiceTheme(key as DiceTheme)}
 													className={cn(
@@ -794,6 +798,7 @@ const DiceRoller = () => {
 												)}
 												{selected && (
 													<button
+														type="button"
 														onClick={(e) => {
 															e.stopPropagation();
 															removeDie(sides);
@@ -924,21 +929,23 @@ const DiceRoller = () => {
 										{lastRoll.dice}
 									</SystemText>
 									<div className="flex flex-wrap justify-center gap-2 mt-4">
-										{lastRoll.rolls.map((roll, idx) => (
-											<span
-												key={idx}
-												className={cn(
-													"px-3 py-1 rounded-lg text-sm font-display font-bold border",
-													roll === 20
-														? "bg-green-500/20 text-green-400 border-green-500/40 shadow-[0_0_10px_hsl(142_71%_45%/0.3)]"
-														: roll === 1
-															? "bg-red-500/20 text-red-400 border-red-500/40 shadow-[0_0_10px_hsl(0_84%_60%/0.3)]"
-															: "bg-primary/20 text-primary border-primary/40",
-												)}
-											>
-												{roll}
-											</span>
-										))}
+										{lastRoll.rolls
+											.map((roll, i) => ({ roll, i }))
+											.map(({ roll, i }) => (
+												<span
+													key={`roll-${i}`}
+													className={cn(
+														"px-3 py-1 rounded-lg text-sm font-display font-bold border",
+														roll === 20
+															? "bg-green-500/20 text-green-400 border-green-500/40 shadow-[0_0_10px_hsl(142_71%_45%/0.3)]"
+															: roll === 1
+																? "bg-red-500/20 text-red-400 border-red-500/40 shadow-[0_0_10px_hsl(0_84%_60%/0.3)]"
+																: "bg-primary/20 text-primary border-primary/40",
+													)}
+												>
+													{roll}
+												</span>
+											))}
 										{lastRoll.modifier !== 0 && (
 											<span className="px-3 py-1 rounded-lg text-sm font-display font-bold bg-muted/50 text-muted-foreground border border-border">
 												{lastRoll.modifier >= 0 ? "+" : ""}

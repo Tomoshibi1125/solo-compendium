@@ -162,7 +162,7 @@ export function toGeminiEffectRefs(
 
 	return state.modifiers.map((mod) => ({
 		sourceType: "gemini" as const,
-		sourceId: state.sovereignId!,
+		sourceId: state.sovereignId || "",
 		effectName: mod.source,
 		modifiers: {
 			stat: mod.stat,

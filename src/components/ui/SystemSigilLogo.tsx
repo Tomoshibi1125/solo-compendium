@@ -54,6 +54,7 @@ export function SystemSigilLogo({
 				className="w-full h-full relative z-10"
 				xmlns="http://www.w3.org/2000/svg"
 			>
+				<title>System Sigil</title>
 				{/* Gradient Definitions - Prime Architect Palette */}
 				<defs>
 					<linearGradient

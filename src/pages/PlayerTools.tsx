@@ -14,7 +14,7 @@ import {
 	Heart,
 	HelpCircle,
 	List,
-	Map,
+	Map as MapIcon,
 	Search,
 	Settings,
 	Shield,
@@ -268,7 +268,10 @@ const PlayerTools = () => {
 						<div className="h-8 bg-muted rounded w-1/3"></div>
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 							{[...Array(6)].map((_, i) => (
-								<div key={i} className="h-48 bg-muted rounded-lg"></div>
+								<div
+									key={`slot-${[...Array(i + 1)].length}`}
+									className="h-48 bg-muted rounded-lg"
+								></div>
 							))}
 						</div>
 					</div>
@@ -561,8 +564,8 @@ const PlayerTools = () => {
 									className="justify-start"
 									onClick={() => navigate("/dm-tools/vtt")}
 								>
-									<Map className="w-4 h-4 mr-2" />
-									View Map
+										<MapIcon className="w-4 h-4 mr-2" />
+										VTT Map
 								</Button>
 							</div>
 						</CardContent>

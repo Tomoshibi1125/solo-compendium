@@ -17,7 +17,6 @@ interface LongRestDialogProps {
 	triggerButton?: React.ReactNode;
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
-	characterId?: string;
 }
 
 export function LongRestDialog({
@@ -25,7 +24,6 @@ export function LongRestDialog({
 	triggerButton,
 	open: controlledOpen,
 	onOpenChange,
-	characterId,
 }: LongRestDialogProps) {
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
 	const isControlled = controlledOpen !== undefined;

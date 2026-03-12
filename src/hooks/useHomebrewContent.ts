@@ -202,8 +202,8 @@ export const useSaveHomebrewContent = () => {
 						.from("homebrew_content")
 						.update({
 							...payload,
-							data: payload.data as any,
-						} as any as Database["public"]["Tables"]["homebrew_content"]["Update"])
+							data: payload.data as Record<string, unknown>,
+						} as unknown as Database["public"]["Tables"]["homebrew_content"]["Update"])
 						.eq("id", input.id)
 						.select("*")
 						.single();
@@ -221,14 +221,14 @@ export const useSaveHomebrewContent = () => {
 						...payload,
 						user_id: user.id,
 						status: "draft",
-					} as any as Database["public"]["Tables"]["homebrew_content"]["Insert"])
+					} as unknown as Database["public"]["Tables"]["homebrew_content"]["Insert"])
 					.select("*")
 					.single();
 
 				if (error) throw error;
 				return {
 					queued: false,
-					record: data as any as HomebrewRecord,
+					record: data as unknown as HomebrewRecord,
 				};
 			} catch (error) {
 				if (!isOfflineError(error)) {
@@ -352,7 +352,7 @@ export const usePublishedHomebrew = (
 				.eq("user_id", userId)
 				.eq("status", "published")
 				.in("content_type", types);
-			if (ownData) results.push(...(ownData as any as HomebrewRecord[]));
+			if (ownData) results.push(...(ownData as unknown as HomebrewRecord[]));
 
 			// Public published (exclude own to avoid duplicates)
 			const { data: publicData } = await supabase
@@ -362,7 +362,7 @@ export const usePublishedHomebrew = (
 				.eq("visibility_scope", "public")
 				.neq("user_id", userId)
 				.in("content_type", types);
-			if (publicData) results.push(...(publicData as any as HomebrewRecord[]));
+			if (publicData) results.push(...(publicData as unknown as HomebrewRecord[]));
 
 			// Campaign-scoped published
 			if (campaignId) {
@@ -374,8 +374,7 @@ export const usePublishedHomebrew = (
 					.eq("campaign_id", campaignId)
 					.neq("user_id", userId)
 					.in("content_type", types);
-				if (campaignData)
-					results.push(...(campaignData as any as HomebrewRecord[]));
+					results.push(...(campaignData as unknown as HomebrewRecord[]));
 			}
 
 			// Deduplicate by id
@@ -415,9 +414,9 @@ export const useSetHomebrewStatus = () => {
 				const { error } = await supabase.rpc("set_homebrew_content_status", {
 					p_homebrew_id: id,
 					p_status: status,
-					p_visibility_scope: visibilityScope ?? null,
-					p_campaign_id: campaignId ?? null,
-				} as any);
+					p_visibility_scope: visibilityScope ?? undefined,
+					p_campaign_id: campaignId ?? undefined,
+				});
 
 				if (error) throw error;
 
@@ -431,7 +430,7 @@ export const useSetHomebrewStatus = () => {
 
 				return {
 					queued: false,
-					record: data as any as HomebrewRecord,
+					record: data as unknown as HomebrewRecord,
 				};
 			} catch (error) {
 				if (!isOfflineError(error)) {
@@ -490,7 +489,7 @@ export function useHomebrewCharacterIntegration() {
 			const allHomebrew = queryClient.getQueryData([
 				"homebrew",
 				"list",
-			]) as Record<string, any>;
+			]) as { pages?: HomebrewRecord[][] } | undefined;
 			const homebrewRecords = allHomebrew?.pages?.flat() || [];
 
 			const transformToCharacterOption = (

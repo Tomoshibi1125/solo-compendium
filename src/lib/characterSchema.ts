@@ -64,9 +64,7 @@ export interface CharacterImportValidation {
 	data: CharacterExportSchema | null;
 }
 
-export function validateCharacterImport(
-	json: unknown,
-): CharacterImportValidation {
+export function validateCharacterImport(json: unknown): CharacterImportValidation {
 	const errors: string[] = [];
 
 	if (typeof json !== "object" || json === null) {

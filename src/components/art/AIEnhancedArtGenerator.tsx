@@ -524,9 +524,9 @@ export function AIEnhancedArtGenerator({
 								<div className="space-y-2">
 									<p className="text-sm font-medium">Style Variations</p>
 									<div className="space-y-2">
-										{styleSuggestions.map((style, index) => (
+										{styleSuggestions.map((style, _index) => (
 											<Badge
-												key={index}
+												key={style}
 												variant={
 													selectedStyle === style ? "default" : "outline"
 												}

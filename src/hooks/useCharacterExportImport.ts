@@ -4,10 +4,10 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
-type Character = Database["public"]["Tables"]["characters"]["Row"];
-type CharacterUpdate = Database["public"]["Tables"]["characters"]["Update"];
+type _Character = Database["public"]["Tables"]["characters"]["Row"];
+type _CharacterUpdate = Database["public"]["Tables"]["characters"]["Update"];
 
-interface ExportImportOptions {
+interface _ExportImportOptions {
 	format: "json" | "pdf";
 	includeHistory?: boolean;
 	includeNotes?: boolean;
@@ -15,6 +15,7 @@ interface ExportImportOptions {
 
 export function useCharacterExport() {
 	const { toast } = useToast();
+
 	const { user } = useAuth();
 
 	const exportCharacterJson = useCallback(
@@ -26,7 +27,7 @@ export function useCharacterExport() {
 
 				// Fetch complete character data
 				const { data: character, error: charError } = await supabase
-					.from("user_characters")
+					.from("characters")
 					.select("*")
 					.eq("id", characterId)
 					.single();
@@ -53,7 +54,7 @@ export function useCharacterExport() {
 					]);
 
 				const exportData = {
-					character: character as Record<string, any>, // Type cast to handle field differences
+					character: character as Record<string, unknown>, // Type cast to handle field differences
 					abilities: abilitiesResult.data || [],
 					equipment: equipmentResult.data || [],
 					features: featuresResult.data || [],
@@ -104,7 +105,7 @@ export function useCharacterExport() {
 				if (!jsonData) return null;
 
 				const { character } = jsonData;
-				const char = character as Record<string, any>; // Type cast to access fields
+				const char = character as Record<string, unknown>; // Type cast to access fields
 
 				// Create formatted text content
 				const content = `
@@ -117,12 +118,12 @@ Path: ${char.path || "None"}
 
 ABILITY SCORES
 ==============
-Strength: ${char.strength || 10} (${Math.floor(((char.strength || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((char.strength || 10) - 10) / 2)})
-Dexterity: ${char.dexterity || 10} (${Math.floor(((char.dexterity || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((char.dexterity || 10) - 10) / 2)})
-Constitution: ${char.constitution || 10} (${Math.floor(((char.constitution || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((char.constitution || 10) - 10) / 2)})
-Intelligence: ${char.intelligence || 10} (${Math.floor(((char.intelligence || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((char.intelligence || 10) - 10) / 2)})
-Wisdom: ${char.wisdom || 10} (${Math.floor(((char.wisdom || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((char.wisdom || 10) - 10) / 2)})
-Charisma: ${char.charisma || 10} (${Math.floor(((char.charisma || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((char.charisma || 10) - 10) / 2)})
+Strength: ${Number(char.strength) || 10} (${Math.floor(((Number(char.strength) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.strength) || 10) - 10) / 2)})
+Dexterity: ${Number(char.dexterity) || 10} (${Math.floor(((Number(char.dexterity) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.dexterity) || 10) - 10) / 2)})
+Constitution: ${Number(char.constitution) || 10} (${Math.floor(((Number(char.constitution) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.constitution) || 10) - 10) / 2)})
+Intelligence: ${Number(char.intelligence) || 10} (${Math.floor(((Number(char.intelligence) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.intelligence) || 10) - 10) / 2)})
+Wisdom: ${Number(char.wisdom) || 10} (${Math.floor(((Number(char.wisdom) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.wisdom) || 10) - 10) / 2)})
+Charisma: ${Number(char.charisma) || 10} (${Math.floor(((Number(char.charisma) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.charisma) || 10) - 10) / 2)})
 
 COMBAT STATS
 ============
@@ -133,12 +134,12 @@ Speed: ${char.speed || 30}
 
 SAVING THROWS
 =============
-STR: ${char.saving_throw_proficiencies?.includes("strength") ? "Proficient" : "Not proficient"}
-DEX: ${char.saving_throw_proficiencies?.includes("dexterity") ? "Proficient" : "Not proficient"}
-CON: ${char.saving_throw_proficiencies?.includes("constitution") ? "Proficient" : "Not proficient"}
-INT: ${char.saving_throw_proficiencies?.includes("intelligence") ? "Proficient" : "Not proficient"}
-WIS: ${char.saving_throw_proficiencies?.includes("wisdom") ? "Proficient" : "Not proficient"}
-CHA: ${char.saving_throw_proficiencies?.includes("charisma") ? "Proficient" : "Not proficient"}
+STR: ${(char.saving_throw_proficiencies as string[])?.includes("strength") ? "Proficient" : "Not proficient"}
+DEX: ${(char.saving_throw_proficiencies as string[])?.includes("dexterity") ? "Proficient" : "Not proficient"}
+CON: ${(char.saving_throw_proficiencies as string[])?.includes("constitution") ? "Proficient" : "Not proficient"}
+INT: ${(char.saving_throw_proficiencies as string[])?.includes("intelligence") ? "Proficient" : "Not proficient"}
+WIS: ${(char.saving_throw_proficiencies as string[])?.includes("wisdom") ? "Proficient" : "Not proficient"}
+CHA: ${(char.saving_throw_proficiencies as string[])?.includes("charisma") ? "Proficient" : "Not proficient"}
 
 Generated: ${new Date().toLocaleDateString()}
       `.trim();
@@ -193,7 +194,7 @@ Generated: ${new Date().toLocaleDateString()}
 
 				// Create new character from import
 				const { character: charData } = data;
-				const newCharacter: any = {
+				const newCharacter: Record<string, unknown> = {
 					user_id: user.id,
 					name: `${charData.name} (Imported)`,
 					level: charData.level || 1,
@@ -213,8 +214,8 @@ Generated: ${new Date().toLocaleDateString()}
 				};
 
 				const { data: createdCharacter, error: createError } = await supabase
-					.from("user_characters")
-					.insert(newCharacter)
+					.from("characters")
+					.insert(newCharacter as Database["public"]["Tables"]["characters"]["Insert"])
 					.select()
 					.single();
 
@@ -224,35 +225,35 @@ Generated: ${new Date().toLocaleDateString()}
 
 				// Import related data if present
 				if (data.abilities && data.abilities.length > 0) {
-					const abilities = data.abilities.map((ability: any) => ({
+					const abilities = data.abilities.map((ability: Record<string, unknown>) => ({
 						...ability,
 						character_id: createdCharacter.id,
 						id: undefined, // Let DB generate new ID
-					}));
-					await supabase.from("character_abilities").insert(abilities);
+					})) as Database["public"]["Tables"]["character_abilities"]["Insert"][];
+					await supabase.from("character_abilities").insert(abilities).throwOnError();
 				}
 
 				if (data.equipment && data.equipment.length > 0) {
-					const equipment = data.equipment.map((item: any) => ({
+					const equipment = data.equipment.map((item: Record<string, unknown>) => ({
 						...item,
 						character_id: createdCharacter.id,
 						id: undefined,
-					}));
-					await supabase.from("character_equipment").insert(equipment);
+					})) as Database["public"]["Tables"]["character_equipment"]["Insert"][];
+					await supabase.from("character_equipment").insert(equipment).throwOnError();
 				}
 
 				if (data.features && data.features.length > 0) {
-					const features = data.features.map((feature: any) => ({
+					const features = data.features.map((feature: Record<string, unknown>) => ({
 						...feature,
 						character_id: createdCharacter.id,
 						id: undefined,
-					}));
-					await supabase.from("character_features").insert(features);
+					})) as Database["public"]["Tables"]["character_features"]["Insert"][];
+					await supabase.from("character_features").insert(features).throwOnError();
 				}
 
 				// Skip spells import for now as table structure may differ
 				// if (data.spells && data.spells.length > 0) {
-				//   const spells = data.spells.map((spell: any) => ({
+				//   const spells = data.spells.map((spell: Record<string, unknown>) => ({
 				//     ...spell,
 				//     character_id: createdCharacter.id,
 				//     id: undefined
@@ -310,7 +311,7 @@ export function useCharacterImport() {
 
 				// Create new character from import
 				const { character: charData } = data;
-				const newCharacter: any = {
+				const newCharacter: Record<string, unknown> = {
 					user_id: user.id,
 					name: `${charData.name} (Imported)`,
 					level: charData.level || 1,
@@ -330,8 +331,8 @@ export function useCharacterImport() {
 				};
 
 				const { data: createdCharacter, error: createError } = await supabase
-					.from("user_characters")
-					.insert(newCharacter)
+					.from("characters")
+					.insert(newCharacter as Database["public"]["Tables"]["characters"]["Insert"])
 					.select()
 					.single();
 
@@ -341,35 +342,35 @@ export function useCharacterImport() {
 
 				// Import related data if present
 				if (data.abilities && data.abilities.length > 0) {
-					const abilities = data.abilities.map((ability: any) => ({
+					const abilities = data.abilities.map((ability: Record<string, unknown>) => ({
 						...ability,
 						character_id: createdCharacter.id,
 						id: undefined, // Let DB generate new ID
-					}));
-					await supabase.from("character_abilities").insert(abilities);
+					})) as Database["public"]["Tables"]["character_abilities"]["Insert"][];
+					await supabase.from("character_abilities").insert(abilities).throwOnError();
 				}
 
 				if (data.equipment && data.equipment.length > 0) {
-					const equipment = data.equipment.map((item: any) => ({
+					const equipment = data.equipment.map((item: Record<string, unknown>) => ({
 						...item,
 						character_id: createdCharacter.id,
 						id: undefined,
-					}));
-					await supabase.from("character_equipment").insert(equipment);
+					})) as Database["public"]["Tables"]["character_equipment"]["Insert"][];
+					await supabase.from("character_equipment").insert(equipment).throwOnError();
 				}
 
 				if (data.features && data.features.length > 0) {
-					const features = data.features.map((feature: any) => ({
+					const features = data.features.map((feature: Record<string, unknown>) => ({
 						...feature,
 						character_id: createdCharacter.id,
 						id: undefined,
-					}));
-					await supabase.from("character_features").insert(features);
+					})) as Database["public"]["Tables"]["character_features"]["Insert"][];
+					await supabase.from("character_features").insert(features).throwOnError();
 				}
 
 				// Skip spells import for now as table structure may differ
 				// if (data.spells && data.spells.length > 0) {
-				//   const spells = data.spells.map((spell: any) => ({
+				//   const spells = data.spells.map((spell: Record<string, unknown>) => ({
 				//     ...spell,
 				//     character_id: createdCharacter.id,
 				//     id: undefined

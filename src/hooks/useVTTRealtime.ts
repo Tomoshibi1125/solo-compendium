@@ -349,12 +349,13 @@ export function rollDiceFormulaDetailed(
 	const tokenRegex =
 		/([+-]?)(\d+d\d+(?:!)?(?:kh\d+)?(?:kl\d+)?(?:ro<\d+)?|\d+)/gi;
 	const tokens: { sign: number; raw: string; isDice: boolean }[] = [];
-	let m: RegExpExecArray | null;
-	while ((m = tokenRegex.exec(formula)) !== null) {
+	let m = tokenRegex.exec(formula);
+	while (m !== null) {
 		const sign = m[1] === "-" ? -1 : 1;
 		const raw = m[2];
 		const isDice = /d/i.test(raw);
 		tokens.push({ sign, raw, isDice });
+		m = tokenRegex.exec(formula);
 	}
 
 	if (tokens.length === 0) {
@@ -505,7 +506,7 @@ export function useVTTRealtime({
 	});
 
 	const channelRef = useRef<RealtimeChannel | null>(null);
-	const eventHandlersRef = useRef<Map<string, Set<(payload: any) => void>>>(
+	const eventHandlersRef = useRef<Map<string, Set<(payload: unknown) => void>>>(
 		new Map(),
 	);
 
@@ -528,11 +529,11 @@ export function useVTTRealtime({
 			}
 			eventHandlersRef.current
 				.get(eventType)
-				?.add(handler as (payload: any) => void);
+				?.add(handler as (payload: unknown) => void);
 			return () => {
 				eventHandlersRef.current
 					.get(eventType)
-					?.delete(handler as (payload: any) => void);
+					?.delete(handler as (payload: unknown) => void);
 			};
 		},
 		[],
@@ -541,7 +542,9 @@ export function useVTTRealtime({
 	const emit = useCallback((eventType: string, payload: unknown) => {
 		const handlers = eventHandlersRef.current.get(eventType);
 		if (handlers) {
-			handlers.forEach((handler) => handler(payload));
+			handlers.forEach((handler) => {
+				handler(payload);
+			});
 		}
 	}, []);
 
@@ -1109,17 +1112,17 @@ export function useVTTRealtime({
 				.eq("campaign_id", campaignId)
 				.order("created_at", { ascending: false })
 				.limit(50)
-				.then(({ data }: { data: any[] | null }) => {
+				.then(({ data }: { data: Array<Record<string, unknown>> | null }) => {
 					if (data && data.length > 0) {
-						const msgs: VTTChatMessage[] = data.reverse().map((row: any) => ({
-							id: row.id,
-							userId: row.user_id || "unknown",
-							userName: row.user_name || "Anonymous",
-							message: row.message || "",
-							type: row.message_type || "chat",
-							diceFormula: row.dice_formula || undefined,
-							diceResult: row.dice_result ?? undefined,
-							timestamp: new Date(row.created_at).getTime(),
+						const msgs: VTTChatMessage[] = data.reverse().map((row) => ({
+							id: row.id as string,
+							userId: (row.user_id as string) || "unknown",
+							userName: (row.user_name as string) || "Anonymous",
+							message: (row.message as string) || "",
+							type: (row.message_type as VTTChatMessage["type"]) || "chat",
+							diceFormula: (row.dice_formula as string) || undefined,
+							diceResult: (row.dice_result as number) ?? undefined,
+							timestamp: new Date(row.created_at as string).getTime(),
 						}));
 						setChatMessages((prev) => {
 							// Merge: keep DB messages + any local messages not in DB

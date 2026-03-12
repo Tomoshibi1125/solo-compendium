@@ -65,6 +65,8 @@ export interface RegentChoice {
 // 7. When player has 2 regents, they can fuse via Gemini Protocol
 // 8. ALL 9x9 regent combinations are valid for fusion (81 possible sovereigns)
 export class RegentGeminiSystem {
+	private constructor() {}
+
 	// Import the Nine Regents from nineRegents.ts
 	static readonly REGENT_DATABASE: RegentPath[] = NINE_REGENTS;
 	static readonly MAX_REGENTS_PER_CHARACTER = 2;
@@ -93,7 +95,7 @@ export class RegentGeminiSystem {
 			(regent) =>
 				!currentRegents.includes(regent.id) &&
 				regent.requirements.statThreshold <=
-				RegentGeminiSystem.getHighestAbilityScore(abilities),
+					RegentGeminiSystem.getHighestAbilityScore(abilities),
 		);
 
 		// Use AI to select and rank the best 3 options
@@ -751,14 +753,15 @@ export class RegentGeminiSystem {
 			return character.abilities as unknown as Record<AbilityScore, number>;
 		}
 
-		const scores = (character as Record<string, any>).abilityScores;
+		const charRecord = character as unknown as Record<string, unknown>;
+		const abilityScores = charRecord.abilityScores as Record<string, number> | undefined;
 		return {
-			STR: scores?.strength ?? 10,
-			AGI: scores?.dexterity ?? scores?.agility ?? 10,
-			VIT: scores?.constitution ?? scores?.vitality ?? 10,
-			INT: scores?.intelligence ?? 10,
-			SENSE: scores?.wisdom ?? scores?.sense ?? 10,
-			PRE: scores?.charisma ?? scores?.presence ?? 10,
+			STR: abilityScores?.strength ?? 10,
+			AGI: abilityScores?.dexterity ?? abilityScores?.agility ?? 10,
+			VIT: abilityScores?.constitution ?? abilityScores?.vitality ?? 10,
+			INT: abilityScores?.intelligence ?? 10,
+			SENSE: abilityScores?.wisdom ?? abilityScores?.sense ?? 10,
+			PRE: abilityScores?.charisma ?? abilityScores?.presence ?? 10,
 		};
 	}
 }
@@ -781,6 +784,8 @@ export interface RegentQuest {
 
 // Quest management system
 export class RegentQuestManager {
+	private constructor() {}
+
 	private static readonly QUEST_DATABASE: RegentQuest[] = [
 		{
 			id: "iron_fist_trial",

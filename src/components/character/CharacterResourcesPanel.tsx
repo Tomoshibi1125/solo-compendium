@@ -232,8 +232,11 @@ export function CharacterResourcesPanel({
 						</div>
 						{cleanedResources.temp_hp_sources.length > 0 ? (
 							<div className="mt-3 space-y-1 text-sm text-muted-foreground">
-								{cleanedResources.temp_hp_sources.map((source, index) => (
-									<div key={index} className="flex justify-between">
+								{cleanedResources.temp_hp_sources.map((source, _index) => (
+									<div
+										key={JSON.stringify(source)}
+										className="flex justify-between"
+									>
 										<span>{source.source}</span>
 										<span>+{source.amount}</span>
 									</div>
@@ -263,7 +266,7 @@ export function CharacterResourcesPanel({
 									<div className="flex gap-1 mt-1">
 										{Array.from({ length: 3 }).map((_, i) => (
 											<div
-												key={`success-${i}`}
+												key={`slot-${[...Array(i + 1)].length}`}
 												className={`w-8 h-8 rounded border-2 flex items-center justify-center text-sm font-bold ${
 													i < cleanedResources.death_saves.death_save_successes
 														? "bg-green-500 border-green-600 text-white"
@@ -282,7 +285,7 @@ export function CharacterResourcesPanel({
 									<div className="flex gap-1 mt-1">
 										{Array.from({ length: 3 }).map((_, i) => (
 											<div
-												key={`failure-${i}`}
+												key={`slot-${[...Array(i + 1)].length}`}
 												className={`w-8 h-8 rounded border-2 flex items-center justify-center text-sm font-bold ${
 													i < cleanedResources.death_saves.death_save_failures
 														? "bg-red-500 border-red-600 text-white"

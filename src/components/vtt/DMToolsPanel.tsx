@@ -58,8 +58,8 @@ interface DMToolsPanelProps {
 	campaignId?: string;
 	/** Callback to roll dice into VTT chat (typically vttRealtime.rollAndBroadcast) */
 	onRoll?: (formula: string, type?: "dice" | "gmroll") => void;
-	onAddToken?: (token: any) => void;
-	onAddEffect?: (effect: any) => void;
+	onAddToken?: (token: unknown) => void;
+	onAddEffect?: (effect: unknown) => void;
 	onPlaySound?: (soundId: string) => void;
 	onMusicChange?: (musicId: string) => void;
 	className?: string;
@@ -68,7 +68,6 @@ interface DMToolsPanelProps {
 export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
 	campaignId,
 	onRoll,
-	onAddToken,
 	onAddEffect,
 	onPlaySound,
 	onMusicChange,

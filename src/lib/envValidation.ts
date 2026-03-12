@@ -82,7 +82,9 @@ export function validateEnvOrThrow(): void {
 
 	if (result.warnings.length > 0) {
 		logger.warn("Environment validation warnings:");
-		result.warnings.forEach((warning) => logger.warn(`  - ${warning}`));
+		result.warnings.forEach((warning) => {
+			logger.warn(`  - ${warning}`);
+		});
 	}
 }
 

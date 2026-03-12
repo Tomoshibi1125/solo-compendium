@@ -131,7 +131,7 @@ export const LevelUpWizardModal = ({
 
 		// Create enhanced job data with awakening features and traits
 		const enhancedJobData = {
-			name: character.job,
+			name: character.job ?? undefined,
 			skill_choice_count: 0, // Not relevant for level-up
 			awakeningFeatures: staticJob.awakeningFeatures || [],
 			jobTraits: staticJob.jobTraits || [],
@@ -193,14 +193,14 @@ export const LevelUpWizardModal = ({
 			if (error) throw error;
 			const accessible = await filterRowsBySourcebookAccess(
 				data || [],
-				(feat) => feat.source_book,
+				(feat) => (feat as { source_book?: string | null }).source_book,
 				{ campaignId },
 			);
 
 			// Filter feats by prerequisites (level-based)
-			return accessible.filter((feat: any) => {
-				const prereqs = feat.prerequisites as Record<string, any>;
-				if (!prereqs || !prereqs.level) return true;
+			return accessible.filter((feat: unknown) => {
+				const prereqs = (feat as { prerequisites?: Record<string, unknown> }).prerequisites;
+				if (!prereqs || typeof prereqs.level !== "number") return true;
 				return prereqs.level <= newLevel;
 			});
 		},
@@ -214,13 +214,13 @@ export const LevelUpWizardModal = ({
 	// Regent progression: show new regent features unlocked at this level
 	const { unlocks: regentUnlocks } = useRegentUnlocks(characterId || "");
 	const primaryRegentUnlock =
-		regentUnlocks.find((u: any) => u.is_primary) ?? regentUnlocks[0];
+		regentUnlocks.find((u: { is_primary?: boolean }) => u.is_primary) ?? regentUnlocks[0];
 	const regentData = primaryRegentUnlock
-		? regents.find((m: any) => m.id === primaryRegentUnlock.regent_id)
+		? regents.find((m: { id: string }) => m.id === primaryRegentUnlock.regent_id)
 		: null;
 	const newRegentFeatures =
 		regentData?.class_features?.filter(
-			(f: Record<string, any>) => f.level === newLevel,
+			(f: Record<string, unknown>) => f.level === newLevel,
 		) ?? [];
 
 	// Fetch features for the new level (DB first, static fallback)
@@ -250,7 +250,7 @@ export const LevelUpWizardModal = ({
 
 			const accessibleJobFeatures = await filterRowsBySourcebookAccess(
 				features || [],
-				(feature) => feature.source_name,
+				(feature) => (feature as { source_name?: string | null }).source_name,
 				{ campaignId },
 			);
 
@@ -273,7 +273,7 @@ export const LevelUpWizardModal = ({
 					if (!pathError && pathFeatures) {
 						const accessiblePathFeatures = await filterRowsBySourcebookAccess(
 							pathFeatures,
-							(feature) => feature.source_name,
+							(feature) => (feature as { source_name?: string | null }).source_name,
 							{ campaignId },
 						);
 
@@ -412,17 +412,17 @@ export const LevelUpWizardModal = ({
 			const newHitDiceMax = newLevel;
 
 			const characterUpdates: Database["public"]["Tables"]["characters"]["Update"] =
-			{
-				level: newLevel,
-				proficiency_bonus: newProficiencyBonus,
-				hp_max: newHP,
-				hp_current: character.hp_current + hpIncrease,
-				hit_dice_max: newHitDiceMax,
-				hit_dice_current: newHitDiceMax,
-				system_favor_die: newSystemFavorDie,
-				system_favor_max: newSystemFavorMax,
-				system_favor_current: newSystemFavorMax,
-			};
+				{
+					level: newLevel,
+					proficiency_bonus: newProficiencyBonus,
+					hp_max: newHP,
+					hp_current: character.hp_current + hpIncrease,
+					hit_dice_max: newHitDiceMax,
+					hit_dice_current: newHitDiceMax,
+					system_favor_die: newSystemFavorDie,
+					system_favor_max: newSystemFavorMax,
+					system_favor_current: newSystemFavorMax,
+				};
 
 			// Apply path selection if chosen during this level-up
 			if (showPathSelection && selectedPath) {
@@ -470,16 +470,16 @@ export const LevelUpWizardModal = ({
 				const featFeatures = selectedFeats
 					.map((featId, index) => {
 						const feat = availableFeats.find(
-							(f: Record<string, any>) => f.id === featId,
-						);
+							(f: { id?: string }) => f.id === featId,
+						) as { name?: string; description?: string } | undefined;
 						if (!feat) return null;
 
 						return {
 							character_id: character.id,
-							name: feat.name,
+							name: feat.name || "Unknown Feat",
 							source: "Feat Selection",
 							level_acquired: newLevel,
-							description: feat.description,
+							description: feat.description || "",
 							uses_current: null,
 							uses_max: null,
 							recharge: null,
@@ -525,21 +525,29 @@ export const LevelUpWizardModal = ({
 			}
 
 			// Add new features (5e/D&D Beyond-style: features are granted automatically at the level)
-			for (const feature of newFeatures) {
+			for (const _feature of newFeatures) {
+				const feature = _feature as {
+					name?: string;
+					is_path_feature?: boolean;
+					description?: string;
+					action_type?: string;
+					uses_formula?: string;
+					recharge?: string;
+				};
 				const usesMax = calculateFeatureUses(
-					feature.uses_formula,
+					feature.uses_formula || null,
 					newLevel,
 					newProficiencyBonus,
 				);
 
 				await supabase.from("character_features").insert({
 					character_id: character.id,
-					name: feature.name,
+					name: feature.name || "Unknown Feature",
 					source: feature.is_path_feature
 						? `Path: ${character.path || "Unknown"}`
 						: `Job: ${character.job}`,
 					level_acquired: newLevel,
-					description: feature.description,
+					description: feature.description || "",
 					action_type: feature.action_type || null,
 					uses_max: usesMax,
 					uses_current: usesMax,
@@ -625,7 +633,7 @@ export const LevelUpWizardModal = ({
 					type: "character:levelup",
 					previousLevel: character.level,
 					newLevel,
-					hpIncrease: hpIncrease!,
+					hpIncrease: hpIncrease as number,
 					newFeatures: newFeatures.map((f) => f.name),
 					isPathUnlockLevel: showPathSelection,
 					isASILevel: isASILevel(newLevel, character.job),
@@ -760,7 +768,7 @@ export const LevelUpWizardModal = ({
 														Math.max(
 															character.level + 1,
 															parseInt(e.target.value, 10) ||
-															character.level + 1,
+																character.level + 1,
 														),
 													),
 												)
@@ -891,9 +899,9 @@ export const LevelUpWizardModal = ({
 																(p) => p.id === selectedPath,
 															) as { display_name?: string | null } | undefined
 														)?.display_name ||
-														availablePaths.find((p) => p.id === selectedPath)
-															?.name ||
-														"",
+															availablePaths.find((p) => p.id === selectedPath)
+																?.name ||
+															"",
 													)}
 												</h4>
 												<p className="text-sm text-muted-foreground">
@@ -924,7 +932,7 @@ export const LevelUpWizardModal = ({
 											).map((ability) => {
 												const currentScore =
 													(character.abilities as Record<string, number>)[
-													ability
+														ability
 													] ?? 10;
 												const bonus = asiChoices[ability] || 0;
 												const totalSpent = Object.values(asiChoices).reduce(
@@ -1019,7 +1027,10 @@ export const LevelUpWizardModal = ({
 											features.
 										</p>
 										<div className="space-y-2 max-h-48 overflow-y-auto">
-											{availableFeats.map((feat: any) => (
+											{availableFeats.map((_feat: unknown) => {
+												const feat = _feat as { id: string; name: string; description?: string };
+												const isSelected = selectedFeats.includes(feat.id);
+												return (
 												<div
 													key={feat.id}
 													className="flex items-center gap-3 p-2 rounded-lg bg-background/50 border border-purple-500/10"
@@ -1027,22 +1038,27 @@ export const LevelUpWizardModal = ({
 													<input
 														type="checkbox"
 														id={`feat-${feat.id}`}
-														checked={selectedFeats.includes(feat.id)}
+														checked={isSelected}
 														onChange={(e) => {
 															if (e.target.checked) {
 																if (
 																	selectedFeats.length < availableChoices.feats
 																) {
-																	setSelectedFeats([...selectedFeats, feat.id]);
+																	setSelectedFeats([
+																		...selectedFeats,
+																		feat.id,
+																	]);
 																}
 															} else {
 																setSelectedFeats(
-																	selectedFeats.filter((id) => id !== feat.id),
+																	selectedFeats.filter(
+																		(id) => id !== feat.id,
+																	),
 																);
 															}
 														}}
 														disabled={
-															!selectedFeats.includes(feat.id) &&
+															!isSelected &&
 															selectedFeats.length >= availableChoices.feats
 														}
 														className="rounded border-purple-500/30"
@@ -1056,12 +1072,14 @@ export const LevelUpWizardModal = ({
 																{formatMonarchVernacular(feat.name)}
 															</span>
 															<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-																{formatMonarchVernacular(feat.description)}
+																{formatMonarchVernacular(
+																	feat.description || "",
+																)}
 															</p>
 														</div>
 													</label>
 												</div>
-											))}
+											)})}
 										</div>
 										<p className="text-xs text-muted-foreground mt-2 font-heading">
 											Selected: {selectedFeats.length}/{availableChoices.feats}
@@ -1077,7 +1095,16 @@ export const LevelUpWizardModal = ({
 											NEW ABILITIES UNLOCKED
 										</Label>
 										<div className="space-y-3">
-											{newFeatures.map((feature) => (
+											{newFeatures.map((_feature) => {
+												const feature = _feature as {
+													id: string;
+													name: string;
+													action_type?: string;
+													uses_formula?: string;
+													description?: string;
+													prerequisites?: string;
+												};
+												return (
 												<div
 													key={feature.id}
 													className={cn(
@@ -1092,7 +1119,9 @@ export const LevelUpWizardModal = ({
 																	htmlFor={`feature-${feature.id}`}
 																	className="font-arise font-semibold cursor-pointer text-amber-400 tracking-wide"
 																>
-																	{formatMonarchVernacular(feature.name)}
+																	{formatMonarchVernacular(
+																		feature.name,
+																	)}
 																</Label>
 																{feature.action_type && (
 																	<Badge
@@ -1131,7 +1160,7 @@ export const LevelUpWizardModal = ({
 														</div>
 													</div>
 												</div>
-											))}
+											)})}
 										</div>
 									</div>
 								)}
@@ -1145,35 +1174,52 @@ export const LevelUpWizardModal = ({
 											ABILITIES
 										</Label>
 										<div className="space-y-3">
-											{newRegentFeatures.map((feature: any, idx: number) => (
-												<div
-													key={idx}
-													className="p-4 rounded-lg border border-monarch-gold/10 bg-muted/30"
-												>
-													<div className="flex items-center gap-2 mb-1 flex-wrap">
-														<span className="font-arise font-semibold text-monarch-gold tracking-wide">
-															{formatRegentVernacular(feature.name)}
-														</span>
-														<Badge
-															variant="secondary"
-															className="text-xs font-heading"
-														>
-															{feature.type}
-														</Badge>
-														{feature.frequency && (
-															<Badge
-																variant="outline"
-																className="text-xs font-heading border-monarch-gold/30 text-monarch-gold"
-															>
-																{feature.frequency}
-															</Badge>
-														)}
+											{newRegentFeatures.map(
+												(_feature: unknown, idx: number) => {
+													const feature = _feature as {
+														id?: string;
+														name: string;
+														type?: string;
+														frequency?: string;
+														description?: string;
+													};
+													return (
+													<div
+														key={
+															feature.id ||
+															`regent-feature-${idx}-${feature.name}`
+														}
+														className="p-4 rounded-lg border border-monarch-gold/10 bg-muted/30"
+													>
+														<div className="flex items-center gap-2 mb-1 flex-wrap">
+															<span className="font-arise font-semibold text-monarch-gold tracking-wide">
+																{formatRegentVernacular(feature.name)}
+															</span>
+															{feature.type && (
+																<Badge
+																	variant="secondary"
+																	className="text-xs font-heading"
+																>
+																	{feature.type}
+																</Badge>
+															)}
+															{feature.frequency && (
+																<Badge
+																	variant="outline"
+																	className="text-xs font-heading border-monarch-gold/30 text-monarch-gold"
+																>
+																	{feature.frequency}
+																</Badge>
+															)}
+														</div>
+														<p className="text-sm text-muted-foreground font-heading">
+															{formatRegentVernacular(
+																feature.description || "",
+															)}
+														</p>
 													</div>
-													<p className="text-sm text-muted-foreground font-heading">
-														{formatRegentVernacular(feature.description)}
-													</p>
-												</div>
-											))}
+												)},
+											)}
 										</div>
 									</div>
 								)}

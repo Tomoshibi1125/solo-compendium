@@ -61,12 +61,12 @@ const DefaultErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 	);
 };
 
-const handleError = (error: any, info: React.ErrorInfo) => {
+const handleError = (error: unknown, info: React.ErrorInfo) => {
 	// Log error for debugging
 	logError("ErrorBoundary caught an error:", error, info);
 
 	// Report to Sentry
-	captureException(error, {
+	captureException(error as Error, {
 		react: {
 			componentStack: info.componentStack,
 		},

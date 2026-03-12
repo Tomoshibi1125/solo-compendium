@@ -57,9 +57,26 @@ export function useCampaignRollFeed(campaignId: string) {
 	const { user } = useAuth();
 
 	const untypedSupabase = supabase as unknown as {
-		from: (table: string) => any;
-		channel: (name: string) => any;
-		removeChannel: (channel: unknown) => any;
+		from: (table: string) => {
+			select: (cols: string) => {
+				eq: (col: string, val: string) => {
+					order: (col: string, opts: { ascending: boolean }) => {
+						limit: (num: number) => Promise<{ data: unknown[] | null; error: unknown }>;
+					};
+				};
+			};
+			insert: (data: Record<string, unknown>) => Promise<{ error: unknown }>;
+		};
+		channel: (name: string) => {
+			on: (
+				type: "postgres_changes",
+				opts: { event: string; schema: string; table: string; filter: string },
+				cb: (payload: { new: unknown }) => void,
+			) => {
+				subscribe: (cb: (status: string) => void) => RealtimeChannel;
+			};
+		};
+		removeChannel: (channel: RealtimeChannel) => void;
 	};
 
 	// Load initial events

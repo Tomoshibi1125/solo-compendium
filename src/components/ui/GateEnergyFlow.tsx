@@ -27,7 +27,7 @@ export const GateEnergyFlow = ({
 	className,
 }: GateEnergyFlowProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const { reducedMotion, fx, tier: performanceTier } = usePerformanceProfile();
+	const { reducedMotion, tier: performanceTier } = usePerformanceProfile();
 
 	const reduceEffects = reducedMotion || performanceTier === "low";
 	const finalIntensity = reduceEffects ? "low" : intensity;

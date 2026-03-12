@@ -100,10 +100,10 @@ const toProfileRole = (role: UserRole): "dm" | "player" => role;
 const isEmailRateLimitError = (error: unknown): boolean => {
 	if (!error || typeof error !== "object") return false;
 	const message =
-		typeof (error as { message?: unknown }).message === "string"
+		typeof (error as { message?: string }).message === "string"
 			? (error as { message: string }).message
 			: "";
-	const status = (error as { status?: unknown }).status;
+	const status = (error as { status?: number }).status;
 	if (typeof status === "number" && status === 429) return true;
 	const normalized = message.toLowerCase();
 	return (

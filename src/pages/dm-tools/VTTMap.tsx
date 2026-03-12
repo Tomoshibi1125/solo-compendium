@@ -330,7 +330,7 @@ const VTTMap = () => {
 
 	const handleTokenKeyDown = (
 		token: PlacedToken,
-		e: React.KeyboardEvent<HTMLDivElement>,
+		e: React.KeyboardEvent<HTMLDivElement | HTMLButtonElement>,
 	) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
@@ -642,6 +642,7 @@ const VTTMap = () => {
 													token.imageUrl.includes("/generated/effects/")));
 										return (
 											<button
+												type="button"
 												key={token.id}
 												onClick={() => setSelectedToken(token.id)}
 												className={cn(
@@ -742,6 +743,7 @@ const VTTMap = () => {
 											</div>
 											<div className="flex gap-1">
 												<button
+													type="button"
 													onClick={() => handleToggleLock(token.id)}
 													className="p-1 hover:bg-muted rounded"
 													title={token.locked ? "Unlock" : "Lock"}
@@ -756,6 +758,7 @@ const VTTMap = () => {
 													)}
 												</button>
 												<button
+													type="button"
 													onClick={() => handleRotateToken(token.id)}
 													className="p-1 hover:bg-muted rounded"
 													title="Rotate"
@@ -763,6 +766,7 @@ const VTTMap = () => {
 													<RotateCw className="w-3 h-3" />
 												</button>
 												<button
+													type="button"
 													onClick={() => handleDeleteToken(token.id)}
 													className="p-1 hover:bg-muted rounded text-destructive"
 													title="Delete"
@@ -843,7 +847,7 @@ const VTTMap = () => {
 												}
 											: undefined;
 										return (
-											<div
+											<button type="button"
 												key={token.id}
 												draggable={!token.locked}
 												onDragStart={(e) => handleTokenDragStart(token, e)}
@@ -853,11 +857,9 @@ const VTTMap = () => {
 												}}
 												onClick={(e) => e.stopPropagation()}
 												onKeyDown={(e) => handleTokenKeyDown(token, e)}
-												role="button"
-												tabIndex={0}
 												aria-label={`Token ${token.name}. Enter rotates, Delete removes, L toggles lock.`}
 												className={cn(
-													"absolute cursor-move transition-all",
+													"absolute cursor-move transition-all p-0 bg-transparent border-none text-left",
 													token.locked && "cursor-not-allowed opacity-75",
 													draggedToken?.id === token.id && "opacity-50",
 												)}
@@ -908,7 +910,7 @@ const VTTMap = () => {
 														token.emoji || "@"
 													)}
 												</div>
-											</div>
+											</button>
 										);
 									})}
 								</div>

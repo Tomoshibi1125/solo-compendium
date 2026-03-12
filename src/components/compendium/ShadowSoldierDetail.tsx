@@ -113,8 +113,8 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 				<div id="soldier-tags" className="scroll-mt-4">
 					<h3 className="text-lg font-semibold mb-3 font-heading">Tags</h3>
 					<div className="flex flex-wrap gap-2">
-						{entry.tags.map((tag, index) => (
-							<Badge key={index} variant="secondary" className="capitalize">
+						{entry.tags.map((tag, _index) => (
+							<Badge key={tag} variant="secondary" className="capitalize">
 								{formatRegentVernacular(tag.replace("-", " "))}
 							</Badge>
 						))}

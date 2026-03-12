@@ -3,7 +3,9 @@ export const REGENT_LABEL_PLURAL = "Regents";
 const REGENT_CANONICAL = "regent";
 const REGENT_CANONICAL_PLURAL = "regents";
 
-export const formatRegentVernacular = (value: string | undefined | null): string => {
+export const formatRegentVernacular = (
+	value: string | undefined | null,
+): string => {
 	if (!value) return "";
 	return String(value)
 		.replace(/\bMONARCHS\b/g, REGENT_LABEL_PLURAL.toUpperCase())
@@ -20,7 +22,9 @@ export const formatRegentVernacular = (value: string | undefined | null): string
 		.replace(/\bregent\b/g, REGENT_LABEL.toLowerCase());
 };
 
-export const normalizeRegentSearch = (value: string | undefined | null): string => {
+export const normalizeRegentSearch = (
+	value: string | undefined | null,
+): string => {
 	if (!value) return "";
 	const label = REGENT_LABEL.toLowerCase();
 	const labelPlural = REGENT_LABEL_PLURAL.toLowerCase();

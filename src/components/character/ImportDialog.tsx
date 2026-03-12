@@ -156,8 +156,9 @@ export function ImportDialog({
 
 				<div className="space-y-4">
 					{/* File Upload */}
-					<div
-						className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 transition-colors"
+					<button
+						type="button"
+						className="w-full border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 transition-colors bg-transparent"
 						onClick={() => fileInputRef.current?.click()}
 					>
 						<input
@@ -184,7 +185,7 @@ export function ImportDialog({
 								</p>
 							</div>
 						)}
-					</div>
+					</button>
 
 					{/* Validation Errors */}
 					{errors.length > 0 && (
@@ -192,8 +193,8 @@ export function ImportDialog({
 							<AlertCircle className="h-4 w-4" />
 							<AlertDescription>
 								<ul className="list-disc list-inside text-xs space-y-1">
-									{errors.map((error, i) => (
-										<li key={i}>{error}</li>
+									{errors.map((error) => (
+										<li key={error}>{error}</li>
 									))}
 								</ul>
 							</AlertDescription>

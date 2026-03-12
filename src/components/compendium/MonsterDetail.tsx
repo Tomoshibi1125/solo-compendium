@@ -7,7 +7,7 @@ import {
 	Swords,
 	Zap,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
@@ -123,77 +123,81 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 	const [actions, setActions] = useState<MonsterAction[]>([]);
 	const [traits, setTraits] = useState<MonsterTrait[]>([]);
 
-	const mapStaticAction = (
-		a: Record<string, unknown>,
-		idx: number,
-	): MonsterAction => {
-		const name = typeof a.name === "string" ? a.name : `Action ${idx + 1}`;
-		const actionTypeRaw =
-			(typeof a.action_type === "string" ? a.action_type : null) ??
-			(typeof a.action === "string" ? a.action : null);
+	const mapStaticAction = useCallback(
+		(a: Record<string, unknown>, idx: number): MonsterAction => {
+			const name = typeof a.name === "string" ? a.name : `Action ${idx + 1}`;
+			const actionTypeRaw =
+				(typeof a.action_type === "string" ? a.action_type : null) ??
+				(typeof a.action === "string" ? a.action : null);
 
-		const action_type =
-			actionTypeRaw === "bonus-action"
-				? "bonus"
-				: actionTypeRaw === "reaction"
-					? "reaction"
-					: actionTypeRaw === "legendary"
-						? "legendary"
-						: "action";
+			const action_type =
+				actionTypeRaw === "bonus-action"
+					? "bonus"
+					: actionTypeRaw === "reaction"
+						? "reaction"
+						: actionTypeRaw === "legendary"
+							? "legendary"
+							: actionTypeRaw === "mythic"
+								? "mythic"
+								: actionTypeRaw === "lair"
+									? "lair"
+									: "action";
 
-		const attack_bonus =
-			typeof a.attack_bonus === "number"
-				? a.attack_bonus
-				: typeof a.attackBonus === "number"
-					? a.attackBonus
-					: undefined;
+			const attack_bonus =
+				typeof a.attack_bonus === "number"
+					? a.attack_bonus
+					: typeof a.attackBonus === "number"
+						? a.attackBonus
+						: undefined;
 
-		const damage = typeof a.damage === "string" ? a.damage : undefined;
-		const damage_type =
-			typeof a.damage_type === "string"
-				? a.damage_type
-				: typeof a.damageType === "string"
-					? a.damageType
-					: undefined;
+			const damage = typeof a.damage === "string" ? a.damage : undefined;
+			const damage_type =
+				typeof a.damage_type === "string"
+					? a.damage_type
+					: typeof a.damageType === "string"
+						? a.damageType
+						: undefined;
 
-		const recharge =
-			typeof a.recharge === "string"
-				? a.recharge
-				: typeof a.usage === "string"
-					? a.usage
-					: undefined;
+			const recharge =
+				typeof a.recharge === "string"
+					? a.recharge
+					: typeof a.usage === "string"
+						? a.usage
+						: undefined;
 
-		const legendary_cost =
-			typeof a.legendary_cost === "number"
-				? a.legendary_cost
-				: typeof a.legendaryCost === "number"
-					? a.legendaryCost
-					: undefined;
+			const legendary_cost =
+				typeof a.legendary_cost === "number"
+					? a.legendary_cost
+					: typeof a.legendaryCost === "number"
+						? a.legendaryCost
+						: undefined;
 
-		return {
-			id: `${data.id}:static-action:${idx}`,
-			name,
-			description: typeof a.description === "string" ? a.description : "",
-			action_type,
-			attack_bonus,
-			damage,
-			damage_type,
-			recharge,
-			legendary_cost,
-		};
-	};
+			return {
+				id: `${data.id}:static-action:${idx}`,
+				name,
+				description: typeof a.description === "string" ? a.description : "",
+				action_type,
+				attack_bonus,
+				damage,
+				damage_type,
+				recharge,
+				legendary_cost,
+			};
+		},
+		[data.id],
+	);
 
-	const mapStaticTrait = (
-		t: Record<string, unknown>,
-		idx: number,
-	): MonsterTrait => {
-		const name = typeof t.name === "string" ? t.name : `Trait ${idx + 1}`;
-		return {
-			id: `${data.id}:static-trait:${idx}`,
-			name,
-			description: typeof t.description === "string" ? t.description : "",
-		};
-	};
+	const mapStaticTrait = useCallback(
+		(t: Record<string, unknown>, idx: number): MonsterTrait => {
+			const name = typeof t.name === "string" ? t.name : `Trait ${idx + 1}`;
+			return {
+				id: `${data.id}:static-trait:${idx}`,
+				name,
+				description: typeof t.description === "string" ? t.description : "",
+			};
+		},
+		[data.id],
+	);
 
 	useEffect(() => {
 		const fetchRelatedData = async () => {
@@ -245,17 +249,17 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 			if (remoteActions.length > 0) {
 				setActions(
-					remoteActions.map((action: any) => ({
-						...action,
-						attack_bonus: action.attack_bonus ?? undefined,
-						damage: action.damage ?? undefined,
-						damage_type: action.damage_type ?? undefined,
-						recharge: action.recharge ?? undefined,
-						legendary_cost: action.legendary_cost ?? undefined,
-						action_type: action.action_type ?? undefined,
-						aliases: action.aliases ?? undefined,
-						display_name: action.display_name ?? undefined,
-					})),
+					remoteActions.map((action: Record<string, unknown>) => ({
+						id: String(action.id),
+						name: String(action.name),
+						description: String(action.description ?? ""),
+						attack_bonus: typeof action.attack_bonus === "number" ? action.attack_bonus : undefined,
+						damage: typeof action.damage === "string" ? action.damage : undefined,
+						damage_type: typeof action.damage_type === "string" ? action.damage_type : undefined,
+						recharge: typeof action.recharge === "string" ? action.recharge : undefined,
+						legendary_cost: typeof action.legendary_cost === "number" ? action.legendary_cost : undefined,
+						action_type: typeof action.action_type === "string" ? action.action_type : "action",
+					})) as MonsterAction[],
 				);
 			} else if (staticActions) {
 				// Remote not present; fallback to static embedded data.
@@ -268,10 +272,10 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 			if (remoteTraits.length > 0) {
 				setTraits(
-					remoteTraits.map((trait: any) => ({
-						...trait,
-						display_name: trait.display_name ?? undefined,
-						aliases: trait.aliases ?? undefined,
+					remoteTraits.map((trait: Record<string, unknown>) => ({
+						id: String(trait.id),
+						name: String(trait.name),
+						description: String(trait.description ?? ""),
 					})),
 				);
 			} else if (staticTraits) {

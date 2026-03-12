@@ -7,13 +7,13 @@ export interface Relic {
 	name: string;
 	description: string;
 	type:
-	| "weapon"
-	| "armor"
-	| "accessory"
-	| "consumable"
-	| "artifact"
-	| "tool"
-	| "material";
+		| "weapon"
+		| "armor"
+		| "accessory"
+		| "consumable"
+		| "artifact"
+		| "tool"
+		| "material";
 	rarity: "uncommon" | "rare" | "very_rare" | "epic" | "legendary" | "mythic";
 	attunement?: boolean;
 	requirements?: {
@@ -36,23 +36,23 @@ export interface Relic {
 		name: string;
 		description: string;
 		type:
-		| "passive"
-		| "active"
-		| "command"
-		| "consumable"
-		| "triggered"
-		| "reaction";
+			| "passive"
+			| "active"
+			| "command"
+			| "consumable"
+			| "triggered"
+			| "reaction";
 		frequency?:
-		| "at-will"
-		| "short-rest"
-		| "long-rest"
-		| "once-per-day"
-		| "once-per-week"
-		| "once-per-turn"
-		| "when-critical-hit"
-		| "when-creature-dies"
-		| "reaction"
-		| "action";
+			| "at-will"
+			| "short-rest"
+			| "long-rest"
+			| "once-per-day"
+			| "once-per-week"
+			| "once-per-turn"
+			| "when-critical-hit"
+			| "when-creature-dies"
+			| "reaction"
+			| "action";
 		action?: "action" | "bonus-action" | "reaction" | "free";
 		dc?: number;
 		charges?: number;
@@ -66,12 +66,12 @@ export interface Relic {
 	mechanics: {
 		bonus?: {
 			type:
-			| "attack"
-			| "damage"
-			| "AC"
-			| "saving-throws"
-			| "ability-checks"
-			| "skill-checks";
+				| "attack"
+				| "damage"
+				| "AC"
+				| "saving-throws"
+				| "ability-checks"
+				| "skill-checks";
 			value: number;
 			ability?: string;
 			skills?: string[];

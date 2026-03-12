@@ -227,7 +227,7 @@ export function initAnalytics(): void {
 	// Initialize PostHog
 	if (config.posthogKey && typeof window !== "undefined" && !window.posthog) {
 		import("posthog-js").then((posthog) => {
-			posthog.default.init(config.posthogKey!, {
+			posthog.default.init(config.posthogKey as string, {
 				api_host: config.posthogHost,
 				loaded: (ph) => {
 					if (import.meta.env.DEV) {

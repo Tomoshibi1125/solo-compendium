@@ -409,8 +409,8 @@ READ-ALOUD ENTRY:
 													COMPLICATIONS
 												</span>
 												<div className="flex flex-wrap gap-2 mt-2">
-													{rift.complications.map((comp, i) => (
-														<Badge key={i} variant="destructive">
+													{rift.complications.map((comp, _i) => (
+														<Badge key={comp} variant="destructive">
 															{comp}
 														</Badge>
 													))}

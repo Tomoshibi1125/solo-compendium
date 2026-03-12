@@ -98,7 +98,7 @@ export function SpellPanel({
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
 	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const { rollInCampaign } = usePlayerToolsEnhancements();
+	const playerTools = usePlayerToolsEnhancements();
 
 	const preparedCount = spells.filter(
 		(s) => s.isPrepared && s.level > 0,
@@ -133,7 +133,7 @@ export function SpellPanel({
 			: `${spellName} (Level ${finalLevel})`;
 
 		if (campaignId) {
-			rollInCampaign(campaignId, {
+			playerTools.rollInCampaign(campaignId, {
 				dice_formula: "0",
 				result: 0,
 				rolls: [],
@@ -153,7 +153,7 @@ export function SpellPanel({
 			character_id: characterId,
 		});
 
-		usePlayerToolsEnhancements()
+		playerTools
 			.trackCustomFeatureUsage(characterId, spellName, "cast", "5e")
 			.catch(console.error);
 
@@ -204,7 +204,7 @@ export function SpellPanel({
 									<div className="flex gap-0.5">
 										{Array.from({ length: slot.max }).map((_, i) => (
 											<div
-												key={i}
+												key={`slot-${[...Array(i + 1)].length}`}
 												className={cn(
 													"h-3.5 w-3.5 rounded-full border transition-colors",
 													i < slot.current
@@ -267,7 +267,7 @@ export function SpellPanel({
 													onCastSpell(spell.id, 0, false);
 
 													if (campaignId) {
-														rollInCampaign(campaignId, {
+														playerTools.rollInCampaign(campaignId, {
 															dice_formula: "0",
 															result: 0,
 															rolls: [],
@@ -349,6 +349,7 @@ export function SpellPanel({
 					return (
 						<div key={lvl} className="border rounded-md">
 							<button
+								type="button"
 								className="w-full flex items-center justify-between px-3 py-2 text-sm font-medium hover:bg-muted/50 transition-colors"
 								onClick={() => setExpandedLevel(isExpanded ? null : lvl)}
 							>
@@ -378,6 +379,7 @@ export function SpellPanel({
 											<div className="flex items-center gap-2">
 												{canPrepare && (
 													<button
+														type="button"
 														onClick={() =>
 															onTogglePrepared(spell.id, !spell.isPrepared)
 														}
@@ -452,7 +454,7 @@ export function SpellPanel({
 						<div className="space-y-3">
 							{/* Level selector for upcast */}
 							<div>
-								<label className="text-sm font-medium">Cast at level</label>
+								<p className="text-sm font-medium">Cast at level</p>
 								<div className="flex gap-1.5 mt-1">
 									{availableUpcastLevels(castDialog.spell.level).map((lvl) => (
 										<Button

@@ -84,7 +84,8 @@ export function AddEquipmentDialog({
 					if (Array.isArray(item.properties)) return item.properties;
 					const props: string[] = [];
 
-					const passiveEffects = (item.effects as Record<string, any>)?.passive;
+					const passiveEffects = (item.effects as Record<string, unknown>)
+						?.passive;
 					if (Array.isArray(passiveEffects)) {
 						for (const line of passiveEffects) {
 							if (typeof line === "string" && line.trim().length > 0) {
@@ -92,8 +93,8 @@ export function AddEquipmentDialog({
 							}
 						}
 					}
-
-					const weapon = (item.properties as Record<string, any>)?.weapon;
+					const weapon = (item.properties as Record<string, unknown>)
+						?.weapon as { isSimple?: boolean; isMartial?: boolean; isFirearm?: boolean; damage?: string; damageType?: string; finesse?: boolean; } | undefined;
 					if (weapon) {
 						if (
 							typeof weapon.damage === "string" &&
@@ -104,14 +105,16 @@ export function AddEquipmentDialog({
 						if (weapon.finesse === true) props.push("finesse");
 					}
 
-					const armor = (item.properties as Record<string, any>)?.armor;
+					const armor = (item.properties as Record<string, unknown>)
+						?.armor as { baseAC?: number; type?: string } | undefined;
 					if (armor) {
 						if (typeof armor.baseAC === "number")
 							props.push(`AC ${armor.baseAC}`);
 						if (typeof armor.type === "string") props.push(armor.type);
 					}
 
-					const magical = (item.properties as Record<string, any>)?.magical;
+					const magical = (item.properties as Record<string, unknown>)
+						?.magical as { bonus?: { armorClass?: number; attack?: number; damage?: number } } | undefined;
 					if (
 						magical?.bonus?.armorClass &&
 						typeof magical.bonus.armorClass === "number"
@@ -144,21 +147,9 @@ export function AddEquipmentDialog({
 				weight: item.weight ?? null,
 				source_book: item.source_book ?? null,
 				rarity: item.rarity ?? null,
-				damage:
-					typeof (item.properties as Record<string, any>)?.weapon?.damage ===
-					"string"
-						? (item.properties as Record<string, any>).weapon.damage
-						: null,
-				damage_type:
-					typeof (item.properties as Record<string, any>)?.weapon
-						?.damageType === "string"
-						? (item.properties as Record<string, any>).weapon.damageType
-						: null,
-				armor_class:
-					typeof (item.properties as Record<string, any>)?.armor?.baseAC ===
-					"number"
-						? (item.properties as Record<string, any>).armor.baseAC
-						: null,
+				damage: (item.properties as { weapon?: { damage?: string } })?.weapon?.damage ?? null,
+				damage_type: (item.properties as { weapon?: { damageType?: string } })?.weapon?.damageType ?? null,
+				armor_class: (item.properties as { armor?: { baseAC?: number } })?.armor?.baseAC ?? null,
 				attunement: item.attunement ?? false,
 			}));
 		},
@@ -241,6 +232,11 @@ export function AddEquipmentDialog({
 							</div>
 						) : (
 							equipment.map((item) => {
+								const itemRarity = (item as unknown as { rarity?: string }).rarity;
+								const itemAttunement = (item as unknown as { attunement?: boolean }).attunement;
+								const itemDamage = (item as unknown as { damage?: string }).damage;
+								const itemDamageType = (item as unknown as { damage_type?: string }).damage_type;
+								const itemArmorClass = (item as unknown as { armor_class?: number }).armor_class;
 								const eqType = (item.equipment_type || "gear").toLowerCase();
 								const TypeIcon =
 									eqType === "weapon"
@@ -251,13 +247,13 @@ export function AddEquipmentDialog({
 												? FlaskConical
 												: Gem;
 								const rarityColor =
-									(item as Record<string, any>).rarity === "legendary"
+									itemRarity === "legendary"
 										? "text-amber-500"
-										: (item as Record<string, any>).rarity === "epic"
+										: itemRarity === "epic"
 											? "text-purple-500"
-											: (item as Record<string, any>).rarity === "rare"
+											: itemRarity === "rare"
 												? "text-blue-500"
-												: (item as Record<string, any>).rarity === "uncommon"
+												: itemRarity === "uncommon"
 													? "text-green-500"
 													: "text-muted-foreground";
 
@@ -278,14 +274,14 @@ export function AddEquipmentDialog({
 															item.equipment_type || "Equipment",
 														)}
 													</Badge>
-													{(item as Record<string, any>).rarity && (
+													{itemRarity && (
 														<span
 															className={`text-[10px] font-medium capitalize ${rarityColor}`}
 														>
-															{(item as Record<string, any>).rarity}
+															{itemRarity}
 														</span>
 													)}
-													{(item as Record<string, any>).attunement && (
+													{itemAttunement && (
 														<Badge
 															variant="outline"
 															className="text-[10px] px-1"
@@ -295,16 +291,14 @@ export function AddEquipmentDialog({
 													)}
 												</div>
 												<div className="flex items-center gap-3 text-[10px] text-muted-foreground mb-1">
-													{(item as Record<string, any>).damage && (
+													{itemDamage && (
 														<span>
-															Damage: {(item as Record<string, any>).damage}{" "}
-															{(item as Record<string, any>).damage_type || ""}
+															Damage: {itemDamage}{" "}
+															{itemDamageType || ""}
 														</span>
 													)}
-													{(item as Record<string, any>).armor_class && (
-														<span>
-															AC: {(item as Record<string, any>).armor_class}
-														</span>
+													{itemArmorClass && (
+														<span>AC: {itemArmorClass}</span>
 													)}
 													{item.weight != null && item.weight > 0 && (
 														<span>{item.weight} lb.</span>

@@ -128,7 +128,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 					<SystemWindow title="PERSONALITY TRAITS">
 						<ul className="space-y-2">
 							{data.personality_traits.map((trait, i) => (
-								<li key={i} className="flex items-start gap-2">
+								<li key={trait} className="flex items-start gap-2">
 									<span className="text-primary font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
 										{formatMonarchVernacular(trait)}
@@ -143,7 +143,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 					<SystemWindow title="IDEALS">
 						<ul className="space-y-2">
 							{data.ideals.map((ideal, i) => (
-								<li key={i} className="flex items-start gap-2">
+								<li key={ideal} className="flex items-start gap-2">
 									<span className="text-primary font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
 										{formatMonarchVernacular(ideal)}
@@ -158,7 +158,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 					<SystemWindow title="BONDS">
 						<ul className="space-y-2">
 							{data.bonds.map((bond, i) => (
-								<li key={i} className="flex items-start gap-2">
+								<li key={bond} className="flex items-start gap-2">
 									<span className="text-primary font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
 										{formatMonarchVernacular(bond)}
@@ -173,7 +173,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 					<SystemWindow title="FLAWS">
 						<ul className="space-y-2">
 							{data.flaws.map((flaw, i) => (
-								<li key={i} className="flex items-start gap-2">
+								<li key={flaw} className="flex items-start gap-2">
 									<span className="text-red-400 font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
 										{formatMonarchVernacular(flaw)}

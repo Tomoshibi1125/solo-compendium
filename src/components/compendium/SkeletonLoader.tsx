@@ -16,7 +16,7 @@ export function SkeletonLoader({
 			<>
 				{Array.from({ length: count }).map((_, i) => (
 					<div
-						key={i}
+						key={`slot-${[...Array(i + 1)].length}`}
 						className={cn(
 							"glass-card border border-arise/20 relative overflow-hidden",
 							className,
@@ -48,7 +48,7 @@ export function SkeletonLoader({
 			<>
 				{Array.from({ length: count }).map((_, i) => (
 					<div
-						key={i}
+						key={`slot-${[...Array(i + 1)].length}`}
 						className={cn(
 							"glass-card border border-arise/20 p-3 flex items-center gap-4 relative overflow-hidden",
 							className,
@@ -73,7 +73,7 @@ export function SkeletonLoader({
 		<>
 			{Array.from({ length: count }).map((_, i) => (
 				<div
-					key={i}
+					key={`slot-${[...Array(i + 1)].length}`}
 					className={cn(
 						"h-4 bg-gradient-to-r from-arise/20 to-shadow-purple/10 rounded animate-pulse",
 						className,

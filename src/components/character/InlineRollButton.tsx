@@ -21,7 +21,6 @@ interface InlineRollButtonProps {
 
 export function InlineRollButton({
 	characterId,
-	characterName,
 	rollType,
 	rollKey,
 	label,
@@ -33,10 +32,8 @@ export function InlineRollButton({
 	variant = "outline",
 }: InlineRollButtonProps) {
 	const { user } = useAuth();
-	const { useCharacterSheetEnhancements, usePlayerToolsEnhancements } =
-		useGlobalDDBeyondIntegration();
+	const { useCharacterSheetEnhancements } = useGlobalDDBeyondIntegration();
 	const { roll } = useCharacterSheetEnhancements(characterId);
-	const { rollInCampaign } = usePlayerToolsEnhancements();
 
 	const handleRoll = async () => {
 		try {
@@ -44,31 +41,16 @@ export function InlineRollButton({
 				? (modifier as number)
 				: 0;
 			const resolvedAdvantage: AdvantageState = advantageState ?? "normal";
-			let result;
 
-			if (campaignId) {
-				// Send roll to campaign using the DDB parity hook
-				result = await rollInCampaign(campaignId, {
-					dice_formula: `1d20${resolvedModifier >= 0 ? `+${resolvedModifier}` : `${resolvedModifier}`}`,
-					roll_type: rollType,
-					context: label,
-					modifiers: {
-						base: resolvedModifier,
-						advantage: resolvedAdvantage,
-					},
-					character_id: characterId,
-				});
-			} else {
-				// Perform local roll using the DDB parity hook
-				result = await roll(
-					rollKey,
-					resolvedModifier,
-					rollType,
-					label,
-					campaignId,
-					resolvedAdvantage,
-				);
-			}
+			// Perform roll using the DDB parity hook, which handles campaign broadcasting internally
+			const result = await roll(
+				rollKey,
+				resolvedModifier,
+				rollType,
+				label,
+				campaignId,
+				resolvedAdvantage,
+			);
 
 			// The roll result will be displayed via toast from the hooks
 			return result;

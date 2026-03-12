@@ -390,7 +390,6 @@ export const useDeleteCampaignInvite = () => {
 
 	return useMutation({
 		mutationFn: async ({
-			campaignId,
 			inviteId,
 			reason,
 		}: {

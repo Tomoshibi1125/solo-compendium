@@ -55,8 +55,7 @@ export function useCompendiumShadowSoldiers() {
 			if (error) throw error;
 			return data.map((soldier) => ({
 				...soldier,
-				abilities:
-					(soldier.abilities as unknown as ShadowSoldierAbility[]) || [],
+				abilities: (soldier.abilities as unknown as ShadowSoldierAbility[]) || [],
 			})) as ShadowSoldier[];
 		},
 	});
@@ -83,8 +82,7 @@ export function useCharacterShadowSoldiers(characterId: string | undefined) {
 					? {
 							...css.soldier,
 							abilities:
-								(css.soldier.abilities as unknown as ShadowSoldierAbility[]) ||
-								[],
+								(css.soldier.abilities as unknown as ShadowSoldierAbility[]) || [],
 						}
 					: undefined,
 			})) as CharacterShadowSoldier[];

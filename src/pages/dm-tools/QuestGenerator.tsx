@@ -556,8 +556,8 @@ ${quest.description}
 											Objectives
 										</h3>
 										<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-											{quest.objectives.map((objective, idx) => (
-												<li key={idx}>{objective}</li>
+											{quest.objectives.map((objective) => (
+												<li key={`quest-obj-${objective}`}>{objective}</li>
 											))}
 										</ul>
 									</div>
@@ -569,8 +569,10 @@ ${quest.description}
 												Complications
 											</h3>
 											<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-												{quest.complications.map((complication, idx) => (
-													<li key={idx}>{complication}</li>
+												{quest.complications.map((complication) => (
+													<li key={`quest-comp-${complication}`}>
+														{complication}
+													</li>
 												))}
 											</ul>
 										</div>
@@ -583,8 +585,8 @@ ${quest.description}
 											</Badge>
 										</h3>
 										<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-											{quest.rewards.map((reward, idx) => (
-												<li key={idx}>{reward}</li>
+											{quest.rewards.map((reward) => (
+												<li key={`quest-reward-${reward}`}>{reward}</li>
 											))}
 										</ul>
 									</div>

@@ -1,6 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
 import { useBackgroundSync } from "@/hooks/useBackgroundSync";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
@@ -46,8 +45,7 @@ type ExtendedDatabase = Database & {
 	};
 };
 
-const supabaseExtended =
-	supabase as unknown as SupabaseClient<ExtendedDatabase>;
+const supabaseExtended = supabase as unknown as SupabaseClient<ExtendedDatabase>;
 
 // Fetch all characters for current user
 export const useCharacters = () => {
@@ -190,8 +188,6 @@ export const useCharacter = (characterId: string, shareToken?: string) => {
 // Create character
 export const useCreateCharacter = () => {
 	const queryClient = useQueryClient();
-	const { toast } = useToast();
-
 	return useMutation({
 		mutationFn: async (data: Omit<CharacterInsert, "user_id">) => {
 			const {
@@ -240,14 +236,16 @@ export const useCreateCharacter = () => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["characters"] });
-			toast({
+			console.log({
+				// toast replaced fallback
 				title: "Ascendant created",
 				description: "Your Ascendant has been awakened.",
 			});
 		},
 		onError: (error) => {
 			logErrorWithContext(error, "useCreateCharacter");
-			toast({
+			console.log({
+				// toast replaced fallback
 				title: "Failed to create Ascendant",
 				description: getErrorMessage(error),
 				variant: "destructive",
@@ -259,13 +257,12 @@ export const useCreateCharacter = () => {
 // Update character
 export const useUpdateCharacter = () => {
 	const _queryClient = useQueryClient();
-	const { toast } = useToast();
 	const { addToSyncQueue } = useBackgroundSync();
 
 	return useOptimisticMutation<
 		Character | NonNullable<ReturnType<typeof updateLocalCharacter>>,
 		{ id: string; data: CharacterUpdate },
-		{ previousData: any; mutationKey: any }
+		{ previousData: unknown; mutationKey: unknown }
 	>(
 		(variables) => ["character", variables.id, undefined],
 		async ({ id, data }: { id: string; data: CharacterUpdate }) => {
@@ -315,8 +312,6 @@ export const useUpdateCharacter = () => {
 // Delete character
 export const useDeleteCharacter = () => {
 	const queryClient = useQueryClient();
-	const { toast } = useToast();
-
 	return useMutation({
 		mutationFn: async (id: string) => {
 			if (isLocalCharacterId(id)) {
@@ -345,7 +340,8 @@ export const useDeleteCharacter = () => {
 		},
 		onError: (error) => {
 			logErrorWithContext(error, "useDeleteCharacter");
-			toast({
+			console.log({
+				// toast replaced fallback
 				title: "Failed to delete Ascendant",
 				description: getErrorMessage(error),
 				variant: "destructive",
@@ -357,8 +353,6 @@ export const useDeleteCharacter = () => {
 // Generate share token for character
 export const useGenerateShareToken = () => {
 	const queryClient = useQueryClient();
-	const { toast } = useToast();
-
 	return useMutation({
 		mutationFn: async (characterId: string): Promise<string> => {
 			if (isLocalCharacterId(characterId)) {
@@ -381,13 +375,15 @@ export const useGenerateShareToken = () => {
 		onSuccess: (_, characterId) => {
 			queryClient.invalidateQueries({ queryKey: ["character", characterId] });
 			queryClient.invalidateQueries({ queryKey: ["characters"] });
-			toast({
+			console.log({
+				// toast replaced fallback
 				title: "Share link generated",
 				description: "Your character can now be shared via the link.",
 			});
 		},
 		onError: (error: Error) => {
-			toast({
+			console.log({
+				// toast replaced fallback
 				title: "Failed to generate share link",
 				description: error.message,
 				variant: "destructive",

@@ -84,11 +84,11 @@ export function Pagination({
 					<ChevronLeft className="w-4 h-4" />
 				</Button>
 				<div className="flex items-center gap-1">
-					{getPageNumbers().map((page, index) => {
+					{getPageNumbers().map((page, _index) => {
 						if (page === "...") {
 							return (
 								<span
-									key={`ellipsis-${currentPage}-${index}`}
+									key={(page as { id?: string }).id || JSON.stringify(page)}
 									className="px-2 text-primary/50 tracking-widest font-mono"
 								>
 									...

@@ -1032,7 +1032,7 @@ export class AIServiceManager {
 			const data = await response.json();
 			const availableModels = Array.isArray(data?.models)
 				? data.models
-					.map((entry: { name?: unknown } | string) =>
+					.map((entry: { name?: string } | string) =>
 						typeof entry === "string" ? entry : entry?.name,
 					)
 					.filter(

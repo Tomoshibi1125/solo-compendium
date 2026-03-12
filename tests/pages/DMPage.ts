@@ -412,8 +412,6 @@ export class DMPage {
    * Start an active session for players to join.
    */
   async startSession(sessionId: string, campaignId?: string): Promise<void> {
-    // For now, use the existing session planner approach
-    // TODO: Update when active session UI is implemented
     await this.page.goto(`/campaigns/${campaignId || 'unknown'}`);
     await this.page.waitForTimeout(2_000);
   }

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Audio System React Hooks
  * React integration for the audio player service
  */
@@ -791,8 +791,7 @@ export function useAudioUpload() {
  * Hook for keyboard shortcuts
  */
 export function useAudioShortcuts() {
-	const { play, pause, stop, next, previous, setVolume, setMasterVolume } =
-		useAudioPlayer();
+	const { play, pause, next, previous, setMasterVolume } = useAudioPlayer();
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {

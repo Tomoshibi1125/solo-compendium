@@ -1,1671 +1,1371 @@
 export interface SigilEntry {
-  id: string;
-  name: string;
-  description: string;
-  effect_description: string;
-  rune_type: string;
-  rune_category: string;
-  rune_level: number;
-  rarity: "common" | "uncommon" | "rare" | "very_rare" | "legendary";
-  effect_type: "active" | "passive" | "both";
-  requires_level?: number;
-  passive_bonuses?: Record<string, unknown>;
-  can_inscribe_on?: string[];
-  inscription_difficulty?: number;
-  tags?: string[];
-  image?: string;
-  source_book?: string;
+	id: string;
+	name: string;
+	description: string;
+	effect_description: string;
+	rune_type: string;
+	rune_category: string;
+	rune_level: number;
+	rarity: "common" | "uncommon" | "rare" | "very_rare" | "legendary";
+	effect_type: "active" | "passive" | "both";
+	requires_level?: number;
+	passive_bonuses?: Record<string, unknown>;
+	can_inscribe_on?: string[];
+	inscription_difficulty?: number;
+	tags?: string[];
+	image?: string;
+	source_book?: string;
 }
 
 export const sigils: SigilEntry[] = [
-  {
-    "id": "sigil-fire-weapon-1",
-    "name": "Sigil of Fire Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure fire energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 1d6 fire damage. On a critical hit, the target is set ablaze, taking 1d6 fire damage at the start of their turns.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "fire",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/fire-sigil.webp"
-  },
-  {
-    "id": "sigil-fire-armor-2",
-    "name": "Sigil of Fire Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure fire energy to grant unique abilities.",
-    "effect_description": "Grants resistance to fire damage. When struck by a melee attack, the attacker takes 1d8 fire damage as flames erupt from the armor.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "fire",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/fire-sigil.webp"
-  },
-  {
-    "id": "sigil-fire-shield-3",
-    "name": "Sigil of Fire Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure fire energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to emit a burst of flame. Attackers within 5 feet must make a DC 30 Dexterity save or take 3d8 fire damage.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "fire",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/fire-sigil.webp"
-  },
-  {
-    "id": "sigil-fire-accessory-4",
-    "name": "Sigil of Fire Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure fire energy to grant unique abilities.",
-    "effect_description": "Your fire spells deal an additional 10 damage, and ignore fire resistance.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "fire",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/fire-sigil.webp"
-  },
-  {
-    "id": "sigil-fire-boots-5",
-    "name": "Sigil of Fire Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure fire energy to grant unique abilities.",
-    "effect_description": "You leave a trail of fire behind you. Once per turn, you can dash as a bonus action, causing spaces you leave to deal 1d8 fire damage to enemies entering them.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "fire",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/fire-sigil.webp"
-  },
-  {
-    "id": "sigil-ice-weapon-6",
-    "name": "Sigil of Ice Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure ice energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 1d6 cold damage. Reduces the target's movement speed by 10 ft for 1 minute.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "ice",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/ice-sigil.webp"
-  },
-  {
-    "id": "sigil-ice-armor-7",
-    "name": "Sigil of Ice Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure ice energy to grant unique abilities.",
-    "effect_description": "Grants resistance to cold damage. You are immune to being frozen or restrained by ice.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "ice",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/ice-sigil.webp"
-  },
-  {
-    "id": "sigil-ice-shield-8",
-    "name": "Sigil of Ice Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure ice energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to flash-freeze the attacker's weapon, imposing a -2 penalty to their next attack roll.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "ice",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/ice-sigil.webp"
-  },
-  {
-    "id": "sigil-ice-accessory-9",
-    "name": "Sigil of Ice Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure ice energy to grant unique abilities.",
-    "effect_description": "Your cold spells can target one additional creature within 10 feet of the original target.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "ice",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/ice-sigil.webp"
-  },
-  {
-    "id": "sigil-ice-boots-10",
-    "name": "Sigil of Ice Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure ice energy to grant unique abilities.",
-    "effect_description": "You can move across icy and slippery surfaces without penalty, and can leave a 10-foot radius patch of slippery ice when you stop moving.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "ice",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/ice-sigil.webp"
-  },
-  {
-    "id": "sigil-lightning-weapon-11",
-    "name": "Sigil of Lightning Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure lightning energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 1d6 lightning damage. Lightning arcs to one additional target within 10 feet for half damage.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "lightning",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/lightning-sigil.webp"
-  },
-  {
-    "id": "sigil-lightning-armor-12",
-    "name": "Sigil of Lightning Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure lightning energy to grant unique abilities.",
-    "effect_description": "Grants resistance to lightning damage. Attackers that strike you in melee are shocked, unable to take reactions until the start of their next turn.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "lightning",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/lightning-sigil.webp"
-  },
-  {
-    "id": "sigil-lightning-shield-13",
-    "name": "Sigil of Lightning Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure lightning energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to push the attacker 10 feet away with a thunderous boom.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "lightning",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/lightning-sigil.webp"
-  },
-  {
-    "id": "sigil-lightning-accessory-14",
-    "name": "Sigil of Lightning Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure lightning energy to grant unique abilities.",
-    "effect_description": "Your lightning spells gain a +1 bonus to their spell save DC.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "lightning",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/lightning-sigil.webp"
-  },
-  {
-    "id": "sigil-lightning-boots-15",
-    "name": "Sigil of Lightning Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure lightning energy to grant unique abilities.",
-    "effect_description": "Your movement speed increases by 40 ft. Moving out of an enemy's reach does not provoke opportunity attacks.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "lightning",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/lightning-sigil.webp"
-  },
-  {
-    "id": "sigil-shadow-weapon-16",
-    "name": "Sigil of Shadow Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure shadow energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 1d8 necrotic damage. You gain advantage on attacks against targets in dim light or darkness.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "shadow",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/shadow-sigil.webp"
-  },
-  {
-    "id": "sigil-shadow-armor-17",
-    "name": "Sigil of Shadow Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure shadow energy to grant unique abilities.",
-    "effect_description": "Grants resistance to necrotic damage. While in dim light, attacks against you have disadvantage.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "shadow",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/shadow-sigil.webp"
-  },
-  {
-    "id": "sigil-shadow-shield-18",
-    "name": "Sigil of Shadow Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure shadow energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to fade into shadows, becoming invisible until the start of your next turn.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "shadow",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/shadow-sigil.webp"
-  },
-  {
-    "id": "sigil-shadow-accessory-19",
-    "name": "Sigil of Shadow Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure shadow energy to grant unique abilities.",
-    "effect_description": "Your illusion and necrotic spells have their range doubled.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "shadow",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/shadow-sigil.webp"
-  },
-  {
-    "id": "sigil-shadow-boots-20",
-    "name": "Sigil of Shadow Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure shadow energy to grant unique abilities.",
-    "effect_description": "You can use a bonus action to teleport up to 80 feet to an unoccupied space you can see that is also in dim light or darkness.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "shadow",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/shadow-sigil.webp"
-  },
-  {
-    "id": "sigil-light-weapon-21",
-    "name": "Sigil of Light Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure light energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 3d8 radiant damage. The target sheds bright light for 10 feet and cannot benefit from invisibility.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "light",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/light-sigil.webp"
-  },
-  {
-    "id": "sigil-light-armor-22",
-    "name": "Sigil of Light Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure light energy to grant unique abilities.",
-    "effect_description": "Grants resistance to radiant damage. You emit bright light in a 15-foot radius; allies within this light gain +1 to saving throws.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "light",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/light-sigil.webp"
-  },
-  {
-    "id": "sigil-light-shield-23",
-    "name": "Sigil of Light Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure light energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to flare blinding light. The attacker must make a DC 25 Constitution save or be blinded until the end of their turn.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "light",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/light-sigil.webp"
-  },
-  {
-    "id": "sigil-light-accessory-24",
-    "name": "Sigil of Light Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure light energy to grant unique abilities.",
-    "effect_description": "Healing spells you cast restore an additional 3d8 hit points.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "light",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/light-sigil.webp"
-  },
-  {
-    "id": "sigil-light-boots-25",
-    "name": "Sigil of Light Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure light energy to grant unique abilities.",
-    "effect_description": "You gain a flying speed equal to your walking speed. You leave a trail of floating starlight that illuminates the area.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "light",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/light-sigil.webp"
-  },
-  {
-    "id": "sigil-earth-weapon-26",
-    "name": "Sigil of Earth Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure earth energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 2d8 bludgeoning damage. On a hit, the target must make a DC 25 Strength save or be knocked prone.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "earth",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/earth-sigil.webp"
-  },
-  {
-    "id": "sigil-earth-armor-27",
-    "name": "Sigil of Earth Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure earth energy to grant unique abilities.",
-    "effect_description": "Grants resistance to slashing damage. You cannot be moved against your will while standing on solid ground.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "earth",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/earth-sigil.webp"
-  },
-  {
-    "id": "sigil-earth-shield-28",
-    "name": "Sigil of Earth Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure earth energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you gain temporary hit points equal to the damage blocked, up to 40.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "earth",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/earth-sigil.webp"
-  },
-  {
-    "id": "sigil-earth-accessory-29",
-    "name": "Sigil of Earth Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure earth energy to grant unique abilities.",
-    "effect_description": "Earth and transmutation spells you cast count as one level higher.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "earth",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/earth-sigil.webp"
-  },
-  {
-    "id": "sigil-earth-boots-30",
-    "name": "Sigil of Earth Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure earth energy to grant unique abilities.",
-    "effect_description": "You gain tremorsense out to 40 feet and ignore difficult terrain made of earth or stone.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "earth",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/earth-sigil.webp"
-  },
-  {
-    "id": "sigil-wind-weapon-31",
-    "name": "Sigil of Wind Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure wind energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks gain reach (an extra 5 feet) and deal an extra 1d8 slashing damage from razor winds.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "wind",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/wind-sigil.webp"
-  },
-  {
-    "id": "sigil-wind-armor-32",
-    "name": "Sigil of Wind Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure wind energy to grant unique abilities.",
-    "effect_description": "Grants advantage on Dexterity saving throws against area of effect spells. Missiles have a 50% chance to be deflected away from you.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "wind",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/wind-sigil.webp"
-  },
-  {
-    "id": "sigil-wind-shield-33",
-    "name": "Sigil of Wind Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure wind energy to grant unique abilities.",
-    "effect_description": "When you block a ranged attack, you can use your reaction to redirect the projectile at another target within 30 feet.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "wind",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/wind-sigil.webp"
-  },
-  {
-    "id": "sigil-wind-accessory-34",
-    "name": "Sigil of Wind Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure wind energy to grant unique abilities.",
-    "effect_description": "Your spells that deal thunder or slashing damage push targets 10 feet away on a failed saving throw.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "wind",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/wind-sigil.webp"
-  },
-  {
-    "id": "sigil-wind-boots-35",
-    "name": "Sigil of Wind Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure wind energy to grant unique abilities.",
-    "effect_description": "You can cast Levitate on yourself at will, and you have advantage on Acrobatics checks.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "wind",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/wind-sigil.webp"
-  },
-  {
-    "id": "sigil-blood-weapon-36",
-    "name": "Sigil of Blood Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure blood energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 3d8 necrotic damage. You heal for half of the necrotic damage dealt.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "blood",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/blood-sigil.webp"
-  },
-  {
-    "id": "sigil-blood-armor-37",
-    "name": "Sigil of Blood Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure blood energy to grant unique abilities.",
-    "effect_description": "When you fall below half your maximum hit points, you gain temporary HP equal to 90.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "blood",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/blood-sigil.webp"
-  },
-  {
-    "id": "sigil-blood-shield-38",
-    "name": "Sigil of Blood Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure blood energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can expend a Hit Die to immediately heal yourself.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "blood",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/blood-sigil.webp"
-  },
-  {
-    "id": "sigil-blood-accessory-39",
-    "name": "Sigil of Blood Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure blood energy to grant unique abilities.",
-    "effect_description": "When you cast a spell that deals damage, you can expend 5 HP to max out one of the damage dice.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "blood",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/blood-sigil.webp"
-  },
-  {
-    "id": "sigil-blood-boots-40",
-    "name": "Sigil of Blood Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure blood energy to grant unique abilities.",
-    "effect_description": "You can flawlessly track bleeding targets up to 1 mile away, and you gain +10 movement speed when moving toward a wounded enemy.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "blood",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/blood-sigil.webp"
-  },
-  {
-    "id": "sigil-void-weapon-41",
-    "name": "Sigil of Void Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure void energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 1d6 force damage. Targets hit lose their resistance to force damage for 1 minute.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "void",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/void-sigil.webp"
-  },
-  {
-    "id": "sigil-void-armor-42",
-    "name": "Sigil of Void Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure void energy to grant unique abilities.",
-    "effect_description": "Grants resistance to force damage. Spells targeting you have a 20% chance to be absorbed harmlessly into the void.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "void",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/void-sigil.webp"
-  },
-  {
-    "id": "sigil-void-shield-43",
-    "name": "Sigil of Void Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure void energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to create a gravity well, pulling enemies within 15 feet exactly 5 feet closer to you.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "void",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/void-sigil.webp"
-  },
-  {
-    "id": "sigil-void-accessory-44",
-    "name": "Sigil of Void Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure void energy to grant unique abilities.",
-    "effect_description": "Your spells ignore half cover and three-quarters cover.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "void",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/void-sigil.webp"
-  },
-  {
-    "id": "sigil-void-boots-45",
-    "name": "Sigil of Void Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure void energy to grant unique abilities.",
-    "effect_description": "You hover slightly off the ground, leaving no tracks and ignoring ground-based traps. You are immune to the Prone condition.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "void",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/void-sigil.webp"
-  },
-  {
-    "id": "sigil-time-weapon-46",
-    "name": "Sigil of Time Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure time energy to grant unique abilities.",
-    "effect_description": "When you take the Attack action, you can make one additional weapon attack as a bonus action, dealing 3d8 force damage.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "time",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/time-sigil.webp"
-  },
-  {
-    "id": "sigil-time-armor-47",
-    "name": "Sigil of Time Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure time energy to grant unique abilities.",
-    "effect_description": "Once per long rest, when you would be reduced to 0 hit points, time rewinds, restoring you to the hit points you had at the start of your previous turn.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "time",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/time-sigil.webp"
-  },
-  {
-    "id": "sigil-time-shield-48",
-    "name": "Sigil of Time Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure time energy to grant unique abilities.",
-    "effect_description": "When you are hit by an attack, you can use your reaction to force the attacker to reroll the attack (taking the lower result).",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "time",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/time-sigil.webp"
-  },
-  {
-    "id": "sigil-time-accessory-49",
-    "name": "Sigil of Time Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure time energy to grant unique abilities.",
-    "effect_description": "You have advantage on Initiative rolls, and you can cast 'Haste' once per long rest without expending a slot.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "time",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/time-sigil.webp"
-  },
-  {
-    "id": "sigil-time-boots-50",
-    "name": "Sigil of Time Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure time energy to grant unique abilities.",
-    "effect_description": "You can use a bonus action to mark your current location in time. At the end of your next turn, you teleport back to that space.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "time",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/time-sigil.webp"
-  },
-  {
-    "id": "sigil-space-weapon-51",
-    "name": "Sigil of Space Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure space energy to grant unique abilities.",
-    "effect_description": "Your melee attacks can hit targets up to 15 feet away through micro-portals, dealing an extra 1d8 force damage.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "space",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/space-sigil.webp"
-  },
-  {
-    "id": "sigil-space-armor-52",
-    "name": "Sigil of Space Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure space energy to grant unique abilities.",
-    "effect_description": "Ranged attacks against you are made with disadvantage as reality distort around you.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "space",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/space-sigil.webp"
-  },
-  {
-    "id": "sigil-space-shield-53",
-    "name": "Sigil of Space Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure space energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to swap places with a willing creature within 30 feet.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "space",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/space-sigil.webp"
-  },
-  {
-    "id": "sigil-space-accessory-54",
-    "name": "Sigil of Space Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure space energy to grant unique abilities.",
-    "effect_description": "Your spells double in range, and touch spells can be cast at a distance of 30 feet.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "space",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/space-sigil.webp"
-  },
-  {
-    "id": "sigil-space-boots-55",
-    "name": "Sigil of Space Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure space energy to grant unique abilities.",
-    "effect_description": "You can teleport up to your movement speed instead of walking.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "space",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/space-sigil.webp"
-  },
-  {
-    "id": "sigil-mind-weapon-56",
-    "name": "Sigil of Mind Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure mind energy to grant unique abilities.",
-    "effect_description": "Your weapon attacks deal an extra 1d6 psychic damage. On a critical hit, the target is confused until their next turn.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "mind",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/mind-sigil.webp"
-  },
-  {
-    "id": "sigil-mind-armor-57",
-    "name": "Sigil of Mind Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure mind energy to grant unique abilities.",
-    "effect_description": "Grants resistance to psychic damage. You are immune to being charmed or frightened.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "mind",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/mind-sigil.webp"
-  },
-  {
-    "id": "sigil-mind-shield-58",
-    "name": "Sigil of Mind Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure mind energy to grant unique abilities.",
-    "effect_description": "When you block a melee attack, the attacker takes 2d8 psychic damage from a mental backlash.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "mind",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/mind-sigil.webp"
-  },
-  {
-    "id": "sigil-mind-accessory-59",
-    "name": "Sigil of Mind Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure mind energy to grant unique abilities.",
-    "effect_description": "You gain telepathy out to 60 feet, and illusion spells you cast require an Intelligence saving throw instead of Wisdom.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "mind",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/mind-sigil.webp"
-  },
-  {
-    "id": "sigil-mind-boots-60",
-    "name": "Sigil of Mind Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure mind energy to grant unique abilities.",
-    "effect_description": "You can use a bonus action to become invisible to one specific creature you can see for 1 minute.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "mind",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/mind-sigil.webp"
-  },
-  {
-    "id": "sigil-soul-weapon-61",
-    "name": "Sigil of Soul Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure soul energy to grant unique abilities.",
-    "effect_description": "Your attacks deal an extra 1d6 radiant or necrotic damage (your choice). Slain enemies can't be raised as undead.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "soul",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/soul-sigil.webp"
-  },
-  {
-    "id": "sigil-soul-armor-62",
-    "name": "Sigil of Soul Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure soul energy to grant unique abilities.",
-    "effect_description": "You gain advantage on death saving throws. When you heal a creature, you both gain 40 temporary hit points.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "soul",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/soul-sigil.webp"
-  },
-  {
-    "id": "sigil-soul-shield-63",
-    "name": "Sigil of Soul Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure soul energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to grant an ally within 30 feet a bonus to their next saving throw equal to your proficiency modifier.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "soul",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/soul-sigil.webp"
-  },
-  {
-    "id": "sigil-soul-accessory-64",
-    "name": "Sigil of Soul Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure soul energy to grant unique abilities.",
-    "effect_description": "Your soul fuels your magic. You can cast spells without material components up to a value of 300 gold.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "soul",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/soul-sigil.webp"
-  },
-  {
-    "id": "sigil-soul-boots-65",
-    "name": "Sigil of Soul Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure soul energy to grant unique abilities.",
-    "effect_description": "You can walk through solid objects up to 5 feet thick as difficult terrain once per turn.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "soul",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/soul-sigil.webp"
-  },
-  {
-    "id": "sigil-nature-weapon-66",
-    "name": "Sigil of Nature Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure nature energy to grant unique abilities.",
-    "effect_description": "Your weapons deal an extra 2d8 poison damage. On a hit, thorns sprout from the wound causing 1d4 damage if the target moves.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "nature",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/nature-sigil.webp"
-  },
-  {
-    "id": "sigil-nature-armor-67",
-    "name": "Sigil of Nature Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure nature energy to grant unique abilities.",
-    "effect_description": "Grants resistance to poison damage. You blend into natural terrain, gaining advantage on Stealth checks in wilderness.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "nature",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/nature-sigil.webp"
-  },
-  {
-    "id": "sigil-nature-shield-68",
-    "name": "Sigil of Nature Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure nature energy to grant unique abilities.",
-    "effect_description": "When you block an attack, grasping vines erupt, reducing the attacker's speed to 0 until the start of their next turn.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 2,
-    "rarity": "uncommon",
-    "effect_type": "passive",
-    "requires_level": 2,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 12,
-    "tags": [
-      "nature",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/nature-sigil.webp"
-  },
-  {
-    "id": "sigil-nature-accessory-69",
-    "name": "Sigil of Nature Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure nature energy to grant unique abilities.",
-    "effect_description": "Beasts and plants will not attack you unless provoked. Your healing spells also cure the poisoned condition.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "nature",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/nature-sigil.webp"
-  },
-  {
-    "id": "sigil-nature-boots-70",
-    "name": "Sigil of Nature Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure nature energy to grant unique abilities.",
-    "effect_description": "You ignore difficult terrain caused by plants or natural overgrowth, and you leave no trace of your passage.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "nature",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/nature-sigil.webp"
-  },
-  {
-    "id": "sigil-metal-weapon-71",
-    "name": "Sigil of Metal Strikes",
-    "description": "A mastercrafted sigil. When inscribed on a weapon, it channels pure metal energy to grant unique abilities.",
-    "effect_description": "Your attacks are considered adamantine, dealing max damage to objects and ignoring resistances of constructs. They deal an extra 2d8 slashing damage.",
-    "rune_type": "offensive",
-    "rune_category": "Combat",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "weapon"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "metal",
-      "sigil",
-      "weapon"
-    ],
-    "image": "/generated/sigils/metal-sigil.webp"
-  },
-  {
-    "id": "sigil-metal-armor-72",
-    "name": "Sigil of Metal Bulwark",
-    "description": "A mastercrafted sigil. When inscribed on a armor, it channels pure metal energy to grant unique abilities.",
-    "effect_description": "Your AC increases by +2, and critical hits against you become normal hits.",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "armor"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "metal",
-      "sigil",
-      "armor"
-    ],
-    "image": "/generated/sigils/metal-sigil.webp"
-  },
-  {
-    "id": "sigil-metal-shield-73",
-    "name": "Sigil of Metal Deflection",
-    "description": "A mastercrafted sigil. When inscribed on a shield, it channels pure metal energy to grant unique abilities.",
-    "effect_description": "When you block an attack, you can use your reaction to disarm the attacker if they are wielding a metal weapon (DC 30 Strength save).",
-    "rune_type": "defensive",
-    "rune_category": "Defense",
-    "rune_level": 8,
-    "rarity": "legendary",
-    "effect_type": "passive",
-    "requires_level": 8,
-    "can_inscribe_on": [
-      "shield"
-    ],
-    "inscription_difficulty": 23,
-    "tags": [
-      "metal",
-      "sigil",
-      "shield"
-    ],
-    "image": "/generated/sigils/metal-sigil.webp"
-  },
-  {
-    "id": "sigil-metal-accessory-74",
-    "name": "Sigil of Metal Channeling",
-    "description": "A mastercrafted sigil. When inscribed on a accessory, it channels pure metal energy to grant unique abilities.",
-    "effect_description": "You have advantage on saving throws to maintain concentration, and you gain resistance to nonmagical bludgeoning damage.",
-    "rune_type": "caster",
-    "rune_category": "Control",
-    "rune_level": 4,
-    "rarity": "rare",
-    "effect_type": "passive",
-    "requires_level": 4,
-    "can_inscribe_on": [
-      "accessory"
-    ],
-    "inscription_difficulty": 14,
-    "tags": [
-      "metal",
-      "sigil",
-      "accessory"
-    ],
-    "image": "/generated/sigils/metal-sigil.webp"
-  },
-  {
-    "id": "sigil-metal-boots-75",
-    "name": "Sigil of Metal Stride",
-    "description": "A mastercrafted sigil. When inscribed on a boots, it channels pure metal energy to grant unique abilities.",
-    "effect_description": "You cannot be forcibly moved by wind or magic, and your kicks deal 1d8 bludgeoning damage.",
-    "rune_type": "martial",
-    "rune_category": "Mobility",
-    "rune_level": 6,
-    "rarity": "very_rare",
-    "effect_type": "passive",
-    "requires_level": 6,
-    "can_inscribe_on": [
-      "boots"
-    ],
-    "inscription_difficulty": 16,
-    "tags": [
-      "metal",
-      "sigil",
-      "boots"
-    ],
-    "image": "/generated/sigils/metal-sigil.webp"
-  }
+	{
+		id: "sigil-fire-weapon-1",
+		name: "Sigil of Fire Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure fire energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 1d6 fire damage. On a critical hit, the target is set ablaze, taking 1d6 fire damage at the start of their turns.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 12,
+		tags: ["fire", "sigil", "weapon"],
+		image: "/generated/sigils/fire-sigil.webp",
+	},
+	{
+		id: "sigil-fire-armor-2",
+		name: "Sigil of Fire Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure fire energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to fire damage. When struck by a melee attack, the attacker takes 1d8 fire damage as flames erupt from the armor.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 14,
+		tags: ["fire", "sigil", "armor"],
+		image: "/generated/sigils/fire-sigil.webp",
+	},
+	{
+		id: "sigil-fire-shield-3",
+		name: "Sigil of Fire Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure fire energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to emit a burst of flame. Attackers within 5 feet must make a DC 30 Dexterity save or take 3d8 fire damage.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 23,
+		tags: ["fire", "sigil", "shield"],
+		image: "/generated/sigils/fire-sigil.webp",
+	},
+	{
+		id: "sigil-fire-accessory-4",
+		name: "Sigil of Fire Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure fire energy to grant unique abilities.",
+		effect_description:
+			"Your fire spells deal an additional 10 damage, and ignore fire resistance.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 12,
+		tags: ["fire", "sigil", "accessory"],
+		image: "/generated/sigils/fire-sigil.webp",
+	},
+	{
+		id: "sigil-fire-boots-5",
+		name: "Sigil of Fire Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure fire energy to grant unique abilities.",
+		effect_description:
+			"You leave a trail of fire behind you. Once per turn, you can dash as a bonus action, causing spaces you leave to deal 1d8 fire damage to enemies entering them.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 14,
+		tags: ["fire", "sigil", "boots"],
+		image: "/generated/sigils/fire-sigil.webp",
+	},
+	{
+		id: "sigil-ice-weapon-6",
+		name: "Sigil of Ice Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure ice energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 1d6 cold damage. Reduces the target's movement speed by 10 ft for 1 minute.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 12,
+		tags: ["ice", "sigil", "weapon"],
+		image: "/generated/sigils/ice-sigil.webp",
+	},
+	{
+		id: "sigil-ice-armor-7",
+		name: "Sigil of Ice Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure ice energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to cold damage. You are immune to being frozen or restrained by ice.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 12,
+		tags: ["ice", "sigil", "armor"],
+		image: "/generated/sigils/ice-sigil.webp",
+	},
+	{
+		id: "sigil-ice-shield-8",
+		name: "Sigil of Ice Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure ice energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to flash-freeze the attacker's weapon, imposing a -2 penalty to their next attack roll.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 12,
+		tags: ["ice", "sigil", "shield"],
+		image: "/generated/sigils/ice-sigil.webp",
+	},
+	{
+		id: "sigil-ice-accessory-9",
+		name: "Sigil of Ice Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure ice energy to grant unique abilities.",
+		effect_description:
+			"Your cold spells can target one additional creature within 10 feet of the original target.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 12,
+		tags: ["ice", "sigil", "accessory"],
+		image: "/generated/sigils/ice-sigil.webp",
+	},
+	{
+		id: "sigil-ice-boots-10",
+		name: "Sigil of Ice Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure ice energy to grant unique abilities.",
+		effect_description:
+			"You can move across icy and slippery surfaces without penalty, and can leave a 10-foot radius patch of slippery ice when you stop moving.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 23,
+		tags: ["ice", "sigil", "boots"],
+		image: "/generated/sigils/ice-sigil.webp",
+	},
+	{
+		id: "sigil-lightning-weapon-11",
+		name: "Sigil of Lightning Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure lightning energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 1d6 lightning damage. Lightning arcs to one additional target within 10 feet for half damage.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 12,
+		tags: ["lightning", "sigil", "weapon"],
+		image: "/generated/sigils/lightning-sigil.webp",
+	},
+	{
+		id: "sigil-lightning-armor-12",
+		name: "Sigil of Lightning Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure lightning energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to lightning damage. Attackers that strike you in melee are shocked, unable to take reactions until the start of their next turn.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 14,
+		tags: ["lightning", "sigil", "armor"],
+		image: "/generated/sigils/lightning-sigil.webp",
+	},
+	{
+		id: "sigil-lightning-shield-13",
+		name: "Sigil of Lightning Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure lightning energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to push the attacker 10 feet away with a thunderous boom.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 14,
+		tags: ["lightning", "sigil", "shield"],
+		image: "/generated/sigils/lightning-sigil.webp",
+	},
+	{
+		id: "sigil-lightning-accessory-14",
+		name: "Sigil of Lightning Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure lightning energy to grant unique abilities.",
+		effect_description:
+			"Your lightning spells gain a +1 bonus to their spell save DC.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 12,
+		tags: ["lightning", "sigil", "accessory"],
+		image: "/generated/sigils/lightning-sigil.webp",
+	},
+	{
+		id: "sigil-lightning-boots-15",
+		name: "Sigil of Lightning Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure lightning energy to grant unique abilities.",
+		effect_description:
+			"Your movement speed increases by 40 ft. Moving out of an enemy's reach does not provoke opportunity attacks.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 23,
+		tags: ["lightning", "sigil", "boots"],
+		image: "/generated/sigils/lightning-sigil.webp",
+	},
+	{
+		id: "sigil-shadow-weapon-16",
+		name: "Sigil of Shadow Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure shadow energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 1d8 necrotic damage. You gain advantage on attacks against targets in dim light or darkness.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 14,
+		tags: ["shadow", "sigil", "weapon"],
+		image: "/generated/sigils/shadow-sigil.webp",
+	},
+	{
+		id: "sigil-shadow-armor-17",
+		name: "Sigil of Shadow Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure shadow energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to necrotic damage. While in dim light, attacks against you have disadvantage.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 23,
+		tags: ["shadow", "sigil", "armor"],
+		image: "/generated/sigils/shadow-sigil.webp",
+	},
+	{
+		id: "sigil-shadow-shield-18",
+		name: "Sigil of Shadow Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure shadow energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to fade into shadows, becoming invisible until the start of your next turn.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 23,
+		tags: ["shadow", "sigil", "shield"],
+		image: "/generated/sigils/shadow-sigil.webp",
+	},
+	{
+		id: "sigil-shadow-accessory-19",
+		name: "Sigil of Shadow Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure shadow energy to grant unique abilities.",
+		effect_description:
+			"Your illusion and necrotic spells have their range doubled.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 16,
+		tags: ["shadow", "sigil", "accessory"],
+		image: "/generated/sigils/shadow-sigil.webp",
+	},
+	{
+		id: "sigil-shadow-boots-20",
+		name: "Sigil of Shadow Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure shadow energy to grant unique abilities.",
+		effect_description:
+			"You can use a bonus action to teleport up to 80 feet to an unoccupied space you can see that is also in dim light or darkness.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 23,
+		tags: ["shadow", "sigil", "boots"],
+		image: "/generated/sigils/shadow-sigil.webp",
+	},
+	{
+		id: "sigil-light-weapon-21",
+		name: "Sigil of Light Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure light energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 3d8 radiant damage. The target sheds bright light for 10 feet and cannot benefit from invisibility.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 23,
+		tags: ["light", "sigil", "weapon"],
+		image: "/generated/sigils/light-sigil.webp",
+	},
+	{
+		id: "sigil-light-armor-22",
+		name: "Sigil of Light Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure light energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to radiant damage. You emit bright light in a 15-foot radius; allies within this light gain +1 to saving throws.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 12,
+		tags: ["light", "sigil", "armor"],
+		image: "/generated/sigils/light-sigil.webp",
+	},
+	{
+		id: "sigil-light-shield-23",
+		name: "Sigil of Light Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure light energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to flare blinding light. The attacker must make a DC 25 Constitution save or be blinded until the end of their turn.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 16,
+		tags: ["light", "sigil", "shield"],
+		image: "/generated/sigils/light-sigil.webp",
+	},
+	{
+		id: "sigil-light-accessory-24",
+		name: "Sigil of Light Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure light energy to grant unique abilities.",
+		effect_description:
+			"Healing spells you cast restore an additional 3d8 hit points.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 23,
+		tags: ["light", "sigil", "accessory"],
+		image: "/generated/sigils/light-sigil.webp",
+	},
+	{
+		id: "sigil-light-boots-25",
+		name: "Sigil of Light Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure light energy to grant unique abilities.",
+		effect_description:
+			"You gain a flying speed equal to your walking speed. You leave a trail of floating starlight that illuminates the area.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 12,
+		tags: ["light", "sigil", "boots"],
+		image: "/generated/sigils/light-sigil.webp",
+	},
+	{
+		id: "sigil-earth-weapon-26",
+		name: "Sigil of Earth Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure earth energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 2d8 bludgeoning damage. On a hit, the target must make a DC 25 Strength save or be knocked prone.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 16,
+		tags: ["earth", "sigil", "weapon"],
+		image: "/generated/sigils/earth-sigil.webp",
+	},
+	{
+		id: "sigil-earth-armor-27",
+		name: "Sigil of Earth Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure earth energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to slashing damage. You cannot be moved against your will while standing on solid ground.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 12,
+		tags: ["earth", "sigil", "armor"],
+		image: "/generated/sigils/earth-sigil.webp",
+	},
+	{
+		id: "sigil-earth-shield-28",
+		name: "Sigil of Earth Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure earth energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you gain temporary hit points equal to the damage blocked, up to 40.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 14,
+		tags: ["earth", "sigil", "shield"],
+		image: "/generated/sigils/earth-sigil.webp",
+	},
+	{
+		id: "sigil-earth-accessory-29",
+		name: "Sigil of Earth Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure earth energy to grant unique abilities.",
+		effect_description:
+			"Earth and transmutation spells you cast count as one level higher.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 12,
+		tags: ["earth", "sigil", "accessory"],
+		image: "/generated/sigils/earth-sigil.webp",
+	},
+	{
+		id: "sigil-earth-boots-30",
+		name: "Sigil of Earth Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure earth energy to grant unique abilities.",
+		effect_description:
+			"You gain tremorsense out to 40 feet and ignore difficult terrain made of earth or stone.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 14,
+		tags: ["earth", "sigil", "boots"],
+		image: "/generated/sigils/earth-sigil.webp",
+	},
+	{
+		id: "sigil-wind-weapon-31",
+		name: "Sigil of Wind Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure wind energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks gain reach (an extra 5 feet) and deal an extra 1d8 slashing damage from razor winds.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 14,
+		tags: ["wind", "sigil", "weapon"],
+		image: "/generated/sigils/wind-sigil.webp",
+	},
+	{
+		id: "sigil-wind-armor-32",
+		name: "Sigil of Wind Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure wind energy to grant unique abilities.",
+		effect_description:
+			"Grants advantage on Dexterity saving throws against area of effect spells. Missiles have a 50% chance to be deflected away from you.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 12,
+		tags: ["wind", "sigil", "armor"],
+		image: "/generated/sigils/wind-sigil.webp",
+	},
+	{
+		id: "sigil-wind-shield-33",
+		name: "Sigil of Wind Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure wind energy to grant unique abilities.",
+		effect_description:
+			"When you block a ranged attack, you can use your reaction to redirect the projectile at another target within 30 feet.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 14,
+		tags: ["wind", "sigil", "shield"],
+		image: "/generated/sigils/wind-sigil.webp",
+	},
+	{
+		id: "sigil-wind-accessory-34",
+		name: "Sigil of Wind Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure wind energy to grant unique abilities.",
+		effect_description:
+			"Your spells that deal thunder or slashing damage push targets 10 feet away on a failed saving throw.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 16,
+		tags: ["wind", "sigil", "accessory"],
+		image: "/generated/sigils/wind-sigil.webp",
+	},
+	{
+		id: "sigil-wind-boots-35",
+		name: "Sigil of Wind Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure wind energy to grant unique abilities.",
+		effect_description:
+			"You can cast Levitate on yourself at will, and you have advantage on Acrobatics checks.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 12,
+		tags: ["wind", "sigil", "boots"],
+		image: "/generated/sigils/wind-sigil.webp",
+	},
+	{
+		id: "sigil-blood-weapon-36",
+		name: "Sigil of Blood Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure blood energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 3d8 necrotic damage. You heal for half of the necrotic damage dealt.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 23,
+		tags: ["blood", "sigil", "weapon"],
+		image: "/generated/sigils/blood-sigil.webp",
+	},
+	{
+		id: "sigil-blood-armor-37",
+		name: "Sigil of Blood Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure blood energy to grant unique abilities.",
+		effect_description:
+			"When you fall below half your maximum hit points, you gain temporary HP equal to 90.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 16,
+		tags: ["blood", "sigil", "armor"],
+		image: "/generated/sigils/blood-sigil.webp",
+	},
+	{
+		id: "sigil-blood-shield-38",
+		name: "Sigil of Blood Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure blood energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can expend a Hit Die to immediately heal yourself.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 12,
+		tags: ["blood", "sigil", "shield"],
+		image: "/generated/sigils/blood-sigil.webp",
+	},
+	{
+		id: "sigil-blood-accessory-39",
+		name: "Sigil of Blood Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure blood energy to grant unique abilities.",
+		effect_description:
+			"When you cast a spell that deals damage, you can expend 5 HP to max out one of the damage dice.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 23,
+		tags: ["blood", "sigil", "accessory"],
+		image: "/generated/sigils/blood-sigil.webp",
+	},
+	{
+		id: "sigil-blood-boots-40",
+		name: "Sigil of Blood Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure blood energy to grant unique abilities.",
+		effect_description:
+			"You can flawlessly track bleeding targets up to 1 mile away, and you gain +10 movement speed when moving toward a wounded enemy.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 12,
+		tags: ["blood", "sigil", "boots"],
+		image: "/generated/sigils/blood-sigil.webp",
+	},
+	{
+		id: "sigil-void-weapon-41",
+		name: "Sigil of Void Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure void energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 1d6 force damage. Targets hit lose their resistance to force damage for 1 minute.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 12,
+		tags: ["void", "sigil", "weapon"],
+		image: "/generated/sigils/void-sigil.webp",
+	},
+	{
+		id: "sigil-void-armor-42",
+		name: "Sigil of Void Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure void energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to force damage. Spells targeting you have a 20% chance to be absorbed harmlessly into the void.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 14,
+		tags: ["void", "sigil", "armor"],
+		image: "/generated/sigils/void-sigil.webp",
+	},
+	{
+		id: "sigil-void-shield-43",
+		name: "Sigil of Void Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure void energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to create a gravity well, pulling enemies within 15 feet exactly 5 feet closer to you.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 12,
+		tags: ["void", "sigil", "shield"],
+		image: "/generated/sigils/void-sigil.webp",
+	},
+	{
+		id: "sigil-void-accessory-44",
+		name: "Sigil of Void Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure void energy to grant unique abilities.",
+		effect_description:
+			"Your spells ignore half cover and three-quarters cover.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 14,
+		tags: ["void", "sigil", "accessory"],
+		image: "/generated/sigils/void-sigil.webp",
+	},
+	{
+		id: "sigil-void-boots-45",
+		name: "Sigil of Void Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure void energy to grant unique abilities.",
+		effect_description:
+			"You hover slightly off the ground, leaving no tracks and ignoring ground-based traps. You are immune to the Prone condition.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 16,
+		tags: ["void", "sigil", "boots"],
+		image: "/generated/sigils/void-sigil.webp",
+	},
+	{
+		id: "sigil-time-weapon-46",
+		name: "Sigil of Time Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure time energy to grant unique abilities.",
+		effect_description:
+			"When you take the Attack action, you can make one additional weapon attack as a bonus action, dealing 3d8 force damage.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 23,
+		tags: ["time", "sigil", "weapon"],
+		image: "/generated/sigils/time-sigil.webp",
+	},
+	{
+		id: "sigil-time-armor-47",
+		name: "Sigil of Time Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure time energy to grant unique abilities.",
+		effect_description:
+			"Once per long rest, when you would be reduced to 0 hit points, time rewinds, restoring you to the hit points you had at the start of your previous turn.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 12,
+		tags: ["time", "sigil", "armor"],
+		image: "/generated/sigils/time-sigil.webp",
+	},
+	{
+		id: "sigil-time-shield-48",
+		name: "Sigil of Time Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure time energy to grant unique abilities.",
+		effect_description:
+			"When you are hit by an attack, you can use your reaction to force the attacker to reroll the attack (taking the lower result).",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 14,
+		tags: ["time", "sigil", "shield"],
+		image: "/generated/sigils/time-sigil.webp",
+	},
+	{
+		id: "sigil-time-accessory-49",
+		name: "Sigil of Time Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure time energy to grant unique abilities.",
+		effect_description:
+			"You have advantage on Initiative rolls, and you can cast 'Haste' once per long rest without expending a slot.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 16,
+		tags: ["time", "sigil", "accessory"],
+		image: "/generated/sigils/time-sigil.webp",
+	},
+	{
+		id: "sigil-time-boots-50",
+		name: "Sigil of Time Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure time energy to grant unique abilities.",
+		effect_description:
+			"You can use a bonus action to mark your current location in time. At the end of your next turn, you teleport back to that space.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 14,
+		tags: ["time", "sigil", "boots"],
+		image: "/generated/sigils/time-sigil.webp",
+	},
+	{
+		id: "sigil-space-weapon-51",
+		name: "Sigil of Space Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure space energy to grant unique abilities.",
+		effect_description:
+			"Your melee attacks can hit targets up to 15 feet away through micro-portals, dealing an extra 1d8 force damage.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 14,
+		tags: ["space", "sigil", "weapon"],
+		image: "/generated/sigils/space-sigil.webp",
+	},
+	{
+		id: "sigil-space-armor-52",
+		name: "Sigil of Space Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure space energy to grant unique abilities.",
+		effect_description:
+			"Ranged attacks against you are made with disadvantage as reality distort around you.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 14,
+		tags: ["space", "sigil", "armor"],
+		image: "/generated/sigils/space-sigil.webp",
+	},
+	{
+		id: "sigil-space-shield-53",
+		name: "Sigil of Space Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure space energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to swap places with a willing creature within 30 feet.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 14,
+		tags: ["space", "sigil", "shield"],
+		image: "/generated/sigils/space-sigil.webp",
+	},
+	{
+		id: "sigil-space-accessory-54",
+		name: "Sigil of Space Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure space energy to grant unique abilities.",
+		effect_description:
+			"Your spells double in range, and touch spells can be cast at a distance of 30 feet.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 14,
+		tags: ["space", "sigil", "accessory"],
+		image: "/generated/sigils/space-sigil.webp",
+	},
+	{
+		id: "sigil-space-boots-55",
+		name: "Sigil of Space Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure space energy to grant unique abilities.",
+		effect_description:
+			"You can teleport up to your movement speed instead of walking.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 16,
+		tags: ["space", "sigil", "boots"],
+		image: "/generated/sigils/space-sigil.webp",
+	},
+	{
+		id: "sigil-mind-weapon-56",
+		name: "Sigil of Mind Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure mind energy to grant unique abilities.",
+		effect_description:
+			"Your weapon attacks deal an extra 1d6 psychic damage. On a critical hit, the target is confused until their next turn.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 12,
+		tags: ["mind", "sigil", "weapon"],
+		image: "/generated/sigils/mind-sigil.webp",
+	},
+	{
+		id: "sigil-mind-armor-57",
+		name: "Sigil of Mind Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure mind energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to psychic damage. You are immune to being charmed or frightened.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 16,
+		tags: ["mind", "sigil", "armor"],
+		image: "/generated/sigils/mind-sigil.webp",
+	},
+	{
+		id: "sigil-mind-shield-58",
+		name: "Sigil of Mind Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure mind energy to grant unique abilities.",
+		effect_description:
+			"When you block a melee attack, the attacker takes 2d8 psychic damage from a mental backlash.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 16,
+		tags: ["mind", "sigil", "shield"],
+		image: "/generated/sigils/mind-sigil.webp",
+	},
+	{
+		id: "sigil-mind-accessory-59",
+		name: "Sigil of Mind Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure mind energy to grant unique abilities.",
+		effect_description:
+			"You gain telepathy out to 60 feet, and illusion spells you cast require an Intelligence saving throw instead of Wisdom.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 23,
+		tags: ["mind", "sigil", "accessory"],
+		image: "/generated/sigils/mind-sigil.webp",
+	},
+	{
+		id: "sigil-mind-boots-60",
+		name: "Sigil of Mind Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure mind energy to grant unique abilities.",
+		effect_description:
+			"You can use a bonus action to become invisible to one specific creature you can see for 1 minute.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 14,
+		tags: ["mind", "sigil", "boots"],
+		image: "/generated/sigils/mind-sigil.webp",
+	},
+	{
+		id: "sigil-soul-weapon-61",
+		name: "Sigil of Soul Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure soul energy to grant unique abilities.",
+		effect_description:
+			"Your attacks deal an extra 1d6 radiant or necrotic damage (your choice). Slain enemies can't be raised as undead.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 12,
+		tags: ["soul", "sigil", "weapon"],
+		image: "/generated/sigils/soul-sigil.webp",
+	},
+	{
+		id: "sigil-soul-armor-62",
+		name: "Sigil of Soul Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure soul energy to grant unique abilities.",
+		effect_description:
+			"You gain advantage on death saving throws. When you heal a creature, you both gain 40 temporary hit points.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 23,
+		tags: ["soul", "sigil", "armor"],
+		image: "/generated/sigils/soul-sigil.webp",
+	},
+	{
+		id: "sigil-soul-shield-63",
+		name: "Sigil of Soul Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure soul energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to grant an ally within 30 feet a bonus to their next saving throw equal to your proficiency modifier.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 14,
+		tags: ["soul", "sigil", "shield"],
+		image: "/generated/sigils/soul-sigil.webp",
+	},
+	{
+		id: "sigil-soul-accessory-64",
+		name: "Sigil of Soul Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure soul energy to grant unique abilities.",
+		effect_description:
+			"Your soul fuels your magic. You can cast spells without material components up to a value of 300 gold.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 16,
+		tags: ["soul", "sigil", "accessory"],
+		image: "/generated/sigils/soul-sigil.webp",
+	},
+	{
+		id: "sigil-soul-boots-65",
+		name: "Sigil of Soul Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure soul energy to grant unique abilities.",
+		effect_description:
+			"You can walk through solid objects up to 5 feet thick as difficult terrain once per turn.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 14,
+		tags: ["soul", "sigil", "boots"],
+		image: "/generated/sigils/soul-sigil.webp",
+	},
+	{
+		id: "sigil-nature-weapon-66",
+		name: "Sigil of Nature Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure nature energy to grant unique abilities.",
+		effect_description:
+			"Your weapons deal an extra 2d8 poison damage. On a hit, thorns sprout from the wound causing 1d4 damage if the target moves.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 16,
+		tags: ["nature", "sigil", "weapon"],
+		image: "/generated/sigils/nature-sigil.webp",
+	},
+	{
+		id: "sigil-nature-armor-67",
+		name: "Sigil of Nature Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure nature energy to grant unique abilities.",
+		effect_description:
+			"Grants resistance to poison damage. You blend into natural terrain, gaining advantage on Stealth checks in wilderness.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 12,
+		tags: ["nature", "sigil", "armor"],
+		image: "/generated/sigils/nature-sigil.webp",
+	},
+	{
+		id: "sigil-nature-shield-68",
+		name: "Sigil of Nature Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure nature energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, grasping vines erupt, reducing the attacker's speed to 0 until the start of their next turn.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 2,
+		rarity: "uncommon",
+		effect_type: "passive",
+		requires_level: 2,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 12,
+		tags: ["nature", "sigil", "shield"],
+		image: "/generated/sigils/nature-sigil.webp",
+	},
+	{
+		id: "sigil-nature-accessory-69",
+		name: "Sigil of Nature Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure nature energy to grant unique abilities.",
+		effect_description:
+			"Beasts and plants will not attack you unless provoked. Your healing spells also cure the poisoned condition.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 23,
+		tags: ["nature", "sigil", "accessory"],
+		image: "/generated/sigils/nature-sigil.webp",
+	},
+	{
+		id: "sigil-nature-boots-70",
+		name: "Sigil of Nature Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure nature energy to grant unique abilities.",
+		effect_description:
+			"You ignore difficult terrain caused by plants or natural overgrowth, and you leave no trace of your passage.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 16,
+		tags: ["nature", "sigil", "boots"],
+		image: "/generated/sigils/nature-sigil.webp",
+	},
+	{
+		id: "sigil-metal-weapon-71",
+		name: "Sigil of Metal Strikes",
+		description:
+			"A mastercrafted sigil. When inscribed on a weapon, it channels pure metal energy to grant unique abilities.",
+		effect_description:
+			"Your attacks are considered adamantine, dealing max damage to objects and ignoring resistances of constructs. They deal an extra 2d8 slashing damage.",
+		rune_type: "offensive",
+		rune_category: "Combat",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["weapon"],
+		inscription_difficulty: 16,
+		tags: ["metal", "sigil", "weapon"],
+		image: "/generated/sigils/metal-sigil.webp",
+	},
+	{
+		id: "sigil-metal-armor-72",
+		name: "Sigil of Metal Bulwark",
+		description:
+			"A mastercrafted sigil. When inscribed on a armor, it channels pure metal energy to grant unique abilities.",
+		effect_description:
+			"Your AC increases by +2, and critical hits against you become normal hits.",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["armor"],
+		inscription_difficulty: 14,
+		tags: ["metal", "sigil", "armor"],
+		image: "/generated/sigils/metal-sigil.webp",
+	},
+	{
+		id: "sigil-metal-shield-73",
+		name: "Sigil of Metal Deflection",
+		description:
+			"A mastercrafted sigil. When inscribed on a shield, it channels pure metal energy to grant unique abilities.",
+		effect_description:
+			"When you block an attack, you can use your reaction to disarm the attacker if they are wielding a metal weapon (DC 30 Strength save).",
+		rune_type: "defensive",
+		rune_category: "Defense",
+		rune_level: 8,
+		rarity: "legendary",
+		effect_type: "passive",
+		requires_level: 8,
+		can_inscribe_on: ["shield"],
+		inscription_difficulty: 23,
+		tags: ["metal", "sigil", "shield"],
+		image: "/generated/sigils/metal-sigil.webp",
+	},
+	{
+		id: "sigil-metal-accessory-74",
+		name: "Sigil of Metal Channeling",
+		description:
+			"A mastercrafted sigil. When inscribed on a accessory, it channels pure metal energy to grant unique abilities.",
+		effect_description:
+			"You have advantage on saving throws to maintain concentration, and you gain resistance to nonmagical bludgeoning damage.",
+		rune_type: "caster",
+		rune_category: "Control",
+		rune_level: 4,
+		rarity: "rare",
+		effect_type: "passive",
+		requires_level: 4,
+		can_inscribe_on: ["accessory"],
+		inscription_difficulty: 14,
+		tags: ["metal", "sigil", "accessory"],
+		image: "/generated/sigils/metal-sigil.webp",
+	},
+	{
+		id: "sigil-metal-boots-75",
+		name: "Sigil of Metal Stride",
+		description:
+			"A mastercrafted sigil. When inscribed on a boots, it channels pure metal energy to grant unique abilities.",
+		effect_description:
+			"You cannot be forcibly moved by wind or magic, and your kicks deal 1d8 bludgeoning damage.",
+		rune_type: "martial",
+		rune_category: "Mobility",
+		rune_level: 6,
+		rarity: "very_rare",
+		effect_type: "passive",
+		requires_level: 6,
+		can_inscribe_on: ["boots"],
+		inscription_difficulty: 16,
+		tags: ["metal", "sigil", "boots"],
+		image: "/generated/sigils/metal-sigil.webp",
+	},
 ];

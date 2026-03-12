@@ -230,6 +230,7 @@ const CampaignSessionPlay = () => {
 															</Button>
 															{adj !== 0 && (
 																<button
+																	type="button"
 																	className="text-xs text-muted-foreground w-5 text-center hover:text-foreground"
 																	onClick={() =>
 																		setAdjustments((prev) => {

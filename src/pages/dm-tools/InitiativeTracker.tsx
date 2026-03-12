@@ -287,7 +287,7 @@ const InitiativeTracker = () => {
 		sessionId,
 	);
 	useCampaignCombatRealtime(campaignId, sessionId);
-	const { data: campaignMembers = [] } = useCampaignMembers(campaignId || "");
+	const { data: _campaignMembers = [] } = useCampaignMembers(campaignId || "");
 	const updateCombatSession = useUpdateCombatSession();
 	const upsertCombatants = useUpsertCombatants();
 	const activeCombatSession = combatSessionData?.session ?? null;

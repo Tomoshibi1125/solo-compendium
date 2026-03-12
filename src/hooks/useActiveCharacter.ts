@@ -6,11 +6,8 @@ const STORAGE_KEY = "active-character";
 
 export function useActiveCharacter() {
 	const { data: characters = [], isLoading } = useCharacters();
-	const {
-		state: activeCharacterId,
-		setState: setActiveCharacterId,
-		isAuthed,
-	} = useUserLocalState<string | null>(STORAGE_KEY, { initialState: null });
+	const { state: activeCharacterId, setState: setActiveCharacterId } =
+		useUserLocalState<string | null>(STORAGE_KEY, { initialState: null });
 
 	useEffect(() => {
 		if (characters.length === 0) return;

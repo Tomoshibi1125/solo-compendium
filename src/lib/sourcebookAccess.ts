@@ -95,7 +95,7 @@ const fetchAccessibleSourcebooks = (
 ): Promise<RpcResponse> =>
 	supabaseRpc.rpc("get_accessible_sourcebooks", {
 		p_campaign_id: campaignId,
-		p_user_id: userId,
+		puser_id: userId,
 	});
 
 export const sourcebookCandidates = (

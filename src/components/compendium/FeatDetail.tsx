@@ -54,8 +54,8 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 			{data.benefits && data.benefits.length > 0 && (
 				<SystemWindow title="BENEFITS">
 					<ul className="space-y-3">
-						{data.benefits.map((benefit, i) => (
-							<li key={i} className="flex items-start gap-3">
+						{data.benefits.map((benefit, _i) => (
+							<li key={benefit} className="flex items-start gap-3">
 								<CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
 								<span className="text-foreground">
 									{formatMonarchVernacular(benefit)}

@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { formatModifier } from "@/lib/characterCalculations";
-import { formatRollResult, rollDiceString } from "@/lib/diceRoller";
+import { type DiceRoll, formatRollResult, rollDiceString } from "@/lib/diceRoller";
 import { cn } from "@/lib/utils";
 import { formatMonarchVernacular } from "@/lib/vernacular";
 
@@ -29,7 +29,7 @@ interface ActionCardProps {
 	className?: string;
 }
 
-const TYPE_ICONS: Record<string, any> = {
+const TYPE_ICONS: Record<string, unknown> = {
 	action: Sword,
 	"bonus-action": Zap,
 	"bonus action": Zap,
@@ -71,9 +71,9 @@ function ActionCardComponent({
 	const { usePlayerToolsEnhancements, useCharacterSheetEnhancements } =
 		useGlobalDDBeyondIntegration();
 	const { rollInCampaign } = usePlayerToolsEnhancements();
-	const { quickRoll } = useCharacterSheetEnhancements(characterId || "");
+	const { _quickRoll } = useCharacterSheetEnhancements(characterId || "");
 
-	const Icon = type ? TYPE_ICONS[type] || Star : Star;
+	const Icon = (type ? TYPE_ICONS[type] || Star : Star) as React.ComponentType<{ className?: string }>;
 	const displayName = formatMonarchVernacular(name);
 	const displayDescription = formatMonarchVernacular(description);
 	const displayRange = range ? formatMonarchVernacular(range) : undefined;
@@ -94,7 +94,7 @@ function ActionCardComponent({
 		}
 
 		try {
-			let roll;
+			let roll: DiceRoll | undefined;
 			let message = "";
 			let formula = "";
 
@@ -150,8 +150,8 @@ function ActionCardComponent({
 							rollType === "attack"
 								? `${displayName} Attack`
 								: `${displayName} Damage`,
-						modifiers: roll.modifier ? { modifier: roll.modifier } : null,
-						character_id: characterId ?? null,
+						modifiers: roll.modifier ? { modifier: roll.modifier } : undefined,
+						character_id: characterId,
 					});
 				}
 
@@ -164,7 +164,7 @@ function ActionCardComponent({
 						rollType === "attack"
 							? `${displayName} Attack`
 							: `${displayName} Damage`,
-					modifiers: roll.modifier ? { modifier: roll.modifier } : null,
+					modifiers: roll.modifier ? { modifier: roll.modifier } : undefined,
 					campaign_id: campaignId ?? null,
 					character_id: characterId ?? null,
 				});
@@ -265,8 +265,8 @@ function ActionCardComponent({
 											rolls: [],
 											roll_type: "feature",
 											context: `Uses Action: ${displayName}`,
-											modifiers: null,
-											character_id: characterId ?? null,
+											modifiers: undefined,
+											character_id: characterId,
 										});
 									}
 									recordRoll.mutate({
@@ -275,7 +275,7 @@ function ActionCardComponent({
 										rolls: [],
 										roll_type: "feature",
 										context: `Uses Action: ${displayName}`,
-										modifiers: null,
+										modifiers: undefined,
 										campaign_id: campaignId ?? null,
 										character_id: characterId ?? null,
 									});

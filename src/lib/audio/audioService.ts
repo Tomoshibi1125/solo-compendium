@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Audio Player Service
  * Legal-safe sounds and music management for Wardens
  */
@@ -56,7 +56,9 @@ export class AudioService {
 	}
 
 	private notifyListeners() {
-		this.listeners.forEach((listener) => listener(this.state));
+		this.listeners.forEach((listener) => {
+			listener(this.state);
+		});
 	}
 
 	private handleTrackEnd() {
@@ -141,7 +143,7 @@ export class AudioService {
 					this.updateState({
 						volume: (this.audio?.volume() as number) || 0,
 					});
-				}
+				},
 			});
 
 			// Update state
@@ -194,7 +196,8 @@ export class AudioService {
 			clearInterval(this.progressTimer);
 			this.progressTimer = null;
 		}
-	} async next() {
+	}
+	async next() {
 		const { playlist, currentTrackIndex, shuffle } = this.state;
 
 		if (!playlist || playlist.tracks.length === 0) return;
@@ -316,9 +319,13 @@ export class AudioService {
 
 		// Stop playback after fading out
 		const id = this.audio.play(); // Assuming Howler 2.x returns the ID
-		this.audio.once('fade', () => {
-			if (this.audio) this.audio.stop(id);
-		}, id);
+		this.audio.once(
+			"fade",
+			() => {
+				if (this.audio) this.audio.stop(id);
+			},
+			id,
+		);
 	}
 
 	private clearFadeTimeout() {

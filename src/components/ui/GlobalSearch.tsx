@@ -263,6 +263,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 										<div className="space-y-1">
 											{recentItems.slice(0, 5).map((item) => (
 												<button
+													type="button"
 													key={`${item.type}-${item.id}`}
 													onClick={() => handleResultClick(item)}
 													className="w-full text-left p-2 rounded hover:bg-muted/50 transition-colors text-sm"
@@ -290,6 +291,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 							<div className="space-y-1">
 								{results.map((result) => (
 									<button
+										type="button"
 										key={`${result.type}-${result.id}`}
 										onClick={() => handleResultClick(result)}
 										className="w-full text-left p-2 rounded hover:bg-muted/50 transition-colors"

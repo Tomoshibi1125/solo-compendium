@@ -4,12 +4,15 @@ import { usePerformanceProfile } from "@/lib/performanceProfile";
 const runIdle = (callback: () => void) => {
 	if (typeof window === "undefined") return 0;
 	if (
-		typeof (window as Record<string, any>).requestIdleCallback === "function"
+		typeof (window as unknown as Record<string, unknown>)
+			.requestIdleCallback === "function"
 	) {
-		return (window as Record<string, any>).requestIdleCallback(
-			() => callback(),
-			{ timeout: 3500 },
-		) as number;
+		return (
+			(window as unknown as Record<string, unknown>).requestIdleCallback as (
+				cb: () => void,
+				opts: { timeout: number },
+			) => number
+		)(() => callback(), { timeout: 3500 });
 	}
 	return window.setTimeout(callback, 1200);
 };
@@ -17,9 +20,14 @@ const runIdle = (callback: () => void) => {
 const cancelIdle = (id: number) => {
 	if (typeof window === "undefined") return;
 	if (
-		typeof (window as Record<string, any>).cancelIdleCallback === "function"
+		typeof (window as unknown as Record<string, unknown>).cancelIdleCallback ===
+		"function"
 	) {
-		(window as Record<string, any>).cancelIdleCallback(id);
+		(
+			(window as unknown as Record<string, unknown>).cancelIdleCallback as (
+				id: number,
+			) => void
+		)(id);
 		return;
 	}
 	window.clearTimeout(id);

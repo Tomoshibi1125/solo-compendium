@@ -173,7 +173,6 @@ export function CompendiumImage({
 					aspectRatio === "auto" ? "" : aspectRatioClasses[aspectRatio],
 					className,
 				)}
-				aria-label={`Image unavailable for ${alt}`}
 			>
 				{fallbackIcon || (
 					<ImageIcon className="w-8 h-8 text-muted-foreground" />

@@ -60,13 +60,13 @@ export function calculateTotalWeight(
 		}
 	});
 
-	const isInsideIgnoredContainer = (item: any): boolean => {
-		let currentId = item.container_id;
+	const isInsideIgnoredContainer = (item: Record<string, unknown>): boolean => {
+		let currentId = item.container_id as string | null | undefined;
 		let depth = 0;
 		while (currentId && depth < 10) {
 			if (
-				inactiveContainerIds.has(currentId) ||
-				magicalContainerIds.has(currentId)
+				inactiveContainerIds.has(currentId as string) ||
+				magicalContainerIds.has(currentId as string)
 			) {
 				return true;
 			}

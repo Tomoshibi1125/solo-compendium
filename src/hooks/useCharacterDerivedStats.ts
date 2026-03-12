@@ -105,7 +105,7 @@ export function useCharacterDerivedStats(
 		const initiativeBonus = sumCustomModifiers(customModifiers, "initiative_bonus") + sumCustomModifiers(customModifiers, "initiative");
 		const finalInitiative = getAbilityModifier(finalAbilities.AGI) + initiativeBonus;
 
-		const hpMaxBonus = sumCustomModifiers(customModifiers, "hp-max") + sumCustomModifiers(customModifiers, "hp_max");
+		const _hpMaxBonus = sumCustomModifiers(customModifiers, "hp-max") + sumCustomModifiers(customModifiers, "hp_max");
 		
 		const speedBonus = sumCustomModifiers(customModifiers, "speed") + sumCustomModifiers(customModifiers, "speed_bonus");
 		let finalSpeed = (character.speed || 30) + speedBonus;

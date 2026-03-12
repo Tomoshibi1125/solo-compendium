@@ -9,7 +9,6 @@ import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { OfflineBanner } from "@/components/ui/OfflineBanner";
 import { useAccessibility } from "@/hooks/useAccessibility";
 import { usePWA } from "@/hooks/usePWA";
-import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
 
 interface LayoutProps {
@@ -63,7 +62,6 @@ function useSAZone(): string {
 }
 
 export function Layout({ children, className }: LayoutProps) {
-	const { user, signOut } = useAuth();
 	const { reducedMotion, highContrast } = useAccessibility();
 	const saZone = useSAZone();
 	const {
@@ -103,7 +101,11 @@ export function Layout({ children, className }: LayoutProps) {
 			<OfflineBanner />
 			{/* Global Cosmic Architecture */}
 			<div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-				<CosmicBackground variant="shadow" intensity="low" animated={!reducedMotion} />
+				<CosmicBackground
+					variant="shadow"
+					intensity="low"
+					animated={!reducedMotion}
+				/>
 			</div>
 
 			<a href="#main-content" className="skip-link">

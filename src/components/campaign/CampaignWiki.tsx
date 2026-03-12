@@ -183,6 +183,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 												{groupedArticles[category.id].map((article) => (
 													<li key={article.id}>
 														<button
+															type="button"
 															onClick={() => setSelectedId(article.id)}
 															className={cn(
 																"w-full text-left px-3 py-1.5 rounded text-sm transition-colors flex items-center justify-between group",
@@ -291,6 +292,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 													);
 													return (
 														<button
+															type="button"
 															onClick={(e) => {
 																e.preventDefault();
 																navigateToArticleTitle(title);
@@ -353,9 +355,10 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 				article={editingArticle}
 				onSubmit={async (data) => {
 					if (editingArticle) {
-						await updateArticle({ id: editingArticle.id, updates: data });
+						await updateArticle({ updates: data, id: editingArticle.id });
 					} else {
-						const newlyCreated = await addArticle(data);
+						const payload = data as Omit<WikiArticle, "campaign_id" | "id" | "created_at" | "updated_at" | "created_by">;
+						const newlyCreated = await addArticle(payload);
 						if (newlyCreated) setSelectedId(newlyCreated.id);
 					}
 					setIsEditorOpen(false);
@@ -374,7 +377,7 @@ function WikiEditorDialog({
 	isOpen: boolean;
 	onClose: () => void;
 	article: WikiArticle | null;
-	onSubmit: (data: any) => Promise<void>;
+	onSubmit: (data: { title: string; content: string; category: string; is_public: boolean }) => Promise<void>;
 }) {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");

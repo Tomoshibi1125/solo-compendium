@@ -8,13 +8,13 @@ export interface Technique {
 	description: string;
 	type: "offensive" | "defensive" | "mobility" | "utility" | "finishing";
 	style:
-	| "unarmed"
-	| "weapon"
-	| "ranged"
-	| "dual-wielding"
-	| "two-handed"
-	| "shield"
-	| "any";
+		| "unarmed"
+		| "weapon"
+		| "ranged"
+		| "dual-wielding"
+		| "two-handed"
+		| "shield"
+		| "any";
 	prerequisites?: {
 		level?: number;
 		class?: string;

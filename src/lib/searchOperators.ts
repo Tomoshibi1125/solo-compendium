@@ -36,9 +36,8 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
 	// Extract operators (format: key:value or key:>value)
 	const operatorPattern = /(\w+):([><=]+)?([^\s]+)/g;
 	const operators: string[] = [];
-	let match;
 
-	while ((match = operatorPattern.exec(query)) !== null) {
+	for (const match of query.matchAll(operatorPattern)) {
 		operators.push(match[0]);
 		const [, key, op, value] = match;
 

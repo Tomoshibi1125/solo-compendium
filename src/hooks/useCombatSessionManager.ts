@@ -4,7 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
-type CampaignCombatSession =
+type _CampaignCombatSession =
 	Database["public"]["Tables"]["campaign_combat_sessions"]["Row"];
 
 interface CombatSessionEndOptions {
@@ -18,6 +18,7 @@ interface CombatSessionEndOptions {
 
 export function useCombatSessionManager() {
 	const { toast } = useToast();
+
 	const { user } = useAuth();
 
 	const generateSessionSummary = useCallback(async (sessionId: string) => {
@@ -40,7 +41,7 @@ export function useCombatSessionManager() {
 
 			const defeatedCombatants =
 				combatants?.filter((c) => {
-					const conditions = c.conditions as Record<string, any>;
+					const conditions = c.conditions as Record<string, unknown>;
 					return (
 						conditions &&
 						(conditions.defeated === true ||
@@ -50,7 +51,7 @@ export function useCombatSessionManager() {
 
 			const survivingCombatants =
 				combatants?.filter((c) => {
-					const conditions = c.conditions as Record<string, any>;
+					const conditions = c.conditions as Record<string, unknown>;
 					return (
 						!conditions ||
 						(conditions.defeated !== true &&
@@ -153,10 +154,8 @@ export function useCombatSessionManager() {
 				};
 			}
 		},
-		[user, toast, generateSessionSummary],
+		[user, generateSessionSummary, toast],
 	);
-
-
 
 	const resumeCombatSession = useCallback(
 		async (sessionId: string) => {

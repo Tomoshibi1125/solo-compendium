@@ -31,13 +31,13 @@ declare module "*.avif" {
 }
 
 declare module "*.json" {
-	const content: any;
+	const content: unknown;
 	export default content;
 }
 
 declare module "react-dom/client" {
 	export function createRoot(container: Element | DocumentFragment): {
-		render(children: any): void;
+		render(children: unknown): void;
 		unmount(): void;
 	};
 }

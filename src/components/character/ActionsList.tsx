@@ -374,9 +374,9 @@ export function ActionsList({
 							<p className="text-xs mt-1">Equip weapons or prepare powers</p>
 						</div>
 					) : (
-						groupedActions.action.map((action, i) => (
+						groupedActions.action.map((action, _i) => (
 							<ActionCard
-								key={i}
+								key={action.name}
 								{...action}
 								characterId={characterId}
 								campaignId={campaignId}
@@ -392,9 +392,9 @@ export function ActionsList({
 							<p>No Bonus Actions</p>
 						</div>
 					) : (
-						groupedActions.bonusAction.map((action, i) => (
+						groupedActions.bonusAction.map((action, _i) => (
 							<ActionCard
-								key={i}
+								key={action.name}
 								{...action}
 								characterId={characterId}
 								campaignId={campaignId}
@@ -410,9 +410,9 @@ export function ActionsList({
 							<p>No Reactions</p>
 						</div>
 					) : (
-						groupedActions.reaction.map((action, i) => (
+						groupedActions.reaction.map((action, _i) => (
 							<ActionCard
-								key={i}
+								key={action.name}
 								{...action}
 								characterId={characterId}
 								campaignId={campaignId}
@@ -430,9 +430,9 @@ export function ActionsList({
 							<p>No Other Actions</p>
 						</div>
 					) : (
-						groupedActions.other.map((action, i) => (
+						groupedActions.other.map((action, _i) => (
 							<ActionCard
-								key={i}
+								key={action.name}
 								{...action}
 								characterId={characterId}
 								campaignId={campaignId}

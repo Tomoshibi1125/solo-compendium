@@ -51,7 +51,9 @@ if (!envResult.valid) {
 	);
 }
 if (envResult.warnings.length > 0) {
-	envResult.warnings.forEach((w) => logWarn(w));
+	envResult.warnings.forEach((w) => {
+		logWarn(w);
+	});
 }
 
 // Lazy load routes for code splitting
@@ -728,8 +730,8 @@ const AppContent = () => {
 const App = () => {
 	const routerBase = normalizeBasePath(
 		getRuntimeEnvValue("VITE_ROUTER_BASE") ||
-		getRuntimeEnvValue("VITE_BASE_PATH") ||
-		import.meta.env.BASE_URL,
+			getRuntimeEnvValue("VITE_BASE_PATH") ||
+			import.meta.env.BASE_URL,
 	);
 	const { isOnline, queueLength } = useOfflineSyncStatus();
 
@@ -755,7 +757,9 @@ const App = () => {
 										<NavBar />
 										<RouteEffects />
 										<PageViewTracker />
-										<AppContent />
+										<ErrorBoundary>
+											<AppContent />
+										</ErrorBoundary>
 									</BrowserRouter>
 									<ServiceWorkerUpdatePrompt />
 									<OfflineIndicator />

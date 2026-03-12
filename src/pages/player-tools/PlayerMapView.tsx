@@ -114,14 +114,14 @@ const PlayerMapView = ({
 	const { data: members } = useCampaignMembers(effectiveCampaignId);
 	const myCharacterId = useMemo(() => {
 		if (!user?.id || !members) return null;
-		const myMember = members.find((m: any) => m.user_id === user.id);
+		const myMember = members.find((m: { user_id?: string }) => m.user_id === user.id);
 		if (!myMember) return null;
-		const chars = (myMember as Record<string, any>).characters;
+		const chars = (myMember as Record<string, unknown>).characters;
 		if (chars && typeof chars === "object" && "id" in chars)
-			return (chars as Record<string, any>).id as string;
+			return (chars as Record<string, unknown>).id as string;
 		// Also check character_id directly on the member
-		if ((myMember as Record<string, any>).character_id)
-			return (myMember as Record<string, any>).character_id as string;
+		if ((myMember as Record<string, unknown>).character_id)
+			return (myMember as Record<string, unknown>).character_id as string;
 		return null;
 	}, [members, user?.id]);
 
@@ -573,6 +573,8 @@ const PlayerMapView = ({
 									onMouseUp={handleMapMouseUp}
 									onMouseLeave={handleMapMouseUp}
 									onDoubleClick={handleMapDoubleClick}
+									role="application"
+									aria-label="Battle Map Canvas"
 								>
 									<div
 										className="vtt-map-container vtt-map-scene"
@@ -614,16 +616,19 @@ const PlayerMapView = ({
 										{/* Fog of war */}
 										{currentScene?.fogOfWar && currentScene.fogData && (
 											<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
-												{currentScene.fogData.map((row, ry) =>
-													row.map((revealed, rx) =>
-														!revealed ? (
+												{currentScene.fogData
+													.flatMap((row, ry) =>
+														row.map((revealed, rx) => ({ revealed, rx, ry })),
+													)
+													.map((cell) =>
+														!cell.revealed ? (
 															<div
-																key={`fog-${rx}-${ry}`}
+																key={`fog-${cell.rx}-${cell.ry}`}
 																className="absolute vtt-fog-cell bg-black"
 																style={
 																	{
-																		left: `${rx * gridSize * zoom}px`,
-																		top: `${ry * gridSize * zoom}px`,
+																		left: `${cell.rx * gridSize * zoom}px`,
+																		top: `${cell.ry * gridSize * zoom}px`,
 																		width: `${gridSize * zoom}px`,
 																		height: `${gridSize * zoom}px`,
 																		opacity: 0.9,
@@ -631,8 +636,7 @@ const PlayerMapView = ({
 																}
 															/>
 														) : null,
-													),
-												)}
+													)}
 											</div>
 										)}
 
@@ -641,6 +645,7 @@ const PlayerMapView = ({
 											currentScene.terrain.length > 0 && (
 												<div className="absolute inset-0 pointer-events-none z-[1]">
 													<svg className="absolute inset-0 w-full h-full overflow-visible">
+														<title>Map Terrain Zones</title>
 														{currentScene.terrain.map((zone) => {
 															if (!zone.visible) return null;
 															const gZoom = gridSize * zoom;
@@ -686,6 +691,7 @@ const PlayerMapView = ({
 																	key={drawing.id}
 																	className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
 																>
+																	<title>Map Freehand Drawing</title>
 																	<polyline
 																		points={pointsStr}
 																		fill="none"
@@ -728,7 +734,7 @@ const PlayerMapView = ({
 										{currentScene?.weather &&
 											currentScene.weather !== "clear" &&
 											WEATHER_PRESETS[
-											currentScene.weather as keyof typeof WEATHER_PRESETS
+												currentScene.weather as keyof typeof WEATHER_PRESETS
 											] && (
 												<div
 													className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80"
@@ -737,7 +743,7 @@ const PlayerMapView = ({
 													<style>
 														{getWeatherCSSAnimation(
 															WEATHER_PRESETS[
-															currentScene.weather as keyof typeof WEATHER_PRESETS
+																currentScene.weather as keyof typeof WEATHER_PRESETS
 															],
 														)}
 													</style>
@@ -748,31 +754,33 @@ const PlayerMapView = ({
 															].particleCount,
 															200,
 														),
-													}).map((_, i) => {
-														const size = Math.random() * 4 + 2;
-														const left = Math.random() * 100;
-														const top = Math.random() * 100;
-														const animDuration = Math.random() * 2 + 1;
-														const delay = Math.random() * -2;
-														return (
-															<div
-																key={i}
-																className="absolute rounded-full"
-																style={{
-																	width: `${size}px`,
-																	height: `${size}px`,
-																	left: `${left}%`,
-																	top: `${top}%`,
-																	backgroundColor:
-																		WEATHER_PRESETS[
-																			currentScene?.weather as keyof typeof WEATHER_PRESETS
-																		].particleColor,
-																	animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
-																	animationDelay: `${delay}s`,
-																}}
-															/>
-														);
-													})}
+													})
+														.map((_, idx) => idx)
+														.map((i) => {
+															const size = Math.random() * 4 + 2;
+															const left = Math.random() * 100;
+															const top = Math.random() * 100;
+															const animDuration = Math.random() * 2 + 1;
+															const delay = Math.random() * -2;
+															return (
+																<div
+																	key={`weather-particle-${currentScene.weather}-${i}`}
+																	className="absolute rounded-full"
+																	style={{
+																		width: `${size}px`,
+																		height: `${size}px`,
+																		left: `${left}%`,
+																		top: `${top}%`,
+																		backgroundColor:
+																			WEATHER_PRESETS[
+																				currentScene?.weather as keyof typeof WEATHER_PRESETS
+																			].particleColor,
+																		animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
+																		animationDelay: `${delay}s`,
+																	}}
+																/>
+															);
+														})}
 												</div>
 											)}
 
@@ -781,7 +789,9 @@ const PlayerMapView = ({
 											.filter((t) => t.auraRadius && t.auraRadius > 0)
 											.map((token) => {
 												const auraSize =
-													(token.auraRadius! * 2 + 1) * gridSize * zoom;
+													((token.auraRadius as number) * 2 + 1) *
+													gridSize *
+													zoom;
 												const tokenSize = SIZE_VALUES[token.size] * zoom;
 												const centerOffset = tokenSize / 2 - auraSize / 2;
 												return (
@@ -816,10 +826,10 @@ const PlayerMapView = ({
 												token.tokenType === "effect" ||
 												token.tokenType === "prop";
 											return (
-												<div
+												<button type="button"
 													key={token.id}
 													className={cn(
-														"vtt-token-container transition-all",
+														"vtt-token-container transition-all p-0 bg-transparent border-none text-left",
 														canDrag ? "cursor-move" : "cursor-default",
 														draggedTokenId === token.id && "opacity-70",
 													)}
@@ -832,7 +842,11 @@ const PlayerMapView = ({
 															"--token-z-index": token.layer,
 														} as React.CSSProperties
 													}
-													onMouseDown={(e) => handleTokenMouseDown(token, e)}
+													onMouseDown={
+														canDrag
+															? (e) => handleTokenMouseDown(token, e)
+															: undefined
+													}
 													title={`${token.name}${token.hp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ""}${canDrag ? " — drag to move" : ""}`}
 												>
 													<div
@@ -879,11 +893,11 @@ const PlayerMapView = ({
 															<div
 																className={cn(
 																	"vtt-hp-bar vtt-hp-bar-fill",
-																	hpPercent! > 50 && "high",
-																	hpPercent! > 25 &&
-																	hpPercent! <= 50 &&
-																	"medium",
-																	hpPercent! <= 25 && "low",
+																	(hpPercent as number) > 50 && "high",
+																	(hpPercent as number) > 25 &&
+																		(hpPercent as number) <= 50 &&
+																		"medium",
+																	(hpPercent as number) <= 25 && "low",
 																)}
 																style={
 																	{
@@ -899,7 +913,7 @@ const PlayerMapView = ({
 														<div className="vtt-conditions">
 															{token.conditions.slice(0, 3).map((cond) => (
 																<span
-																	key={cond}
+																	key={`${token.id}-cond-${cond}`}
 																	className="vtt-condition-badge"
 																	title={cond}
 																>
@@ -908,7 +922,7 @@ const PlayerMapView = ({
 															))}
 														</div>
 													)}
-												</div>
+												</button>
 											);
 										})}
 
@@ -941,44 +955,48 @@ const PlayerMapView = ({
 										{/* Remote cursors */}
 										{vttRealtime.activeUsers.filter((u) => u.cursor).length >
 											0 && (
-												<div className="absolute inset-0 pointer-events-none vtt-cursors-overlay">
-													{vttRealtime.activeUsers
-														.filter((u) => u.cursor)
-														.map((u) => (
+											<div className="absolute inset-0 pointer-events-none vtt-cursors-overlay">
+												{vttRealtime.activeUsers
+													.filter((u) => u.cursor)
+													.map((u) => (
+														<div
+															key={u.userId}
+															className="absolute transition-all duration-100"
+															style={
+																{
+																	"--cursor-left":
+																		((u.cursor?.x ?? 0) + 0.5) *
+																		gridSize *
+																		zoom,
+																	"--cursor-top":
+																		((u.cursor?.y ?? 0) + 0.5) *
+																		gridSize *
+																		zoom,
+																} as React.CSSProperties
+															}
+														>
 															<div
-																key={u.userId}
-																className="absolute transition-all duration-100"
+																className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
 																style={
 																	{
-																		"--cursor-left":
-																			((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom,
-																		"--cursor-top":
-																			((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom,
+																		"--cursor-dot-bg": u.color,
+																	} as React.CSSProperties
+																}
+															/>
+															<div
+																className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+																style={
+																	{
+																		"--cursor-label-bg": u.color,
 																	} as React.CSSProperties
 																}
 															>
-																<div
-																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
-																	style={
-																		{
-																			"--cursor-dot-bg": u.color,
-																		} as React.CSSProperties
-																	}
-																/>
-																<div
-																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																	style={
-																		{
-																			"--cursor-label-bg": u.color,
-																		} as React.CSSProperties
-																	}
-																>
-																	{u.userName}
-																</div>
+																{u.userName}
 															</div>
-														))}
-												</div>
-											)}
+														</div>
+													))}
+											</div>
+										)}
 
 										{/* Empty state */}
 										{visibleTokens.length === 0 &&
@@ -1115,31 +1133,29 @@ const PlayerMapView = ({
 																className={cn(
 																	"p-1.5 rounded",
 																	msg.type === "chat" &&
-																	"border border-border bg-muted/20",
+																		"border border-border bg-muted/20",
 																	msg.type === "system" &&
-																	"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
+																		"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
 																	msg.type === "dice" &&
-																	"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
+																		"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
 																	msg.type === "gmroll" &&
-																	"border border-amber-500/40 bg-amber-950/30 text-amber-100",
+																		"border border-amber-500/40 bg-amber-950/30 text-amber-100",
 																	msg.type === "whisper" &&
-																	"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
+																		"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
 																)}
 															>
 																{msg.diceDisplayText ? (
-																	<span
-																		dangerouslySetInnerHTML={{
-																			__html: msg.diceDisplayText
-																				.replace(
-																					/\*\*(.+?)\*\*/g,
-																					"<strong>$1</strong>",
-																				)
-																				.replace(
-																					/~~(.+?)~~/g,
-																					'<del class="opacity-40">$1</del>',
-																				),
-																		}}
-																	/>
+																	<span>
+																		{msg.diceDisplayText.split(/(\*\*.*?\*\*|~~.*?~~)/).map((part) => {
+																			if (part.startsWith('**') && part.endsWith('**')) {
+																				return <strong key={crypto.randomUUID()}>{part.slice(2, -2)}</strong>;
+																			}
+																			if (part.startsWith('~~') && part.endsWith('~~')) {
+																				return <del key={crypto.randomUUID()} className="opacity-40">{part.slice(2, -2)}</del>;
+																			}
+																			return <span key={crypto.randomUUID()}>{part}</span>;
+																		})}
+																	</span>
 																) : (
 																	msg.message
 																)}
@@ -1288,11 +1304,11 @@ const PlayerMapView = ({
 																		<div
 																			className={cn(
 																				"h-full rounded-full vtt-initiative-hp-bar",
-																				hpPercent! > 50 && "high",
-																				hpPercent! > 25 &&
-																				hpPercent! <= 50 &&
-																				"medium",
-																				hpPercent! <= 25 && "low",
+																				(hpPercent as number) > 50 && "high",
+																				(hpPercent as number) > 25 &&
+																					(hpPercent as number) <= 50 &&
+																					"medium",
+																				(hpPercent as number) <= 25 && "low",
 																			)}
 																			style={
 																				{
@@ -1376,17 +1392,24 @@ const PlayerMapView = ({
 				{isMobile && effectiveCampaignId && (
 					<>
 						<div className="vtt-mobile-toolbar">
-							<button onClick={() => setZoom(Math.max(0.5, zoom - 0.15))}>
+							<button
+								type="button"
+								onClick={() => setZoom(Math.max(0.5, zoom - 0.15))}
+							>
 								−
 							</button>
 							<span className="text-[10px] text-muted-foreground min-w-[32px] text-center">
 								{Math.round(zoom * 100)}%
 							</span>
-							<button onClick={() => setZoom(Math.min(2, zoom + 0.15))}>
+							<button
+								type="button"
+								onClick={() => setZoom(Math.min(2, zoom + 0.15))}
+							>
 								+
 							</button>
 							<div className="w-px h-8 bg-border/30 mx-1" />
 							<button
+								type="button"
 								className={cn(mobilePanel === "chat" && "active")}
 								onClick={() =>
 									setMobilePanel(mobilePanel === "chat" ? null : "chat")
@@ -1395,6 +1418,7 @@ const PlayerMapView = ({
 								Chat
 							</button>
 							<button
+								type="button"
 								className={cn(mobilePanel === "dice" && "active")}
 								onClick={() =>
 									setMobilePanel(mobilePanel === "dice" ? null : "dice")
@@ -1403,6 +1427,7 @@ const PlayerMapView = ({
 								Dice
 							</button>
 							<button
+								type="button"
 								className={cn(mobilePanel === "init" && "active")}
 								onClick={() =>
 									setMobilePanel(mobilePanel === "init" ? null : "init")
@@ -1411,6 +1436,7 @@ const PlayerMapView = ({
 								Init
 							</button>
 							<button
+								type="button"
 								className={cn(mobilePanel === "sheet" && "active")}
 								onClick={() =>
 									setMobilePanel(mobilePanel === "sheet" ? null : "sheet")
@@ -1419,6 +1445,7 @@ const PlayerMapView = ({
 								Sheet
 							</button>
 							<button
+								type="button"
 								className={cn(mobilePanel === "assets" && "active")}
 								onClick={() =>
 									setMobilePanel(mobilePanel === "assets" ? null : "assets")
@@ -1443,19 +1470,17 @@ const PlayerMapView = ({
 														{msg.userName}:{" "}
 													</span>
 													{msg.diceDisplayText ? (
-														<span
-															dangerouslySetInnerHTML={{
-																__html: msg.diceDisplayText
-																	.replace(
-																		/\*\*(.+?)\*\*/g,
-																		"<strong>$1</strong>",
-																	)
-																	.replace(
-																		/~~(.+?)~~/g,
-																		'<del class="opacity-40">$1</del>',
-																	),
-															}}
-														/>
+														<span>
+															{msg.diceDisplayText.split(/(\*\*.*?\*\*|~~.*?~~)/).map((part) => {
+																if (part.startsWith('**') && part.endsWith('**')) {
+																	return <strong key={crypto.randomUUID()}>{part.slice(2, -2)}</strong>;
+																}
+																if (part.startsWith('~~') && part.endsWith('~~')) {
+																	return <del key={crypto.randomUUID()} className="opacity-40">{part.slice(2, -2)}</del>;
+																}
+																return <span key={crypto.randomUUID()}>{part}</span>;
+															})}
+														</span>
 													) : (
 														msg.message
 													)}
@@ -1579,19 +1604,20 @@ const PlayerMapView = ({
 
 				{/* Handout Share Popup Overlay */}
 				{vttRealtime.sharedHandout && (
-					<div
-						className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-						onClick={vttRealtime.dismissHandout}
-					>
-						<div
-							className="bg-background border-2 border-primary rounded-lg shadow-2xl max-w-lg w-full mx-4 p-6"
-							onClick={(e) => e.stopPropagation()}
-						>
+					<div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+						<button
+							type="button"
+							className="absolute inset-0 w-full h-full bg-black/60 cursor-default outline-none"
+							onClick={vttRealtime.dismissHandout}
+							aria-label="Close handout"
+						/>
+						<div className="bg-background border-2 border-primary rounded-lg shadow-2xl max-w-lg w-full relative z-10 p-6 pointer-events-auto">
 							<div className="flex items-center justify-between mb-4">
 								<h3 className="font-arise text-lg font-bold gradient-text-shadow">
 									{vttRealtime.sharedHandout.title}
 								</h3>
 								<button
+									type="button"
 									onClick={vttRealtime.dismissHandout}
 									className="text-muted-foreground hover:text-foreground text-lg"
 								>

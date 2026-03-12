@@ -120,8 +120,6 @@ import { useSpellSlots } from "@/hooks/useSpellSlots";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { getLevelingMode } from "@/lib/campaignSettings";
 import {
-	calculateCharacterStats,
-	calculateHPMax,
 	formatModifier,
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
@@ -131,30 +129,16 @@ import {
 	type CustomResource,
 	calculateTotalTempHP,
 } from "@/lib/characterResources";
-import { getActiveConditionEffects, getAllConditions } from "@/lib/conditions";
+import { getAllConditions } from "@/lib/conditions";
 import {
 	type CustomModifier,
 	normalizeCustomModifiers,
-	resolveAdvantageFromCustomModifiers,
 	sumCustomModifiers,
 } from "@/lib/customModifiers";
 import { formatRollResult, rollDiceString } from "@/lib/diceRoller";
-import {
-	calculateCarryingCapacity,
-	calculateEncumbrance,
-	calculateTotalWeight,
-} from "@/lib/encumbrance";
-import { applyEquipmentModifiers } from "@/lib/equipmentModifiers";
 import { isLocalCharacterId } from "@/lib/guestStore";
-import { applyRuneBonuses } from "@/lib/runeAutomation";
-import {
-	calculateSkillModifier,
-	getAllSkills,
-	type SkillDefinition,
-} from "@/lib/skills";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { getAvailableFavorOptions } from "@/lib/systemFavor";
-import { getUnarmoredDefenseBaseAC } from "@/lib/unarmoredDefense";
 import { cn } from "@/lib/utils";
 import { formatMonarchVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import { QuestLog } from "@/pages/player-tools/QuestLog";
@@ -176,7 +160,6 @@ type SheetSkill = {
 	expertise: boolean;
 };
 
-type SheetSkillMap = Record<string, SheetSkill>;
 
 const CharacterSheet = () => {
 	const { id } = useParams<{ id: string }>();

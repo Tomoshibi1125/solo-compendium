@@ -132,7 +132,7 @@ export const useDeleteCampaignEncounter = () => {
 
 	return useMutation({
 		mutationFn: async ({
-			campaignId,
+			campaignId: _campaignId,
 			encounterId,
 		}: {
 			campaignId: string;
@@ -178,7 +178,6 @@ export const useDeployCampaignEncounter = () => {
 
 	return useMutation({
 		mutationFn: async ({
-			campaignId,
 			encounterId,
 		}: {
 			campaignId: string;

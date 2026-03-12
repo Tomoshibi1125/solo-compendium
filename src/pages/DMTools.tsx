@@ -20,7 +20,7 @@ import {
 	HelpCircle,
 	Image as ImageIcon,
 	List,
-	Map,
+	Map as MapIcon,
 	Palette,
 	Scroll,
 	Search,
@@ -122,7 +122,7 @@ const dmTools = [
 		id: "dungeon-map-generator",
 		name: "Dungeon Map Generator",
 		description: "Generate procedural dungeon layouts with room descriptions.",
-		icon: Map,
+		icon: MapIcon,
 		status: "available",
 		color:
 			"from-green-500/20 to-green-600/10 border-green-500/30 hover:border-green-500/60",
@@ -238,7 +238,7 @@ const dmTools = [
 		name: "VTT Enhanced",
 		description:
 			"Virtual tabletop with maps, tokens, and real-time collaboration.",
-		icon: Grid,
+		icon: MapIcon,
 		status: "available",
 		color:
 			"from-violet-500/20 to-violet-600/10 border-violet-500/30 hover:border-violet-500/60",

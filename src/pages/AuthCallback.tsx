@@ -8,13 +8,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import { logger } from "@/lib/logger";
 
+const normalizeRole = (value: string | null): "dm" | "player" | null => {
+	if (value === "dm" || value === "player") return value;
+	return null;
+};
+
 export default function AuthCallback() {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
-	const normalizeRole = (value: string | null): "dm" | "player" | null => {
-		if (value === "dm" || value === "player") return value;
-		return null;
-	};
 
 	useEffect(() => {
 		const handleAuthCallback = async () => {
@@ -128,7 +129,7 @@ export default function AuthCallback() {
 		};
 
 		handleAuthCallback();
-	}, [navigate, searchParams, normalizeRole]);
+	}, [navigate, searchParams]);
 
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">

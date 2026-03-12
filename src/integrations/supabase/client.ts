@@ -56,8 +56,10 @@ const guardedFetch: typeof fetch = async (input, init) => {
 // import { supabase } from "@/integrations/supabase/client";
 
 export const supabase = createClient<Database>(
-	isSupabaseConfigured ? SUPABASE_URL! : SUPABASE_URL_FALLBACK,
-	isSupabaseConfigured ? SUPABASE_PUBLISHABLE_KEY! : SUPABASE_KEY_FALLBACK,
+	isSupabaseConfigured ? (SUPABASE_URL as string) : SUPABASE_URL_FALLBACK,
+	isSupabaseConfigured
+		? (SUPABASE_PUBLISHABLE_KEY as string)
+		: SUPABASE_KEY_FALLBACK,
 	{
 		global: {
 			fetch: guardedFetch,

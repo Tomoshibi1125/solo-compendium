@@ -61,7 +61,7 @@ export function AddCustomItemDialog({
 		}
 
 		try {
-			const customModifiers: any = {};
+			const customModifiers: Record<string, number> = {};
 			if (acBonus) customModifiers.acBonus = parseInt(acBonus, 10);
 			if (attackBonus) customModifiers.attackBonus = parseInt(attackBonus, 10);
 			if (damageBonus) customModifiers.damageBonus = parseInt(damageBonus, 10);

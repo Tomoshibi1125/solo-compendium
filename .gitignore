@@ -27,19 +27,39 @@ qa-artifacts/
 eslint-report.json
 public/runtime-env.js
 
-# Build/debug artifacts
-ts_errors*.txt
-tsc_output.txt
-tsc_utf8.txt
-biome_errors.txt
-ts-prune-output.txt
-test_output.log
-vitest_utf8.log
-typecheck.log
-git_status.json
-.git_status.txt
-supabase_start_error*.txt
-test_report*.txt
+# Build/debug/audit artifacts (prevent root directory pollution)
+*.txt
+!.browserslistrc
+*.bak
+*.broken
+*.stable_anchor
+biome_*.json
+biome-*.json
+audit-report*.json
+knip-*.json
+errors.json
+tsc.json
+
+# Temp fix/debug scripts (not project config)
+fix_*.mjs
+fix_*.cjs
+fix_*.js
+autofix_*.mjs
+check_*.mjs
+dump_*.cjs
+run_*.cjs
+run_biome.js
+extract_*.mjs
+list_*.mjs
+recover_*.mjs
+remove_*.mjs
+show_*.mjs
+summarize_*.mjs
+summarize_*.cjs
+apply_*.mjs
+debug-*.js
+test-pattern*.js
+tmp-*.ps1
 
 # Downloaded Node binary
 node-v*/
@@ -60,13 +80,6 @@ __pycache__/
 *.njsproj
 *.sln
 *.sw?
-
-.vercel
-.env*.local
-
-src/pages/CharacterSheet.tsx.bak
-src/pages/CharacterSheet.tsx.broken
-src/pages/CharacterSheet.tsx.stable_anchor
 
 .vercel
 .env*.local

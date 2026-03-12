@@ -32,7 +32,7 @@ interface EnhancedCardProps extends React.HTMLAttributes<HTMLDivElement> {
 	onFavorite?: () => void;
 	isFavorite?: boolean;
 	stats?: Array<{ label: string; value: string | number }>;
-	metadata?: Record<string, any>;
+	metadata?: Record<string, unknown>;
 }
 
 const cardVariants = {
@@ -88,9 +88,9 @@ const EnhancedCard = ({
 
 		return (
 			<div className="flex flex-wrap gap-2 mt-3">
-				{stats.map((stat, index) => (
+				{stats.map((stat, _index) => (
 					<div
-						key={index}
+						key={JSON.stringify(stat)}
 						className="flex items-center space-x-1 px-2 py-1 bg-background/60 rounded text-xs"
 					>
 						<span className="text-muted-foreground">{stat.label}:</span>
@@ -161,6 +161,7 @@ const EnhancedCard = ({
 	};
 
 	const cardContent = (
+		// biome-ignore lint/a11y/noStaticElementInteractions: Interaction is conditional via props
 		<div
 			className={cn(
 				"relative overflow-hidden rounded-xl",
@@ -169,6 +170,18 @@ const EnhancedCard = ({
 				loading && "opacity-70",
 				className,
 			)}
+			role={interactive ? "button" : undefined}
+			tabIndex={interactive ? 0 : undefined}
+			onKeyDown={
+				interactive
+					? (e) => {
+							if (e.key === "Enter" || e.key === " ") {
+								e.preventDefault();
+								onClick?.();
+							}
+						}
+					: undefined
+			}
 			onClick={interactive ? onClick : undefined}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}

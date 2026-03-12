@@ -24,9 +24,9 @@ export interface RegentUnlock {
 }
 
 export function useRegentUnlocks(characterId: string) {
-	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
+	const queryClient = useQueryClient();
 	const {
 		data: unlocks = [],
 		isLoading,
@@ -94,7 +94,7 @@ export function useRegentUnlocks(characterId: string) {
 				description: "The regent has been successfully unlocked.",
 			});
 		},
-		onError: (error: any) => {
+		onError: (error: Error) => {
 			toast({
 				title: "Failed to Unlock",
 				description:
@@ -122,7 +122,7 @@ export function useRegentUnlocks(characterId: string) {
 				description: "The regent unlock has been removed.",
 			});
 		},
-		onError: (error: any) => {
+		onError: (error: Error) => {
 			toast({
 				title: "Failed to Remove",
 				description:
@@ -159,7 +159,7 @@ export function useRegentUnlocks(characterId: string) {
 				description: "The regent unlock has been updated.",
 			});
 		},
-		onError: (error: any) => {
+		onError: (error: Error) => {
 			toast({
 				title: "Failed to Update",
 				description:
@@ -184,8 +184,6 @@ export function useRegentUnlocks(characterId: string) {
 
 // Hook for DMs to manage regent unlocks for their campaign characters
 export function useCampaignRegentUnlocks(campaignId: string) {
-	const { toast } = useToast();
-
 	const {
 		data: campaignUnlocks = [],
 		isLoading,
@@ -231,8 +229,6 @@ export function useCampaignRegentUnlocks(campaignId: string) {
 
 // Hook to get available regents for unlocking
 export function useAvailableRegents(characterId: string) {
-	const { toast } = useToast();
-
 	const {
 		data: availableRegents = [],
 		isLoading,
@@ -280,7 +276,7 @@ export const useCharacterRegentUnlocks = useRegentUnlocks;
  */
 export const useUnlockMonarch = () => {
 	return {
-		mutate: (_params: any, _options?: any) => {
+		mutate: (_params: unknown, _options?: unknown) => {
 			console.warn(
 				"[DEPRECATED] useUnlockMonarch: use useRegentUnlocks(characterId).unlockRegent instead",
 			);
@@ -295,7 +291,7 @@ export const useUnlockMonarch = () => {
  */
 export const useSetPrimaryMonarch = () => {
 	return {
-		mutate: (_params: any) => {
+		mutate: (_params: unknown) => {
 			console.warn(
 				"[DEPRECATED] useSetPrimaryMonarch: use useRegentUnlocks(characterId).updateUnlock instead",
 			);

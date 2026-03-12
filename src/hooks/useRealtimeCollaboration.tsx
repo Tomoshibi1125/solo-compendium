@@ -474,7 +474,13 @@ export function CollaborativeCursors({
 						<div
 							key={user.id}
 							className="cursor-indicator"
-							ref={(el) => setCursorVars(el, user.cursor!, user.id)}
+							ref={(el) =>
+								setCursorVars(
+									el,
+									user.cursor as { x: number; y: number },
+									user.id,
+								)
+							}
 						>
 							<div className="cursor-indicator-inner" />
 							<div className="cursor-indicator-info">{user.name}</div>

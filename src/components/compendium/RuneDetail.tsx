@@ -114,8 +114,8 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 			{requirements.length > 0 && (
 				<SystemWindow title="REQUIREMENTS">
 					<div className="flex flex-wrap gap-2">
-						{requirements.map((req, i) => (
-							<Badge key={i} variant="outline">
+						{requirements.map((req, _i) => (
+							<Badge key={req} variant="outline">
 								{req}
 							</Badge>
 						))}

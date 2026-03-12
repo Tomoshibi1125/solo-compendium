@@ -32,10 +32,17 @@ export interface VTTAudioSettings {
 
 const supabaseAny = supabase as unknown as {
 	auth: { getUser: () => Promise<{ data: { user: { id: string } | null } }> };
-	from: (table: string) => any;
+	from: (table: string) => {
+		select: (columns: string) => {
+			eq: (col: string, val: string) => {
+				order: (col: string, opts?: { ascending: boolean }) => Promise<{ data: unknown; error: { message?: string } | null }>;
+				maybeSingle: () => Promise<{ data: unknown; error: { message?: string } | null }>;
+			};
+		};
+	};
 	rpc: (
 		fn: string,
-		args?: Record<string, unknown>,
+		args?: unknown,
 	) => Promise<{ data: unknown; error: { message?: string } | null }>;
 };
 
@@ -151,7 +158,7 @@ export const useDeleteVTTAudioTrack = () => {
 	return useMutation({
 		mutationFn: async ({
 			trackId,
-			sessionId,
+			sessionId: _sessionId,
 		}: {
 			trackId: string;
 			sessionId: string;
@@ -270,7 +277,7 @@ export class VTTAudioManager {
 			await audio.play();
 			// Update track status
 			await this.updateTrackStatus(track.id, true);
-		} catch (error) {
+		} catch (error: unknown) {
 			logError("Failed to play audio track:", error);
 			throw error;
 		}

@@ -356,8 +356,12 @@ READ-ALOUD DISCOVERY:
 										Items ({treasure.items.length})
 									</h3>
 									<div className="flex flex-wrap gap-2">
-										{treasure.items.map((item, idx) => (
-											<Badge key={idx} variant="outline" className="text-sm">
+										{treasure.items.map((item) => (
+											<Badge
+												key={`treasure-item-${item}`}
+												variant="outline"
+												className="text-sm"
+											>
 												{item}
 											</Badge>
 										))}
@@ -372,9 +376,9 @@ READ-ALOUD DISCOVERY:
 										Materials ({treasure.materials.length})
 									</h3>
 									<div className="flex flex-wrap gap-2">
-										{treasure.materials.map((material, idx) => (
+										{treasure.materials.map((material) => (
 											<Badge
-												key={idx}
+												key={`treasure-material-${material}`}
 												variant="outline"
 												className="text-sm bg-blue-400/10 border-blue-400/30"
 											>
@@ -392,9 +396,9 @@ READ-ALOUD DISCOVERY:
 										Relics ({treasure.relics.length})
 									</h3>
 									<div className="flex flex-wrap gap-2">
-										{treasure.relics.map((relic, idx) => (
+										{treasure.relics.map((relic) => (
 											<Badge
-												key={idx}
+												key={`treasure-relic-${relic}`}
 												variant="outline"
 												className="text-sm bg-purple-400/20 border-purple-400/50 text-purple-300"
 											>

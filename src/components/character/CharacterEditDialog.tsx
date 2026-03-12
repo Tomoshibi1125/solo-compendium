@@ -110,10 +110,10 @@ export function CharacterEditDialog({
 			} else {
 				throw new Error("Received empty response from AI.");
 			}
-		} catch (err: any) {
+		} catch (err) {
 			toast({
 				title: "Generation Failed",
-				description: err.message,
+				description: err instanceof Error ? err.message : String(err),
 				variant: "destructive",
 			});
 		} finally {

@@ -4,13 +4,13 @@ import { logger } from "@/lib/logger";
 export interface GeneratedContent {
 	id: string;
 	type:
-	| "npc"
-	| "encounter"
-	| "location"
-	| "quest"
-	| "dialogue"
-	| "item"
-	| "backstory";
+		| "npc"
+		| "encounter"
+		| "location"
+		| "quest"
+		| "dialogue"
+		| "item"
+		| "backstory";
 	title: string;
 	content: string;
 	metadata?: {

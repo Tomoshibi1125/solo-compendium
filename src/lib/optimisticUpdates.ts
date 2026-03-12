@@ -18,11 +18,11 @@ import { useToast } from "@/hooks/use-toast";
 export function useOptimisticMutation<
 	TData,
 	TVariables,
-	TContext = { previousData: any; mutationKey: MutationKey },
+	TContext = { previousData: unknown; mutationKey: MutationKey },
 >(
 	mutationKeyFn: (variables: TVariables) => MutationKey,
 	mutationFn: MutationFunction<TData, TVariables>,
-	optimisticUpdateFn: (oldData: any | undefined, variables: TVariables) => any,
+	optimisticUpdateFn: (oldData: unknown | undefined, variables: TVariables) => unknown,
 	onOfflineQueue: (variables: TVariables) => void,
 ) {
 	const queryClient = useQueryClient();
@@ -38,7 +38,7 @@ export function useOptimisticMutation<
 			}
 
 			// If online, perform the actual remote mutation immediately.
-			return await (mutationFn as any)(variables);
+			return await (mutationFn as unknown as (v: TVariables) => Promise<TData>)(variables);
 		},
 		onMutate: async (variables) => {
 			const resolvedKey = mutationKeyFn(variables);
@@ -50,7 +50,7 @@ export function useOptimisticMutation<
 			const previousData = queryClient.getQueryData(resolvedKey);
 
 			// 3. Optimistically update to the new value
-			queryClient.setQueryData(resolvedKey, (old: any) =>
+			queryClient.setQueryData(resolvedKey, (old: unknown) =>
 				optimisticUpdateFn(old, variables),
 			);
 
@@ -60,7 +60,7 @@ export function useOptimisticMutation<
 		onError: (err, _newTodo, context) => {
 			// If the mutation fails, roll back to the previous value
 			const typedContext = context as
-				| { previousData: any; mutationKey: MutationKey }
+				| { previousData: unknown; mutationKey: MutationKey }
 				| undefined;
 			if (typedContext?.previousData && typedContext.mutationKey) {
 				queryClient.setQueryData(
@@ -79,7 +79,7 @@ export function useOptimisticMutation<
 			// Always refetch after error or success to ensure 100% server sync
 			if (navigator.onLine) {
 				const resolvedKey =
-					(context as any)?.mutationKey ||
+					(context as { mutationKey?: MutationKey })?.mutationKey ||
 					mutationKeyFn(variables as TVariables);
 				queryClient.invalidateQueries({ queryKey: resolvedKey });
 			}

@@ -81,8 +81,8 @@ export function CharacterRollsPanel({
 	};
 
 	// Calculate skill modifiers
-	const getSkillModifier = (skill: any) => {
-		if (!skill) return 0;
+	const getSkillModifier = (skill: { name: string; ability?: string; proficiency?: string } | undefined | null) => {
+		if (!skill || !skill.ability || !skill.name) return 0;
 
 		const abilityMod = getAbilityModifier(
 			abilities[skill.ability.toLowerCase()] || 10,
@@ -233,7 +233,7 @@ export function CharacterRollsPanel({
 				<div>
 					<h4 className="font-medium mb-2">Skills</h4>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-						{skills?.map((skill: any) => (
+						{skills?.map((skill: { name: string; ability: string; proficiency?: string }) => (
 							<SkillRollButton
 								key={skill.name}
 								characterId={characterId}
@@ -283,7 +283,7 @@ export function CharacterRollsPanel({
 							rollKey="perception"
 							label="Perception"
 							modifier={getSkillModifier(
-								skills?.find((s: any) => s.name === "Perception"),
+								skills?.find((s: { name: string }) => s.name === "Perception"),
 							)}
 							campaignId={campaignId}
 							advantageState={resolveAdv({
@@ -298,7 +298,7 @@ export function CharacterRollsPanel({
 							rollKey="stealth"
 							label="Stealth"
 							modifier={getSkillModifier(
-								skills?.find((s: any) => s.name === "Stealth"),
+								skills?.find((s: { name: string }) => s.name === "Stealth"),
 							)}
 							campaignId={campaignId}
 							advantageState={resolveAdv({

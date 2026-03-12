@@ -334,8 +334,8 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{propertiesList.length > 0 && (
 				<SystemWindow title="PROPERTIES">
 					<ul className="space-y-2">
-						{propertiesList.map((prop, i) => (
-							<li key={i} className="flex items-start gap-2">
+						{propertiesList.map((prop, _i) => (
+							<li key={prop} className="flex items-start gap-2">
 								<span className="text-primary">•</span>
 								<span className="text-foreground">
 									{formatMonarchVernacular(prop)}
@@ -349,12 +349,12 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{abilitiesList.length > 0 && (
 				<SystemWindow title="ABILITIES">
 					<div className="space-y-4">
-						{abilitiesList.map((ability, i) => {
+						{abilitiesList.map((ability, _i) => {
 							const payload = buildAbilityPayload(ability);
 
 							return (
 								<div
-									key={`${ability.name ?? "ability"}-${i}`}
+									key={ability.name}
 									className="border-l-2 border-primary/40 pl-3"
 								>
 									<div className="flex flex-wrap items-center gap-2">
@@ -499,8 +499,8 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{data.quirks && data.quirks.length > 0 && (
 				<SystemWindow title="QUIRKS">
 					<ul className="space-y-2">
-						{data.quirks.map((quirk, i) => (
-							<li key={i} className="flex items-start gap-2">
+						{data.quirks.map((quirk, _i) => (
+							<li key={quirk} className="flex items-start gap-2">
 								<Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
 								<span className="text-muted-foreground">
 									{formatMonarchVernacular(quirk)}

@@ -266,20 +266,23 @@ export function VTTInitiativePanel({
 						<div
 							key={entry.id}
 							className={cn(
-								"rounded border p-1.5 text-xs transition-all cursor-pointer",
+								"rounded border p-1.5 text-xs transition-all",
 								isActive
 									? "bg-primary/20 border-primary shadow-sm"
 									: "border-border hover:bg-muted/40",
 							)}
-							onClick={() => {
-								setExpandedId(isExpanded ? null : entry.id);
-								if (entry.characterId && onHighlightToken) {
-									onHighlightToken(entry.characterId);
-								}
-							}}
 						>
 							{/* Main row */}
-							<div className="flex items-center gap-1.5">
+							<button
+								type="button"
+								className="flex items-center gap-1.5 w-full text-left outline-none cursor-pointer focus-visible:ring-1 focus-visible:ring-primary rounded"
+								onClick={() => {
+									setExpandedId(isExpanded ? null : entry.id);
+									if (entry.characterId && onHighlightToken) {
+										onHighlightToken(entry.characterId);
+									}
+								}}
+							>
 								<span className="w-5 text-center font-mono text-muted-foreground">
 									{entry.initiative}
 								</span>
@@ -311,11 +314,11 @@ export function VTTInitiativePanel({
 									</span>
 								)}
 								{isExpanded ? (
-									<ChevronUp className="h-3 w-3 text-muted-foreground" />
+									<ChevronUp className="h-3 w-3 text-muted-foreground shrink-0" />
 								) : (
-									<ChevronDown className="h-3 w-3 text-muted-foreground" />
+									<ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
 								)}
-							</div>
+							</button>
 
 							{/* Conditions row */}
 							{entry.conditions.length > 0 && (
@@ -331,11 +334,9 @@ export function VTTInitiativePanel({
 								</div>
 							)}
 
-							{/* Expanded detail */}
 							{isExpanded && isGM && (
 								<div
 									className="mt-2 pt-2 border-t border-border/50 space-y-2"
-									onClick={(e) => e.stopPropagation()}
 								>
 									{/* HP adjustment */}
 									<div className="flex items-center gap-1">
@@ -367,6 +368,7 @@ export function VTTInitiativePanel({
 									<div className="flex flex-wrap gap-0.5">
 										{CONDITION_OPTIONS.slice(0, 8).map((c) => (
 											<button
+												type="button"
 												key={c}
 												onClick={() => toggleCondition(entry, c)}
 												className={cn(

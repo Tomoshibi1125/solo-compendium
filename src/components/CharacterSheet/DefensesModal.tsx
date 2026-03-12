@@ -64,7 +64,10 @@ export function DefensesModal({
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				{triggerButton || (
-					<button className="flex flex-col items-center justify-center p-2 rounded-lg border bg-card hover:bg-accent hover:text-accent-foreground transition-colors group">
+					<button
+						type="button"
+						className="flex flex-col items-center justify-center p-2 rounded-lg border bg-card hover:bg-accent hover:text-accent-foreground transition-colors group"
+					>
 						<div className="flex items-center gap-1.5">
 							<Shield className="h-4 w-4 text-blue-500 group-hover:text-blue-600 transition-colors" />
 							<span className="text-2xl font-bold">{acBreakdown.total}</span>
@@ -82,6 +85,7 @@ export function DefensesModal({
 							<Shield className="h-5 w-5" /> Defenses & Resistances
 						</DialogTitle>
 						<button
+							type="button"
 							onClick={handleShare}
 							className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors px-2 py-1 border rounded-md hover:bg-muted"
 							title="Share to Campaign"
@@ -146,8 +150,8 @@ export function DefensesModal({
 
 						{acBreakdown.warnings.length > 0 && (
 							<div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 text-xs p-2 rounded-md space-y-1">
-								{acBreakdown.warnings.map((warning, i) => (
-									<p key={i} className="flex items-start gap-1.5">
+								{acBreakdown.warnings.map((warning, _i) => (
+									<p key={warning} className="flex items-start gap-1.5">
 										<ShieldAlert className="h-3.5 w-3.5 mt-0.5 shrink-0" />
 										<span>{warning}</span>
 									</p>
@@ -188,7 +192,7 @@ export function DefensesModal({
 									<div className="flex flex-wrap gap-1.5">
 										{immunities.map((i) => (
 											<Badge
-												key={i}
+												key={`item-${i}`}
 												variant="outline"
 												className="text-[11px] font-normal border-green-200 bg-green-50/50 text-green-700 dark:border-green-900 dark:bg-green-950/50 dark:text-green-300"
 											>

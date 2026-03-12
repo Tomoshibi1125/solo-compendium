@@ -30,7 +30,8 @@ interface JournalEntry {
 	updatedAt: string;
 }
 
-type VttJournalRow = Database["public"]["Tables"]["vtt_journal_entries"]["Row"];
+type _VttJournalRow =
+	Database["public"]["Tables"]["vtt_journal_entries"]["Row"];
 
 const JOURNAL_CATEGORIES = ["session", "note", "lore", "handout"] as const;
 const toJournalCategory = (value: unknown): JournalEntry["category"] => {
@@ -471,6 +472,7 @@ const VTTJournal = () => {
 								) : (
 									visibleEntries.map((entry) => (
 										<button
+											type="button"
 											key={entry.id}
 											onClick={() => setSelectedEntry(entry)}
 											className={cn(

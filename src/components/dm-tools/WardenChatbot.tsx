@@ -30,7 +30,7 @@ export function WardenChatbot() {
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const { toast } = useToast();
 
-	const { saveNow: saveNpcState } = useUserToolState<any>("npc_generator", {
+	const { saveNow: saveNpcState } = useUserToolState<unknown>("npc_generator", {
 		initialState: { npc: null },
 		storageKey: "solo-compendium.dm-tools.npc-generator.v1",
 	});

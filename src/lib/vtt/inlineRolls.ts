@@ -93,9 +93,9 @@ export function parseInlineRolls(message: string): ParsedChatMessage {
 	let lastIndex = 0;
 
 	const regex = new RegExp(INLINE_ROLL_REGEX.source, "g");
-	let match: RegExpExecArray | null;
+	let match = regex.exec(message);
 
-	while ((match = regex.exec(message)) !== null) {
+	while (match !== null) {
 		// Add text before this roll
 		if (match.index > lastIndex) {
 			segments.push({
@@ -115,7 +115,8 @@ export function parseInlineRolls(message: string): ParsedChatMessage {
 			segments.push({ type: "text", content: match[0] });
 		}
 
-		lastIndex = match.index + match[0].length;
+		lastIndex = regex.lastIndex;
+		match = regex.exec(message);
 	}
 
 	// Add remaining text

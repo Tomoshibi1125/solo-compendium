@@ -2630,7 +2630,7 @@
    SAFE AREA INSETS (notched devices)
    ======================================== */
 
-@supports (padding: env(safe-area-inset-bottom)) {
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
 	.sticky.bottom-0,
 	.fixed.bottom-0,
 	nav.fixed.bottom-0 {

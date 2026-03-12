@@ -381,9 +381,11 @@ export default function ArtGenerationAdmin() {
 												<div>
 													<p>Generated files:</p>
 													<ul className="list-disc list-inside text-muted-foreground">
-														{testResult.paths.map((path: string, i: number) => (
-															<li key={i}>{path}</li>
-														))}
+														{testResult.paths.map(
+															(path: string, _i: number) => (
+																<li key={path}>{path}</li>
+															),
+														)}
 													</ul>
 												</div>
 											)}
@@ -442,7 +444,7 @@ export default function ArtGenerationAdmin() {
 									<div className="space-y-1">
 										{results.map((result, i) => (
 											<div
-												key={i}
+												key={JSON.stringify(result)}
 												className="flex items-center justify-between text-sm"
 											>
 												<span>Item {i + 1}</span>
@@ -510,13 +512,13 @@ export default function ArtGenerationAdmin() {
 											<h4 className="font-medium">Queue Details:</h4>
 											<div className="space-y-1 text-sm">
 												{queueMonitor.running?.map((_item, i) => (
-													<div key={i} className="flex justify-between">
+													<div key={_item.id} className="flex justify-between">
 														<span>Running {i + 1}</span>
 														<Badge variant="default">Active</Badge>
 													</div>
 												))}
 												{queueMonitor.pending?.map((_item, i) => (
-													<div key={i} className="flex justify-between">
+													<div key={_item.id} className="flex justify-between">
 														<span>Pending {i + 1}</span>
 														<Badge variant="secondary">Queued</Badge>
 													</div>

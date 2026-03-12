@@ -80,8 +80,12 @@ function EquipmentItemComponent({
 					)}
 					{item.properties && item.properties.length > 0 && (
 						<div className="flex flex-wrap gap-1 mt-1">
-							{item.properties.slice(0, 3).map((prop, i) => (
-								<Badge key={i} variant="outline" className="text-xs">
+							{item.properties.slice(0, 3).map((prop, _i) => (
+								<Badge
+									key={JSON.stringify(prop)}
+									variant="outline"
+									className="text-xs"
+								>
 									{formatMonarchVernacular(prop)}
 								</Badge>
 							))}

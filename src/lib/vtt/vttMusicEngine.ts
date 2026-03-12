@@ -416,11 +416,11 @@ export class VttMusicEngine {
 				gain.gain.linearRampToValueAtTime(vol, now + 0.05);
 				gain.gain.linearRampToValueAtTime(
 					0,
-					now + config.melodyDuration! * 0.9,
+					now + (config.melodyDuration || 0) * 0.9,
 				);
 				osc.connect(gain).connect(this.masterGain);
 				osc.start(now);
-				osc.stop(now + config.melodyDuration!);
+				osc.stop(now + (config.melodyDuration || 0));
 				noteIndex++;
 			}, interval);
 		}

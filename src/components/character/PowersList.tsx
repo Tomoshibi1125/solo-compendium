@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, Plus, Trash2, Wand2 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,10 +14,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-
-type Path = Record<string, any>;
-
-import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -107,7 +104,7 @@ export function PowersList({
 				"@/data/compendium/staticDataProvider"
 			);
 			const staticPowers = await staticDataProvider.getPowers("");
-			return staticPowers.map((p: Path) => ({ id: p.id, name: p.name }));
+			return staticPowers.map((p: { id: string; name: string }) => ({ id: p.id, name: p.name }));
 		},
 	});
 
@@ -542,7 +539,7 @@ export function PowersList({
 														{getPowerId(power.name) ? (
 															<CompendiumLink
 																type="powers"
-																id={getPowerId(power.name)!}
+																id={getPowerId(power.name) as unknown as string}
 																name={displayName}
 																className="font-heading font-semibold hover:text-primary"
 															/>

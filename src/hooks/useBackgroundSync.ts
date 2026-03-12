@@ -15,7 +15,7 @@ interface OfflineSyncItem {
 	id: string;
 	type: string;
 	action: "create" | "update" | "delete";
-	data: Record<string, any>;
+	data: Record<string, unknown>;
 	timestamp: string;
 	retryCount: number;
 }
@@ -48,104 +48,134 @@ export function useBackgroundSync() {
 	}, []);
 
 	// Process character sync
-	const processCharacterSync = async (action: string, data: any) => {
-		switch (action) {
-			case "create":
-				await supabase.from("characters").insert([data] as never[]);
-				break;
-			case "update": {
-				const { id, ...updateData } = data;
-				await supabase
-					.from("characters")
-					.update({ ...updateData } as never)
-					.eq("id", id);
-				break;
+	const processCharacterSync = useCallback(
+		async (action: string, data: Record<string, unknown>) => {
+			switch (action) {
+				case "create":
+					await supabase.from("characters").insert([data] as never[]);
+					break;
+				case "update": {
+					const { id, ...updateData } = data;
+					await supabase
+						.from("characters")
+						.update({ ...updateData } as never)
+						.eq("id", id as string);
+					break;
+				}
+				case "delete":
+					await supabase
+						.from("characters")
+						.delete()
+						.eq("id", data.id as string);
+					break;
 			}
-			case "delete":
-				await supabase.from("characters").delete().eq("id", data.id);
-				break;
-		}
-	};
+		},
+		[],
+	);
 
 	// Process campaign sync
-	const processCampaignSync = async (action: string, data: any) => {
-		switch (action) {
-			case "create":
-				await supabase.from("campaigns").insert([data] as never[]);
-				break;
-			case "update": {
-				const { id, ...updateData } = data;
-				await supabase
-					.from("campaigns")
-					.update({ ...updateData } as never)
-					.eq("id", id);
-				break;
+	const processCampaignSync = useCallback(
+		async (action: string, data: Record<string, unknown>) => {
+			switch (action) {
+				case "create":
+					await supabase.from("campaigns").insert([data] as never[]);
+					break;
+				case "update": {
+					const { id, ...updateData } = data;
+					await supabase
+						.from("campaigns")
+						.update({ ...updateData } as never)
+						.eq("id", id as string);
+					break;
+				}
+				case "delete":
+					await supabase
+						.from("campaigns")
+						.delete()
+						.eq("id", data.id as string);
+					break;
 			}
-			case "delete":
-				await supabase.from("campaigns").delete().eq("id", data.id);
-				break;
-		}
-	};
+		},
+		[],
+	);
 
 	// Process roll sync
-	const processRollSync = async (action: string, data: any) => {
-		switch (action) {
-			case "create":
-				await supabase.from("roll_history").insert(data as never);
-				break;
-			case "update": {
-				const { id, ...updateData } = data;
-				await supabase
-					.from("roll_history")
-					.update({ ...updateData } as never)
-					.eq("id", id);
-				break;
+	const processRollSync = useCallback(
+		async (action: string, data: Record<string, unknown>) => {
+			switch (action) {
+				case "create":
+					await supabase.from("roll_history").insert(data as never);
+					break;
+				case "update": {
+					const { id, ...updateData } = data;
+					await supabase
+						.from("roll_history")
+						.update({ ...updateData } as never)
+						.eq("id", id as string);
+					break;
+				}
+				case "delete":
+					await supabase
+						.from("roll_history")
+						.delete()
+						.eq("id", data.id as string);
+					break;
 			}
-			case "delete":
-				await supabase.from("roll_history").delete().eq("id", data.id);
-				break;
-		}
-	};
+		},
+		[],
+	);
 
 	// Process homebrew sync
-	const processHomebrewSync = async (action: string, data: any) => {
-		switch (action) {
-			case "create":
-				await supabase.from("homebrew_content").insert([data] as never[]);
-				break;
-			case "update": {
-				const { id, ...updateData } = data;
-				await supabase
-					.from("homebrew_content")
-					.update({ ...updateData } as never)
-					.eq("id", id);
-				break;
+	const processHomebrewSync = useCallback(
+		async (action: string, data: Record<string, unknown>) => {
+			switch (action) {
+				case "create":
+					await supabase.from("homebrew_content").insert([data] as never[]);
+					break;
+				case "update": {
+					const { id, ...updateData } = data;
+					await supabase
+						.from("homebrew_content")
+						.update({ ...updateData } as never)
+						.eq("id", id as string);
+					break;
+				}
+				case "delete":
+					await supabase
+						.from("homebrew_content")
+						.delete()
+						.eq("id", data.id as string);
+					break;
 			}
-			case "delete":
-				await supabase.from("homebrew_content").delete().eq("id", data.id);
-				break;
-		}
-	};
+		},
+		[],
+	);
 
 	// Process marketplace sync
-	const processMarketplaceSync = async (action: string, data: any) => {
-		switch (action) {
-			case "create":
-				await supabase.from("marketplace_items").insert([data] as never[]);
-				break;
-			case "update": {
-				const { id, ...updateData } = data;
-				await supabase
-					.from("marketplace_items")
-					.update({ ...updateData } as never)
-					.eq("id", id);
-				break;
+	const processMarketplaceSync = useCallback(
+		async (action: string, data: Record<string, unknown>) => {
+			switch (action) {
+				case "create":
+					await supabase.from("marketplace_items").insert([data] as never[]);
+					break;
+				case "update": {
+					const { id, ...updateData } = data;
+					await supabase
+						.from("marketplace_items")
+						.update({ ...updateData } as never)
+						.eq("id", id as string);
+					break;
+				}
+				case "delete":
+					await supabase
+						.from("marketplace_items")
+						.delete()
+						.eq("id", data.id as string);
+					break;
 			}
-			case "delete":
-				await supabase.from("marketplace_items").delete().eq("id", data.id);
-				break;
-		}
-	};
+		},
+		[],
+	);
 
 	// Process individual sync item
 	const processSyncItem = useCallback(
@@ -172,7 +202,13 @@ export function useBackgroundSync() {
 					console.warn(`Unknown sync type: ${type}`);
 			}
 		},
-		[],
+		[
+			processCampaignSync,
+			processCharacterSync,
+			processHomebrewSync,
+			processMarketplaceSync,
+			processRollSync,
+		],
 	);
 
 	// Process sync queue
@@ -243,7 +279,7 @@ export function useBackgroundSync() {
 
 	// Handle sync events — stable reference via refs
 	const handleSyncEvent = useCallback(
-		async (event: any) => {
+		async (event: Record<string, unknown>) => {
 			if (!userRef.current || !isOnlineRef.current) return;
 
 			setState((prev) => ({ ...prev, isSyncing: true }));
@@ -273,19 +309,19 @@ export function useBackgroundSync() {
 		setState((prev) => ({ ...prev, isSupported: supported }));
 
 		if (supported) {
-			navigator.serviceWorker.ready.then((registration) => {
-				registration.addEventListener("sync", handleSyncEvent);
+			navigator.serviceWorker.ready.then((registration: unknown) => {
+				(registration as { addEventListener?: (t: string, cb: unknown) => void }).addEventListener?.("sync", handleSyncEvent);
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [handleSyncEvent]);
 
 	// Add item to sync queue
 	const addToSyncQueue = useCallback(
 		(
 			type: string,
 			action: "create" | "update" | "delete",
-			data: Record<string, any>,
+			data: Record<string, unknown>,
 		) => {
 			if (!user) return;
 
@@ -306,10 +342,10 @@ export function useBackgroundSync() {
 
 			// Register background sync if supported
 			if (state.isSupported && "serviceWorker" in navigator) {
-				navigator.serviceWorker.ready.then((registration) => {
+				navigator.serviceWorker.ready.then((registration: unknown) => {
 					// Register background sync
-					if ("sync" in registration) {
-						const syncManager = (registration as Record<string, any>).sync;
+					if ("sync" in (registration as Record<string, unknown>)) {
+						const syncManager = (registration as Record<string, { register: (t: string) => void }>).sync;
 						if (syncManager) {
 							syncManager.register("offline-sync-queue");
 						}
@@ -382,7 +418,7 @@ export function useBackgroundSync() {
 		// Only re-run when online status changes, NOT when syncQueue changes
 		// (syncing itself updates the queue, which would cause an infinite loop)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [state.isOnline]);
+	}, [state.isOnline, forceSyncNow, state.syncQueue.length]);
 
 	return {
 		...state,

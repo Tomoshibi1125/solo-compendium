@@ -143,7 +143,7 @@ function buildItemProperties(item: (typeof staticItems)[number]): string[] {
 	}
 	if (item.range && item.range !== "Melee") props.push(`Range ${item.range}`);
 
-	const passive = (item.effects as Record<string, any>)?.passive;
+	const passive = (item.effects as Record<string, unknown>)?.passive;
 	if (Array.isArray(passive)) {
 		for (const line of passive) {
 			if (typeof line === "string" && line.trim().length > 0) {
@@ -179,7 +179,7 @@ export async function autoUpdateFeatureUses(
 	if (!features) return;
 
 	for (const feature of features) {
-		const usesFormula = (feature as Record<string, any>).uses_formula;
+		const usesFormula = (feature as Record<string, unknown>).uses_formula as string | undefined;
 		if (usesFormula) {
 			const newMax = calculateFeatureUses(
 				usesFormula,
@@ -325,8 +325,8 @@ async function insertCharacterFeature(
 			uses_current: payload.uses_current ?? null,
 			recharge: payload.recharge ?? null,
 			is_active: payload.is_active ?? true,
-			modifiers: (payload as Record<string, any>).modifiers ?? null,
-			homebrew_id: (payload as Record<string, any>).homebrew_id ?? null,
+			modifiers: ((payload as Record<string, unknown>).modifiers ?? null) as Database["public"]["Tables"]["character_features"]["Row"]["modifiers"],
+			homebrew_id: ((payload as Record<string, unknown>).homebrew_id as string) ?? null,
 		});
 		return;
 	}
@@ -815,7 +815,7 @@ function getJobAwakeningFeatureModifiers(
 			feature === "mana-dense-physiology"
 		) {
 			return [
-				{ type: "hp-max", value: level, target: null!, source: featureName },
+				{ type: "hp-max", value: level, target: null as unknown as string, source: featureName },
 			];
 		}
 		if (feature === "toxin purge") {
@@ -1011,7 +1011,7 @@ function getJobAwakeningFeatureModifiers(
 			feature === "mana-dense-physiology"
 		) {
 			return [
-				{ type: "hp-max", value: level, target: null!, source: featureName },
+				{ type: "hp-max", value: level, target: null as unknown as string, source: featureName },
 			];
 		}
 		if (feature === "unstable reactor") {
@@ -1411,7 +1411,7 @@ export function getJobASI(
 	const job = findStaticJobByName(jobName);
 	if (!job || !job.abilityScoreImprovements) return {};
 
-	const result: Record<string, number> = {};
+	const result: Record<string, number> = {} as Record<string, number>;
 	for (const [ability, bonus] of Object.entries(job.abilityScoreImprovements)) {
 		const systemAbility = JOB_ASI_TO_SYSTEM[ability.toLowerCase()];
 		if (systemAbility && typeof bonus === "number" && bonus !== 0) {
@@ -1626,7 +1626,7 @@ function getPathFeatureModifiers(
 				];
 			if (feature === "draconic resilience")
 				return [
-					{ type: "hp-max", value: level, target: null!, source: featureName },
+					{ type: "hp-max", value: level, target: null as unknown as string, source: featureName },
 				];
 		}
 	}
@@ -2726,27 +2726,27 @@ export async function addStartingEquipment(
 			const shouldAutoEquip = ["armor", "shield", "weapon"].includes(itemType);
 			const equipData = compendiumItem
 				? {
-					name: compendiumItem.name,
-					item_type: itemType,
-					weight: compendiumItem.weight ?? null,
-					description: compendiumItem.description ?? null,
-					properties: buildItemProperties(compendiumItem),
-					rarity:
-						(compendiumItem.rarity as
-							| "common"
-							| "uncommon"
-							| "rare"
-							| "legendary"
-							| "very_rare") ?? null,
-					quantity: 1,
-					is_equipped: shouldAutoEquip,
-				}
+						name: compendiumItem.name,
+						item_type: itemType,
+						weight: compendiumItem.weight ?? null,
+						description: compendiumItem.description ?? null,
+						properties: buildItemProperties(compendiumItem),
+						rarity:
+							(compendiumItem.rarity as
+								| "common"
+								| "uncommon"
+								| "rare"
+								| "legendary"
+								| "very_rare") ?? null,
+						quantity: 1,
+						is_equipped: shouldAutoEquip,
+					}
 				: {
-					name: itemName,
-					item_type: "gear",
-					quantity: 1,
-					is_equipped: false,
-				};
+						name: itemName,
+						item_type: "gear",
+						quantity: 1,
+						is_equipped: false,
+					};
 
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(characterId, equipData);

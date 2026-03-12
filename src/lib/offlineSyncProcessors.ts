@@ -30,7 +30,7 @@ const handleHomebrewCreate = async (item: SyncQueueItem) => {
 	const { error } = await supabase
 		.from("homebrew_content")
 		.insert(
-			payload as any as Database["public"]["Tables"]["homebrew_content"]["Insert"],
+			payload as unknown as Database["public"]["Tables"]["homebrew_content"]["Insert"],
 		);
 
 	if (error) throw error;
@@ -74,7 +74,7 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 
 		let query = supabase
 			.from("campaign_combat_sessions")
-			.update(payload as any)
+			.update(payload as never)
 			.eq("id", sessionId);
 
 		if (campaignId) {
@@ -142,7 +142,7 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 
 		const { error } = await supabase
 			.from("campaign_combatants")
-			.upsert(payload as any, { onConflict: "id" });
+			.upsert(payload as never, { onConflict: "id" });
 
 		if (error) throw error;
 		return;
@@ -167,7 +167,7 @@ const handleHomebrewUpdate = async (item: SyncQueueItem) => {
 			UUID_PATTERN.test(item.data.campaign_id)
 				? item.data.campaign_id
 				: undefined) as string | undefined,
-		} as any);
+		} as never);
 		if (error) throw error;
 		return;
 	}
@@ -204,7 +204,7 @@ const handleMarketplaceCreate = async (item: SyncQueueItem) => {
 	const { error } = await supabase
 		.from("marketplace_items")
 		.insert(
-			payload as any as Database["public"]["Tables"]["marketplace_items"]["Insert"],
+			payload as unknown as Database["public"]["Tables"]["marketplace_items"]["Insert"],
 		);
 
 	if (error) throw error;
@@ -221,7 +221,7 @@ const handleMarketplaceUpdate = async (item: SyncQueueItem) => {
 
 		const { error } = await supabase.rpc("record_marketplace_download", {
 			p_item_id: itemId,
-			p_user_id: userId,
+			puser_id: userId,
 		});
 		if (error) throw error;
 		return;
@@ -238,7 +238,7 @@ const handleMarketplaceUpdate = async (item: SyncQueueItem) => {
 			p_rating: Number.isFinite(rating) ? rating : 5,
 			p_comment:
 				typeof item.data.comment === "string" ? item.data.comment : undefined,
-			p_user_id: userId,
+			puser_id: userId,
 		});
 		if (error) throw error;
 		return;
@@ -253,7 +253,7 @@ const handleMarketplaceUpdate = async (item: SyncQueueItem) => {
 	const { error } = await supabase
 		.from("marketplace_items")
 		.update(
-			payload as any as Database["public"]["Tables"]["marketplace_items"]["Update"],
+			payload as unknown as Database["public"]["Tables"]["marketplace_items"]["Update"],
 		)
 		.eq("id", id);
 
@@ -287,7 +287,7 @@ const handleCampaignSessionCreate = async (item: SyncQueueItem) => {
 			p_content: item.data.content as string,
 			p_metadata: (item.data.metadata as Record<string, unknown>) ?? {},
 			p_is_player_visible: (item.data.is_player_visible as boolean) ?? true,
-		} as any);
+		} as never);
 		if (error) throw error;
 		return;
 	}
@@ -309,7 +309,7 @@ const handleCampaignSessionCreate = async (item: SyncQueueItem) => {
 				| "completed"
 				| "cancelled") ?? null,
 		p_location: (item.data.location as string) ?? null,
-	} as any);
+	} as never);
 
 	if (error) throw error;
 };

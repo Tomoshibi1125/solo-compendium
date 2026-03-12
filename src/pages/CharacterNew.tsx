@@ -666,7 +666,6 @@ const CharacterNew = () => {
 			// Add level 1 features from compendium
 			const {
 				addLevel1Features,
-				addBackgroundFeatures,
 				addStartingEquipment,
 				addStartingPowers,
 				addJobAwakeningBenefitsForLevel,
@@ -1106,7 +1105,7 @@ const CharacterNew = () => {
 												<div className="flex gap-1 mb-1">
 													{rolledStats.map((stat, index) => (
 														<Button
-															key={`stat-option-${stat}-${index}`}
+															key={stat}
 															variant="outline"
 															size="sm"
 															className="text-xs h-6 px-2"
@@ -1371,7 +1370,10 @@ const CharacterNew = () => {
 											{showJobFeatures && (
 												<div className="mt-2 space-y-1.5 max-h-64 overflow-y-auto pr-1">
 													{staticJobFeatures.map((cf, idx) => (
-														<div key={idx} className="flex gap-2 text-xs">
+														<div
+															key={`${cf.level}-${cf.name || idx}`}
+															className="flex gap-2 text-xs"
+														>
 															<span className="font-heading font-semibold text-primary min-w-[2rem]">
 																L{cf.level}
 															</span>
@@ -1524,12 +1526,16 @@ const CharacterNew = () => {
 														(path as { display_name?: string | null })
 															.display_name || path.name,
 													)}
-													{(path as Record<string, any>)._marketplace && (
+													{Boolean(
+														(path as Record<string, unknown>)._marketplace,
+													) && (
 														<Badge variant="outline" className="ml-2 text-xs">
 															Marketplace
 														</Badge>
 													)}
-													{(path as Record<string, any>)._homebrew && (
+													{Boolean(
+														(path as Record<string, unknown>)._homebrew,
+													) && (
 														<Badge variant="outline" className="ml-2 text-xs">
 															Homebrew
 														</Badge>
@@ -1701,12 +1707,13 @@ const CharacterNew = () => {
 										group is selected by default.
 									</SystemText>
 									<div className="space-y-4">
-										{staticJobData.startingEquipment.map(
-											(group, groupIndex) => {
+										{staticJobData.startingEquipment
+											.map((group, groupIndex) => ({ group, groupIndex }))
+											.map(({ group, groupIndex }) => {
 												const chosen = equipmentChoices[groupIndex] ?? group[0];
 												return (
 													<div
-														key={groupIndex}
+														key={`eq-group-${groupIndex}`}
 														className="p-4 rounded-lg border bg-muted/20"
 													>
 														{group.length === 1 ? (
@@ -1771,8 +1778,7 @@ const CharacterNew = () => {
 														)}
 													</div>
 												);
-											},
-										)}
+											})}
 									</div>
 
 									{/* Summary of chosen equipment */}
@@ -1785,7 +1791,7 @@ const CharacterNew = () => {
 												const chosen = equipmentChoices[i] ?? group[0];
 												return (
 													<li
-														key={i}
+														key={JSON.stringify(group)}
 														className="text-sm flex items-center gap-2"
 													>
 														<Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />

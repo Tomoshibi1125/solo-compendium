@@ -151,12 +151,9 @@ export function resolveAttack(
 			attackTotal: attack.result,
 			attackMode: mode,
 			attackD20:
-				(attack as Record<string, any>).rolls?.length === 2
-					? [
-							(attack as Record<string, any>).rolls[0],
-							(attack as Record<string, any>).rolls[1],
-						]
-					: [(attack as Record<string, any>).rolls?.[0] ?? attack.total],
+				attack.rolls?.length === 2
+					? ([attack.rolls[0], attack.rolls[1]] as [number, number])
+					: ([attack.rolls?.[0] ?? attack.total] as [number]),
 			targetAC,
 			hit,
 		};
@@ -169,12 +166,9 @@ export function resolveAttack(
 		attackTotal: attack.result,
 		attackMode: mode,
 		attackD20:
-			(attack as Record<string, any>).rolls?.length === 2
-				? [
-						(attack as Record<string, any>).rolls[0],
-						(attack as Record<string, any>).rolls[1],
-					]
-				: [(attack as Record<string, any>).rolls?.[0] ?? attack.total],
+			attack.rolls?.length === 2
+				? ([attack.rolls[0], attack.rolls[1]] as [number, number])
+				: ([attack.rolls?.[0] ?? attack.total] as [number]),
 		targetAC,
 		hit,
 		damageTotal: damage.result,
@@ -238,12 +232,9 @@ export function resolveSave(
 			saveTotal: save.result,
 			saveMode: mode,
 			saveD20:
-				(save as Record<string, any>).rolls?.length === 2
-					? [
-							(save as Record<string, any>).rolls[0],
-							(save as Record<string, any>).rolls[1],
-						]
-					: [(save as Record<string, any>).rolls?.[0] ?? save.total],
+				save.rolls?.length === 2
+					? ([save.rolls[0], save.rolls[1]] as [number, number])
+					: ([save.rolls?.[0] ?? save.total] as [number]),
 			dc,
 			success,
 		};
@@ -257,12 +248,9 @@ export function resolveSave(
 		saveTotal: save.result,
 		saveMode: mode,
 		saveD20:
-			(save as Record<string, any>).rolls?.length === 2
-				? [
-						(save as Record<string, any>).rolls[0],
-						(save as Record<string, any>).rolls[1],
-					]
-				: [(save as Record<string, any>).rolls?.[0] ?? save.total],
+			save.rolls?.length === 2
+				? ([save.rolls[0], save.rolls[1]] as [number, number])
+				: ([save.rolls?.[0] ?? save.total] as [number]),
 		dc,
 		success,
 		damageTotal: damage.result,

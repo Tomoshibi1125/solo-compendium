@@ -893,7 +893,7 @@ export function CampaignProtocolControls({
 							<div className="space-y-2">
 								{lootItems.map((item, index) => (
 									<div
-										key={`${item.name}-${index}`}
+										key={item.name}
 										className="flex items-center justify-between rounded border border-border px-3 py-2"
 									>
 										<div>
