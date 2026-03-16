@@ -152,15 +152,6 @@ import "./CharacterSheet.css";
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 const ALL_CONDITIONS = getAllConditions();
 
-type SheetSkill = {
-	modifier: number;
-	passive: number;
-	ability: AbilityScore;
-	proficient: boolean;
-	expertise: boolean;
-};
-
-
 const CharacterSheet = () => {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
