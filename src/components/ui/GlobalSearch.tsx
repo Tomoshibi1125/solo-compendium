@@ -306,7 +306,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 										</div>
 										{result.description && (
 											<p className="text-xs text-muted-foreground line-clamp-1">
-												{formatMonarchVernacular(result.description)}
+												export {formatMonarchVernacular(result.description)}
 											</p>
 										)}
 									</button>

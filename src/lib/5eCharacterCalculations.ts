@@ -10,7 +10,7 @@ import {
 } from "./5eRulesEngine";
 
 // Re-export for convenience
-export const getProficiencyBonus = getProficiencyBonusFromRules;
+const getProficiencyBonus = getProficiencyBonusFromRules;
 
 export interface CharacterStats {
 	level: number;

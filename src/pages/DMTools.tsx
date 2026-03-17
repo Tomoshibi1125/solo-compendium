@@ -1,6 +1,6 @@
 /**
  * Enhanced DM Tools Page - D&D Beyond Style Layout
- * Professional dungeon master tools with System Ascendant theme
+ * Professional protocol warden tools with System Ascendant theme
  */
 
 import {
@@ -120,8 +120,8 @@ const dmTools = [
 	},
 	{
 		id: "dungeon-map-generator",
-		name: "Dungeon Map Generator",
-		description: "Generate procedural dungeon layouts with room descriptions.",
+		name: "Rift Map Generator",
+		description: "Generate procedural rift layouts with room descriptions.",
 		icon: MapIcon,
 		status: "available",
 		color:
@@ -451,7 +451,7 @@ const DMTools = () => {
 									<div className="step-number step-rift">2</div>
 									<div className="step-content">
 										<span className="step-title">RIFT</span>
-										<p className="step-description">Enter the dungeon</p>
+										<p className="step-description">Enter the rift</p>
 									</div>
 								</div>
 								<ChevronRight className="w-6 h-6 text-arise/50 hidden md:block" />
@@ -477,7 +477,7 @@ const DMTools = () => {
 					<div className="search-bar">
 						<Search className="w-5 h-5 text-muted-foreground" />
 						<Input
-							placeholder="Search DM tools..."
+							placeholder="Search warden tools..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 							className="border-0 focus:ring-0"
@@ -598,7 +598,7 @@ const DMTools = () => {
 								Quick Actions
 							</CardTitle>
 							<CardDescription>
-								Common tasks and shortcuts for Dungeon Masters
+								Common tasks and shortcuts for Protocol Wardens
 							</CardDescription>
 						</CardHeader>
 						<CardContent>

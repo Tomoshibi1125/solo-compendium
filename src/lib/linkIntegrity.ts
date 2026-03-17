@@ -8,7 +8,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { resolveRef } from "./compendiumResolver";
 
-export interface BrokenLink {
+interface BrokenLink {
 	characterId: string;
 	characterName: string;
 	referenceType: "rune" | "job" | "path" | "background" | "feature" | "power";
@@ -25,7 +25,7 @@ export interface BrokenLink {
  * @param characterId - The character ID to check
  * @returns Array of broken links found
  */
-export async function checkLinkIntegrity(
+async function checkLinkIntegrity(
 	characterId: string,
 ): Promise<BrokenLink[]> {
 	const brokenLinks: BrokenLink[] = [];

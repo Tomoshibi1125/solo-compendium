@@ -4,11 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 
-export type CampaignExtra =
+type CampaignExtra =
 	Database["public"]["Tables"]["campaign_extras"]["Row"];
-export type CampaignExtraInsert =
+type CampaignExtraInsert =
 	Database["public"]["Tables"]["campaign_extras"]["Insert"];
-export type CampaignExtraUpdate =
+type CampaignExtraUpdate =
 	Database["public"]["Tables"]["campaign_extras"]["Update"];
 
 export const useCampaignExtras = (campaignId: string | null) => {

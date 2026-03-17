@@ -21,7 +21,7 @@ import { useOptimisticMutation } from "@/lib/optimisticUpdates";
 
 // Note: These functions are defined in system-rules.ts but we'll use the ones from characterCalculations
 
-type Character = Database["public"]["Tables"]["characters"]["Row"];
+export type Character = Database["public"]["Tables"]["characters"]["Row"];
 type CharacterInsert = Database["public"]["Tables"]["characters"]["Insert"];
 type CharacterUpdate = Database["public"]["Tables"]["characters"]["Update"];
 type AbilityScore = Database["public"]["Enums"]["ability_score"];

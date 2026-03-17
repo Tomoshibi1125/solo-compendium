@@ -6,7 +6,7 @@ import { warn as logWarn } from "@/lib/logger";
 
 const DEFAULT_STORAGE_PREFIX = "solo-compendium.tool";
 
-export const buildToolStorageKey = (toolKey: string) =>
+const buildToolStorageKey = (toolKey: string) =>
 	`${DEFAULT_STORAGE_PREFIX}.${toolKey}`;
 
 export const readLocalToolState = <T>(storageKey: string): T | null => {
@@ -33,7 +33,7 @@ export const writeLocalToolState = <T>(storageKey: string, state: T): void => {
 	}
 };
 
-export const loadUserToolState = async <T>(
+const loadUserToolState = async <T>(
 	userId: string,
 	toolKey: string,
 ): Promise<T | null> => {
@@ -70,7 +70,7 @@ export const saveUserToolState = async <T>(
 	}
 };
 
-export const loadCampaignToolState = async <T>(
+const loadCampaignToolState = async <T>(
 	campaignId: string,
 	toolKey: string,
 ): Promise<T | null> => {

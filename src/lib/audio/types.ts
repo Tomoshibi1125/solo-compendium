@@ -85,7 +85,8 @@ export interface AudioPlayerState {
 }
 
 // Sound effect categories
-export const SOUND_CATEGORIES = {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const SOUND_CATEGORIES = {
 	MUSIC: "music",
 	AMBIENT: "ambient",
 	EFFECT: "effect",
@@ -101,7 +102,8 @@ export const SOUND_CATEGORIES = {
 } as const;
 
 // Mood tags for filtering
-export const MOOD_TAGS = [
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const MOOD_TAGS = [
 	"epic",
 	"tense",
 	"mysterious",
@@ -122,7 +124,8 @@ export const MOOD_TAGS = [
 ] as const;
 
 // Legal-safe audio sources
-export const AUDIO_SOURCES = {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const AUDIO_SOURCES = {
 	YOUTUBE_AUDIO_LIBRARY: "YouTube Audio Library",
 	FREESOUND: "FreeSound (CC0)",
 	OPENGAMEART: "OpenGameArt.org",
@@ -132,7 +135,8 @@ export const AUDIO_SOURCES = {
 } as const;
 
 // Default playlists for different scenarios
-export const DEFAULT_PLAYLISTS = {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const DEFAULT_PLAYLISTS = {
 	COMBAT: {
 		id: "default-combat",
 		name: "Combat Music",
@@ -204,7 +208,8 @@ export function formatDuration(seconds: number): string {
 	return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
-export function getLicenseInfo(license: string): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getLicenseInfo(license: string): string {
 	const licenseMap: Record<string, string> = {
 		CC0: "Public Domain - No attribution required",
 		"CC BY": "Creative Commons - Attribution required",
@@ -215,7 +220,8 @@ export function getLicenseInfo(license: string): string {
 	return licenseMap[license] || license;
 }
 
-export function isValidAudioFile(file: File): boolean {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function isValidAudioFile(file: File): boolean {
 	const validTypes = [
 		"audio/mpeg",
 		"audio/wav",

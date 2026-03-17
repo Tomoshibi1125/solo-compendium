@@ -3,7 +3,7 @@
  * Used to validate imported character files and ensure compatibility.
  */
 
-export const CURRENT_SCHEMA_VERSION = "1.0";
+const CURRENT_SCHEMA_VERSION = "1.0";
 
 export interface CharacterExportSchema {
 	$schema: string;
@@ -58,7 +58,7 @@ export interface CharacterExportSchema {
 	backstory?: string | null;
 }
 
-export interface CharacterImportValidation {
+interface CharacterImportValidation {
 	valid: boolean;
 	errors: string[];
 	data: CharacterExportSchema | null;

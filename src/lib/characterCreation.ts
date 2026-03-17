@@ -22,7 +22,7 @@ import {
 } from "@/lib/sourcebookAccess";
 import { getProficiencyBonus } from "@/types/system-rules";
 
-type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"];
+export type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"];
 type Background = Database["public"]["Tables"]["compendium_backgrounds"]["Row"];
 
 type StaticJob = (typeof staticJobs)[number];
@@ -2664,7 +2664,8 @@ export async function addLevel1Features(
 /**
  * Add background proficiencies and features
  */
-export async function addBackgroundFeatures(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function addBackgroundFeatures(
 	characterId: string,
 	background: Background,
 ): Promise<void> {

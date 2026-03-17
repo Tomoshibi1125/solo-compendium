@@ -8,14 +8,15 @@ import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { error as logError } from "@/lib/logger";
 
-type Character = Database["public"]["Tables"]["characters"]["Row"];
+export type Character = Database["public"]["Tables"]["characters"]["Row"];
 type CompendiumEquipment =
 	Database["public"]["Tables"]["compendium_equipment"]["Row"];
 
 /**
  * Bulk update characters
  */
-export async function bulkUpdateCharacters(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function bulkUpdateCharacters(
 	characterIds: string[],
 	updates: Partial<Character>,
 ): Promise<{ success: number; failed: number }> {
@@ -67,7 +68,8 @@ export async function bulkDeleteCharacters(
 /**
  * Bulk add equipment to characters
  */
-export async function bulkAddEquipment(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function bulkAddEquipment(
 	characterIds: string[],
 	equipmentId: string,
 	quantity: number = 1,

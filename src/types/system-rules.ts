@@ -21,7 +21,8 @@ export interface Skill {
 	description: string;
 }
 
-export const SKILLS: Skill[] = [
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const SKILLS: Skill[] = [
 	{
 		id: "athletics",
 		name: "Athletics",
@@ -130,7 +131,8 @@ export const SKILLS: Skill[] = [
 ];
 
 // DC Reference
-export const DC_LADDER = [
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const DC_LADDER = [
 	{
 		dc: 5,
 		difficulty: "Very Easy",
@@ -166,7 +168,8 @@ export const DC_LADDER = [
 // Rarity levels
 export type Rarity = "common" | "uncommon" | "rare" | "very-rare" | "legendary";
 
-export const RARITY_LABELS: Record<Rarity, string> = {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const RARITY_LABELS: Record<Rarity, string> = {
 	common: "Common",
 	uncommon: "Uncommon",
 	rare: "Rare",
@@ -248,7 +251,8 @@ export interface Relic {
 }
 
 // Monster/Creature
-export interface Monster {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface Monster {
 	id: string;
 	name: string;
 	size: "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
@@ -276,12 +280,12 @@ export interface Monster {
 	tags: string[]; // Rift tags, faction tags, etc.
 }
 
-export interface MonsterTrait {
+interface MonsterTrait {
 	name: string;
 	description: string;
 }
 
-export interface MonsterAction {
+interface MonsterAction {
 	name: string;
 	description: string;
 	attackBonus?: number;

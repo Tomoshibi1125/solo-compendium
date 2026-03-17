@@ -23,7 +23,7 @@ import type { AbilityScore } from "@/types/system-rules";
 import { getAbilityModifier, getProficiencyBonus } from "@/types/system-rules";
 import { ActionCard } from "./ActionCard";
 
-export interface ActionItem {
+interface ActionItem {
 	name: string;
 	type: string;
 	description: string;

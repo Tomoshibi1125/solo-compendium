@@ -4,7 +4,8 @@
 // Generated on: 2026-01-13T22:03:39.609Z
 // 22 Backgrounds from System Ascendant Canon
 
-export interface Background {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface Background {
 	id: string;
 	name: string;
 	type: string;

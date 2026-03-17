@@ -327,7 +327,8 @@ export function getTableName(
 /**
  * Validate that a reference exists
  */
-export async function validateRef(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function validateRef(
 	type: EntryType,
 	id: string,
 ): Promise<boolean> {
@@ -361,7 +362,8 @@ const homebrewTypeToEntryType: Record<string, EntryType> = {
  * @param userId - Current user id
  * @param campaignId - Optional campaign id
  */
-export async function mergeHomebrewEntries(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function mergeHomebrewEntries(
 	type: EntryType,
 	userId?: string | null,
 	campaignId?: string | null,

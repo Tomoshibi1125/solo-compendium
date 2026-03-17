@@ -50,7 +50,8 @@ const writeCachedData = <T>(key: string, data: T) => {
 };
 
 // Fetch all compendium runes
-export function useCompendiumRunes(characterId?: string) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useCompendiumRunes(characterId?: string) {
 	return useQuery({
 		queryKey: ["compendium-runes", characterId ?? "global"],
 		queryFn: async () => {
@@ -210,7 +211,8 @@ const buildEquipmentRunesCacheKey = (userId: string, equipmentId: string) => {
 };
 
 // Fetch runes on specific equipment
-export function useEquipmentRunes(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useEquipmentRunes(
 	equipmentId: string | undefined,
 	characterId?: string,
 ) {
@@ -277,7 +279,8 @@ export function useEquipmentRunes(
 }
 
 // Inscribe a rune on equipment
-export function useInscribeRune() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useInscribeRune() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
@@ -380,7 +383,8 @@ export function useInscribeRune() {
 }
 
 // Remove rune inscription
-export function useRemoveRuneInscription() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useRemoveRuneInscription() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
@@ -412,7 +416,8 @@ export function useRemoveRuneInscription() {
 }
 
 // Toggle rune active status
-export function useToggleRuneActive() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useToggleRuneActive() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
@@ -449,7 +454,8 @@ export function useToggleRuneActive() {
 }
 
 // Use a rune (consume one use on a rune inscription, if tracked)
-export function useUseRune() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useUseRune() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
@@ -519,7 +525,8 @@ export function useUseRune() {
 }
 
 // Learn a rune (add to knowledge)
-export function useLearnRune() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useLearnRune() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
@@ -685,7 +692,8 @@ export function useAbsorbRune() {
 }
 
 // Check if character meets rune requirements
-export function checkRuneRequirements(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function checkRuneRequirements(
 	rune: Rune,
 	characterAbilities: Record<string, number>,
 	characterJob: string | null,

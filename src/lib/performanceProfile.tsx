@@ -22,9 +22,9 @@ type HardwareInfo = {
 	cpuCores: number | null;
 };
 
-export type PerformanceTier = "low" | "balanced" | "high" | "ultra";
+type PerformanceTier = "low" | "balanced" | "high" | "ultra";
 
-export type PerformanceProfile = {
+type PerformanceProfile = {
 	tier: PerformanceTier;
 	override: PerformanceTier | "auto";
 	reducedMotion: boolean;

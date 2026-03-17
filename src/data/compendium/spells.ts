@@ -2,7 +2,7 @@
 // Generated with full admin privileges
 // System Ascendant themed spells with images
 
-export interface Spell {
+interface Spell {
 	id: string;
 	name: string;
 	description: string;

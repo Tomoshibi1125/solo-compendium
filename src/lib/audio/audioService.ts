@@ -14,7 +14,7 @@ import type {
 } from "./types";
 import { DEFAULT_AUDIO_SETTINGS } from "./types";
 
-export class AudioService {
+class AudioService {
 	private audio: Howl | null = null;
 	private state: AudioPlayerState = {
 		currentTrack: null,

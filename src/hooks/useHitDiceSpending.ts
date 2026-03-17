@@ -14,14 +14,14 @@
 import { useCallback, useMemo, useState } from "react";
 import { getAbilityModifier } from "@/types/system-rules";
 
-export interface HitDieRollResult {
+interface HitDieRollResult {
 	roll: number;
 	vitModifier: number;
 	hpRecovered: number;
 	hitDiceRemaining: number;
 }
 
-export interface UseHitDiceSpendingReturn {
+interface UseHitDiceSpendingReturn {
 	/** Number of hit dice currently available */
 	hitDiceAvailable: number;
 	/** Total HP recovered this short rest session */

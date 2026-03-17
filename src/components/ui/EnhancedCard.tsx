@@ -331,7 +331,7 @@ const EnhancedCard = ({
 			)}
 
 			{/* Loading Overlay */}
-			{loading && (
+			export {loading && (
 				<div className="absolute inset-0 bg-background/80 flex items-center justify-center z-20">
 					<div className="flex flex-col items-center space-y-3">
 						<div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>

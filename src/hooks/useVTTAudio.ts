@@ -4,7 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { log, error as logError } from "@/lib/logger";
 
-export interface VTTAudioTrack {
+interface VTTAudioTrack {
 	id: string;
 	session_id: string;
 	name: string;
@@ -18,7 +18,7 @@ export interface VTTAudioTrack {
 	updated_at: string;
 }
 
-export interface VTTAudioSettings {
+interface VTTAudioSettings {
 	id: string;
 	session_id: string;
 	master_volume: number;
@@ -65,7 +65,8 @@ export const useVTTAudioTracks = (sessionId: string) => {
 	});
 };
 
-export const useVTTAudioSettings = (sessionId: string) => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useVTTAudioSettings = (sessionId: string) => {
 	return useQuery({
 		queryKey: ["vtt", "audio", "settings", sessionId],
 		queryFn: async (): Promise<VTTAudioSettings | null> => {
@@ -191,7 +192,8 @@ export const useDeleteVTTAudioTrack = () => {
 	});
 };
 
-export const useUpdateVTTAudioSettings = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useUpdateVTTAudioSettings = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
@@ -229,7 +231,7 @@ export const useUpdateVTTAudioSettings = () => {
 };
 
 // Audio playback utilities
-export class VTTAudioManager {
+class VTTAudioManager {
 	private audioElements: Map<string, HTMLAudioElement> = new Map();
 	private settings: VTTAudioSettings | null = null;
 

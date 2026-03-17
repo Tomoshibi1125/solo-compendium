@@ -27,7 +27,7 @@ import { getAbilityModifier, getProficiencyBonus } from "@/types/system-rules";
 // Types
 // ---------------------------------------------------------------------------
 
-export interface ConcentrationCheckResult {
+interface ConcentrationCheckResult {
 	success: boolean;
 	roll: number;
 	dc: number;
@@ -37,7 +37,7 @@ export interface ConcentrationCheckResult {
 	concentrationLost: boolean;
 }
 
-export interface UseConcentrationReturn {
+interface UseConcentrationReturn {
 	/** Current concentration state */
 	state: ConcentrationState;
 	/** Display-friendly status */

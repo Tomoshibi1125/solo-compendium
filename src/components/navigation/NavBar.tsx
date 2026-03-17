@@ -1,4 +1,4 @@
-import { LogOut, Menu, Settings, User } from "lucide-react";
+import { LogOut, Menu, Settings, User, Volume2, VolumeX } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,6 +12,7 @@ import {
 import { GlobalSearch } from "@/components/ui/GlobalSearch";
 import { NotificationCenter } from "@/components/ui/NotificationCenter";
 import { SystemSigilLogo } from "@/components/ui/SystemSigilLogo";
+import { useAppStore } from "@/hooks/useAppStore";
 import { useAuth } from "@/lib/auth/authContext";
 import { logger } from "@/lib/logger";
 import { MegaMenu } from "./MegaMenu";
@@ -21,6 +22,7 @@ export function NavBar() {
 	const { user, signOut } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { soundEnabled, setSoundEnabled } = useAppStore();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	// Don't show the global nav on login or setup pages if desired,
@@ -80,6 +82,17 @@ export function NavBar() {
 					{/* Right Actions: Search, Notifications, User Profile */}
 					<div className="flex items-center gap-2 sm:gap-4">
 						<GlobalSearch className="hidden md:block w-48 lg:w-64" />
+						
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={() => setSoundEnabled(!soundEnabled)}
+							className="text-muted-foreground hover:text-primary transition-colors hidden sm:flex"
+							title={soundEnabled ? "Mute Sounds" : "Enable Sounds"}
+						>
+							{soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+						</Button>
+
 						<NotificationCenter />
 
 						{user ? (

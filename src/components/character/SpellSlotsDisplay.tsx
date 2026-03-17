@@ -73,7 +73,7 @@ export function SpellSlotsDisplay({
 				playerTools
 					.trackCustomFeatureUsage(
 						characterId,
-						`Tier ${spellLevel} Spell Slot`,
+						`Tier ${spellLevel} Power Slot`,
 						"cast",
 						"5e",
 					)
@@ -171,7 +171,7 @@ export function SpellSlotsDisplay({
 					<div className="text-xs text-muted-foreground pt-2 border-t border-border">
 						{casterType === "pact"
 							? "Pact slots recover on short rest."
-							: "Slots recover on long rest. Some classes recover slots on short rest."}
+							: "Power slots recover on long rest. Some jobs recover slots on short rest."}
 					</div>
 				)}
 			</div>

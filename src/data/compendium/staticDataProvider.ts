@@ -222,7 +222,7 @@ export interface StaticCompendiumEntry {
 	path_tier?: number | null;
 }
 
-export interface StaticDataProvider {
+interface StaticDataProvider {
 	getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -1800,7 +1800,8 @@ export const staticDataProvider: StaticDataProvider = {
 };
 
 // Export a hook to check if we should use static data
-export const useStaticDataFallback = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useStaticDataFallback = () => {
 	// Use static data when Supabase is not configured or fails
 	return (
 		!(window as unknown as Record<string, unknown>).supabaseConfigured || false

@@ -1,7 +1,7 @@
 import { aiService } from "@/lib/ai/aiService";
 import { AppError } from "@/lib/appError";
 
-export interface ProtocolWardenContext {
+interface ProtocolWardenContext {
 	campaignName?: string;
 	characterNames?: string[];
 	recentContext?: string;

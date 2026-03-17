@@ -23,7 +23,7 @@ import { isLocalCharacterId } from "@/lib/guestStore";
 
 export const MAX_ATTUNEMENT_SLOTS = 3;
 
-export interface AttunableItem {
+interface AttunableItem {
 	id: string;
 	name: string;
 	requiresAttunement: boolean;
@@ -31,13 +31,13 @@ export interface AttunableItem {
 	isAttuned: boolean;
 }
 
-export interface AttuneResult {
+interface AttuneResult {
 	success: boolean;
 	message: string;
 	attunedCount: number;
 }
 
-export interface UseAttunementReturn {
+interface UseAttunementReturn {
 	/** Currently attuned items */
 	attunedItems: AttunableItem[];
 	/** Number of attuned items */
@@ -66,7 +66,8 @@ export interface UseAttunementReturn {
 // Hook
 // ---------------------------------------------------------------------------
 
-export function useAttunement(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useAttunement(
 	initialItems: AttunableItem[] = [],
 ): UseAttunementReturn {
 	const [items, setItems] = useState<AttunableItem[]>(initialItems);

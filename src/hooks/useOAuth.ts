@@ -43,7 +43,7 @@ export const OAUTH_PROVIDERS: OAuthProvider[] = [
 	},
 ];
 
-export interface UseOAuthReturn {
+interface UseOAuthReturn {
 	isLoading: boolean;
 	signInWithProvider: (provider: OAuthProvider) => Promise<void>;
 	signOut: () => Promise<void>;

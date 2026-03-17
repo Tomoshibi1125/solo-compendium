@@ -140,7 +140,7 @@ export function RegentFeaturesDisplay({
 				{/* Spell Slots */}
 				{regentData?.spellcasting && (
 					<div className="space-y-4">
-						<h4 className="font-medium">Regent Spell Slots</h4>
+						<h4 className="font-medium">Regent Power Slots</h4>
 						<div className="grid grid-cols-9 gap-2 text-center">
 							{Array.from({ length: 9 }, (_, i) => i + 1).map((level) => {
 								const slotKey =

@@ -57,7 +57,7 @@ import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { formatMonarchVernacular } from "@/lib/vernacular";
 
-type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"] & {
+export type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"] & {
 	display_name?: string | null;
 };
 type Path = Database["public"]["Tables"]["compendium_job_paths"]["Row"] & {

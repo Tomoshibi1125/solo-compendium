@@ -22,7 +22,7 @@ type PendingItem = QueueStatus["pending"][number];
 type RunningItem = QueueStatus["running"][number];
 type ArtAssetRow = Database["public"]["Tables"]["art_assets"]["Row"];
 
-export class ArtPipelineService {
+class ArtPipelineService {
 	private enabled: boolean;
 	private pending: PendingItem[] = [];
 	private running: RunningItem[] = [];

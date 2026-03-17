@@ -4,7 +4,7 @@ import { useUserLocalState } from "@/hooks/useToolState";
 const STORAGE_KEY = "search-history";
 const MAX_HISTORY_ITEMS = 20;
 
-export interface SearchHistoryItem {
+interface SearchHistoryItem {
 	query: string;
 	timestamp: number;
 	filters?: Record<string, unknown>;

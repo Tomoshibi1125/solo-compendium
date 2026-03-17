@@ -1,7 +1,7 @@
 import { formatMonarchVernacular } from "@/lib/vernacular";
 
 // Rarity system for treasure
-export const RARITY_CHANCES = {
+const RARITY_CHANCES = {
 	common: 0.6,
 	uncommon: 0.25,
 	rare: 0.1,
@@ -9,7 +9,8 @@ export const RARITY_CHANCES = {
 	legendary: 0.01,
 };
 
-export function generateRarity(): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function generateRarity(): string {
 	const roll = Math.random();
 	let cumulative = 0;
 

@@ -44,7 +44,7 @@ interface RelicProperty {
 	type: "passive" | "active" | "bonus";
 }
 
-interface Relic {
+export interface Relic {
 	id: string;
 	name: string;
 	type: "weapon" | "armor" | "accessory" | "tool";

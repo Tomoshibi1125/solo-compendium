@@ -26,7 +26,7 @@ import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 // Types
 // ---------------------------------------------------------------------------
 
-export interface LevelGateVerdict {
+interface LevelGateVerdict {
 	allowed: boolean;
 	reason: string;
 }
@@ -134,7 +134,8 @@ export function canAcquireFeature(
 /**
  * Filter features to only those accessible at the given level.
  */
-export function filterAccessibleFeatures(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function filterAccessibleFeatures(
 	characterLevel: number,
 	features: FeatureGateMeta[],
 ): FeatureGateMeta[] {
@@ -297,7 +298,7 @@ export function getCantripLimit(
 /**
  * Get spells-known limit at the given level (for known-casters only).
  */
-export function getSpellsKnown(
+function getSpellsKnown(
 	jobName: string | null | undefined,
 	characterLevel: number,
 ): number | null {
@@ -307,7 +308,8 @@ export function getSpellsKnown(
 /**
  * Get spells-prepared limit at the given level.
  */
-export function getSpellsPrepared(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getSpellsPrepared(
 	jobName: string | null | undefined,
 	characterLevel: number,
 	abilityModifier: number,
@@ -319,7 +321,7 @@ export function getSpellsPrepared(
 // Composite gating summary (for UI display)
 // ---------------------------------------------------------------------------
 
-export interface LevelUpGatingSummary {
+interface LevelUpGatingSummary {
 	level: number;
 	jobName: string;
 	pathName: string | null;

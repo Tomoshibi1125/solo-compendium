@@ -162,7 +162,7 @@ export function SystemSigilLogo({
 					className="animate-pulse"
 				/>
 
-				{/* Central Point - Divine Spark */}
+				export {/* Central Point - Divine Spark */}
 				<circle cx="50" cy="50" r="1.5" fill="white" opacity="0.9" />
 			</svg>
 		</div>

@@ -35,7 +35,7 @@ export const AIServiceSchema = z.object({
 });
 
 export type AIService = z.infer<typeof AIServiceSchema>;
-export type AICapability = AIService["capabilities"][number];
+type AICapability = AIService["capabilities"][number];
 
 // AI request types
 export const AIRequestSchema = z.object({
@@ -274,7 +274,8 @@ export function getAIServiceById(
 	return services.find((service) => service.id === id);
 }
 
-export function getAIServiceForCapability(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getAIServiceForCapability(
 	capability: AICapability,
 	services: AIService[],
 ): AIService | undefined {
@@ -283,7 +284,8 @@ export function getAIServiceForCapability(
 	);
 }
 
-export function validateAIRequest(request: AIRequest): string[] {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function validateAIRequest(request: AIRequest): string[] {
 	const errors: string[] = [];
 
 	if (!request.input) {

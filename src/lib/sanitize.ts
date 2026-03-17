@@ -28,7 +28,7 @@ const RICH_TEXT_ALLOWED_TAGS = [
 const RICH_TEXT_ALLOWED_ATTR = ["href", "target", "rel", "style", "class"];
 
 // Sanitize HTML content (basic - for user-generated content)
-export function sanitizeHTML(html: string): string {
+function sanitizeHTML(html: string): string {
 	const div = document.createElement("div");
 	div.textContent = html;
 	return div.innerHTML;
@@ -53,7 +53,7 @@ export function sanitizeRichText(html: string): string {
 }
 
 // Sanitize text input (removes potentially dangerous characters)
-export function sanitizeText(text: string): string {
+function sanitizeText(text: string): string {
 	return text
 		.replace(/[<>]/g, "") // Remove angle brackets
 		.trim()
@@ -61,7 +61,8 @@ export function sanitizeText(text: string): string {
 }
 
 // Validate and sanitize numeric input
-export function sanitizeNumber(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function sanitizeNumber(
 	value: unknown,
 	min?: number,
 	max?: number,
@@ -74,7 +75,8 @@ export function sanitizeNumber(
 }
 
 // Sanitize array of strings
-export function sanitizeStringArray(arr: unknown): string[] {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function sanitizeStringArray(arr: unknown): string[] {
 	if (!Array.isArray(arr)) return [];
 	return arr
 		.filter((item): item is string => typeof item === "string")
@@ -84,7 +86,8 @@ export function sanitizeStringArray(arr: unknown): string[] {
 }
 
 // Sanitize object keys (for user input)
-export function sanitizeObjectKeys(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function sanitizeObjectKeys(
 	obj: Record<string, unknown>,
 ): Record<string, unknown> {
 	const sanitized: Record<string, unknown> = {};

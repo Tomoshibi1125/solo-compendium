@@ -20,9 +20,9 @@ import { getAbilityModifier } from "@/types/system-rules";
 // Types
 // ---------------------------------------------------------------------------
 
-export type ArmorCategory = "none" | "light" | "medium" | "heavy";
+type ArmorCategory = "none" | "light" | "medium" | "heavy";
 
-export interface EquippedArmor {
+interface EquippedArmor {
 	name: string;
 	baseAC: number;
 	category: ArmorCategory;
@@ -31,7 +31,7 @@ export interface EquippedArmor {
 	strengthRequirement?: number;
 }
 
-export interface EquippedShield {
+interface EquippedShield {
 	name: string;
 	acBonus: number; // typically 2
 	magicalBonus?: number;
@@ -54,7 +54,7 @@ export interface ACBreakdown {
 // Pure calculation
 // ---------------------------------------------------------------------------
 
-export function calculateAC(
+function calculateAC(
 	agiScore: number,
 	armor: EquippedArmor | null,
 	shield: EquippedShield | null,
@@ -147,7 +147,8 @@ export function calculateAC(
 // Hook
 // ---------------------------------------------------------------------------
 
-export function useArmorClass(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useArmorClass(
 	agiScore: number,
 	armor: EquippedArmor | null,
 	shield: EquippedShield | null,

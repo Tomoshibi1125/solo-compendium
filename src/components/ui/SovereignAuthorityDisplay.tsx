@@ -246,7 +246,8 @@ interface AscensionMeterProps {
 	className?: string;
 }
 
-export const AscensionMeter = ({
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const AscensionMeter = ({
 	progress,
 	tier,
 	nextTier,
@@ -352,7 +353,7 @@ export const AscensionMeter = ({
 								left: `${20 + i * 15}%`,
 								top: `${30 + (i % 2) * 40}%`,
 								color: tierConfig.glow,
-								animationDelay: `${i * 0.2}s`,
+								animationDelay: `$export {i * 0.2}s`,
 								animationDuration: "1.5s",
 							}}
 						/>
@@ -363,4 +364,4 @@ export const AscensionMeter = ({
 	);
 };
 
-export default SovereignAuthorityDisplay;
+

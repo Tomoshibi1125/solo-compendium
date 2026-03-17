@@ -94,6 +94,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useUpdateCharacterAbilities } from "@/hooks/useCharacterAbilities";
+import { useAutoBackup } from "@/hooks/useCharacterBackup";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
 import {
 	featureModifiersToCustomModifiers,
@@ -342,6 +343,9 @@ const CharacterSheet = () => {
 			}));
 	}, [equipment]);
 	const slotsRemaining = 3 - attunedItems.length;
+
+	// Enable automatic periodic backups while editing (disabled in read-only mode)
+	useAutoBackup(character ?? null, !isReadOnly);
 
 	// Spell system hooks
 	const { data: spellSlotData = [] } = useSpellSlots(
@@ -1535,7 +1539,7 @@ const CharacterSheet = () => {
 								<div className="p-4 border-b sm:border-b-0 sm:border-r border-primary/20 flex-1 flex flex-col justify-center gap-2 bg-black/20">
 									<div className="flex items-center gap-2">
 										<span className="text-xs font-mono text-primary/50 uppercase tracking-widest w-12">
-											CLASS:
+											JOB:
 										</span>
 										<span className="font-system text-primary font-bold uppercase tracking-wider text-sm drop-shadow-[0_0_5px_currentColor]">
 											{jobDisplayName || "Unawakened"}
@@ -1776,8 +1780,8 @@ const CharacterSheet = () => {
 							className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple"
 						>
 							<Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
-							<span className="hidden xs:inline relative z-10">Spells</span>
-							<span className="xs:hidden relative z-10">S</span>
+							<span className="hidden xs:inline relative z-10">Powers</span>
+							<span className="xs:hidden relative z-10">P</span>
 							<div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
 						</TabsTrigger>
 						<TabsTrigger

@@ -34,7 +34,7 @@ type CollaborationEventBase = {
 	campaignId: string;
 };
 
-export type CollaborationEvent =
+type CollaborationEvent =
 	| (CollaborationEventBase & { type: "cursor_move"; data: CursorPosition })
 	| (CollaborationEventBase & { type: "text_change"; data: TextChangePayload })
 	| (CollaborationEventBase & {
@@ -65,7 +65,7 @@ type PresencePayload = {
 	currentElement?: string;
 };
 
-export interface ActiveUser {
+interface ActiveUser {
 	id: string;
 	name: string;
 	cursor?: { x: number; y: number };
@@ -424,7 +424,8 @@ export function useRealtimeCollaboration(campaignId: string) {
 }
 
 // React component for displaying active users
-export function ActiveUsersList({
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function ActiveUsersList({
 	activeUsers,
 }: {
 	activeUsers: ActiveUser[];
@@ -450,7 +451,8 @@ export function ActiveUsersList({
 }
 
 // React component for collaborative cursors
-export function CollaborativeCursors({
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function CollaborativeCursors({
 	activeUsers,
 }: {
 	activeUsers: ActiveUser[];

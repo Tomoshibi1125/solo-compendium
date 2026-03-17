@@ -329,4 +329,4 @@ export const CosmicBackground = ({
 	);
 };
 
-export default CosmicBackground;
+

@@ -41,7 +41,7 @@ type RuneKnowledgeRow =
 	Database["public"]["Tables"]["character_rune_knowledge"]["Row"];
 type RollHistoryRow = Database["public"]["Tables"]["roll_history"]["Row"];
 
-export interface GuestCharacterState {
+interface GuestCharacterState {
 	character: CharacterRow;
 	abilities: Record<AbilityScore, number>;
 	equipment: EquipmentRow[];
@@ -65,7 +65,7 @@ const STORAGE_KEY = "solo-compendium.guest.v1";
 const USER_KEY = "solo-compendium.guest.user";
 const ROLE_KEY = "solo-compendium.guest.role";
 
-export type GuestRole = "dm" | "player";
+type GuestRole = "dm" | "player";
 
 function hasLocalStorage(): boolean {
 	try {
@@ -97,7 +97,7 @@ export function isLocalCharacterId(id: string): boolean {
 	return id.startsWith("local_");
 }
 
-export function createLocalId(prefix: string): string {
+function createLocalId(prefix: string): string {
 	const uuid =
 		typeof crypto !== "undefined" && "randomUUID" in crypto
 			? (crypto.randomUUID as () => string)()
@@ -196,7 +196,7 @@ export function getLocalCharacterWithAbilities(
 	};
 }
 
-export function upsertLocalCharacter(
+function upsertLocalCharacter(
 	character: CharacterRow,
 	abilities?: Record<AbilityScore, number>,
 ): void {

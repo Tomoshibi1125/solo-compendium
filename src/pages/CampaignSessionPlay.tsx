@@ -22,7 +22,6 @@ import {
 	useEndCombatSession,
 	useUpdateCombatSession,
 } from "@/hooks/useCampaignCombat";
-import { useCampaignCombatRealtime } from "@/hooks/useCampaignCombatRealtime";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
@@ -35,10 +34,7 @@ const CampaignSessionPlay = () => {
 	const resolvedCampaignId = campaignId ?? "";
 	const resolvedSessionId = sessionId ?? "";
 
-	useCampaignCombatRealtime(
-		resolvedCampaignId || null,
-		resolvedSessionId || null,
-	);
+	// Realtime connection for combat list update logic is now covered by useCampaignCombatSession directly!
 
 	// Master integration: encounter rewards, combat tracking, VTT mgmt, analytics (DDB parity)
 	const { useDMToolsEnhancements } = useGlobalDDBeyondIntegration();

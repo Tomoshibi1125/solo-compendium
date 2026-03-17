@@ -1,7 +1,7 @@
 import { aiService } from "@/lib/ai/aiService";
 import { logger } from "@/lib/logger";
 
-export interface GeneratedContent {
+interface GeneratedContent {
 	id: string;
 	type:
 		| "npc"
@@ -25,7 +25,7 @@ export interface GeneratedContent {
 	prompt: string;
 }
 
-export interface ContentGenerationOptions {
+interface ContentGenerationOptions {
 	type: GeneratedContent["type"];
 	tone: "serious" | "humorous" | "dramatic" | "mysterious" | "epic";
 	length: "short" | "medium" | "long";

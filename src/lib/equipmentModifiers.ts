@@ -2,7 +2,7 @@
  * Equipment modifier parsing and application
  */
 
-export interface EquipmentModifiers {
+interface EquipmentModifiers {
 	ac?: number;
 	attack?: number;
 	damage?: number;
@@ -262,7 +262,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 /**
  * Combine multiple modifier objects
  */
-export function combineModifiers(
+function combineModifiers(
 	...modifierSets: EquipmentModifiers[]
 ): EquipmentModifiers {
 	const combined: EquipmentModifiers = {};

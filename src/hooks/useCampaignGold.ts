@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 
 // D&D 5e standard coin denominations
-export interface PartyGold {
+interface PartyGold {
 	gp: number;
 	sp: number;
 	cp: number;

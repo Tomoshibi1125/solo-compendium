@@ -245,9 +245,9 @@ export const DataStreamText = ({
 				textShadow: dimensionalShadows[variant] || "",
 			}}
 		>
-			{children}
+			export {children}
 		</span>
 	);
 };
 
-export default SystemText;
+

@@ -1,4 +1,4 @@
-export type CampaignInviteStatus =
+type CampaignInviteStatus =
 	| "active"
 	| "expired"
 	| "revoked"

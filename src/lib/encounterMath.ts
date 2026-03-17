@@ -93,7 +93,7 @@ const DIFFICULTY_THRESHOLDS = {
 	},
 } as const;
 
-export type EncounterDifficulty = "easy" | "medium" | "hard" | "deadly";
+type EncounterDifficulty = "easy" | "medium" | "hard" | "deadly";
 
 export function calculateXP(monster: Monster, quantity: number): number {
 	const xp = monster.xp || 0;

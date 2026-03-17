@@ -1,7 +1,7 @@
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 
-export type SourcebookAccessContext = {
+type SourcebookAccessContext = {
 	campaignId?: string | null;
 };
 
@@ -138,7 +138,7 @@ export function filterRowsByAccessibleSourcebooks<T>(
 	});
 }
 
-export async function getAccessibleSourcebookSet(
+async function getAccessibleSourcebookSet(
 	context: SourcebookAccessContext = {},
 ): Promise<Set<string> | null> {
 	if (!isSupabaseConfigured) {

@@ -7,6 +7,7 @@ import {
 } from "@/components/pwa/PWAComponents";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { OfflineBanner } from "@/components/ui/OfflineBanner";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import { useAccessibility } from "@/hooks/useAccessibility";
 import { usePWA } from "@/hooks/usePWA";
 import { cn } from "@/lib/utils";
@@ -62,6 +63,7 @@ function useSAZone(): string {
 }
 
 export function Layout({ children, className }: LayoutProps) {
+	const embedded = useEmbedded();
 	const { reducedMotion, highContrast } = useAccessibility();
 	const saZone = useSAZone();
 	const {
@@ -91,6 +93,14 @@ export function Layout({ children, className }: LayoutProps) {
 		root.classList.toggle("reduce-motion", reducedMotion);
 		root.classList.toggle("high-contrast", highContrast);
 	}, [reducedMotion, highContrast]);
+
+	if (embedded) {
+		return (
+			<div className={cn("relative overflow-hidden w-full", className)} data-sa-zone={saZone}>
+				{children || <Outlet />}
+			</div>
+		);
+	}
 
 	return (
 		<div

@@ -48,7 +48,7 @@ interface HomebrewCharacterOptions {
 	items: CharacterCreationOption[];
 }
 
-export interface HomebrewVersionRecord {
+interface HomebrewVersionRecord {
 	id: string;
 	homebrew_id: string;
 	version_number: number;
@@ -58,7 +58,7 @@ export interface HomebrewVersionRecord {
 	created_at: string;
 }
 
-export type HomebrewSaveInput = {
+type HomebrewSaveInput = {
 	id?: string;
 	contentType: HomebrewContentType;
 	name: string;
@@ -70,7 +70,7 @@ export type HomebrewSaveInput = {
 	campaignId?: string | null;
 };
 
-export type HomebrewMutationResult = {
+type HomebrewMutationResult = {
 	queued: boolean;
 	record: HomebrewRecord | null;
 };
@@ -470,7 +470,8 @@ export const useSetHomebrewStatus = () => {
 };
 
 // Character creation integration hook
-export function useHomebrewCharacterIntegration() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useHomebrewCharacterIntegration() {
 	const { user } = useAuth();
 	const queryClient = useQueryClient();
 

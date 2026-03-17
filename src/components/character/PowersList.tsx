@@ -23,7 +23,7 @@ import type { useSpellCasting } from "@/hooks/useSpellCasting";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
-type Power = Database["public"]["Tables"]["character_powers"]["Row"];
+export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 
 import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
 import {
@@ -260,7 +260,7 @@ export function PowersList({
 				.catch(console.error);
 			toast({
 				title: "Cantrip Cast",
-				description: `${displayName} is cast without using a spell slot.`,
+				description: `${displayName} is activated without using a power slot.`,
 			});
 			return;
 		}
@@ -270,8 +270,8 @@ export function PowersList({
 		);
 		if (!slot) {
 			toast({
-				title: "No Spell Slots Available",
-				description: `You don't have any Tier ${power.power_level} spell slots available.`,
+				title: "No Power Slots Available",
+				description: `You don't have any Tier ${power.power_level} power slots available.`,
 				variant: "destructive",
 			});
 			return;
@@ -311,12 +311,12 @@ export function PowersList({
 
 			toast({
 				title: "Power Used",
-				description: `${displayName} activated! Used 1 Tier ${power.power_level} spell slot.`,
+				description: `${displayName} activated! Used 1 Tier ${power.power_level} power slot.`,
 			});
 		} catch {
 			toast({
 				title: "Error",
-				description: "Failed to use spell slot.",
+				description: "Failed to use power slot.",
 				variant: "destructive",
 			});
 		}

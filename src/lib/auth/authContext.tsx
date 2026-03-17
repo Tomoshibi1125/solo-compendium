@@ -17,9 +17,9 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { error as logError } from "@/lib/logger";
 
-export type UserRole = "dm" | "player";
+type UserRole = "dm" | "player";
 
-export interface AuthUser {
+interface AuthUser {
 	id: string;
 	email: string;
 	role: UserRole;
@@ -526,7 +526,8 @@ export function useAuth() {
 }
 
 // Permission-based component wrapper
-export function withPermission<P extends object>(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function withPermission<P extends object>(
 	permission: string,
 	Component: React.ComponentType<P>,
 ) {

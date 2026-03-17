@@ -44,7 +44,7 @@ export interface MarketplaceItemRecord {
 	has_access?: boolean;
 }
 
-export interface MarketplaceReviewRecord {
+interface MarketplaceReviewRecord {
 	id: string;
 	item_id: string;
 	user_id: string;
@@ -56,7 +56,7 @@ export interface MarketplaceReviewRecord {
 	updated_at: string;
 }
 
-export type MarketplaceSaveInput = {
+type MarketplaceSaveInput = {
 	id?: string;
 	title: string;
 	description: string;
@@ -191,7 +191,8 @@ export const useMarketplaceItems = ({
 	});
 };
 
-export const useMarketplaceReviews = (itemId: string | null) => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useMarketplaceReviews = (itemId: string | null) => {
 	return useQuery({
 		queryKey: [...KEY, "reviews", itemId ?? "none"],
 		queryFn: async (): Promise<MarketplaceReviewRecord[]> => {

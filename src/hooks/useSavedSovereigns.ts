@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import type { FusionAbility, GeneratedSovereign } from "@/lib/geminiProtocol";
 
-export interface SavedSovereign {
+interface SavedSovereign {
 	id: string;
 	name: string;
 	title: string;
@@ -25,7 +25,8 @@ export interface SavedSovereign {
 	likes_count: number;
 }
 
-export function useSavedSovereigns() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useSavedSovereigns() {
 	return useQuery({
 		queryKey: ["saved-sovereigns"],
 		queryFn: async () => {
@@ -46,7 +47,8 @@ export function useSavedSovereigns() {
 	});
 }
 
-export function useMySovereigns() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useMySovereigns() {
 	return useQuery({
 		queryKey: ["my-sovereigns"],
 		queryFn: async () => {
@@ -183,7 +185,8 @@ export function useSaveSovereign() {
 	});
 }
 
-export function useDeleteSovereign() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useDeleteSovereign() {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

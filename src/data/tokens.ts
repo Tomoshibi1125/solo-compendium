@@ -17,7 +17,7 @@ export interface Token {
 	friendly: boolean;
 }
 
-export const tokensCompendium: Token[] = [
+const tokensCompendium: Token[] = [
 	{
 		id: "player-token",
 		name: "Umbral Ascendant",
@@ -85,5 +85,7 @@ export const tokensCompendium: Token[] = [
 		friendly: true,
 	},
 ];
+
+
 
 export default tokensCompendium;

@@ -3,7 +3,7 @@
  * Handles condition application and effects on characters
  */
 
-export interface ConditionEffect {
+interface ConditionEffect {
 	name: string;
 	description: string;
 	effects: string[];
@@ -17,7 +17,7 @@ export interface ConditionEffect {
 	};
 }
 
-export const CONDITIONS: Record<string, ConditionEffect> = {
+const CONDITIONS: Record<string, ConditionEffect> = {
 	blinded: {
 		name: "Blinded",
 		description:
@@ -226,7 +226,8 @@ export const CONDITIONS: Record<string, ConditionEffect> = {
 	},
 };
 
-export function getCondition(name: string): ConditionEffect | undefined {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getCondition(name: string): ConditionEffect | undefined {
 	return CONDITIONS[name.toLowerCase()];
 }
 

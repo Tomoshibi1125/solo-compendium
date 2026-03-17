@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
@@ -9,7 +10,7 @@ const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
 type CombatSession =
 	Database["public"]["Tables"]["campaign_combat_sessions"]["Row"];
-type Combatant = Database["public"]["Tables"]["campaign_combatants"]["Row"];
+export type Combatant = Database["public"]["Tables"]["campaign_combatants"]["Row"];
 
 type UpdateCombatSessionInput = {
 	campaignId: string;
@@ -37,7 +38,7 @@ type CombatMutationResult = {
 	sessionId: string;
 };
 
-export type { CombatSession, Combatant };
+export type { CombatSession };
 
 const isOfflineError = (error: unknown): boolean => {
 	const message =
@@ -65,6 +66,48 @@ export const useCampaignCombatSession = (
 	campaignId: string,
 	sessionId?: string | null,
 ) => {
+	const queryClient = useQueryClient();
+
+	useEffect(() => {
+		if (!campaignId || !isSupabaseConfigured) return;
+
+		const channel = supabase
+			.channel(`combat-sync-${campaignId}`)
+			.on(
+				"postgres_changes",
+				{
+					event: "*",
+					schema: "public",
+					table: "campaign_combat_sessions",
+					filter: `campaign_id=eq.${campaignId}`,
+				},
+				() => {
+					queryClient.invalidateQueries({
+						queryKey: ["campaigns", campaignId, "combat-session"],
+					});
+				},
+			)
+			.on(
+				"postgres_changes",
+				{
+					event: "*",
+					schema: "public",
+					table: "campaign_combatants",
+					filter: `campaign_id=eq.${campaignId}`,
+				},
+				() => {
+					queryClient.invalidateQueries({
+						queryKey: ["campaigns", campaignId, "combat-session"],
+					});
+				},
+			)
+			.subscribe();
+
+		return () => {
+			supabase.removeChannel(channel);
+		};
+	}, [campaignId, queryClient]);
+
 	return useQuery({
 		queryKey: [
 			"campaigns",

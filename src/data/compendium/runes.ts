@@ -1,5 +1,5 @@
 // System Ascendant Runes Compendium - Extended Generation
-export interface RuneCompendiumEntry {
+interface RuneCompendiumEntry {
 	id: string;
 	name: string;
 	description: string;

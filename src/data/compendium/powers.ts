@@ -791,4 +791,4 @@ export const powers: Power[] = [
 	},
 ];
 
-export default powers;
+

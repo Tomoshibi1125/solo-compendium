@@ -12,7 +12,7 @@ export interface SystemFavorOption {
 	minLevel: number;
 }
 
-export const SYSTEM_FAVOR_OPTIONS: SystemFavorOption[] = [
+const SYSTEM_FAVOR_OPTIONS: SystemFavorOption[] = [
 	// ── Core (D&D Inspiration equivalent) ──
 	{
 		id: "favor-inspiration",
@@ -99,14 +99,16 @@ export function getAvailableFavorOptions(level: number): SystemFavorOption[] {
 }
 
 // Aligned with unified engine: 3/4/5/6 by tier (System Ascendant canonical formula)
-export function getSystemFavorMax(level: number): number {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getSystemFavorMax(level: number): number {
 	if (level <= 4) return 3;
 	if (level <= 10) return 4;
 	if (level <= 16) return 5;
 	return 6;
 }
 
-export function getSystemFavorDie(level: number): number {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getSystemFavorDie(level: number): number {
 	if (level <= 4) return 4;
 	if (level <= 10) return 6;
 	if (level <= 16) return 8;

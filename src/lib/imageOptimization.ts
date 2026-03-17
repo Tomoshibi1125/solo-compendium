@@ -9,7 +9,7 @@ let cachedBestFormat: "avif" | "webp" | "original" | null = null;
 /**
  * Check if browser supports WebP
  */
-export function supportsWebP(): boolean {
+function supportsWebP(): boolean {
 	if (typeof window === "undefined") return false;
 
 	try {
@@ -25,7 +25,7 @@ export function supportsWebP(): boolean {
 /**
  * Check if browser supports AVIF
  */
-export function supportsAVIF(): boolean {
+function supportsAVIF(): boolean {
 	if (typeof window === "undefined") return false;
 
 	try {
@@ -62,7 +62,7 @@ export type ImageSize =
 	| "xlarge"
 	| "hero";
 
-export const IMAGE_SIZES: Record<ImageSize, number> = {
+const IMAGE_SIZES: Record<ImageSize, number> = {
 	thumbnail: 64,
 	small: 128,
 	medium: 256,
@@ -254,7 +254,8 @@ export async function compressImage(
 /**
  * Get image dimensions from URL
  */
-export function getImageDimensions(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getImageDimensions(
 	url: string,
 ): Promise<{ width: number; height: number }> {
 	return new Promise((resolve, reject) => {
@@ -270,7 +271,8 @@ export function getImageDimensions(
 /**
  * Preload image for better performance
  */
-export function preloadImage(url: string): Promise<void> {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function preloadImage(url: string): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const img = new Image();
 		img.onload = () => resolve();

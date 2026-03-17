@@ -30,7 +30,8 @@ export {
 } from "./advancedDiceEngine";
 
 // Validate dice string format
-export function validateDiceString(diceString: string): boolean {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function validateDiceString(diceString: string): boolean {
 	if (!diceString || typeof diceString !== "string") return false;
 
 	// Basic pattern: NdS+/-M where N=dice count, S=sides, M=modifier
@@ -38,14 +39,14 @@ export function validateDiceString(diceString: string): boolean {
 	return pattern.test(diceString);
 }
 
-export interface DiceRoll {
+interface DiceRoll {
 	dice: number;
 	sides: number;
 	modifier: number;
 	advantage?: "advantage" | "disadvantage" | "normal";
 }
 
-export interface RollResult {
+interface RollResult {
 	formula: string;
 	rolls: number[];
 	modifier: number;
@@ -58,7 +59,7 @@ export interface RollResult {
 /**
  * Parse a dice formula string (e.g., "2d6+4", "1d20+5")
  */
-export function parseFormula(formula: string): DiceRoll {
+function parseFormula(formula: string): DiceRoll {
 	const match = formula.match(/^(\d+)?d(\d+)([+-]\d+)?$/i);
 	if (!match) {
 		throw new AppError(`Invalid dice formula: ${formula}`, "INVALID_INPUT");
@@ -75,14 +76,14 @@ export function parseFormula(formula: string): DiceRoll {
 /**
  * Roll a single die
  */
-export function rollDie(sides: number): number {
+function rollDie(sides: number): number {
 	return Math.floor(Math.random() * sides) + 1;
 }
 
 /**
  * Execute a dice roll
  */
-export function roll(diceRoll: DiceRoll): RollResult {
+function roll(diceRoll: DiceRoll): RollResult {
 	const { dice, sides, modifier } = diceRoll;
 	// Treat missing advantage/disadvantage as normal
 	const advantage = diceRoll.advantage ?? "normal";
@@ -131,7 +132,7 @@ export function roll(diceRoll: DiceRoll): RollResult {
 /**
  * Quick roll from formula string
  */
-export function quickRoll(
+function quickRoll(
 	formula: string,
 	advantage?: "advantage" | "disadvantage" | "normal",
 ): RollResult {
@@ -158,7 +159,8 @@ export function rollCheck(
 /**
  * Roll attack with damage
  */
-export function rollAttack(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function rollAttack(
 	attackModifier: number,
 	damageFormula: string,
 	advantage?: "advantage" | "disadvantage" | "normal",
@@ -186,7 +188,8 @@ export function rollAttack(
 /**
  * Roll multiple dice and sum them
  */
-export function rollMultiple(formulas: string[]): {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function rollMultiple(formulas: string[]): {
 	results: RollResult[];
 	grandTotal: number;
 } {
@@ -198,7 +201,8 @@ export function rollMultiple(formulas: string[]): {
 /**
  * Format roll result for display
  */
-export function formatRollResult(result: RollResult): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function formatRollResult(result: RollResult): string {
 	const rollsStr =
 		result.rolls.length > 1
 			? `[${result.rolls.join(" + ")}]`

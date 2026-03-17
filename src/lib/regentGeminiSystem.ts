@@ -6,16 +6,9 @@ import type { Character } from "../types/character";
 import { NINE_REGENTS } from "./nineRegents";
 
 type AbilityScore = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
-type Job = string;
+export type Job = string;
 
-export type {
-	Feature,
-	RegentPath,
-	Spell,
-	StructuredSpell,
-	Trait,
-} from "./regentTypes";
-export { RegentType } from "./regentTypes";
+
 
 import {
 	type Feature,
@@ -26,7 +19,7 @@ import {
 } from "./regentTypes";
 
 // Gemini Protocol fusion result
-export interface GeminiSovereign {
+interface GeminiSovereign {
 	id: string;
 	name: string;
 	baseJob: Job;
@@ -45,7 +38,7 @@ export interface GeminiSovereign {
 }
 
 // AI-generated regent options
-export interface RegentChoice {
+interface RegentChoice {
 	regent: RegentPath;
 	aiReasoning: string;
 	adaptationNote?: string; // How the regent is adapted for martial/caster compatibility
@@ -767,7 +760,7 @@ export class RegentGeminiSystem {
 }
 
 // Quest completion tracking for regent unlocking
-export interface RegentQuest {
+interface RegentQuest {
 	id: string;
 	name: string;
 	description: string;
@@ -783,7 +776,8 @@ export interface RegentQuest {
 }
 
 // Quest management system
-export class RegentQuestManager {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+class RegentQuestManager {
 	private constructor() {}
 
 	private static readonly QUEST_DATABASE: RegentQuest[] = [

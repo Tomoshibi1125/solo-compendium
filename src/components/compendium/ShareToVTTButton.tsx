@@ -12,7 +12,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 
-export interface ShareToVTTButtonProps {
+interface ShareToVTTButtonProps {
 	itemType: "Monster" | "Item" | "Spell";
 	itemName: string;
 }

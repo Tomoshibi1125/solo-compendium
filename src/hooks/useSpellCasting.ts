@@ -33,7 +33,7 @@ import {
 // Types
 // ---------------------------------------------------------------------------
 
-export interface CastableSpell {
+interface CastableSpell {
 	id: string;
 	name: string;
 	level: number; // 0 = cantrip
@@ -48,7 +48,7 @@ export interface CastableSpell {
 	higherLevels: string | null;
 }
 
-export interface CastSpellParams {
+interface CastSpellParams {
 	spell: CastableSpell;
 	castAtLevel?: number; // for upcasting; defaults to spell.level
 	asRitual?: boolean; // cast as ritual (no slot consumed)
@@ -60,7 +60,7 @@ export interface CastSpellParams {
 	campaignId: string | null;
 }
 
-export interface CastSpellResult {
+interface CastSpellResult {
 	success: boolean;
 	slotExpended: boolean;
 	castAtLevel: number;
@@ -261,7 +261,8 @@ export function useSpellCasting(
  * This feeds into computeCharacterStats() so buff/debuff spells auto-apply
  * stat modifiers (AC, attack, speed, etc.) — full DDB/Foundry parity.
  */
-export function buildActiveSpellEffectEntry(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function buildActiveSpellEffectEntry(
 	spellName: string,
 	casterId: string,
 	targetId: string,

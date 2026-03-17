@@ -5,7 +5,7 @@
 /**
  * Check if device is mobile
  */
-export function isMobile(): boolean {
+function isMobile(): boolean {
 	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 		navigator.userAgent,
 	);
@@ -14,14 +14,15 @@ export function isMobile(): boolean {
 /**
  * Check if device is touch-enabled
  */
-export function isTouchDevice(): boolean {
+function isTouchDevice(): boolean {
 	return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 }
 
 /**
  * Get viewport dimensions
  */
-export function getViewportSize(): { width: number; height: number } {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getViewportSize(): { width: number; height: number } {
 	return {
 		width: window.innerWidth,
 		height: window.innerHeight,
@@ -31,14 +32,16 @@ export function getViewportSize(): { width: number; height: number } {
 /**
  * Check if viewport is small (mobile)
  */
-export function isSmallViewport(): boolean {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function isSmallViewport(): boolean {
 	return window.innerWidth < 768;
 }
 
 /**
  * Prevent zoom on double tap (iOS)
  */
-export function preventDoubleTapZoom() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function preventDoubleTapZoom() {
 	let lastTouchEnd = 0;
 	document.addEventListener(
 		"touchend",

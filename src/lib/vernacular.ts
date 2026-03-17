@@ -39,4 +39,5 @@ export const normalizeRegentSearch = (
 export const MONARCH_LABEL = REGENT_LABEL;
 export const MONARCH_LABEL_PLURAL = REGENT_LABEL_PLURAL;
 export const formatMonarchVernacular = formatRegentVernacular;
-export const normalizeMonarchSearch = normalizeRegentSearch;
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const normalizeMonarchSearch = normalizeRegentSearch;

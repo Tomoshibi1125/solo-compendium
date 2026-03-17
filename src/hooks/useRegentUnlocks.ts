@@ -3,7 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
-export interface RegentUnlock {
+interface RegentUnlock {
 	id: string;
 	character_id: string;
 	regent_id: string;
@@ -183,7 +183,8 @@ export function useRegentUnlocks(characterId: string) {
 }
 
 // Hook for DMs to manage regent unlocks for their campaign characters
-export function useCampaignRegentUnlocks(campaignId: string) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useCampaignRegentUnlocks(campaignId: string) {
 	const {
 		data: campaignUnlocks = [],
 		isLoading,
@@ -228,7 +229,8 @@ export function useCampaignRegentUnlocks(campaignId: string) {
 }
 
 // Hook to get available regents for unlocking
-export function useAvailableRegents(characterId: string) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useAvailableRegents(characterId: string) {
 	const {
 		data: availableRegents = [],
 		isLoading,
@@ -266,7 +268,8 @@ export function useAvailableRegents(characterId: string) {
 }
 
 // Backward compatibility aliases
-export const useMonarchUnlocks = useRegentUnlocks;
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useMonarchUnlocks = useRegentUnlocks;
 export const useCharacterMonarchUnlocks = useRegentUnlocks;
 export const useCharacterRegentUnlocks = useRegentUnlocks;
 

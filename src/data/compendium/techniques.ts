@@ -2,7 +2,7 @@
 // Combat maneuvers and martial techniques
 // Based on System Ascendant mechanics
 
-export interface Technique {
+interface Technique {
 	id: string;
 	name: string;
 	description: string;
@@ -1143,4 +1143,4 @@ export const techniques: Technique[] = [
 	},
 ];
 
-export default techniques;
+

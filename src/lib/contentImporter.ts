@@ -554,7 +554,8 @@ export function parseJSONContent(jsonString: string): ContentBundle {
 }
 
 // Parse YAML content
-export async function parseYAMLContent(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function parseYAMLContent(
 	yamlString: string,
 ): Promise<ContentBundle> {
 	try {

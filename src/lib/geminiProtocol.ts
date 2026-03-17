@@ -9,7 +9,7 @@ import {
 	REGENT_LABEL_PLURAL,
 } from "@/lib/vernacular";
 
-type Job = Tables<"compendium_jobs">;
+export type Job = Tables<"compendium_jobs">;
 type Path = Tables<"compendium_job_paths">;
 type Regent = Tables<"compendium_regents">;
 
@@ -959,11 +959,12 @@ export function calculateTotalCombinations(
 }
 
 // Get fusion description for display
-export function getFusionDescription(): string {
+function getFusionDescription(): string {
 	return `Gemini Protocol overlays a permanent subclass using Job + Path + ${REGENT_LABEL} A + ${REGENT_LABEL} B. Any valid template can fuse, and each Sovereign is a unique, irreversible overlay with combined memories and abilities.`;
 }
 
 // Get fusion method description for display (legacy compatibility)
-export function getFusionMethodDescription(): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getFusionMethodDescription(): string {
 	return getFusionDescription();
 }

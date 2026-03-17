@@ -50,7 +50,8 @@ export const registerOfflineSyncProcessor = (
 	syncManager.registerProcessor(type, action, processor);
 };
 
-export const unregisterOfflineSyncProcessor = (
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const unregisterOfflineSyncProcessor = (
 	type: OfflineSyncType,
 	action: OfflineSyncAction,
 ) => {

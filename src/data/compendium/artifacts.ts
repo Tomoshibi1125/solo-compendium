@@ -2,7 +2,7 @@
 // God-tier items and legendary artifacts
 // Based on System Ascendant mechanics
 
-export interface Artifact {
+interface Artifact {
 	id: string;
 	name: string;
 	description: string;
@@ -982,4 +982,4 @@ export const artifacts: Artifact[] = [
 	},
 ];
 
-export default artifacts;
+

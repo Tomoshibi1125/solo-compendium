@@ -16,8 +16,8 @@ export type TokenCategory =
 	| "trap"
 	| "effect"
 	| "other";
-export type TokenRenderMode = "token" | "overlay";
-export type TokenBlendMode =
+type TokenRenderMode = "token" | "overlay";
+type TokenBlendMode =
 	| "normal"
 	| "multiply"
 	| "screen"
@@ -113,7 +113,7 @@ const BASE_TYPE_MAP: Record<
 	guard: { type: "npc", category: "npc", size: "medium", tag: "guard" },
 };
 
-export const BASE_LIBRARY_TOKENS: LibraryToken[] = tokensCompendium.map(
+const BASE_LIBRARY_TOKENS: LibraryToken[] = tokensCompendium.map(
 	(token: BaseToken) => {
 		const mapped = BASE_TYPE_MAP[token.type] ?? {
 			type: "custom",

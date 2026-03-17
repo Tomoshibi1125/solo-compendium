@@ -316,4 +316,4 @@ export const SystemHologram = ({
 	);
 };
 
-export default SystemHologram;
+

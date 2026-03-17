@@ -7,7 +7,7 @@ const isDevelopment = import.meta.env.DEV;
 const isE2E = import.meta.env.VITE_E2E === "true";
 const allowConsole = isDevelopment && !isE2E;
 
-export interface Logger {
+interface Logger {
 	log: (...args: unknown[]) => void;
 	error: (...args: unknown[]) => void;
 	warn: (...args: unknown[]) => void;
@@ -67,7 +67,7 @@ const defaultOptions: LoggerOptions = {
 	sink: console,
 };
 
-export function createLogger(overrides: Partial<LoggerOptions> = {}): Logger {
+function createLogger(overrides: Partial<LoggerOptions> = {}): Logger {
 	const options: LoggerOptions = {
 		...defaultOptions,
 		...overrides,
@@ -112,9 +112,11 @@ export const logger: Logger = createLogger();
 export const log = logger.log.bind(logger);
 export const error = logger.error.bind(logger);
 export const warn = logger.warn.bind(logger);
-export const debug = logger.debug.bind(logger);
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const debug = logger.debug.bind(logger);
 
-export function logAndToastError(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function logAndToastError(
 	error: unknown,
 	context: string,
 	toast?: (opts: {

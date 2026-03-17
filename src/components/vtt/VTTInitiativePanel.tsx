@@ -21,7 +21,6 @@ import {
 	useUpdateCombatSession,
 	useUpsertCombatants,
 } from "@/hooks/useCampaignCombat";
-import { useCampaignCombatRealtime } from "@/hooks/useCampaignCombatRealtime";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
@@ -95,9 +94,6 @@ export function VTTInitiativePanel({
 	const upsertCombatants = useUpsertCombatants();
 	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
 	const ddbTools = usePlayerToolsEnhancements();
-
-	// Real-time sync
-	useCampaignCombatRealtime(campaignId, sessionId ?? "");
 
 	const session = data?.session;
 	const combatants = (data?.combatants ?? []).map(rowToEntry);
@@ -235,20 +231,20 @@ export function VTTInitiativePanel({
 					<Button
 						variant="ghost"
 						size="icon"
-						className="h-6 w-6"
+						className="h-8 w-8"
 						onClick={nextTurn}
 						title="Next turn"
 					>
-						<SkipForward className="h-3 w-3" />
+						<SkipForward className="h-4 w-4" />
 					</Button>
 					<Button
 						variant="ghost"
 						size="icon"
-						className="h-6 w-6"
+						className="h-8 w-8"
 						onClick={resetCombat}
 						title="Reset combat"
 					>
-						<RotateCcw className="h-3 w-3" />
+						<RotateCcw className="h-4 w-4" />
 					</Button>
 				</div>
 			</div>
@@ -346,7 +342,7 @@ export function VTTInitiativePanel({
 										<Button
 											variant="outline"
 											size="icon"
-											className="h-5 w-5"
+											className="h-7 w-7"
 											onClick={() => adjustHP(entry, -1)}
 										>
 											-
@@ -357,7 +353,7 @@ export function VTTInitiativePanel({
 										<Button
 											variant="outline"
 											size="icon"
-											className="h-5 w-5"
+											className="h-7 w-7"
 											onClick={() => adjustHP(entry, 1)}
 										>
 											+
@@ -366,7 +362,7 @@ export function VTTInitiativePanel({
 
 									{/* Quick conditions */}
 									<div className="flex flex-wrap gap-0.5">
-										{CONDITION_OPTIONS.slice(0, 8).map((c) => (
+										{CONDITION_OPTIONS.slice(0, 8).map((c: string) => (
 											<button
 												type="button"
 												key={c}
@@ -427,4 +423,4 @@ export function VTTInitiativePanel({
 	);
 }
 
-export default VTTInitiativePanel;
+

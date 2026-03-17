@@ -53,7 +53,7 @@ interface JobData {
 	} | null;
 }
 
-interface JobFeature {
+export interface JobFeature {
 	id: string;
 	name: string;
 	display_name?: string | null;
@@ -63,7 +63,7 @@ interface JobFeature {
 	is_path_feature: boolean;
 }
 
-interface JobPath {
+export interface JobPath {
 	id: string;
 	name: string;
 	display_name?: string | null;

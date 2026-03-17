@@ -78,7 +78,7 @@ export function RoleBadge({
 		>
 			<Icon className={cn(iconSizes[variant], config.color)} />
 			<span className={cn(textSizes[variant], config.color)}>
-				{config.text}
+				export {config.text}
 			</span>
 		</div>
 	);

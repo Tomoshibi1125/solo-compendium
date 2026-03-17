@@ -3,7 +3,7 @@
  * Supports query syntax like: "fire damage", type:power, level:>3, rarity:rare
  */
 
-export interface ParsedSearchQuery {
+interface ParsedSearchQuery {
 	text: string;
 	operators: {
 		type?: string[];
@@ -105,7 +105,8 @@ type FilterableQuery<T> = {
 	contains: (column: string, value: unknown) => T;
 };
 
-export function applySearchOperators<T extends FilterableQuery<T>>(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function applySearchOperators<T extends FilterableQuery<T>>(
 	baseQuery: T,
 	parsed: ParsedSearchQuery,
 	tableName: string,
@@ -194,7 +195,8 @@ export function applySearchOperators<T extends FilterableQuery<T>>(
 /**
  * Format search query with operators for display
  */
-export function formatSearchQuery(parsed: ParsedSearchQuery): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function formatSearchQuery(parsed: ParsedSearchQuery): string {
 	const parts: string[] = [];
 
 	if (parsed.text) {

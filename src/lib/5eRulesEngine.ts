@@ -418,7 +418,7 @@ export interface SystemFavorOption {
 	minLevel: number;
 }
 
-export const SYSTEM_FAVOR_OPTIONS: SystemFavorOption[] = [
+const SYSTEM_FAVOR_OPTIONS: SystemFavorOption[] = [
 	// ── Core (D&D Inspiration equivalent) ──
 	{
 		id: "favor-inspiration",

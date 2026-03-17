@@ -91,7 +91,7 @@ const categories = [
 
 	// Character Foundation
 	{ id: "backgrounds", name: "Backgrounds", icon: Users },
-	{ id: "jobs", name: "Classes", icon: Swords },
+	{ id: "jobs", name: "Jobs", icon: Swords },
 	{ id: "paths", name: "Paths", icon: GitBranch },
 	{ id: "regents", name: MONARCH_LABEL_PLURAL, icon: Crown },
 

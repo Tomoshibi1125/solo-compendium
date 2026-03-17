@@ -10,7 +10,7 @@ import {
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-export interface CampaignInviteRecord {
+interface CampaignInviteRecord {
 	id: string;
 	campaign_id: string;
 	token: string;
@@ -31,7 +31,7 @@ export interface CampaignInviteRecord {
 	status?: "active" | "expired" | "revoked" | "used_up" | "unknown";
 }
 
-export interface CampaignInviteSummary {
+interface CampaignInviteSummary {
 	campaign_id: string;
 	campaign_name: string;
 	campaign_description: string | null;
@@ -44,7 +44,7 @@ export interface CampaignInviteSummary {
 	status?: "active" | "expired" | "revoked" | "used_up" | "unknown";
 }
 
-export interface CampaignInviteCreateResult {
+interface CampaignInviteCreateResult {
 	id: string;
 	token: string;
 	join_code?: string | null;
@@ -86,7 +86,7 @@ const supabaseAny = supabase as unknown as {
 	};
 };
 
-export interface CampaignInviteAuditLog {
+interface CampaignInviteAuditLog {
 	id: string;
 	campaign_id: string;
 	invite_id: string | null;
@@ -304,7 +304,8 @@ export const useCreateCampaignInvite = () => {
 	});
 };
 
-export const useAddPlayerCharacterToCampaign = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useAddPlayerCharacterToCampaign = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

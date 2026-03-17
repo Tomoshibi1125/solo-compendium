@@ -1,4 +1,4 @@
-export type AppErrorCode =
+type AppErrorCode =
 	| "AUTH_REQUIRED"
 	| "NOT_FOUND"
 	| "INVALID_INPUT"

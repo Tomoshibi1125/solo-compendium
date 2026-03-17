@@ -85,7 +85,8 @@ interface StatRowProps {
 	className?: string;
 }
 
-export function StatRow({ label, value, className }: StatRowProps) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function StatRow({ label, value, className }: StatRowProps) {
 	return (
 		<div
 			className={cn("flex justify-between items-start gap-4 py-1", className)}

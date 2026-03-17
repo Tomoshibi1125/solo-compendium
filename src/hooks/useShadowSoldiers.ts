@@ -32,7 +32,7 @@ export interface ShadowSoldier {
 	shadow_type: string;
 }
 
-export interface CharacterShadowSoldier {
+interface CharacterShadowSoldier {
 	id: string;
 	character_id: string;
 	soldier_id: string;
@@ -210,7 +210,8 @@ export function useUpdateSoldierHP() {
 	});
 }
 
-export function useIncreaseBondLevel() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useIncreaseBondLevel() {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

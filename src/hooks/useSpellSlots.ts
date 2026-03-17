@@ -432,7 +432,8 @@ export const useInitializeSpellSlots = () => {
 /**
  * Recover spell slots on rest
  */
-export const useRecoverSpellSlots = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useRecoverSpellSlots = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({

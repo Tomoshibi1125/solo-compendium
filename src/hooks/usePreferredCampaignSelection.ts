@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useUserToolState } from "@/hooks/useToolState";
 
-export type PreferredCampaignSelection = {
+type PreferredCampaignSelection = {
 	campaignId: string | null;
 };
 

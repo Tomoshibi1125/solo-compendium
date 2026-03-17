@@ -34,7 +34,7 @@ export interface ActiveEffectRef {
 	modifiers: Record<string, unknown>;
 }
 
-export interface CorePayloadFields {
+interface CorePayloadFields {
 	characterId: string;
 	characterName: string;
 	classId: string | null;

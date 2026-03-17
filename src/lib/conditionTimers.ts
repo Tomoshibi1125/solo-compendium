@@ -1,4 +1,4 @@
-export type ConditionTimers = Record<string, number> | undefined;
+type ConditionTimers = Record<string, number> | undefined;
 
 export function cleanupExpiredConditions(
 	conditions: string[],

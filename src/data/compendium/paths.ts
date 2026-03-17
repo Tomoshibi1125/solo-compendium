@@ -1,7 +1,7 @@
 // Job Paths Compendium - System Ascendant Canonical 84 Paths
 // 14 Jobs × 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
 
-export interface Path {
+interface Path {
 	id: string;
 	name: string;
 	jobId: string;

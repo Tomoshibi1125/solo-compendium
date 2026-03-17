@@ -120,7 +120,7 @@ import {
 /**
  * Equipment instance with effects
  */
-export interface EquipmentInstance {
+interface EquipmentInstance {
 	id: string;
 	name: string;
 	type: "armor" | "weapon" | "accessory" | "consumable" | "tool" | "other";
@@ -159,7 +159,7 @@ export interface ActiveCondition {
 /**
  * Feature instance with usage tracking
  */
-export interface FeatureInstance {
+interface FeatureInstance {
 	id: string;
 	name: string;
 	sourceType: "job" | "path" | "feat" | "race" | "item" | "awakening" | "trait";
@@ -174,7 +174,7 @@ export interface FeatureInstance {
 /**
  * Active spell effect (concentration, duration-based)
  */
-export interface ActiveSpellEffect {
+interface ActiveSpellEffect {
 	spellId: string;
 	spellName: string;
 	level: number;
@@ -190,7 +190,7 @@ export interface ActiveSpellEffect {
 /**
  * Character job/regent overlay data
  */
-export interface CharacterJob {
+interface CharacterJob {
 	job: string; // System Ascendant job name (Destroyer, Mage, etc.)
 	path?: string; // System Ascendant subclass/path name (level 3, automatic)
 	regent?: string; // Regent path ID (quest-gated, DM unlocks)
@@ -213,7 +213,7 @@ export interface CharacterJob {
 /**
  * Base character data - everything stored in database
  */
-export interface CharacterBaseData {
+interface CharacterBaseData {
 	// Identity
 	id: string;
 	name: string;
@@ -264,7 +264,7 @@ export interface CharacterBaseData {
 /**
  * All computed/derived character stats
  */
-export interface ComputedCharacterStats {
+interface ComputedCharacterStats {
 	// Core derived stats
 	proficiencyBonus: number;
 	abilityModifiers: Record<AbilityScore, number>;
@@ -328,7 +328,7 @@ export interface ComputedCharacterStats {
 /**
  * Computed effect after resolution
  */
-export interface ComputedEffect {
+interface ComputedEffect {
 	source: EffectSource;
 	target: EffectTarget;
 	value: number | string | boolean | Record<string, unknown>;
@@ -339,7 +339,7 @@ export interface ComputedEffect {
 /**
  * Roll modifier summary for a roll type
  */
-export interface RollModifierSummary {
+interface RollModifierSummary {
 	advantage: boolean;
 	disadvantage: boolean;
 	flatModifier: number;
@@ -1504,7 +1504,8 @@ function computeEncumbrance(
  * @param base - Base character data from database
  * @returns Fully computed character stats
  */
-export function computeCharacterStats(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function computeCharacterStats(
 	base: CharacterBaseData,
 ): ComputedCharacterStats {
 	// 1. Calculate proficiency bonus from total level

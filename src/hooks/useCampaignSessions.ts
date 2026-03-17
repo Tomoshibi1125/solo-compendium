@@ -16,7 +16,7 @@ export type CampaignSessionLogType =
 	| "event"
 	| "note";
 
-export interface CampaignSessionRecord {
+interface CampaignSessionRecord {
 	id: string;
 	campaign_id: string;
 	title: string;
@@ -29,7 +29,7 @@ export interface CampaignSessionRecord {
 	updated_at: string;
 }
 
-export interface CampaignSessionLogRecord {
+interface CampaignSessionLogRecord {
 	id: string;
 	campaign_id: string;
 	session_id: string | null;

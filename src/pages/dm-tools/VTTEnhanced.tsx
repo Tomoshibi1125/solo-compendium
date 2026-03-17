@@ -29,6 +29,7 @@ import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
 import { VTTInitiativePanel } from "@/components/vtt/VTTInitiativePanel";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
+import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
 import {
 	DEFAULT_TOKENS,
@@ -62,7 +63,6 @@ import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { getBestImageFormat } from "@/lib/imageOptimization";
-
 import { cn } from "@/lib/utils";
 import {
 	type AmbientSoundZone,
@@ -1797,10 +1797,12 @@ const VTTEnhanced = () => {
 
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-[1920px]">
 				{!isGM ? (
-					<PlayerMapView
-						campaignId={campaignId || ""}
-						sessionId={sessionId || undefined}
-					/>
+					<EmbeddedProvider>
+						<PlayerMapView
+							campaignId={campaignId || ""}
+							sessionId={sessionId || undefined}
+						/>
+					</EmbeddedProvider>
 				) : (
 					<>
 						<div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">

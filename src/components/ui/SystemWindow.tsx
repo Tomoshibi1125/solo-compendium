@@ -111,7 +111,7 @@ export function SystemWindow({
 			id={id}
 			className={cn(
 				"relative bg-gradient-to-br border rounded-lg backdrop-blur-2xl overflow-hidden transition-all duration-300 w-full max-w-full",
-				"system-panel hologram-flicker sw-root hover:border-open/50",
+				"sa-panel system-panel hologram-flicker sw-root hover:border-open/50",
 				variantStyles[variant],
 				animated && "animate-shadow-pulse",
 				id && "scroll-mt-4",

@@ -128,7 +128,7 @@ export function SortableList<T extends { id: string }>({
 							disabled={disabled}
 							className={itemClassName}
 						>
-							{renderItem(item, index)}
+							export {renderItem(item, index)}
 						</SortableItem>
 					))}
 				</div>

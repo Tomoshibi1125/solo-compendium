@@ -65,14 +65,16 @@ export function getAssetUrl(
 /**
  * Get fallback asset URL for a given asset type.
  */
-export function getFallbackUrl(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getFallbackUrl(
 	assetType: keyof typeof DEFAULT_FALLBACKS,
 ): string {
 	return DEFAULT_FALLBACKS[assetType] || DEFAULT_FALLBACKS.portrait;
 }
 
 // Validate asset exists (client-side check)
-export async function validateAsset(url: string): Promise<boolean> {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function validateAsset(url: string): Promise<boolean> {
 	try {
 		const response = await fetch(url, { method: "HEAD" });
 		return response.ok;
@@ -82,7 +84,7 @@ export async function validateAsset(url: string): Promise<boolean> {
 }
 
 // Lightweight manifest stub for backward compatibility
-export interface AssetManifest {
+interface AssetManifest {
 	mappings: Record<string, AssetMapping>;
 	globalFallbacks: {
 		portrait: string;
@@ -98,7 +100,7 @@ export interface AssetManifest {
 	};
 }
 
-export interface AssetMapping {
+interface AssetMapping {
 	id: string;
 	type: string;
 	assets: {
@@ -117,13 +119,14 @@ export interface AssetMapping {
 	};
 }
 
-export const assetManifest: AssetManifest = {
+const assetManifest: AssetManifest = {
 	mappings: {},
 	globalFallbacks: DEFAULT_FALLBACKS,
 	statistics: { totalMappings: 0, mappingsWithAssets: 0, missingAssets: [] },
 };
 
 // Legacy compatibility
-export function createAssetManifest(): AssetManifest {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function createAssetManifest(): AssetManifest {
 	return assetManifest;
 }

@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlayerToolsPanel } from "@/components/vtt/PlayerToolsPanel";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
+import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { useCampaignToolState } from "@/hooks/useToolState";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
@@ -20,6 +21,7 @@ import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
 import "@/styles/vtt-player-map.css";
 import "./PlayerMapView.css";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { LibraryToken } from "@/data/tokenLibraryDefaults";
 import {
 	type AmbientSoundZone,
@@ -145,6 +147,12 @@ const PlayerMapView = ({
 
 	// Scene state received from DM
 	const [currentScene, setCurrentScene] = useState<Scene | null>(null);
+
+	const { data: combatData } = useCampaignCombatSession(
+		effectiveCampaignId,
+		effectiveSessionId,
+	);
+	const activeTurnIndex = combatData?.session?.current_turn ?? -1;
 
 	// Realtime connection
 	const vttRealtime = useVTTRealtime({
@@ -576,8 +584,9 @@ const PlayerMapView = ({
 									role="application"
 									aria-label="Battle Map Canvas"
 								>
-									<div
-										className="vtt-map-container vtt-map-scene"
+									<ErrorBoundary>
+										<div
+											className="vtt-map-container vtt-map-scene"
 										style={{
 											width: `${sceneWidth * gridSize * zoom}px`,
 											height: `${sceneHeight * gridSize * zoom}px`,
@@ -1008,6 +1017,7 @@ const PlayerMapView = ({
 												</div>
 											)}
 									</div>
+									</ErrorBoundary>
 								</div>
 							</SystemWindow>
 						</div>
@@ -1289,7 +1299,9 @@ const PlayerMapView = ({
 															key={token.id}
 															className={cn(
 																"p-2 rounded border flex items-center gap-2",
-																index === 0 && "bg-primary/20 border-primary",
+																index === activeTurnIndex
+																	? "bg-primary/20 border-primary"
+																	: "",
 															)}
 														>
 															<span className="font-arise text-lg w-6 text-center">
@@ -1546,10 +1558,15 @@ const PlayerMapView = ({
 												No initiative order yet.
 											</SystemText>
 										) : (
-											tokensInInitiative.map((token) => (
+											tokensInInitiative.map((token, index) => (
 												<div
 													key={token.id}
-													className="flex items-center gap-2 p-2 rounded text-sm border border-border/40"
+													className={cn(
+														"flex items-center gap-2 p-2 rounded text-sm border transition-colors",
+														index === activeTurnIndex
+															? "bg-primary/20 border-primary shadow-sm"
+															: "border-border/40",
+													)}
 												>
 													<span className="truncate flex-1">{token.name}</span>
 													<span className="font-bold">{token.initiative}</span>

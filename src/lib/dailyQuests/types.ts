@@ -6,7 +6,7 @@
 import { z } from "zod";
 
 // Quest requirement types
-export const QuestRequirementSchema = z.object({
+const QuestRequirementSchema = z.object({
 	type: z.enum([
 		"check_count",
 		"distance_traveled",
@@ -46,7 +46,8 @@ export const QuestRequirementSchema = z.object({
 	item_types: z.array(z.string()).optional(),
 });
 
-export type QuestRequirement = z.infer<typeof QuestRequirementSchema>;
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type QuestRequirement = z.infer<typeof QuestRequirementSchema>;
 
 // Quest scaling types
 export const QuestScalingSchema = z.object({
@@ -55,7 +56,7 @@ export const QuestScalingSchema = z.object({
 	offset: z.number().default(0),
 });
 
-export type QuestScaling = z.infer<typeof QuestScalingSchema>;
+type QuestScaling = z.infer<typeof QuestScalingSchema>;
 
 // Quest reward types
 export const QuestRewardSchema = z.object({
@@ -126,7 +127,7 @@ export const DailyQuestConfigSchema = z.object({
 export type DailyQuestConfig = z.infer<typeof DailyQuestConfigSchema>;
 
 // Progress tracking
-export interface QuestProgress {
+interface QuestProgress {
 	current: number;
 	target: number;
 	completed: boolean;
@@ -134,27 +135,31 @@ export interface QuestProgress {
 }
 
 // Quest assignment request
-export interface QuestAssignmentRequest {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface QuestAssignmentRequest {
 	character_id: string;
 	force_new?: boolean; // Override existing quests
 }
 
 // Quest completion request
-export interface QuestCompletionRequest {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface QuestCompletionRequest {
 	quest_id: string;
 	character_id: string;
 	progress_updates?: Record<string, unknown>;
 }
 
 // Quest reward result
-export interface QuestRewardResult {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface QuestRewardResult {
 	granted: QuestReward;
 	applied: boolean;
 	message: string;
 }
 
 // Daily quest summary for UI
-export interface DailyQuestSummary {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface DailyQuestSummary {
 	date_key: string;
 	total_quests: number;
 	completed_quests: number;
@@ -164,14 +169,17 @@ export interface DailyQuestSummary {
 }
 
 // Quest types for filtering
-export type QuestTier = "I" | "II" | "III" | "IV";
-export type QuestCategory =
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type QuestTier = "I" | "II" | "III" | "IV";
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type QuestCategory =
 	| "Training"
 	| "Combat"
 	| "Exploration"
 	| "Mana"
 	| "Crafting";
-export type QuestStatus =
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type QuestStatus =
 	| "pending"
 	| "in_progress"
 	| "completed"

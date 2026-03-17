@@ -35,7 +35,7 @@ const GRID_32: PremadeMapGrid = {
 	size: 64,
 };
 
-export const PREMADE_MAPS: PremadeMap[] = [
+const PREMADE_MAPS: PremadeMap[] = [
 	{
 		id: "rift-keep",
 		name: "Rift Keep",
@@ -277,5 +277,7 @@ export const PREMADE_MAPS: PremadeMap[] = [
 		tags: ["painterly", "battlemap", "arcane", "schematic", "umbral"],
 	},
 ];
+
+
 
 export default PREMADE_MAPS;

@@ -31,9 +31,7 @@ import {
 	useUpdateCombatSession,
 	useUpsertCombatants,
 } from "@/hooks/useCampaignCombat";
-import { useCampaignCombatRealtime } from "@/hooks/useCampaignCombatRealtime";
 import {
-	useCampaignMembers,
 	useJoinedCampaigns,
 	useMyCampaigns,
 } from "@/hooks/useCampaigns";
@@ -42,6 +40,7 @@ import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegrati
 import { useHydratedPreferredCampaignId } from "@/hooks/usePreferredCampaignSelection";
 import { useCampaignToolState, useUserToolState } from "@/hooks/useToolState";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import {
 	type ActionResolutionPayload,
 	clearPendingResolution,
@@ -52,7 +51,14 @@ import {
 	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
-import { cleanupExpiredConditions as cleanupExpiredConditionsHelper } from "@/lib/conditionTimers";
+import { 
+	advanceConditionRound, 
+	applyCondition, 
+	type ConditionEntry, 
+	getActiveConditionNames,
+	migrateLegacyConditions,
+	removeCondition as removeAdvancedCondition 
+} from "@/lib/conditionSystem";
 import { cn } from "@/lib/utils";
 
 interface Combatant {
@@ -68,6 +74,7 @@ interface Combatant {
 	damage_resistances?: string[];
 	damage_immunities?: string[];
 	damage_vulnerabilities?: string[];
+	advancedConditions: ConditionEntry[];
 }
 
 type CampaignWithRole = {
@@ -146,6 +153,7 @@ const mapCampaignCombatantToTracker = (
 ): Combatant => {
 	const stats = toRecord(combatant.stats);
 	const flags = toRecord(combatant.flags);
+	const rawLegacyConditions = toConditionArray(combatant.conditions);
 
 	return {
 		id: combatant.id,
@@ -171,6 +179,9 @@ const mapCampaignCombatantToTracker = (
 		damage_vulnerabilities: toStringArray(
 			stats.damage_vulnerabilities ?? stats.damageVulnerabilities,
 		),
+		advancedConditions: Array.isArray(stats.advancedConditions) 
+			? (stats.advancedConditions as ConditionEntry[]) 
+			: migrateLegacyConditions(rawLegacyConditions),
 	};
 };
 
@@ -286,8 +297,8 @@ const InitiativeTracker = () => {
 		campaignId || "",
 		sessionId,
 	);
-	useCampaignCombatRealtime(campaignId, sessionId);
-	const { data: _campaignMembers = [] } = useCampaignMembers(campaignId || "");
+
+	// Fetch members optionally: _campaignMembers = [] } = useCampaignMembers(campaignId || "");
 	const updateCombatSession = useUpdateCombatSession();
 	const upsertCombatants = useUpsertCombatants();
 	const activeCombatSession = combatSessionData?.session ?? null;
@@ -418,8 +429,9 @@ const InitiativeTracker = () => {
 						damage_immunities: combatant.damage_immunities ?? null,
 						damage_vulnerabilities: combatant.damage_vulnerabilities ?? null,
 						condition_timers: combatant.condition_timers ?? null,
+						advancedConditions: combatant.advancedConditions as unknown as Json,
 					},
-					conditions: combatant.conditions,
+					conditions: getActiveConditionNames(combatant.advancedConditions),
 					flags: {
 						isHunter: combatant.isHunter,
 					},
@@ -493,6 +505,7 @@ const InitiativeTracker = () => {
 				ac: newCombatant.ac || undefined,
 				conditions: [],
 				isHunter: newCombatant.isHunter,
+				advancedConditions: [],
 			},
 		]);
 
@@ -598,17 +611,13 @@ const InitiativeTracker = () => {
 	const addCondition = (
 		id: string,
 		condition: string,
-		expiresAtRound?: number,
+		durationRounds?: number,
 	) => {
 		setCombatants((prev) =>
 			prev.map((c) => {
 				if (c.id !== id) return c;
-				const nextConditions = c.conditions.includes(condition)
-					? c.conditions
-					: [...c.conditions, condition];
-				const nextTimers = expiresAtRound
-					? { ...(c.condition_timers ?? {}), [condition]: expiresAtRound }
-					: c.condition_timers;
+				
+				const advNext = applyCondition(c.advancedConditions, condition, "manual", "DM", { durationRounds });
 
 				// DDB Parity: Broadcast Condition Added
 				if (!c.conditions.includes(condition)) {
@@ -619,83 +628,67 @@ const InitiativeTracker = () => {
 
 				return {
 					...c,
-					conditions: nextConditions,
-					condition_timers: nextTimers,
+					advancedConditions: advNext.conditions,
+					conditions: getActiveConditionNames(advNext.conditions),
 				};
 			}),
 		);
 	};
 
-	const removeCondition = (id: string, condition: string) => {
+	// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+	const removeCondition = (id: string, conditionName: string) => {
 		setCombatants((prev) =>
 			prev.map((c) => {
 				if (c.id !== id) return c;
-				const nextConditions = c.conditions.filter(
-					(cond) => cond !== condition,
+				
+				const nextAdvanced = c.advancedConditions.filter(
+					(cond) => cond.conditionName.toLowerCase() !== conditionName.toLowerCase()
 				);
-				const nextTimers = c.condition_timers
-					? { ...c.condition_timers }
-					: undefined;
-				if (nextTimers && condition in nextTimers) {
-					delete nextTimers[condition];
-				}
 
 				// DDB Parity: Broadcast Condition Removed
-				if (c.conditions.includes(condition)) {
+				if (c.conditions.includes(conditionName)) {
 					playerTools
-						.trackConditionChange(c.id || c.name, condition, "remove")
+						.trackConditionChange(c.id || c.name, conditionName, "remove")
 						.catch(console.error);
 				}
 
 				return {
 					...c,
-					conditions: nextConditions,
-					condition_timers:
-						nextTimers && Object.keys(nextTimers).length > 0
-							? nextTimers
-							: undefined,
+					advancedConditions: nextAdvanced,
+					conditions: getActiveConditionNames(nextAdvanced),
 				};
 			}),
 		);
 	};
+
 
 	const cleanupExpiredConditions = (nextRound: number) => {
 		const expiredAnnouncements: string[] = [];
 
 		setCombatants((prev) => {
 			const updated = prev.map((c) => {
-				if (!c.condition_timers) return c;
-
-				// Find conditions that are expiring this round
-				const expiringThisRound = Object.entries(c.condition_timers)
-					.filter(([, expiresAt]) => expiresAt <= nextRound)
-					.map(([cond]) => cond);
-
-				if (expiringThisRound.length > 0) {
-					expiredAnnouncements.push(
-						`**${c.name}** is no longer ${expiringThisRound.join(", ")}.`,
-					);
-					expiringThisRound.forEach((cond) => {
-						playerTools
-							.trackConditionChange(c.id || c.name, cond, "remove")
-							.catch(console.error);
+				const expiredAnnouncementsForC: string[] = [];
+				// Advance structured condition system
+				const advNext = advanceConditionRound(c.advancedConditions, nextRound);
+				
+				if (advNext.changes.length > 0) {
+					const expiredNames = advNext.changes.filter(ch => ch.type === "expired").map(ch => ch.condition.conditionName);
+					if (expiredNames.length > 0) {
+						expiredAnnouncementsForC.push(`**${c.name}** is no longer ${expiredNames.join(", ")}.`);
+					}
+					advNext.changes.forEach(ch => {
+						if (ch.type === "expired") {
+							playerTools.trackConditionChange(c.id || c.name, ch.condition.conditionName, "remove").catch(console.error);
+						}
 					});
 				}
 
-				const next = cleanupExpiredConditionsHelper(
-					c.conditions,
-					c.condition_timers,
-					nextRound,
-				);
-				if (
-					next.conditions === c.conditions &&
-					next.timers === c.condition_timers
-				)
-					return c;
+				if (expiredAnnouncementsForC.length > 0) expiredAnnouncements.push(...expiredAnnouncementsForC);
+
 				return {
 					...c,
-					conditions: next.conditions,
-					condition_timers: next.timers,
+					advancedConditions: advNext.conditions,
+					conditions: getActiveConditionNames(advNext.conditions),
 				};
 			});
 
@@ -935,10 +928,9 @@ const InitiativeTracker = () => {
 				Number.isFinite(resolutionConditionDuration) &&
 				resolutionConditionDuration > 0
 					? Math.floor(resolutionConditionDuration)
-					: 0;
-			const expiresAt = durationRounds > 0 ? round + durationRounds : undefined;
+					: undefined;
 			for (const condition of pending.appliesConditions) {
-				addCondition(target.id, condition, expiresAt);
+				addCondition(target.id, condition, durationRounds);
 			}
 		}
 	};
@@ -946,7 +938,7 @@ const InitiativeTracker = () => {
 	return (
 		<Layout>
 			<div
-				className="container mx-auto px-4 py-8"
+				className="container mx-auto px-4 py-8 relative"
 				data-testid="initiative-tracker"
 			>
 				<div className="mb-6">
@@ -1336,28 +1328,28 @@ const InitiativeTracker = () => {
 													Full
 												</Button>
 											</div>
-											{combatant.conditions.length > 0 && (
+											{combatant.advancedConditions.length > 0 && (
 												<div className="flex flex-wrap gap-1 mt-2">
-													{combatant.conditions.map((condition) => (
+													{combatant.advancedConditions.map((condition) => (
 														<Badge
-															key={condition}
+															key={condition.id}
 															variant="destructive"
 															className="text-xs cursor-pointer"
-															onClick={() =>
-																removeCondition(combatant.id, condition)
-															}
+															onClick={() => {
+																const removed = removeAdvancedCondition(combatant.advancedConditions, condition.id);
+																setCombatants(prev => prev.map(c => c.id === combatant.id ? { ...c, advancedConditions: removed.conditions, conditions: getActiveConditionNames(removed.conditions)} : c));
+																playerTools.trackConditionChange(combatant.id || combatant.name, condition.conditionName, "remove").catch(console.error);
+															}}
 															title={
-																combatant.condition_timers?.[condition] !==
-																undefined
-																	? `Expires at round ${combatant.condition_timers[condition]}`
+																condition.remainingRounds !== null
+																	? `Expires in ${condition.remainingRounds} rounds`
 																	: undefined
 															}
 														>
-															{condition}
-															{combatant.condition_timers?.[condition] !==
-																undefined && (
+															{condition.conditionName}
+															{condition.remainingRounds !== null && (
 																<span className="ml-1 opacity-80">
-																	(R{combatant.condition_timers[condition]})
+																	({condition.remainingRounds}r)
 																</span>
 															)}
 															<span className="ml-1">x</span>
@@ -1391,32 +1383,28 @@ const InitiativeTracker = () => {
 												</div>
 												<div className="flex flex-wrap gap-1">
 													{CONDITION_OPTIONS.filter(
-														(condition) =>
-															!combatant.conditions.includes(condition),
-													).map((condition) => (
+														(conditionName) =>
+															!combatant.conditions.includes(conditionName),
+													).map((conditionName) => (
 														<Badge
-															key={condition}
+															key={conditionName}
 															variant="outline"
-															className="text-xs cursor-pointer"
+															className="text-xs cursor-pointer hover:bg-primary/20"
 															onClick={() => {
 																const durationRounds =
 																	Number.isFinite(manualConditionDuration) &&
 																	manualConditionDuration > 0
 																		? Math.floor(manualConditionDuration)
-																		: 0;
-																const expiresAt =
-																	durationRounds > 0
-																		? round + durationRounds
 																		: undefined;
 																addCondition(
 																	combatant.id,
-																	condition,
-																	expiresAt,
+																	conditionName,
+																	durationRounds,
 																);
 															}}
-															aria-label={`Add ${condition} to ${combatant.name}`}
+															aria-label={`Add ${conditionName} to ${combatant.name}`}
 														>
-															+ {condition}
+															+ {conditionName}
 														</Badge>
 													))}
 												</div>

@@ -2,7 +2,7 @@
 // Generated with full admin privileges
 // System Ascendant themed monsters with images
 
-export interface Monster {
+interface Monster {
 	id: string;
 	name: string;
 	type: string;
@@ -48779,4 +48779,4 @@ export const monsters = [
 	},
 ];
 
-export default monsters;
+

@@ -16,7 +16,7 @@ import {
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 
-type Power = Database["public"]["Tables"]["character_powers"]["Row"];
+export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 type PowerInsert = Database["public"]["Tables"]["character_powers"]["Insert"];
 type PowerUpdate = Database["public"]["Tables"]["character_powers"]["Update"];
 

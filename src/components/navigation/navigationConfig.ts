@@ -10,14 +10,14 @@ import {
 	Users,
 } from "lucide-react";
 
-export type NavSubItem = {
+type NavSubItem = {
 	title: string;
 	href: string;
 	description?: string;
 	icon?: unknown;
 };
 
-export type NavItemConfig = {
+type NavItemConfig = {
 	title: string;
 	href?: string;
 	items?: NavSubItem[];

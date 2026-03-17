@@ -1,4 +1,4 @@
-export interface SigilEntry {
+interface SigilEntry {
 	id: string;
 	name: string;
 	description: string;

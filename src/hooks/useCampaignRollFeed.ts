@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 
-export interface CampaignRollEvent {
+interface CampaignRollEvent {
 	id: string;
 	campaign_id: string;
 	user_id: string;
@@ -34,7 +34,7 @@ const loadLocalRollEvents = (campaignId: string): CampaignRollEvent[] => {
 	}
 };
 
-export const saveLocalRollEvent = (event: CampaignRollEvent) => {
+const saveLocalRollEvent = (event: CampaignRollEvent) => {
 	if (typeof window === "undefined") return;
 	const raw = window.localStorage.getItem(LOCAL_ROLL_EVENTS_KEY);
 	const all: CampaignRollEvent[] = raw ? JSON.parse(raw) : [];

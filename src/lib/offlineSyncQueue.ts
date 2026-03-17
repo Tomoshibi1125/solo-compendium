@@ -3,9 +3,9 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { logger } from "@/lib/logger";
 
-export type QueueItemType = "roll" | "message";
+type QueueItemType = "roll" | "message";
 
-export interface RollPayload {
+interface RollPayload {
 	dice_formula: string;
 	result: number;
 	roll_type: string;
@@ -17,7 +17,7 @@ export interface RollPayload {
 	user_id: string;
 }
 
-export interface MessagePayload {
+interface MessagePayload {
 	campaign_id: string;
 	user_id: string;
 	message_type: "chat" | "roll" | "system" | "whisper";
@@ -26,7 +26,7 @@ export interface MessagePayload {
 	character_name?: string | null;
 }
 
-export interface QueueItem {
+interface QueueItem {
 	id: string;
 	type: QueueItemType;
 	timestamp: number;
@@ -35,7 +35,7 @@ export interface QueueItem {
 
 const QUEUE_KEY = "solo-compendium-offline-queue";
 
-export const getOfflineQueue = async (): Promise<QueueItem[]> => {
+const getOfflineQueue = async (): Promise<QueueItem[]> => {
 	try {
 		const queue = await get(QUEUE_KEY);
 		return Array.isArray(queue) ? queue : [];

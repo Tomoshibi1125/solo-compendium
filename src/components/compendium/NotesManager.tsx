@@ -422,4 +422,4 @@ export function NotesManager({
 	);
 }
 
-export default NotesManager;
+

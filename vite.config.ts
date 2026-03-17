@@ -241,7 +241,7 @@ export default defineConfig(({ mode: _mode }) => {
       dedupe: ['react', 'react-dom', 'three'],
     },
     build: {
-      chunkSizeWarningLimit: 1500,
+      chunkSizeWarningLimit: 4000,
       // Optimize for production and mobile
       minify: 'esbuild',
       sourcemap: false, // Disabled due to Sentry issues

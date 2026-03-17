@@ -77,7 +77,7 @@ export function LongRestDialog({
 							</li>
 							<li className="flex items-center gap-2">
 								<Zap className="h-4 w-4 text-yellow-500 flex-shrink-0" />
-								<span>All expended Spell Slots</span>
+								<span>All expended Power Slots</span>
 							</li>
 							<li className="flex items-center gap-2">
 								<RefreshCw className="h-4 w-4 text-blue-500 flex-shrink-0" />
