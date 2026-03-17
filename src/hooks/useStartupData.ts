@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
-import { staticDataProvider } from "@/data/compendium/staticDataProvider";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
@@ -123,6 +122,10 @@ export const useStartupData = () => {
 		queryFn: async (): Promise<StartupData> => {
 			const allEntries: CompendiumEntry[] = [];
 			const totalCounts: Record<string, number> = {};
+
+			const { staticDataProvider } = await import(
+				"@/data/compendium/staticDataProvider"
+			);
 
 			if (!isSupabaseConfigured) {
 				// Use static data for development/preview - load ALL categories with COMPLETE data

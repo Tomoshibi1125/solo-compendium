@@ -57,7 +57,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
-import { staticDataProvider } from "@/data/compendium/staticDataProvider";
 import { useToast } from "@/hooks/use-toast";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -201,6 +200,10 @@ const Compendium = () => {
 			});
 
 			const allEntries: CompendiumEntry[] = [];
+
+			const { staticDataProvider } = await import(
+				"@/data/compendium/staticDataProvider"
+			);
 
 			// Always use static data provider for comprehensive loading
 			logger.debug("Using comprehensive static data provider");
