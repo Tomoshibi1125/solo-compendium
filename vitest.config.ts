@@ -19,6 +19,9 @@ export default defineConfig({
       'node_modules/**',
       'dist/**',
     ],
+    execArgv: [
+      '--localstorage-file=node_modules/.cache/vitest/localstorage/data.json',
+    ],
   },
   resolve: {
     alias: {
