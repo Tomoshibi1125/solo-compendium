@@ -7,7 +7,7 @@ import {
 	Swords,
 	Zap,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
@@ -122,6 +122,14 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 	const navigate = useNavigate();
 	const [actions, setActions] = useState<MonsterAction[]>([]);
 	const [traits, setTraits] = useState<MonsterTrait[]>([]);
+	const actionHash = useMemo(
+		() => JSON.stringify(data.monster_actions || []),
+		[data.monster_actions],
+	);
+	const traitHash = useMemo(
+		() => JSON.stringify(data.monster_traits || []),
+		[data.monster_traits],
+	);
 
 	const mapStaticAction = useCallback(
 		(a: Record<string, unknown>, idx: number): MonsterAction => {
@@ -201,16 +209,16 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 	useEffect(() => {
 		const fetchRelatedData = async () => {
-			const staticActions = Array.isArray(data.monster_actions)
-				? data.monster_actions
-				: null;
-			const staticTraits = Array.isArray(data.monster_traits)
-				? data.monster_traits
-				: null;
+			const staticActions = JSON.parse(actionHash) as
+				| Record<string, unknown>[]
+				| null;
+			const staticTraits = JSON.parse(traitHash) as
+				| Record<string, unknown>[]
+				| null;
 
 			// If Supabase isn't configured, rely entirely on embedded static data.
 			if (!isSupabaseConfigured) {
-				if (staticActions) {
+				if (staticActions && staticActions.length > 0) {
 					setActions(
 						staticActions
 							.map((a, idx) =>
@@ -220,7 +228,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 					);
 				}
 
-				if (staticTraits) {
+				if (staticTraits && staticTraits.length > 0) {
 					setTraits(
 						staticTraits
 							.map((t, idx) =>
@@ -275,7 +283,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 								: "action",
 					})) as MonsterAction[],
 				);
-			} else if (staticActions) {
+			} else if (staticActions && staticActions.length > 0) {
 				// Remote not present; fallback to static embedded data.
 				setActions(
 					staticActions
@@ -292,7 +300,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						description: String(trait.description ?? ""),
 					})),
 				);
-			} else if (staticTraits) {
+			} else if (staticTraits && staticTraits.length > 0) {
 				setTraits(
 					staticTraits
 						.map((t, idx) => mapStaticTrait(t as Record<string, unknown>, idx))
@@ -302,13 +310,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 		};
 
 		fetchRelatedData();
-	}, [
-		data.id,
-		data.monster_actions,
-		data.monster_traits,
-		mapStaticAction,
-		mapStaticTrait,
-	]);
+	}, [data.id, actionHash, traitHash, mapStaticAction, mapStaticTrait]);
 
 	const speeds = [
 		data.speed_walk && `${data.speed_walk} ft.`,

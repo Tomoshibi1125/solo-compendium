@@ -667,7 +667,9 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 		name: monster.name,
 		display_name: monster.name,
 		description: monster.description,
-		created_at: new Date().toISOString(),
+		created_at:
+			(monster as { created_at?: string }).created_at ||
+			"2024-01-01T00:00:00.000Z",
 		tags: [monster.type, rank].filter(Boolean) as string[],
 		source_book: "System Ascendant Homebrew",
 		image_url: monster.image,
@@ -783,7 +785,9 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		name: item.name,
 		display_name: item.name,
 		description: item.description,
-		created_at: new Date().toISOString(),
+		created_at:
+			(item as { created_at?: string }).created_at ||
+			"2024-01-01T00:00:00.000Z",
 		tags: [item.type, item.rarity].filter(Boolean) as string[],
 		source_book: "System Ascendant Homebrew",
 		image_url: item.image,
@@ -822,7 +826,8 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		name: job.name,
 		display_name: job.name,
 		description: job.description,
-		created_at: new Date().toISOString(),
+		created_at:
+			(job as { created_at?: string }).created_at || "2024-01-01T00:00:00.000Z",
 		tags: job.primary_abilities || [],
 		source_book: job.source || "System Ascendant Canon",
 		image_url: job.image,
@@ -902,7 +907,9 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		name: spell.name,
 		display_name: spell.name,
 		description: spell.description,
-		created_at: new Date().toISOString(),
+		created_at:
+			(spell as { created_at?: string }).created_at ||
+			"2024-01-01T00:00:00.000Z",
 		tags: [spell.type, spell.rank, school, ...classes].filter(
 			Boolean,
 		) as string[],
@@ -972,7 +979,9 @@ function transformLocation(
 		name: location.name,
 		display_name: location.name,
 		description: location.description,
-		created_at: new Date().toISOString(),
+		created_at:
+			(location as { created_at?: string }).created_at ||
+			"2024-01-01T00:00:00.000Z",
 		tags: [location.type, location.rank].filter(Boolean) as string[],
 		source_book: "System Ascendant Homebrew",
 		image_url: location.image,
@@ -1007,7 +1016,9 @@ function transformRune(
 		name: rune.name || "Unknown Rune",
 		display_name: rune.name || "Unknown Rune",
 		description: rune.effect_description || rune.description || "",
-		created_at: new Date().toISOString(),
+		created_at:
+			(rune as { created_at?: string }).created_at ||
+			"2024-01-01T00:00:00.000Z",
 		tags: (rune.tags || [rune.element || rune.rune_type, rune.rarity]).filter(
 			Boolean,
 		) as string[],
@@ -1066,7 +1077,9 @@ function transformBackground(
 		name: background.name,
 		display_name: background.name,
 		description: background.description,
-		created_at: new Date().toISOString(),
+		created_at:
+			(background as { created_at?: string }).created_at ||
+			"2024-01-01T00:00:00.000Z",
 		tags: skillProfs,
 		source_book: background.source || "System Ascendant Canon",
 		image_url: background.image,
@@ -1161,7 +1174,9 @@ function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
 		name: regent.name,
 		display_name: regent.name,
 		description: regent.description || "",
-		created_at: new Date().toISOString(),
+		created_at:
+			(regent as { created_at?: string }).created_at ||
+			"2024-01-01T00:00:00.000Z",
 		tags: regent.tags || (["regent", regent.theme].filter(Boolean) as string[]),
 		source_book: regent.source_book || "System Ascendant Canon",
 		image_url: regent.image,
@@ -1223,7 +1238,9 @@ export const staticDataProvider: StaticDataProvider = {
 			name: path.name,
 			display_name: path.name,
 			description: path.description,
-			created_at: new Date().toISOString(),
+			created_at:
+				(path as { created_at?: string }).created_at ||
+				"2024-01-01T00:00:00.000Z",
 			tags: [
 				path.jobId,
 				`tier-${path.tier}`,
@@ -1635,7 +1652,9 @@ export const staticDataProvider: StaticDataProvider = {
 			name: artifact.name,
 			display_name: artifact.name,
 			description: artifact.description,
-			created_at: new Date().toISOString(),
+			created_at:
+				(artifact as { created_at?: string }).created_at ||
+				"2024-01-01T00:00:00.000Z",
 			tags: ["artifact", artifact.type, artifact.rarity].filter(
 				Boolean,
 			) as string[],
@@ -1729,7 +1748,7 @@ export const staticDataProvider: StaticDataProvider = {
 			name: item.name,
 			display_name: item.name,
 			description: item.description,
-			created_at: new Date().toISOString(),
+			created_at: "2024-01-01T00:00:00.000Z",
 			tags: ["umbral-legion", "umbral", "minion"],
 			source_book: "System Ascendant Canon",
 			role: item.role,
@@ -1769,7 +1788,9 @@ export const staticDataProvider: StaticDataProvider = {
 			name: sigil.name,
 			display_name: sigil.name,
 			description: sigil.effect_description || sigil.description,
-			created_at: new Date().toISOString(),
+			created_at:
+				(sigil as { created_at?: string }).created_at ||
+				"2024-01-01T00:00:00.000Z",
 			tags: (sigil.tags || [sigil.rune_type, sigil.rarity]).filter(
 				Boolean,
 			) as string[],

@@ -241,22 +241,54 @@ export function GeminiProtocolGenerator() {
 		}
 	}, [activeCharacter, allPaths, autoMode, paths, selectedJob, selectedPath]);
 
+	const selectedJobEntry = useMemo(
+		() => jobs.find((job) => job.id === selectedJob) || null,
+		[jobs, selectedJob],
+	);
+	const selectedPathEntry = useMemo(
+		() =>
+			paths.find((path) => path.id === selectedPath) ||
+			allPaths.find((path) => path.id === selectedPath) ||
+			null,
+		[paths, allPaths, selectedPath],
+	);
+	const selectedRegentAEntry = useMemo(
+		() => regents.find((regent) => regent.id === selectedRegentA) || null,
+		[regents, selectedRegentA],
+	);
+	const selectedRegentBEntry = useMemo(
+		() => regents.find((regent) => regent.id === selectedRegentB) || null,
+		[regents, selectedRegentB],
+	);
+
+	const primaryUnlockRegentId = useMemo(() => {
+		if (regentUnlocksLoading || regentUnlocks.length === 0) return null;
+		const primary =
+			regentUnlocks.find(
+				(unlock: unknown) => (unlock as { is_primary?: boolean }).is_primary,
+			) || regentUnlocks[0];
+		return (primary as { regent_id: string }).regent_id;
+	}, [regentUnlocks, regentUnlocksLoading]);
+
+	const secondaryUnlockRegentId = useMemo(() => {
+		if (regentUnlocksLoading || regentUnlocks.length < 2) return null;
+		const secondary = regentUnlocks.find(
+			(unlock: unknown) =>
+				(unlock as { regent_id: string }).regent_id !== primaryUnlockRegentId,
+		);
+		return (secondary as { regent_id: string })?.regent_id || null;
+	}, [regentUnlocks, regentUnlocksLoading, primaryUnlockRegentId]);
+
 	useEffect(() => {
 		if (autoMode) {
-			if (regentUnlocksLoading) return;
-			const primary =
-				regentUnlocks.find(
-					(unlock: unknown) => (unlock as { is_primary?: boolean }).is_primary,
-				) || regentUnlocks[0];
-			const secondary = regentUnlocks.find(
-				(unlock: unknown) =>
-					(unlock as { id?: string }).id !== (primary as { id?: string })?.id,
-			);
-			if (primary && selectedRegentA !== primary.regent_id) {
-				setSelectedRegentA(primary.regent_id);
+			if (primaryUnlockRegentId && selectedRegentA !== primaryUnlockRegentId) {
+				setSelectedRegentA(primaryUnlockRegentId);
 			}
-			if (secondary && selectedRegentB !== secondary.regent_id) {
-				setSelectedRegentB(secondary.regent_id);
+			if (
+				secondaryUnlockRegentId &&
+				selectedRegentB !== secondaryUnlockRegentId
+			) {
+				setSelectedRegentB(secondaryUnlockRegentId);
 			}
 			return;
 		}
@@ -276,9 +308,9 @@ export function GeminiProtocolGenerator() {
 		}
 	}, [
 		autoMode,
+		primaryUnlockRegentId,
+		secondaryUnlockRegentId,
 		regents,
-		regentUnlocks,
-		regentUnlocksLoading,
 		selectedRegentA,
 		selectedRegentB,
 	]);
@@ -288,14 +320,13 @@ export function GeminiProtocolGenerator() {
 	const handleGenerate = useCallback(async () => {
 		// Block if the character already has a Sovereign overlay
 		if (autoMode && existingSovereign) return;
-		const job = jobs.find((j) => j.id === selectedJob);
-		const path =
-			paths.find((p) => p.id === selectedPath) ||
-			allPaths.find((p) => p.id === selectedPath);
-		const regentA = regents.find((r) => r.id === selectedRegentA);
-		const regentB = regents.find((r) => r.id === selectedRegentB);
 
-		if (job && path && regentA && regentB) {
+		if (
+			selectedJobEntry &&
+			selectedPathEntry &&
+			selectedRegentAEntry &&
+			selectedRegentBEntry
+		) {
 			setIsGenerating(true);
 
 			const broadcastGeneration = (sovereign: GeneratedSovereign) => {
@@ -335,19 +366,19 @@ export function GeminiProtocolGenerator() {
 
 			try {
 				const sovereign = await generateSovereignWithAI(
-					job,
-					path,
-					regentA as never,
-					regentB as never,
+					selectedJobEntry as never,
+					selectedPathEntry as never,
+					selectedRegentAEntry as never,
+					selectedRegentBEntry as never,
 				);
 				setGeneratedSovereign(sovereign);
 				broadcastGeneration(sovereign);
 			} catch {
 				const sovereign = generateSovereign(
-					job,
-					path,
-					regentA as never,
-					regentB as never,
+					selectedJobEntry as never,
+					selectedPathEntry as never,
+					selectedRegentAEntry as never,
+					selectedRegentBEntry as never,
 				);
 				setGeneratedSovereign(sovereign);
 				broadcastGeneration(sovereign);
@@ -356,14 +387,10 @@ export function GeminiProtocolGenerator() {
 			}
 		}
 	}, [
-		allPaths,
-		jobs,
-		paths,
-		regents,
-		selectedJob,
-		selectedPath,
-		selectedRegentA,
-		selectedRegentB,
+		selectedJobEntry,
+		selectedPathEntry,
+		selectedRegentAEntry,
+		selectedRegentBEntry,
 		autoMode,
 		campaignId,
 		characterId,
@@ -409,15 +436,6 @@ export function GeminiProtocolGenerator() {
 		return <Swords className="h-4 w-4" />;
 	};
 
-	const selectedJobEntry = jobs.find((job) => job.id === selectedJob) || null;
-	const selectedPathEntry =
-		paths.find((path) => path.id === selectedPath) ||
-		allPaths.find((path) => path.id === selectedPath) ||
-		null;
-	const selectedRegentAEntry =
-		regents.find((regent) => regent.id === selectedRegentA) || null;
-	const selectedRegentBEntry =
-		regents.find((regent) => regent.id === selectedRegentB) || null;
 	const dataReady = !jobsLoading && !regentsLoading && !allPathsLoading;
 	const templateReady = Boolean(
 		selectedJobEntry &&

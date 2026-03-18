@@ -21,7 +21,7 @@ import {
 	Users,
 	Wand2,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { CompendiumSidebar } from "@/components/compendium/CompendiumSidebar";
@@ -386,8 +386,15 @@ const Compendium = () => {
 
 	// Track search history
 	const { addToHistory } = useSearchHistory();
+	const lastRecordedSearch = useRef<string>("");
+
 	useEffect(() => {
-		if (filters.searchQuery.trim() && entries.length > 0) {
+		const searchKey = `${filters.selectedCategory}:${filters.searchQuery}:${entries.length}`;
+		if (
+			filters.searchQuery.trim() &&
+			entries.length > 0 &&
+			lastRecordedSearch.current !== searchKey
+		) {
 			addToHistory(
 				filters.searchQuery,
 				{
@@ -397,6 +404,7 @@ const Compendium = () => {
 				},
 				entries.length,
 			);
+			lastRecordedSearch.current = searchKey;
 		}
 	}, [
 		filters.searchQuery,
