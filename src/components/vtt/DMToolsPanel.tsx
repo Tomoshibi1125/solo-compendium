@@ -148,7 +148,7 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
 		{ id: "victory-triumph", name: "🎉 Victory", mood: "triumph" },
 		{ id: "sadness-loss", name: "😢 Sadness", mood: "loss" },
 		{ id: "gate-resonance", name: "🌀 Gate", mood: "sa" },
-		{ id: "monarch-presence", name: "👁️ Monarch", mood: "sa" },
+		{ id: "regent-presence", name: "👁️ Regent", mood: "sa" },
 		{ id: "shadow-realm", name: "🌑 Shadow", mood: "sa" },
 		{ id: "system-awakening", name: "⚡ Awakening", mood: "sa" },
 	];

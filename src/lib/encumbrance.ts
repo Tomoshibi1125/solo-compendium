@@ -23,7 +23,7 @@ export function calculateCarryingCapacity(strScore: number): number {
 /**
  * Calculate push/drag/lift capacity (2x carrying capacity)
  */
-function calculatePushDragLift(strScore: number): number {
+export function calculatePushDragLift(strScore: number): number {
 	return calculateCarryingCapacity(strScore) * 2;
 }
 
@@ -147,8 +147,7 @@ export function calculateEncumbrance(
 /**
  * Get speed penalty from encumbrance
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getEncumbranceSpeedPenalty(
+export function getEncumbranceSpeedPenalty(
 	status: EncumbranceStatus["status"],
 ): number {
 	switch (status) {

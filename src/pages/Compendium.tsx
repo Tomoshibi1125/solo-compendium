@@ -71,9 +71,9 @@ import { isSetupRouteEnabled } from "@/lib/setupAccess";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import {
-	formatMonarchVernacular,
-	MONARCH_LABEL,
-	MONARCH_LABEL_PLURAL,
+	formatRegentVernacular,
+	REGENT_LABEL,
+	REGENT_LABEL_PLURAL,
 } from "@/lib/vernacular";
 
 type SortOption =
@@ -92,7 +92,7 @@ const categories = [
 	{ id: "backgrounds", name: "Backgrounds", icon: Users },
 	{ id: "jobs", name: "Jobs", icon: Swords },
 	{ id: "paths", name: "Paths", icon: GitBranch },
-	{ id: "regents", name: MONARCH_LABEL_PLURAL, icon: Crown },
+	{ id: "regents", name: REGENT_LABEL_PLURAL, icon: Crown },
 
 	// Abilities & Skills
 	{ id: "feats", name: "Feats", icon: Sparkles },
@@ -404,8 +404,6 @@ const Compendium = () => {
 		filters.selectedSchools,
 		addToHistory,
 	]);
-
-
 
 	// Extract unique source books
 	const { sourceBooks, counts, favoriteCount } = useMemo(() => {
@@ -766,7 +764,7 @@ const Compendium = () => {
 		e.stopPropagation();
 		const wasFavorite = favorites.has(`${entry.type}:${entry.id}`);
 		toggleFavorite(entry.type, entry.id);
-		const displayName = formatMonarchVernacular(entry.name);
+		const displayName = formatRegentVernacular(entry.name);
 
 		if (wasFavorite) {
 			toast({
@@ -782,7 +780,7 @@ const Compendium = () => {
 	};
 
 	const handleExport = () => {
-		const dataStr = formatMonarchVernacular(
+		const dataStr = formatRegentVernacular(
 			JSON.stringify(filteredAndSortedEntries, null, 2),
 		);
 		const dataBlob = new Blob([dataStr], { type: "application/json" });
@@ -828,8 +826,8 @@ const Compendium = () => {
 
 	// Highlight search terms in text (sanitized)
 	const highlightText = (text: string, query: string) => {
-		const displayText = formatMonarchVernacular(text);
-		const displayQuery = formatMonarchVernacular(query);
+		const displayText = formatRegentVernacular(text);
+		const displayQuery = formatRegentVernacular(query);
 		if (!displayQuery.trim()) return displayText;
 		const escapedQuery = displayQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 		const parts = displayText.split(new RegExp(`(${escapedQuery})`, "gi"));
@@ -1044,7 +1042,7 @@ const Compendium = () => {
 										<DialogHeader>
 											<DialogTitle>Gemini Protocol</DialogTitle>
 											<DialogDescription>
-												Fuse Job, Path, and {MONARCH_LABEL} essences into a
+												Fuse Job, Path, and {REGENT_LABEL} essences into a
 												Sovereign overlay.
 											</DialogDescription>
 										</DialogHeader>
@@ -1222,7 +1220,10 @@ const Compendium = () => {
 														)}
 												</h3>
 												<SystemText className="block text-sm text-muted-foreground line-clamp-2">
-													{highlightText(entry.description, filters.searchQuery)}
+													{highlightText(
+														entry.description,
+														filters.searchQuery,
+													)}
 												</SystemText>
 												<div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
 													{entry.cr && <span>CR {entry.cr}</span>}
@@ -1270,7 +1271,10 @@ const Compendium = () => {
 															)}
 													</h3>
 													<SystemText className="block text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
-														{highlightText(entry.description, filters.searchQuery)}
+														{highlightText(
+															entry.description,
+															filters.searchQuery,
+														)}
 													</SystemText>
 												</div>
 												<div className="flex items-center gap-2 flex-shrink-0">

@@ -65,8 +65,7 @@ const CR_XP_MAP: Record<string, number> = {
 };
 
 // Encounter multipliers based on number of monsters
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const ENCOUNTER_MULTIPLIERS: Record<string, number> = {
+export const ENCOUNTER_MULTIPLIERS: Record<string, number> = {
 	"1": 1,
 	"2": 1.5,
 	"3-6": 2,
@@ -75,7 +74,7 @@ const ENCOUNTER_MULTIPLIERS: Record<string, number> = {
 	"15+": 4,
 };
 
-function getLevelFromXP(xp: number): number {
+export function getLevelFromXP(xp: number): number {
 	let level = 1;
 	for (let i = 20; i >= 1; i--) {
 		if (xp >= XP_THRESHOLDS[i]) {
@@ -86,13 +85,11 @@ function getLevelFromXP(xp: number): number {
 	return level;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getXPForLevel(level: number): number {
+export function getXPForLevel(level: number): number {
 	return XP_THRESHOLDS[level] || 0;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getXPToNextLevel(currentXP: number): {
+export function getXPToNextLevel(currentXP: number): {
 	needed: number;
 	progress: number;
 } {
@@ -117,7 +114,7 @@ export function getCRXP(cr: string): number {
 	return CR_XP_MAP[cr] || 0;
 }
 
-function getEncounterMultiplier(monsterCount: number): number {
+export function getEncounterMultiplier(monsterCount: number): number {
 	if (monsterCount === 1) return 1;
 	if (monsterCount === 2) return 1.5;
 	if (monsterCount <= 6) return 2;
@@ -126,8 +123,9 @@ function getEncounterMultiplier(monsterCount: number): number {
 	return 4;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function calculateEncounterXP(monsters: { cr: string; count: number }[]): {
+export function calculateEncounterXP(
+	monsters: { cr: string; count: number }[],
+): {
 	baseXP: number;
 	adjustedXP: number;
 	totalMonsters: number;
@@ -146,8 +144,7 @@ function calculateEncounterXP(monsters: { cr: string; count: number }[]): {
 	return { baseXP, adjustedXP, totalMonsters };
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getEncounterDifficulty(
+export function getEncounterDifficulty(
 	adjustedXP: number,
 	partyLevels: number[],
 ): "trivial" | "easy" | "medium" | "hard" | "deadly" {

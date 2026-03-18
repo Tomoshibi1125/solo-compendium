@@ -790,8 +790,7 @@ export function useAudioUpload() {
 /**
  * Hook for keyboard shortcuts
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useAudioShortcuts() {
+export function useAudioShortcuts() {
 	const { play, pause, next, previous, setMasterVolume } = useAudioPlayer();
 
 	useEffect(() => {

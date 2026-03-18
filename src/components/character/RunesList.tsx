@@ -20,7 +20,7 @@ import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useAbsorbRune, useCharacterRuneKnowledge } from "@/hooks/useRunes";
 import { resolveRuneAbsorption } from "@/lib/runeAutomation";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import { getProficiencyBonus } from "@/types/system-rules";
 
 const RUNE_TYPE_COLORS: Record<string, string> = {
@@ -91,7 +91,7 @@ export function RunesList({
 	}, [character, unabsorbedRunes]);
 
 	const handleAbsorb = async (runeId: string, runeName: string) => {
-		const displayName = formatMonarchVernacular(runeName);
+		const displayName = formatRegentVernacular(runeName);
 		try {
 			const result = await absorbRune.mutateAsync({ characterId, runeId });
 
@@ -148,11 +148,11 @@ export function RunesList({
 						<div className="space-y-2">
 							{unabsorbedRunes.map((rk) => {
 								const Icon = RUNE_TYPE_ICONS[rk.rune.rune_type] || BookOpen;
-								const displayName = formatMonarchVernacular(rk.rune.name);
+								const displayName = formatRegentVernacular(rk.rune.name);
 								const displayDesc = rk.rune.effect_description
-									? formatMonarchVernacular(rk.rune.effect_description)
+									? formatRegentVernacular(rk.rune.effect_description)
 									: rk.rune.description
-										? formatMonarchVernacular(rk.rune.description)
+										? formatRegentVernacular(rk.rune.description)
 										: "";
 								return (
 									<div
@@ -248,7 +248,7 @@ export function RunesList({
 										<div className="flex items-center gap-2">
 											<CheckCircle className="w-4 h-4 text-arise-violet" />
 											<span className="font-heading font-semibold text-sm">
-												{formatMonarchVernacular(feature.name)}
+												{formatRegentVernacular(feature.name)}
 											</span>
 										</div>
 										<div className="flex items-center gap-2">
@@ -276,7 +276,7 @@ export function RunesList({
 									</div>
 									{feature.description && (
 										<p className="text-xs text-muted-foreground mt-1">
-											{formatMonarchVernacular(feature.description)}
+											{formatRegentVernacular(feature.description)}
 										</p>
 									)}
 								</div>

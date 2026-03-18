@@ -32,7 +32,7 @@ export interface HomebrewRecord {
 }
 
 // Character creation interfaces
-interface CharacterCreationOption {
+export interface CharacterCreationOption {
 	id: string;
 	name: string;
 	description: string;
@@ -41,7 +41,7 @@ interface CharacterCreationOption {
 	data: Record<string, unknown>;
 }
 
-interface HomebrewCharacterOptions {
+export interface HomebrewCharacterOptions {
 	jobs: CharacterCreationOption[];
 	paths: CharacterCreationOption[];
 	spells: CharacterCreationOption[];
@@ -471,8 +471,7 @@ export const useSetHomebrewStatus = () => {
 };
 
 // Character creation integration hook
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useHomebrewCharacterIntegration() {
+export function useHomebrewCharacterIntegration() {
 	const { user } = useAuth();
 	const queryClient = useQueryClient();
 

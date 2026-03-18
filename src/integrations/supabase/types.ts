@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
 	| string
 	| number
 	| boolean
@@ -2288,13 +2288,13 @@ export type Database = {
 					},
 				];
 			};
-			character_monarch_unlocks: {
+			character_regent_unlocks: {
 				Row: {
 					character_id: string;
 					dm_notes: string | null;
 					id: string;
 					is_primary: boolean;
-					monarch_id: string;
+					regent_id: string;
 					quest_name: string;
 					unlocked_at: string;
 				};
@@ -2303,7 +2303,7 @@ export type Database = {
 					dm_notes?: string | null;
 					id?: string;
 					is_primary?: boolean;
-					monarch_id: string;
+					regent_id: string;
 					quest_name: string;
 					unlocked_at?: string;
 				};
@@ -2312,30 +2312,30 @@ export type Database = {
 					dm_notes?: string | null;
 					id?: string;
 					is_primary?: boolean;
-					monarch_id?: string;
+					regent_id?: string;
 					quest_name?: string;
 					unlocked_at?: string;
 				};
 				Relationships: [
 					{
-						foreignKeyName: "character_monarch_unlocks_character_id_fkey";
+						foreignKeyName: "character_regent_unlocks_character_id_fkey";
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "characters";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "character_monarch_unlocks_character_id_fkey";
+						foreignKeyName: "character_regent_unlocks_character_id_fkey";
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "character_monarch_unlocks_monarch_id_fkey";
-						columns: ["monarch_id"];
+						foreignKeyName: "character_regent_unlocks_regent_id_fkey";
+						columns: ["regent_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monarchs";
+						referencedRelation: "compendium_regents";
 						referencedColumns: ["id"];
 					},
 				];
@@ -2408,36 +2408,6 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 				];
-			};
-			character_regent_unlocks: {
-				Row: {
-					character_id: string;
-					dm_notes: string | null;
-					id: string;
-					is_primary: boolean;
-					quest_name: string;
-					regent_id: string;
-					unlocked_at: string;
-				};
-				Insert: {
-					character_id: string;
-					dm_notes?: string | null;
-					id?: string;
-					is_primary?: boolean;
-					quest_name: string;
-					regent_id: string;
-					unlocked_at?: string;
-				};
-				Update: {
-					character_id?: string;
-					dm_notes?: string | null;
-					id?: string;
-					is_primary?: boolean;
-					quest_name?: string;
-					regent_id?: string;
-					unlocked_at?: string;
-				};
-				Relationships: [];
 			};
 			character_regents: {
 				Row: {
@@ -2995,13 +2965,12 @@ export type Database = {
 					initiative: number;
 					job: string | null;
 					level: number;
-					monarch_overlays: string[] | null;
+					regent_overlays: string[] | null;
 					name: string;
 					notes: string | null;
 					path: string | null;
 					portrait_url: string | null;
 					proficiency_bonus: number;
-					regent_overlays: string[] | null;
 					saving_throw_proficiencies:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -3042,13 +3011,12 @@ export type Database = {
 					initiative?: number;
 					job?: string | null;
 					level?: number;
-					monarch_overlays?: string[] | null;
+					regent_overlays?: string[] | null;
 					name: string;
 					notes?: string | null;
 					path?: string | null;
 					portrait_url?: string | null;
 					proficiency_bonus?: number;
-					regent_overlays?: string[] | null;
 					saving_throw_proficiencies?:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -3089,13 +3057,12 @@ export type Database = {
 					initiative?: number;
 					job?: string | null;
 					level?: number;
-					monarch_overlays?: string[] | null;
+					regent_overlays?: string[] | null;
 					name?: string;
 					notes?: string | null;
 					path?: string | null;
 					portrait_url?: string | null;
 					proficiency_bonus?: number;
-					regent_overlays?: string[] | null;
 					saving_throw_proficiencies?:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -3804,7 +3771,7 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			compendium_monarch_features: {
+			compendium_regent_features: {
 				Row: {
 					action_type: string | null;
 					aliases: string[] | null;
@@ -3816,7 +3783,7 @@ export type Database = {
 					is_signature: boolean;
 					level: number;
 					license_note: string | null;
-					monarch_id: string;
+					regent_id: string;
 					name: string;
 					prerequisites: string | null;
 					recharge: string | null;
@@ -3836,7 +3803,7 @@ export type Database = {
 					is_signature?: boolean;
 					level: number;
 					license_note?: string | null;
-					monarch_id: string;
+					regent_id: string;
 					name: string;
 					prerequisites?: string | null;
 					recharge?: string | null;
@@ -3856,7 +3823,7 @@ export type Database = {
 					is_signature?: boolean;
 					level?: number;
 					license_note?: string | null;
-					monarch_id?: string;
+					regent_id?: string;
 					name?: string;
 					prerequisites?: string | null;
 					recharge?: string | null;
@@ -3867,15 +3834,15 @@ export type Database = {
 				};
 				Relationships: [
 					{
-						foreignKeyName: "compendium_monarch_features_monarch_id_fkey";
-						columns: ["monarch_id"];
+						foreignKeyName: "compendium_regent_features_regent_id_fkey";
+						columns: ["regent_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monarchs";
+						referencedRelation: "compendium_regents";
 						referencedColumns: ["id"];
 					},
 				];
 			};
-			compendium_monarchs: {
+			compendium_regents: {
 				Row: {
 					aliases: string[] | null;
 					corruption_risk: string | null;
@@ -4358,156 +4325,6 @@ export type Database = {
 					source_name?: string | null;
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
-				};
-				Relationships: [];
-			};
-			compendium_regent_features: {
-				Row: {
-					action_type: string | null;
-					aliases: string[] | null;
-					created_at: string;
-					description: string;
-					display_name: string | null;
-					generated_reason: string | null;
-					id: string;
-					is_signature: boolean;
-					level: number;
-					license_note: string | null;
-					name: string;
-					prerequisites: string | null;
-					recharge: string | null;
-					regent_id: string;
-					source_kind: string | null;
-					source_name: string | null;
-					theme_tags: string[] | null;
-					uses_formula: string | null;
-				};
-				Insert: {
-					action_type?: string | null;
-					aliases?: string[] | null;
-					created_at?: string;
-					description: string;
-					display_name?: string | null;
-					generated_reason?: string | null;
-					id?: string;
-					is_signature?: boolean;
-					level: number;
-					license_note?: string | null;
-					name: string;
-					prerequisites?: string | null;
-					recharge?: string | null;
-					regent_id: string;
-					source_kind?: string | null;
-					source_name?: string | null;
-					theme_tags?: string[] | null;
-					uses_formula?: string | null;
-				};
-				Update: {
-					action_type?: string | null;
-					aliases?: string[] | null;
-					created_at?: string;
-					description?: string;
-					display_name?: string | null;
-					generated_reason?: string | null;
-					id?: string;
-					is_signature?: boolean;
-					level?: number;
-					license_note?: string | null;
-					name?: string;
-					prerequisites?: string | null;
-					recharge?: string | null;
-					regent_id?: string;
-					source_kind?: string | null;
-					source_name?: string | null;
-					theme_tags?: string[] | null;
-					uses_formula?: string | null;
-				};
-				Relationships: [];
-			};
-			compendium_regents: {
-				Row: {
-					aliases: string[] | null;
-					corruption_risk: string | null;
-					created_at: string;
-					damage_type: string | null;
-					description: string;
-					display_name: string | null;
-					flavor_text: string | null;
-					generated_reason: string | null;
-					id: string;
-					license_note: string | null;
-					lore: string | null;
-					manifestation_description: string | null;
-					name: string;
-					prerequisites: string | null;
-					primary_abilities:
-						| Database["public"]["Enums"]["ability_score"][]
-						| null;
-					source_book: string | null;
-					source_kind: string | null;
-					source_name: string | null;
-					tags: string[] | null;
-					theme: string;
-					theme_tags: string[] | null;
-					title: string;
-					unlock_level: number;
-					updated_at: string;
-				};
-				Insert: {
-					aliases?: string[] | null;
-					corruption_risk?: string | null;
-					created_at?: string;
-					damage_type?: string | null;
-					description: string;
-					display_name?: string | null;
-					flavor_text?: string | null;
-					generated_reason?: string | null;
-					id?: string;
-					license_note?: string | null;
-					lore?: string | null;
-					manifestation_description?: string | null;
-					name: string;
-					prerequisites?: string | null;
-					primary_abilities?:
-						| Database["public"]["Enums"]["ability_score"][]
-						| null;
-					source_book?: string | null;
-					source_kind?: string | null;
-					source_name?: string | null;
-					tags?: string[] | null;
-					theme: string;
-					theme_tags?: string[] | null;
-					title: string;
-					unlock_level?: number;
-					updated_at?: string;
-				};
-				Update: {
-					aliases?: string[] | null;
-					corruption_risk?: string | null;
-					created_at?: string;
-					damage_type?: string | null;
-					description?: string;
-					display_name?: string | null;
-					flavor_text?: string | null;
-					generated_reason?: string | null;
-					id?: string;
-					license_note?: string | null;
-					lore?: string | null;
-					manifestation_description?: string | null;
-					name?: string;
-					prerequisites?: string | null;
-					primary_abilities?:
-						| Database["public"]["Enums"]["ability_score"][]
-						| null;
-					source_book?: string | null;
-					source_kind?: string | null;
-					source_name?: string | null;
-					tags?: string[] | null;
-					theme?: string;
-					theme_tags?: string[] | null;
-					title?: string;
-					unlock_level?: number;
-					updated_at?: string;
 				};
 				Relationships: [];
 			};
@@ -5091,8 +4908,6 @@ export type Database = {
 					is_template: boolean;
 					job_id: string | null;
 					license_note: string | null;
-					monarch_a_id: string | null;
-					monarch_b_id: string | null;
 					name: string;
 					path_id: string | null;
 					prerequisites: string | null;
@@ -5119,8 +4934,6 @@ export type Database = {
 					is_template?: boolean;
 					job_id?: string | null;
 					license_note?: string | null;
-					monarch_a_id?: string | null;
-					monarch_b_id?: string | null;
 					name: string;
 					path_id?: string | null;
 					prerequisites?: string | null;
@@ -5147,8 +4960,6 @@ export type Database = {
 					is_template?: boolean;
 					job_id?: string | null;
 					license_note?: string | null;
-					monarch_a_id?: string | null;
-					monarch_b_id?: string | null;
 					name?: string;
 					path_id?: string | null;
 					prerequisites?: string | null;
@@ -5168,20 +4979,6 @@ export type Database = {
 						columns: ["job_id"];
 						isOneToOne: false;
 						referencedRelation: "compendium_jobs";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "compendium_sovereigns_monarch_a_id_fkey";
-						columns: ["monarch_a_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_monarchs";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "compendium_sovereigns_monarch_b_id_fkey";
-						columns: ["monarch_b_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_monarchs";
 						referencedColumns: ["id"];
 					},
 					{
@@ -6011,8 +5808,8 @@ export type Database = {
 					is_public: boolean;
 					job_id: string;
 					likes_count: number;
-					monarch_a_id: string;
-					monarch_b_id: string;
+					regent_a_id: string;
+					regent_b_id: string;
 					name: string;
 					path_id: string;
 					power_multiplier: string;
@@ -6031,8 +5828,8 @@ export type Database = {
 					is_public?: boolean;
 					job_id: string;
 					likes_count?: number;
-					monarch_a_id: string;
-					monarch_b_id: string;
+					regent_a_id: string;
+					regent_b_id: string;
 					name: string;
 					path_id: string;
 					power_multiplier: string;
@@ -6051,8 +5848,8 @@ export type Database = {
 					is_public?: boolean;
 					job_id?: string;
 					likes_count?: number;
-					monarch_a_id?: string;
-					monarch_b_id?: string;
+					regent_a_id?: string;
+					regent_b_id?: string;
 					name?: string;
 					path_id?: string;
 					power_multiplier?: string;
@@ -6067,17 +5864,17 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "saved_sovereigns_monarch_a_id_fkey";
-						columns: ["monarch_a_id"];
+						foreignKeyName: "saved_sovereigns_regent_a_id_fkey";
+						columns: ["regent_a_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monarchs";
+						referencedRelation: "compendium_regents";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "saved_sovereigns_monarch_b_id_fkey";
-						columns: ["monarch_b_id"];
+						foreignKeyName: "saved_sovereigns_regent_b_id_fkey";
+						columns: ["regent_b_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monarchs";
+						referencedRelation: "compendium_regents";
 						referencedColumns: ["id"];
 					},
 					{
@@ -6867,13 +6664,12 @@ export type Database = {
 					initiative: number | null;
 					job: string | null;
 					level: number | null;
-					monarch_overlays: string[] | null;
+					regent_overlays: string[] | null;
 					name: string | null;
 					notes: string | null;
 					path: string | null;
 					portrait_url: string | null;
 					proficiency_bonus: number | null;
-					regent_overlays: string[] | null;
 					saving_throw_proficiencies:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -7303,7 +7099,7 @@ export type Database = {
 					tags: string[];
 				}[];
 			};
-			search_compendium_monarchs: {
+			search_compendium_regents: {
 				Args: { p_limit?: number; p_offset?: number; p_query: string };
 				Returns: {
 					created_at: string;
@@ -7549,8 +7345,7 @@ export type Tables<
 			: never
 		: never;
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type TablesInsert<
+export type TablesInsert<
 	DefaultSchemaTableNameOrOptions extends
 		| keyof DefaultSchema["Tables"]
 		| { schema: keyof DatabaseWithoutInternals },
@@ -7575,8 +7370,7 @@ type TablesInsert<
 			: never
 		: never;
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type TablesUpdate<
+export type TablesUpdate<
 	DefaultSchemaTableNameOrOptions extends
 		| keyof DefaultSchema["Tables"]
 		| { schema: keyof DatabaseWithoutInternals },
@@ -7601,8 +7395,7 @@ type TablesUpdate<
 			: never
 		: never;
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type Enums<
+export type Enums<
 	DefaultSchemaEnumNameOrOptions extends
 		| keyof DefaultSchema["Enums"]
 		| { schema: keyof DatabaseWithoutInternals },
@@ -7619,8 +7412,7 @@ type Enums<
 		? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
 		: never;
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type CompositeTypes<
+export type CompositeTypes<
 	PublicCompositeTypeNameOrOptions extends
 		| keyof DefaultSchema["CompositeTypes"]
 		| { schema: keyof DatabaseWithoutInternals },
@@ -7637,8 +7429,7 @@ type CompositeTypes<
 		? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
 		: never;
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const Constants = {
+export const Constants = {
 	graphql_public: {
 		Enums: {},
 	},

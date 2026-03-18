@@ -244,7 +244,7 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
 	},
 ];
 
-function showShortcutsHelp() {
+export function showShortcutsHelp() {
 	// Show keyboard shortcuts help dialog
 	const helpEvent = new CustomEvent("show-shortcuts-help");
 	window.dispatchEvent(helpEvent);
@@ -253,8 +253,7 @@ function showShortcutsHelp() {
 /**
  * Get shortcuts by category
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getShortcutsByCategory(
+export function getShortcutsByCategory(
 	category: GlobalShortcut["category"],
 ): GlobalShortcut[] {
 	return GLOBAL_SHORTCUTS.filter((s) => s.category === category);
@@ -263,16 +262,14 @@ function getShortcutsByCategory(
 /**
  * Get all global shortcuts (work everywhere)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getGlobalShortcuts(): GlobalShortcut[] {
+export function getGlobalShortcuts(): GlobalShortcut[] {
 	return GLOBAL_SHORTCUTS.filter((s) => s.global === true);
 }
 
 /**
  * Format shortcut for display
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function formatShortcut(shortcut: GlobalShortcut): string {
+export function formatShortcut(shortcut: GlobalShortcut): string {
 	const parts: string[] = [];
 	if (shortcut.ctrl || shortcut.meta) parts.push(shortcut.meta ? "⌘" : "Ctrl");
 	if (shortcut.shift) parts.push("Shift");

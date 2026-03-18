@@ -355,7 +355,7 @@ interface RollModifierSummary {
  * Aggregate awakening features from jobs compendium
  * These are progressive abilities unlocked at specific levels (1, 3, 5, 7, 11, 14, etc.)
  */
-function aggregateAwakeningFeatures(
+export function aggregateAwakeningFeatures(
 	jobs: CharacterJob[],
 	_totalLevel: number,
 ): FeatureInstance[] {
@@ -402,7 +402,7 @@ function aggregateAwakeningFeatures(
  * Parse awakening feature description into structured effects
  * This analyzes the awakening feature text and extracts mechanical effects
  */
-function parseAwakeningEffects(
+export function parseAwakeningEffects(
 	feature: { name: string; description: string; level: number },
 	jobLevel: number,
 ): Effect[] {
@@ -502,7 +502,7 @@ function parseAwakeningEffects(
  * Aggregate job traits from jobs compendium
  * These are passive/active abilities that are always available
  */
-function aggregateJobTraits(
+export function aggregateJobTraits(
 	jobs: CharacterJob[],
 	_totalLevel: number,
 ): FeatureInstance[] {
@@ -547,7 +547,7 @@ function aggregateJobTraits(
 /**
  * Convert job trait frequency to recharge type
  */
-function convertFrequencyToRecharge(
+export function convertFrequencyToRecharge(
 	frequency?: string,
 ): "short-rest" | "long-rest" | "dawn" | "none" {
 	if (!frequency) return "none";
@@ -563,7 +563,7 @@ function convertFrequencyToRecharge(
 /**
  * Parse job trait description into structured effects
  */
-function parseJobTraitEffects(
+export function parseJobTraitEffects(
 	trait: {
 		name: string;
 		description: string;
@@ -622,7 +622,9 @@ function parseJobTraitEffects(
  * Aggregate regent features (quest-gated sovereign subclass)
  * Regents are DM-unlocked, NOT level-gated
  */
-function aggregateRegentFeatures(jobs: CharacterJob[]): FeatureInstance[] {
+export function aggregateRegentFeatures(
+	jobs: CharacterJob[],
+): FeatureInstance[] {
 	const features: FeatureInstance[] = [];
 
 	try {
@@ -665,7 +667,7 @@ function aggregateRegentFeatures(jobs: CharacterJob[]): FeatureInstance[] {
  * Regents are full class overlays and can grant bonuses (AC, attack, damage, speed, etc.)
  * NO direct stat bonuses (STR, AGI, VIT, INT, SENSE, PRE)
  */
-function parseRegentFeatureEffects(
+export function parseRegentFeatureEffects(
 	feature: { name: string; description: string; type: string },
 	_jobLevel: number,
 ): Effect[] {
@@ -809,7 +811,9 @@ function parseRegentFeatureEffects(
  * NOTE: Sovereigns are powerful subclass overlays, they do NOT grant stat bonuses
  * The integrated AI generates the fusion sovereign based on the combination
  */
-function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
+export function aggregateGeminiFeatures(
+	jobs: CharacterJob[],
+): FeatureInstance[] {
 	const features: FeatureInstance[] = [];
 
 	try {
@@ -930,7 +934,7 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
 /**
  * Aggregate all effects from all sources
  */
-function aggregateEffects(base: CharacterBaseData): Effect[] {
+export function aggregateEffects(base: CharacterBaseData): Effect[] {
 	const allEffects: Effect[] = [];
 
 	// Equipment effects (Priority: 100-199)
@@ -1028,7 +1032,7 @@ function aggregateEffects(base: CharacterBaseData): Effect[] {
 /**
  * Apply effects to a base value with conflict resolution
  */
-function applyEffectsToStat(
+export function applyEffectsToStat(
 	baseValue: number,
 	effects: Effect[],
 	target: EffectTarget,
@@ -1083,7 +1087,7 @@ function applyEffectsToStat(
 /**
  * Compute ability modifiers from ability scores + effects
  */
-function computeAbilityModifiers(
+export function computeAbilityModifiers(
 	baseAbilities: Record<AbilityScore, number>,
 	effects: Effect[],
 ): Record<AbilityScore, number> {
@@ -1114,7 +1118,7 @@ function computeAbilityModifiers(
 /**
  * Compute saving throws
  */
-function computeSavingThrows(
+export function computeSavingThrows(
 	abilityModifiers: Record<AbilityScore, number>,
 	proficiencies: AbilityScore[],
 	proficiencyBonus: number,
@@ -1143,7 +1147,7 @@ function computeSavingThrows(
 /**
  * Compute skill modifiers
  */
-function computeSkills(
+export function computeSkills(
 	abilityModifiers: Record<AbilityScore, number>,
 	skillProficiencies: string[],
 	skillExpertise: string[],
@@ -1176,7 +1180,7 @@ function computeSkills(
  * Compute armor class
  * Handles unarmored, light/medium/heavy armor, shields, and effects
  */
-function computeArmorClass(
+export function computeArmorClass(
 	_baseAbilities: Record<AbilityScore, number>,
 	abilityModifiers: Record<AbilityScore, number>,
 	equippedItems: EquipmentInstance[],
@@ -1220,7 +1224,7 @@ function computeArmorClass(
 /**
  * Parse AC formula from armor
  */
-function parseACFormula(
+export function parseACFormula(
 	formula: string,
 	abilityMods: Record<AbilityScore, number>,
 ): number {
@@ -1258,7 +1262,7 @@ function parseACFormula(
 /**
  * Compute spell save DC and attack bonus
  */
-function computeSpellcasting(
+export function computeSpellcasting(
 	jobs: CharacterJob[],
 	abilityModifiers: Record<AbilityScore, number>,
 	proficiencyBonus: number,
@@ -1285,7 +1289,7 @@ function computeSpellcasting(
 /**
  * Get spellcasting ability for a System Ascendant job
  */
-function getSpellcastingAbilityForJob(job: string): AbilityScore | null {
+export function getSpellcastingAbilityForJob(job: string): AbilityScore | null {
 	const abilityMap: Record<string, AbilityScore> = {
 		// INT casters
 		Mage: "INT",
@@ -1309,7 +1313,7 @@ function getSpellcastingAbilityForJob(job: string): AbilityScore | null {
  * Compute spell slots for character (single job + regent overlays)
  * Uses the standard 5e spell slot tables from 5eCharacterCalculations.ts
  */
-function computeSpellSlots(
+export function computeSpellSlots(
 	jobs: CharacterJob[],
 	level: number,
 ): Record<number, { current: number; max: number }> {
@@ -1354,7 +1358,7 @@ function computeSpellSlots(
  * Extract sense grants from equipped items' properties.
  * Items like "Goggles of Night" include "darkvision 60 ft" in their properties.
  */
-function extractEquipmentSenses(items: EquipmentInstance[]): Array<{
+export function extractEquipmentSenses(items: EquipmentInstance[]): Array<{
 	type: "equipment";
 	name: string;
 	sense: "darkvision" | "blindsight" | "tremorsense" | "truesight";
@@ -1394,7 +1398,7 @@ function extractEquipmentSenses(items: EquipmentInstance[]): Array<{
  * Extract sense grants from active spell effects.
  * Spells like "Darkvision" include sense keywords in their effects or name.
  */
-function extractSpellSenses(spells: ActiveSpellEffect[]): Array<{
+export function extractSpellSenses(spells: ActiveSpellEffect[]): Array<{
 	type: "spell";
 	name: string;
 	sense: "darkvision" | "blindsight" | "tremorsense" | "truesight";
@@ -1439,7 +1443,7 @@ function extractSpellSenses(spells: ActiveSpellEffect[]): Array<{
 /**
  * Compute carrying capacity and encumbrance
  */
-function computeEncumbrance(
+export function computeEncumbrance(
 	strScore: number,
 	equippedItems: EquipmentInstance[],
 ): {
@@ -1503,8 +1507,7 @@ function computeEncumbrance(
  * @param base - Base character data from database
  * @returns Fully computed character stats
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function computeCharacterStats(
+export function computeCharacterStats(
 	base: CharacterBaseData,
 ): ComputedCharacterStats {
 	// 1. Calculate proficiency bonus from total level
@@ -1670,7 +1673,7 @@ function computeCharacterStats(
 /**
  * Summarize roll modifiers for display
  */
-function summarizeRollModifiers(
+export function summarizeRollModifiers(
 	conditions: string[],
 	exhaustionLevel: number,
 	rollType:
@@ -1694,7 +1697,7 @@ function summarizeRollModifiers(
 /**
  * Build effects summary for UI display
  */
-function buildEffectsSummary(
+export function buildEffectsSummary(
 	_effects: Effect[],
 	base: CharacterBaseData,
 ): ComputedEffect[] {
@@ -1826,7 +1829,10 @@ function buildEffectsSummary(
 /**
  * Format effect for display
  */
-function formatEffectDisplay(effect: Effect, sourceName: string): string {
+export function formatEffectDisplay(
+	effect: Effect,
+	sourceName: string,
+): string {
 	if (effect.type === "modifier" && typeof effect.value === "number") {
 		const sign = effect.value >= 0 ? "+" : "";
 		return `${sign}${effect.value} ${effect.target} (${sourceName})`;

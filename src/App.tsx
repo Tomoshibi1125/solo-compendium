@@ -149,7 +149,7 @@ const CatchAllRedirect = () => {
 };
 const PlayerToolDetail = lazy(() => import("./pages/PlayerToolDetail"));
 
-const CompendiumLegacyMonarchRedirect = () => {
+const CompendiumLegacyRegentRedirect = () => {
 	const params = new URLSearchParams(window.location.search);
 	const path = window.location.pathname;
 	const parts = path.split("/").filter(Boolean);
@@ -332,8 +332,8 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/compendium/monarchs/:id"
-					element={<CompendiumLegacyMonarchRedirect />}
+					path="/compendium/regents/:id"
+					element={<CompendiumLegacyRegentRedirect />}
 				/>
 				<Route
 					path="/compendium/:type/:id"

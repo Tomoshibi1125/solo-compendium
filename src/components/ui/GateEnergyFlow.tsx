@@ -1,6 +1,7 @@
 import { useMemo, useRef } from "react";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
+import { DynamicStyle } from "./DynamicStyle";
 
 interface EnergyStream {
 	id: number;
@@ -105,13 +106,13 @@ export const GateEnergyFlow = ({
 			)}
 		>
 			{energyStreams.map((stream) => (
-				<div
+				<DynamicStyle
 					key={stream.id}
 					className={cn(
 						"absolute origin-left",
 						enableAnimation && "animate-gate-energy-flow",
 					)}
-					style={{
+					vars={{
 						left: `${stream.x}%`,
 						top: `${stream.y}%`,
 						width: `${stream.length}px`,
@@ -129,12 +130,13 @@ export const GateEnergyFlow = ({
 			))}
 
 			{/* Central rift portal effect */}
-			<div
+			<DynamicStyle
+				as="div"
 				className={cn(
 					"absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
 					enableAnimation && "animate-rift-portal",
 				)}
-				style={{
+				vars={{
 					width: "200px",
 					height: "200px",
 					background: `radial-gradient(circle, hsl(var(--${getTierGlowColor(tier)}) / 0.3) 0%, transparent 70%)`,
@@ -144,16 +146,17 @@ export const GateEnergyFlow = ({
 			/>
 
 			{/* Pulsing dimensional core */}
-			<div
+			<DynamicStyle
+				as="div"
 				className={cn(
 					"absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full",
 					enableAnimation && "animate-dimensional-pulse",
 				)}
-				style={{
+				vars={{
 					width: "20px",
 					height: "20px",
 					background: `hsl(var(--${getTierGlowColor(tier)}))`,
-					boxShadow: `0 0 30px hsl(var(--$export {getTierGlowColor(tier)}) / 0.8)`,
+					boxShadow: `0 0 30px hsl(var(--${getTierGlowColor(tier)}) / 0.8)`,
 				}}
 			/>
 		</div>

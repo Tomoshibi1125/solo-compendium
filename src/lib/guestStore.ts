@@ -274,7 +274,6 @@ export function createLocalCharacter(
 
 		conditions: data.conditions ?? null,
 		exhaustion_level: data.exhaustion_level ?? 0,
-		monarch_overlays: data.monarch_overlays ?? null,
 		active_sovereign_id:
 			((data as Record<string, unknown>).active_sovereign_id as string) ?? null,
 		gemini_state:

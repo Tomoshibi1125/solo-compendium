@@ -412,8 +412,7 @@ import type { ActiveCondition } from "./characterEngine";
  * Remove all conditions tied to a specific concentration spell.
  * Called when concentration is broken (damage, casting another spell, etc.)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function breakConcentrationConditions(
+export function breakConcentrationConditions(
 	conditions: ActiveCondition[],
 	spellId: string,
 ): ActiveCondition[] {
@@ -424,8 +423,7 @@ function breakConcentrationConditions(
  * Tick round-based durations (call at end of each round).
  * Returns { active, expired } condition arrays.
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function tickRoundDurations(conditions: ActiveCondition[]): {
+export function tickRoundDurations(conditions: ActiveCondition[]): {
 	active: ActiveCondition[];
 	expired: ActiveCondition[];
 } {
@@ -457,8 +455,7 @@ function tickRoundDurations(conditions: ActiveCondition[]): {
 /**
  * Filter out time-expired conditions (minutes/hours with expiresAt).
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function filterExpiredConditions(
+export function filterExpiredConditions(
 	conditions: ActiveCondition[],
 	now: Date = new Date(),
 ): { active: ActiveCondition[]; expired: ActiveCondition[] } {

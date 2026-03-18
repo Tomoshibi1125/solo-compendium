@@ -292,7 +292,7 @@ const Landing = () => {
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<Link to="/login">
 								<Button
-									variant="monarch"
+									variant="regent"
 									size="lg"
 									className="font-semibold px-8"
 								>

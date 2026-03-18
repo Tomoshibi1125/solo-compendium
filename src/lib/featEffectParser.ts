@@ -295,7 +295,7 @@ const FEAT_EFFECTS: Record<string, (level: number) => FeatEffect[]> = {
 /**
  * Parse fighting style name into Effect[]
  */
-function parseFightingStyleEffects(styleName: string): FeatEffect[] {
+export function parseFightingStyleEffects(styleName: string): FeatEffect[] {
 	const key = styleName.toLowerCase().trim();
 	return FIGHTING_STYLE_EFFECTS[key] ?? [];
 }
@@ -303,7 +303,7 @@ function parseFightingStyleEffects(styleName: string): FeatEffect[] {
 /**
  * Parse feat name into Effect[] (some feats scale with level)
  */
-function parseFeatEffects(
+export function parseFeatEffects(
 	featName: string,
 	characterLevel: number,
 ): FeatEffect[] {
@@ -386,15 +386,13 @@ export function computeAttacksPerAction(
 /**
  * Check if a feat name has known mechanical effects
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function hasFeatEffects(featName: string): boolean {
+export function hasFeatEffects(featName: string): boolean {
 	return featName.toLowerCase().trim() in FEAT_EFFECTS;
 }
 
 /**
  * Check if a fighting style has known effects
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function hasFightingStyleEffects(styleName: string): boolean {
+export function hasFightingStyleEffects(styleName: string): boolean {
 	return styleName.toLowerCase().trim() in FIGHTING_STYLE_EFFECTS;
 }

@@ -40,10 +40,8 @@ const TYPE_FOLDER_MAP: Record<string, string> = {
 	artifacts: "artifacts",
 	power: "powers",
 	powers: "powers",
-	monarch: "monarchs",
-	monarchs: "monarchs",
-	regent: "monarchs",
-	regents: "monarchs",
+	regent: "regents",
+	regents: "regents",
 };
 
 /**
@@ -62,17 +60,14 @@ export function getAssetUrl(
 	return DEFAULT_FALLBACKS.portrait;
 }
 
-/**
- * Get fallback asset URL for a given asset type.
- */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getFallbackUrl(assetType: keyof typeof DEFAULT_FALLBACKS): string {
+export function getFallbackUrl(
+	assetType: keyof typeof DEFAULT_FALLBACKS,
+): string {
 	return DEFAULT_FALLBACKS[assetType] || DEFAULT_FALLBACKS.portrait;
 }
 
 // Validate asset exists (client-side check)
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function validateAsset(url: string): Promise<boolean> {
+export async function validateAsset(url: string): Promise<boolean> {
 	try {
 		const response = await fetch(url, { method: "HEAD" });
 		return response.ok;
@@ -82,7 +77,7 @@ async function validateAsset(url: string): Promise<boolean> {
 }
 
 // Lightweight manifest stub for backward compatibility
-interface AssetManifest {
+export interface AssetManifest {
 	mappings: Record<string, AssetMapping>;
 	globalFallbacks: {
 		portrait: string;
@@ -98,7 +93,7 @@ interface AssetManifest {
 	};
 }
 
-interface AssetMapping {
+export interface AssetMapping {
 	id: string;
 	type: string;
 	assets: {
@@ -117,14 +112,13 @@ interface AssetMapping {
 	};
 }
 
-const assetManifest: AssetManifest = {
+export const assetManifest: AssetManifest = {
 	mappings: {},
 	globalFallbacks: DEFAULT_FALLBACKS,
 	statistics: { totalMappings: 0, mappingsWithAssets: 0, missingAssets: [] },
 };
 
 // Legacy compatibility
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function createAssetManifest(): AssetManifest {
+export function createAssetManifest(): AssetManifest {
 	return assetManifest;
 }

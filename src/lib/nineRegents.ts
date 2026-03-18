@@ -39,7 +39,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		id: "shadow_regent",
 		name: "Shadow Regent",
 		type: RegentType.INTELLIGENCE_REGENT,
-		compendiumId: "umbral-monarch-overlay",
+		compendiumId: "umbral-regent-overlay",
 		description:
 			"Ruler of death and the abyssal realm. Command an eternal army extracted from fallen foes. Your System displays [SHADOW REGENT PROTOCOL]. Ascendant Bureau: S-Rank necromancy threat.",
 		abilities: [
@@ -267,7 +267,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		id: "titan_regent",
 		name: "Titan Regent",
 		type: RegentType.VITALITY_REGENT,
-		compendiumId: "steel-flesh-monarch-overlay",
+		compendiumId: "steel-flesh-regent-overlay",
 		description:
 			"Embodiment of absolute defense. Invulnerable to all harm. Laws of physics bend around you. Ascendant Bureau: Unkillable entity - containment impossible.",
 		abilities: [
@@ -372,7 +372,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		},
 	},
 
-	// 7. ARCHITECT REGENT (Architect Monarch)
+	// 7. ARCHITECT REGENT (Architect Regent)
 	// COSMIC THEME: Reality architecture, dimensional construction, space/time manipulation
 	// DISTINCT FROM: Mage (construction spells), Technomancer (tech buildings)
 	// UNIQUE POWER: Architect reality itself, create permanent demiplanes, reshape space/time
@@ -438,7 +438,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		id: "radiant_regent",
 		name: "Radiant Regent",
 		type: RegentType.PRESENCE_REGENT,
-		compendiumId: "flame-monarch-overlay",
+		compendiumId: "flame-regent-overlay",
 		description:
 			"Purifying flame incarnate. White fire that erases evil. Visible from space. Every religion claims you as prophet/devil. Ascendant Bureau: Apocalypse-class sanctification event.",
 		abilities: [

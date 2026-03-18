@@ -44,7 +44,7 @@ import {
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const CampaignDetail = () => {
 	const { id } = useParams<{ id: string }>();
@@ -396,7 +396,7 @@ const CampaignDetail = () => {
 															{member.characters && (
 																<SystemText className="block text-xs text-muted-foreground">
 																	Level {member.characters.level}{" "}
-																	{formatMonarchVernacular(
+																	{formatRegentVernacular(
 																		member.characters.job || "Unknown",
 																	)}
 																</SystemText>

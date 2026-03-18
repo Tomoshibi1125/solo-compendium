@@ -362,7 +362,7 @@ export const conditions: Condition[] = [
 		image: "/generated/conditions/shadow-bound.webp",
 	},
 	{
-		id: "monarch-marked",
+		id: "regent-marked",
 		name: "Regent Marked",
 		type: "shadow",
 		description:
@@ -381,7 +381,7 @@ export const conditions: Condition[] = [
 			"Wish spell",
 		],
 		source: "System Ascendant Canon",
-		image: "/generated/conditions/monarch-marked.webp",
+		image: "/generated/conditions/regent-marked.webp",
 	},
 	{
 		id: "shadow-fused",

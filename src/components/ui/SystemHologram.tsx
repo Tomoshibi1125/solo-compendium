@@ -199,7 +199,7 @@ export const SystemHologram = ({
 			case "sovereign":
 				return cn(
 					baseStyles,
-					"from-monarch-gold/10 via-shadow-purple/15 to-void-black/90 border-monarch-gold/40 shadow-[0_0_30px_hsl(var(--monarch-gold)/0.3)]",
+					"from-regent-gold/10 via-shadow-purple/15 to-void-black/90 border-regent-gold/40 shadow-[0_0_30px_hsl(var(--regent-gold)/0.3)]",
 				);
 			case "gate":
 				return cn(
@@ -284,7 +284,7 @@ export const SystemHologram = ({
 					<h3
 						className={cn(
 							"font-display text-sm tracking-widest",
-							variant === "sovereign" && "text-monarch-gold",
+							variant === "sovereign" && "text-regent-gold",
 							variant === "gate" && "text-gate-s",
 							variant === "system" && "text-system-green",
 							variant === "default" && "text-primary",

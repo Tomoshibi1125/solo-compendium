@@ -38,7 +38,7 @@ import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacters, useDeleteCharacter } from "@/hooks/useCharacters";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const Characters = () => {
 	const navigate = useNavigate();
@@ -340,9 +340,9 @@ const Characters = () => {
 												{character.name}
 											</h3>
 											<SystemText className="block text-xs font-mono tracking-wider text-muted-foreground mb-4 uppercase">
-												{formatMonarchVernacular(character.job || "Unawakened")}
+												{formatRegentVernacular(character.job || "Unawakened")}
 												{character.path &&
-													` - ${formatMonarchVernacular(character.path)}`}
+													` - ${formatRegentVernacular(character.path)}`}
 											</SystemText>
 
 											{/* HP Bar */}

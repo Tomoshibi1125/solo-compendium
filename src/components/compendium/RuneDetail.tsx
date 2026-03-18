@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import type { Database } from "@/integrations/supabase/types";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 
@@ -42,7 +42,7 @@ const RUNE_TYPE_COLORS: Record<string, string> = {
 export const RuneDetail = ({ data }: RuneDetailProps) => {
 	const Icon = RUNE_TYPE_ICONS[data.rune_type] || Sparkles;
 	const typeColor = RUNE_TYPE_COLORS[data.rune_type] || "";
-	const displayName = formatMonarchVernacular(
+	const displayName = formatRegentVernacular(
 		(data as { display_name?: string | null }).display_name || data.name,
 	);
 
@@ -83,27 +83,27 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 										typeColor || "bg-primary/20 text-primary border-primary/30"
 									}
 								>
-									{formatMonarchVernacular(data.rune_type)}
+									{formatRegentVernacular(data.rune_type)}
 								</Badge>
 								<Badge variant="secondary">Level {data.rune_level}</Badge>
 								<Badge variant="outline">
-									{formatMonarchVernacular(data.rarity)}
+									{formatRegentVernacular(data.rarity)}
 								</Badge>
 								<Badge variant="outline">
-									{formatMonarchVernacular(data.rune_category)}
+									{formatRegentVernacular(data.rune_category)}
 								</Badge>
 							</div>
 						</div>
 					</div>
 
 					<p className="text-foreground">
-						{formatMonarchVernacular(data.description)}
+						{formatRegentVernacular(data.description)}
 					</p>
 
 					{data.lore && (
 						<div className="border-l-2 border-primary/30 pl-4">
 							<p className="text-muted-foreground italic">
-								{formatMonarchVernacular(data.lore)}
+								{formatRegentVernacular(data.lore)}
 							</p>
 						</div>
 					)}
@@ -128,7 +128,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							<div className="flex flex-wrap gap-2">
 								{data.requires_job.map((job) => (
 									<Badge key={job} variant="secondary">
-										{formatMonarchVernacular(job)}
+										{formatRegentVernacular(job)}
 									</Badge>
 								))}
 							</div>
@@ -150,7 +150,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 									</h4>
 								</div>
 								<p className="text-sm text-muted-foreground ml-6">
-									{formatMonarchVernacular(data.caster_penalty)}
+									{formatRegentVernacular(data.caster_penalty)}
 								</p>
 								{data.caster_requirement_multiplier &&
 									data.caster_requirement_multiplier !== 1.0 && (
@@ -170,7 +170,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 									</h4>
 								</div>
 								<p className="text-sm text-muted-foreground ml-6">
-									{formatMonarchVernacular(data.martial_penalty)}
+									{formatRegentVernacular(data.martial_penalty)}
 								</p>
 								{data.martial_requirement_multiplier &&
 									data.martial_requirement_multiplier !== 1.0 && (
@@ -194,14 +194,14 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							<h4 className="font-heading font-semibold">Effect Type</h4>
 						</div>
 						<Badge variant="outline">
-							{formatMonarchVernacular(data.effect_type)}
+							{formatRegentVernacular(data.effect_type)}
 						</Badge>
 					</div>
 
 					{data.effect_description && (
 						<div>
 							<p className="text-foreground">
-								{formatMonarchVernacular(data.effect_description)}
+								{formatRegentVernacular(data.effect_description)}
 							</p>
 						</div>
 					)}
@@ -215,7 +215,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 								<div>
 									<span className="text-muted-foreground">Action: </span>
 									<Badge variant="outline" className="text-xs">
-										{formatMonarchVernacular(data.activation_action)}
+										{formatRegentVernacular(data.activation_action)}
 									</Badge>
 								</div>
 								{data.activation_cost && (
@@ -223,7 +223,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 										<span className="text-muted-foreground">Cost: </span>
 										<Badge variant="outline" className="text-xs">
 											{data.activation_cost_amount}{" "}
-											{formatMonarchVernacular(data.activation_cost)}
+											{formatRegentVernacular(data.activation_cost)}
 										</Badge>
 									</div>
 								)}
@@ -231,7 +231,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 									<div>
 										<span className="text-muted-foreground">Uses: </span>
 										<Badge variant="outline" className="text-xs">
-											{formatMonarchVernacular(data.uses_per_rest)}
+											{formatRegentVernacular(data.uses_per_rest)}
 										</Badge>
 									</div>
 								)}
@@ -239,7 +239,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 									<div>
 										<span className="text-muted-foreground">Recharge: </span>
 										<Badge variant="outline" className="text-xs">
-											{formatMonarchVernacular(data.recharge)}
+											{formatRegentVernacular(data.recharge)}
 										</Badge>
 									</div>
 								)}
@@ -251,7 +251,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						<div>
 							<span className="text-muted-foreground">Range: </span>
 							<span className="text-foreground">
-								{formatMonarchVernacular(data.range)}
+								{formatRegentVernacular(data.range)}
 							</span>
 						</div>
 					)}
@@ -260,7 +260,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						<div>
 							<span className="text-muted-foreground">Duration: </span>
 							<span className="text-foreground">
-								{formatMonarchVernacular(data.duration)}
+								{formatRegentVernacular(data.duration)}
 							</span>
 							{data.concentration && (
 								<Badge variant="secondary" className="ml-2 text-xs">
@@ -276,7 +276,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 								At Higher Rune Levels
 							</h4>
 							<p className="text-sm text-muted-foreground">
-								{formatMonarchVernacular(data.higher_levels)}
+								{formatRegentVernacular(data.higher_levels)}
 							</p>
 						</div>
 					)}
@@ -309,7 +309,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						<div className="flex flex-wrap gap-2 mt-1">
 							{data.can_inscribe_on?.map((type) => (
 								<Badge key={type} variant="outline" className="text-xs">
-									{formatMonarchVernacular(type)}
+									{formatRegentVernacular(type)}
 								</Badge>
 							))}
 						</div>
@@ -327,7 +327,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 			{data.discovery_lore && (
 				<SystemWindow title="DISCOVERY">
 					<p className="text-muted-foreground italic">
-						{formatMonarchVernacular(data.discovery_lore)}
+						{formatRegentVernacular(data.discovery_lore)}
 					</p>
 				</SystemWindow>
 			)}
@@ -337,7 +337,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 				<div className="flex flex-wrap gap-2">
 					{data.tags.map((tag) => (
 						<Badge key={tag} variant="outline" className="text-xs">
-							{formatMonarchVernacular(tag)}
+							{formatRegentVernacular(tag)}
 						</Badge>
 					))}
 				</div>

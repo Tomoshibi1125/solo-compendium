@@ -183,8 +183,7 @@ export function useRegentUnlocks(characterId: string) {
 }
 
 // Hook for DMs to manage regent unlocks for their campaign characters
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useCampaignRegentUnlocks(campaignId: string) {
+export function useCampaignRegentUnlocks(campaignId: string) {
 	const {
 		data: campaignUnlocks = [],
 		isLoading,
@@ -229,8 +228,7 @@ function useCampaignRegentUnlocks(campaignId: string) {
 }
 
 // Hook to get available regents for unlocking
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useAvailableRegents(characterId: string) {
+export function useAvailableRegents(characterId: string) {
 	const {
 		data: availableRegents = [],
 		isLoading,
@@ -267,21 +265,17 @@ function useAvailableRegents(characterId: string) {
 	};
 }
 
-// Backward compatibility aliases
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useMonarchUnlocks = useRegentUnlocks;
-export const useCharacterMonarchUnlocks = useRegentUnlocks;
 export const useCharacterRegentUnlocks = useRegentUnlocks;
 
 /**
  * @deprecated Use `useRegentUnlocks(characterId).unlockRegent` instead.
  * This standalone stub exists only for backward compatibility with legacy callsites.
  */
-export const useUnlockMonarch = () => {
+export const useUnlockRegent = () => {
 	return {
 		mutate: (_params: unknown, _options?: unknown) => {
 			console.warn(
-				"[DEPRECATED] useUnlockMonarch: use useRegentUnlocks(characterId).unlockRegent instead",
+				"[DEPRECATED] useUnlockRegent: use useRegentUnlocks(characterId).unlockRegent instead",
 			);
 		},
 		isPending: false,
@@ -292,11 +286,11 @@ export const useUnlockMonarch = () => {
  * @deprecated Use `useRegentUnlocks(characterId).updateUnlock` instead.
  * This standalone stub exists only for backward compatibility with legacy callsites.
  */
-export const useSetPrimaryMonarch = () => {
+export const useSetPrimaryRegent = () => {
 	return {
 		mutate: (_params: unknown) => {
 			console.warn(
-				"[DEPRECATED] useSetPrimaryMonarch: use useRegentUnlocks(characterId).updateUnlock instead",
+				"[DEPRECATED] useSetPrimaryRegent: use useRegentUnlocks(characterId).updateUnlock instead",
 			);
 		},
 		isPending: false,

@@ -61,7 +61,7 @@ import {
 	campaignInviteStatusMessage,
 	deriveCampaignInviteStatus,
 } from "@/lib/campaignInviteUtils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const downloadJson = (payload: Json, filename: string) => {
 	const blob = new Blob([JSON.stringify(payload, null, 2)], {
@@ -930,7 +930,7 @@ export function CampaignProtocolControls({
 										{memberOptions.map((member) => (
 											<SelectItem key={member.id} value={member.id}>
 												{member.name} · Lv {member.level}{" "}
-												{formatMonarchVernacular(member.job)}
+												{formatRegentVernacular(member.job)}
 											</SelectItem>
 										))}
 									</SelectContent>
@@ -1034,7 +1034,7 @@ export function CampaignProtocolControls({
 											{memberOptions.map((member) => (
 												<SelectItem key={member.id} value={member.id}>
 													{member.name} · Lv {member.level}{" "}
-													{formatMonarchVernacular(member.job)}
+													{formatRegentVernacular(member.job)}
 												</SelectItem>
 											))}
 										</SelectContent>

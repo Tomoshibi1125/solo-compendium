@@ -5,27 +5,27 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import "@/styles/realtime-collaboration.css";
 
-type CursorPosition = { x: number; y: number };
+export type CursorPosition = { x: number; y: number };
 
-type TextChangePayload = {
+export type TextChangePayload = {
 	elementId: string;
 	content: string;
 	cursorPosition?: number;
 };
 
-type CharacterUpdatePayload = {
+export type CharacterUpdatePayload = {
 	characterId: string;
 	updates: Record<string, unknown>;
 };
 
-type DiceRollPayload = {
+export type DiceRollPayload = {
 	formula: string;
 	result: number;
 	details?: Record<string, unknown>;
 };
 
-type MapUpdatePayload = Record<string, unknown>;
-type CombatStatePayload = Record<string, unknown>;
+export type MapUpdatePayload = Record<string, unknown>;
+export type CombatStatePayload = Record<string, unknown>;
 
 type CollaborationEventBase = {
 	userId: string;
@@ -48,16 +48,25 @@ type CollaborationEvent =
 			data: CombatStatePayload;
 	  });
 
-type TextChangeEvent = Extract<CollaborationEvent, { type: "text_change" }>;
-type CharacterUpdateEvent = Extract<
+export type TextChangeEvent = Extract<
+	CollaborationEvent,
+	{ type: "text_change" }
+>;
+export type CharacterUpdateEvent = Extract<
 	CollaborationEvent,
 	{ type: "character_update" }
 >;
-type DiceRollEvent = Extract<CollaborationEvent, { type: "dice_roll" }>;
-type MapUpdateEvent = Extract<CollaborationEvent, { type: "map_update" }>;
-type CombatStateEvent = Extract<CollaborationEvent, { type: "combat_state" }>;
+export type DiceRollEvent = Extract<CollaborationEvent, { type: "dice_roll" }>;
+export type MapUpdateEvent = Extract<
+	CollaborationEvent,
+	{ type: "map_update" }
+>;
+export type CombatStateEvent = Extract<
+	CollaborationEvent,
+	{ type: "combat_state" }
+>;
 
-type PresencePayload = {
+export type PresencePayload = {
 	user_id?: string;
 	user_name?: string;
 	cursor?: CursorPosition;
@@ -65,7 +74,7 @@ type PresencePayload = {
 	currentElement?: string;
 };
 
-interface ActiveUser {
+export interface ActiveUser {
 	id: string;
 	name: string;
 	cursor?: { x: number; y: number };
@@ -424,8 +433,11 @@ export function useRealtimeCollaboration(campaignId: string) {
 }
 
 // React component for displaying active users
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function ActiveUsersList({ activeUsers }: { activeUsers: ActiveUser[] }) {
+export function ActiveUsersList({
+	activeUsers,
+}: {
+	activeUsers: ActiveUser[];
+}) {
 	return (
 		<div className="flex items-center space-x-2 p-2 bg-muted rounded-lg">
 			<div className="flex -space-x-2">
@@ -447,8 +459,11 @@ function ActiveUsersList({ activeUsers }: { activeUsers: ActiveUser[] }) {
 }
 
 // React component for collaborative cursors
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function CollaborativeCursors({ activeUsers }: { activeUsers: ActiveUser[] }) {
+export function CollaborativeCursors({
+	activeUsers,
+}: {
+	activeUsers: ActiveUser[];
+}) {
 	const setCursorVars = (
 		el: HTMLDivElement | null,
 		cursor: { x: number; y: number },
@@ -486,7 +501,7 @@ function CollaborativeCursors({ activeUsers }: { activeUsers: ActiveUser[] }) {
 }
 
 // Helper function to get consistent colors for users
-function getUserColor(userId: string): string {
+export function getUserColor(userId: string): string {
 	const colors = [
 		"#ef4444",
 		"#f97316",

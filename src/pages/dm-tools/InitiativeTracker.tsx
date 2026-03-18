@@ -640,87 +640,66 @@ const InitiativeTracker = () => {
 		);
 	};
 
-	// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-	const removeCondition = (id: string, conditionName: string) => {
-		setCombatants((prev) =>
-			prev.map((c) => {
-				if (c.id !== id) return c;
+	const cleanupExpiredConditions = useCallback(
+		(nextRound: number) => {
+			const expiredAnnouncements: string[] = [];
 
-				const nextAdvanced = c.advancedConditions.filter(
-					(cond) =>
-						cond.conditionName.toLowerCase() !== conditionName.toLowerCase(),
-				);
+			setCombatants((prev) => {
+				const updated = prev.map((c) => {
+					const expiredAnnouncementsForC: string[] = [];
+					// Advance structured condition system
+					const advNext = advanceConditionRound(
+						c.advancedConditions,
+						nextRound,
+					);
 
-				// DDB Parity: Broadcast Condition Removed
-				if (c.conditions.includes(conditionName)) {
-					playerTools
-						.trackConditionChange(c.id || c.name, conditionName, "remove")
+					if (advNext.changes.length > 0) {
+						const expiredNames = advNext.changes
+							.filter((ch) => ch.type === "expired")
+							.map((ch) => ch.condition.conditionName);
+						if (expiredNames.length > 0) {
+							expiredAnnouncementsForC.push(
+								`**${c.name}** is no longer ${expiredNames.join(", ")}.`,
+							);
+						}
+						advNext.changes.forEach((ch) => {
+							if (ch.type === "expired") {
+								playerTools
+									.trackConditionChange(
+										c.id || c.name,
+										ch.condition.conditionName,
+										"remove",
+									)
+									.catch(console.error);
+							}
+						});
+					}
+
+					if (expiredAnnouncementsForC.length > 0)
+						expiredAnnouncements.push(...expiredAnnouncementsForC);
+
+					return {
+						...c,
+						advancedConditions: advNext.conditions,
+						conditions: getActiveConditionNames(advNext.conditions),
+					};
+				});
+
+				if (expiredAnnouncements.length > 0 && campaignId) {
+					sendMessage
+						.mutateAsync({
+							campaignId,
+							messageType: "system",
+							content: expiredAnnouncements.join("\n"),
+						})
 						.catch(console.error);
 				}
 
-				return {
-					...c,
-					advancedConditions: nextAdvanced,
-					conditions: getActiveConditionNames(nextAdvanced),
-				};
-			}),
-		);
-	};
-
-	const cleanupExpiredConditions = useCallback((nextRound: number) => {
-		const expiredAnnouncements: string[] = [];
-
-		setCombatants((prev) => {
-			const updated = prev.map((c) => {
-				const expiredAnnouncementsForC: string[] = [];
-				// Advance structured condition system
-				const advNext = advanceConditionRound(c.advancedConditions, nextRound);
-
-				if (advNext.changes.length > 0) {
-					const expiredNames = advNext.changes
-						.filter((ch) => ch.type === "expired")
-						.map((ch) => ch.condition.conditionName);
-					if (expiredNames.length > 0) {
-						expiredAnnouncementsForC.push(
-							`**${c.name}** is no longer ${expiredNames.join(", ")}.`,
-						);
-					}
-					advNext.changes.forEach((ch) => {
-						if (ch.type === "expired") {
-							playerTools
-								.trackConditionChange(
-									c.id || c.name,
-									ch.condition.conditionName,
-									"remove",
-								)
-								.catch(console.error);
-						}
-					});
-				}
-
-				if (expiredAnnouncementsForC.length > 0)
-					expiredAnnouncements.push(...expiredAnnouncementsForC);
-
-				return {
-					...c,
-					advancedConditions: advNext.conditions,
-					conditions: getActiveConditionNames(advNext.conditions),
-				};
+				return updated;
 			});
-
-			if (expiredAnnouncements.length > 0 && campaignId) {
-				sendMessage
-					.mutateAsync({
-						campaignId,
-						messageType: "system",
-						content: expiredAnnouncements.join("\n"),
-					})
-					.catch(console.error);
-			}
-
-			return updated;
-		});
-	}, [campaignId, playerTools, sendMessage]);
+		},
+		[campaignId, playerTools, sendMessage],
+	);
 
 	const nextTurn = useCallback(() => {
 		if (sortedCombatants.length === 0) return;

@@ -1,0 +1,50 @@
+/* VTT Enhanced Custom Styles - Resolving Inline Style Warnings */
+
+.vtt-token-hp-bar {
+	width: var(--vtt-hp-percent, 100%);
+	background-color: var(--vtt-hp-color, #22c55e);
+}
+
+.vtt-user-avatar {
+	background-color: var(--vtt-user-color, #6b7280);
+}
+
+.vtt-cursor {
+	left: var(--vtt-cursor-x, 0);
+	top: var(--vtt-cursor-y, 0);
+	color: var(--vtt-user-color, #6b7280);
+}
+
+.vtt-ping {
+	left: var(--vtt-ping-x, 0);
+	top: var(--vtt-ping-y, 0);
+	border-color: var(--vtt-user-color, #ef4444);
+}
+
+.vtt-weather-layer {
+	opacity: var(--vtt-weather-opacity, 0.5);
+	pointer-events: none;
+}
+
+.vtt-map-overlay {
+	z-index: var(--vtt-overlay-z, 10);
+}
+
+.vtt-draggable-token {
+	transform: translate(var(--vtt-token-x, 0), var(--vtt-token-y, 0));
+	width: var(--vtt-token-size, 40px);
+	height: var(--vtt-token-size, 40px);
+}
+
+.vtt-grid-cell {
+	width: var(--vtt-grid-size, 50px);
+	height: var(--vtt-grid-size, 50px);
+}
+
+.vtt-dynamic-color {
+	color: var(--vtt-dynamic-color-value);
+}
+
+.vtt-dynamic-bg {
+	background-color: var(--vtt-dynamic-bg-value);
+}

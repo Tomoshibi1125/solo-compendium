@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface SovereignAuthorityDisplayProps {
 	authority: number; // 0-100
-	tier: "ascendant" | "sovereign" | "regent" | "monarch";
+	tier: "ascendant" | "sovereign" | "regent" | "regent";
 	domain?: string;
 	decrees?: number;
 	vassals?: number;
@@ -158,7 +158,7 @@ export const SovereignAuthorityDisplay = ({
 	return (
 		<div
 			className={cn(
-				"relative bg-void-black/80 border border-monarch-gold/30 rounded-lg p-4",
+				"relative bg-void-black/80 border border-regent-gold/30 rounded-lg p-4",
 				className,
 			)}
 		>
@@ -169,7 +169,7 @@ export const SovereignAuthorityDisplay = ({
 						className="w-2 h-2 rounded-full animate-pulse"
 						style={{ backgroundColor: tierConfig.color }}
 					/>
-					<span className="font-display text-sm tracking-widest text-monarch-gold">
+					<span className="font-display text-sm tracking-widest text-regent-gold">
 						SOVEREIGN AUTHORITY
 					</span>
 				</div>
@@ -182,14 +182,14 @@ export const SovereignAuthorityDisplay = ({
 			<div className="relative mb-4">
 				<canvas
 					ref={canvasRef}
-					className="w-full h-32 rounded border border-monarch-gold/20"
+					className="w-full h-32 rounded border border-regent-gold/20"
 				/>
 				<div className="absolute inset-0 flex items-center justify-center">
 					<div className="text-center">
 						<div className="font-display text-xl font-black text-white">
 							{authority}%
 						</div>
-						<div className="font-system text-xs tracking-wider text-monarch-gold">
+						<div className="font-system text-xs tracking-wider text-regent-gold">
 							AUTHORITY
 						</div>
 					</div>
@@ -202,7 +202,7 @@ export const SovereignAuthorityDisplay = ({
 					<div className="font-system text-xs tracking-wider text-gray-400 uppercase">
 						Domain
 					</div>
-					<div className="font-display text-sm text-monarch-gold">{domain}</div>
+					<div className="font-display text-sm text-regent-gold">{domain}</div>
 				</div>
 				<div>
 					<div className="font-system text-xs tracking-wider text-gray-400 uppercase">
@@ -241,13 +241,12 @@ export const SovereignAuthorityDisplay = ({
 // Ascension Meter Component
 interface AscensionMeterProps {
 	progress: number; // 0-100
-	tier: "ascendant" | "sovereign" | "regent" | "monarch";
+	tier: "ascendant" | "sovereign" | "regent" | "regent";
 	nextTier?: string;
 	className?: string;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const AscensionMeter = ({
+export const AscensionMeter = ({
 	progress,
 	tier,
 	nextTier,

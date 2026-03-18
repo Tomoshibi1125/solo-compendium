@@ -48,8 +48,7 @@ export function calculateSkillModifier(
 	return modifier;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function calculatePassiveSkill(
+export function calculatePassiveSkill(
 	skillName: string,
 	abilities: Record<AbilityScore, number>,
 	proficiencies: string[],

@@ -2,7 +2,7 @@ import { Gem, MapPin, Skull } from "lucide-react";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface LocationData {
 	id: string;
@@ -27,7 +27,7 @@ const rankStyles: Record<string, string> = {
 };
 
 export const LocationDetail = ({ data }: { data: LocationData }) => {
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const imageSrc = data.image_url || data.image || undefined;
 	const rankStyle = data.rank ? rankStyles[data.rank] : undefined;
 
@@ -53,7 +53,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 					<div className="flex flex-wrap items-center gap-2">
 						{data.location_type && (
 							<Badge variant="secondary">
-								{formatMonarchVernacular(data.location_type)}
+								{formatRegentVernacular(data.location_type)}
 							</Badge>
 						)}
 						{data.rank && (
@@ -63,7 +63,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 						)}
 						{data.source_book && (
 							<Badge variant="outline">
-								{formatMonarchVernacular(data.source_book)}
+								{formatRegentVernacular(data.source_book)}
 							</Badge>
 						)}
 					</div>
@@ -73,7 +73,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 			{data.description && (
 				<SystemWindow id="location-details" title="DETAILS">
 					<p className="text-foreground leading-relaxed">
-						{formatMonarchVernacular(data.description)}
+						{formatRegentVernacular(data.description)}
 					</p>
 				</SystemWindow>
 			)}
@@ -85,7 +85,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 							<li key={encounter} className="flex items-center gap-2">
 								<Skull className="w-4 h-4 text-rose-400" />
 								<span className="text-muted-foreground">
-									{formatMonarchVernacular(encounter)}
+									{formatRegentVernacular(encounter)}
 								</span>
 							</li>
 						))}
@@ -100,7 +100,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 							<li key={treasure} className="flex items-center gap-2">
 								<Gem className="w-4 h-4 text-amber-400" />
 								<span className="text-muted-foreground">
-									{formatMonarchVernacular(treasure)}
+									{formatRegentVernacular(treasure)}
 								</span>
 							</li>
 						))}

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
@@ -287,6 +288,13 @@ const TokenLibrary = () => {
 			title: "Exported!",
 			description: "Token library exported.",
 		});
+	};
+
+	const handleTokenKeyDown = (token: Token, e: React.KeyboardEvent) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			setSelectedToken(token);
+		}
 	};
 
 	const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -569,6 +577,8 @@ const TokenLibrary = () => {
 										<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 											{filteredTokens.map((token) => {
 												const CategoryIcon = getCategoryIcon(token.category);
+												const isSelected =
+													!!selectedToken && selectedToken.id === token.id;
 
 												return (
 													<button
@@ -576,24 +586,19 @@ const TokenLibrary = () => {
 														key={token.id}
 														className={cn(
 															"w-full text-left p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 transition-all cursor-pointer group",
-															selectedToken?.id === token.id &&
-																"ring-2 ring-primary",
+															isSelected && "ring-2 ring-primary",
 														)}
 														data-token-name={token.name}
+														data-selected={isSelected || undefined}
 														aria-label={`Token ${token.name}`}
+														aria-current={isSelected ? "true" : undefined}
 														onClick={() => setSelectedToken(token)}
-														onKeyDown={(e) => {
-															if (e.key === "Enter" || e.key === " ") {
-																e.preventDefault();
-																setSelectedToken(token);
-															}
-														}}
-														aria-pressed={
-															selectedToken?.id === token.id ? "true" : "false"
+														onKeyDown={(e: React.KeyboardEvent) =>
+															handleTokenKeyDown(token, e)
 														}
 													>
 														<div className="flex flex-col items-center gap-3">
-															<div
+															<DynamicStyle
 																className={cn(
 																	"token-display",
 																	`token-display-${token.size}`,
@@ -601,7 +606,7 @@ const TokenLibrary = () => {
 																		? `border-[${token.color}]`
 																		: "border-border",
 																)}
-																style={{
+																vars={{
 																	backgroundColor: token.color
 																		? `${token.color}20`
 																		: undefined,
@@ -617,7 +622,7 @@ const TokenLibrary = () => {
 																) : (
 																	token.emoji || "TK"
 																)}
-															</div>
+															</DynamicStyle>
 															<div className="text-center w-full">
 																<div className="font-heading font-semibold text-sm mb-1 truncate">
 																	{token.name}
@@ -658,7 +663,7 @@ const TokenLibrary = () => {
 										<div className="space-y-4">
 											<div className="flex items-start justify-between">
 												<div className="flex items-center gap-4">
-													<div
+													<DynamicStyle
 														className={cn(
 															"token-detail-display",
 															`token-detail-display-${selectedToken.size}`,
@@ -666,7 +671,7 @@ const TokenLibrary = () => {
 																? `border-[${selectedToken.color}]`
 																: "border-border",
 														)}
-														style={{
+														vars={{
 															backgroundColor: selectedToken.color
 																? `${selectedToken.color}20`
 																: undefined,
@@ -682,7 +687,7 @@ const TokenLibrary = () => {
 														) : (
 															selectedToken.emoji || "TK"
 														)}
-													</div>
+													</DynamicStyle>
 													<div>
 														<h3 className="font-heading font-semibold text-xl">
 															{selectedToken.name}

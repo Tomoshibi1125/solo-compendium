@@ -304,8 +304,7 @@ export const useCreateCampaignInvite = () => {
 	});
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useAddPlayerCharacterToCampaign = () => {
+export const useAddPlayerCharacterToCampaign = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

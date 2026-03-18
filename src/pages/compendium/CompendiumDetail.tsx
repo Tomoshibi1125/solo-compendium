@@ -12,7 +12,6 @@ import { FeatDetail } from "@/components/compendium/FeatDetail";
 import { ItemDetail } from "@/components/compendium/ItemDetail";
 import { JobDetail } from "@/components/compendium/JobDetail";
 import { LocationDetail } from "@/components/compendium/LocationDetail";
-import type { MonarchDetail } from "@/components/compendium/MonarchDetail";
 import { MonsterDetail } from "@/components/compendium/MonsterDetail";
 import { PathDetail } from "@/components/compendium/PathDetail";
 import { PowerDetail } from "@/components/compendium/PowerDetail";
@@ -43,10 +42,7 @@ import {
 	resolveRef,
 } from "@/lib/compendiumResolver";
 import { error as logError } from "@/lib/logger";
-import {
-	formatMonarchVernacular,
-	MONARCH_LABEL_PLURAL,
-} from "@/lib/vernacular";
+import { formatRegentVernacular, REGENT_LABEL_PLURAL } from "@/lib/vernacular";
 
 type JobDetailData = Parameters<typeof JobDetail>[0]["data"];
 type PathDetailData = Parameters<typeof PathDetail>[0]["data"];
@@ -56,7 +52,7 @@ type RelicDetailData = Parameters<typeof RelicDetail>[0]["data"];
 type MonsterDetailData = Parameters<typeof MonsterDetail>[0]["data"];
 type BackgroundDetailData = Parameters<typeof BackgroundDetail>[0]["data"];
 type ConditionDetailData = Parameters<typeof ConditionDetail>[0]["data"];
-type _MonarchDetailData = Parameters<typeof MonarchDetail>[0]["data"];
+type _RegentDetailData = Parameters<typeof RegentDetail>[0]["data"];
 type RegentDetailData = Parameters<typeof RegentDetail>[0]["data"];
 type FeatDetailData = Parameters<typeof FeatDetail>[0]["data"];
 type SigilDetailData = Parameters<typeof SigilDetail>[0]["data"];
@@ -130,10 +126,10 @@ const CompendiumDetail = () => {
 				related.push(
 					...matches.map((item) => ({
 						id: item.id,
-						name: formatMonarchVernacular(item.display_name || item.name),
+						name: formatRegentVernacular(item.display_name || item.name),
 						type: entryType,
 						description: item.description
-							? formatMonarchVernacular(item.description)
+							? formatRegentVernacular(item.description)
 							: undefined,
 					})),
 				);
@@ -187,7 +183,7 @@ const CompendiumDetail = () => {
 			(entry as { display_name?: string | null; name?: string }).display_name ||
 			(entry as { name?: string }).name ||
 			"";
-		const entryName = formatMonarchVernacular(entryNameRaw);
+		const entryName = formatRegentVernacular(entryNameRaw);
 		const items: Array<{ id: string; title: string; level: number }> = [
 			{ id: "entry-header", title: entryName, level: 1 },
 		];
@@ -299,8 +295,6 @@ const CompendiumDetail = () => {
 				return <ConditionDetail data={data as ConditionDetailData} />;
 			case "regents":
 				return <RegentDetail data={data as RegentDetailData} />;
-			case "monarchs":
-				return <RegentDetail data={data as RegentDetailData} />;
 			case "feats":
 				return <FeatDetail data={data as FeatDetailData} />;
 			case "skills":
@@ -377,7 +371,7 @@ const CompendiumDetail = () => {
 
 	const isFavorite = favorites.has(`${type}:${id || ""}`);
 	const entryDisplayNameRaw = entryData.display_name || entryData.name;
-	const entryDisplayName = formatMonarchVernacular(entryDisplayNameRaw);
+	const entryDisplayName = formatRegentVernacular(entryDisplayNameRaw);
 
 	const handleToggleFavorite = () => {
 		if (!id) return;
@@ -410,7 +404,7 @@ const CompendiumDetail = () => {
 	};
 
 	const handleExport = () => {
-		const dataStr = formatMonarchVernacular(JSON.stringify(entry, null, 2));
+		const dataStr = formatRegentVernacular(JSON.stringify(entry, null, 2));
 		const dataBlob = new Blob([dataStr], { type: "application/json" });
 		const url = URL.createObjectURL(dataBlob);
 		const link = document.createElement("a");
@@ -436,7 +430,7 @@ const CompendiumDetail = () => {
 		monsters: "Monsters",
 		backgrounds: "Backgrounds",
 		conditions: "Conditions",
-		monarchs: MONARCH_LABEL_PLURAL,
+		regents: REGENT_LABEL_PLURAL,
 		feats: "Feats",
 		skills: "Skills",
 		equipment: "Equipment",
@@ -467,7 +461,7 @@ const CompendiumDetail = () => {
 					items={[
 						{ label: "Compendium", href: "/compendium" },
 						{
-							label: formatMonarchVernacular(categoryLabels[type] || type),
+							label: formatRegentVernacular(categoryLabels[type] || type),
 							href: `/compendium?category=${type}`,
 						},
 						{ label: entryDisplayName },

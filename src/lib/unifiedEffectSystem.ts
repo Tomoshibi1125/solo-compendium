@@ -99,18 +99,18 @@ const TYPE_MAP: Record<string, EffectType> = {
 
 // ─── Bridge Functions ───────────────────────────────────────
 
-function mapTarget(raw: string): EffectTarget {
+export function mapTarget(raw: string): EffectTarget {
 	return TARGET_MAP[raw] ?? "skill"; // default to 'skill' for unknown targets
 }
 
-function mapType(raw: string): EffectType {
+export function mapType(raw: string): EffectType {
 	return TYPE_MAP[raw] ?? "modifier";
 }
 
 /**
  * Convert a FeatEffect into a canonical Effect + EffectSource pair
  */
-function bridgeFeatEffect(feat: FeatEffect): {
+export function bridgeFeatEffect(feat: FeatEffect): {
 	effect: Effect;
 	source: EffectSource;
 } {
@@ -133,7 +133,7 @@ function bridgeFeatEffect(feat: FeatEffect): {
 /**
  * Convert a SpellEngineEffect into a canonical Effect + EffectSource pair
  */
-function bridgeSpellEffect(spell: SpellEngineEffect): {
+export function bridgeSpellEffect(spell: SpellEngineEffect): {
 	effect: Effect;
 	source: EffectSource;
 } {
@@ -157,8 +157,7 @@ function bridgeSpellEffect(spell: SpellEngineEffect): {
  * Bridge equipment property strings → Effect[] via parseModifiers.
  * Equipment modifiers use priority 200 (typed equipment bonus bucket).
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function bridgeEquipmentEffects(properties: string[]): Effect[] {
+export function bridgeEquipmentEffects(properties: string[]): Effect[] {
 	const mods = parseModifiers(properties);
 	const effects: Effect[] = [];
 	const EQUIP_PRIORITY = 200;
@@ -273,8 +272,7 @@ export function bridgeAllFeatEffects(feats: FeatEffect[]): Effect[] {
 /**
  * Batch-convert all SpellEngineEffects into canonical Effects
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function bridgeAllSpellEffects(spells: SpellEngineEffect[]): Effect[] {
+export function bridgeAllSpellEffects(spells: SpellEngineEffect[]): Effect[] {
 	return spells.map((s) => bridgeSpellEffect(s).effect);
 }
 

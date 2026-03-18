@@ -51,7 +51,7 @@ import {
 } from "@/components/ui/select";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import "./PlayerTools.css";
 
 const playerTools = [
@@ -201,8 +201,8 @@ const playerTools = [
 	},
 	{
 		id: "regent-status",
-		name: `${formatMonarchVernacular("Regent")} Status`,
-		description: `Manage your ${formatMonarchVernacular("regent")} domains and powers.`,
+		name: `${formatRegentVernacular("Regent")} Status`,
+		description: `Manage your ${formatRegentVernacular("regent")} domains and powers.`,
 		icon: Crown,
 		status: "high-level",
 		color:

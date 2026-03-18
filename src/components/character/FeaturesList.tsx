@@ -19,7 +19,7 @@ import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegrati
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 export function FeaturesList({ characterId }: { characterId: string }) {
 	const { features, updateFeature, reorderFeatures } = useFeatures(characterId);
@@ -202,7 +202,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 					Object.entries(groupedFeatures).map(([source, sourceFeatures]) => (
 						<div key={source} className="space-y-2">
 							<div className="text-sm font-heading text-muted-foreground">
-								{formatMonarchVernacular(source)}
+								{formatRegentVernacular(source)}
 							</div>
 							<SortableList
 								items={sourceFeatures}
@@ -219,19 +219,19 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 											<div className="flex-1">
 												<div className="flex items-center gap-2 mb-1">
 													<span className="font-heading font-semibold">
-														{formatMonarchVernacular(feature.name)}
+														{formatRegentVernacular(feature.name)}
 													</span>
 													<Badge variant="outline" className="text-xs">
 														Level {feature.level_acquired}
 													</Badge>
 													{feature.action_type && (
 														<Badge variant="secondary" className="text-xs">
-															{formatMonarchVernacular(feature.action_type)}
+															{formatRegentVernacular(feature.action_type)}
 														</Badge>
 													)}
 													{feature.recharge && (
 														<Badge variant="outline" className="text-xs">
-															{formatMonarchVernacular(feature.recharge)}
+															{formatRegentVernacular(feature.recharge)}
 														</Badge>
 													)}
 													{!feature.is_active && (
@@ -242,7 +242,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 												</div>
 												{feature.description && (
 													<p className="text-xs text-muted-foreground line-clamp-2">
-														{formatMonarchVernacular(feature.description)}
+														{formatRegentVernacular(feature.description)}
 													</p>
 												)}
 												{feature.uses_max !== null && (

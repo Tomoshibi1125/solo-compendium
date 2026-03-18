@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -796,7 +797,8 @@ READ-ALOUD ENTRANCE:
 											className?: string;
 										}>;
 										return (
-											<button
+											<DynamicStyle
+												as="button"
 												type="button"
 												key={cellType.type}
 												onClick={() => setSelectedCellType(cellType.type)}
@@ -806,6 +808,11 @@ READ-ALOUD ENTRANCE:
 														? `${cellType.color} border-current`
 														: "border-border hover:bg-muted/50",
 												)}
+												vars={{
+													"--type-color": cellType.color
+														.split(" ")[1]
+														.split("-")[1],
+												}}
 											>
 												<div className="flex items-center gap-2">
 													<Icon className="w-4 h-4" />
@@ -813,7 +820,7 @@ READ-ALOUD ENTRANCE:
 														{cellType.label}
 													</span>
 												</div>
-											</button>
+											</DynamicStyle>
 										);
 									},
 								)}
@@ -901,16 +908,16 @@ READ-ALOUD ENTRANCE:
 											</div>
 										</div>
 
-										<div
+										<DynamicStyle
 											ref={mapRef}
 											className="map-container zoom-scale"
-											style={{
+											vars={{
 												transform: `scale(${zoom})`,
 											}}
 										>
-											<div
+											<DynamicStyle
 												className="map-grid dynamic-size"
-												style={{
+												vars={{
 													gridTemplateColumns: `repeat(${dungeonMap.width}, ${cellSize}px)`,
 													gridTemplateRows: `repeat(${dungeonMap.height}, ${cellSize}px)`,
 												}}
@@ -924,7 +931,8 @@ READ-ALOUD ENTRANCE:
 															?.label;
 
 														return (
-															<button
+															<DynamicStyle
+																as="button"
 																key={key}
 																type="button"
 																onClick={() => handleCellClick(x, y)}
@@ -933,7 +941,7 @@ READ-ALOUD ENTRANCE:
 																	getCellColor(type),
 																	cellSize < 20 && "small-text",
 																)}
-																style={{
+																vars={{
 																	width: `${cellSize}px`,
 																	height: `${cellSize}px`,
 																	fontSize: `${Math.max(8, cellSize / 3)}px`,
@@ -944,12 +952,12 @@ READ-ALOUD ENTRANCE:
 																{label && (
 																	<div className="cell-label">{label}</div>
 																)}
-															</button>
+															</DynamicStyle>
 														);
 													}),
 												)}
-											</div>
-										</div>
+											</DynamicStyle>
+										</DynamicStyle>
 
 										<div className="text-xs text-muted-foreground space-y-1">
 											<p>• Click on cells to manually edit them</p>

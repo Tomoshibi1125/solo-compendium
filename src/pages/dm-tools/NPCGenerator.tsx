@@ -21,7 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const ASCENDANT_RANKS = ["E", "D", "C", "B", "A", "S"];
 const NPC_ROLES = [
@@ -30,7 +30,7 @@ const NPC_ROLES = [
 	"Relic Merchant",
 	"Information Broker",
 	"Former S-Rank Ascendant",
-	"Monarch Cultist",
+	"Regent Cultist",
 	"System Analyst",
 	"Rift Survivor",
 	"Beast Slayer",
@@ -58,7 +58,7 @@ const MOTIVATIONS = [
 	"Revenge against monsters",
 	"Researching Rift phenomena",
 	"Building an ascendant organization",
-	"Seeking the Umbral Monarch",
+	"Seeking the Umbral Regent",
 	"Escaping past trauma",
 	"Proving their worth",
 	"Accumulating wealth",
@@ -68,7 +68,7 @@ const MOTIVATIONS = [
 ];
 const SECRETS = [
 	"Former S-Rank ascendant (lost power)",
-	"Working for a Monarch",
+	"Working for a Regent",
 	"Has a cursed relic",
 	"Knows about the reset",
 	"Is actually a monster",
@@ -128,15 +128,15 @@ function generateNPC(): GeneratedNPC {
 	const name = NAMES[Math.floor(Math.random() * NAMES.length)];
 	const rank =
 		ASCENDANT_RANKS[Math.floor(Math.random() * ASCENDANT_RANKS.length)];
-	const role = formatMonarchVernacular(
+	const role = formatRegentVernacular(
 		NPC_ROLES[Math.floor(Math.random() * NPC_ROLES.length)],
 	);
 	const personality =
 		PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
-	const motivation = formatMonarchVernacular(
+	const motivation = formatRegentVernacular(
 		MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)],
 	);
-	const secret = formatMonarchVernacular(
+	const secret = formatRegentVernacular(
 		SECRETS[Math.floor(Math.random() * SECRETS.length)],
 	);
 	const quirk = QUIRKS[Math.floor(Math.random() * QUIRKS.length)];

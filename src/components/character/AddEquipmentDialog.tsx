@@ -27,7 +27,7 @@ import {
 	getCharacterCampaignId,
 } from "@/lib/sourcebookAccess";
 import {
-	formatMonarchVernacular,
+	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
 import { AddCustomItemDialog } from "./AddCustomItemDialog";
@@ -182,7 +182,7 @@ export function AddEquipmentDialog({
 	});
 
 	const handleAdd = async (item: (typeof equipment)[0]) => {
-		const displayName = formatMonarchVernacular(item.name);
+		const displayName = formatRegentVernacular(item.name);
 		try {
 			await addEquipment({
 				character_id: characterId,
@@ -300,10 +300,10 @@ export function AddEquipmentDialog({
 												<div className="flex items-center gap-2 mb-1 flex-wrap">
 													<TypeIcon className="w-4 h-4 flex-shrink-0 text-muted-foreground" />
 													<span className="font-heading font-semibold">
-														{formatMonarchVernacular(item.name)}
+														{formatRegentVernacular(item.name)}
 													</span>
 													<Badge variant="secondary" className="text-xs">
-														{formatMonarchVernacular(
+														{formatRegentVernacular(
 															item.equipment_type || "Equipment",
 														)}
 													</Badge>
@@ -336,7 +336,7 @@ export function AddEquipmentDialog({
 												</div>
 												{item.description && (
 													<p className="text-xs text-muted-foreground line-clamp-2">
-														{formatMonarchVernacular(item.description)}
+														{formatRegentVernacular(item.description)}
 													</p>
 												)}
 											</div>

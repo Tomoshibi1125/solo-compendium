@@ -26,7 +26,7 @@ import {
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import {
-	formatMonarchVernacular,
+	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
 
@@ -79,8 +79,8 @@ export function AddPowerDialog({
 				(character as CharacterExtended).regent_overlays,
 			)
 				? ((character as CharacterExtended).regent_overlays as string[])
-				: Array.isArray((character as CharacterExtended).monarch_overlays)
-					? ((character as CharacterExtended).monarch_overlays as string[])
+				: Array.isArray((character as CharacterExtended).regent_overlays)
+					? ((character as CharacterExtended).regent_overlays as string[])
 					: [];
 			let regentNames: string[] = [];
 			if (regentOverlayIds.length > 0) {
@@ -94,7 +94,7 @@ export function AddPowerDialog({
 				}> | null;
 				if (canonicalResult.error) {
 					const fallbackResult = await supabase
-						.from("compendium_monarchs")
+						.from("compendium_regents")
 						.select("name")
 						.in("id", regentOverlayIds);
 					if (fallbackResult.error) throw fallbackResult.error;
@@ -248,7 +248,7 @@ export function AddPowerDialog({
 	}, [characterPowers, replaceTarget]);
 
 	const handleAdd = async (power: (typeof powers)[0]) => {
-		const displayName = formatMonarchVernacular(power.name);
+		const displayName = formatRegentVernacular(power.name);
 		try {
 			if (character?.job) {
 				if (power.power_level === 0) {
@@ -341,7 +341,7 @@ export function AddPowerDialog({
 		if (!replaceTarget) return;
 
 		const { powerToLearn } = replaceTarget;
-		const displayName = formatMonarchVernacular(powerToLearn.name);
+		const displayName = formatRegentVernacular(powerToLearn.name);
 
 		try {
 			await removePower(existingPowerId);
@@ -410,7 +410,7 @@ export function AddPowerDialog({
 									</div>
 									<div className="text-xs text-muted-foreground mt-1">
 										Limit: {replaceTarget.limit}. Select one to replace with{" "}
-										{formatMonarchVernacular(replaceTarget.powerToLearn.name)}.
+										{formatRegentVernacular(replaceTarget.powerToLearn.name)}.
 									</div>
 								</div>
 								<Button
@@ -437,7 +437,7 @@ export function AddPowerDialog({
 										>
 											<div className="flex items-center justify-between gap-2">
 												<div className="text-sm font-heading font-semibold">
-													{formatMonarchVernacular(p.name)}
+													{formatRegentVernacular(p.name)}
 												</div>
 												{(p.power_level ?? 0) > 0 ? (
 													<Badge variant="secondary" className="text-xs">
@@ -502,7 +502,7 @@ export function AddPowerDialog({
 											<div className="flex-1">
 												<div className="flex items-center gap-2 mb-1 flex-wrap">
 													<span className="font-heading font-semibold">
-														{formatMonarchVernacular(power.name)}
+														{formatRegentVernacular(power.name)}
 													</span>
 													{(power.power_level ?? 0) > 0 ? (
 														<Badge variant="secondary" className="text-xs">
@@ -515,7 +515,7 @@ export function AddPowerDialog({
 													)}
 													{power.school && (
 														<Badge variant="outline" className="text-xs">
-															{formatMonarchVernacular(power.school)}
+															{formatRegentVernacular(power.school)}
 														</Badge>
 													)}
 													{power.concentration && (
@@ -526,17 +526,17 @@ export function AddPowerDialog({
 												</div>
 												{power.description && (
 													<p className="text-xs text-muted-foreground line-clamp-2">
-														{formatMonarchVernacular(power.description)}
+														{formatRegentVernacular(power.description)}
 													</p>
 												)}
 												<div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
 													{power.casting_time && (
 														<span>
-															{formatMonarchVernacular(power.casting_time)}
+															{formatRegentVernacular(power.casting_time)}
 														</span>
 													)}
 													{power.range && (
-														<span>{formatMonarchVernacular(power.range)}</span>
+														<span>{formatRegentVernacular(power.range)}</span>
 													)}
 												</div>
 											</div>

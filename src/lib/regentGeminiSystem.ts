@@ -5,7 +5,7 @@
 import type { Character } from "../types/character";
 import { NINE_REGENTS } from "./nineRegents";
 
-type AbilityScore = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
+export type AbilityScore = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
 export type Job = string;
 
 import {
@@ -776,8 +776,7 @@ interface RegentQuest {
 }
 
 // Quest management system
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-class RegentQuestManager {
+export class RegentQuestManager {
 	private constructor() {}
 
 	private static readonly QUEST_DATABASE: RegentQuest[] = [

@@ -23,7 +23,6 @@ import {
 	SystemText,
 } from "@/components/ui/SystemText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAIService } from "@/lib/ai/hooks";
 import {
 	useArtPipeline,
 	useArtQueueMonitor,
@@ -49,9 +48,6 @@ export default function ArtGenerationAdmin() {
 		isGenerating: isBatchGenerating,
 	} = useBatchArtGeneration();
 	const queueMonitor = useArtQueueMonitor(enabled ? 2000 : 0);
-
-	// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-	const aiService = useAIService();
 
 	const [testResult, setTestResult] = useState<GenerationResult | null>(null);
 	const [isTestGenerating, setIsTestGenerating] = useState(false);

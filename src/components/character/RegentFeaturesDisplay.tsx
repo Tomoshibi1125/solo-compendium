@@ -7,7 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { regents } from "@/data/compendium/monarchs";
+import { regents } from "@/data/compendium/regents";
 import { cn } from "@/lib/utils";
 
 interface RegentFeaturesDisplayProps {

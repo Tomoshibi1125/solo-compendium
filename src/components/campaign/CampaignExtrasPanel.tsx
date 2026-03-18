@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { useCampaignExtras } from "@/hooks/useCampaignExtras";
 import type { Database } from "@/integrations/supabase/types";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 type CampaignExtra = Database["public"]["Tables"]["campaign_extras"]["Row"];
 
@@ -166,7 +166,7 @@ export function CampaignExtrasPanel({
 									{/* Info */}
 									<div className="space-y-1">
 										<Badge variant="outline" className="text-[10px] uppercase">
-											{formatMonarchVernacular(extra.extra_type)}
+											{formatRegentVernacular(extra.extra_type)}
 										</Badge>
 										<div className="flex gap-2 text-xs text-muted-foreground mt-1">
 											<span className="flex items-center gap-1">

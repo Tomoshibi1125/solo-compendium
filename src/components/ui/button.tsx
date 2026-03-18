@@ -21,8 +21,8 @@ const buttonVariants = cva(
 					"hover:bg-primary/20 hover:text-primary-foreground hover:shadow-[inset_0_0_10px_hsl(var(--primary)/0.2)] text-foreground",
 				link: "text-primary underline-offset-4 hover:underline hover:text-primary/80 hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.8)]",
 				// Sovereign power variants
-				monarch:
-					"bg-monarch-gold text-white hover:bg-monarch-gold/90 hover:shadow-[0_0_25px_hsl(var(--monarch-gold)/0.5),0_0_50px_hsl(var(--shadow-purple)/0.3)] hover:-translate-y-1 monarch-seal",
+				regent:
+					"bg-regent-gold text-white hover:bg-regent-gold/90 hover:shadow-[0_0_25px_hsl(var(--regent-gold)/0.5),0_0_50px_hsl(var(--shadow-purple)/0.3)] hover:-translate-y-1 regent-seal",
 				arise:
 					"bg-arise-violet text-white hover:bg-arise-violet/90 hover:shadow-[0_0_30px_hsl(var(--arise-violet)/0.6),0_0_60px_hsl(var(--shadow-purple)/0.4)] hover:-translate-y-1 arise",
 				// Gate-tier variants

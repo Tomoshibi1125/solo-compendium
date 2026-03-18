@@ -55,8 +55,8 @@ const tablesToAudit = [
 	"compendium_conditions",
 	"compendium_feats",
 	"compendium_skills",
-	"compendium_monarchs",
-	"compendium_monarch_features",
+	"compendium_regents",
+	"compendium_regent_features",
 	"compendium_sovereigns",
 	"compendium_sovereign_features",
 	"compendium_runes",
@@ -150,13 +150,13 @@ const tableCapabilities: Record<
 		hasSourceBook: true,
 		hasTags: false,
 	},
-	compendium_monarchs: {
+	compendium_regents: {
 		hasDescription: true,
 		hasImageUrl: false,
 		hasSourceBook: true,
 		hasTags: true,
 	},
-	compendium_monarch_features: {
+	compendium_regent_features: {
 		hasDescription: true,
 		hasImageUrl: false,
 		hasSourceBook: false,

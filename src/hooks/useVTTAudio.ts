@@ -74,8 +74,7 @@ export const useVTTAudioTracks = (sessionId: string) => {
 	});
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useVTTAudioSettings = (sessionId: string) => {
+export const useVTTAudioSettings = (sessionId: string) => {
 	return useQuery({
 		queryKey: ["vtt", "audio", "settings", sessionId],
 		queryFn: async (): Promise<VTTAudioSettings | null> => {
@@ -201,8 +200,7 @@ export const useDeleteVTTAudioTrack = () => {
 	});
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useUpdateVTTAudioSettings = () => {
+export const useUpdateVTTAudioSettings = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

@@ -46,8 +46,7 @@ const QuestRequirementSchema = z.object({
 	item_types: z.array(z.string()).optional(),
 });
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type QuestRequirement = z.infer<typeof QuestRequirementSchema>;
+export type QuestRequirement = z.infer<typeof QuestRequirementSchema>;
 
 // Quest scaling types
 export const QuestScalingSchema = z.object({
@@ -56,7 +55,7 @@ export const QuestScalingSchema = z.object({
 	offset: z.number().default(0),
 });
 
-type QuestScaling = z.infer<typeof QuestScalingSchema>;
+export type QuestScaling = z.infer<typeof QuestScalingSchema>;
 
 // Quest reward types
 export const QuestRewardSchema = z.object({
@@ -135,31 +134,27 @@ interface QuestProgress {
 }
 
 // Quest assignment request
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface QuestAssignmentRequest {
+export interface QuestAssignmentRequest {
 	character_id: string;
 	force_new?: boolean; // Override existing quests
 }
 
 // Quest completion request
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface QuestCompletionRequest {
+export interface QuestCompletionRequest {
 	quest_id: string;
 	character_id: string;
 	progress_updates?: Record<string, unknown>;
 }
 
 // Quest reward result
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface QuestRewardResult {
+export interface QuestRewardResult {
 	granted: QuestReward;
 	applied: boolean;
 	message: string;
 }
 
 // Daily quest summary for UI
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface DailyQuestSummary {
+export interface DailyQuestSummary {
 	date_key: string;
 	total_quests: number;
 	completed_quests: number;
@@ -169,17 +164,14 @@ interface DailyQuestSummary {
 }
 
 // Quest types for filtering
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type QuestTier = "I" | "II" | "III" | "IV";
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type QuestCategory =
+export type QuestTier = "I" | "II" | "III" | "IV";
+export type QuestCategory =
 	| "Training"
 	| "Combat"
 	| "Exploration"
 	| "Mana"
 	| "Crafting";
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type QuestStatus =
+export type QuestStatus =
 	| "pending"
 	| "in_progress"
 	| "completed"

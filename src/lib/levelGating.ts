@@ -134,8 +134,7 @@ export function canAcquireFeature(
 /**
  * Filter features to only those accessible at the given level.
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function filterAccessibleFeatures(
+export function filterAccessibleFeatures(
 	characterLevel: number,
 	features: FeatureGateMeta[],
 ): FeatureGateMeta[] {
@@ -298,7 +297,7 @@ export function getCantripLimit(
 /**
  * Get spells-known limit at the given level (for known-casters only).
  */
-function getSpellsKnown(
+export function getSpellsKnown(
 	jobName: string | null | undefined,
 	characterLevel: number,
 ): number | null {
@@ -308,8 +307,7 @@ function getSpellsKnown(
 /**
  * Get spells-prepared limit at the given level.
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getSpellsPrepared(
+export function getSpellsPrepared(
 	jobName: string | null | undefined,
 	characterLevel: number,
 	abilityModifier: number,

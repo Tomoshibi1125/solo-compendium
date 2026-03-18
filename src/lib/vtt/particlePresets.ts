@@ -2585,8 +2585,8 @@ export const PARTICLE_PRESETS: Record<string, ParticlePreset> = {
 			addAtBack: false,
 		},
 	},
-	monarchAwakening: {
-		label: "Monarch Awakening",
+	regentAwakening: {
+		label: "Regent Awakening",
 		category: "sa-specific",
 		config: {
 			...ringSpawn(0, 0, 60),

@@ -39,7 +39,7 @@ export function SystemSigilLogo({
 
 	const styles = variantStyles[variant];
 	const idPrefix = useId().replace(/:/g, "");
-	const regentGradientId = `monarchGradientSupreme-${idPrefix}`;
+	const regentGradientId = `regentGradientSupreme-${idPrefix}`;
 	const shadowCoreId = `shadowCoreDeep-${idPrefix}`;
 	const ariseGlowId = `ariseGlow-${idPrefix}`;
 	const shadowGlowId = `shadowGlow-${idPrefix}`;

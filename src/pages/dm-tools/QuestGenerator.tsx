@@ -34,7 +34,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { LocalAIIntegration } from "@/lib/localAIIntegration";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const QUEST_TYPES = [
 	"Rift Clearance",
@@ -74,7 +74,7 @@ const QUEST_COMPLICATIONS = [
 	"Escalation: Situation worsens during mission",
 	"Information blackout: Limited communication",
 	"Political interference: Awakened Council politics",
-	"Monarch involvement: Umbral Regent fragments detected",
+	"Regent involvement: Umbral Regent fragments detected",
 ] as const;
 
 const QUEST_REWARDS = [
@@ -230,13 +230,13 @@ function generateQuest(rank?: string): GeneratedQuest {
 
 	return {
 		type,
-		title: formatMonarchVernacular(title),
+		title: formatRegentVernacular(title),
 		rank: selectedRank,
-		location: formatMonarchVernacular(location),
-		description: formatMonarchVernacular(description),
-		objectives: objectives.slice(0, numObjectives).map(formatMonarchVernacular),
-		complications: complications.map(formatMonarchVernacular),
-		rewards: rewards.map(formatMonarchVernacular),
+		location: formatRegentVernacular(location),
+		description: formatRegentVernacular(description),
+		objectives: objectives.slice(0, numObjectives).map(formatRegentVernacular),
+		complications: complications.map(formatRegentVernacular),
+		rewards: rewards.map(formatRegentVernacular),
 		timeLimit,
 	};
 }

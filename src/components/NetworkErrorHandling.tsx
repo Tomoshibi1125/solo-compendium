@@ -92,7 +92,7 @@ export class NetworkErrorBoundary extends React.Component<
 	}
 }
 
-function NetworkErrorFallback({
+export function NetworkErrorFallback({
 	error,
 	retry,
 	retryCount,
@@ -172,8 +172,7 @@ export function LoadingIndicator({
 	);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function SlowNetworkWarning() {
+export function SlowNetworkWarning() {
 	return (
 		<Alert className="border-yellow-200 bg-yellow-50">
 			<Clock className="w-4 h-4 text-yellow-600" />
@@ -185,8 +184,7 @@ function SlowNetworkWarning() {
 	);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function ServerErrorFallback({
+export function ServerErrorFallback({
 	error,
 	retry,
 }: {
@@ -234,8 +232,7 @@ function ServerErrorFallback({
 	);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function TimeoutErrorFallback({ retry }: { retry: () => void }) {
+export function TimeoutErrorFallback({ retry }: { retry: () => void }) {
 	return (
 		<Card className="border-orange-200 bg-orange-50">
 			<CardHeader>
@@ -269,8 +266,7 @@ function TimeoutErrorFallback({ retry }: { retry: () => void }) {
 	);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function OfflineModeIndicator() {
+export function OfflineModeIndicator() {
 	return (
 		<Alert className="border-gray-200 bg-gray-50">
 			<WifiOff className="w-4 h-4 text-gray-600" />
@@ -282,8 +278,7 @@ function OfflineModeIndicator() {
 	);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function NetworkStatusIndicator({
+export function NetworkStatusIndicator({
 	isOnline,
 	latency,
 }: {
@@ -333,8 +328,7 @@ function NetworkStatusIndicator({
 	);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function ResourceLoadingFailure({
+export function ResourceLoadingFailure({
 	resource,
 	retry,
 }: {

@@ -25,7 +25,7 @@ export const entryTypes = [
 	"backgrounds",
 	"conditions",
 	"regents",
-	"monarchs",
+	"regents",
 	"feats",
 	"skills",
 	"equipment",
@@ -71,11 +71,11 @@ const supabaseTableMap: Partial<
 
 const legacyIdMap: Partial<Record<EntryType, Record<string, string>>> = {
 	regents: {
-		"umbral-sovereign-overlay": "umbral-monarch-overlay",
+		"umbral-sovereign-overlay": "umbral-regent-overlay",
 	},
 };
 
-type StaticDataProvider = {
+export type StaticDataProvider = {
 	getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -327,8 +327,10 @@ export function getTableName(
 /**
  * Validate that a reference exists
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function validateRef(type: EntryType, id: string): Promise<boolean> {
+export async function validateRef(
+	type: EntryType,
+	id: string,
+): Promise<boolean> {
 	const entity = await resolveRef(type, id);
 	return entity !== null;
 }
@@ -359,8 +361,7 @@ const homebrewTypeToEntryType: Record<string, EntryType> = {
  * @param userId - Current user id
  * @param campaignId - Optional campaign id
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function mergeHomebrewEntries(
+export async function mergeHomebrewEntries(
 	type: EntryType,
 	userId?: string | null,
 	campaignId?: string | null,

@@ -226,8 +226,7 @@ const CONDITIONS: Record<string, ConditionEffect> = {
 	},
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getCondition(name: string): ConditionEffect | undefined {
+export function getCondition(name: string): ConditionEffect | undefined {
 	return CONDITIONS[name.toLowerCase()];
 }
 

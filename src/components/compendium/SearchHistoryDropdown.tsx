@@ -12,7 +12,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface SearchHistoryDropdownProps {
 	onSelect: (query: string) => void;
@@ -69,7 +69,7 @@ export function SearchHistoryDropdown({
 						>
 							<div className="flex-1 min-w-0">
 								<div className="font-medium truncate">
-									{formatMonarchVernacular(item.query)}
+									{formatRegentVernacular(item.query)}
 								</div>
 								{item.resultCount !== undefined && (
 									<div className="text-xs text-muted-foreground">

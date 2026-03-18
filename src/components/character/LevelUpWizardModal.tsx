@@ -25,7 +25,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { jobs as staticJobs } from "@/data/compendium/jobs";
-import { regents } from "@/data/compendium/monarchs";
+import { regents } from "@/data/compendium/regents";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter, useUpdateCharacter } from "@/hooks/useCharacters";
@@ -47,10 +47,7 @@ import { isASILevel } from "@/lib/levelGating";
 import { logger } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
-import {
-	formatMonarchVernacular,
-	formatRegentVernacular,
-} from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 // System Ascendant XP Thresholds (cumulative XP needed to reach each level)
 const XP_THRESHOLDS = [
@@ -887,7 +884,7 @@ export const LevelUpWizardModal = ({
 											<SelectContent>
 												{availablePaths.map((path) => (
 													<SelectItem key={path.id} value={path.id}>
-														{formatMonarchVernacular(
+														{formatRegentVernacular(
 															(path as { display_name?: string | null })
 																.display_name || path.name,
 														)}
@@ -898,7 +895,7 @@ export const LevelUpWizardModal = ({
 										{selectedPath && (
 											<div className="mt-3 p-3 rounded-lg bg-muted/30 border border-purple-500/10">
 												<h4 className="font-heading font-semibold text-purple-400 mb-1">
-													{formatMonarchVernacular(
+													{formatRegentVernacular(
 														(
 															availablePaths.find(
 																(p) => p.id === selectedPath,
@@ -910,7 +907,7 @@ export const LevelUpWizardModal = ({
 													)}
 												</h4>
 												<p className="text-sm text-muted-foreground">
-													{formatMonarchVernacular(
+													{formatRegentVernacular(
 														availablePaths.find((p) => p.id === selectedPath)
 															?.description || "",
 													)}
@@ -1079,10 +1076,10 @@ export const LevelUpWizardModal = ({
 														>
 															<div>
 																<span className="font-arise text-sm text-purple-400">
-																	{formatMonarchVernacular(feat.name)}
+																	{formatRegentVernacular(feat.name)}
 																</span>
 																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-																	{formatMonarchVernacular(
+																	{formatRegentVernacular(
 																		feat.description || "",
 																	)}
 																</p>
@@ -1130,14 +1127,14 @@ export const LevelUpWizardModal = ({
 																		htmlFor={`feature-${feature.id}`}
 																		className="font-arise font-semibold cursor-pointer text-amber-400 tracking-wide"
 																	>
-																		{formatMonarchVernacular(feature.name)}
+																		{formatRegentVernacular(feature.name)}
 																	</Label>
 																	{feature.action_type && (
 																		<Badge
 																			variant="secondary"
 																			className="text-xs font-heading"
 																		>
-																			{formatMonarchVernacular(
+																			{formatRegentVernacular(
 																				feature.action_type,
 																			)}
 																		</Badge>
@@ -1147,21 +1144,21 @@ export const LevelUpWizardModal = ({
 																			variant="outline"
 																			className="text-xs font-heading border-amber-500/30 text-amber-400"
 																		>
-																			{formatMonarchVernacular(
+																			{formatRegentVernacular(
 																				feature.uses_formula,
 																			)}
 																		</Badge>
 																	)}
 																</div>
 																<p className="text-sm text-muted-foreground font-heading">
-																	{formatMonarchVernacular(
+																	{formatRegentVernacular(
 																		feature.description || "",
 																	)}
 																</p>
 																{feature.prerequisites && (
 																	<p className="text-xs text-muted-foreground mt-1 italic">
 																		Prerequisites:{" "}
-																		{formatMonarchVernacular(
+																		{formatRegentVernacular(
 																			feature.prerequisites,
 																		)}
 																	</p>
@@ -1177,8 +1174,8 @@ export const LevelUpWizardModal = ({
 
 								{/* Regent Features Unlocked at This Level */}
 								{primaryRegentUnlock && newRegentFeatures.length > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-monarch-gold/10 to-shadow-purple/10 border border-monarch-gold/20">
-										<Label className="font-arise text-monarch-gold tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-regent-gold/10 to-shadow-purple/10 border border-regent-gold/20">
+										<Label className="font-arise text-regent-gold tracking-wide flex items-center gap-2 mb-4">
 											<Crown className="w-4 h-4" />
 											{formatRegentVernacular(regentData?.name ?? "")} — NEW
 											ABILITIES
@@ -1199,10 +1196,10 @@ export const LevelUpWizardModal = ({
 																feature.id ||
 																`regent-feature-${idx}-${feature.name}`
 															}
-															className="p-4 rounded-lg border border-monarch-gold/10 bg-muted/30"
+															className="p-4 rounded-lg border border-regent-gold/10 bg-muted/30"
 														>
 															<div className="flex items-center gap-2 mb-1 flex-wrap">
-																<span className="font-arise font-semibold text-monarch-gold tracking-wide">
+																<span className="font-arise font-semibold text-regent-gold tracking-wide">
 																	{formatRegentVernacular(feature.name)}
 																</span>
 																{feature.type && (
@@ -1216,7 +1213,7 @@ export const LevelUpWizardModal = ({
 																{feature.frequency && (
 																	<Badge
 																		variant="outline"
-																		className="text-xs font-heading border-monarch-gold/30 text-monarch-gold"
+																		className="text-xs font-heading border-regent-gold/30 text-regent-gold"
 																	>
 																		{feature.frequency}
 																	</Badge>

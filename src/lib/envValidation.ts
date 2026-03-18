@@ -70,8 +70,7 @@ export function validateEnv(): ValidationResult {
 /**
  * Validate and throw if invalid
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function validateEnvOrThrow(): void {
+export function validateEnvOrThrow(): void {
 	const result = validateEnv();
 
 	if (!result.valid) {
@@ -92,8 +91,7 @@ function validateEnvOrThrow(): void {
 /**
  * Get environment variable with fallback
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getEnvVar(name: string, fallback?: string): string {
+export function getEnvVar(name: string, fallback?: string): string {
 	const value = import.meta.env[name];
 	if (!value || value.trim() === "") {
 		if (fallback !== undefined) {
@@ -110,15 +108,13 @@ function getEnvVar(name: string, fallback?: string): string {
 /**
  * Check if running in development
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function isDevelopment(): boolean {
+export function isDevelopment(): boolean {
 	return import.meta.env.MODE === "development";
 }
 
 /**
  * Check if running in production
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function isProduction(): boolean {
+export function isProduction(): boolean {
 	return import.meta.env.MODE === "production";
 }

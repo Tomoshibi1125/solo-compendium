@@ -19,7 +19,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Database } from "@/integrations/supabase/types";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
-import { formatMonarchVernacular, MONARCH_LABEL } from "@/lib/vernacular";
+import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import type { AbilityScore } from "@/types/system-rules";
 
 type ChoiceGroupRow = {
@@ -111,7 +111,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 		queryFn: async () => {
 			const { data, error } = await supabase
 				.from("characters")
-				.select("id, job, path, level, regent_overlays, monarch_overlays")
+				.select("id, job, path, level, regent_overlays")
 				.eq("id", characterId)
 				.maybeSingle();
 			if (error) throw error;
@@ -144,11 +144,8 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 			const regentOverlayIds = asUuidArray(
 				(character as CharacterExtended)?.regent_overlays,
 			);
-			const monarchOverlayIds = asUuidArray(
-				(character as CharacterExtended)?.monarch_overlays,
-			);
 			const overlayIds =
-				regentOverlayIds.length > 0 ? regentOverlayIds : monarchOverlayIds;
+				regentOverlayIds.length > 0 ? regentOverlayIds : regentOverlayIds;
 
 			let regentNames: string[] = [];
 			if (overlayIds.length > 0) {
@@ -389,7 +386,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 					if (invalidPower) {
 						toast({
 							title: "Ineligible power",
-							description: formatMonarchVernacular(
+							description: formatRegentVernacular(
 								`"${invalidPower}" is not eligible for your Job / Path / ${MONARCH_LABEL} overlays.`,
 							),
 							variant: "destructive",
@@ -916,7 +913,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 							className="p-3 rounded-lg border bg-muted/30 space-y-2"
 						>
 							<Label className="text-sm font-heading">
-								{formatMonarchVernacular(label)}
+								{formatRegentVernacular(label)}
 							</Label>
 							<Select
 								value={selectedOptionByGroupId[group.id] || ""}
@@ -933,7 +930,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 								<SelectContent>
 									{groupOptions.map((opt) => (
 										<SelectItem key={opt.id} value={opt.id}>
-											{formatMonarchVernacular(opt.name)}
+											{formatRegentVernacular(opt.name)}
 										</SelectItem>
 									))}
 								</SelectContent>
@@ -944,7 +941,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 								if (!chosen?.description) return null;
 								return (
 									<div className="text-xs text-muted-foreground">
-										{formatMonarchVernacular(chosen.description)}
+										{formatRegentVernacular(chosen.description)}
 									</div>
 								);
 							})()}

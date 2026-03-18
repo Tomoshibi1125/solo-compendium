@@ -54,7 +54,7 @@ const textVariants = {
 		font: "font-display",
 		weight: "font-black",
 		tracking: "tracking-widest",
-		color: "text-monarch-gold",
+		color: "text-regent-gold",
 	},
 	rift: {
 		font: "font-display",
@@ -166,7 +166,7 @@ export const SystemHeading = ({
 		},
 		sovereign: {
 			font: "font-display",
-			color: "text-monarch-gold",
+			color: "text-regent-gold",
 		},
 		rift: {
 			font: "font-display",
@@ -225,7 +225,7 @@ export const DataStreamText = ({
 			color: "text-system-green",
 		},
 		sovereign: {
-			color: "text-monarch-gold",
+			color: "text-regent-gold",
 		},
 		rift: {
 			color: "text-gate-national",

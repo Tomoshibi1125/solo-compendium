@@ -380,8 +380,8 @@ export const AMBIENT_SOUND_PRESETS: Record<
 		category: "effect",
 		falloff: "exponential",
 	},
-	monarch_aura: {
-		label: "Monarch Aura",
+	regent_aura: {
+		label: "Regent Aura",
 		radius: 7,
 		category: "effect",
 		falloff: "exponential",

@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import {
 	DataStreamText,
@@ -328,10 +329,7 @@ const VTTMap = () => {
 		void saveMapNow({ ...storedMapState, walls: [] });
 	};
 
-	const handleTokenKeyDown = (
-		token: PlacedToken,
-		e: React.KeyboardEvent<HTMLDivElement | HTMLButtonElement>,
-	) => {
+	const handleTokenKeyDown = (token: PlacedToken, e: React.KeyboardEvent) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
 			handleRotateToken(token.id);
@@ -655,14 +653,14 @@ const VTTMap = () => {
 												aria-label={`Select token ${token.name}`}
 											>
 												<div className="flex items-center gap-2">
-													<div
+													<DynamicStyle
 														className={cn(
 															"flex items-center justify-center text-lg border border-border overflow-hidden",
 															isOverlayPreview
 																? "rounded-md bg-transparent"
 																: "rounded-full",
 														)}
-														style={{
+														vars={{
 															width: `${Math.min(size / 2, 32)}px`,
 															height: `${Math.min(size / 2, 32)}px`,
 															borderColor: token.color ?? undefined,
@@ -688,7 +686,7 @@ const VTTMap = () => {
 														) : (
 															token.emoji || "@"
 														)}
-													</div>
+													</DynamicStyle>
 													<span className="text-xs font-heading truncate flex-1">
 														{token.name}
 													</span>
@@ -790,7 +788,8 @@ const VTTMap = () => {
 					<div className="lg:col-span-3">
 						<SystemWindow title="MAP CANVAS">
 							{/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-							<div
+							<DynamicStyle
+								as="div"
 								ref={mapRef}
 								onClick={handleMapClick}
 								onMouseMove={handleTokenDrag}
@@ -804,23 +803,25 @@ const VTTMap = () => {
 									selectedToken && "cursor-crosshair",
 									"max-h-[600px]",
 								)}
-								style={{
+								vars={{
 									width: "100%",
 									height: "600px",
 								}}
 							>
-								<div
+								<DynamicStyle
+									as="div"
 									className="relative"
-									style={{
+									vars={{
 										width: `${mapWidth * gridSize * zoom}px`,
 										height: `${mapHeight * gridSize * zoom}px`,
 									}}
 								>
 									{/* Grid */}
 									{showGrid && (
-										<div
+										<DynamicStyle
+											as="div"
 											className="absolute inset-0 opacity-20"
-											style={{
+											vars={{
 												backgroundImage: `
                           linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
                           linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)
@@ -847,24 +848,32 @@ const VTTMap = () => {
 												}
 											: undefined;
 										return (
-											<button
+											<DynamicStyle
+												as="button"
 												type="button"
 												key={token.id}
 												draggable={!token.locked}
-												onDragStart={(e) => handleTokenDragStart(token, e)}
-												onContextMenu={(e) => {
+												onDragStart={(e: React.DragEvent) =>
+													handleTokenDragStart(token, e)
+												}
+												onContextMenu={(e: React.MouseEvent) => {
 													e.preventDefault();
 													handleRotateToken(token.id);
 												}}
-												onClick={(e) => e.stopPropagation()}
-												onKeyDown={(e) => handleTokenKeyDown(token, e)}
+												onClick={(e: React.MouseEvent) => e.stopPropagation()}
+												onKeyDown={(e: React.KeyboardEvent) =>
+													handleTokenKeyDown(token, e)
+												}
+												aria-pressed={
+													selectedToken === token.id ? "true" : "false"
+												}
 												aria-label={`Token ${token.name}. Enter rotates, Delete removes, L toggles lock.`}
 												className={cn(
 													"absolute cursor-move transition-all p-0 bg-transparent border-none text-left",
 													token.locked && "cursor-not-allowed opacity-75",
 													draggedToken?.id === token.id && "opacity-50",
 												)}
-												style={{
+												vars={{
 													left: `${token.x * gridSize * zoom}px`,
 													top: `${token.y * gridSize * zoom}px`,
 													width: `${size}px`,
@@ -872,7 +881,8 @@ const VTTMap = () => {
 													transform: `rotate(${token.rotation}deg)`,
 												}}
 											>
-												<div
+												<DynamicStyle
+													as="div"
 													className={cn(
 														"w-full h-full flex items-center justify-center text-2xl border-2 border-border transition-all hover:scale-110",
 														isOverlayToken
@@ -881,7 +891,7 @@ const VTTMap = () => {
 														isOverlayToken ? "hover:scale-100" : "",
 														token.locked && "ring-2 ring-amber-400",
 													)}
-													style={{
+													vars={{
 														backgroundColor: isOverlayToken
 															? "transparent"
 															: token.color
@@ -910,12 +920,12 @@ const VTTMap = () => {
 													) : (
 														token.emoji || "@"
 													)}
-												</div>
-											</button>
+												</DynamicStyle>
+											</DynamicStyle>
 										);
 									})}
-								</div>
-							</div>
+								</DynamicStyle>
+							</DynamicStyle>
 
 							<div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
 								<div>

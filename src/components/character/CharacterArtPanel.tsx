@@ -19,7 +19,7 @@ import {
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useArtAsset } from "@/lib/artPipeline/hooks";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface CharacterArtPanelProps {
 	characterId: string;
@@ -53,7 +53,7 @@ export function CharacterArtPanel({
 	const getCharacterTags = () => {
 		const tags = [];
 		if (characterData.job)
-			tags.push(formatMonarchVernacular(characterData.job).toLowerCase());
+			tags.push(formatRegentVernacular(characterData.job).toLowerCase());
 		if (characterData.level) tags.push(`level ${characterData.level}`);
 		if (characterData.appearance) {
 			// Extract keywords from appearance

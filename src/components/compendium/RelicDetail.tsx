@@ -8,7 +8,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface RelicData {
 	id: string;
@@ -93,7 +93,7 @@ const tierColors: Record<string, string> = {
 
 export const RelicDetail = ({ data }: { data: RelicData }) => {
 	const navigate = useNavigate();
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const itemType = data.item_type || data.equipment_type || "";
 	const requiresAttunement = data.requires_attunement ?? !!data.attunement;
 
@@ -128,7 +128,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 				? ability.dc
 				: parseDcFromText(description);
 		const dice = parseDiceFromText(description);
-		const payloadName = `${displayName}: ${formatMonarchVernacular(ability.name || "Ability")}`;
+		const payloadName = `${displayName}: ${formatRegentVernacular(ability.name || "Ability")}`;
 
 		if (dc !== null) {
 			return {
@@ -202,16 +202,16 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						<Badge
 							className={`${rarityColors[data.rarity]} text-white capitalize`}
 						>
-							{formatMonarchVernacular(data.rarity.replace("_", " "))}
+							{formatRegentVernacular(data.rarity.replace("_", " "))}
 						</Badge>
 						{itemType && (
 							<Badge variant="secondary">
-								{formatMonarchVernacular(itemType)}
+								{formatRegentVernacular(itemType)}
 							</Badge>
 						)}
 						{data.relic_tier && (
 							<Badge variant="outline" className={tierColors[data.relic_tier]}>
-								{formatMonarchVernacular(data.relic_tier)}
+								{formatRegentVernacular(data.relic_tier)}
 							</Badge>
 						)}
 						{requiresAttunement && (
@@ -223,7 +223,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						<p className="text-sm text-muted-foreground">
 							<em>
 								Attunement:{" "}
-								{formatMonarchVernacular(data.attunement_requirements)}
+								{formatRegentVernacular(data.attunement_requirements)}
 							</em>
 						</p>
 					)}
@@ -238,7 +238,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							className={`w-5 h-5 ${data.rarity === "legendary" ? "text-amber-500" : rarityColors[data.rarity] ? "text-white" : ""}`}
 						/>
 						<span className="font-heading capitalize">
-							{formatMonarchVernacular(data.rarity.replace("_", " "))}
+							{formatRegentVernacular(data.rarity.replace("_", " "))}
 						</span>
 					</div>
 				</SystemWindow>
@@ -248,7 +248,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						<div className="flex items-center gap-2">
 							<Sparkles className="w-5 h-5 text-primary" />
 							<span className="font-heading capitalize">
-								{formatMonarchVernacular(data.relic_tier)}
+								{formatRegentVernacular(data.relic_tier)}
 							</span>
 						</div>
 					</SystemWindow>
@@ -279,7 +279,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							<li className="flex items-start gap-2">
 								<span className="text-primary">•</span>
 								<span>
-									Class: {formatMonarchVernacular(data.requirements.class)}
+									Class: {formatRegentVernacular(data.requirements.class)}
 								</span>
 							</li>
 						)}
@@ -288,7 +288,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<li className="flex items-start gap-2">
 									<span className="text-primary">•</span>
 									<span>
-										{formatMonarchVernacular(data.requirements.ability)}{" "}
+										{formatRegentVernacular(data.requirements.ability)}{" "}
 										{data.requirements.score}+
 									</span>
 								</li>
@@ -298,7 +298,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<span className="text-primary">•</span>
 								<span>
 									Alignment:{" "}
-									{formatMonarchVernacular(data.requirements.alignment)}
+									{formatRegentVernacular(data.requirements.alignment)}
 								</span>
 							</li>
 						)}
@@ -306,7 +306,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							<li className="flex items-start gap-2">
 								<span className="text-primary">•</span>
 								<span>
-									Job: {formatMonarchVernacular(data.requirements.job)}
+									Job: {formatRegentVernacular(data.requirements.job)}
 								</span>
 							</li>
 						)}
@@ -315,7 +315,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<span className="text-primary">•</span>
 								<span>
 									Background:{" "}
-									{formatMonarchVernacular(data.requirements.background)}
+									{formatRegentVernacular(data.requirements.background)}
 								</span>
 							</li>
 						)}
@@ -326,7 +326,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{/* Description */}
 			<SystemWindow title="DESCRIPTION">
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
-					{formatMonarchVernacular(data.description)}
+					{formatRegentVernacular(data.description)}
 				</p>
 			</SystemWindow>
 
@@ -338,7 +338,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							<li key={prop} className="flex items-start gap-2">
 								<span className="text-primary">•</span>
 								<span className="text-foreground">
-									{formatMonarchVernacular(prop)}
+									{formatRegentVernacular(prop)}
 								</span>
 							</li>
 						))}
@@ -360,21 +360,21 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 									<div className="flex flex-wrap items-center gap-2">
 										<Sparkles className="w-4 h-4 text-primary" />
 										<span className="font-heading">
-											{formatMonarchVernacular(ability.name || "Ability")}
+											{formatRegentVernacular(ability.name || "Ability")}
 										</span>
 										{ability.type && (
 											<Badge variant="secondary" className="text-xs">
-												{formatMonarchVernacular(ability.type)}
+												{formatRegentVernacular(ability.type)}
 											</Badge>
 										)}
 										{ability.frequency && (
 											<Badge variant="outline" className="text-xs">
-												{formatMonarchVernacular(ability.frequency)}
+												{formatRegentVernacular(ability.frequency)}
 											</Badge>
 										)}
 										{ability.action && (
 											<Badge variant="outline" className="text-xs">
-												{formatMonarchVernacular(ability.action)}
+												{formatRegentVernacular(ability.action)}
 											</Badge>
 										)}
 										{typeof ability.dc === "number" && (
@@ -385,7 +385,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 									</div>
 									{ability.description && (
 										<p className="text-sm text-muted-foreground mt-1">
-											{formatMonarchVernacular(ability.description)}
+											{formatRegentVernacular(ability.description)}
 										</p>
 									)}
 
@@ -427,19 +427,19 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						{data.lore.origin && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Origin:</span>{" "}
-								{formatMonarchVernacular(data.lore.origin)}
+								{formatRegentVernacular(data.lore.origin)}
 							</p>
 						)}
 						{data.lore.history && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">History:</span>{" "}
-								{formatMonarchVernacular(data.lore.history)}
+								{formatRegentVernacular(data.lore.history)}
 							</p>
 						)}
 						{data.lore.currentOwner && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Current Owner:</span>{" "}
-								{formatMonarchVernacular(data.lore.currentOwner)}
+								{formatRegentVernacular(data.lore.currentOwner)}
 							</p>
 						)}
 						{data.lore.previousOwners &&
@@ -447,7 +447,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<p className="text-muted-foreground">
 									<span className="text-foreground">Previous Owners:</span>{" "}
 									{data.lore.previousOwners
-										.map(formatMonarchVernacular)
+										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>
 							)}
@@ -461,7 +461,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						{data.mechanics.bonus && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Bonus:</span>{" "}
-								{formatMonarchVernacular(data.mechanics.bonus.type || "")} +
+								{formatRegentVernacular(data.mechanics.bonus.type || "")} +
 								{data.mechanics.bonus.value}
 							</p>
 						)}
@@ -470,16 +470,14 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<p className="text-muted-foreground">
 									<span className="text-foreground">Resistance:</span>{" "}
 									{data.mechanics.resistance
-										.map(formatMonarchVernacular)
+										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>
 							)}
 						{data.mechanics.immunity && data.mechanics.immunity.length > 0 && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Immunity:</span>{" "}
-								{data.mechanics.immunity
-									.map(formatMonarchVernacular)
-									.join(", ")}
+								{data.mechanics.immunity.map(formatRegentVernacular).join(", ")}
 							</p>
 						)}
 						{data.mechanics.vulnerabilities &&
@@ -487,7 +485,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<p className="text-muted-foreground">
 									<span className="text-foreground">Vulnerabilities:</span>{" "}
 									{data.mechanics.vulnerabilities
-										.map(formatMonarchVernacular)
+										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>
 							)}
@@ -503,7 +501,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							<li key={quirk} className="flex items-start gap-2">
 								<Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
 								<span className="text-muted-foreground">
-									{formatMonarchVernacular(quirk)}
+									{formatRegentVernacular(quirk)}
 								</span>
 							</li>
 						))}
@@ -517,7 +515,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 					<div className="flex items-start gap-3">
 						<AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
 						<p className="text-foreground">
-							{formatMonarchVernacular(data.corruption_risk)}
+							{formatRegentVernacular(data.corruption_risk)}
 						</p>
 					</div>
 				</SystemWindow>
@@ -528,7 +526,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 				<div className="flex flex-wrap gap-2">
 					{data.tags.map((tag) => (
 						<Badge key={tag} variant="outline" className="text-xs">
-							{formatMonarchVernacular(tag)}
+							{formatRegentVernacular(tag)}
 						</Badge>
 					))}
 				</div>

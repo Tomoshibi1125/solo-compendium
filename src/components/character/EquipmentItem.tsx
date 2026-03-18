@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import type { Database } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 type Equipment = Database["public"]["Tables"]["character_equipment"]["Row"];
 
@@ -38,12 +38,12 @@ function EquipmentItemComponent({
 	onChangeContainer,
 	onToggleActive,
 }: EquipmentItemProps) {
-	const displayName = formatMonarchVernacular(item.name);
+	const displayName = formatRegentVernacular(item.name);
 	const displayDescription = item.description
-		? formatMonarchVernacular(item.description)
+		? formatRegentVernacular(item.description)
 		: null;
 	const displayRarity = item.rarity
-		? formatMonarchVernacular(item.rarity)
+		? formatRegentVernacular(item.rarity)
 		: null;
 
 	return (
@@ -86,7 +86,7 @@ function EquipmentItemComponent({
 									variant="outline"
 									className="text-xs"
 								>
-									{formatMonarchVernacular(prop)}
+									{formatRegentVernacular(prop)}
 								</Badge>
 							))}
 						</div>
@@ -108,7 +108,7 @@ function EquipmentItemComponent({
 									</SelectItem>
 									{containers.map((c) => (
 										<SelectItem key={c.id} value={c.id} className="text-xs">
-											{formatMonarchVernacular(c.name)}
+											{formatRegentVernacular(c.name)}
 										</SelectItem>
 									))}
 								</SelectContent>

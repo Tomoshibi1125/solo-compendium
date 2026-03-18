@@ -2,7 +2,7 @@ import { BookOpen, Clock, Target, Timer, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface PowerData {
 	id: string;
@@ -40,7 +40,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 	const tierLabel =
 		data.power_level === 0 ? "Cantrip" : `Tier ${data.power_level}`;
 	const tierColor = tierColors[data.power_level] || "text-foreground";
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 
 	return (
 		<div className="space-y-6">
@@ -54,7 +54,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 						<Badge className={tierColor}>{tierLabel}</Badge>
 						{data.school && (
 							<Badge variant="secondary">
-								{formatMonarchVernacular(data.school)}
+								{formatRegentVernacular(data.school)}
 							</Badge>
 						)}
 						{data.concentration && (
@@ -68,7 +68,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 							<span className="text-sm text-muted-foreground">Jobs:</span>
 							{data.job_names.map((job) => (
 								<Badge key={job} variant="outline" className="text-xs">
-									{formatMonarchVernacular(job)}
+									{formatRegentVernacular(job)}
 								</Badge>
 							))}
 						</div>
@@ -82,7 +82,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Clock className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatMonarchVernacular(data.casting_time)}
+							{formatRegentVernacular(data.casting_time)}
 						</span>
 					</div>
 				</SystemWindow>
@@ -91,7 +91,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Target className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatMonarchVernacular(data.range)}
+							{formatRegentVernacular(data.range)}
 						</span>
 					</div>
 				</SystemWindow>
@@ -100,7 +100,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Timer className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatMonarchVernacular(data.duration)}
+							{formatRegentVernacular(data.duration)}
 						</span>
 					</div>
 				</SystemWindow>
@@ -109,7 +109,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Zap className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatMonarchVernacular(data.components || "V, S")}
+							{formatRegentVernacular(data.components || "V, S")}
 						</span>
 					</div>
 				</SystemWindow>
@@ -118,7 +118,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 			{/* Description */}
 			<SystemWindow title="DESCRIPTION">
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
-					{formatMonarchVernacular(data.description)}
+					{formatRegentVernacular(data.description)}
 				</p>
 			</SystemWindow>
 
@@ -128,7 +128,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-start gap-3">
 						<BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
 						<p className="text-foreground leading-relaxed text-base">
-							{formatMonarchVernacular(data.higher_levels)}
+							{formatRegentVernacular(data.higher_levels)}
 						</p>
 					</div>
 				</SystemWindow>
@@ -139,7 +139,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 				<div className="flex flex-wrap gap-2">
 					{data.tags.map((tag) => (
 						<Badge key={tag} variant="outline" className="text-xs">
-							{formatMonarchVernacular(tag)}
+							{formatRegentVernacular(tag)}
 						</Badge>
 					))}
 				</div>

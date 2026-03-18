@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import { NotesManager } from "./NotesManager";
 
 interface QuickReferenceProps {
@@ -33,7 +33,7 @@ export function QuickReference({
 	onExport,
 	className,
 }: QuickReferenceProps) {
-	const displayName = formatMonarchVernacular(entry.display_name || entry.name);
+	const displayName = formatRegentVernacular(entry.display_name || entry.name);
 	return (
 		<div className={cn("space-y-4", className)}>
 			{/* Actions */}
@@ -107,7 +107,7 @@ export function QuickReference({
 							<div className="mt-1">
 								<Badge variant="outline" className="text-xs">
 									<BookOpen className="w-3 h-3 mr-1" />
-									{formatMonarchVernacular(entry.source_book)}
+									{formatRegentVernacular(entry.source_book)}
 								</Badge>
 							</div>
 						</div>
@@ -152,7 +152,7 @@ export function QuickReference({
 							<div className="mt-1 flex flex-wrap gap-1">
 								{entry.tags.slice(0, 5).map((tag) => (
 									<Badge key={tag} variant="outline" className="text-xs">
-										{formatMonarchVernacular(tag)}
+										{formatRegentVernacular(tag)}
 									</Badge>
 								))}
 							</div>

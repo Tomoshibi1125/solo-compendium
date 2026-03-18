@@ -16,7 +16,7 @@ import {
 	calculateEncumbrance,
 	calculateTotalWeight,
 } from "@/lib/encumbrance";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import { AddEquipmentDialog } from "./AddEquipmentDialog";
 import { EncumbranceWidget } from "./EncumbranceWidget";
 import { EquipmentItem } from "./EquipmentItem";
@@ -155,7 +155,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 	};
 
 	const handleToggleEquipped = async (item: Equipment) => {
-		const displayName = formatMonarchVernacular(item.name);
+		const displayName = formatRegentVernacular(item.name);
 		try {
 			await updateEquipment({
 				id: item.id,
@@ -184,7 +184,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 	};
 
 	const handleToggleAttuned = async (item: Equipment) => {
-		const displayName = formatMonarchVernacular(item.name);
+		const displayName = formatRegentVernacular(item.name);
 		if (!item.is_attuned && !canAttune) {
 			toast({
 				title: "Attunement limit reached",
@@ -222,7 +222,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 	};
 
 	const handleRemove = async (item: Equipment) => {
-		const displayName = formatMonarchVernacular(item.name);
+		const displayName = formatRegentVernacular(item.name);
 		if (!confirm(`Remove ${displayName} from inventory?`)) return;
 
 		try {

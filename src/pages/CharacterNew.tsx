@@ -55,7 +55,7 @@ import {
 } from "@/lib/choiceCalculations";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 export type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"] & {
 	display_name?: string | null;
@@ -1199,7 +1199,7 @@ const CharacterNew = () => {
 								<SelectContent>
 									{allJobs.map((job) => (
 										<SelectItem key={job.id} value={job.id}>
-											{formatMonarchVernacular(job.display_name || job.name)}
+											{formatRegentVernacular(job.display_name || job.name)}
 											{(job as Job & { _homebrew?: boolean })._homebrew && (
 												<Badge variant="outline" className="ml-2 text-xs">
 													Homebrew
@@ -1212,17 +1212,17 @@ const CharacterNew = () => {
 							{jobData && (
 								<div className="mt-4 p-4 rounded-lg bg-muted/30 space-y-3">
 									<h4 className="font-heading font-semibold mb-2">
-										{formatMonarchVernacular(
+										{formatRegentVernacular(
 											jobData.display_name || jobData.name,
 										)}
 									</h4>
 									<SystemText className="block text-sm text-muted-foreground">
-										{formatMonarchVernacular(jobData.description)}
+										{formatRegentVernacular(jobData.description)}
 									</SystemText>
 									<div className="text-xs text-muted-foreground">
 										Hit Die: d{jobData.hit_die} | Primary:{" "}
 										{jobData.primary_abilities
-											.map(formatMonarchVernacular)
+											.map(formatRegentVernacular)
 											.join(", ")}
 									</div>
 
@@ -1319,10 +1319,10 @@ const CharacterNew = () => {
 														{jobAwakeningAtCreation.map((f) => (
 															<div key={f.name} className="text-xs">
 																<div className="font-heading font-semibold">
-																	{formatMonarchVernacular(f.name)}
+																	{formatRegentVernacular(f.name)}
 																</div>
 																<div className="text-muted-foreground">
-																	{formatMonarchVernacular(f.description)}
+																	{formatRegentVernacular(f.description)}
 																</div>
 															</div>
 														))}
@@ -1339,10 +1339,10 @@ const CharacterNew = () => {
 														{jobTraitsAtCreation.map((t) => (
 															<div key={t.name} className="text-xs">
 																<div className="font-heading font-semibold">
-																	{formatMonarchVernacular(t.name)}
+																	{formatRegentVernacular(t.name)}
 																</div>
 																<div className="text-muted-foreground">
-																	{formatMonarchVernacular(t.description)}
+																	{formatRegentVernacular(t.description)}
 																</div>
 															</div>
 														))}
@@ -1378,10 +1378,10 @@ const CharacterNew = () => {
 																L{cf.level}
 															</span>
 															<span className="font-heading font-semibold min-w-[8rem]">
-																{formatMonarchVernacular(cf.name)}
+																{formatRegentVernacular(cf.name)}
 															</span>
 															<span className="text-muted-foreground">
-																{formatMonarchVernacular(cf.description).slice(
+																{formatRegentVernacular(cf.description).slice(
 																	0,
 																	100,
 																)}
@@ -1466,7 +1466,7 @@ const CharacterNew = () => {
 													htmlFor={`skill-${skill}`}
 													className="text-sm font-heading cursor-pointer"
 												>
-													{formatMonarchVernacular(skill)}
+													{formatRegentVernacular(skill)}
 												</label>
 											</div>
 										))}
@@ -1474,7 +1474,7 @@ const CharacterNew = () => {
 									{selectedSkills.length > 0 && (
 										<SystemText className="block text-xs text-muted-foreground mt-2">
 											Selected:{" "}
-											{selectedSkills.map(formatMonarchVernacular).join(", ")} (
+											{selectedSkills.map(formatRegentVernacular).join(", ")} (
 											{selectedSkills.length}/{totalChoices.skills})
 										</SystemText>
 									)}
@@ -1522,7 +1522,7 @@ const CharacterNew = () => {
 										<SelectContent>
 											{pathsAvailableAtCreation.map((path: Path) => (
 												<SelectItem key={path.id} value={path.id}>
-													{formatMonarchVernacular(
+													{formatRegentVernacular(
 														(path as { display_name?: string | null })
 															.display_name || path.name,
 													)}
@@ -1547,7 +1547,7 @@ const CharacterNew = () => {
 									{selectedPath && selectedPath !== "none" && (
 										<div className="mt-4 p-4 rounded-lg bg-muted/30">
 											<h4 className="font-heading font-semibold mb-2">
-												{formatMonarchVernacular(
+												{formatRegentVernacular(
 													(
 														pathsAvailableAtCreation.find(
 															(p: Path) => p.id === selectedPath,
@@ -1562,7 +1562,7 @@ const CharacterNew = () => {
 												)}
 											</h4>
 											<SystemText className="block text-sm text-muted-foreground">
-												{formatMonarchVernacular(
+												{formatRegentVernacular(
 													pathsAvailableAtCreation.find(
 														(p: Path) => p.id === selectedPath,
 													)?.description || "",
@@ -1589,7 +1589,7 @@ const CharacterNew = () => {
 								<SelectContent>
 									{allBackgrounds.map((bg) => (
 										<SelectItem key={bg.id} value={bg.id}>
-											{formatMonarchVernacular(
+											{formatRegentVernacular(
 												(bg as Background & { display_name?: string | null })
 													.display_name || bg.name,
 											)}
@@ -1626,7 +1626,7 @@ const CharacterNew = () => {
 												{/* Title + Description */}
 												<div className="space-y-2">
 													<h4 className="font-heading text-lg font-semibold text-foreground">
-														{formatMonarchVernacular(
+														{formatRegentVernacular(
 															(
 																bg as {
 																	name?: string;
@@ -1638,7 +1638,7 @@ const CharacterNew = () => {
 														)}
 													</h4>
 													<SystemText className="block text-sm leading-relaxed text-muted-foreground">
-														{formatMonarchVernacular(bg.description || "")}
+														{formatRegentVernacular(bg.description || "")}
 													</SystemText>
 												</div>
 
@@ -1652,7 +1652,7 @@ const CharacterNew = () => {
 																</div>
 																<div className="text-sm text-foreground">
 																	{bg.skill_proficiencies
-																		.map(formatMonarchVernacular)
+																		.map(formatRegentVernacular)
 																		.join(", ")}
 																</div>
 															</div>
@@ -1665,7 +1665,7 @@ const CharacterNew = () => {
 																</div>
 																<div className="text-sm text-foreground">
 																	{bg.tool_proficiencies
-																		.map(formatMonarchVernacular)
+																		.map(formatRegentVernacular)
 																		.join(", ")}
 																</div>
 															</div>
@@ -1679,7 +1679,7 @@ const CharacterNew = () => {
 															Starting Equipment
 														</div>
 														<div className="text-sm text-foreground leading-relaxed">
-															{formatMonarchVernacular(bg.starting_equipment)}
+															{formatRegentVernacular(bg.starting_equipment)}
 														</div>
 													</div>
 												)}
@@ -1819,14 +1819,14 @@ const CharacterNew = () => {
 									<div>
 										<strong>Job:</strong>{" "}
 										{jobData
-											? formatMonarchVernacular(
+											? formatRegentVernacular(
 													jobData.display_name || jobData.name,
 												)
 											: "None"}
 									</div>
 									<div>
 										<strong>Path:</strong>{" "}
-										{formatMonarchVernacular(
+										{formatRegentVernacular(
 											(
 												pathsAvailableAtCreation.find(
 													(p: Path) => p.id === selectedPath,
@@ -1842,7 +1842,7 @@ const CharacterNew = () => {
 									</div>
 									<div>
 										<strong>Background:</strong>{" "}
-										{formatMonarchVernacular(
+										{formatRegentVernacular(
 											(
 												backgrounds.find((b) => b.id === selectedBackground) as
 													| { name?: string; display_name?: string | null }
@@ -1955,7 +1955,7 @@ const CharacterNew = () => {
 												<div className="mt-1 space-y-1">
 													{jobAwakeningAtCreation.map((f) => (
 														<div key={f.name} className="text-muted-foreground">
-															{formatMonarchVernacular(f.name)}
+															{formatRegentVernacular(f.name)}
 														</div>
 													))}
 												</div>
@@ -1968,7 +1968,7 @@ const CharacterNew = () => {
 												<div className="mt-1 space-y-1">
 													{jobTraitsAtCreation.map((t) => (
 														<div key={t.name} className="text-muted-foreground">
-															{formatMonarchVernacular(t.name)}
+															{formatRegentVernacular(t.name)}
 														</div>
 													))}
 												</div>

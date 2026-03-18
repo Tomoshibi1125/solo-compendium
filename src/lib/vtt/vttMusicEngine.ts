@@ -35,7 +35,7 @@ export type MusicMood =
 	| "arctic-cold"
 	| "rainfall"
 	| "gate-resonance"
-	| "monarch-presence"
+	| "regent-presence"
 	| "shadow-realm"
 	| "system-awakening";
 
@@ -283,8 +283,8 @@ const MOOD_CONFIGS: Record<MusicMood, MoodConfig> = {
 		lfoSpeed: 0.25,
 		lfoDepth: 0.3,
 	},
-	"monarch-presence": {
-		label: "Monarch Presence (SA)",
+	"regent-presence": {
+		label: "Regent Presence (SA)",
 		drones: [65.41, 98.0, 130.81],
 		droneType: "triangle",
 		droneVolume: 0.05,

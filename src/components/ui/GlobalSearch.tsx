@@ -15,7 +15,7 @@ import { error as logError } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import {
-	formatMonarchVernacular,
+	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
 
@@ -80,7 +80,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 					hasSourceBook: true,
 				},
 				{ table: "compendium_monsters", type: "monsters", hasSourceBook: true },
-				{ table: "compendium_monarchs", type: "monarchs", hasSourceBook: true },
+				{ table: "compendium_regents", type: "regents", hasSourceBook: true },
 				{
 					table: "compendium_sovereigns",
 					type: "sovereigns",
@@ -269,9 +269,9 @@ export function GlobalSearch({ className }: { className?: string }) {
 													className="w-full text-left p-2 rounded hover:bg-muted/50 transition-colors text-sm"
 												>
 													<div className="flex items-center justify-between">
-														<span>{formatMonarchVernacular(item.name)}</span>
+														<span>{formatRegentVernacular(item.name)}</span>
 														<Badge variant="outline" className="text-xs">
-															{formatMonarchVernacular(item.type)}
+															{formatRegentVernacular(item.type)}
 														</Badge>
 													</div>
 												</button>
@@ -298,15 +298,15 @@ export function GlobalSearch({ className }: { className?: string }) {
 									>
 										<div className="flex items-center justify-between mb-1">
 											<span className="font-heading text-sm">
-												{formatMonarchVernacular(result.name)}
+												{formatRegentVernacular(result.name)}
 											</span>
 											<Badge variant="outline" className="text-xs">
-												{formatMonarchVernacular(result.type)}
+												{formatRegentVernacular(result.type)}
 											</Badge>
 										</div>
 										{result.description && (
 											<p className="text-xs text-muted-foreground line-clamp-1">
-												export {formatMonarchVernacular(result.description)}
+												export {formatRegentVernacular(result.description)}
 											</p>
 										)}
 									</button>

@@ -191,8 +191,7 @@ export const useMarketplaceItems = ({
 	});
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useMarketplaceReviews = (itemId: string | null) => {
+export const useMarketplaceReviews = (itemId: string | null) => {
 	return useQuery({
 		queryKey: [...KEY, "reviews", itemId ?? "none"],
 		queryFn: async (): Promise<MarketplaceReviewRecord[]> => {

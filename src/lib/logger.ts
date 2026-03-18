@@ -14,11 +14,11 @@ interface Logger {
 	debug: (...args: unknown[]) => void;
 }
 
-type LoggerMode = "development" | "production";
+export type LoggerMode = "development" | "production";
 
-type LoggerSink = Pick<Console, "log" | "error" | "warn" | "debug">;
+export type LoggerSink = Pick<Console, "log" | "error" | "warn" | "debug">;
 
-type LoggerOptions = {
+export type LoggerOptions = {
 	mode: LoggerMode;
 	criticalPatterns: string[];
 	sink: LoggerSink;
@@ -40,7 +40,10 @@ const defaultCriticalPatterns: string[] = [
 /**
  * Check if an error message should be logged in production
  */
-function isCriticalError(args: unknown[], criticalPatterns: string[]): boolean {
+export function isCriticalError(
+	args: unknown[],
+	criticalPatterns: string[],
+): boolean {
 	const message = args
 		.map((arg) => {
 			if (typeof arg === "string") return arg;
@@ -67,7 +70,7 @@ const defaultOptions: LoggerOptions = {
 	sink: console,
 };
 
-function createLogger(overrides: Partial<LoggerOptions> = {}): Logger {
+export function createLogger(overrides: Partial<LoggerOptions> = {}): Logger {
 	const options: LoggerOptions = {
 		...defaultOptions,
 		...overrides,
@@ -112,11 +115,9 @@ export const logger: Logger = createLogger();
 export const log = logger.log.bind(logger);
 export const error = logger.error.bind(logger);
 export const warn = logger.warn.bind(logger);
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const debug = logger.debug.bind(logger);
+export const debug = logger.debug.bind(logger);
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function logAndToastError(
+export function logAndToastError(
 	error: unknown,
 	context: string,
 	toast?: (opts: {

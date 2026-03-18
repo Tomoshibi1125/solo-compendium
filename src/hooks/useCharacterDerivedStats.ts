@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import type { CharacterWithAbilities } from "@/hooks/useCharacters";
+import type { EquipmentRow, Rune, RuneInscription } from "@/hooks/useRunes";
 import { calculateCharacterStats } from "@/lib/characterCalculations";
 import { getActiveConditionEffects } from "@/lib/conditions";
 import {
@@ -28,12 +30,9 @@ import {
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
 export function useCharacterDerivedStats(
-	// biome-ignore lint/suspicious/noExplicitAny: extracted from monolithic component
-	character: any | null,
-	// biome-ignore lint/suspicious/noExplicitAny: extracted from monolithic component
-	equipment: any[],
-	// biome-ignore lint/suspicious/noExplicitAny: extracted from monolithic component
-	activeRunes: any[],
+	character: CharacterWithAbilities | null,
+	equipment: EquipmentRow[],
+	activeRunes: (RuneInscription & { rune: Rune; equipment: EquipmentRow })[],
 	customModifiers: CustomModifier[],
 ) {
 	return useMemo(() => {
@@ -160,15 +159,6 @@ export function useCharacterDerivedStats(
 		const finalInitiative =
 			getAbilityModifier(finalAbilities.AGI) + initiativeBonus;
 
-		const _hpMaxBonus =
-			sumCustomModifiers(customModifiers, "hp-max") +
-			sumCustomModifiers(customModifiers, "hp_max");
-
-		const speedBonus =
-			sumCustomModifiers(customModifiers, "speed") +
-			sumCustomModifiers(customModifiers, "speed_bonus");
-		let finalSpeed = (character.speed || 30) + speedBonus;
-
 		const featureACBonus = sumCustomModifiers(customModifiers, "ac_bonus");
 		const baseACValue = sumCustomModifiers(customModifiers, "ac_base");
 		let finalAC = baseStats.armorClass + featureACBonus;
@@ -230,7 +220,7 @@ export function useCharacterDerivedStats(
 		const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
 		const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
 
-		finalSpeed = runeBonuses.speed;
+		let finalSpeed = runeBonuses.speed;
 		if (encumbrance.status === "heavy") {
 			finalSpeed = Math.max(0, finalSpeed - 10);
 		} else if (encumbrance.status === "overloaded") {
@@ -274,8 +264,18 @@ export function useCharacterDerivedStats(
 		);
 
 		const allSkills: SkillDefinition[] = getAllSkills();
-		// biome-ignore lint/suspicious/noExplicitAny: extracted from monolithic component
-		const skills = allSkills.reduce<Record<string, any>>((acc, skill) => {
+		const skills = allSkills.reduce<
+			Record<
+				string,
+				{
+					modifier: number;
+					passive: number;
+					ability: AbilityScore;
+					proficient: boolean;
+					expertise: boolean;
+				}
+			>
+		>((acc, skill) => {
 			const baseModifier = calculateSkillModifier(
 				skill.name,
 				finalAbilities,

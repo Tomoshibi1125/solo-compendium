@@ -2,6 +2,7 @@ import { QuestGenerator } from "@/components/dm-tools/QuestGenerator";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import {
 	Dialog,
 	DialogContent,
@@ -58,11 +59,11 @@ import {
 	useVTTAudioTracks,
 	vttAudioManager,
 } from "@/hooks/useVTTAudio";
+import "./VTTEnhanced.css";
 import type { VTTToken } from "@/hooks/useVTTManager";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
-import { getBestImageFormat } from "@/lib/imageOptimization";
 import { cn } from "@/lib/utils";
 import {
 	type AmbientSoundZone,
@@ -108,6 +109,7 @@ import React, {
 	useRef,
 	useState,
 } from "react";
+
 import {
 	Link,
 	useNavigate,
@@ -326,7 +328,7 @@ const upsertScene = (scenes: Scene[], nextScene: Scene): Scene[] => {
 	return next;
 };
 
-const EMPTY_ARRAY: any[] = [];
+const EMPTY_ARRAY: never[] = [];
 
 const VTTEnhanced = () => {
 	const { campaignId } = useParams<{ campaignId: string }>();
@@ -1649,10 +1651,13 @@ const VTTEnhanced = () => {
 		[activeTokenId, currentScene?.tokens],
 	);
 
-	const memoizedGridConfig = useMemo(() => ({
-		type: currentScene?.gridType ?? "square" as const,
-		size: gridSize,
-	}), [currentScene?.gridType, gridSize]);
+	const memoizedGridConfig = useMemo(
+		() => ({
+			type: currentScene?.gridType ?? ("square" as const),
+			size: gridSize,
+		}),
+		[currentScene?.gridType, gridSize],
+	);
 
 	const MemoizedVttPixiStage = React.memo(VttPixiStage);
 
@@ -1854,18 +1859,16 @@ const VTTEnhanced = () => {
 									{vttRealtime.activeUsers.length > 0 && (
 										<div className="flex -space-x-1.5">
 											{vttRealtime.activeUsers.slice(0, 6).map((u) => (
-												<div
+												<DynamicStyle
 													key={u.userId}
 													className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-white border border-background vtt-user-avatar"
-													style={
-														{
-															["--user-color" as string]: u.color,
-														} as React.CSSProperties
-													}
+													vars={{
+														"--vtt-user-color": u.color,
+													}}
 													title={`${u.userName} (${u.role})`}
 												>
 													{u.userName.charAt(0).toUpperCase()}
-												</div>
+												</DynamicStyle>
 											))}
 										</div>
 									)}
@@ -3480,15 +3483,13 @@ const VTTEnhanced = () => {
 											{vttRealtime.pings.length > 0 && (
 												<div className="absolute inset-0 pointer-events-none vtt-ping-layer">
 													{vttRealtime.pings.map((ping) => (
-														<div
+														<DynamicStyle
 															key={ping.createdAt}
 															className="absolute animate-ping vtt-ping"
-															style={
-																{
-																	["--ping-x" as string]: `${(ping.x + 0.5) * gridSize * zoom}px`,
-																	["--ping-y" as string]: `${(ping.y + 0.5) * gridSize * zoom}px`,
-																} as React.CSSProperties
-															}
+															vars={{
+																"--vtt-ping-x": `${(ping.x + 0.5) * gridSize * zoom}px`,
+																"--vtt-ping-y": `${(ping.y + 0.5) * gridSize * zoom}px`,
+															}}
 														/>
 													))}
 												</div>
@@ -3518,27 +3519,26 @@ const VTTEnhanced = () => {
 																].particleCount,
 																200,
 															),
-														}).map((_, i) => {
+														}).map((_) => {
 															const size = Math.random() * 4 + 2;
 															const left = Math.random() * 100;
 															const top = Math.random() * 100;
 															const animDuration = Math.random() * 2 + 1;
 															const delay = Math.random() * -2;
 															return (
-																<div
-																	key={`slot-${[...Array(i + 1)].length}`}
-																	className="absolute rounded-full"
-																	style={{
-																		width: `${size}px`,
-																		height: `${size}px`,
-																		left: `${left}%`,
-																		top: `${top}%`,
-																		backgroundColor:
+																<DynamicStyle
+																	key={`vtt-wp-${currentScene?.weather}-${size}-${left}-${top}`}
+																	className="absolute rounded-full vtt-weather-particle"
+																	vars={{
+																		"--vtt-particle-size": `${size}px`,
+																		"--vtt-particle-left": `${left}%`,
+																		"--vtt-particle-top": `${top}%`,
+																		"--vtt-particle-color":
 																			WEATHER_PRESETS[
 																				currentScene?.weather as keyof typeof WEATHER_PRESETS
 																			].particleColor,
-																		animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
-																		animationDelay: `${delay}s`,
+																		"--vtt-particle-animation": `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
+																		"--vtt-particle-delay": `${delay}s`,
 																	}}
 																/>
 															);
@@ -3553,35 +3553,30 @@ const VTTEnhanced = () => {
 													{vttRealtime.activeUsers
 														.filter((u) => u.cursor)
 														.map((u) => (
-															<div
+															<DynamicStyle
 																key={u.userId}
 																className="absolute transition-all duration-100 vtt-cursor"
-																style={
-																	{
-																		["--cursor-x" as string]: `${((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom}px`,
-																		["--cursor-y" as string]: `${((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom}px`,
-																	} as React.CSSProperties
-																}
+																vars={{
+																	"--vtt-cursor-x": `${((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom}px`,
+																	"--vtt-cursor-y": `${((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom}px`,
+																}}
 															>
-																<div
+																<DynamicStyle
 																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
-																	style={
-																		{
-																			["--user-color" as string]: u.color,
-																		} as React.CSSProperties
-																	}
+																	vars={{
+																		"--vtt-user-color": u.color,
+																	}}
 																/>
-																<div
+																<DynamicStyle
+																	as="div"
 																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																	style={
-																		{
-																			["--user-color" as string]: u.color,
-																		} as React.CSSProperties
-																	}
+																	vars={{
+																		"--vtt-user-color": u.color,
+																	}}
 																>
 																	{u.userName}
-																</div>
-															</div>
+																</DynamicStyle>
+															</DynamicStyle>
 														))}
 												</div>
 											)}
@@ -4203,15 +4198,12 @@ const VTTEnhanced = () => {
 																						: "#ef4444";
 																			return (
 																				<div className="h-1 rounded-full bg-black/30 mt-0.5 w-full">
-																					<div
+																					<DynamicStyle
 																						className="h-full rounded-full transition-all vtt-hp-bar"
-																						style={
-																							{
-																								["--hp-percent" as string]: `${hpPercent}%`,
-																								["--hp-color" as string]:
-																									hpColor,
-																							} as React.CSSProperties
-																						}
+																						vars={{
+																							"--vtt-hp-percent": `${hpPercent}%`,
+																							"--vtt-hp-color": hpColor,
+																						}}
 																					/>
 																				</div>
 																			);
@@ -4258,18 +4250,16 @@ const VTTEnhanced = () => {
 												<div className="flex items-center gap-1 mb-2 px-1">
 													<div className="flex -space-x-1.5">
 														{vttRealtime.activeUsers.map((u) => (
-															<div
+															<DynamicStyle
 																key={u.userId}
 																className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background vtt-user-avatar"
-																style={
-																	{
-																		["--user-color" as string]: u.color,
-																	} as React.CSSProperties
-																}
+																vars={{
+																	"--vtt-user-color": u.color,
+																}}
 																title={`${u.userName} (${u.role})`}
 															>
 																{u.userName.charAt(0).toUpperCase()}
-															</div>
+															</DynamicStyle>
 														))}
 													</div>
 													<span className="text-[10px] text-muted-foreground ml-1">
@@ -5052,14 +5042,12 @@ const VTTEnhanced = () => {
 									onClick={() => setContextMenu(null)}
 									aria-label="Close context menu"
 								/>
-								<div
+								<DynamicStyle
 									className="vtt-context-menu"
-									style={
-										{
-											["--menu-x" as string]: `${contextMenu.x}px`,
-											["--menu-y" as string]: `${contextMenu.y}px`,
-										} as React.CSSProperties
-									}
+									vars={{
+										"--vtt-menu-x": `${contextMenu.x}px`,
+										"--vtt-menu-y": `${contextMenu.y}px`,
+									}}
 								>
 									<button
 										type="button"
@@ -5119,7 +5107,7 @@ const VTTEnhanced = () => {
 											✕ Delete
 										</button>
 									)}
-								</div>
+								</DynamicStyle>
 							</>
 						);
 					})()}

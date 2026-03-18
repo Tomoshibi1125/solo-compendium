@@ -35,8 +35,7 @@ type AnalyticsConfig = {
 
 let analyticsConfigOverride: Partial<AnalyticsConfig> | null = null;
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function setAnalyticsConfigOverride(
+export function setAnalyticsConfigOverride(
 	override: Partial<AnalyticsConfig> | null,
 ): void {
 	analyticsConfigOverride = override;
@@ -80,8 +79,7 @@ function shouldTrack(config: AnalyticsConfig): boolean {
 /**
  * Track a custom event
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function trackEvent(event: AnalyticsEvent): void {
+export function trackEvent(event: AnalyticsEvent): void {
 	const config = getAnalyticsConfig();
 	if (!shouldTrack(config)) return;
 
@@ -163,8 +161,10 @@ export function trackPageView(page: AnalyticsPageView): void {
 /**
  * Identify a user (only when consented)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function identifyUser(userId: string, traits?: Record<string, unknown>): void {
+export function identifyUser(
+	userId: string,
+	traits?: Record<string, unknown>,
+): void {
 	const config = getAnalyticsConfig();
 	if (!shouldTrack(config)) return;
 
@@ -184,8 +184,7 @@ function identifyUser(userId: string, traits?: Record<string, unknown>): void {
 /**
  * Reset user identification (on logout)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function resetUser(): void {
+export function resetUser(): void {
 	const config = getAnalyticsConfig();
 	if (!shouldTrack(config)) return;
 
@@ -242,8 +241,7 @@ export function initAnalytics(): void {
 }
 
 // Common event names for consistency
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const AnalyticsEvents = {
+export const AnalyticsEvents = {
 	// User actions
 	USER_SIGNED_UP: "user_signed_up",
 	USER_SIGNED_IN: "user_signed_in",

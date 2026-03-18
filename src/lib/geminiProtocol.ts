@@ -10,8 +10,8 @@ import {
 } from "@/lib/vernacular";
 
 export type Job = Tables<"compendium_jobs">;
-type Path = Tables<"compendium_job_paths">;
-type Regent = Tables<"compendium_regents">;
+export type Path = Tables<"compendium_job_paths">;
+export type Regent = Tables<"compendium_regents">;
 
 export interface FusionAbility {
 	name: string;
@@ -43,9 +43,9 @@ export interface GeneratedSovereign {
 const escapeRegExp = (value: string) =>
 	value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-const stripMonarchTerm = (value: string): string => {
+const stripRegentTerm = (value: string): string => {
 	const label = escapeRegExp(REGENT_LABEL);
-	const pattern = new RegExp(`\\s*(?:Monarch|${label})\\s*`, "gi");
+	const pattern = new RegExp(`\\s*(?:Regent|${label})\\s*`, "gi");
 	return value
 		.replace(pattern, " ")
 		.replace(/\s{2,}/g, " ")
@@ -61,9 +61,9 @@ const generateUnifiedFusionName = (a: string, b: string): string => {
 };
 
 // Generate fusion name based on unified approach
-function generateFusionName(regentA: Regent, regentB: Regent): string {
-	const nameA = stripMonarchTerm(regentA.name);
-	const nameB = stripMonarchTerm(regentB.name);
+export function generateFusionName(regentA: Regent, regentB: Regent): string {
+	const nameA = stripRegentTerm(regentA.name);
+	const nameB = stripRegentTerm(regentB.name);
 
 	return generateUnifiedFusionName(nameA, nameB);
 }
@@ -498,7 +498,7 @@ const themeMatrix: Record<
 	},
 };
 
-function getFusionTheme(
+export function getFusionTheme(
 	regentA: Regent,
 	regentB: Regent,
 ): { theme: string; element: string; concept: string } {
@@ -516,12 +516,12 @@ function getFusionTheme(
 }
 
 // Unified Power Multiplier - Single comprehensive approach
-function getPowerMultiplier(): string {
+export function getPowerMultiplier(): string {
 	return "Base Power x Thousands (Unified Fusion - Permanent, Sovereign-Stabilized)";
 }
 
 // Unified ability templates with comprehensive fusion mechanics
-type AbilityTemplate = {
+export type AbilityTemplate = {
 	name: string;
 	desc: string;
 	action: string;
@@ -594,7 +594,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
 	},
 };
 
-function generateAbilityFromTemplate(
+export function generateAbilityFromTemplate(
 	template: AbilityTemplate,
 	context: Record<string, string>,
 	level: number,
@@ -622,11 +622,11 @@ function generateAbilityFromTemplate(
 }
 
 // Simplified fusion determination - unified approach
-function determineUnifiedFusion(): string {
+export function determineUnifiedFusion(): string {
 	return "unified";
 }
 
-function mergeSources(primary: string[], required: string[]): string[] {
+export function mergeSources(primary: string[], required: string[]): string[] {
 	const seen = new Set<string>();
 	const result: string[] = [];
 	for (const value of [...primary, ...required]) {
@@ -872,7 +872,7 @@ Return as plain text with clear section headers. Do NOT use JSON or code fences.
 	return generateSovereign(job, path, regentA, regentB);
 }
 
-function parseAISovereignText(
+export function parseAISovereignText(
 	text: string,
 	fallback: GeneratedSovereign,
 	job: Job,
@@ -959,12 +959,11 @@ export function calculateTotalCombinations(
 }
 
 // Get fusion description for display
-function getFusionDescription(): string {
+export function getFusionDescription(): string {
 	return `Gemini Protocol overlays a permanent subclass using Job + Path + ${REGENT_LABEL} A + ${REGENT_LABEL} B. Any valid template can fuse, and each Sovereign is a unique, irreversible overlay with combined memories and abilities.`;
 }
 
 // Get fusion method description for display (legacy compatibility)
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getFusionMethodDescription(): string {
+export function getFusionMethodDescription(): string {
 	return getFusionDescription();
 }

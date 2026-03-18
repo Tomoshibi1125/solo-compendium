@@ -125,8 +125,7 @@ export class UndoRedoManager<T> {
 /**
  * React hook for undo/redo
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useUndoRedo<T>(initialState: T, maxHistorySize: number = 50) {
+export function useUndoRedo<T>(initialState: T, maxHistorySize: number = 50) {
 	const manager = new UndoRedoManager(initialState, maxHistorySize);
 
 	return {

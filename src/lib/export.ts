@@ -6,7 +6,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
 
@@ -21,7 +21,7 @@ interface ExportOptions {
 /**
  * Export character to JSON
  */
-async function exportCharacter(
+export async function exportCharacter(
 	characterId: string,
 	options: ExportOptions = {},
 ): Promise<string> {
@@ -94,13 +94,13 @@ async function exportCharacter(
 		exportData.powers = powers || [];
 	}
 
-	return formatMonarchVernacular(JSON.stringify(exportData, null, 2));
+	return formatRegentVernacular(JSON.stringify(exportData, null, 2));
 }
 
 /**
  * Export character to PDF (markdown format for now)
  */
-function exportCharacterToMarkdown(character: Character): string {
+export function exportCharacterToMarkdown(character: Character): string {
 	const markdown = `# ${character.name}
 
 **Level ${character.level}** ${character.job}${character.path ? ` (${character.path})` : ""}
@@ -122,14 +122,13 @@ ${
 
 ${character.notes ? `## Notes\n${character.notes}` : ""}
 `;
-	return formatMonarchVernacular(markdown);
+	return formatRegentVernacular(markdown);
 }
 
 /**
  * Export compendium entries
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function exportCompendiumEntries(
+export async function exportCompendiumEntries(
 	entryIds: string[],
 	entryType: string,
 ): Promise<string> {
@@ -167,7 +166,7 @@ async function exportCompendiumEntries(
 /**
  * Download file
  */
-function downloadFile(
+export function downloadFile(
 	content: string,
 	filename: string,
 	mimeType: string = "application/json",
@@ -220,8 +219,7 @@ export function exportCharacterPDF(character: Character): void {
 /**
  * Print character sheet
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function printCharacterSheet(characterId: string): void {
+export function printCharacterSheet(characterId: string): void {
 	// Open character sheet in new window for printing
 	const printWindow = window.open(
 		`/characters/${characterId}?print=true`,

@@ -14,7 +14,7 @@ import {
 	rollDiceString,
 } from "@/lib/diceRoller";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface ActionCardProps {
 	name: string;
@@ -80,13 +80,13 @@ function ActionCardComponent({
 	const Icon = (type ? TYPE_ICONS[type] || Star : Star) as React.ComponentType<{
 		className?: string;
 	}>;
-	const displayName = formatMonarchVernacular(name);
-	const displayDescription = formatMonarchVernacular(description);
-	const displayRange = range ? formatMonarchVernacular(range) : undefined;
+	const displayName = formatRegentVernacular(name);
+	const displayDescription = formatRegentVernacular(description);
+	const displayRange = range ? formatRegentVernacular(range) : undefined;
 	const displayRecharge = recharge
-		? formatMonarchVernacular(recharge)
+		? formatRegentVernacular(recharge)
 		: undefined;
-	const displayDamage = damage ? formatMonarchVernacular(damage) : undefined;
+	const displayDamage = damage ? formatRegentVernacular(damage) : undefined;
 
 	const formatFormula = (base: string, modifier?: number) => {
 		if (!modifier) return base;

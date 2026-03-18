@@ -1,17 +1,17 @@
 export type DiceTheme =
 	| "umbral-ascendant"
-	| "frost-monarch"
-	| "flame-monarch"
-	| "beast-monarch"
-	| "plague-monarch"
-	| "iron-monarch"
-	| "dragon-monarch"
-	| "regent-monarch"
+	| "frost-regent"
+	| "flame-regent"
+	| "beast-regent"
+	| "plague-regent"
+	| "iron-regent"
+	| "dragon-regent"
+	| "regent-regent"
 	| "supreme-deity"
 	| "gate-portal"
 	| "system-interface"
 	| "arise-violet"
-	| "monarch-gold";
+	| "regent-gold";
 
 interface DiceThemeConfig {
 	baseColor: string;
@@ -41,7 +41,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.56,
 		bloomFieldScale: 1.76,
 	},
-	"frost-monarch": {
+	"frost-regent": {
 		baseColor: "#0f172a",
 		emissiveColor: "#38bdf8",
 		glowIntensity: 0.75,
@@ -54,7 +54,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.18,
 		bloomFieldScale: 1.08,
 	},
-	"flame-monarch": {
+	"flame-regent": {
 		baseColor: "#2b1207",
 		emissiveColor: "#f97316",
 		glowIntensity: 0.95,
@@ -67,7 +67,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.68,
 		bloomFieldScale: 2.12,
 	},
-	"beast-monarch": {
+	"beast-regent": {
 		baseColor: "#1f2937",
 		emissiveColor: "#a3e635",
 		glowIntensity: 0.7,
@@ -80,7 +80,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.28,
 		bloomFieldScale: 1.22,
 	},
-	"plague-monarch": {
+	"plague-regent": {
 		baseColor: "#1f1b13",
 		emissiveColor: "#22c55e",
 		glowIntensity: 0.8,
@@ -93,7 +93,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.32,
 		bloomFieldScale: 1.28,
 	},
-	"iron-monarch": {
+	"iron-regent": {
 		baseColor: "#111827",
 		emissiveColor: "#9ca3af",
 		glowIntensity: 0.5,
@@ -106,7 +106,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.1,
 		bloomFieldScale: 1.02,
 	},
-	"dragon-monarch": {
+	"dragon-regent": {
 		baseColor: "#240b23",
 		emissiveColor: "#ec4899",
 		glowIntensity: 0.9,
@@ -119,7 +119,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.62,
 		bloomFieldScale: 1.92,
 	},
-	"regent-monarch": {
+	"regent-regent": {
 		baseColor: "#0a0c10", // Obsidian Core
 		emissiveColor: "#22d3ee", // Solar Core Cyan
 		glowIntensity: 0.85,
@@ -184,7 +184,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.6,
 		bloomFieldScale: 1.9,
 	},
-	"monarch-gold": {
+	"regent-gold": {
 		baseColor: "#713f12", // Dark antique gold
 		emissiveColor: "#fbbf24", // Regent gold
 		glowIntensity: 0.85,

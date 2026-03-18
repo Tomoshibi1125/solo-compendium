@@ -521,8 +521,7 @@ export function applyExpertise(
 /**
  * Format roll result for display
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function formatRollResult(roll: RollResult): string {
+export function formatRollResult(roll: RollResult): string {
 	const rollsStr = roll.rolls.join(" + ");
 
 	if (roll.droppedRolls && roll.droppedRolls.length > 0) {
@@ -552,8 +551,7 @@ function formatRollResult(roll: RollResult): string {
 /**
  * Validate dice string format
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function validateDiceString(diceString: string): boolean {
+export function validateDiceString(diceString: string): boolean {
 	if (!diceString || typeof diceString !== "string") return false;
 
 	// Basic pattern: NdS+/-M where N=dice count, S=sides, M=modifier

@@ -79,14 +79,13 @@ export function StatBlock({
 	);
 }
 
-interface StatRowProps {
+export interface StatRowProps {
 	label: string;
 	value: string | number | ReactNode;
 	className?: string;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function StatRow({ label, value, className }: StatRowProps) {
+export function StatRow({ label, value, className }: StatRowProps) {
 	return (
 		<div
 			className={cn("flex justify-between items-start gap-4 py-1", className)}

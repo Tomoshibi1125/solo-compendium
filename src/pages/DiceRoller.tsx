@@ -104,18 +104,18 @@ const diceTypes = [
 
 const THEME_ICONS: Partial<Record<DiceTheme, LucideIcon>> = {
 	"umbral-ascendant": Crown,
-	"frost-monarch": Snowflake,
-	"flame-monarch": Flame,
-	"beast-monarch": PawPrint,
-	"plague-monarch": Biohazard,
-	"iron-monarch": Shield,
-	"dragon-monarch": Swords,
-	"regent-monarch": Gem,
+	"frost-regent": Snowflake,
+	"flame-regent": Flame,
+	"beast-regent": PawPrint,
+	"plague-regent": Biohazard,
+	"iron-regent": Shield,
+	"dragon-regent": Swords,
+	"regent-regent": Gem,
 	"supreme-deity": ZapIcon,
 	"gate-portal": Flame,
 	"system-interface": Sparkles,
 	"arise-violet": Gem,
-	"monarch-gold": Crown,
+	"regent-gold": Crown,
 };
 
 const THEME_SWATCH_CLASSES: Partial<
@@ -125,21 +125,21 @@ const THEME_SWATCH_CLASSES: Partial<
 		icon: "text-shadow-purple",
 		bar: "bg-shadow-purple/40",
 	},
-	"frost-monarch": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
-	"flame-monarch": { icon: "text-orange-400", bar: "bg-orange-400/40" },
-	"beast-monarch": { icon: "text-lime-400", bar: "bg-lime-400/40" },
-	"plague-monarch": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
-	"iron-monarch": {
+	"frost-regent": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
+	"flame-regent": { icon: "text-orange-400", bar: "bg-orange-400/40" },
+	"beast-regent": { icon: "text-lime-400", bar: "bg-lime-400/40" },
+	"plague-regent": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
+	"iron-regent": {
 		icon: "text-muted-foreground",
 		bar: "bg-muted-foreground/40",
 	},
-	"dragon-monarch": { icon: "text-pink-400", bar: "bg-pink-400/40" },
-	"regent-monarch": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
+	"dragon-regent": { icon: "text-pink-400", bar: "bg-pink-400/40" },
+	"regent-regent": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 	"supreme-deity": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
 	"gate-portal": { icon: "text-red-400", bar: "bg-red-400/40" },
 	"system-interface": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
 	"arise-violet": { icon: "text-arise-violet", bar: "bg-arise-violet/40" },
-	"monarch-gold": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
+	"regent-gold": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 };
 
 const Dice3DRoller = lazy(() =>
@@ -984,7 +984,7 @@ const DiceRoller = () => {
 					<div>
 						<SystemWindow
 							title="ROLL HISTORY"
-							variant="monarch"
+							variant="regent"
 							className="sticky top-24"
 						>
 							<div className="space-y-2 max-h-[60vh] overflow-y-auto">

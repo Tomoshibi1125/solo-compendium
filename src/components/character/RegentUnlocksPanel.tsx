@@ -30,9 +30,9 @@ import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
-	useCharacterMonarchUnlocks,
-	useSetPrimaryMonarch,
-	useUnlockMonarch,
+	useCharacterRegentUnlocks,
+	useSetPrimaryRegent,
+	useUnlockRegent,
 } from "@/hooks/useRegentUnlocks";
 import { supabase } from "@/integrations/supabase/client";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
@@ -43,7 +43,7 @@ import {
 	REGENT_LABEL_PLURAL,
 } from "@/lib/vernacular";
 
-interface MonarchUnlocksPanelProps {
+interface RegentUnlocksPanelProps {
 	characterId: string;
 	campaignId?: string;
 }
@@ -135,19 +135,19 @@ const themeIcons: Record<string, React.ReactNode> = {
 	Stone: <Crown className="h-4 w-4" />,
 };
 
-export function MonarchUnlocksPanel({
+export function RegentUnlocksPanel({
 	characterId,
 	campaignId,
-}: MonarchUnlocksPanelProps) {
+}: RegentUnlocksPanelProps) {
 	const [open, setOpen] = useState(false);
-	const [selectedMonarchId, setSelectedMonarchId] = useState("");
+	const [selectedRegentId, setSelectedRegentId] = useState("");
 	const [questName, setQuestName] = useState("");
 	const [dmNotes, setDmNotes] = useState("");
 
 	const { data: character } = useCharacter(characterId);
-	const { unlocks = [] } = useCharacterMonarchUnlocks(characterId);
-	const unlockMonarch = useUnlockMonarch();
-	const setPrimary = useSetPrimaryMonarch();
+	const { unlocks = [] } = useCharacterRegentUnlocks(characterId);
+	const unlockRegent = useUnlockRegent();
+	const setPrimary = useSetPrimaryRegent();
 
 	const { toast } = useToast();
 	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
@@ -238,17 +238,17 @@ export function MonarchUnlocksPanel({
 	}, [availableLockedRegents, character]);
 
 	const handleUnlock = () => {
-		if (!selectedMonarchId || !questName.trim()) return;
+		if (!selectedRegentId || !questName.trim()) return;
 
-		const regent = allRegents.find((r) => r.id === selectedMonarchId);
+		const regent = allRegents.find((r) => r.id === selectedRegentId);
 		const regentName = regent
 			? formatRegentVernacular(regent.title || regent.name)
 			: "A Regent";
 
-		unlockMonarch.mutate(
+		unlockRegent.mutate(
 			{
 				characterId,
-				regentId: selectedMonarchId,
+				regentId: selectedRegentId,
 				questName: questName.trim(),
 				dmNotes: dmNotes.trim() || undefined,
 				isPrimary: unlocks.length === 0,
@@ -272,7 +272,7 @@ export function MonarchUnlocksPanel({
 					});
 
 					setOpen(false);
-					setSelectedMonarchId("");
+					setSelectedRegentId("");
 					setQuestName("");
 					setDmNotes("");
 				},
@@ -283,21 +283,21 @@ export function MonarchUnlocksPanel({
 	return (
 		<SystemWindow
 			title={`${REGENT_LABEL.toUpperCase()} UNLOCKS - DIVINE AUTHORITY`}
-			variant="monarch"
-			className="border-monarch-gold/30"
+			variant="regent"
+			className="border-regent-gold/30"
 		>
 			<div className="space-y-4">
 				{/* Status Header */}
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<div className="w-10 h-10 rounded-lg bg-monarch-gold/20 flex items-center justify-center">
-							<Crown className="h-5 w-5 text-monarch-gold" />
+						<div className="w-10 h-10 rounded-lg bg-regent-gold/20 flex items-center justify-center">
+							<Crown className="h-5 w-5 text-regent-gold" />
 						</div>
 						<div>
 							<p className="font-heading text-sm text-muted-foreground">
 								{REGENT_LABEL_PLURAL} Unlocked
 							</p>
-							<p className="font-display text-lg text-monarch-gold">
+							<p className="font-display text-lg text-regent-gold">
 								{unlocks.length} / 2 Required
 							</p>
 						</div>
@@ -312,7 +312,7 @@ export function MonarchUnlocksPanel({
 
 				{unlocks.length > 0 && (
 					<>
-						<Separator className="bg-monarch-gold/20" />
+						<Separator className="bg-regent-gold/20" />
 
 						<div className="space-y-3">
 							{unlocks.map((unlock, index) => {
@@ -362,7 +362,7 @@ export function MonarchUnlocksPanel({
 														{unlock.is_primary && (
 															<Badge
 																variant="outline"
-																className="bg-monarch-gold/20 text-monarch-gold border-monarch-gold/40 text-xs"
+																className="bg-regent-gold/20 text-regent-gold border-regent-gold/40 text-xs"
 															>
 																<Star className="h-3 w-3 mr-1" />
 																Primary
@@ -392,7 +392,7 @@ export function MonarchUnlocksPanel({
 															unlockId: unlock.id,
 														})
 													}
-													className="text-xs hover:bg-monarch-gold/10"
+													className="text-xs hover:bg-regent-gold/10"
 												>
 													<Star className="h-3 w-3 mr-1" />
 													Set Primary
@@ -408,7 +408,7 @@ export function MonarchUnlocksPanel({
 										</div>
 
 										{unlock.dm_notes && (
-											<p className="text-xs text-muted-foreground mt-2 italic border-l-2 border-monarch-gold/30 pl-2">
+											<p className="text-xs text-muted-foreground mt-2 italic border-l-2 border-regent-gold/30 pl-2">
 												{formatRegentVernacular(unlock.dm_notes)}
 											</p>
 										)}
@@ -421,7 +421,7 @@ export function MonarchUnlocksPanel({
 
 				{unlocks.length === 0 && (
 					<div className="text-center py-6">
-						<Lock className="h-10 w-10 text-monarch-gold/30 mx-auto mb-3" />
+						<Lock className="h-10 w-10 text-regent-gold/30 mx-auto mb-3" />
 						<p className="text-sm text-muted-foreground font-heading">
 							No {REGENT_LABEL_PLURAL} unlocked yet
 						</p>
@@ -455,13 +455,13 @@ export function MonarchUnlocksPanel({
 						<DialogTrigger asChild>
 							<Button
 								variant="outline"
-								className="w-full border-monarch-gold/40 hover:border-monarch-gold hover:bg-monarch-gold/10 font-display tracking-wider"
+								className="w-full border-regent-gold/40 hover:border-regent-gold hover:bg-regent-gold/10 font-display tracking-wider"
 							>
-								<Unlock className="h-4 w-4 mr-2 text-monarch-gold" />
+								<Unlock className="h-4 w-4 mr-2 text-regent-gold" />
 								APPROACH THE THRONE (Unlock {REGENT_LABEL})
 							</Button>
 						</DialogTrigger>
-						<DialogContent className="bg-card border-monarch-gold/40 max-w-lg">
+						<DialogContent className="bg-card border-regent-gold/40 max-w-lg">
 							<DialogHeader>
 								<DialogTitle className="font-display text-xl gradient-text-regent flex items-center gap-2">
 									<Crown className="h-5 w-5" />
@@ -476,7 +476,7 @@ export function MonarchUnlocksPanel({
 
 							<div className="space-y-4 pt-2">
 								<div className="space-y-3">
-									<Label className="font-heading text-monarch-gold">
+									<Label className="font-heading text-regent-gold">
 										Adaptive Choices
 									</Label>
 									<div className="grid grid-cols-1 gap-2">
@@ -488,18 +488,18 @@ export function MonarchUnlocksPanel({
 													key={regent.id}
 													className={cn(
 														"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
-														selectedMonarchId === regent.id
-															? "border-monarch-gold bg-monarch-gold/10 shadow-[0_0_10px_hsl(var(--monarch-gold)/0.2)]"
-															: "border-border hover:border-monarch-gold/50 bg-background/50",
+														selectedRegentId === regent.id
+															? "border-regent-gold bg-regent-gold/10 shadow-[0_0_10px_hsl(var(--regent-gold)/0.2)]"
+															: "border-border hover:border-regent-gold/50 bg-background/50",
 													)}
-													onClick={() => setSelectedMonarchId(regent.id)}
+													onClick={() => setSelectedRegentId(regent.id)}
 												>
 													<div className="flex items-center gap-3">
 														<div
 															className={cn(
 																"w-8 h-8 rounded-full flex items-center justify-center",
-																selectedMonarchId === regent.id
-																	? "bg-monarch-gold text-background"
+																selectedRegentId === regent.id
+																	? "bg-regent-gold text-background"
 																	: "bg-muted text-muted-foreground",
 															)}
 														>
@@ -518,8 +518,8 @@ export function MonarchUnlocksPanel({
 															</div>
 														</div>
 													</div>
-													{selectedMonarchId === regent.id && (
-														<CheckCircle className="h-4 w-4 text-monarch-gold" />
+													{selectedRegentId === regent.id && (
+														<CheckCircle className="h-4 w-4 text-regent-gold" />
 													)}
 												</button>
 											);
@@ -551,12 +551,12 @@ export function MonarchUnlocksPanel({
 								</div>
 
 								<Button
-									className="w-full font-display tracking-wider bg-monarch-gold hover:bg-monarch-gold/80 text-background"
+									className="w-full font-display tracking-wider bg-regent-gold hover:bg-regent-gold/80 text-background"
 									onClick={handleUnlock}
 									disabled={
-										!selectedMonarchId ||
+										!selectedRegentId ||
 										!questName.trim() ||
-										unlockMonarch.isPending
+										unlockRegent.isPending
 									}
 								>
 									<Crown className="h-4 w-4 mr-2" />

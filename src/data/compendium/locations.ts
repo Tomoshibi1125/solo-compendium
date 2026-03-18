@@ -2,8 +2,7 @@
 // Generated with full admin privileges
 // System Ascendant themed locations with images
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface Location {
+export interface Location {
 	id: string;
 	name: string;
 	type: string;

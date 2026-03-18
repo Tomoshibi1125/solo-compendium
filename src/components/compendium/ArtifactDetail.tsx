@@ -8,7 +8,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface ArtifactAbility {
 	name: string;
@@ -78,7 +78,7 @@ const rarityStyles: Record<string, string> = {
 
 export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 	const navigate = useNavigate();
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const imageSrc = data.image_url || data.image || undefined;
 	const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
 
@@ -111,7 +111,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 		const description = ability.description || "";
 		const dice = parseDiceFromText(description);
 		const dc = parseDcFromText(description);
-		const payloadName = `${displayName}: ${formatMonarchVernacular(ability.name)}`;
+		const payloadName = `${displayName}: ${formatRegentVernacular(ability.name)}`;
 
 		if (dc !== null) {
 			return {
@@ -180,12 +180,12 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 					<div className="flex flex-wrap items-center gap-2">
 						{data.artifact_type && (
 							<Badge variant="secondary">
-								{formatMonarchVernacular(data.artifact_type)}
+								{formatRegentVernacular(data.artifact_type)}
 							</Badge>
 						)}
 						{data.rarity && (
 							<Badge variant="outline" className={rarityStyle}>
-								{formatMonarchVernacular(data.rarity)}
+								{formatRegentVernacular(data.rarity)}
 							</Badge>
 						)}
 						{data.attunement && (
@@ -193,13 +193,13 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 						)}
 						{data.source_book && (
 							<Badge variant="outline">
-								{formatMonarchVernacular(data.source_book)}
+								{formatRegentVernacular(data.source_book)}
 							</Badge>
 						)}
 					</div>
 					{data.description && (
 						<p className="text-muted-foreground leading-relaxed">
-							{formatMonarchVernacular(data.description)}
+							{formatRegentVernacular(data.description)}
 						</p>
 					)}
 				</div>
@@ -218,7 +218,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Class: {formatMonarchVernacular(data.requirements.class)}
+									Class: {formatRegentVernacular(data.requirements.class)}
 								</span>
 							</li>
 						)}
@@ -227,7 +227,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 								<li className="flex items-center gap-2">
 									<Shield className="w-4 h-4 text-muted-foreground" />
 									<span>
-										{formatMonarchVernacular(data.requirements.ability)}{" "}
+										{formatRegentVernacular(data.requirements.ability)}{" "}
 										{data.requirements.score}+
 									</span>
 								</li>
@@ -237,14 +237,14 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
 									Alignment:{" "}
-									{formatMonarchVernacular(data.requirements.alignment)}
+									{formatRegentVernacular(data.requirements.alignment)}
 								</span>
 							</li>
 						)}
 						{data.requirements.quest && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>{formatMonarchVernacular(data.requirements.quest)}</span>
+								<span>{formatRegentVernacular(data.requirements.quest)}</span>
 							</li>
 						)}
 					</ul>
@@ -288,27 +288,27 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 									<div className="flex flex-wrap items-center gap-2">
 										<Sparkles className="w-4 h-4 text-primary" />
 										<span className="font-heading font-semibold">
-											{formatMonarchVernacular(ability.name)}
+											{formatRegentVernacular(ability.name)}
 										</span>
 										<Badge variant="outline" className="text-xs">
 											{label}
 										</Badge>
 										<Badge variant="secondary" className="text-xs">
-											{formatMonarchVernacular(ability.type)}
+											{formatRegentVernacular(ability.type)}
 										</Badge>
 										{ability.frequency && (
 											<Badge variant="outline" className="text-xs">
-												{formatMonarchVernacular(ability.frequency)}
+												{formatRegentVernacular(ability.frequency)}
 											</Badge>
 										)}
 										{ability.action && (
 											<Badge variant="outline" className="text-xs">
-												{formatMonarchVernacular(ability.action)}
+												{formatRegentVernacular(ability.action)}
 											</Badge>
 										)}
 									</div>
 									<p className="text-sm text-muted-foreground">
-										{formatMonarchVernacular(ability.description)}
+										{formatRegentVernacular(ability.description)}
 									</p>
 
 									{payload && (
@@ -349,25 +349,25 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 						{data.lore.origin && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Origin:</span>{" "}
-								{formatMonarchVernacular(data.lore.origin)}
+								{formatRegentVernacular(data.lore.origin)}
 							</p>
 						)}
 						{data.lore.history && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">History:</span>{" "}
-								{formatMonarchVernacular(data.lore.history)}
+								{formatRegentVernacular(data.lore.history)}
 							</p>
 						)}
 						{data.lore.curse && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Curse:</span>{" "}
-								{formatMonarchVernacular(data.lore.curse)}
+								{formatRegentVernacular(data.lore.curse)}
 							</p>
 						)}
 						{data.lore.personality && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Personality:</span>{" "}
-								{formatMonarchVernacular(data.lore.personality)}
+								{formatRegentVernacular(data.lore.personality)}
 							</p>
 						)}
 					</div>
@@ -383,13 +383,13 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 								<div>
 									<p className="text-foreground">
 										Bonus:{" "}
-										{formatMonarchVernacular(data.mechanics.bonus.type || "")} +
+										{formatRegentVernacular(data.mechanics.bonus.type || "")} +
 										{data.mechanics.bonus.value}
 									</p>
 									{data.mechanics.bonus.ability && (
 										<p className="text-muted-foreground">
 											Ability:{" "}
-											{formatMonarchVernacular(data.mechanics.bonus.ability)}
+											{formatRegentVernacular(data.mechanics.bonus.ability)}
 										</p>
 									)}
 									{data.mechanics.bonus.skills &&
@@ -397,7 +397,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 											<p className="text-muted-foreground">
 												Skills:{" "}
 												{data.mechanics.bonus.skills
-													.map(formatMonarchVernacular)
+													.map(formatRegentVernacular)
 													.join(", ")}
 											</p>
 										)}
@@ -407,9 +407,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 						{data.mechanics.immunity && data.mechanics.immunity.length > 0 && (
 							<p>
 								<span className="text-foreground">Immunity:</span>{" "}
-								{data.mechanics.immunity
-									.map(formatMonarchVernacular)
-									.join(", ")}
+								{data.mechanics.immunity.map(formatRegentVernacular).join(", ")}
 							</p>
 						)}
 						{data.mechanics.resistance &&
@@ -417,7 +415,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 								<p>
 									<span className="text-foreground">Resistance:</span>{" "}
 									{data.mechanics.resistance
-										.map(formatMonarchVernacular)
+										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>
 							)}
@@ -426,7 +424,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 								<p>
 									<span className="text-foreground">Vulnerability:</span>{" "}
 									{data.mechanics.vulnerability
-										.map(formatMonarchVernacular)
+										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>
 							)}
@@ -435,7 +433,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 								<p className="text-foreground">Special:</p>
 								<ul className="list-disc list-inside text-muted-foreground">
 									{data.mechanics.special.map((entry) => (
-										<li key={entry}>{formatMonarchVernacular(entry)}</li>
+										<li key={entry}>{formatRegentVernacular(entry)}</li>
 									))}
 								</ul>
 							</div>

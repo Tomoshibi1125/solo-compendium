@@ -770,8 +770,7 @@ export const useLeaveCampaign = () => {
 };
 
 // Check if current user is the System (Protocol Warden) of a campaign
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useIsCampaignDM = (campaignId: string) => {
+export const useIsCampaignDM = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "is-system"],
 		queryFn: async () => {
@@ -965,8 +964,7 @@ export const useCampaignRole = (campaignId: string) => {
 };
 
 // Check if user is a Warden (System/Protocol Warden) - now uses profiles table
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useIsDM = () => {
+export const useIsDM = () => {
 	return useQuery({
 		queryKey: ["user", "is-dm"],
 		queryFn: async (): Promise<boolean> => {

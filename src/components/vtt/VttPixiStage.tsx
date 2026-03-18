@@ -232,7 +232,7 @@ export function VttPixiStage({
 
 		const stage = app.stage;
 		stage.removeChildren();
- 
+
 		const root = new Container();
 		rootContainerRef.current = root;
 		stage.addChild(root);
@@ -923,10 +923,11 @@ export function VttPixiStage({
 		walls,
 		lightSources,
 		weather,
-		gridConfig?.type, // Expose the app + effects container so parent components can trigger particle presets
+		gridConfig?.type,
 		onStageReady,
 		onTokenDragStart,
 		updateToken,
+		zoom,
 	]);
 
 	// Optimized Zoom Effect: Scale the root container instead of rebuilding the stage

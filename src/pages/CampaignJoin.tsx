@@ -40,7 +40,7 @@ import {
 	isLikelyShareCode,
 	normalizeInviteAccessKey,
 } from "@/lib/campaignInviteUtils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const CampaignJoin = () => {
 	const { shareCode: urlAccessKey } = useParams<{ shareCode: string }>();
@@ -383,7 +383,7 @@ const CampaignJoin = () => {
 									{characters.map((char) => (
 										<SelectItem key={char.id} value={char.id}>
 											{char.name} - Level {char.level}{" "}
-											{formatMonarchVernacular(char.job || "Unknown")}
+											{formatRegentVernacular(char.job || "Unknown")}
 										</SelectItem>
 									))}
 								</SelectContent>

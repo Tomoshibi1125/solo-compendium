@@ -17,7 +17,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface SpellData {
 	id: string;
@@ -72,7 +72,7 @@ const rankStyles: Record<string, string> = {
 
 export const SpellDetail = ({ data }: { data: SpellData }) => {
 	const navigate = useNavigate();
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const imageSrc = data.image_url || data.image || undefined;
 	const rankStyle = data.rank ? rankStyles[data.rank] : undefined;
 
@@ -257,7 +257,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					<div className="flex flex-wrap items-center gap-2">
 						{data.spell_type && (
 							<Badge variant="secondary">
-								{formatMonarchVernacular(data.spell_type)}
+								{formatRegentVernacular(data.spell_type)}
 							</Badge>
 						)}
 						{data.rank && (
@@ -267,7 +267,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						)}
 						{data.source_book && (
 							<Badge variant="outline">
-								{formatMonarchVernacular(data.source_book)}
+								{formatRegentVernacular(data.source_book)}
 							</Badge>
 						)}
 					</div>
@@ -300,7 +300,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						<div className="flex items-center gap-2">
 							<Target className="w-5 h-5 text-emerald-400" />
 							<span className="font-heading">
-								{formatMonarchVernacular(rangeText)}
+								{formatRegentVernacular(rangeText)}
 							</span>
 						</div>
 					</SystemWindow>
@@ -314,12 +314,12 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<div className="flex items-center gap-2">
 								<Zap className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatMonarchVernacular(activation.type || "action")}
+									{formatRegentVernacular(activation.type || "action")}
 								</span>
 							</div>
 							{activation.cost && (
 								<span className="text-xs text-muted-foreground">
-									{formatMonarchVernacular(activation.cost)}
+									{formatRegentVernacular(activation.cost)}
 								</span>
 							)}
 						</SystemWindow>
@@ -329,12 +329,12 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<div className="flex items-center gap-2">
 								<Timer className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatMonarchVernacular(duration.type || "instantaneous")}
+									{formatRegentVernacular(duration.type || "instantaneous")}
 								</span>
 							</div>
 							{duration.time && (
 								<span className="text-xs text-muted-foreground">
-									{formatMonarchVernacular(duration.time)}
+									{formatRegentVernacular(duration.time)}
 								</span>
 							)}
 						</SystemWindow>
@@ -349,7 +349,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							</div>
 							{components.material_desc && (
 								<span className="text-xs text-muted-foreground">
-									{formatMonarchVernacular(components.material_desc)}
+									{formatRegentVernacular(components.material_desc)}
 								</span>
 							)}
 						</SystemWindow>
@@ -362,17 +362,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					<div className="space-y-3">
 						{effects.primary && (
 							<p className="text-foreground leading-relaxed">
-								{formatMonarchVernacular(effects.primary)}
+								{formatRegentVernacular(effects.primary)}
 							</p>
 						)}
 						{effects.secondary && (
 							<p className="text-muted-foreground leading-relaxed">
-								{formatMonarchVernacular(effects.secondary)}
+								{formatRegentVernacular(effects.secondary)}
 							</p>
 						)}
 						{effects.tertiary && (
 							<p className="text-muted-foreground leading-relaxed">
-								{formatMonarchVernacular(effects.tertiary)}
+								{formatRegentVernacular(effects.tertiary)}
 							</p>
 						)}
 					</div>
@@ -387,17 +387,16 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading capitalize">
-										{formatMonarchVernacular(mechanics.attack.type || "")}{" "}
-										attack
+										{formatRegentVernacular(mechanics.attack.type || "")} attack
 									</p>
 									<p className="text-sm text-muted-foreground">
 										{mechanics.attack.damage
-											? formatMonarchVernacular(
+											? formatRegentVernacular(
 													`Damage: ${mechanics.attack.damage}`,
 												)
 											: "Damage varies"}
 										{mechanics.attack.modifier
-											? formatMonarchVernacular(
+											? formatRegentVernacular(
 													` | Modifier: ${mechanics.attack.modifier}`,
 												)
 											: ""}
@@ -410,25 +409,24 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">
-										{formatMonarchVernacular(
+										{formatRegentVernacular(
 											mechanics.saving_throw.ability || "",
 										)}{" "}
 										Save
 									</p>
 									<p className="text-sm text-muted-foreground">
-										DC{" "}
-										{formatMonarchVernacular(mechanics.saving_throw.dc || "")}
+										DC {formatRegentVernacular(mechanics.saving_throw.dc || "")}
 									</p>
 									{mechanics.saving_throw.success && (
 										<p className="text-xs text-muted-foreground">
 											Success:{" "}
-											{formatMonarchVernacular(mechanics.saving_throw.success)}
+											{formatRegentVernacular(mechanics.saving_throw.success)}
 										</p>
 									)}
 									{mechanics.saving_throw.failure && (
 										<p className="text-xs text-muted-foreground">
 											Failure:{" "}
-											{formatMonarchVernacular(mechanics.saving_throw.failure)}
+											{formatRegentVernacular(mechanics.saving_throw.failure)}
 										</p>
 									)}
 								</div>
@@ -439,7 +437,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading capitalize">
-										{formatMonarchVernacular(mechanics.movement.type || "")}{" "}
+										{formatRegentVernacular(mechanics.movement.type || "")}{" "}
 										movement
 									</p>
 									{mechanics.movement.distance !== undefined && (
@@ -456,9 +454,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								<div>
 									<p className="font-heading">Conditions</p>
 									<p className="text-sm text-muted-foreground">
-										{mechanics.condition
-											.map(formatMonarchVernacular)
-											.join(", ")}
+										{mechanics.condition.map(formatRegentVernacular).join(", ")}
 									</p>
 								</div>
 							</div>
@@ -473,14 +469,14 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						{limitations.uses && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Uses: {formatMonarchVernacular(limitations.uses)}</span>
+								<span>Uses: {formatRegentVernacular(limitations.uses)}</span>
 							</li>
 						)}
 						{limitations.cooldown && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Cooldown: {formatMonarchVernacular(limitations.cooldown)}
+									Cooldown: {formatRegentVernacular(limitations.cooldown)}
 								</span>
 							</li>
 						)}
@@ -488,7 +484,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Exhaustion: {formatMonarchVernacular(limitations.exhaustion)}
+									Exhaustion: {formatRegentVernacular(limitations.exhaustion)}
 								</span>
 							</li>
 						)}
@@ -498,7 +494,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								<span>
 									Conditions:{" "}
 									{limitations.conditions
-										.map(formatMonarchVernacular)
+										.map(formatRegentVernacular)
 										.join(", ")}
 								</span>
 							</li>
@@ -510,7 +506,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{data.effect && (
 				<SystemWindow id="spell-effect" title="EFFECT">
 					<p className="text-foreground leading-relaxed">
-						{formatMonarchVernacular(data.effect)}
+						{formatRegentVernacular(data.effect)}
 					</p>
 				</SystemWindow>
 			)}
@@ -518,7 +514,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{(data.higher_levels || data.atHigherLevels) && (
 				<SystemWindow title="AT HIGHER TIERS">
 					<p className="text-foreground leading-relaxed">
-						{formatMonarchVernacular(
+						{formatRegentVernacular(
 							data.higher_levels || data.atHigherLevels || "",
 						)}
 					</p>
@@ -528,7 +524,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{data.flavor && (
 				<SystemWindow title="FLAVOR">
 					<p className="text-sm text-muted-foreground italic">
-						{formatMonarchVernacular(data.flavor)}
+						{formatRegentVernacular(data.flavor)}
 					</p>
 				</SystemWindow>
 			)}
@@ -536,7 +532,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{data.description && (
 				<SystemWindow id="spell-description" title="DESCRIPTION">
 					<p className="text-foreground leading-relaxed">
-						{formatMonarchVernacular(data.description)}
+						{formatRegentVernacular(data.description)}
 					</p>
 				</SystemWindow>
 			)}

@@ -221,8 +221,7 @@ export const useUnshareCharacter = () => {
 };
 
 // Update share permissions
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useUpdateSharePermissions = () => {
+export const useUpdateSharePermissions = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

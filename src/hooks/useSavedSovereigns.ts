@@ -16,8 +16,8 @@ interface SavedSovereign {
 	fusion_stability: string;
 	job_id: string;
 	path_id: string;
-	monarch_a_id: string;
-	monarch_b_id: string;
+	regent_a_id: string;
+	regent_b_id: string;
 	abilities: FusionAbility[];
 	created_by: string;
 	created_at: string;
@@ -25,8 +25,7 @@ interface SavedSovereign {
 	likes_count: number;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useSavedSovereigns() {
+export function useSavedSovereigns() {
 	return useQuery({
 		queryKey: ["saved-sovereigns"],
 		queryFn: async () => {
@@ -36,8 +35,8 @@ function useSavedSovereigns() {
           *,
           job:compendium_jobs(name),
           path:compendium_job_paths(name),
-          monarch_a:compendium_monarchs!saved_sovereigns_monarch_a_id_fkey(name, title, theme),
-          monarch_b:compendium_monarchs!saved_sovereigns_monarch_b_id_fkey(name, title, theme)
+          regent_a:compendium_regents!saved_sovereigns_regent_a_id_fkey(name, title, theme),
+          regent_b:compendium_regents!saved_sovereigns_regent_b_id_fkey(name, title, theme)
         `)
 				.order("created_at", { ascending: false });
 			if (error) throw error;
@@ -47,8 +46,7 @@ function useSavedSovereigns() {
 	});
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useMySovereigns() {
+export function useMySovereigns() {
 	return useQuery({
 		queryKey: ["my-sovereigns"],
 		queryFn: async () => {
@@ -63,8 +61,8 @@ function useMySovereigns() {
           *,
           job:compendium_jobs(name),
           path:compendium_job_paths(name),
-          monarch_a:compendium_monarchs!saved_sovereigns_monarch_a_id_fkey(name, title, theme),
-          monarch_b:compendium_monarchs!saved_sovereigns_monarch_b_id_fkey(name, title, theme)
+          regent_a:compendium_regents!saved_sovereigns_regent_a_id_fkey(name, title, theme),
+          regent_b:compendium_regents!saved_sovereigns_regent_b_id_fkey(name, title, theme)
         `)
 				.eq("created_by", user.id)
 				.order("created_at", { ascending: false });
@@ -133,8 +131,8 @@ export function useSaveSovereign() {
 				fusion_stability: sovereign.fusion_stability,
 				job_id: sovereign.job.id,
 				path_id: sovereign.path.id,
-				monarch_a_id: sovereign.regentA.id,
-				monarch_b_id: sovereign.regentB.id,
+				regent_a_id: sovereign.regentA.id,
+				regent_b_id: sovereign.regentB.id,
 				abilities: JSON.parse(JSON.stringify(sovereign.abilities)),
 				created_by: user.id,
 			};
@@ -185,8 +183,7 @@ export function useSaveSovereign() {
 	});
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useDeleteSovereign() {
+export function useDeleteSovereign() {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

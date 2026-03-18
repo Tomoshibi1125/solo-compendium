@@ -24,7 +24,7 @@ const TEST_USERS = {
 /**
  * Create test users in Supabase for development/testing
  */
-async function createTestUsers() {
+export async function createTestUsers() {
 	try {
 		// Create DM user
 		const { data: dmData, error: dmError } = await supabase.auth.signUp({
@@ -70,7 +70,7 @@ async function createTestUsers() {
 /**
  * Authenticate test user
  */
-async function authenticateTestUser(userType: keyof typeof TEST_USERS) {
+export async function authenticateTestUser(userType: keyof typeof TEST_USERS) {
 	const user = TEST_USERS[userType];
 
 	try {
@@ -117,8 +117,7 @@ export async function setupTestAccounts() {
 /**
  * Clean up test users (for teardown)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function cleanupTestUsers() {
+export async function cleanupTestUsers() {
 	try {
 		// Sign out current user
 		await supabase.auth.signOut();

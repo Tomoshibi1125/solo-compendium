@@ -15,7 +15,7 @@ import { useCharacterExtras } from "@/hooks/useCharacterExtras";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import type { Database } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 type CharacterExtra = Database["public"]["Tables"]["character_extras"]["Row"];
 
@@ -192,7 +192,7 @@ export function CharacterExtrasPanel({
 								{/* Info */}
 								<div className="space-y-1">
 									<Badge variant="outline" className="text-[10px] uppercase">
-										{formatMonarchVernacular(extra.extra_type)}
+										{formatRegentVernacular(extra.extra_type)}
 									</Badge>
 									{extra.monster_id && (
 										<div className="text-xs text-muted-foreground">

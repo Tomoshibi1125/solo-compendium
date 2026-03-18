@@ -14,7 +14,7 @@ import { usePreferredCampaignSelection } from "@/hooks/usePreferredCampaignSelec
 import { useUserToolState } from "@/hooks/useToolState";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 // System Ascendant themed reference tables
 const GATE_COMPLICATIONS = [
@@ -42,7 +42,7 @@ const GATE_REWARDS = [
 	"Unique monster part",
 	"Rift completion bonus",
 	"Hidden treasure cache",
-	"Monarch blessing",
+	"Regent blessing",
 	"Skill point bonus",
 	"Legendary core shard",
 ];
@@ -68,7 +68,7 @@ const NPC_MOTIVATIONS = [
 	"Revenge against monsters",
 	"Researching Rift phenomena",
 	"Building an ascendant organization",
-	"Seeking the Umbral Monarch",
+	"Seeking the Umbral Regent",
 	"Escaping past trauma",
 	"Proving their worth",
 	"Accumulating wealth",
@@ -79,7 +79,7 @@ const NPC_MOTIVATIONS = [
 
 const NPC_SECRETS = [
 	"Former S-Rank ascendant (lost power)",
-	"Working for a Monarch",
+	"Working for a Regent",
 	"Has a cursed relic",
 	"Knows about the reset",
 	"Is actually a monster",
@@ -102,7 +102,7 @@ const GATE_THEMES = [
 	"Prime Architect's Domain (shadow focus)",
 	"Necromantic Lab (undead + construct)",
 	"Mana Nexus (elemental + aberration)",
-	"Umbral Monarch's Memory",
+	"Umbral Regent's Memory",
 	"System Testing Ground",
 	"Post-Reset Fragment",
 ];
@@ -159,11 +159,11 @@ const TREASURE_TIERS = {
 		"Artifact equipment",
 	],
 	"S-Rank": [
-		"Monarch relic (resonant)",
-		"Monarch materials",
+		"Regent relic (resonant)",
+		"Regent materials",
 		"Incredible credit sum",
 		"System-granted consumables",
-		"Monarch equipment",
+		"Regent equipment",
 	],
 };
 
@@ -247,7 +247,7 @@ For EACH result, provide:
 	};
 
 	const roll = (key: string, table: string[]) => {
-		const result = formatMonarchVernacular(rollTable(table));
+		const result = formatRegentVernacular(rollTable(table));
 		setResults((prev) => {
 			const next = { ...prev, [key]: result };
 			if (hydratedRef.current && !isLoading) {
@@ -601,7 +601,7 @@ For EACH result, provide:
 											</div>
 										)}
 										<div className="text-xs text-muted-foreground mt-2">
-											{items.map(formatMonarchVernacular).join(", ")}
+											{items.map(formatRegentVernacular).join(", ")}
 										</div>
 									</div>
 								))}

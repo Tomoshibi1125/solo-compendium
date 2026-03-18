@@ -1,4 +1,4 @@
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 // Rarity system for treasure
 const RARITY_CHANCES = {
@@ -9,8 +9,7 @@ const RARITY_CHANCES = {
 	legendary: 0.01,
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function generateRarity(): string {
+export function generateRarity(): string {
 	const roll = Math.random();
 	let cumulative = 0;
 
@@ -231,9 +230,9 @@ export function generateTreasure(rank: string): TreasureResult {
 	}
 
 	const descriptions: string[] = [];
-	const displayItems = items.map(formatMonarchVernacular);
-	const displayMaterials = materials.map(formatMonarchVernacular);
-	const displayRelics = relics.map(formatMonarchVernacular);
+	const displayItems = items.map(formatRegentVernacular);
+	const displayMaterials = materials.map(formatRegentVernacular);
+	const displayRelics = relics.map(formatRegentVernacular);
 
 	descriptions.push(
 		`Rift Rank ${rank} treasure hoard containing ${gold} gold pieces.`,
@@ -263,6 +262,6 @@ export function generateTreasure(rank: string): TreasureResult {
 		items: displayItems,
 		materials: displayMaterials,
 		relics: displayRelics,
-		description: formatMonarchVernacular(descriptions.join(" ")),
+		description: formatRegentVernacular(descriptions.join(" ")),
 	};
 }

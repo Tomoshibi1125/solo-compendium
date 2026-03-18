@@ -18,7 +18,7 @@ export interface CompendiumEntry {
 		| "backgrounds"
 		| "conditions"
 		| "regents"
-		| "monarchs"
+		| "regents"
 		| "feats"
 		| "skills"
 		| "equipment"
@@ -66,7 +66,7 @@ const STARTUP_CATEGORIES = [
 	"monsters",
 	"backgrounds",
 	"conditions",
-	"monarchs",
+	"regents",
 	"feats",
 	"skills",
 	"equipment",
@@ -160,8 +160,8 @@ export const useStartupData = () => {
 						case "conditions":
 							data = await staticDataProvider.getConditions("");
 							break;
-						case "monarchs":
-							data = await staticDataProvider.getMonarchs("");
+						case "regents":
+							data = await staticDataProvider.getRegents("");
 							break;
 						case "feats":
 							data = await staticDataProvider.getFeats("");
@@ -235,7 +235,7 @@ export const useStartupData = () => {
 							...(category === "feats" && {
 								prerequisites: item.prerequisites,
 							}),
-							...(category === "monarchs" && {
+							...(category === "regents" && {
 								title: item.title,
 								theme: item.theme,
 							}),
@@ -328,9 +328,9 @@ export const useStartupData = () => {
 								.select("id, name, display_name, description, created_at")
 								.limit(STARTUP_LIMIT);
 							break;
-						case "monarchs":
+						case "regents":
 							query = supabase
-								.from("compendium_monarchs")
+								.from("compendium_regents")
 								.select(
 									"id, name, display_name, description, created_at, tags, source_book, title, theme",
 								)
@@ -459,7 +459,7 @@ export const useStartupData = () => {
 							...(category === "feats" && {
 								prerequisites: item.prerequisites,
 							}),
-							...(category === "monarchs" && {
+							...(category === "regents" && {
 								title: item.title,
 								theme: item.theme,
 							}),

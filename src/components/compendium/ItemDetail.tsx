@@ -17,7 +17,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface ItemData {
 	id: string;
@@ -99,7 +99,7 @@ const rarityStyles: Record<string, string> = {
 
 export const ItemDetail = ({ data }: { data: ItemData }) => {
 	const navigate = useNavigate();
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const imageSrc = data.image_url || data.image || undefined;
 	const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
 	const weapon = data.properties?.weapon;
@@ -133,7 +133,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 			return {
 				version: 1,
 				id: crypto.randomUUID(),
-				name: `${displayName}: ${formatMonarchVernacular(active.name)}`,
+				name: `${displayName}: ${formatRegentVernacular(active.name)}`,
 				source: { type: "item", entryId: data.id },
 				kind: "save",
 				save: { dc: active.dc, roll: "1d20" },
@@ -150,7 +150,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 			return {
 				version: 1,
 				id: crypto.randomUUID(),
-				name: `${displayName}: ${formatMonarchVernacular(active.name)}`,
+				name: `${displayName}: ${formatRegentVernacular(active.name)}`,
 				source: { type: "item", entryId: data.id },
 				kind: "healing",
 				healing: { roll: dice },
@@ -160,7 +160,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 		return {
 			version: 1,
 			id: crypto.randomUUID(),
-			name: `${displayName}: ${formatMonarchVernacular(active.name)}`,
+			name: `${displayName}: ${formatRegentVernacular(active.name)}`,
 			source: { type: "item", entryId: data.id },
 			kind: "damage",
 			damage: { roll: dice },
@@ -200,12 +200,12 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 					<div className="flex flex-wrap items-center gap-2">
 						{data.item_type && (
 							<Badge variant="secondary">
-								{formatMonarchVernacular(data.item_type)}
+								{formatRegentVernacular(data.item_type)}
 							</Badge>
 						)}
 						{data.rarity && (
 							<Badge variant="outline" className={rarityStyle}>
-								{formatMonarchVernacular(data.rarity)}
+								{formatRegentVernacular(data.rarity)}
 							</Badge>
 						)}
 						{data.attunement && (
@@ -214,7 +214,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						{data.cursed && <Badge variant="destructive">Cursed</Badge>}
 						{data.source_book && (
 							<Badge variant="outline">
-								{formatMonarchVernacular(data.source_book)}
+								{formatRegentVernacular(data.source_book)}
 							</Badge>
 						)}
 					</div>
@@ -280,7 +280,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						</div>
 						{data.charges.recharge && (
 							<span className="text-xs text-muted-foreground">
-								{formatMonarchVernacular(`${data.charges.recharge} recharge`)}
+								{formatRegentVernacular(`${data.charges.recharge} recharge`)}
 							</span>
 						)}
 					</SystemWindow>
@@ -302,7 +302,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								<span>
 									Classes:{" "}
 									{data.requirements.class
-										.map(formatMonarchVernacular)
+										.map(formatRegentVernacular)
 										.join(", ")}
 								</span>
 							</li>
@@ -312,9 +312,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
 									Jobs:{" "}
-									{data.requirements.job
-										.map(formatMonarchVernacular)
-										.join(", ")}
+									{data.requirements.job.map(formatRegentVernacular).join(", ")}
 								</span>
 							</li>
 						)}
@@ -325,7 +323,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 									<span>
 										Alignment:{" "}
 										{data.requirements.alignment
-											.map(formatMonarchVernacular)
+											.map(formatRegentVernacular)
 											.join(", ")}
 									</span>
 								</li>
@@ -345,16 +343,16 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								</div>
 								<p className="text-muted-foreground">
 									{weapon.damage
-										? formatMonarchVernacular(`Damage: ${weapon.damage}`)
+										? formatRegentVernacular(`Damage: ${weapon.damage}`)
 										: "Damage varies"}
 									{weapon.damageType
-										? formatMonarchVernacular(` (${weapon.damageType})`)
+										? formatRegentVernacular(` (${weapon.damageType})`)
 										: ""}
 									{weapon.range ? ` | Range: ${weapon.range} ft` : ""}
 								</p>
 								{weapon.versatile && (
 									<p className="text-muted-foreground">
-										{formatMonarchVernacular(`Versatile: ${weapon.versatile}`)}
+										{formatRegentVernacular(`Versatile: ${weapon.versatile}`)}
 									</p>
 								)}
 								{weapon.finesse && (
@@ -384,7 +382,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 												<li>
 													Saving throws:{" "}
 													{magical.bonus.savingThrows
-														.map(formatMonarchVernacular)
+														.map(formatRegentVernacular)
 														.join(", ")}
 												</li>
 											)}
@@ -401,20 +399,20 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								{magical.resistance && magical.resistance.length > 0 && (
 									<p className="text-muted-foreground">
 										Resistance:{" "}
-										{magical.resistance.map(formatMonarchVernacular).join(", ")}
+										{magical.resistance.map(formatRegentVernacular).join(", ")}
 									</p>
 								)}
 								{magical.immunity && magical.immunity.length > 0 && (
 									<p className="text-muted-foreground">
 										Immunity:{" "}
-										{magical.immunity.map(formatMonarchVernacular).join(", ")}
+										{magical.immunity.map(formatRegentVernacular).join(", ")}
 									</p>
 								)}
 								{magical.vulnerability && magical.vulnerability.length > 0 && (
 									<p className="text-muted-foreground">
 										Vulnerability:{" "}
 										{magical.vulnerability
-											.map(formatMonarchVernacular)
+											.map(formatRegentVernacular)
 											.join(", ")}
 									</p>
 								)}
@@ -432,7 +430,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								<p className="font-heading text-foreground">Passive</p>
 								<ul className="list-disc list-inside text-muted-foreground">
 									{data.effects.passive.map((entry) => (
-										<li key={entry}>{formatMonarchVernacular(entry)}</li>
+										<li key={entry}>{formatRegentVernacular(entry)}</li>
 									))}
 								</ul>
 							</div>
@@ -450,16 +448,16 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 										>
 											<div className="flex flex-wrap items-center gap-2">
 												<span className="font-heading">
-													{formatMonarchVernacular(active.name)}
+													{formatRegentVernacular(active.name)}
 												</span>
 												{active.action && (
 													<Badge variant="outline" className="text-xs">
-														{formatMonarchVernacular(active.action)}
+														{formatRegentVernacular(active.action)}
 													</Badge>
 												)}
 												{active.frequency && (
 													<Badge variant="outline" className="text-xs">
-														{formatMonarchVernacular(active.frequency)}
+														{formatRegentVernacular(active.frequency)}
 													</Badge>
 												)}
 												{active.dc !== undefined && (
@@ -496,7 +494,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 											)}
 
 											<p className="text-muted-foreground">
-												{formatMonarchVernacular(active.description)}
+												{formatRegentVernacular(active.description)}
 											</p>
 										</div>
 									);
@@ -505,7 +503,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						)}
 						{data.effect && (
 							<p className="text-muted-foreground">
-								{formatMonarchVernacular(data.effect)}
+								{formatRegentVernacular(data.effect)}
 							</p>
 						)}
 					</div>
@@ -515,7 +513,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 			{data.description && (
 				<SystemWindow id="item-description" title="DESCRIPTION">
 					<p className="text-foreground leading-relaxed">
-						{formatMonarchVernacular(data.description)}
+						{formatRegentVernacular(data.description)}
 					</p>
 				</SystemWindow>
 			)}

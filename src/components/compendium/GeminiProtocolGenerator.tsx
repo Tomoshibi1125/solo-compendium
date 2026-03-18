@@ -29,7 +29,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
-import { useCharacterMonarchUnlocks } from "@/hooks/useRegentUnlocks";
+import { useCharacterRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import {
 	useCharacterSovereign,
@@ -45,9 +45,9 @@ import {
 } from "@/lib/geminiProtocol";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import {
-	formatMonarchVernacular,
-	MONARCH_LABEL,
-	MONARCH_LABEL_PLURAL,
+	formatRegentVernacular,
+	REGENT_LABEL,
+	REGENT_LABEL_PLURAL,
 } from "@/lib/vernacular";
 
 type RegentOption = {
@@ -68,7 +68,7 @@ export function GeminiProtocolGenerator() {
 	const campaignId = characterCampaign?.id ?? null;
 	const characterId = activeCharacter?.id;
 	const { unlocks: regentUnlocks = [], isLoading: regentUnlocksLoading } =
-		useCharacterMonarchUnlocks(characterId || "");
+		useCharacterRegentUnlocks(characterId || "");
 	const [selectedJob, setSelectedJob] = useState<string>("");
 	const [selectedPath, setSelectedPath] = useState<string>("");
 	const [selectedRegentA, setSelectedRegentA] = useState<string>("");
@@ -153,7 +153,7 @@ export function GeminiProtocolGenerator() {
 			let data = (canonicalResult.data as RegentOption[] | null) || [];
 			if (canonicalResult.error) {
 				const fallbackResult = await supabase
-					.from("compendium_monarchs")
+					.from("compendium_regents")
 					.select("*")
 					.order("name");
 				if (fallbackResult.error) throw fallbackResult.error;
@@ -299,8 +299,8 @@ export function GeminiProtocolGenerator() {
 			setIsGenerating(true);
 
 			const broadcastGeneration = (sovereign: GeneratedSovereign) => {
-				const title = formatMonarchVernacular(sovereign.title);
-				const name = formatMonarchVernacular(sovereign.name);
+				const title = formatRegentVernacular(sovereign.title);
+				const name = formatRegentVernacular(sovereign.name);
 				const contextMsg = `System Ascendant Gemini Protocol: Generated Sovereign [${name} - ${title}]`;
 
 				if (campaignId && characterId) {
@@ -430,42 +430,42 @@ export function GeminiProtocolGenerator() {
 	const lastAutoKey = useRef<string>("");
 	const displaySovereign = generatedSovereign
 		? {
-				name: formatMonarchVernacular(generatedSovereign.name),
-				title: formatMonarchVernacular(generatedSovereign.title),
-				jobName: formatMonarchVernacular(generatedSovereign.job.name),
-				pathName: formatMonarchVernacular(
+				name: formatRegentVernacular(generatedSovereign.name),
+				title: formatRegentVernacular(generatedSovereign.title),
+				jobName: formatRegentVernacular(generatedSovereign.job.name),
+				pathName: formatRegentVernacular(
 					generatedSovereign.path.name.replace("Path of the ", ""),
 				),
-				regentATheme: formatMonarchVernacular(
+				regentATheme: formatRegentVernacular(
 					(generatedSovereign as unknown as { regentA?: { theme?: string } })
 						.regentA?.theme,
 				),
-				regentBTheme: formatMonarchVernacular(
+				regentBTheme: formatRegentVernacular(
 					(generatedSovereign as unknown as { regentB?: { theme?: string } })
 						.regentB?.theme,
 				),
-				fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
-				powerMultiplier: formatMonarchVernacular(
+				fusionTheme: formatRegentVernacular(generatedSovereign.fusion_theme),
+				powerMultiplier: formatRegentVernacular(
 					generatedSovereign.power_multiplier,
 				),
-				fusionStability: formatMonarchVernacular(
+				fusionStability: formatRegentVernacular(
 					generatedSovereign.fusion_stability,
 				),
-				description: formatMonarchVernacular(generatedSovereign.description),
-				fusionDescription: formatMonarchVernacular(
+				description: formatRegentVernacular(generatedSovereign.description),
+				fusionDescription: formatRegentVernacular(
 					generatedSovereign.fusion_description,
 				),
 				abilities: generatedSovereign.abilities.map((ability) => ({
 					...ability,
-					name: formatMonarchVernacular(ability.name),
-					description: formatMonarchVernacular(ability.description),
+					name: formatRegentVernacular(ability.name),
+					description: formatRegentVernacular(ability.description),
 					action_type: ability.action_type
-						? formatMonarchVernacular(ability.action_type)
+						? formatRegentVernacular(ability.action_type)
 						: null,
 					recharge: ability.recharge
-						? formatMonarchVernacular(ability.recharge)
+						? formatRegentVernacular(ability.recharge)
 						: null,
-					origin_sources: ability.origin_sources.map(formatMonarchVernacular),
+					origin_sources: ability.origin_sources.map(formatRegentVernacular),
 				})),
 			}
 		: null;
@@ -478,7 +478,7 @@ export function GeminiProtocolGenerator() {
 			autoIssues.push("Active character is missing a Path.");
 		if (regentUnlocks.length < 2)
 			autoIssues.push(
-				`Unlock two ${MONARCH_LABEL_PLURAL} to auto-generate a Sovereign.`,
+				`Unlock two ${REGENT_LABEL_PLURAL} to auto-generate a Sovereign.`,
 			);
 		if (activeCharacter?.job && !selectedJobEntry)
 			autoIssues.push("No matching Job found in the compendium.");
@@ -551,7 +551,7 @@ export function GeminiProtocolGenerator() {
 					combinations available
 				</p>
 				<p className="text-sm text-muted-foreground italic">
-					Any Job + Path + {MONARCH_LABEL} A + {MONARCH_LABEL} B template
+					Any Job + Path + {REGENT_LABEL} A + {REGENT_LABEL} B template
 					qualifies for a Sovereign overlay.
 				</p>
 				<p className="text-xs text-muted-foreground">
@@ -589,7 +589,7 @@ export function GeminiProtocolGenerator() {
 							<div className="text-sm text-muted-foreground">
 								Sovereign fusion auto-syncs from your active character. The
 								protocol triggers automatically once your Job, Path, and{" "}
-								{MONARCH_LABEL} pair are complete.
+								{REGENT_LABEL} pair are complete.
 							</div>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div className="space-y-1">
@@ -611,21 +611,21 @@ export function GeminiProtocolGenerator() {
 								</div>
 								<div className="space-y-1">
 									<div className="text-xs uppercase tracking-wide text-muted-foreground">
-										Primary {MONARCH_LABEL}
+										Primary {REGENT_LABEL}
 									</div>
 									<div className="font-medium">
 										{selectedRegentAEntry
-											? `${formatMonarchVernacular(selectedRegentAEntry.title || selectedRegentAEntry.name)} (${selectedRegentAEntry.theme})`
+											? `${formatRegentVernacular(selectedRegentAEntry.title || selectedRegentAEntry.name)} (${selectedRegentAEntry.theme})`
 											: "Not set"}
 									</div>
 								</div>
 								<div className="space-y-1">
 									<div className="text-xs uppercase tracking-wide text-muted-foreground">
-										Secondary {MONARCH_LABEL}
+										Secondary {REGENT_LABEL}
 									</div>
 									<div className="font-medium">
 										{selectedRegentBEntry
-											? `${formatMonarchVernacular(selectedRegentBEntry.title || selectedRegentBEntry.name)} (${selectedRegentBEntry.theme})`
+											? `${formatRegentVernacular(selectedRegentBEntry.title || selectedRegentBEntry.name)} (${selectedRegentBEntry.theme})`
 											: "Not set"}
 									</div>
 								</div>
@@ -689,7 +689,7 @@ export function GeminiProtocolGenerator() {
 							{/* Regent A Selection */}
 							<div className="space-y-2">
 								<p className="text-sm font-medium">
-									Primary {MONARCH_LABEL} (Dominant)
+									Primary {REGENT_LABEL} (Dominant)
 								</p>
 								<Select
 									value={selectedRegentA}
@@ -697,7 +697,7 @@ export function GeminiProtocolGenerator() {
 								>
 									<SelectTrigger>
 										<SelectValue
-											placeholder={`Select Primary ${MONARCH_LABEL}...`}
+											placeholder={`Select Primary ${REGENT_LABEL}...`}
 										/>
 									</SelectTrigger>
 									<SelectContent>
@@ -707,7 +707,7 @@ export function GeminiProtocolGenerator() {
 												value={regent.id}
 												disabled={regent.id === selectedRegentB}
 											>
-												{formatMonarchVernacular(regent.title || regent.name)} (
+												{formatRegentVernacular(regent.title || regent.name)} (
 												{regent.theme})
 											</SelectItem>
 										))}
@@ -718,7 +718,7 @@ export function GeminiProtocolGenerator() {
 							{/* Regent B Selection */}
 							<div className="space-y-2">
 								<p className="text-sm font-medium">
-									Secondary {MONARCH_LABEL} (Merged)
+									Secondary {REGENT_LABEL} (Merged)
 								</p>
 								<Select
 									value={selectedRegentB}
@@ -726,7 +726,7 @@ export function GeminiProtocolGenerator() {
 								>
 									<SelectTrigger>
 										<SelectValue
-											placeholder={`Select Secondary ${MONARCH_LABEL}...`}
+											placeholder={`Select Secondary ${REGENT_LABEL}...`}
 										/>
 									</SelectTrigger>
 									<SelectContent>
@@ -736,7 +736,7 @@ export function GeminiProtocolGenerator() {
 												value={regent.id}
 												disabled={regent.id === selectedRegentA}
 											>
-												{formatMonarchVernacular(regent.title || regent.name)} (
+												{formatRegentVernacular(regent.title || regent.name)} (
 												{regent.theme})
 											</SelectItem>
 										))}

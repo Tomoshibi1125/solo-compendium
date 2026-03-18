@@ -1,6 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface ConditionData {
 	id: string;
@@ -19,7 +19,7 @@ interface ConditionData {
 }
 
 export const ConditionDetail = ({ data }: { data: ConditionData }) => {
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const effects =
 		(Array.isArray(data.condition_effects)
 			? data.condition_effects
@@ -35,7 +35,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 				<div className="flex items-start gap-3">
 					<AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0" />
 					<p className="text-foreground">
-						{formatMonarchVernacular(data.description)}
+						{formatRegentVernacular(data.description)}
 					</p>
 				</div>
 			</SystemWindow>
@@ -45,21 +45,21 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 					{data.condition_duration && (
 						<SystemWindow title="DURATION" compact>
 							<p className="text-sm text-muted-foreground">
-								{formatMonarchVernacular(data.condition_duration)}
+								{formatRegentVernacular(data.condition_duration)}
 							</p>
 						</SystemWindow>
 					)}
 					{data.condition_save && (
 						<SystemWindow title="SAVING THROW" compact>
 							<p className="text-sm text-muted-foreground">
-								{formatMonarchVernacular(data.condition_save.type || "")}
+								{formatRegentVernacular(data.condition_save.type || "")}
 								{typeof data.condition_save.dc === "number"
 									? ` DC ${data.condition_save.dc}`
 									: ""}
 							</p>
 							{data.condition_save.description && (
 								<p className="text-xs text-muted-foreground mt-1">
-									{formatMonarchVernacular(data.condition_save.description)}
+									{formatRegentVernacular(data.condition_save.description)}
 								</p>
 							)}
 						</SystemWindow>
@@ -77,7 +77,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 								className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4"
 							>
 								<span className="text-foreground">
-									{formatMonarchVernacular(effect)}
+									{formatRegentVernacular(effect)}
 								</span>
 							</li>
 						))}
@@ -94,7 +94,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 								className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4"
 							>
 								<span className="text-foreground">
-									{formatMonarchVernacular(step)}
+									{formatRegentVernacular(step)}
 								</span>
 							</li>
 						))}

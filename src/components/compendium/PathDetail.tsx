@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface PathData {
 	id: string;
@@ -37,7 +37,7 @@ interface PathFeature {
 }
 
 export const PathDetail = ({ data }: { data: PathData }) => {
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const pathLevel = data.level ?? data.path_level ?? undefined;
 	const [features, setFeatures] = useState<PathFeature[]>([]);
 	const [jobName, setJobName] = useState<string | null>(data.jobName ?? null);
@@ -153,7 +153,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 						<p className="text-muted-foreground mt-1">
 							Subclass of{" "}
 							<span className="font-semibold">
-								{formatMonarchVernacular(jobName || data.jobName || "")}
+								{formatRegentVernacular(jobName || data.jobName || "")}
 							</span>
 						</p>
 					)}
@@ -169,11 +169,11 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			<div>
 				<h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
 				<p className="text-muted-foreground leading-relaxed">
-					{formatMonarchVernacular(data.description)}
+					{formatRegentVernacular(data.description)}
 				</p>
 				{data.flavor_text && (
 					<p className="text-muted-foreground leading-relaxed mt-3 italic">
-						{formatMonarchVernacular(data.flavor_text)}
+						{formatRegentVernacular(data.flavor_text)}
 					</p>
 				)}
 			</div>
@@ -193,7 +193,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 						)}
 						{data.prerequisites && (
 							<div className="text-sm text-muted-foreground">
-								Prerequisites: {formatMonarchVernacular(data.prerequisites)}
+								Prerequisites: {formatRegentVernacular(data.prerequisites)}
 							</div>
 						)}
 					</div>
@@ -218,13 +218,13 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 										Level {feature.level}
 									</span>
 									<span className="font-semibold">
-										{formatMonarchVernacular(
+										{formatRegentVernacular(
 											feature.display_name || feature.name,
 										)}
 									</span>
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{formatMonarchVernacular(feature.description)}
+									{formatRegentVernacular(feature.description)}
 								</p>
 								{(feature.action_type ||
 									feature.recharge ||
@@ -232,17 +232,17 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 									<div className="flex gap-4 text-xs text-muted-foreground mt-2">
 										{feature.action_type && (
 											<span>
-												Action: {formatMonarchVernacular(feature.action_type)}
+												Action: {formatRegentVernacular(feature.action_type)}
 											</span>
 										)}
 										{feature.recharge && (
 											<span>
-												Recharge: {formatMonarchVernacular(feature.recharge)}
+												Recharge: {formatRegentVernacular(feature.recharge)}
 											</span>
 										)}
 										{feature.uses_formula && (
 											<span>
-												Uses: {formatMonarchVernacular(feature.uses_formula)}
+												Uses: {formatRegentVernacular(feature.uses_formula)}
 											</span>
 										)}
 									</div>
@@ -263,27 +263,25 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 						{abilityFeatures.map((ability) => (
 							<div key={ability.id} className="p-4 bg-card border rounded-lg">
 								<h4 className="font-semibold mb-2">
-									{formatMonarchVernacular(
-										ability.display_name || ability.name,
-									)}
+									{formatRegentVernacular(ability.display_name || ability.name)}
 								</h4>
 								<p className="text-sm text-muted-foreground mb-3">
-									{formatMonarchVernacular(ability.description)}
+									{formatRegentVernacular(ability.description)}
 								</p>
 								<div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
 									{ability.action_type && (
 										<span>
-											Action: {formatMonarchVernacular(ability.action_type)}
+											Action: {formatRegentVernacular(ability.action_type)}
 										</span>
 									)}
 									{ability.recharge && (
 										<span>
-											Recharge: {formatMonarchVernacular(ability.recharge)}
+											Recharge: {formatRegentVernacular(ability.recharge)}
 										</span>
 									)}
 									{ability.uses_formula && (
 										<span>
-											Uses: {formatMonarchVernacular(ability.uses_formula)}
+											Uses: {formatRegentVernacular(ability.uses_formula)}
 										</span>
 									)}
 								</div>
@@ -300,7 +298,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 					<div className="flex flex-wrap gap-2">
 						{data.tags.map((tag, _index) => (
 							<Badge key={tag} variant="secondary" className="capitalize">
-								{formatMonarchVernacular(tag.replace("-", " "))}
+								{formatRegentVernacular(tag.replace("-", " "))}
 							</Badge>
 						))}
 					</div>
@@ -310,7 +308,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			{/* Source */}
 			{data.source_book && (
 				<div className="text-sm text-muted-foreground">
-					Source: {formatMonarchVernacular(data.source_book)}
+					Source: {formatRegentVernacular(data.source_book)}
 				</div>
 			)}
 		</div>

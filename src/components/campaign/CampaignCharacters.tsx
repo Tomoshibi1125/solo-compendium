@@ -25,7 +25,7 @@ import {
 } from "@/hooks/useCampaignCharacters";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import { useCharacters } from "@/hooks/useCharacters";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface CampaignCharactersProps {
 	campaignId: string;
@@ -128,7 +128,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 										{share.characters && (
 											<p className="text-xs text-muted-foreground">
 												Level {share.characters.level}{" "}
-												{formatMonarchVernacular(share.characters.job)}
+												{formatRegentVernacular(share.characters.job)}
 											</p>
 										)}
 									</div>
@@ -178,7 +178,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 								{availableCharacters.map((char) => (
 									<SelectItem key={char.id} value={char.id}>
 										{char.name} - Level {char.level}{" "}
-										{formatMonarchVernacular(char.job ?? "")}
+										{formatRegentVernacular(char.job ?? "")}
 									</SelectItem>
 								))}
 							</SelectContent>

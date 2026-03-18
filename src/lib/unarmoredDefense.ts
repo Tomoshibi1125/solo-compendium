@@ -1,5 +1,4 @@
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type UnarmoredDefenseJob = "Striker" | "Berserker";
+export type UnarmoredDefenseJob = "Striker" | "Berserker";
 
 export function getUnarmoredDefenseBaseAC(
 	jobName: string | null | undefined,

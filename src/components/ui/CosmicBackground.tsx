@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
+import { DynamicStyle } from "./DynamicStyle";
 import { GateEnergyFlow } from "./GateEnergyFlow";
 
 interface HexNode {
@@ -219,22 +220,23 @@ export const CosmicBackground = ({
 			)}
 		>
 			{/* Base canvas for data streams */}
-			<canvas
+			<DynamicStyle
+				as="canvas"
 				ref={canvasRef}
 				className="absolute inset-0 w-full h-full"
-				style={{ opacity: finalIntensity === "low" ? 0.3 : 0.8 }}
+				vars={{ opacity: finalIntensity === "low" ? 0.3 : 0.8 }}
 			/>
 
 			{/* Floating System Hexagons */}
 			<div ref={hexRef} className="absolute inset-0 overflow-hidden">
 				{hexNodes.map((node) => (
-					<div
+					<DynamicStyle
 						key={node.id}
 						className={cn(
 							"absolute flex items-center justify-center",
 							enableAnimation && "animate-spin-slow",
 						)}
-						style={{
+						vars={{
 							left: `${node.x}%`,
 							top: `${node.y}%`,
 							width: `${node.size}px`,
@@ -250,45 +252,48 @@ export const CosmicBackground = ({
 						}}
 					>
 						{/* CSS Hexagon shape */}
-						<svg
+						<DynamicStyle
+							as="svg"
 							viewBox="0 0 100 100"
 							className="w-full h-full overflow-visible"
 						>
 							<title>Hexagon Theme Background Overlay</title>
-							<polygon
+							<DynamicStyle
+								as="polygon"
 								points="50 3, 93 28, 93 72, 50 97, 7 72, 7 28"
 								fill="none"
 								stroke={node.color}
 								strokeWidth="1"
 								className={cn(enableAnimation && "animate-pulse")}
-								style={{
+								vars={{
 									filter: `drop-shadow(0 0 10px ${node.color})`,
 									animationDuration: `${3 + (node.id % 3)}s`,
 								}}
 							/>
 							{/* Inner geometric accent */}
 							{node.id % 2 === 0 && (
-								<circle
+								<DynamicStyle
+									as="circle"
 									cx="50"
 									cy="50"
 									r="3"
 									fill={node.color}
 									className={cn(enableAnimation && "animate-ping")}
-									style={{ animationDuration: "4s" }}
+									vars={{ animationDuration: "4s" }}
 								/>
 							)}
-						</svg>
-					</div>
+						</DynamicStyle>
+					</DynamicStyle>
 				))}
 			</div>
 
 			{/* Sharp Umbral Ash / Cyan Particles (Rising) */}
 			<div ref={ashRef} className="absolute inset-0 overflow-hidden">
 				{ashParticles.map((particle) => (
-					<div
+					<DynamicStyle
 						key={particle.id}
 						className="absolute bg-accent rounded-sm shadow-[0_0_8px_hsl(var(--accent))]" // Sharp square particles
-						style={{
+						vars={{
 							left: `${particle.x}%`,
 							top: `${particle.y}%`,
 							width: `${particle.size}px`,
@@ -309,9 +314,10 @@ export const CosmicBackground = ({
 			</div>
 
 			{/* Base Vignette fading to Obsidian */}
-			<div
+			<DynamicStyle
+				as="div"
 				className="absolute inset-0"
-				style={{
+				vars={{
 					background:
 						"radial-gradient(circle at center, transparent 30%, hsl(var(--background)) 100%)",
 				}}

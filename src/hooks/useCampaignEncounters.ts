@@ -46,8 +46,7 @@ export const useCampaignEncounters = (campaignId: string) => {
 	});
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useCampaignEncounterEntries = (encounterId: string | null) => {
+export const useCampaignEncounterEntries = (encounterId: string | null) => {
 	return useQuery({
 		queryKey: ["campaigns", "encounters", encounterId, "entries"],
 		queryFn: async (): Promise<EncounterEntryRow[]> => {

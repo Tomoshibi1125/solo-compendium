@@ -2,7 +2,7 @@ import { Coins, Shield, Sword, Weight } from "lucide-react";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface EquipmentData {
 	id: string;
@@ -40,7 +40,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 		data.equipment_type.includes("ranged");
 	const isArmor =
 		data.equipment_type.includes("armor") || data.equipment_type === "shield";
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
+	const displayName = formatRegentVernacular(data.display_name || data.name);
 
 	return (
 		<div className="space-y-6">
@@ -63,19 +63,19 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						<Badge variant="secondary">
-							{formatMonarchVernacular(
+							{formatRegentVernacular(
 								typeLabels[data.equipment_type] || data.equipment_type,
 							)}
 						</Badge>
 						{data.source_book && (
 							<Badge variant="outline">
-								{formatMonarchVernacular(data.source_book)}
+								{formatRegentVernacular(data.source_book)}
 							</Badge>
 						)}
 					</div>
 					{data.description && (
 						<p className="text-muted-foreground leading-relaxed text-base">
-							{formatMonarchVernacular(data.description)}
+							{formatRegentVernacular(data.description)}
 						</p>
 					)}
 				</div>
@@ -109,7 +109,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 						</div>
 						{data.damage_type && (
 							<span className="text-xs text-muted-foreground">
-								{formatMonarchVernacular(data.damage_type)}
+								{formatRegentVernacular(data.damage_type)}
 							</span>
 						)}
 					</SystemWindow>
@@ -133,7 +133,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					<div className="flex flex-wrap gap-2">
 						{data.properties.map((prop) => (
 							<Badge key={prop} variant="outline" className="capitalize">
-								{formatMonarchVernacular(prop)}
+								{formatRegentVernacular(prop)}
 							</Badge>
 						))}
 					</div>

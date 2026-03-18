@@ -79,6 +79,9 @@ const EnhancedCard = ({
 	const [isHovered, setIsHovered] = useState(false);
 	const [imageError, setImageError] = useState(false);
 
+	// remove accessibility props from div to avoid Biome warnings
+	const { role: _role, tabIndex: _tabIndex, ...divProps } = props;
+
 	const handleImageError = () => {
 		setImageError(true);
 	};
@@ -161,32 +164,32 @@ const EnhancedCard = ({
 	};
 
 	const cardContent = (
-		// biome-ignore lint/a11y/noStaticElementInteractions: Interaction is conditional via props
 		<div
 			className={cn(
 				"relative overflow-hidden rounded-xl",
 				cardVariants[variant],
-				interactive && "cursor-pointer group",
+				interactive && "group",
 				loading && "opacity-70",
 				className,
 			)}
-			role={interactive ? "button" : undefined}
-			tabIndex={interactive ? 0 : undefined}
-			onKeyDown={
-				interactive
-					? (e) => {
-							if (e.key === "Enter" || e.key === " ") {
-								e.preventDefault();
-								onClick?.();
-							}
-						}
-					: undefined
-			}
-			onClick={interactive ? onClick : undefined}
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
-			{...props}
+			{...divProps}
 		>
+			{interactive && (
+				<button
+					type="button"
+					className="absolute inset-0 w-full h-full cursor-pointer z-0 opacity-0"
+					onClick={onClick}
+					aria-label={`View ${title}`}
+					onMouseEnter={() => setIsHovered(true)}
+					onMouseLeave={() => setIsHovered(false)}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" || e.key === " ") {
+							e.preventDefault();
+							onClick?.();
+						}
+					}}
+				/>
+			)}
 			{/* Dimensional Rift Edges for System Ascendant variants */}
 			{(variant === "sovereign" ||
 				variant === "gate" ||
@@ -201,7 +204,7 @@ const EnhancedCard = ({
 					{/* Energy Glow Layers */}
 					<div className="absolute -inset-1 rounded-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none">
 						{variant === "sovereign" && (
-							<div className="absolute inset-0 bg-gradient-to-r from-monarch-gold/20 via-shadow-purple/30 to-monarch-gold/20 blur-sm"></div>
+							<div className="absolute inset-0 bg-gradient-to-r from-regent-gold/20 via-shadow-purple/30 to-regent-gold/20 blur-sm"></div>
 						)}
 						{variant === "gate" && (
 							<div className="absolute inset-0 bg-gradient-to-r from-gate-s/20 via-gate-ss/30 to-gate-s/20 blur-sm"></div>
@@ -240,10 +243,10 @@ const EnhancedCard = ({
 				</div>
 			)}
 			{/* Card Content */}
-			<div className="relative z-10 p-6">
+			<div className="relative z-10 p-6 pointer-events-none">
 				{/* Header */}
 				<div className="flex items-start justify-between mb-4">
-					<div className="flex items-center space-x-3 flex-1 min-w-0">
+					<div className="flex items-center space-x-3 flex-1 min-w-0 pointer-events-auto">
 						{icon && (
 							<div className="flex-shrink-0 p-2 bg-background/60 rounded-lg">
 								{icon}
@@ -260,13 +263,13 @@ const EnhancedCard = ({
 					</div>
 
 					{isFavorite && (
-						<Star className="h-5 w-5 text-yellow-500 fill-current flex-shrink-0" />
+						<Star className="h-5 w-5 text-yellow-500 fill-current flex-shrink-0 pointer-events-auto" />
 					)}
 				</div>
 
 				{/* Image */}
 				{image && (
-					<div className="mb-4 -mx-6">
+					<div className="mb-4 -mx-6 pointer-events-auto">
 						<div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
 							{!imageError ? (
 								<img
@@ -291,23 +294,23 @@ const EnhancedCard = ({
 
 				{/* Description */}
 				{description && (
-					<p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
+					<p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3 pointer-events-auto">
 						{description}
 					</p>
 				)}
 
 				{/* Stats */}
-				{renderStats()}
+				<div className="pointer-events-auto">{renderStats()}</div>
 
 				{/* Children */}
-				{children}
+				<div className="pointer-events-auto">{children}</div>
 
 				{/* Actions */}
-				{renderActions()}
+				<div className="pointer-events-auto">{renderActions()}</div>
 			</div>
 			{/* Footer */}
 			{footer && (
-				<div className="px-6 py-4 bg-background/60 border-t border-border">
+				<div className="px-6 py-4 bg-background/60 border-t border-border relative z-20 pointer-events-auto">
 					{footer}
 				</div>
 			)}
@@ -325,7 +328,6 @@ const EnhancedCard = ({
 				</div>
 			)}
 			{/* Loading Overlay */}
-			export{" "}
 			{loading && (
 				<div className="absolute inset-0 bg-background/80 flex items-center justify-center z-20">
 					<div className="flex flex-col items-center space-y-3">

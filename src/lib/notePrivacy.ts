@@ -10,8 +10,8 @@
 
 // ─── Types ──────────────────────────────────────────────────
 
-type NoteVisibility = "private" | "shared" | "per-player";
-type NotePermission = "none" | "read" | "write";
+export type NoteVisibility = "private" | "shared" | "per-player";
+export type NotePermission = "none" | "read" | "write";
 
 export interface NotePrivacySettings {
 	/** Who can see this note */
@@ -60,8 +60,7 @@ export function createPrivacySettings(ownerId: string): NotePrivacySettings {
 /**
  * Create a new secured note
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function createSecuredNote(
+export function createSecuredNote(
 	title: string,
 	content: string,
 	campaignId: string,
@@ -91,7 +90,7 @@ function createSecuredNote(
 /**
  * Check if a user can VIEW a note's content
  */
-function canViewNote(
+export function canViewNote(
 	note: SecuredNote,
 	userId: string,
 	isGM: boolean,
@@ -134,7 +133,7 @@ export function canEditNote(
 /**
  * Check if a user can see the note exists (title visible in sidebar)
  */
-function canSeeNoteExists(
+export function canSeeNoteExists(
 	note: SecuredNote,
 	userId: string,
 	isGM: boolean,
@@ -158,7 +157,7 @@ function canSeeNoteExists(
 /**
  * Set visibility for a note
  */
-function setNoteVisibility(
+export function setNoteVisibility(
 	note: SecuredNote,
 	visibility: NoteVisibility,
 ): SecuredNote {
@@ -172,8 +171,7 @@ function setNoteVisibility(
 /**
  * Grant a player permission on a note
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function grantPlayerPermission(
+export function grantPlayerPermission(
 	note: SecuredNote,
 	playerId: string,
 	permission: NotePermission,
@@ -195,8 +193,7 @@ function grantPlayerPermission(
 /**
  * Revoke a player's permission (set to 'none')
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function revokePlayerPermission(
+export function revokePlayerPermission(
 	note: SecuredNote,
 	playerId: string,
 ): SecuredNote {
@@ -214,16 +211,14 @@ function revokePlayerPermission(
 /**
  * Share a note with all campaign members (set to 'shared')
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function shareWithAll(note: SecuredNote): SecuredNote {
+export function shareWithAll(note: SecuredNote): SecuredNote {
 	return setNoteVisibility(note, "shared");
 }
 
 /**
  * Make a note private (DM-only)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function makePrivate(note: SecuredNote): SecuredNote {
+export function makePrivate(note: SecuredNote): SecuredNote {
 	return setNoteVisibility(note, "private");
 }
 
@@ -243,8 +238,7 @@ export function filterVisibleNotes(
 /**
  * Filter notes that a user can read (content accessible)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function filterReadableNotes(
+export function filterReadableNotes(
 	notes: SecuredNote[],
 	userId: string,
 	isGM: boolean,

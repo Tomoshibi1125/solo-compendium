@@ -15,7 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const RIFT_RANKS = ["E", "D", "C", "B", "A", "S"];
 const RIFT_THEMES = [
@@ -28,7 +28,7 @@ const RIFT_THEMES = [
 	"Prime Architect's Domain",
 	"Necromantic Lab",
 	"Mana Nexus",
-	"Umbral Monarch's Memory",
+	"Umbral Regent's Memory",
 	"System Testing Ground",
 	"Post-Reset Fragment",
 ];
@@ -51,7 +51,7 @@ const BOSS_TYPES = [
 	"System Guardian",
 	"Corrupted Ascendant",
 	"Ancient Rift Beast",
-	"Monarch's Shadow",
+	"Regent's Shadow",
 	"Rift Core Manifestation",
 	"Time-Lost Entity",
 	"Dimensional Breach",
@@ -81,11 +81,11 @@ interface GeneratedRift {
 function generateRift(rank?: string): GeneratedRift {
 	const selectedRank =
 		rank || RIFT_RANKS[Math.floor(Math.random() * RIFT_RANKS.length)];
-	const theme = formatMonarchVernacular(
+	const theme = formatRegentVernacular(
 		RIFT_THEMES[Math.floor(Math.random() * RIFT_THEMES.length)],
 	);
 	const biome = RIFT_BIOMES[Math.floor(Math.random() * RIFT_BIOMES.length)];
-	const boss = formatMonarchVernacular(
+	const boss = formatRegentVernacular(
 		BOSS_TYPES[Math.floor(Math.random() * BOSS_TYPES.length)],
 	);
 	const numComplications = Math.floor(Math.random() * 3) + 1;
@@ -96,9 +96,9 @@ function generateRift(rank?: string): GeneratedRift {
 				() => COMPLICATIONS[Math.floor(Math.random() * COMPLICATIONS.length)],
 			),
 		),
-	].map(formatMonarchVernacular);
+	].map(formatRegentVernacular);
 
-	const description = formatMonarchVernacular(
+	const description = formatRegentVernacular(
 		`A ${selectedRank}-Rank Rift manifesting as ${biome} within the ${theme}. The Rift's core is protected by ${boss}. ${complications.length > 0 ? `Complications: ${complications.join(", ")}.` : ""}`,
 	);
 

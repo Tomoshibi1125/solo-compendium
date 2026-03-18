@@ -87,7 +87,7 @@ export interface Relic {
 export const comprehensiveRelics: Relic[] = [
 	// LEGENDARY WEAPONS
 	{
-		id: "monarchs-shadow-dagger",
+		id: "regents-shadow-dagger",
 		name: "Regent's Shadow Dagger",
 		description:
 			"A dagger forged from pure shadow energy, capable of piercing dimensional barriers and striking at the very essence of beings.",

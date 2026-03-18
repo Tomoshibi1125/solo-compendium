@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Art Pipeline React Hooks
  * React integration for the art generation system
  */

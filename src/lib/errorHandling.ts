@@ -53,7 +53,7 @@ export function getErrorMessage(error: unknown): string {
 /**
  * Extract detailed error information
  */
-function getErrorInfo(error: unknown): ErrorInfo {
+export function getErrorInfo(error: unknown): ErrorInfo {
 	const pgError = error as PostgrestError;
 
 	return {
@@ -67,8 +67,7 @@ function getErrorInfo(error: unknown): ErrorInfo {
 /**
  * Check if error is a network/connection error
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function isNetworkError(error: unknown): boolean {
+export function isNetworkError(error: unknown): boolean {
 	if (error instanceof Error) {
 		return (
 			error.message.includes("network") ||
@@ -83,8 +82,7 @@ function isNetworkError(error: unknown): boolean {
 /**
  * Check if error is an authentication error
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function isAuthError(error: unknown): boolean {
+export function isAuthError(error: unknown): boolean {
 	if (error instanceof Error) {
 		return (
 			error.message.includes("Not authenticated") ||
@@ -142,8 +140,7 @@ export function logErrorWithContext(
 /**
  * Create a standardized error handler for React Query mutations
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function createMutationErrorHandler(context: string) {
+export function createMutationErrorHandler(context: string) {
 	return (error: unknown) => {
 		logErrorWithContext(error, context);
 
@@ -159,8 +156,7 @@ function createMutationErrorHandler(context: string) {
 /**
  * Create a standardized error handler for React Query queries
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function createQueryErrorHandler(context: string) {
+export function createQueryErrorHandler(context: string) {
 	return (error: unknown) => {
 		logErrorWithContext(error, context);
 

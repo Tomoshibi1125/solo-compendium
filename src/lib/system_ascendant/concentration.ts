@@ -46,8 +46,9 @@ export function startConcentration(
 }
 
 // Maintain concentration (called at start of turn)
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function maintainConcentration(state: ConcentrationState): ConcentrationState {
+export function maintainConcentration(
+	state: ConcentrationState,
+): ConcentrationState {
 	if (!state.isConcentrating || !state.currentEffect) {
 		return state;
 	}
@@ -75,8 +76,7 @@ function maintainConcentration(state: ConcentrationState): ConcentrationState {
 }
 
 // Take damage while concentrating (SRD 5e: sets the DC for a required Constitution save)
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function takeConcentrationDamage(
+export function takeConcentrationDamage(
 	state: ConcentrationState,
 	damage: number,
 ): ConcentrationState {
@@ -108,8 +108,7 @@ export function endConcentration(
 }
 
 // Make concentration saving throw
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function makeConcentrationSave(
+export function makeConcentrationSave(
 	state: ConcentrationState,
 	conSaveModifier: number,
 	dc: number,

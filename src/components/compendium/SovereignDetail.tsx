@@ -22,8 +22,8 @@ interface SovereignData {
 	description: string;
 	job_id?: string;
 	path_id?: string;
-	monarch_a_id?: string;
-	monarch_b_id?: string;
+	regent_a_id?: string;
+	regent_b_id?: string;
 	fusion_theme?: string;
 	fusion_description?: string;
 	prerequisites?: string;
@@ -46,7 +46,7 @@ interface SovereignFeature {
 }
 
 interface FusionComponent {
-	type: "job" | "path" | "monarch";
+	type: "job" | "path" | "regent";
 	id: string;
 	name: string;
 }
@@ -116,28 +116,28 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					});
 			}
 
-			if (data.monarch_a_id) {
-				const regent = await resolveRef("regents", data.monarch_a_id);
+			if (data.regent_a_id) {
+				const regent = await resolveRef("regents", data.regent_a_id);
 				if (regent) {
 					const rawName =
 						(regent as { display_name?: string | null; name: string })
 							.display_name || regent.name;
 					components.push({
-						type: "monarch",
+						type: "regent",
 						id: regent.id || "",
 						name: formatRegentVernacular(rawName),
 					});
 				}
 			}
 
-			if (data.monarch_b_id) {
-				const regent = await resolveRef("regents", data.monarch_b_id);
+			if (data.regent_b_id) {
+				const regent = await resolveRef("regents", data.regent_b_id);
 				if (regent) {
 					const rawName =
 						(regent as { display_name?: string | null; name: string })
 							.display_name || regent.name;
 					components.push({
-						type: "monarch",
+						type: "regent",
 						id: regent.id || "",
 						name: formatRegentVernacular(rawName),
 					});
@@ -149,35 +149,29 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 		};
 
 		fetchData();
-	}, [
-		data.id,
-		data.job_id,
-		data.path_id,
-		data.monarch_a_id,
-		data.monarch_b_id,
-	]);
+	}, [data.id, data.job_id, data.path_id, data.regent_a_id, data.regent_b_id]);
 
 	const capstoneFeatures = features.filter((f) => f.is_capstone);
 	const coreFeatures = features.filter((f) => !f.is_capstone);
 
-	const getComponentIcon = (type: "job" | "path" | "monarch") => {
+	const getComponentIcon = (type: "job" | "path" | "regent") => {
 		switch (type) {
 			case "job":
 				return Swords;
 			case "path":
 				return GitBranch;
-			case "monarch":
+			case "regent":
 				return Crown;
 		}
 	};
 
-	const getComponentColor = (type: "job" | "path" | "monarch") => {
+	const getComponentColor = (type: "job" | "path" | "regent") => {
 		switch (type) {
 			case "job":
 				return "text-blue-400 bg-blue-500/10 border-blue-500/30";
 			case "path":
 				return "text-emerald-400 bg-emerald-500/10 border-emerald-500/30";
-			case "monarch":
+			case "regent":
 				return "text-amber-400 bg-amber-500/10 border-amber-500/30";
 		}
 	};
@@ -262,7 +256,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 										<Icon className="w-5 h-5 flex-shrink-0" />
 										<div>
 											<p className="text-xs text-muted-foreground capitalize">
-												{component.type === "monarch"
+												{component.type === "regent"
 													? REGENT_LABEL
 													: component.type}
 											</p>

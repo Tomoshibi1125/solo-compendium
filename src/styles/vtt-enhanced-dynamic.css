@@ -38,3 +38,14 @@
 	left: var(--menu-x);
 	top: var(--menu-y);
 }
+
+/* Weather particles */
+.vtt-weather-particle {
+	width: var(--particle-size);
+	height: var(--particle-size);
+	left: var(--particle-left);
+	top: var(--particle-top);
+	background-color: var(--particle-color);
+	animation: var(--particle-animation);
+	animation-delay: var(--particle-delay);
+}

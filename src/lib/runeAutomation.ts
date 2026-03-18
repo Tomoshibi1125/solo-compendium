@@ -2,14 +2,13 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { logger } from "./logger";
 
-type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
+export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 
 /**
  * Automatically learn runes based on character progression
  * Some runes may be learned through features or as rewards
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function autoLearnRunes(
+export async function autoLearnRunes(
 	characterId: string,
 	runeIds: string[],
 	isMastered: boolean = false,
@@ -38,8 +37,7 @@ async function autoLearnRunes(
  * Check if character can inscribe a rune on equipment
  * Validates requirements, equipment type, and existing inscriptions
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function canInscribeRune(
+export async function canInscribeRune(
 	characterId: string,
 	equipmentId: string,
 	runeId: string,
@@ -169,8 +167,7 @@ async function canInscribeRune(
 /**
  * Get all runes that can be inscribed on a piece of equipment
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function getAvailableRunesForEquipment(
+export async function getAvailableRunesForEquipment(
 	equipmentType: string,
 ): Promise<Rune[]> {
 	try {
@@ -293,7 +290,7 @@ const CASTER_JOBS = [
 const MARTIAL_JOBS = ["Assassin", "Berserker", "Destroyer", "Striker"];
 // All 14 canonical jobs are categorized above. Summoner and Idol are full casters.
 
-type RuneAbsorptionResult = {
+export type RuneAbsorptionResult = {
 	/** True if the character's archetype doesn't match the rune type */
 	isCrossType: boolean;
 	/** Recharge cadence for the learned ability */

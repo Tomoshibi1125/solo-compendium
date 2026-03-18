@@ -5,7 +5,7 @@
 /**
  * Check if device is mobile
  */
-function isMobile(): boolean {
+export function isMobile(): boolean {
 	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 		navigator.userAgent,
 	);
@@ -14,15 +14,14 @@ function isMobile(): boolean {
 /**
  * Check if device is touch-enabled
  */
-function isTouchDevice(): boolean {
+export function isTouchDevice(): boolean {
 	return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 }
 
 /**
  * Get viewport dimensions
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getViewportSize(): { width: number; height: number } {
+export function getViewportSize(): { width: number; height: number } {
 	return {
 		width: window.innerWidth,
 		height: window.innerHeight,
@@ -32,16 +31,14 @@ function getViewportSize(): { width: number; height: number } {
 /**
  * Check if viewport is small (mobile)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function isSmallViewport(): boolean {
+export function isSmallViewport(): boolean {
 	return window.innerWidth < 768;
 }
 
 /**
  * Prevent zoom on double tap (iOS)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function preventDoubleTapZoom() {
+export function preventDoubleTapZoom() {
 	let lastTouchEnd = 0;
 	document.addEventListener(
 		"touchend",
@@ -78,7 +75,7 @@ export function enableTouchOptimizations() {
 	applyTouchOptimizations();
 }
 
-function applyTouchOptimizations() {
+export function applyTouchOptimizations() {
 	if (typeof document === "undefined" || !document.body) return;
 
 	if (isTouchDevice()) {

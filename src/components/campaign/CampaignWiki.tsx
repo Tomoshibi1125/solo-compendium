@@ -343,7 +343,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 						<p className="text-sm text-muted-foreground max-w-md mt-2 font-heading">
 							Select an article from the index to read. Wrap titles in double
 							brackets to create cross-links (e.g.{" "}
-							<code>[[Shadow Monarch]]</code>).
+							<code>[[Shadow Regent]]</code>).
 						</p>
 					</div>
 				)}
@@ -437,7 +437,7 @@ function WikiEditorDialog({
 							<Input
 								value={title}
 								onChange={(e) => setTitle(e.target.value)}
-								placeholder="e.g. The Shadow Monarch"
+								placeholder="e.g. The Shadow Regent"
 								required
 								className="font-bold border-muted-foreground/30 focus-visible:ring-primary"
 							/>

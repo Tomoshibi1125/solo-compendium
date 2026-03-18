@@ -27,7 +27,7 @@ const DEFAULT_EXPIRY_DAYS = 30;
 /**
  * Load notifications from localStorage
  */
-function loadNotifications(): Notification[] {
+export function loadNotifications(): Notification[] {
 	try {
 		const stored = localStorage.getItem(STORAGE_KEY);
 		if (!stored) return [];
@@ -51,7 +51,7 @@ function loadNotifications(): Notification[] {
 /**
  * Save notifications to localStorage
  */
-function saveNotifications(notifications: Notification[]): void {
+export function saveNotifications(notifications: Notification[]): void {
 	try {
 		// Keep only the most recent notifications
 		const toSave = notifications
@@ -143,8 +143,7 @@ export function useNotifications() {
 /**
  * Helper to create notification from various sources
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function createNotification(
+export function createNotification(
 	type: NotificationType,
 	title: string,
 	options?: {

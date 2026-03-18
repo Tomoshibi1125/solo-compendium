@@ -95,7 +95,7 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
 /**
  * Apply parsed query operators to a Supabase query
  */
-type FilterableQuery<T> = {
+export type FilterableQuery<T> = {
 	gt: (column: string, value: unknown) => T;
 	lt: (column: string, value: unknown) => T;
 	gte: (column: string, value: unknown) => T;
@@ -105,8 +105,7 @@ type FilterableQuery<T> = {
 	contains: (column: string, value: unknown) => T;
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function applySearchOperators<T extends FilterableQuery<T>>(
+export function applySearchOperators<T extends FilterableQuery<T>>(
 	baseQuery: T,
 	parsed: ParsedSearchQuery,
 	tableName: string,
@@ -195,8 +194,7 @@ function applySearchOperators<T extends FilterableQuery<T>>(
 /**
  * Format search query with operators for display
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function formatSearchQuery(parsed: ParsedSearchQuery): string {
+export function formatSearchQuery(parsed: ParsedSearchQuery): string {
 	const parts: string[] = [];
 
 	if (parsed.text) {

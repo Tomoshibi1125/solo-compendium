@@ -21,7 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 const WORLD_EVENTS = [
 	"Rift Surge: Multiple Rifts appear simultaneously in an area",
@@ -32,7 +32,7 @@ const WORLD_EVENTS = [
 	"Mysterious Disappearances: Ascendants go missing in a specific area",
 	"New Rift Rank Discovered: Previously unknown Rift rank appears",
 	"System Anomaly: The System behaves unexpectedly",
-	"Monarch Activity: Evidence of Regent presence detected",
+	"Regent Activity: Evidence of Regent presence detected",
 	"Relic Discovery: Ancient relic found, causing a rush",
 	"Rift Breach: A Rift fails to close properly",
 	"Ascendant Awakening Event: Multiple new Ascendants awaken at once",
@@ -57,7 +57,7 @@ const NPC_ENCOUNTERS = [
 	"Rift Researcher: Scientist studying Rifts",
 	"Former S-Rank: Retired ascendant with stories and advice",
 	"Umbral Legionnaire: Encounter with a shadow creature",
-	"Monarch Cultist: Dangerous individual with Regent ties",
+	"Regent Cultist: Dangerous individual with Regent ties",
 	"Protocol Warden: Experienced Warden offers guidance",
 	"Corporate Representative: Business person with an offer",
 	"Media Reporter: Journalist investigating Rifts",
@@ -94,21 +94,21 @@ function generateEvent(
 	if (type === "world") {
 		const event = WORLD_EVENTS[Math.floor(Math.random() * WORLD_EVENTS.length)];
 		title = "World Event";
-		description = formatMonarchVernacular(event);
+		description = formatRegentVernacular(event);
 		impact =
 			"This event affects the larger world and may create new opportunities or complications for the party.";
 	} else if (type === "encounter") {
 		const encounter =
 			NPC_ENCOUNTERS[Math.floor(Math.random() * NPC_ENCOUNTERS.length)];
 		title = "NPC Encounter";
-		description = formatMonarchVernacular(encounter);
+		description = formatRegentVernacular(encounter);
 		impact =
 			"This encounter can provide roleplay opportunities, information, resources, or complications.";
 	} else {
 		const complication =
 			COMPLICATIONS[Math.floor(Math.random() * COMPLICATIONS.length)];
 		title = "Complication";
-		description = formatMonarchVernacular(complication);
+		description = formatRegentVernacular(complication);
 		impact =
 			"This complication adds difficulty or urgency to the current situation.";
 	}

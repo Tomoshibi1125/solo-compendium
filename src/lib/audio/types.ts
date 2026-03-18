@@ -85,8 +85,7 @@ export interface AudioPlayerState {
 }
 
 // Sound effect categories
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const SOUND_CATEGORIES = {
+export const SOUND_CATEGORIES = {
 	MUSIC: "music",
 	AMBIENT: "ambient",
 	EFFECT: "effect",
@@ -102,8 +101,7 @@ const SOUND_CATEGORIES = {
 } as const;
 
 // Mood tags for filtering
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const MOOD_TAGS = [
+export const MOOD_TAGS = [
 	"epic",
 	"tense",
 	"mysterious",
@@ -124,8 +122,7 @@ const MOOD_TAGS = [
 ] as const;
 
 // Legal-safe audio sources
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const AUDIO_SOURCES = {
+export const AUDIO_SOURCES = {
 	YOUTUBE_AUDIO_LIBRARY: "YouTube Audio Library",
 	FREESOUND: "FreeSound (CC0)",
 	OPENGAMEART: "OpenGameArt.org",
@@ -135,8 +132,7 @@ const AUDIO_SOURCES = {
 } as const;
 
 // Default playlists for different scenarios
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const DEFAULT_PLAYLISTS = {
+export const DEFAULT_PLAYLISTS = {
 	COMBAT: {
 		id: "default-combat",
 		name: "Combat Music",
@@ -208,8 +204,7 @@ export function formatDuration(seconds: number): string {
 	return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getLicenseInfo(license: string): string {
+export function getLicenseInfo(license: string): string {
 	const licenseMap: Record<string, string> = {
 		CC0: "Public Domain - No attribution required",
 		"CC BY": "Creative Commons - Attribution required",
@@ -220,8 +215,7 @@ function getLicenseInfo(license: string): string {
 	return licenseMap[license] || license;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function isValidAudioFile(file: File): boolean {
+export function isValidAudioFile(file: File): boolean {
 	const validTypes = [
 		"audio/mpeg",
 		"audio/wav",

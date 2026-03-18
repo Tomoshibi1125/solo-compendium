@@ -7,8 +7,7 @@ import { useCallback, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { aiService } from "@/lib/ai/aiService";
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface AIEnhanceResult {
+export interface AIEnhanceResult {
 	text: string;
 	model?: string;
 }

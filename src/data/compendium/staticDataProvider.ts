@@ -7,7 +7,7 @@
  * Authoritative source: internal compendium data packs already ingested into the app.
  */
 
-import type { MonarchExtended } from "@/integrations/supabase/supabaseExtended";
+import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 
 type DataLoader<T> = () => Promise<T[]>;
@@ -24,12 +24,13 @@ const dataLoaders = {
 		import("./runes").then((module) => module.systemAscendantRunes),
 	backgrounds: () =>
 		import("./backgrounds").then((module) => module.backgrounds),
-	monarchs: () => import("./monarchs").then((module) => module.regents),
 	regents: () => import("./regents").then((module) => module.regents),
 	paths: () => import("./paths").then((module) => module.paths),
 	conditions: () => import("./conditions").then((module) => module.conditions),
 	comprehensiveFeats: () =>
-		import("./feats-comprehensive").then((module) => module.comprehensiveFeats),
+		import("./feats-comprehensive").then(
+			(module) => module.comprehensiveFeats || [],
+		),
 	comprehensiveSkills: () =>
 		import("./skills-comprehensive").then(
 			(module) => module.comprehensiveSkills,
@@ -203,16 +204,16 @@ export interface StaticCompendiumEntry {
 	condition_removal?: string[] | null;
 	condition_save?: { type?: string; dc?: number; description?: string } | null;
 	// Regent detail support (static fallback)
-	monarch_title?: string | null;
-	monarch_theme?: string | null;
-	monarch_damage_type?: string | null;
-	monarch_manifestation?: string | null;
-	monarch_corruption_risk?: string | null;
-	monarch_lore?: string | null;
-	monarch_abilities?: Array<Record<string, unknown>> | null;
-	monarch_features?: Array<Record<string, unknown>> | null;
-	monarch_mechanics?: Record<string, unknown> | null;
-	monarch_requirements?: Record<string, unknown> | null;
+	regent_title?: string | null;
+	regent_theme?: string | null;
+	regent_damage_type?: string | null;
+	regent_manifestation?: string | null;
+	regent_corruption_risk?: string | null;
+	regent_lore?: string | null;
+	regent_abilities?: Array<Record<string, unknown>> | null;
+	regent_features?: Array<Record<string, unknown>> | null;
+	regent_mechanics?: Record<string, unknown> | null;
+	regent_requirements?: Record<string, unknown> | null;
 	// Feat detail support
 	benefits?: string[] | null;
 	// Path detail support
@@ -234,7 +235,6 @@ interface StaticDataProvider {
 	getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getMonarchs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -559,7 +559,7 @@ type StaticBackgroundSource = {
 	};
 };
 
-type StaticMonarchSource = {
+type StaticRegentSource = {
 	id?: string;
 	name: string;
 	description: string;
@@ -1093,18 +1093,18 @@ function transformBackground(
 }
 
 // Derive class_features for regents that only have features[] + abilities[] with power_level
-function deriveMonarchClassFeatures(
-	monarch: StaticMonarchSource,
+function deriveRegentClassFeatures(
+	regent: StaticRegentSource,
 ): Array<{ level: number; name: string; description: string }> | null {
 	// If the regent already has class_features (like Umbral Regent), use them
-	const raw = (monarch as MonarchExtended).class_features;
+	const raw = (regent as RegentExtended).class_features;
 	if (Array.isArray(raw) && raw.length > 0)
 		return raw as Array<{ level: number; name: string; description: string }>;
 
-	const features = (monarch as MonarchExtended).features as
+	const features = (regent as RegentExtended).features as
 		| Array<{ name: string; description: string; power_level?: number }>
 		| undefined;
-	const abilities = monarch.abilities as
+	const abilities = regent.abilities as
 		| Array<{
 				name: string;
 				description: string;
@@ -1153,42 +1153,41 @@ function deriveMonarchClassFeatures(
 	return result.length > 0 ? result : null;
 }
 
-function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
-	const classFeatures = deriveMonarchClassFeatures(monarch);
+function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
+	const classFeatures = deriveRegentClassFeatures(regent);
 
 	return {
-		id: monarch.id || monarch.name.toLowerCase().replace(/\s+/g, "-"),
-		name: monarch.name,
-		display_name: monarch.name,
-		description: monarch.description || "",
+		id: regent.id || regent.name.toLowerCase().replace(/\s+/g, "-"),
+		name: regent.name,
+		display_name: regent.name,
+		description: regent.description || "",
 		created_at: new Date().toISOString(),
-		tags:
-			monarch.tags || (["monarch", monarch.theme].filter(Boolean) as string[]),
-		source_book: monarch.source_book || "System Ascendant Canon",
-		image_url: monarch.image,
-		title: monarch.title,
-		theme: monarch.theme,
-		rank: monarch.rank || null,
+		tags: regent.tags || (["regent", regent.theme].filter(Boolean) as string[]),
+		source_book: regent.source_book || "System Ascendant Canon",
+		image_url: regent.image,
+		title: regent.title,
+		theme: regent.theme,
+		rank: regent.rank || null,
 		rarity:
-			monarch.rank === "S"
+			regent.rank === "S"
 				? "legendary"
-				: monarch.rank === "A"
+				: regent.rank === "A"
 					? "epic"
-					: monarch.rank === "B"
+					: regent.rank === "B"
 						? "rare"
-						: monarch.rank === "C"
+						: regent.rank === "C"
 							? "uncommon"
 							: "common",
-		// Monarch-specific fields for MonarchDetail.tsx
-		monarch_title: monarch.title || null,
-		monarch_theme: monarch.theme || null,
-		monarch_abilities:
-			(monarch.abilities as Array<Record<string, unknown>>) || null,
-		monarch_features:
-			(monarch.features as Array<Record<string, unknown>>) || null,
-		monarch_mechanics: (monarch.mechanics as Record<string, unknown>) || null,
-		monarch_requirements:
-			(monarch.requirements as Record<string, unknown>) || null,
+		// Regent-specific fields for RegentDetail.tsx
+		regent_title: regent.title || null,
+		regent_theme: regent.theme || null,
+		regent_abilities:
+			(regent.abilities as Array<Record<string, unknown>>) || null,
+		regent_features:
+			(regent.features as Array<Record<string, unknown>>) || null,
+		regent_mechanics: (regent.mechanics as Record<string, unknown>) || null,
+		regent_requirements:
+			(regent.requirements as Record<string, unknown>) || null,
 		// Derived 5e-style class features for all regents
 		class_features: classFeatures,
 	};
@@ -1392,42 +1391,32 @@ export const staticDataProvider: StaticDataProvider = {
 	},
 
 	getRegents: async (search?: string) => {
-		const regents = await loadData<StaticMonarchSource>("regents");
+		const regents = await loadData<StaticRegentSource>("regents");
 		const filtered = filterBySearch(regents, search, [
 			"name",
 			"description",
 			"title",
 			"theme",
 		]);
-		return filtered.map(transformMonarch);
-	},
-
-	getMonarchs: async (search?: string) => {
-		const regents = await loadData<StaticMonarchSource>("monarchs");
-		const filtered = filterBySearch(regents, search, [
-			"name",
-			"description",
-			"title",
-			"theme",
-		]);
-		return filtered.map(transformMonarch);
+		return filtered.map(transformRegent);
 	},
 
 	getFeats: async (search?: string) => {
-		const comprehensiveFeats = await loadData<{
-			id: string;
-			name: string;
-			description: string;
-			benefits?: string;
-			prerequisites?: string | Record<string, string | number | boolean>;
-			source?: string;
-		}>("comprehensiveFeats");
+		const comprehensiveFeats =
+			(await loadData<{
+				id: string;
+				name: string;
+				description: string;
+				benefits?: string;
+				prerequisites?: string | Record<string, string | number | boolean>;
+				source?: string;
+			}>("comprehensiveFeats")) || [];
 		const filtered = filterBySearch(comprehensiveFeats, search, [
 			"name",
 			"description",
 			"benefits",
 		]);
-		return filtered.map((feat) => ({
+		return (filtered || []).map((feat) => ({
 			id: feat.id,
 			name: feat.name,
 			display_name: feat.name,
@@ -1436,7 +1425,8 @@ export const staticDataProvider: StaticDataProvider = {
 			tags: [
 				"feat",
 				"ability",
-				...(typeof feat.prerequisites !== "string" &&
+				...(feat.prerequisites &&
+				typeof feat.prerequisites !== "string" &&
 				Array.isArray((feat.prerequisites as Record<string, unknown>).feats)
 					? ((feat.prerequisites as Record<string, unknown>).feats as string[])
 					: []),
@@ -1799,8 +1789,7 @@ export const staticDataProvider: StaticDataProvider = {
 };
 
 // Export a hook to check if we should use static data
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useStaticDataFallback = () => {
+export const useStaticDataFallback = () => {
 	// Use static data when Supabase is not configured or fails
 	return (
 		!(window as unknown as Record<string, unknown>).supabaseConfigured || false

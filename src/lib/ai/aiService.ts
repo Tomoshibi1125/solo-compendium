@@ -1148,7 +1148,7 @@ CORE RULES CONTEXT:
 - Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Dexterity), VIT (Vitality/Constitution), INT (Intelligence), SENSE (Sense/Wisdom), PRE (Presence/Charisma).
 - Classes are called "Jobs". The 14 canonical jobs are: Destroyer (Fighter), Berserker (Barbarian), Assassin (Rogue), Striker (Monk), Mage (Wizard), Esper (Sorcerer), Revenant (Necromancer), Summoner (Druid), Herald (Cleric), Contractor (Warlock), Stalker (Ranger), Holy Knight (Paladin), Technomancer (Artificer), Idol (Bard).
 - Subclasses are called "Paths". The DM is called "Protocol Warden".
-- Regents (formerly Monarchs) are quest/DM-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
+- Regents (formerly Regents) are quest/DM-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
 - Runes follow the System Ascendant model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
 - Shadow Soldiers require the Umbral Regent unlock. System Favor replaces Inspiration.
 - Equipment uses 5e armor rules: light (base + AGI), medium (base + min(AGI,2)), heavy (fixed AC, no AGI). Max 3 attuned items.

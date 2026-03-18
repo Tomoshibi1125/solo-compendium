@@ -17,7 +17,7 @@ import {
 } from "@/lib/compendiumResolver";
 import { cn } from "@/lib/utils";
 import {
-	formatMonarchVernacular,
+	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
 
@@ -166,7 +166,7 @@ const Favorites = () => {
 			feats: "border-yellow-500/30 bg-yellow-500/10",
 			skills: "border-orange-500/30 bg-orange-500/10",
 			backgrounds: "border-gray-500/30 bg-gray-500/10",
-			monarchs: "border-indigo-500/30 bg-indigo-500/10",
+			regents: "border-indigo-500/30 bg-indigo-500/10",
 			relics: "border-amber-500/30 bg-amber-500/10",
 			jobs: "border-cyan-500/30 bg-cyan-500/10",
 			paths: "border-teal-500/30 bg-teal-500/10",
@@ -230,7 +230,7 @@ const Favorites = () => {
 							<option value="all">All Types</option>
 							{types.map((type) => (
 								<option key={type} value={type}>
-									{formatMonarchVernacular(
+									{formatRegentVernacular(
 										type.charAt(0).toUpperCase() + type.slice(1),
 									)}
 								</option>
@@ -273,7 +273,7 @@ const Favorites = () => {
 				) : (
 					<div className="grid gap-4">
 						{filteredItems.map((item) => {
-							const typeLabel = formatMonarchVernacular(
+							const typeLabel = formatRegentVernacular(
 								item.type.replace(/-/g, " "),
 							);
 							const displayType =
@@ -282,7 +282,7 @@ const Favorites = () => {
 							return (
 								<SystemWindow
 									key={item.id}
-									title={formatMonarchVernacular(item.displayName || item.name)}
+									title={formatRegentVernacular(item.displayName || item.name)}
 									className="glass-card"
 								>
 									<div className="p-4">
@@ -297,7 +297,7 @@ const Favorites = () => {
 													</Badge>
 													{item.rarity && (
 														<Badge variant="secondary" className="text-xs">
-															{formatMonarchVernacular(item.rarity)}
+															{formatRegentVernacular(item.rarity)}
 														</Badge>
 													)}
 												</div>
@@ -306,7 +306,7 @@ const Favorites = () => {
 													variant="sovereign"
 													className="font-semibold text-lg mb-1"
 												>
-													{formatMonarchVernacular(
+													{formatRegentVernacular(
 														item.displayName || item.name,
 													)}
 												</SystemHeading>
@@ -315,7 +315,7 @@ const Favorites = () => {
 														variant="system"
 														className="text-sm text-muted-foreground mb-2"
 													>
-														{formatMonarchVernacular(item.description)}
+														{formatRegentVernacular(item.description)}
 													</DataStreamText>
 												)}
 												{item.tags && item.tags.length > 0 && (
@@ -326,7 +326,7 @@ const Favorites = () => {
 																variant="secondary"
 																className="text-xs"
 															>
-																{formatMonarchVernacular(tag)}
+																{formatRegentVernacular(tag)}
 															</Badge>
 														))}
 													</div>

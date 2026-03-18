@@ -62,10 +62,10 @@ import { FeaturesList } from "@/components/character/FeaturesList";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { JournalPanel } from "@/components/character/JournalPanel";
 import { LimitedUseTracker } from "@/components/character/LimitedUseTracker";
-import { MonarchUnlocksPanel } from "@/components/character/MonarchUnlocksPanel";
 import { PortraitUpload } from "@/components/character/PortraitUpload";
 import { PowersList } from "@/components/character/PowersList";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
+import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
 import { RichTextNotes } from "@/components/character/RichTextNotes";
 import { RollHistoryPanel } from "@/components/character/RollHistoryPanel";
 import { RunesList } from "@/components/character/RunesList";
@@ -141,7 +141,7 @@ import { isLocalCharacterId } from "@/lib/guestStore";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { getAvailableFavorOptions } from "@/lib/systemFavor";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular, MONARCH_LABEL } from "@/lib/vernacular";
+import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import { QuestLog } from "@/pages/player-tools/QuestLog";
 import {
 	ABILITY_NAMES,
@@ -264,13 +264,13 @@ const CharacterSheet = () => {
 	const backgroundDisplayNameRaw =
 		backgroundDisplayRow?.display_name || character?.background;
 	const jobDisplayName = jobDisplayNameRaw
-		? formatMonarchVernacular(jobDisplayNameRaw)
+		? formatRegentVernacular(jobDisplayNameRaw)
 		: undefined;
 	const pathDisplayName = pathDisplayNameRaw
-		? formatMonarchVernacular(pathDisplayNameRaw)
+		? formatRegentVernacular(pathDisplayNameRaw)
 		: undefined;
 	const backgroundDisplayName = backgroundDisplayNameRaw
-		? formatMonarchVernacular(backgroundDisplayNameRaw)
+		? formatRegentVernacular(backgroundDisplayNameRaw)
 		: undefined;
 	const updateCharacter = useUpdateCharacter();
 	const updateAbilities = useUpdateCharacterAbilities();
@@ -280,11 +280,14 @@ const CharacterSheet = () => {
 		character?.id || "",
 	);
 	const { data: charFeatures = [] } = useCharacterFeatures(character?.id || "");
-	const baseCustomModifiers = useMemo(() => normalizeCustomModifiers(
-		sheetState.customModifiers,
-	), [sheetState.customModifiers]);
-	const featureCustomModifiers = useMemo(() => 
-		featureModifiersToCustomModifiers(charFeatures), [charFeatures]);
+	const baseCustomModifiers = useMemo(
+		() => normalizeCustomModifiers(sheetState.customModifiers),
+		[sheetState.customModifiers],
+	);
+	const featureCustomModifiers = useMemo(
+		() => featureModifiersToCustomModifiers(charFeatures),
+		[charFeatures],
+	);
 	const customModifiers = useMemo(
 		() => [...baseCustomModifiers, ...featureCustomModifiers],
 		[baseCustomModifiers, featureCustomModifiers],
@@ -3146,7 +3149,7 @@ const CharacterSheet = () => {
 								</SystemText>
 							</SystemWindow>
 						) : (
-							<MonarchUnlocksPanel characterId={character.id} />
+							<RegentUnlocksPanel characterId={character.id} />
 						)}
 
 						{/* Regent Features Display — shows features for DM-unlocked regent */}

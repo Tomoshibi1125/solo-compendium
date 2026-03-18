@@ -4,8 +4,7 @@
 // Generated on: 2026-01-13T22:03:39.609Z
 // 22 Backgrounds from System Ascendant Canon
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface Background {
+export interface Background {
 	id: string;
 	name: string;
 	type: string;
@@ -425,7 +424,7 @@ export const backgrounds = [
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "monarch's-chosen",
+		id: "regent's-chosen",
 		name: "Regent's Chosen",
 		type: "Background",
 		rank: "B",
@@ -483,7 +482,7 @@ export const backgrounds = [
 			"Shadow Corruption",
 			"Obligation Binding",
 		],
-		image: "/generated/compendium/backgrounds/monarchs-chosen.webp",
+		image: "/generated/compendium/backgrounds/regents-chosen.webp",
 		source: "System Ascendant Canon",
 	},
 	{

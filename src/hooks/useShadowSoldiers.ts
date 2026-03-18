@@ -212,8 +212,7 @@ export function useUpdateSoldierHP() {
 	});
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function useIncreaseBondLevel() {
+export function useIncreaseBondLevel() {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

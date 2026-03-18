@@ -1,7 +1,7 @@
 import { AlertCircle, BookOpen, Shield, Sparkles, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface Sigil {
 	id: string;
@@ -50,7 +50,7 @@ const SIGIL_TYPE_COLORS: Record<string, string> = {
 export const SigilDetail = ({ data }: SigilDetailProps) => {
 	const Icon = SIGIL_TYPE_ICONS[data.rune_type] || Sparkles;
 	const typeColor = SIGIL_TYPE_COLORS[data.rune_type] || "";
-	const displayName = formatMonarchVernacular(data.name);
+	const displayName = formatRegentVernacular(data.name);
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -80,16 +80,16 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 								variant="outline"
 								className="uppercase tracking-wider font-semibold"
 							>
-								{formatMonarchVernacular(data.rarity.replace("_", " "))} Gear
+								{formatRegentVernacular(data.rarity.replace("_", " "))} Gear
 								Sigil
 							</Badge>
 							<Badge variant="outline" className={typeColor}>
 								<Icon className="w-3 h-3 mr-1" />
-								{formatMonarchVernacular(data.rune_category)}
+								{formatRegentVernacular(data.rune_category)}
 							</Badge>
 							{data.tags?.map((tag) => (
 								<Badge key={tag} variant="secondary" className="capitalize">
-									{formatMonarchVernacular(tag.replace("_", " "))}
+									{formatRegentVernacular(tag.replace("_", " "))}
 								</Badge>
 							))}
 						</div>
@@ -99,7 +99,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 						</h1>
 
 						<p className="text-lg text-muted-foreground leading-relaxed italic border-l-2 border-primary/30 pl-4 mt-4">
-							"{formatMonarchVernacular(data.description)}"
+							"{formatRegentVernacular(data.description)}"
 						</p>
 
 						<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
@@ -141,7 +141,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 										Sigil Effect
 									</h4>
 									<p className="text-muted-foreground text-sm m-0">
-										{formatMonarchVernacular(data.effect_description)}
+										{formatRegentVernacular(data.effect_description)}
 									</p>
 								</div>
 							</div>
@@ -156,7 +156,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 									{Object.entries(data.passive_bonuses).map(([key, value]) => (
 										<div key={key} className="flex items-center gap-2">
 											<Badge variant="secondary" className="text-xs">
-												{formatMonarchVernacular(
+												{formatRegentVernacular(
 													key
 														.replace(/_/g, " ")
 														.replace(/\bw/g, (l) => l.toUpperCase()),
@@ -183,7 +183,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 									<div className="flex flex-wrap gap-2">
 										{data.can_inscribe_on.map((g) => (
 											<Badge key={g} variant="outline" className="capitalize">
-												{formatMonarchVernacular(g)}
+												{formatRegentVernacular(g)}
 											</Badge>
 										))}
 									</div>

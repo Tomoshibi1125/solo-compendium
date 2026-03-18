@@ -12,7 +12,7 @@ interface SystemWindowProps {
 		| "default"
 		| "alert"
 		| "quest"
-		| "monarch"
+		| "regent"
 		| "regent"
 		| "arise"
 		| "gate-e"
@@ -46,7 +46,7 @@ export function SystemWindow({
 			"border-destructive/40 from-destructive/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		quest:
 			"border-accent/40 from-accent/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		monarch:
+		regent:
 			"border-shadow-purple/50 from-shadow-purple/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		arise:
 			"border-arise-violet/50 from-arise-violet/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
@@ -63,15 +63,13 @@ export function SystemWindow({
 			"border-gate-ss/50 from-gate-ss/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		"gate-national":
 			"border-gate-national/50 from-gate-national/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		regent:
-			"border-shadow-purple/50 from-shadow-purple/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 	};
 
 	const _glowColors = {
 		default: "hsl(var(--primary))",
 		alert: "hsl(var(--destructive))",
 		quest: "hsl(var(--accent))",
-		monarch: "hsl(var(--shadow-purple))",
+		regent: "hsl(var(--shadow-purple))",
 		arise: "hsl(var(--arise-violet))",
 		"gate-e": "hsl(var(--gate-e-glow))",
 		"gate-d": "hsl(var(--gate-d-glow))",
@@ -81,7 +79,6 @@ export function SystemWindow({
 		"gate-s": "hsl(var(--gate-s-glow))",
 		"gate-ss": "hsl(var(--gate-ss-glow))",
 		"gate-national": "hsl(var(--gate-national-glow))",
-		regent: "hsl(var(--shadow-purple))",
 	};
 
 	// Map variant → raw HSL CSS variable name (without hsl() wrapper)
@@ -89,7 +86,7 @@ export function SystemWindow({
 		default: "--primary",
 		alert: "--destructive",
 		quest: "--accent",
-		monarch: "--shadow-purple",
+		regent: "--shadow-purple",
 		arise: "--arise-violet",
 		"gate-e": "--gate-e-glow",
 		"gate-d": "--gate-d-glow",
@@ -99,7 +96,6 @@ export function SystemWindow({
 		"gate-s": "--gate-s-glow",
 		"gate-ss": "--gate-ss-glow",
 		"gate-national": "--gate-national-glow",
-		regent: "--shadow-purple",
 	} as const;
 
 	const glowVar = glowVarMap[variant];
@@ -181,7 +177,7 @@ interface CornerDecorationProps {
 		| "default"
 		| "alert"
 		| "quest"
-		| "monarch"
+		| "regent"
 		| "regent"
 		| "arise"
 		| "gate-e"
@@ -206,7 +202,7 @@ function CornerDecoration({ position, variant }: CornerDecorationProps) {
 		default: "border-primary/40 shadow-[0_0_6px_hsl(var(--primary)/0.5)]",
 		alert: "border-destructive/40 shadow-[0_0_6px_hsl(var(--destructive)/0.5)]",
 		quest: "border-accent/40 shadow-[0_0_6px_hsl(var(--accent)/0.5)]",
-		monarch:
+		regent:
 			"border-shadow-purple/40 shadow-[0_0_6px_hsl(var(--shadow-purple)/0.5)]",
 		arise:
 			"border-arise-violet/50 shadow-[0_0_8px_hsl(var(--arise-violet)/0.6)]",
@@ -220,8 +216,6 @@ function CornerDecoration({ position, variant }: CornerDecorationProps) {
 			"border-gate-ss/40 shadow-[0_0_6px_hsl(var(--gate-ss-glow)/0.5)]",
 		"gate-national":
 			"border-gate-national/40 shadow-[0_0_6px_hsl(var(--gate-national-glow)/0.5)]",
-		regent:
-			"border-shadow-purple/40 shadow-[0_0_6px_hsl(var(--shadow-purple)/0.5)]",
 	};
 
 	return (

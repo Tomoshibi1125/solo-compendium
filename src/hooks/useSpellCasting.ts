@@ -261,8 +261,7 @@ export function useSpellCasting(
  * This feeds into computeCharacterStats() so buff/debuff spells auto-apply
  * stat modifiers (AC, attack, speed, etc.) — full DDB/Foundry parity.
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function buildActiveSpellEffectEntry(
+export function buildActiveSpellEffectEntry(
 	spellName: string,
 	casterId: string,
 	targetId: string,

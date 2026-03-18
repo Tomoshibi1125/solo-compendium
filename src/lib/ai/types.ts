@@ -274,8 +274,7 @@ export function getAIServiceById(
 	return services.find((service) => service.id === id);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getAIServiceForCapability(
+export function getAIServiceForCapability(
 	capability: AICapability,
 	services: AIService[],
 ): AIService | undefined {
@@ -284,8 +283,7 @@ function getAIServiceForCapability(
 	);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function validateAIRequest(request: AIRequest): string[] {
+export function validateAIRequest(request: AIRequest): string[] {
 	const errors: string[] = [];
 
 	if (!request.input) {

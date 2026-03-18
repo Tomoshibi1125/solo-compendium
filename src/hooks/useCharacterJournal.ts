@@ -115,8 +115,7 @@ export const useCreateJournalEntry = () => {
 	});
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-const useUpdateJournalEntry = () => {
+export const useUpdateJournalEntry = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({

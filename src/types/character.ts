@@ -40,8 +40,7 @@ export interface CharacterStats {
 	presence: number;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-interface CharacterCreateRequest {
+export interface CharacterCreateRequest {
 	name: string;
 	class: string;
 	level: number;

@@ -325,8 +325,7 @@ function formatTermDisplay(term: DiceTermResult): string {
 	return `[${parts.join(", ")}]`;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function rollDiceFormula(formula: string): VTTDiceRoll {
+export function rollDiceFormula(formula: string): VTTDiceRoll {
 	const detailed = rollDiceFormulaDetailed(formula);
 	return {
 		formula: detailed.formula,
@@ -430,7 +429,7 @@ type ChatCommand =
 	| { type: "emote"; message: string }
 	| { type: "desc"; message: string };
 
-function parseChatCommand(input: string): ChatCommand {
+export function parseChatCommand(input: string): ChatCommand {
 	const trimmed = input.trim();
 
 	// /roll or /r
@@ -464,7 +463,7 @@ function parseChatCommand(input: string): ChatCommand {
 // ---------------------------------------------------------------------------
 // Macro types
 // ---------------------------------------------------------------------------
-interface VTTMacro {
+export interface VTTMacro {
 	id: string;
 	name: string;
 	command: string; // e.g. "/roll 1d20+5" or "/roll 8d6"

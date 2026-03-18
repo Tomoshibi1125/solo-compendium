@@ -23,12 +23,13 @@ import {
 import { getProficiencyBonus } from "@/types/system-rules";
 
 export type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"];
-type Background = Database["public"]["Tables"]["compendium_backgrounds"]["Row"];
+export type Background =
+	Database["public"]["Tables"]["compendium_backgrounds"]["Row"];
 
-type StaticJob = (typeof staticJobs)[number];
-type StaticBackground = (typeof staticBackgrounds)[number];
+export type StaticJob = (typeof staticJobs)[number];
+export type StaticBackground = (typeof staticBackgrounds)[number];
 
-function normalizeItemLookupName(value: string): string {
+export function normalizeItemLookupName(value: string): string {
 	return value
 		.trim()
 		.replace(/^a\s+/i, "")
@@ -41,7 +42,7 @@ function normalizeItemLookupName(value: string): string {
 		.toLowerCase();
 }
 
-function findStaticItemByName(
+export function findStaticItemByName(
 	itemName: string,
 ): (typeof staticItems)[number] | null {
 	const normalized = normalizeItemLookupName(itemName);
@@ -62,7 +63,7 @@ function findStaticItemByName(
 	);
 }
 
-function _findStaticBackgroundByName(
+export function _findStaticBackgroundByName(
 	backgroundName: string | null | undefined,
 ): StaticBackground | null {
 	if (!backgroundName) return null;
@@ -73,7 +74,7 @@ function _findStaticBackgroundByName(
 	);
 }
 
-function _splitCompoundEquipmentEntry(entry: string): string[] {
+export function _splitCompoundEquipmentEntry(entry: string): string[] {
 	const trimmed = entry.trim();
 	if (!trimmed) return [];
 
@@ -89,7 +90,7 @@ function _splitCompoundEquipmentEntry(entry: string): string[] {
 	return [trimmed];
 }
 
-function deriveItemType(item: (typeof staticItems)[number]): string {
+export function deriveItemType(item: (typeof staticItems)[number]): string {
 	if (item.item_type) return item.item_type;
 	const t = item.type?.toLowerCase() ?? "";
 	if (t === "weapon") return "weapon";
@@ -99,7 +100,7 @@ function deriveItemType(item: (typeof staticItems)[number]): string {
 	return "misc";
 }
 
-function findStaticJobByName(
+export function findStaticJobByName(
 	jobName: string | null | undefined,
 ): StaticJob | null {
 	if (!jobName) return null;
@@ -113,7 +114,9 @@ function findStaticJobByName(
  * Build a properties string array from a static compendium item's mechanical fields.
  * The equipmentModifiers.ts parser reads these strings to apply AC, damage, etc.
  */
-function buildItemProperties(item: (typeof staticItems)[number]): string[] {
+export function buildItemProperties(
+	item: (typeof staticItems)[number],
+): string[] {
 	const props: string[] = [];
 
 	// Armor: emit "AC <value>" so the modifier parser picks it up
@@ -202,12 +205,12 @@ export async function autoUpdateFeatureUses(
 	}
 }
 
-function isChoiceFeatureText(value: string | null | undefined): boolean {
+export function isChoiceFeatureText(value: string | null | undefined): boolean {
 	if (!value) return false;
 	return /\b(choose|select|pick)\b/i.test(value);
 }
 
-function _isChoiceFeatureRow(feature: {
+export function _isChoiceFeatureRow(feature: {
 	name?: string | null;
 	description?: string | null;
 	prerequisites?: string | null;
@@ -219,13 +222,13 @@ function _isChoiceFeatureRow(feature: {
 	);
 }
 
-type SpellProgression = "none" | "full" | "half" | "pact";
+export type SpellProgression = "none" | "full" | "half" | "pact";
 
-function normalizeJobName(jobName: string | null | undefined): string {
+export function normalizeJobName(jobName: string | null | undefined): string {
 	return (jobName || "").trim().toLowerCase();
 }
 
-function getSpellProgressionForJob(
+export function getSpellProgressionForJob(
 	jobName: string | null | undefined,
 ): SpellProgression {
 	const normalized = normalizeJobName(jobName);
@@ -293,7 +296,7 @@ export function getMaxPowerLevelForJobAtLevel(
 	return 1;
 }
 
-async function getExistingFeatureNames(
+export async function getExistingFeatureNames(
 	characterId: string,
 ): Promise<Set<string>> {
 	if (isLocalCharacterId(characterId)) {
@@ -309,7 +312,7 @@ async function getExistingFeatureNames(
 	return new Set((data || []).map((row) => row.name));
 }
 
-async function insertCharacterFeature(
+export async function insertCharacterFeature(
 	characterId: string,
 	payload: Omit<
 		Database["public"]["Tables"]["character_features"]["Insert"],
@@ -341,7 +344,7 @@ async function insertCharacterFeature(
 	});
 }
 
-async function updateCharacterFeatureModifiersByName(
+export async function updateCharacterFeatureModifiersByName(
 	characterId: string,
 	name: string,
 	modifiers: FeatureModifier[] | null,
@@ -366,14 +369,14 @@ async function updateCharacterFeatureModifiersByName(
 		.eq("name", name);
 }
 
-type FeatureModifier = {
+export type FeatureModifier = {
 	type: string;
 	value: number;
 	target?: string;
 	source: string;
 };
 
-function getJobTraitModifiers(
+export function getJobTraitModifiers(
 	jobName: string,
 	traitName: string,
 ): FeatureModifier[] {
@@ -754,7 +757,7 @@ function getJobTraitModifiers(
 	return [];
 }
 
-function getJobAwakeningFeatureModifiers(
+export function getJobAwakeningFeatureModifiers(
 	jobName: string,
 	featureName: string,
 	level: number,
@@ -1435,7 +1438,7 @@ export function getJobASI(
 	return result;
 }
 
-function getPathFeatureModifiers(
+export function getPathFeatureModifiers(
 	jobName: string,
 	pathName: string,
 	featureName: string,
@@ -1773,7 +1776,7 @@ function getPathFeatureModifiers(
 	return [];
 }
 
-function getRegentFeatureModifiers(
+export function getRegentFeatureModifiers(
 	regentName: string,
 	featureName: string,
 	_level: number,
@@ -2041,7 +2044,7 @@ function getRegentFeatureModifiers(
 	}
 
 	// 5. Titan Regent (maps to Steel Regent in compendium)
-	if (regent === "titan regent" || regent === "steel monarch") {
+	if (regent === "titan regent" || regent === "steel regent") {
 		if (
 			feature === "true invulnerability" ||
 			feature === "flesh reconstruction"
@@ -2216,7 +2219,7 @@ function getRegentFeatureModifiers(
 	}
 
 	// 8. Radiant Regent (maps to Flame Regent in compendium)
-	if (regent === "radiant regent" || regent === "flame monarch") {
+	if (regent === "radiant regent" || regent === "flame regent") {
 		if (feature === "flame step")
 			return [
 				{
@@ -2475,7 +2478,7 @@ export async function addJobAwakeningBenefitsForLevel(
 		.eq("character_id", characterId);
 	if (regentChoices && regentChoices.length > 0) {
 		const { regents: staticRegents } = await import(
-			"@/data/compendium/monarchs"
+			"@/data/compendium/regents"
 		);
 		for (const choice of regentChoices as Array<{ regent_id: string }>) {
 			const regentData = staticRegents.find((r) => r.id === choice.regent_id);
@@ -2683,8 +2686,7 @@ export async function addLevel1Features(
 /**
  * Add background proficiencies and features
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function addBackgroundFeatures(
+export async function addBackgroundFeatures(
 	characterId: string,
 	background: Background,
 ): Promise<void> {

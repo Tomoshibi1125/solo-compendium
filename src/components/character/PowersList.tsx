@@ -34,7 +34,7 @@ import {
 	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import { AddPowerDialog } from "./AddPowerDialog";
 
 function CompendiumLink({
@@ -48,7 +48,7 @@ function CompendiumLink({
 	name: string;
 	className?: string;
 }) {
-	const displayName = formatMonarchVernacular(name);
+	const displayName = formatRegentVernacular(name);
 	return (
 		<Link to={`/compendium/${type}/${id}`} className={className}>
 			{displayName}
@@ -181,7 +181,7 @@ export function PowersList({
 	);
 
 	const handleTogglePrepared = async (power: Power) => {
-		const displayName = formatMonarchVernacular(power.name);
+		const displayName = formatRegentVernacular(power.name);
 		// Check if preparing would exceed limit
 		if (!power.is_prepared && spellsPreparedLimit !== null) {
 			if (preparedCount >= spellsPreparedLimit) {
@@ -213,7 +213,7 @@ export function PowersList({
 	};
 
 	const handleCastSpell = async (power: Power) => {
-		const displayName = formatMonarchVernacular(power.name);
+		const displayName = formatRegentVernacular(power.name);
 
 		if (spellCasting) {
 			const result = await spellCasting.castSpell({
@@ -326,7 +326,7 @@ export function PowersList({
 	};
 
 	const handleRemove = async (power: Power) => {
-		const displayName = formatMonarchVernacular(power.name);
+		const displayName = formatRegentVernacular(power.name);
 		if (!confirm(`Remove ${displayName}?`)) return;
 
 		try {
@@ -476,7 +476,7 @@ export function PowersList({
 					<div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
 						<div className="flex items-center gap-2 text-sm">
 							<Badge variant="destructive">Concentrating</Badge>
-							<span>{formatMonarchVernacular(concentrationPower.name)}</span>
+							<span>{formatRegentVernacular(concentrationPower.name)}</span>
 						</div>
 					</div>
 				)}
@@ -511,21 +511,21 @@ export function PowersList({
 								}
 								renderItem={(item) => {
 									const power = item as unknown as Power;
-									const displayName = formatMonarchVernacular(power.name);
+									const displayName = formatRegentVernacular(power.name);
 									const displayDescription = power.description
-										? formatMonarchVernacular(power.description)
+										? formatRegentVernacular(power.description)
 										: null;
 									const displaySource = power.source
-										? formatMonarchVernacular(power.source)
+										? formatRegentVernacular(power.source)
 										: null;
 									const displayCastingTime = power.casting_time
-										? formatMonarchVernacular(power.casting_time)
+										? formatRegentVernacular(power.casting_time)
 										: null;
 									const displayRange = power.range
-										? formatMonarchVernacular(power.range)
+										? formatRegentVernacular(power.range)
 										: null;
 									const displayDuration = power.duration
-										? formatMonarchVernacular(power.duration)
+										? formatRegentVernacular(power.duration)
 										: null;
 
 									return (

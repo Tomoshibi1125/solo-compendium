@@ -25,7 +25,7 @@ export function normalizeSearchText(searchQuery: string): string {
 	return normalizeRegentSearch(cleaned);
 }
 
-function prepareSearchText(searchQuery: string): string {
+export function prepareSearchText(searchQuery: string): string {
 	const cleaned = normalizeSearchText(searchQuery);
 
 	if (!cleaned) return "";
@@ -43,8 +43,7 @@ function prepareSearchText(searchQuery: string): string {
 /**
  * Convert a search query to PostgreSQL tsquery format (alias for prepareSearchText)
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function toTsQuery(searchQuery: string): string {
+export function toTsQuery(searchQuery: string): string {
 	return prepareSearchText(searchQuery);
 }
 
@@ -52,8 +51,7 @@ function toTsQuery(searchQuery: string): string {
  * Use RPC function for full-text search
  * This is the recommended approach with Supabase
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function searchWithRPC(
+export async function searchWithRPC(
 	supabase: Pick<SupabaseClient, "rpc">,
 	table: "jobs" | "powers" | "relics" | "monsters" | "paths" | "regents",
 	searchQuery: string,
@@ -88,8 +86,7 @@ interface OrCapableQuery<T> {
 	or: (filters: string) => T;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function hybridSearchQuery<T extends OrCapableQuery<T>>(
+export function hybridSearchQuery<T extends OrCapableQuery<T>>(
 	baseQuery: T,
 	searchQuery: string,
 	searchFields: string[] = ["name", "description"],

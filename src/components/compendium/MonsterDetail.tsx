@@ -21,7 +21,7 @@ import {
 	setPendingResolution,
 } from "@/lib/actionResolution";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular, MONARCH_LABEL } from "@/lib/vernacular";
+import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 
 interface MonsterData {
 	id: string;
@@ -326,9 +326,9 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 	const legendaryActions = actions.filter((a) => a.action_type === "legendary");
 
 	const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
-	const displayName = formatMonarchVernacular(data.display_name || data.name);
-	const monsterSize = formatMonarchVernacular(data.size || "Medium");
-	const monsterType = formatMonarchVernacular(data.creature_type || "Unknown");
+	const displayName = formatRegentVernacular(data.display_name || data.name);
+	const monsterSize = formatRegentVernacular(data.size || "Medium");
+	const monsterType = formatRegentVernacular(data.creature_type || "Unknown");
 	const armorClass = data.armor_class ?? 0;
 	const hitPointsAverage = data.hit_points_average ?? 0;
 	const hitPointsFormula = data.hit_points_formula ?? "";
@@ -349,7 +349,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 				? {
 						version: 1,
 						id,
-						name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
+						name: `${displayName}: ${formatRegentVernacular(action.name)}`,
 						source: { type: "monster_action", entryId: data.id },
 						kind: "attack",
 						attack: { roll: `1d20+${toHit}` },
@@ -360,7 +360,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 				: {
 						version: 1,
 						id,
-						name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
+						name: `${displayName}: ${formatRegentVernacular(action.name)}`,
 						source: { type: "monster_action", entryId: data.id },
 						kind: "damage",
 						damage: { roll: damageRoll ?? "1d6", type: action.damage_type },
@@ -391,15 +391,11 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 				title={displayName.toUpperCase()}
 				actions={<ShareToVTTButton itemType="Monster" itemName={displayName} />}
 				variant={
-					isBoss
-						? "alert"
-						: data.tags?.includes("monarch")
-							? "arise"
-							: "default"
+					isBoss ? "alert" : data.tags?.includes("regent") ? "arise" : "default"
 				}
 				className={cn(
 					isBoss && "border-gate-a/50 border-2",
-					data.tags?.includes("monarch") && "border-arise-violet/50 border-2",
+					data.tags?.includes("regent") && "border-arise-violet/50 border-2",
 					gateStyle?.glow,
 				)}
 			>
@@ -407,7 +403,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 					<div className="flex flex-wrap items-center gap-2">
 						<span className="text-muted-foreground capitalize font-heading">
 							{monsterSize} {monsterType}
-							{data.alignment && `, ${formatMonarchVernacular(data.alignment)}`}
+							{data.alignment && `, ${formatRegentVernacular(data.alignment)}`}
 						</span>
 						{data.gate_rank && gateStyle && (
 							<Badge
@@ -441,13 +437,13 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						{data.tags?.includes("named-boss") && (
 							<Badge
 								variant="outline"
-								className="border-monarch-gold/50 text-monarch-gold font-heading"
+								className="border-regent-gold/50 text-regent-gold font-heading"
 							>
 								<Crown className="h-3 w-3 mr-1" />
 								Named Boss
 							</Badge>
 						)}
-						{data.tags?.includes("monarch") && (
+						{data.tags?.includes("regent") && (
 							<Badge
 								variant="outline"
 								className="border-arise-violet/50 text-arise-violet font-heading shadow-[0_0_10px_hsl(var(--arise-violet)/0.4)]"
@@ -467,7 +463,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 					</div>
 					{data.lore && (
 						<p className="text-muted-foreground italic border-l-2 border-shadow-purple/40 pl-4 mt-4 leading-relaxed">
-							{formatMonarchVernacular(data.lore)}
+							{formatRegentVernacular(data.lore)}
 						</p>
 					)}
 				</div>
@@ -482,7 +478,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 					</div>
 					{data.armor_type && (
 						<span className="text-xs text-muted-foreground">
-							{formatMonarchVernacular(data.armor_type)}
+							{formatRegentVernacular(data.armor_type)}
 						</span>
 					)}
 				</SystemWindow>
@@ -572,7 +568,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 										</span>
 										<span className="text-muted-foreground">
 											{data.damage_vulnerabilities
-												.map(formatMonarchVernacular)
+												.map(formatRegentVernacular)
 												.join(", ")}
 										</span>
 									</div>
@@ -585,7 +581,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 										</span>
 										<span className="text-muted-foreground">
 											{data.damage_resistances
-												.map(formatMonarchVernacular)
+												.map(formatRegentVernacular)
 												.join(", ")}
 										</span>
 									</div>
@@ -597,7 +593,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									</span>
 									<span className="text-muted-foreground">
 										{data.damage_immunities
-											.map(formatMonarchVernacular)
+											.map(formatRegentVernacular)
 											.join(", ")}
 									</span>
 								</div>
@@ -611,7 +607,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						<div className="flex flex-wrap gap-1">
 							{data.condition_immunities.map((condition) => (
 								<Badge key={condition} variant="outline">
-									{formatMonarchVernacular(condition)}
+									{formatRegentVernacular(condition)}
 								</Badge>
 							))}
 						</div>
@@ -626,10 +622,10 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						{traits.map((trait) => (
 							<div key={trait.id} className="mb-4 last:mb-0">
 								<h4 className="font-heading font-semibold text-primary mb-1 text-base">
-									{formatMonarchVernacular(trait.name)}
+									{formatRegentVernacular(trait.name)}
 								</h4>
 								<p className="text-sm text-foreground leading-relaxed">
-									{formatMonarchVernacular(trait.description)}
+									{formatRegentVernacular(trait.description)}
 								</p>
 							</div>
 						))}
@@ -648,7 +644,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 							>
 								<div className="flex items-center gap-2 mb-2">
 									<h4 className="font-heading font-semibold text-primary text-base">
-										{formatMonarchVernacular(action.name)}
+										{formatRegentVernacular(action.name)}
 									</h4>
 									{action.recharge && (
 										<Badge variant="secondary" className="text-xs">
@@ -680,14 +676,14 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									</Button>
 								</div>
 								<p className="text-sm text-foreground leading-relaxed mb-1">
-									{formatMonarchVernacular(action.description)}
+									{formatRegentVernacular(action.description)}
 								</p>
 								{action.damage && (
 									<p className="text-sm text-foreground font-medium mt-2">
 										<span className="font-semibold">Damage:</span>{" "}
 										{action.damage}{" "}
 										{action.damage_type
-											? formatMonarchVernacular(action.damage_type)
+											? formatRegentVernacular(action.damage_type)
 											: ""}
 										{action.attack_bonus !== null &&
 											action.attack_bonus !== undefined && (
@@ -715,7 +711,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 							>
 								<div className="flex items-center gap-2 mb-2">
 									<h4 className="font-heading font-semibold text-primary text-base">
-										{formatMonarchVernacular(action.name)}
+										{formatRegentVernacular(action.name)}
 									</h4>
 									{action.recharge && (
 										<Badge variant="secondary" className="text-xs">
@@ -724,14 +720,14 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground leading-relaxed mb-1">
-									{formatMonarchVernacular(action.description)}
+									{formatRegentVernacular(action.description)}
 								</p>
 								{action.damage && (
 									<p className="text-sm text-foreground font-medium mt-2">
 										<span className="font-semibold">Damage:</span>{" "}
 										{action.damage}{" "}
 										{action.damage_type
-											? formatMonarchVernacular(action.damage_type)
+											? formatRegentVernacular(action.damage_type)
 											: ""}
 										{action.attack_bonus !== null &&
 											action.attack_bonus !== undefined && (
@@ -759,7 +755,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 							>
 								<div className="flex items-center gap-2 mb-2">
 									<h4 className="font-heading font-semibold text-primary text-base">
-										{formatMonarchVernacular(action.name)}
+										{formatRegentVernacular(action.name)}
 									</h4>
 									{action.recharge && (
 										<Badge variant="secondary" className="text-xs">
@@ -768,14 +764,14 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground leading-relaxed mb-1">
-									{formatMonarchVernacular(action.description)}
+									{formatRegentVernacular(action.description)}
 								</p>
 								{action.damage && (
 									<p className="text-sm text-foreground font-medium mt-2">
 										<span className="font-semibold">Damage:</span>{" "}
 										{action.damage}{" "}
 										{action.damage_type
-											? formatMonarchVernacular(action.damage_type)
+											? formatRegentVernacular(action.damage_type)
 											: ""}
 										{action.attack_bonus !== null &&
 											action.attack_bonus !== undefined && (
@@ -811,7 +807,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 							>
 								<div className="flex items-center gap-2 mb-2">
 									<h4 className="font-heading font-semibold text-amber-400 text-base">
-										{formatMonarchVernacular(action.name)}
+										{formatRegentVernacular(action.name)}
 									</h4>
 									{action.legendary_cost && action.legendary_cost > 1 && (
 										<Badge variant="outline" className="text-xs">
@@ -820,7 +816,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground leading-relaxed">
-									{formatMonarchVernacular(action.description)}
+									{formatRegentVernacular(action.description)}
 								</p>
 							</div>
 						))}
@@ -831,7 +827,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 			{data.description && (
 				<StatBlock title="DESCRIPTION" id="monster-description">
 					<p className="text-foreground leading-relaxed text-base">
-						{formatMonarchVernacular(data.description)}
+						{formatRegentVernacular(data.description)}
 					</p>
 				</StatBlock>
 			)}

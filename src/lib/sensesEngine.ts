@@ -165,8 +165,7 @@ export function computeSenses(
 /**
  * Format senses for display (e.g., "Darkvision 60 ft., Passive Perception 14")
  */
-// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function formatSenses(senses: CharacterSenses): string {
+export function formatSenses(senses: CharacterSenses): string {
 	const parts: string[] = [];
 	if (senses.darkvision > 0) parts.push(`Darkvision ${senses.darkvision} ft.`);
 	if (senses.blindsight > 0) parts.push(`Blindsight ${senses.blindsight} ft.`);

@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import "@/styles/vtt-player-map.css";
 import "./PlayerMapView.css";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import type { LibraryToken } from "@/data/tokenLibraryDefaults";
 import {
 	type AmbientSoundZone,
@@ -492,16 +493,14 @@ const PlayerMapView = ({
 						{vttRealtime.activeUsers.length > 0 && (
 							<div className="flex -space-x-1.5">
 								{vttRealtime.activeUsers.slice(0, 5).map((u) => (
-									<div
+									<DynamicStyle
 										key={u.userId}
 										className="vtt-user-avatar"
-										style={
-											{ "--avatar-bg-color": u.color } as React.CSSProperties
-										}
+										vars={{ "--avatar-bg-color": u.color }}
 										title={`${u.userName} (${u.role})`}
 									>
 										{u.userName.charAt(0).toUpperCase()}
-									</div>
+									</DynamicStyle>
 								))}
 							</div>
 						)}
@@ -587,9 +586,9 @@ const PlayerMapView = ({
 									aria-label="Battle Map Canvas"
 								>
 									<ErrorBoundary>
-										<div
+										<DynamicStyle
 											className="vtt-map-container vtt-map-scene"
-											style={{
+											vars={{
 												width: `${sceneWidth * gridSize * zoom}px`,
 												height: `${sceneHeight * gridSize * zoom}px`,
 											}}
@@ -597,30 +596,30 @@ const PlayerMapView = ({
 											{/* Background image */}
 											{currentScene?.backgroundImage && (
 												<div className="absolute inset-0">
-													<OptimizedImage
-														src={currentScene.backgroundImage}
-														alt="Map background"
-														className="w-full h-full object-cover vtt-background-image"
-														size="large"
-														style={
-															{
-																"--bg-scale": currentScene.backgroundScale ?? 1,
-															} as React.CSSProperties
-														}
-													/>
+													<DynamicStyle
+														vars={{
+															"--bg-scale": currentScene.backgroundScale ?? 1,
+														}}
+													>
+														<OptimizedImage
+															src={currentScene.backgroundImage}
+															alt="Map background"
+															className="w-full h-full object-cover vtt-background-image"
+															size="large"
+														/>
+													</DynamicStyle>
 												</div>
 											)}
 
 											{/* Grid overlay */}
 											{showGrid && (
-												<div
+												<DynamicStyle
+													as="div"
 													className="vtt-grid-overlay"
-													style={
-														{
-															"--grid-bg-size": `${gridSize * zoom}px ${gridSize * zoom}px`,
-															"--grid-border-color": "hsl(var(--border))",
-														} as React.CSSProperties
-													}
+													vars={{
+														"--grid-bg-size": `${gridSize * zoom}px ${gridSize * zoom}px`,
+														"--grid-border-color": "hsl(var(--border))",
+													}}
 												/>
 											)}
 
@@ -633,18 +632,16 @@ const PlayerMapView = ({
 														)
 														.map((cell) =>
 															!cell.revealed ? (
-																<div
+																<DynamicStyle
 																	key={`fog-${cell.rx}-${cell.ry}`}
 																	className="absolute vtt-fog-cell bg-black"
-																	style={
-																		{
-																			left: `${cell.rx * gridSize * zoom}px`,
-																			top: `${cell.ry * gridSize * zoom}px`,
-																			width: `${gridSize * zoom}px`,
-																			height: `${gridSize * zoom}px`,
-																			opacity: 0.9,
-																		} as React.CSSProperties
-																	}
+																	vars={{
+																		left: `${cell.rx * gridSize * zoom}px`,
+																		top: `${cell.ry * gridSize * zoom}px`,
+																		width: `${gridSize * zoom}px`,
+																		height: `${gridSize * zoom}px`,
+																		opacity: 0.9,
+																	}}
 																/>
 															) : null,
 														)}
@@ -774,10 +771,10 @@ const PlayerMapView = ({
 																const animDuration = Math.random() * 2 + 1;
 																const delay = Math.random() * -2;
 																return (
-																	<div
+																	<DynamicStyle
 																		key={`weather-particle-${currentScene.weather}-${i}`}
 																		className="absolute rounded-full"
-																		style={{
+																		vars={{
 																			width: `${size}px`,
 																			height: `${size}px`,
 																			left: `${left}%`,
@@ -806,21 +803,19 @@ const PlayerMapView = ({
 													const tokenSize = SIZE_VALUES[token.size] * zoom;
 													const centerOffset = tokenSize / 2 - auraSize / 2;
 													return (
-														<div
+														<DynamicStyle
 															key={`aura-${token.id}`}
 															className="absolute rounded-full pointer-events-none animate-pulse vtt-token-aura"
-															style={
-																{
-																	"--aura-left":
-																		token.x * gridSize * zoom + centerOffset,
-																	"--aura-top":
-																		token.y * gridSize * zoom + centerOffset,
-																	"--aura-size": `${auraSize}px`,
-																	"--aura-bg-color": `${token.auraColor || "#3b82f6"}18`,
-																	"--aura-border-color": `${token.auraColor || "#3b82f6"}40`,
-																	"--aura-z-index": token.layer * 10 + 5,
-																} as React.CSSProperties
-															}
+															vars={{
+																"--aura-left":
+																	token.x * gridSize * zoom + centerOffset,
+																"--aura-top":
+																	token.y * gridSize * zoom + centerOffset,
+																"--aura-size": `${auraSize}px`,
+																"--aura-bg-color": `${token.auraColor || "#3b82f6"}18`,
+																"--aura-border-color": `${token.auraColor || "#3b82f6"}40`,
+																"--aura-z-index": token.layer * 10 + 5,
+															}}
 														/>
 													);
 												})}
@@ -837,7 +832,8 @@ const PlayerMapView = ({
 													token.tokenType === "effect" ||
 													token.tokenType === "prop";
 												return (
-													<button
+													<DynamicStyle
+														as="button"
 														type="button"
 														key={token.id}
 														className={cn(
@@ -845,42 +841,39 @@ const PlayerMapView = ({
 															canDrag ? "cursor-move" : "cursor-default",
 															draggedTokenId === token.id && "opacity-70",
 														)}
-														style={
-															{
-																"--token-x": token.x * gridSize * zoom,
-																"--token-y": token.y * gridSize * zoom,
-																"--token-size": `${size}px`,
-																"--token-rotation": `${token.rotation}deg`,
-																"--token-z-index": token.layer,
-															} as React.CSSProperties
-														}
+														vars={{
+															"--token-x": token.x * gridSize * zoom,
+															"--token-y": token.y * gridSize * zoom,
+															"--token-size": `${size}px`,
+															"--token-rotation": `${token.rotation}deg`,
+															"--token-z-index": token.layer,
+														}}
 														onMouseDown={
 															canDrag
-																? (e) => handleTokenMouseDown(token, e)
+																? (e: React.MouseEvent) =>
+																		handleTokenMouseDown(token, e)
 																: undefined
 														}
 														title={`${token.name}${token.hp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ""}${canDrag ? " — drag to move" : ""}`}
 													>
-														<div
+														<DynamicStyle
 															className={cn(
 																"vtt-token-inner",
 																isOverlay
 																	? "vtt-token-overlay"
 																	: "rounded-full vtt-token-base",
 															)}
-															style={
-																{
-																	"--token-bg-color": isOverlay
-																		? "transparent"
-																		: token.color
-																			? `${token.color}40`
-																			: "rgba(0,0,0,0.3)",
-																	"--token-border-color": isOverlay
-																		? "transparent"
-																		: token.color || "hsl(var(--primary))",
-																	"--token-font-size": `${size * 0.35}px`,
-																} as React.CSSProperties
-															}
+															vars={{
+																"--token-bg-color": isOverlay
+																	? "transparent"
+																	: token.color
+																		? `${token.color}40`
+																		: "rgba(0,0,0,0.3)",
+																"--token-border-color": isOverlay
+																	? "transparent"
+																	: token.color || "hsl(var(--primary))",
+																"--token-font-size": `${size * 0.35}px`,
+															}}
 														>
 															{token.imageUrl ? (
 																<OptimizedImage
@@ -898,12 +891,13 @@ const PlayerMapView = ({
 																token.emoji ||
 																token.name.charAt(0).toUpperCase()
 															)}
-														</div>
+														</DynamicStyle>
 
 														{/* HP bar */}
 														{hpPercent !== null && !isOverlay && (
 															<div className="vtt-hp-bar-container">
-																<div
+																<DynamicStyle
+																	as="div"
 																	className={cn(
 																		"vtt-hp-bar vtt-hp-bar-fill",
 																		(hpPercent as number) > 50 && "high",
@@ -912,11 +906,9 @@ const PlayerMapView = ({
 																			"medium",
 																		(hpPercent as number) <= 25 && "low",
 																	)}
-																	style={
-																		{
-																			"--hp-width": `${Math.max(0, Math.min(100, hpPercent))}%`,
-																		} as React.CSSProperties
-																	}
+																	vars={{
+																		"--hp-width": `${Math.max(0, Math.min(100, hpPercent))}%`,
+																	}}
 																/>
 															</div>
 														)}
@@ -936,7 +928,7 @@ const PlayerMapView = ({
 																	))}
 																</div>
 															)}
-													</button>
+													</DynamicStyle>
 												);
 											})}
 
@@ -944,25 +936,21 @@ const PlayerMapView = ({
 											{vttRealtime.pings.length > 0 && (
 												<div className="absolute inset-0 pointer-events-none vtt-pings-overlay z-[100]">
 													{vttRealtime.pings.map((ping) => (
-														<div
+														<DynamicStyle
 															key={ping.createdAt}
 															className="absolute animate-ping vtt-ping"
-															style={
-																{
-																	"--ping-left":
-																		(ping.x + 0.5) * gridSize * zoom,
-																	"--ping-top":
-																		(ping.y + 0.5) * gridSize * zoom,
-																	"--ping-color": ping.color,
-																	left: "var(--ping-left)px",
-																	top: "var(--ping-top)px",
-																	width: "40px",
-																	height: "40px",
-																	borderRadius: "50%",
-																	transform: "translate(-50%, -50%)",
-																	border: `4px solid ${ping.color}`,
-																} as React.CSSProperties
-															}
+															vars={{
+																"--ping-left": (ping.x + 0.5) * gridSize * zoom,
+																"--ping-top": (ping.y + 0.5) * gridSize * zoom,
+																"--ping-color": ping.color,
+																left: "var(--ping-left)px",
+																top: "var(--ping-top)px",
+																width: "40px",
+																height: "40px",
+																borderRadius: "50%",
+																transform: "translate(-50%, -50%)",
+																border: `4px solid ${ping.color}`,
+															}}
 														/>
 													))}
 												</div>
@@ -975,41 +963,35 @@ const PlayerMapView = ({
 													{vttRealtime.activeUsers
 														.filter((u) => u.cursor)
 														.map((u) => (
-															<div
+															<DynamicStyle
 																key={u.userId}
 																className="absolute transition-all duration-100"
-																style={
-																	{
-																		"--cursor-left":
-																			((u.cursor?.x ?? 0) + 0.5) *
-																			gridSize *
-																			zoom,
-																		"--cursor-top":
-																			((u.cursor?.y ?? 0) + 0.5) *
-																			gridSize *
-																			zoom,
-																	} as React.CSSProperties
-																}
+																vars={{
+																	"--cursor-left":
+																		((u.cursor?.x ?? 0) + 0.5) *
+																		gridSize *
+																		zoom,
+																	"--cursor-top":
+																		((u.cursor?.y ?? 0) + 0.5) *
+																		gridSize *
+																		zoom,
+																}}
 															>
-																<div
+																<DynamicStyle
 																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
-																	style={
-																		{
-																			"--cursor-dot-bg": u.color,
-																		} as React.CSSProperties
-																	}
+																	vars={{
+																		"--cursor-dot-bg": u.color,
+																	}}
 																/>
-																<div
+																<DynamicStyle
 																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																	style={
-																		{
-																			"--cursor-label-bg": u.color,
-																		} as React.CSSProperties
-																	}
+																	vars={{
+																		"--cursor-label-bg": u.color,
+																	}}
 																>
 																	{u.userName}
-																</div>
-															</div>
+																</DynamicStyle>
+															</DynamicStyle>
 														))}
 												</div>
 											)}
@@ -1023,7 +1005,7 @@ const PlayerMapView = ({
 														</p>
 													</div>
 												)}
-										</div>
+										</DynamicStyle>
 									</ErrorBoundary>
 								</div>
 							</SystemWindow>
@@ -1343,7 +1325,8 @@ const PlayerMapView = ({
 																</div>
 																{hpPercent !== null && (
 																	<div className="h-1 rounded-full bg-black/30 mt-0.5">
-																		<div
+																		<DynamicStyle
+																			as="div"
 																			className={cn(
 																				"h-full rounded-full vtt-initiative-hp-bar",
 																				(hpPercent as number) > 50 && "high",
@@ -1352,11 +1335,9 @@ const PlayerMapView = ({
 																					"medium",
 																				(hpPercent as number) <= 25 && "low",
 																			)}
-																			style={
-																				{
-																					"--initiative-hp-width": `${Math.max(0, Math.min(100, hpPercent))}%`,
-																				} as React.CSSProperties
-																			}
+																			vars={{
+																				"--initiative-hp-width": `${Math.max(0, Math.min(100, hpPercent))}%`,
+																			}}
 																		/>
 																	</div>
 																)}

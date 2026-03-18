@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/select";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import { QuestLog } from "@/pages/player-tools/QuestLog";
 
 const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
@@ -154,7 +154,7 @@ export default function PlayerToolDetail() {
 						<div className="space-y-3">
 							<div className="text-sm text-muted-foreground">
 								{activeCharacter?.name} | Level {activeCharacter?.level}{" "}
-								{formatMonarchVernacular(activeCharacter?.job || "Unawakened")}
+								{formatRegentVernacular(activeCharacter?.job || "Unawakened")}
 							</div>
 							<Button
 								onClick={() => navigate(`/characters/${activeCharacter?.id}`)}

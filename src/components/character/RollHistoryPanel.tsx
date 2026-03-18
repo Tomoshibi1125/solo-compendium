@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { type RollRecord, useRollHistory } from "@/hooks/useRollHistory";
 import { cn } from "@/lib/utils";
-import { formatMonarchVernacular } from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface RollHistoryPanelProps {
 	characterId?: string;
@@ -121,7 +121,7 @@ export function RollHistoryPanel({
 											</div>
 											{roll.context && (
 												<p className="text-xs text-muted-foreground truncate">
-													{formatMonarchVernacular(roll.context)}
+													{formatRegentVernacular(roll.context)}
 												</p>
 											)}
 											<p className="text-xs text-muted-foreground">
