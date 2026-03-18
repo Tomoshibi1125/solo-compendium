@@ -52,7 +52,7 @@ export function AttunementSlots({
 				{Array.from({ length: MAX_ATTUNEMENT_SLOTS }).map((_, i) => {
 					const item = attunedItems[i];
 					return (
-						<TooltipProvider key={i}>
+						<TooltipProvider key={`slot-${[...Array(i + 1)].length}`}>
 							<Tooltip>
 								<TooltipTrigger asChild>
 									<div
@@ -68,6 +68,7 @@ export function AttunementSlots({
 												<Gem className="h-3 w-3 flex-shrink-0 text-cyan-500" />
 												<span className="truncate">{item.name}</span>
 												<button
+													type="button"
 													onClick={() => handleUnattune(item)}
 													className="flex-shrink-0 hover:text-red-500 transition-colors"
 													aria-label={`Unattune ${item.name}`}

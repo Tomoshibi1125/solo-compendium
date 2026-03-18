@@ -61,6 +61,7 @@ export function TableOfContents({ items, className }: TableOfContentsProps) {
 				{items.map((item) => (
 					<li key={item.id}>
 						<button
+							type="button"
 							onClick={() => scrollToId(item.id)}
 							className={cn(
 								"flex items-center gap-2 text-xs text-left w-full px-2 py-1 rounded transition-colors",

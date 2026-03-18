@@ -23,6 +23,7 @@ import {
 	SystemText,
 } from "@/components/ui/SystemText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAIService } from "@/lib/ai/hooks";
 import {
 	useArtPipeline,
 	useArtQueueMonitor,
@@ -48,6 +49,9 @@ export default function ArtGenerationAdmin() {
 		isGenerating: isBatchGenerating,
 	} = useBatchArtGeneration();
 	const queueMonitor = useArtQueueMonitor(enabled ? 2000 : 0);
+	
+	// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+	const aiService = useAIService();
 
 	const [testResult, setTestResult] = useState<GenerationResult | null>(null);
 	const [isTestGenerating, setIsTestGenerating] = useState(false);
@@ -329,6 +333,7 @@ export default function ArtGenerationAdmin() {
 					<TabsTrigger value="single">Single Generation</TabsTrigger>
 					<TabsTrigger value="batch">Batch Generation</TabsTrigger>
 					<TabsTrigger value="queue">Queue Status</TabsTrigger>
+					<TabsTrigger value="settings">Settings</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="single" className="space-y-4">
@@ -381,9 +386,11 @@ export default function ArtGenerationAdmin() {
 												<div>
 													<p>Generated files:</p>
 													<ul className="list-disc list-inside text-muted-foreground">
-														{testResult.paths.map((path: string, i: number) => (
-															<li key={i}>{path}</li>
-														))}
+														{testResult.paths.map(
+															(path: string, _i: number) => (
+																<li key={path}>{path}</li>
+															),
+														)}
 													</ul>
 												</div>
 											)}
@@ -442,7 +449,7 @@ export default function ArtGenerationAdmin() {
 									<div className="space-y-1">
 										{results.map((result, i) => (
 											<div
-												key={i}
+												key={JSON.stringify(result)}
 												className="flex items-center justify-between text-sm"
 											>
 												<span>Item {i + 1}</span>
@@ -510,13 +517,13 @@ export default function ArtGenerationAdmin() {
 											<h4 className="font-medium">Queue Details:</h4>
 											<div className="space-y-1 text-sm">
 												{queueMonitor.running?.map((_item, i) => (
-													<div key={i} className="flex justify-between">
+													<div key={_item.id} className="flex justify-between">
 														<span>Running {i + 1}</span>
 														<Badge variant="default">Active</Badge>
 													</div>
 												))}
 												{queueMonitor.pending?.map((_item, i) => (
-													<div key={i} className="flex justify-between">
+													<div key={_item.id} className="flex justify-between">
 														<span>Pending {i + 1}</span>
 														<Badge variant="secondary">Queued</Badge>
 													</div>

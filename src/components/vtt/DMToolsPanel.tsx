@@ -41,9 +41,11 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import { useToast } from "@/hooks/use-toast";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
+import { AMBIENT_SOUND_PRESETS, TERRAIN_PRESETS } from "@/lib/vtt";
 import DungeonMapGenerator from "@/pages/dm-tools/DungeonMapGenerator";
 import EncounterBuilder from "@/pages/dm-tools/EncounterBuilder";
 import GateGenerator from "@/pages/dm-tools/GateGenerator";
@@ -58,8 +60,8 @@ interface DMToolsPanelProps {
 	campaignId?: string;
 	/** Callback to roll dice into VTT chat (typically vttRealtime.rollAndBroadcast) */
 	onRoll?: (formula: string, type?: "dice" | "gmroll") => void;
-	onAddToken?: (token: any) => void;
-	onAddEffect?: (effect: any) => void;
+	onAddToken?: (token: unknown) => void;
+	onAddEffect?: (effect: unknown) => void;
 	onPlaySound?: (soundId: string) => void;
 	onMusicChange?: (musicId: string) => void;
 	className?: string;
@@ -68,7 +70,6 @@ interface DMToolsPanelProps {
 export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
 	campaignId,
 	onRoll,
-	onAddToken,
 	onAddEffect,
 	onPlaySound,
 	onMusicChange,
@@ -153,9 +154,10 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
 	];
 
 	return (
-		<div className={cn("space-y-4", className)}>
-			{/* Quick Actions Bar */}
-			<SystemWindow title="QUICK ACTIONS" compact>
+		<EmbeddedProvider>
+			<div className={cn("space-y-4", className)}>
+				{/* Quick Actions Bar */}
+				<SystemWindow title="QUICK ACTIONS" compact>
 				<div className="grid grid-cols-2 gap-2">
 					{/* Quick Dice Roll */}
 					<div className="space-y-2">
@@ -594,11 +596,64 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
 										</Button>
 									</div>
 								</div>
+								
+								<div className="pt-2 border-t border-border/50">
+									<Label className="text-xs text-muted-foreground pb-2 block">Terrain Effects</Label>
+									<div className="flex flex-wrap gap-1">
+										{Object.entries(TERRAIN_PRESETS).map(([id, t]) => (
+											<Button
+												key={id}
+												size="sm"
+												variant="outline"
+												className="text-[10px] h-7 px-2 border-primary/20 hover:border-primary/50"
+												onClick={() => {
+													onAddEffect?.({
+														id: `terrain-${Date.now()}`,
+														name: t.label,
+														type: "terrain",
+														radius: 8,
+														color: t.fillColor,
+													});
+													logDMMacro("Terrain", t.label || id);
+												}}
+											>
+												{t.label || id}
+											</Button>
+										))}
+									</div>
+								</div>
+								
+								<div className="pt-2 border-t border-border/50">
+									<Label className="text-xs text-muted-foreground pb-2 block">Ambient Audio Zones</Label>
+									<div className="flex flex-wrap gap-1">
+										{Object.entries(AMBIENT_SOUND_PRESETS).map(([id, s]) => (
+											<Button
+												key={id}
+												size="sm"
+												variant="outline"
+												className="text-[10px] h-7 px-2 border-indigo-500/30 text-indigo-300 hover:border-indigo-400"
+												onClick={() => {
+													onAddEffect?.({
+														id: `ambient-${Date.now()}`,
+														name: s.label,
+														type: "ambient",
+														radius: Math.floor((s.radius || 10) / 5),
+														color: "#6366f1",
+													});
+													logDMMacro("Ambient Zone", s.label || id);
+												}}
+											>
+												{s.label || id}
+											</Button>
+										))}
+									</div>
+								</div>
 							</div>
 						</SystemWindow>
 					</TabsContent>
 				</Tabs>
 			</SystemWindow>
-		</div>
+			</div>
+		</EmbeddedProvider>
 	);
 };

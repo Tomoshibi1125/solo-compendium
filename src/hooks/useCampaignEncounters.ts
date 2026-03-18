@@ -46,7 +46,8 @@ export const useCampaignEncounters = (campaignId: string) => {
 	});
 };
 
-export const useCampaignEncounterEntries = (encounterId: string | null) => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useCampaignEncounterEntries = (encounterId: string | null) => {
 	return useQuery({
 		queryKey: ["campaigns", "encounters", encounterId, "entries"],
 		queryFn: async (): Promise<EncounterEntryRow[]> => {
@@ -132,7 +133,7 @@ export const useDeleteCampaignEncounter = () => {
 
 	return useMutation({
 		mutationFn: async ({
-			campaignId,
+			campaignId: _campaignId,
 			encounterId,
 		}: {
 			campaignId: string;
@@ -178,7 +179,6 @@ export const useDeployCampaignEncounter = () => {
 
 	return useMutation({
 		mutationFn: async ({
-			campaignId,
 			encounterId,
 		}: {
 			campaignId: string;

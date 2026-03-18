@@ -34,7 +34,7 @@ const requireSnapshot = (snapshot: Snapshot | null): Snapshot => {
 
 let storage: Storage;
 let remoteRows: JournalEntry[] | null = null;
-let remoteError: unknown | null = null;
+let remoteError: Error | null = null;
 
 const createMemoryStorage = (): Storage => {
 	const store = new Map<string, string>();

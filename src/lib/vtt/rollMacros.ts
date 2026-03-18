@@ -33,10 +33,10 @@ export interface MacroBar {
 }
 
 // ─── Constants ──────────────────────────────────────────────
-const MACRO_STORAGE_KEY = "solo-compendium.macros.v1";
-const DEFAULT_MAX_SLOTS = 10;
+export const MACRO_STORAGE_KEY = "solo-compendium.macros.v1";
+export const DEFAULT_MAX_SLOTS = 10;
 
-const CATEGORY_ICONS: Record<MacroCategory, string> = {
+export const CATEGORY_ICONS: Record<MacroCategory, string> = {
 	attack: "sword",
 	damage: "flame",
 	save: "shield",
@@ -45,7 +45,7 @@ const CATEGORY_ICONS: Record<MacroCategory, string> = {
 	custom: "zap",
 };
 
-const CATEGORY_COLORS: Record<MacroCategory, string> = {
+export const CATEGORY_COLORS: Record<MacroCategory, string> = {
 	attack: "#ef4444",
 	damage: "#f97316",
 	save: "#3b82f6",

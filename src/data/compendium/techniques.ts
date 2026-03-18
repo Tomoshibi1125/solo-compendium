@@ -2,19 +2,19 @@
 // Combat maneuvers and martial techniques
 // Based on System Ascendant mechanics
 
-export interface Technique {
+interface Technique {
 	id: string;
 	name: string;
 	description: string;
 	type: "offensive" | "defensive" | "mobility" | "utility" | "finishing";
 	style:
-	| "unarmed"
-	| "weapon"
-	| "ranged"
-	| "dual-wielding"
-	| "two-handed"
-	| "shield"
-	| "any";
+		| "unarmed"
+		| "weapon"
+		| "ranged"
+		| "dual-wielding"
+		| "two-handed"
+		| "shield"
+		| "any";
 	prerequisites?: {
 		level?: number;
 		class?: string;
@@ -1143,4 +1143,4 @@ export const techniques: Technique[] = [
 	},
 ];
 
-export default techniques;
+

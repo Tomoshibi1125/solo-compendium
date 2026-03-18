@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, Plus, Trash2, Wand2 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,10 +14,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-
-type Path = Record<string, any>;
-
-import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -26,7 +23,7 @@ import type { useSpellCasting } from "@/hooks/useSpellCasting";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
-type Power = Database["public"]["Tables"]["character_powers"]["Row"];
+export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 
 import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
 import {
@@ -107,7 +104,7 @@ export function PowersList({
 				"@/data/compendium/staticDataProvider"
 			);
 			const staticPowers = await staticDataProvider.getPowers("");
-			return staticPowers.map((p: Path) => ({ id: p.id, name: p.name }));
+			return staticPowers.map((p: { id: string; name: string }) => ({ id: p.id, name: p.name }));
 		},
 	});
 
@@ -263,7 +260,7 @@ export function PowersList({
 				.catch(console.error);
 			toast({
 				title: "Cantrip Cast",
-				description: `${displayName} is cast without using a spell slot.`,
+				description: `${displayName} is activated without using a power slot.`,
 			});
 			return;
 		}
@@ -273,8 +270,8 @@ export function PowersList({
 		);
 		if (!slot) {
 			toast({
-				title: "No Spell Slots Available",
-				description: `You don't have any Tier ${power.power_level} spell slots available.`,
+				title: "No Power Slots Available",
+				description: `You don't have any Tier ${power.power_level} power slots available.`,
 				variant: "destructive",
 			});
 			return;
@@ -314,12 +311,12 @@ export function PowersList({
 
 			toast({
 				title: "Power Used",
-				description: `${displayName} activated! Used 1 Tier ${power.power_level} spell slot.`,
+				description: `${displayName} activated! Used 1 Tier ${power.power_level} power slot.`,
 			});
 		} catch {
 			toast({
 				title: "Error",
-				description: "Failed to use spell slot.",
+				description: "Failed to use power slot.",
 				variant: "destructive",
 			});
 		}
@@ -542,7 +539,7 @@ export function PowersList({
 														{getPowerId(power.name) ? (
 															<CompendiumLink
 																type="powers"
-																id={getPowerId(power.name)!}
+																id={getPowerId(power.name) as unknown as string}
 																name={displayName}
 																className="font-heading font-semibold hover:text-primary"
 															/>

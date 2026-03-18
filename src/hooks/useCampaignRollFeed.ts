@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 
-export interface CampaignRollEvent {
+interface CampaignRollEvent {
 	id: string;
 	campaign_id: string;
 	user_id: string;
@@ -34,7 +34,7 @@ const loadLocalRollEvents = (campaignId: string): CampaignRollEvent[] => {
 	}
 };
 
-export const saveLocalRollEvent = (event: CampaignRollEvent) => {
+const saveLocalRollEvent = (event: CampaignRollEvent) => {
 	if (typeof window === "undefined") return;
 	const raw = window.localStorage.getItem(LOCAL_ROLL_EVENTS_KEY);
 	const all: CampaignRollEvent[] = raw ? JSON.parse(raw) : [];
@@ -57,9 +57,26 @@ export function useCampaignRollFeed(campaignId: string) {
 	const { user } = useAuth();
 
 	const untypedSupabase = supabase as unknown as {
-		from: (table: string) => any;
-		channel: (name: string) => any;
-		removeChannel: (channel: unknown) => any;
+		from: (table: string) => {
+			select: (cols: string) => {
+				eq: (col: string, val: string) => {
+					order: (col: string, opts: { ascending: boolean }) => {
+						limit: (num: number) => Promise<{ data: unknown[] | null; error: unknown }>;
+					};
+				};
+			};
+			insert: (data: Record<string, unknown>) => Promise<{ error: unknown }>;
+		};
+		channel: (name: string) => {
+			on: (
+				type: "postgres_changes",
+				opts: { event: string; schema: string; table: string; filter: string },
+				cb: (payload: { new: unknown }) => void,
+			) => {
+				subscribe: (cb: (status: string) => void) => RealtimeChannel;
+			};
+		};
+		removeChannel: (channel: RealtimeChannel) => void;
 	};
 
 	// Load initial events

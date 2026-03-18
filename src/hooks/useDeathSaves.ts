@@ -17,14 +17,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { rollCheck } from "@/lib/rollEngine";
 
-export interface DeathSaveState {
+interface DeathSaveState {
 	successes: number;
 	failures: number;
 	isStable: boolean;
 	isDead: boolean;
 }
 
-export interface DeathSaveRollResult {
+interface DeathSaveRollResult {
 	roll: number;
 	isNat20: boolean;
 	isNat1: boolean;
@@ -33,7 +33,7 @@ export interface DeathSaveRollResult {
 	message: string;
 }
 
-export interface UseDeathSavesReturn {
+interface UseDeathSavesReturn {
 	state: DeathSaveState;
 	/** Roll a death saving throw */
 	rollDeathSave: () => DeathSaveRollResult;

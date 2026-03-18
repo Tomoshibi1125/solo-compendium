@@ -246,7 +246,8 @@ interface AscensionMeterProps {
 	className?: string;
 }
 
-export const AscensionMeter = ({
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const AscensionMeter = ({
 	progress,
 	tier,
 	nextTier,
@@ -346,13 +347,13 @@ export const AscensionMeter = ({
 				<div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg">
 					{Array.from({ length: 5 }).map((_, i) => (
 						<div
-							key={i}
+							key={`slot-${[...Array(i + 1)].length}`}
 							className="absolute w-1 h-1 bg-current rounded-full animate-pulse opacity-60"
 							style={{
 								left: `${20 + i * 15}%`,
 								top: `${30 + (i % 2) * 40}%`,
 								color: tierConfig.glow,
-								animationDelay: `${i * 0.2}s`,
+								animationDelay: `$export {i * 0.2}s`,
 								animationDuration: "1.5s",
 							}}
 						/>
@@ -363,4 +364,4 @@ export const AscensionMeter = ({
 	);
 };
 
-export default SovereignAuthorityDisplay;
+

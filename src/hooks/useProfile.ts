@@ -4,7 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 
-export interface Profile {
+interface Profile {
 	id: string;
 	role: "dm" | "player";
 	created_at: string;

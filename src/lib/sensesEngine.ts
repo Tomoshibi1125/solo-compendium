@@ -16,7 +16,7 @@ export interface CharacterSenses {
 	passiveInsight: number;
 }
 
-export interface SenseSource {
+interface SenseSource {
 	type: "job" | "path" | "regent" | "equipment" | "spell" | "feat" | "rune";
 	name: string;
 	sense: keyof Omit<
@@ -165,7 +165,8 @@ export function computeSenses(
 /**
  * Format senses for display (e.g., "Darkvision 60 ft., Passive Perception 14")
  */
-export function formatSenses(senses: CharacterSenses): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function formatSenses(senses: CharacterSenses): string {
 	const parts: string[] = [];
 	if (senses.darkvision > 0) parts.push(`Darkvision ${senses.darkvision} ft.`);
 	if (senses.blindsight > 0) parts.push(`Blindsight ${senses.blindsight} ft.`);

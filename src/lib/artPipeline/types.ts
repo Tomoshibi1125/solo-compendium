@@ -97,7 +97,7 @@ export interface GenerationPreset {
 	scheduler: string;
 }
 
-export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
+const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 	"monster-portrait": {
 		width: 1024,
 		height: 1024,

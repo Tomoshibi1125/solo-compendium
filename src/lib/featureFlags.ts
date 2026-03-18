@@ -3,7 +3,7 @@
  * All flags default to false for production safety
  */
 
-export interface FeatureFlags {
+interface FeatureFlags {
 	dailyQuestEnabled: boolean;
 	artGenerationEnabled: boolean;
 	aiEnhancementEnabled: boolean;
@@ -60,7 +60,7 @@ export function getFeatureFlag(flag: keyof FeatureFlags): boolean {
 /**
  * Get all feature flags as an object
  */
-export function getAllFeatureFlags(): FeatureFlags {
+function getAllFeatureFlags(): FeatureFlags {
 	return {
 		dailyQuestEnabled: getFeatureFlag("dailyQuestEnabled"),
 		artGenerationEnabled: getFeatureFlag("artGenerationEnabled"),

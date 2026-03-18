@@ -10,14 +10,14 @@ import {
 } from "three";
 import { ConvexGeometry } from "three/examples/jsm/geometries/ConvexGeometry.js";
 
-export type FaceData = {
+type FaceData = {
 	value: number;
 	normal: Vector3;
 	center: Vector3;
 	quaternion: Quaternion;
 };
 
-export type DieModel = {
+type DieModel = {
 	geometry: BufferGeometry;
 	faces: FaceData[];
 	faceByValue: Map<number, FaceData>;

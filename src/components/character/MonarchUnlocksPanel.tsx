@@ -165,7 +165,7 @@ export function MonarchUnlocksPanel({
 			if (!error && data && data.length > 0) {
 				return filterRowsBySourcebookAccess(
 					data,
-					(regent) => (regent as Record<string, any>).source_book,
+					(regent) => ((regent as Record<string, unknown>).source_book as string | null),
 					{ campaignId },
 				);
 			}
@@ -185,9 +185,9 @@ export function MonarchUnlocksPanel({
 		},
 	});
 
-	const unlockedIds = new Set(unlocks.map((u: any) => u.regent_id));
+	const unlockedIds = new Set(unlocks.map((u: { regent_id: string }) => u.regent_id));
 	const availableLockedRegents = allRegents.filter(
-		(r: Record<string, any>) => !unlockedIds.has(r.id),
+		(r) => !unlockedIds.has(r.id),
 	);
 	const hasJob = !!character?.job;
 	const hasPath = !!character?.path;
@@ -217,7 +217,7 @@ export function MonarchUnlocksPanel({
 		const casterSum = intelligence + wisdom + charisma;
 
 		// Sort regents by some thematic relevance
-		const shuffled = [...availableLockedRegents].sort((a: any, b: any) => {
+		const shuffled = [...availableLockedRegents].sort((a, b) => {
 			// Deterministic based on character stats and regent ID length
 			const aId = a.id || "";
 			const bId = b.id || "";
@@ -237,9 +237,7 @@ export function MonarchUnlocksPanel({
 	const handleUnlock = () => {
 		if (!selectedMonarchId || !questName.trim()) return;
 
-		const regent = allRegents.find(
-			(r: Record<string, any>) => r.id === selectedMonarchId,
-		) as Record<string, any>;
+		const regent = allRegents.find((r) => r.id === selectedMonarchId);
 		const regentName = regent
 			? formatRegentVernacular(regent.title || regent.name)
 			: "A Regent";
@@ -314,13 +312,13 @@ export function MonarchUnlocksPanel({
 						<Separator className="bg-monarch-gold/20" />
 
 						<div className="space-y-3">
-							{unlocks.map((unlock: any, index: number) => {
-								const regent = (unlock as Record<string, any>).regent;
+							{unlocks.map((unlock, index) => {
+								const regent = unlock.regent;
 								if (!regent) return null;
 
 								const themeStyle =
-									themeColors[regent.theme] || themeColors.Shadow;
-								const icon = themeIcons[regent.theme] || (
+									themeColors[regent.theme as string] || themeColors.Shadow;
+								const icon = themeIcons[regent.theme as string] || (
 									<Crown className="h-4 w-4" />
 								);
 								const displayTitle = formatRegentVernacular(
@@ -376,7 +374,7 @@ export function MonarchUnlocksPanel({
 															themeStyle.border,
 														)}
 													>
-														{regent.theme} Theme
+														{regent.theme as string} Theme
 													</Badge>
 												</div>
 											</div>
@@ -479,11 +477,14 @@ export function MonarchUnlocksPanel({
 										Adaptive Choices
 									</Label>
 									<div className="grid grid-cols-1 gap-2">
-										{adaptiveChoices.map((regent: any) => (
-											<div
+										{adaptiveChoices.map((regent) => {
+											if (!regent.id) return null;
+											return (
+											<button
+												type="button"
 												key={regent.id}
 												className={cn(
-													"p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
+													"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
 													selectedMonarchId === regent.id
 														? "border-monarch-gold bg-monarch-gold/10 shadow-[0_0_10px_hsl(var(--monarch-gold)/0.2)]"
 														: "border-border hover:border-monarch-gold/50 bg-background/50",
@@ -499,7 +500,7 @@ export function MonarchUnlocksPanel({
 																: "bg-muted text-muted-foreground",
 														)}
 													>
-														{themeIcons[regent.theme] || (
+														{themeIcons[regent.theme as string] || (
 															<Crown className="h-4 w-4" />
 														)}
 													</div>
@@ -517,8 +518,9 @@ export function MonarchUnlocksPanel({
 												{selectedMonarchId === regent.id && (
 													<CheckCircle className="h-4 w-4 text-monarch-gold" />
 												)}
-											</div>
-										))}
+											</button>
+											);
+										})}
 									</div>
 								</div>
 

@@ -571,10 +571,10 @@ const TokenLibrary = () => {
 												const CategoryIcon = getCategoryIcon(token.category);
 
 												return (
-													<div
+													<button type="button"
 														key={token.id}
 														className={cn(
-															"p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 transition-all cursor-pointer group",
+															"w-full text-left p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 transition-all cursor-pointer group",
 															selectedToken?.id === token.id &&
 																"ring-2 ring-primary",
 														)}
@@ -587,8 +587,6 @@ const TokenLibrary = () => {
 																setSelectedToken(token);
 															}
 														}}
-														role="button"
-														tabIndex={0}
 														aria-pressed={
 															selectedToken?.id === token.id ? "true" : "false"
 														}
@@ -647,7 +645,7 @@ const TokenLibrary = () => {
 																<Trash2 className="w-3 h-3" />
 															</Button>
 														</div>
-													</div>
+													</button>
 												);
 											})}
 										</div>
@@ -713,8 +711,8 @@ const TokenLibrary = () => {
 												<div>
 													<Label>Tags</Label>
 													<div className="flex flex-wrap gap-2 mt-2">
-														{selectedToken.tags.map((tag, idx) => (
-															<Badge key={idx} variant="secondary">
+														{selectedToken.tags.map((tag) => (
+															<Badge key={`tag-${tag}`} variant="secondary">
 																{tag}
 															</Badge>
 														))}

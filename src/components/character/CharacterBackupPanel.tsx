@@ -112,7 +112,7 @@ function BackupRow({
 
 export function CharacterBackupPanel({ characterId }: { characterId: string }) {
 	const { data: character } = useCharacter(characterId);
-	const { backups, createBackup, deleteBackup, exportBackup, isLoading } =
+	const { backups, createBackup, deleteBackup, isLoading } =
 		useCharacterBackups(characterId);
 	const [restoreTarget, setRestoreTarget] = useState<CharacterBackup | null>(
 		null,

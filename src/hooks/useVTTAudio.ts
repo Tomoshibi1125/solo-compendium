@@ -4,7 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { log, error as logError } from "@/lib/logger";
 
-export interface VTTAudioTrack {
+interface VTTAudioTrack {
 	id: string;
 	session_id: string;
 	name: string;
@@ -18,7 +18,7 @@ export interface VTTAudioTrack {
 	updated_at: string;
 }
 
-export interface VTTAudioSettings {
+interface VTTAudioSettings {
 	id: string;
 	session_id: string;
 	master_volume: number;
@@ -32,10 +32,17 @@ export interface VTTAudioSettings {
 
 const supabaseAny = supabase as unknown as {
 	auth: { getUser: () => Promise<{ data: { user: { id: string } | null } }> };
-	from: (table: string) => any;
+	from: (table: string) => {
+		select: (columns: string) => {
+			eq: (col: string, val: string) => {
+				order: (col: string, opts?: { ascending: boolean }) => Promise<{ data: unknown; error: { message?: string } | null }>;
+				maybeSingle: () => Promise<{ data: unknown; error: { message?: string } | null }>;
+			};
+		};
+	};
 	rpc: (
 		fn: string,
-		args?: Record<string, unknown>,
+		args?: unknown,
 	) => Promise<{ data: unknown; error: { message?: string } | null }>;
 };
 
@@ -58,7 +65,8 @@ export const useVTTAudioTracks = (sessionId: string) => {
 	});
 };
 
-export const useVTTAudioSettings = (sessionId: string) => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useVTTAudioSettings = (sessionId: string) => {
 	return useQuery({
 		queryKey: ["vtt", "audio", "settings", sessionId],
 		queryFn: async (): Promise<VTTAudioSettings | null> => {
@@ -151,7 +159,7 @@ export const useDeleteVTTAudioTrack = () => {
 	return useMutation({
 		mutationFn: async ({
 			trackId,
-			sessionId,
+			sessionId: _sessionId,
 		}: {
 			trackId: string;
 			sessionId: string;
@@ -184,7 +192,8 @@ export const useDeleteVTTAudioTrack = () => {
 	});
 };
 
-export const useUpdateVTTAudioSettings = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useUpdateVTTAudioSettings = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
@@ -222,7 +231,7 @@ export const useUpdateVTTAudioSettings = () => {
 };
 
 // Audio playback utilities
-export class VTTAudioManager {
+class VTTAudioManager {
 	private audioElements: Map<string, HTMLAudioElement> = new Map();
 	private settings: VTTAudioSettings | null = null;
 
@@ -270,7 +279,7 @@ export class VTTAudioManager {
 			await audio.play();
 			// Update track status
 			await this.updateTrackStatus(track.id, true);
-		} catch (error) {
+		} catch (error: unknown) {
 			logError("Failed to play audio track:", error);
 			throw error;
 		}

@@ -225,7 +225,8 @@ const shield = baseItem({
 const club = baseItem({
 	id: "base-weapon-club",
 	name: "Club",
-	description: "A heavy stick. Even awakened ascendants sometimes start simple.",
+	description:
+		"A heavy stick. Even awakened ascendants sometimes start simple.",
 	item_type: "weapon",
 	weapon_type: "simple melee",
 	damage: "1d4",

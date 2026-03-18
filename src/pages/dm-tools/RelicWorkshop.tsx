@@ -44,7 +44,7 @@ interface RelicProperty {
 	type: "passive" | "active" | "bonus";
 }
 
-interface Relic {
+export interface Relic {
 	id: string;
 	name: string;
 	type: "weapon" | "armor" | "accessory" | "tool";
@@ -169,7 +169,7 @@ const RelicWorkshop = () => {
 		});
 	};
 
-	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+	const { isEnhancing, enhancedText, enhance } = useAIEnhance();
 
 	const handleAIEnhance = async () => {
 		if (!currentRelic.name) return;
@@ -213,7 +213,7 @@ D&D BEYOND STYLE RELIC STAT BLOCK:
 STATS:
 • Type: ${currentRelic.type}
 • Rarity: ${currentRelic.rarity}
-• Attunement: ${currentRelic.attunement ? "Required by character of ${currentRelic.rank} Rank or higher" : "None required"}
+• Attunement: ${currentRelic.attunement ? `Required by character of ${currentRelic.rank} Rank or higher` : "None required"}
 • Weight: [Standard for ${currentRelic.type} type]
 • Value: [${currentRelic.rarity === "legendary" ? "10,000+" : currentRelic.rarity === "very-rare" ? "5,000+" : currentRelic.rarity === "rare" ? "2,000+" : currentRelic.rarity === "uncommon" ? "500+" : "100+"} GP]
 

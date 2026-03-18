@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { AIServiceManager } from "@/lib/ai/aiService";
 import { useAuth } from "@/lib/auth/authContext";
 
-type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
-type CampaignMember = Database["public"]["Tables"]["campaign_members"]["Row"];
+type _Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+type _CampaignMember = Database["public"]["Tables"]["campaign_members"]["Row"];
 
 export function useCampaignDice() {
 	const { toast } = useToast();
@@ -44,7 +44,7 @@ export function useCampaignDice() {
 				roll_type: string;
 				rolls: number[];
 				context?: string;
-				modifiers?: any;
+				modifiers?: Record<string, Json | undefined>;
 				character_id?: string;
 			},
 		) => {
@@ -107,7 +107,7 @@ export function useCampaignDice() {
 					.single();
 
 				if (!campaignError && campaignData?.settings) {
-					const settings = campaignData.settings as Record<string, any>;
+					const settings = campaignData.settings as Record<string, unknown>;
 					if (
 						settings.automated_combat === true &&
 						(rollData.roll_type === "attack" ||

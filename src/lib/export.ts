@@ -8,9 +8,9 @@ import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { formatMonarchVernacular } from "@/lib/vernacular";
 
-type Character = Database["public"]["Tables"]["characters"]["Row"];
+export type Character = Database["public"]["Tables"]["characters"]["Row"];
 
-export interface ExportOptions {
+interface ExportOptions {
 	includeEquipment?: boolean;
 	includeFeatures?: boolean;
 	includePowers?: boolean;
@@ -21,7 +21,7 @@ export interface ExportOptions {
 /**
  * Export character to JSON
  */
-export async function exportCharacter(
+async function exportCharacter(
 	characterId: string,
 	options: ExportOptions = {},
 ): Promise<string> {
@@ -100,7 +100,7 @@ export async function exportCharacter(
 /**
  * Export character to PDF (markdown format for now)
  */
-export function exportCharacterToMarkdown(character: Character): string {
+function exportCharacterToMarkdown(character: Character): string {
 	const markdown = `# ${character.name}
 
 **Level ${character.level}** ${character.job}${character.path ? ` (${character.path})` : ""}
@@ -128,7 +128,8 @@ ${character.notes ? `## Notes\n${character.notes}` : ""}
 /**
  * Export compendium entries
  */
-export async function exportCompendiumEntries(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function exportCompendiumEntries(
 	entryIds: string[],
 	entryType: string,
 ): Promise<string> {
@@ -166,7 +167,7 @@ export async function exportCompendiumEntries(
 /**
  * Download file
  */
-export function downloadFile(
+function downloadFile(
 	content: string,
 	filename: string,
 	mimeType: string = "application/json",
@@ -219,7 +220,8 @@ export function exportCharacterPDF(character: Character): void {
 /**
  * Print character sheet
  */
-export function printCharacterSheet(characterId: string): void {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function printCharacterSheet(characterId: string): void {
 	// Open character sheet in new window for printing
 	const printWindow = window.open(
 		`/characters/${characterId}?print=true`,

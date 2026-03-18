@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
 import { useRecordRoll } from "@/hooks/useRollHistory";
-import { useAuth } from "@/lib/auth/authContext";
 import { rollCheck } from "@/lib/rollEngine";
 
 interface CharacterRollProps {
@@ -23,65 +22,74 @@ export function useCharacterRoll({
 	skillProficiencies,
 }: CharacterRollProps) {
 	const { toast } = useToast();
-	const { user } = useAuth();
+
 	const recordRoll = useRecordRoll();
 	const { rollInCampaign } = useCampaignDice();
 
-	const getAbilityModifier = (ability: string): number => {
-		const score = abilities[ability] || 10;
-		return Math.floor((score - 10) / 2);
-	};
+	const getAbilityModifier = useCallback(
+		(ability: string): number => {
+			const score = abilities[ability] || 10;
+			return Math.floor((score - 10) / 2);
+		},
+		[abilities],
+	);
 
-	const getSaveModifier = (ability: string): number => {
-		const baseMod = getAbilityModifier(ability);
-		const isProficient = savingThrowProficiencies.includes(ability);
-		return baseMod + (isProficient ? proficiencyBonus : 0);
-	};
+	const getSaveModifier = useCallback(
+		(ability: string): number => {
+			const baseMod = getAbilityModifier(ability);
+			const isProficient = savingThrowProficiencies.includes(ability);
+			return baseMod + (isProficient ? proficiencyBonus : 0);
+		},
+		[getAbilityModifier, savingThrowProficiencies, proficiencyBonus],
+	);
 
-	const getSkillModifier = (skill: string): number => {
-		// Map skills to their abilities
-		const skillAbilityMap: Record<string, string> = {
-			athletics: "str",
-			Athletics: "str",
-			acrobatics: "agi",
-			Acrobatics: "agi",
-			sleight_of_hand: "agi",
-			"Sleight of Hand": "agi",
-			stealth: "agi",
-			Stealth: "agi",
-			arcana: "int",
-			Arcana: "int",
-			history: "int",
-			History: "int",
-			investigation: "int",
-			Investigation: "int",
-			nature: "int",
-			Nature: "int",
-			religion: "int",
-			Religion: "int",
-			insight: "sense",
-			Insight: "sense",
-			medicine: "sense",
-			Medicine: "sense",
-			perception: "sense",
-			Perception: "sense",
-			survival: "sense",
-			Survival: "sense",
-			deception: "pre",
-			Deception: "pre",
-			intimidation: "pre",
-			Intimidation: "pre",
-			performance: "pre",
-			Performance: "pre",
-			persuasion: "pre",
-			Persuasion: "pre",
-		};
+	const getSkillModifier = useCallback(
+		(skill: string): number => {
+			// Map skills to their abilities
+			const skillAbilityMap: Record<string, string> = {
+				athletics: "str",
+				Athletics: "str",
+				acrobatics: "agi",
+				Acrobatics: "agi",
+				sleight_of_hand: "agi",
+				"Sleight of Hand": "agi",
+				stealth: "agi",
+				Stealth: "agi",
+				arcana: "int",
+				Arcana: "int",
+				history: "int",
+				History: "int",
+				investigation: "int",
+				Investigation: "int",
+				nature: "int",
+				Nature: "int",
+				religion: "int",
+				Religion: "int",
+				insight: "sense",
+				Insight: "sense",
+				medicine: "sense",
+				Medicine: "sense",
+				perception: "sense",
+				Perception: "sense",
+				survival: "sense",
+				Survival: "sense",
+				deception: "pre",
+				Deception: "pre",
+				intimidation: "pre",
+				Intimidation: "pre",
+				performance: "pre",
+				Performance: "pre",
+				persuasion: "pre",
+				Persuasion: "pre",
+			};
 
-		const ability = skillAbilityMap[skill] || "str";
-		const baseMod = getAbilityModifier(ability);
-		const isProficient = skillProficiencies.includes(skill);
-		return baseMod + (isProficient ? proficiencyBonus : 0);
-	};
+			const ability = skillAbilityMap[skill] || "str";
+			const baseMod = getAbilityModifier(ability);
+			const isProficient = skillProficiencies.includes(skill);
+			return baseMod + (isProficient ? proficiencyBonus : 0);
+		},
+		[getAbilityModifier, skillProficiencies, proficiencyBonus],
+	);
 
 	const roll = useCallback(
 		(
@@ -179,8 +187,8 @@ export function useCharacterRoll({
 			characterName,
 			proficiencyBonus,
 			recordRoll,
-			toast,
 			rollInCampaign,
+			toast,
 		],
 	);
 

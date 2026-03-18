@@ -387,6 +387,7 @@ export function Auth() {
 						/>
 						<div className="mt-4 text-center">
 							<button
+								type="button"
 								onClick={() =>
 									setAuthView(authView === "sign_in" ? "sign_up" : "sign_in")
 								}

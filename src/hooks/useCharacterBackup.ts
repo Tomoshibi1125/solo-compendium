@@ -24,7 +24,7 @@ const MAX_LOCAL_BACKUPS = 10;
 /**
  * Create a backup of a character (localStorage)
  */
-export function createLocalBackup(
+function createLocalBackup(
 	character: CharacterWithAbilities,
 	backupName?: string,
 ): string {
@@ -59,7 +59,7 @@ export function createLocalBackup(
 /**
  * Load all backups for a character from localStorage
  */
-export function loadLocalBackups(characterId: string): CharacterBackup[] {
+function loadLocalBackups(characterId: string): CharacterBackup[] {
 	try {
 		if (typeof window === "undefined") return [];
 		const key = `${STORAGE_KEY_PREFIX}${characterId}`;
@@ -75,7 +75,8 @@ export function loadLocalBackups(characterId: string): CharacterBackup[] {
 /**
  * Restore a character from backup
  */
-export function restoreFromBackup(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function restoreFromBackup(
 	backup: CharacterBackup,
 ): CharacterWithAbilities {
 	return backup.backup_data as unknown as CharacterWithAbilities;
@@ -84,7 +85,7 @@ export function restoreFromBackup(
 /**
  * Delete a local backup
  */
-export function deleteLocalBackup(characterId: string, backupId: string): void {
+function deleteLocalBackup(characterId: string, backupId: string): void {
 	try {
 		if (typeof window === "undefined") return;
 		const key = `${STORAGE_KEY_PREFIX}${characterId}`;

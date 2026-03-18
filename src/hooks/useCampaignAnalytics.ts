@@ -4,8 +4,8 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
-type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
-type CampaignMember = Database["public"]["Tables"]["campaign_members"]["Row"];
+type _Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+type _CampaignMember = Database["public"]["Tables"]["campaign_members"]["Row"];
 
 interface CampaignAnalytics {
 	totalSessions: number;
@@ -114,8 +114,7 @@ export function useCampaignAnalytics() {
 						return {
 							member_id: member.id,
 							member_name:
-								(member as Record<string, any>).user_profiles?.display_name ||
-								"Unknown",
+								(member as { user_profiles?: { display_name?: string } }).user_profiles?.display_name || "Unknown",
 							sessions_participated: memberSessions.length,
 							last_active:
 								memberSessions.length > 0
@@ -126,12 +125,13 @@ export function useCampaignAnalytics() {
 
 				// Level progression analysis
 				const levelProgression =
-					characterProgression?.map((char: Record<string, any>) => {
+					(characterProgression as unknown as Record<string, unknown>[] | null)?.map((char) => {
 						// This would need to be enhanced with actual level tracking
 						// For now, we'll provide basic structure
 						return {
-							character_id: char.character_id,
-							character_name: char.user_characters?.character_name || "Unknown",
+							character_id: char.character_id as string,
+							character_name:
+								((char.user_characters as Record<string, unknown> | undefined)?.character_name as string) || "Unknown",
 							starting_level: 1,
 							current_level: 1,
 							levels_gained: 0,
@@ -243,7 +243,7 @@ Generated: ${new Date().toLocaleDateString()}
 				return null;
 			}
 		},
-		[getCampaignAnalytics, user, toast],
+		[getCampaignAnalytics, toast, user?.id],
 	);
 
 	return {

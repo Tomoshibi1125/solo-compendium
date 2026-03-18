@@ -243,7 +243,7 @@ export async function resolveRef(
 
 				const displayName =
 					typeof entityData.display_name === "string" &&
-						entityData.display_name.trim().length > 0
+					entityData.display_name.trim().length > 0
 						? entityData.display_name
 						: entityData.name;
 
@@ -327,7 +327,8 @@ export function getTableName(
 /**
  * Validate that a reference exists
  */
-export async function validateRef(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function validateRef(
 	type: EntryType,
 	id: string,
 ): Promise<boolean> {
@@ -361,7 +362,8 @@ const homebrewTypeToEntryType: Record<string, EntryType> = {
  * @param userId - Current user id
  * @param campaignId - Optional campaign id
  */
-export async function mergeHomebrewEntries(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function mergeHomebrewEntries(
 	type: EntryType,
 	userId?: string | null,
 	campaignId?: string | null,
@@ -390,36 +392,42 @@ export async function mergeHomebrewEntries(
 			} as never);
 		}
 
-		const homebrewItems: any[] = [];
+		const homebrewItems: Array<{
+			id: string;
+			name: string;
+			description: string | null;
+			data: unknown;
+			source_book: string | null;
+		}> = [];
 
 		for (const condition of visibilityConditions) {
-			const { data: items } = await supabase
+			const { data: items, error: _error } = await supabase
 				.from("homebrew_content")
-				.select("id, name, description, content, source_book")
+				.select("id, name, description, data, source_book")
 				.eq("content_type", homebrewContentType)
 				.eq("visibility_scope", condition.visibility_scope)
 				.eq("status", condition.status)
 				.eq(
 					"user_id",
-					(condition as Record<string, any>).user_id ||
-					(condition as Record<string, any>).campaign_id ||
-					"",
+					((condition as Record<string, string>).user_id ||
+						(condition as Record<string, string>).campaign_id ||
+						""),
 				)
 				.neq("user_id", userId); // Don't include user's own content twice
 
 			if (items) {
-				homebrewItems.push(...items);
+				homebrewItems.push(...(items as unknown as typeof homebrewItems));
 			}
 		}
 
-		return homebrewItems.map((item: any) => ({
+		return homebrewItems.map((item) => ({
 			id: `homebrew:${item.id}`,
 			name: item.name,
 			type,
 			description: item.description || null,
 			source: "homebrew" as const,
 			homebrew_id: item.id,
-			...((item.content as Record<string, unknown>) || {}),
+			...((item.data as Record<string, unknown>) || {}),
 		}));
 	} catch (err) {
 		logger.warn(`[mergeHomebrewEntries] Exception for ${type}:`, err);

@@ -170,6 +170,8 @@ export default defineConfig(({ mode: _mode }) => {
         display: 'standalone',
         orientation: 'portrait-primary',
         categories: ['games', 'entertainment'],
+        start_url: '/',
+        scope: '/',
         icons: [
           {
             src: '/icon-192.png',
@@ -183,7 +185,31 @@ export default defineConfig(({ mode: _mode }) => {
             type: 'image/png',
             purpose: 'any maskable'
           }
-        ]
+        ],
+        shortcuts: [
+          {
+            name: 'New Character',
+            short_name: 'New Char',
+            description: 'Create a new character',
+            url: '/characters/new',
+            icons: [{ src: '/icon-192.png', sizes: '192x192' }]
+          },
+          {
+            name: 'Dice Roller',
+            short_name: 'Dice',
+            description: 'Open dice roller',
+            url: '/dice',
+            icons: [{ src: '/icon-192.png', sizes: '192x192' }]
+          },
+          {
+            name: 'Compendium',
+            short_name: 'Compendium',
+            description: 'Browse compendium',
+            url: '/compendium',
+            icons: [{ src: '/icon-192.png', sizes: '192x192' }]
+          }
+        ],
+        screenshots: []
       }
     }),
   ];
@@ -211,12 +237,11 @@ export default defineConfig(({ mode: _mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        "@dimforge/rapier3d-compat": path.resolve(__dirname, "./src/lib/rapierCompat.ts"),
       },
-      dedupe: ['react', 'react-dom', '@dimforge/rapier3d', '@dimforge/rapier3d-compat', 'three'],
+      dedupe: ['react', 'react-dom', 'three'],
     },
     build: {
-      chunkSizeWarningLimit: 1500,
+      chunkSizeWarningLimit: 4000,
       // Optimize for production and mobile
       minify: 'esbuild',
       sourcemap: false, // Disabled due to Sentry issues
@@ -262,8 +287,8 @@ export default defineConfig(({ mode: _mode }) => {
                 return 'forms-vendor';
               }
               if (normalizedId.includes('/node_modules/zod/')) return 'validation-vendor';
-              if (normalizedId.includes('/node_modules/quill/')) return 'editor-vendor';
-              if (normalizedId.includes('/node_modules/recharts/')) return 'charts-vendor';
+              if (normalizedId.includes('/node_modules/@tiptap/') || normalizedId.includes('/node_modules/prosemirror-') || normalizedId.includes('/node_modules/@tiptap/pm/')) return 'editor-vendor';
+              if (normalizedId.includes('/node_modules/@nivo/')) return 'charts-vendor';
               if (normalizedId.includes('/node_modules/date-fns/') || normalizedId.includes('/node_modules/react-day-picker/')) {
                 return 'date-vendor';
               }
@@ -296,6 +321,7 @@ export default defineConfig(({ mode: _mode }) => {
               ) {
                 return 'media-vendor';
               }
+              if (normalizedId.includes('/node_modules/@react-pdf/')) return 'pdf-vendor';
               if (normalizedId.includes('/node_modules/framer-motion/')) return 'motion-vendor';
               if (normalizedId.includes('/node_modules/@react-spring/')) return 'motion-vendor';
 

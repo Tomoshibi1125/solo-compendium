@@ -20,7 +20,8 @@ export const enqueueOfflineSync = (
 	// Register background sync if supported
 	if ("serviceWorker" in navigator) {
 		navigator.serviceWorker.ready.then((reg) => {
-			const sync = (reg as Record<string, any>)?.sync;
+			const regExt = reg as unknown as Record<string, unknown>;
+			const sync = regExt?.sync as { register?: (tag: string) => Promise<void> } | undefined;
 			if (sync?.register) {
 				sync.register("offline-queue").catch((err: unknown) => {
 					warn("[Background Sync] Registration failed:", err);
@@ -49,7 +50,8 @@ export const registerOfflineSyncProcessor = (
 	syncManager.registerProcessor(type, action, processor);
 };
 
-export const unregisterOfflineSyncProcessor = (
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const unregisterOfflineSyncProcessor = (
 	type: OfflineSyncType,
 	action: OfflineSyncAction,
 ) => {

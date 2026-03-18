@@ -54,6 +54,7 @@ export function SystemSigilLogo({
 				className="w-full h-full relative z-10"
 				xmlns="http://www.w3.org/2000/svg"
 			>
+				<title>System Sigil</title>
 				{/* Gradient Definitions - Prime Architect Palette */}
 				<defs>
 					<linearGradient
@@ -161,7 +162,7 @@ export function SystemSigilLogo({
 					className="animate-pulse"
 				/>
 
-				{/* Central Point - Divine Spark */}
+				export {/* Central Point - Divine Spark */}
 				<circle cx="50" cy="50" r="1.5" fill="white" opacity="0.9" />
 			</svg>
 		</div>

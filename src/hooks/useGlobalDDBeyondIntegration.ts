@@ -7,8 +7,9 @@ import { useCharacterRoll } from "@/hooks/useCharacterRoll";
 import { useCombatSessionManager } from "@/hooks/useCombatSessionManager";
 import { useEncounterRewards } from "@/hooks/useEncounterRewards";
 import { useOfflineDataAccess } from "@/hooks/useOfflineDataAccess";
-import { useVTTManager } from "@/hooks/useVTTManager";
+import { useVTTManager, type VTTScene } from "@/hooks/useVTTManager";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { logger } from "@/lib/logger";
 import { rollCheck } from "@/lib/rollEngine";
@@ -17,7 +18,11 @@ interface CharacterSheetEnhancements {
 	rollAbilityCheck: (ability: string) => Promise<unknown>;
 	rollSavingThrow: (ability: string) => Promise<unknown>;
 	rollSkillCheck: (skill: string) => Promise<unknown>;
-	quickRoll: (formula: string) => Promise<unknown>;
+	_quickRoll: (formula: string) => Promise<{
+		dice: string;
+		modifier: string;
+		result: number;
+	} | null>;
 	exportCharacter: (format: "json" | "pdf") => Promise<boolean>;
 	importCharacter: (file: File) => Promise<unknown>;
 	getRollHistory: () => Promise<unknown[]>;
@@ -37,18 +42,18 @@ interface DMToolsEnhancements {
 	endCombatSession: (
 		sessionId: string,
 		options?: Record<string, unknown>,
-	) => Promise<unknown>;
+	) => Promise<{ success: boolean; [key: string]: unknown }>;
 	generateSessionReport: (sessionId: string) => Promise<string | null>;
 	distributeRewards: (
 		sessionId: string,
-		rewards: unknown,
-		options?: unknown,
+		rewards: Record<string, unknown>,
+		options?: string[],
 	) => Promise<boolean>;
 	getCampaignAnalytics: (campaignId: string) => Promise<unknown>;
 	exportAnalytics: (campaignId: string) => Promise<Blob | null>;
 	pauseCombatSession: (sessionId: string) => Promise<boolean>;
 	resumeCombatSession: (sessionId: string) => Promise<boolean>;
-	saveVTTScene: (campaignId: string, scene: unknown) => Promise<unknown>;
+	saveVTTScene: (campaignId: string, scene: Partial<VTTScene>) => Promise<unknown>;
 	loadVTTScene: (campaignId: string, sceneId?: string) => Promise<unknown>;
 	uploadVTTAsset: (
 		campaignId: string,
@@ -60,9 +65,20 @@ interface DMToolsEnhancements {
 }
 
 interface PlayerToolsEnhancements {
-	rollInCampaign: (campaignId: string, rollData: unknown) => Promise<unknown>;
+	rollInCampaign: (
+		campaignId: string,
+		rollData: {
+			dice_formula: string;
+			result: number;
+			roll_type: string;
+			rolls: number[];
+			context?: string;
+			modifiers?: Record<string, Json | undefined>;
+			character_id?: string;
+		},
+	) => Promise<unknown>;
 	getCampaignsForRolling: () => Promise<unknown[]>;
-	accessOfflineData: () => Promise<unknown>;
+	accessOfflineData: () => Promise<{ characters: unknown[]; compendium: unknown[]; campaigns: unknown[] }>;
 	syncOfflineData: () => Promise<void>;
 	trackHealthChange: (
 		characterId: string,
@@ -93,6 +109,7 @@ interface PlayerToolsEnhancements {
 
 export function useGlobalDDBeyondIntegration() {
 	const { toast } = useToast();
+
 	const { user } = useAuth();
 
 	// Character sheet enhancements
@@ -110,8 +127,7 @@ export function useGlobalDDBeyondIntegration() {
 
 		const { exportCharacterJson, exportCharacterPdf, importCharacterJson } =
 			useCharacterExport();
-		const { getCachedCharacter, cacheCharacter, clearCache, getCacheSize } =
-			useOfflineDataAccess();
+		const { clearCache, getCacheSize } = useOfflineDataAccess();
 
 		return {
 			rollAbilityCheck: async (ability: string) => {
@@ -133,7 +149,7 @@ export function useGlobalDDBeyondIntegration() {
 					advantage,
 				);
 			},
-			quickRoll: async (formula: string) => {
+			_quickRoll: async (formula: string) => {
 				// Basic roll implementation
 				const match = formula.match(/(\d+d\d+)?([+-]\d+)?/);
 				if (!match) return null;
@@ -222,13 +238,13 @@ export function useGlobalDDBeyondIntegration() {
 			},
 			distributeRewards: async (
 				_sessionId: string,
-				rewards: unknown,
-				options: unknown = [],
+				rewards: Record<string, unknown>,
+				options: string[] = [],
 			) => {
 				return await distributeRewards(
 					campaignId || "",
 					rewards as never,
-					(options ?? []) as string[],
+					options,
 				);
 			},
 			getCampaignAnalytics: async (analyticsCampaignId: string) => {
@@ -245,7 +261,7 @@ export function useGlobalDDBeyondIntegration() {
 				const result = await resumeCombatSession(sessionId);
 				return result.success;
 			},
-			saveVTTScene: async (vttCampaignId: string, scene: any) => {
+			saveVTTScene: async (vttCampaignId: string, scene: Partial<VTTScene>) => {
 				return await saveVTTScene(vttCampaignId, scene);
 			},
 			loadVTTScene: async (vttCampaignId: string, sceneId?: string) => {
@@ -287,13 +303,7 @@ export function useGlobalDDBeyondIntegration() {
 	// Player tools enhancements
 	const usePlayerToolsEnhancements = (): PlayerToolsEnhancements => {
 		const { rollInCampaign, getCampaignsForRolling } = useCampaignDice();
-		const {
-			getCachedCharacter,
-			cacheCharacter,
-			getCachedCompendiumItem,
-			cacheCompendiumItem,
-		} = useOfflineDataAccess();
-
+		useOfflineDataAccess();
 		const broadcastSystemMessage = async (
 			characterId: string,
 			content: string,
@@ -307,7 +317,7 @@ export function useGlobalDDBeyondIntegration() {
 
 				if (member?.campaign_id && user?.id) {
 					const charName =
-						(member.characters as Record<string, any>)?.name || "Someone";
+						(member.characters as Record<string, unknown>)?.name || "Someone";
 					await supabase.from("campaign_messages").insert({
 						campaign_id: member.campaign_id,
 						message_type: "system",
@@ -321,7 +331,18 @@ export function useGlobalDDBeyondIntegration() {
 		};
 
 		return {
-			rollInCampaign: async (campaignId: string, rollData: any) => {
+			rollInCampaign: async (
+				campaignId: string,
+				rollData: {
+					dice_formula: string;
+					result: number;
+					roll_type: string;
+					rolls: number[];
+					context?: string;
+					modifiers?: Record<string, Json | undefined>;
+					character_id?: string;
+				},
+			) => {
 				return await rollInCampaign(campaignId, rollData);
 			},
 			getCampaignsForRolling: async () => {

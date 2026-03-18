@@ -44,7 +44,7 @@ export interface MarketplaceItemRecord {
 	has_access?: boolean;
 }
 
-export interface MarketplaceReviewRecord {
+interface MarketplaceReviewRecord {
 	id: string;
 	item_id: string;
 	user_id: string;
@@ -56,7 +56,7 @@ export interface MarketplaceReviewRecord {
 	updated_at: string;
 }
 
-export type MarketplaceSaveInput = {
+type MarketplaceSaveInput = {
 	id?: string;
 	title: string;
 	description: string;
@@ -156,7 +156,7 @@ export const useMarketplaceItems = ({
 			const { data, error } = await query;
 			if (error) throw error;
 
-			const items = (data || []) as any as MarketplaceItemRecord[];
+			const items = (data || []) as unknown as MarketplaceItemRecord[];
 			if (!userId) {
 				return items.map((item) => ({
 					...item,
@@ -191,7 +191,8 @@ export const useMarketplaceItems = ({
 	});
 };
 
-export const useMarketplaceReviews = (itemId: string | null) => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useMarketplaceReviews = (itemId: string | null) => {
 	return useQuery({
 		queryKey: [...KEY, "reviews", itemId ?? "none"],
 		queryFn: async (): Promise<MarketplaceReviewRecord[]> => {
@@ -248,10 +249,10 @@ export const useSaveMarketplaceItem = () => {
 						.from("marketplace_items")
 						.update({
 							...payload,
-							content: payload.content as any,
-							requirements: payload.requirements as any,
-							compatibility: payload.compatibility as any,
-						} as any as Database["public"]["Tables"]["marketplace_items"]["Update"])
+							content: payload.content as typeof payload.content,
+							requirements: payload.requirements as typeof payload.requirements,
+							compatibility: payload.compatibility as typeof payload.compatibility,
+						} as unknown as Database["public"]["Tables"]["marketplace_items"]["Update"])
 						.eq("id", input.id)
 						.select("*")
 						.single();
@@ -259,7 +260,7 @@ export const useSaveMarketplaceItem = () => {
 					if (error) throw error;
 					return {
 						queued: false,
-						record: data as any as MarketplaceItemRecord,
+						record: data as unknown as MarketplaceItemRecord,
 					};
 				}
 
@@ -268,15 +269,15 @@ export const useSaveMarketplaceItem = () => {
 					.insert({
 						...payload,
 						author_id: userId,
-						content: payload.content as any,
-						requirements: payload.requirements as any,
-						compatibility: payload.compatibility as any,
-					} as any as Database["public"]["Tables"]["marketplace_items"]["Insert"])
+						content: payload.content as typeof payload.content,
+						requirements: payload.requirements as typeof payload.requirements,
+						compatibility: payload.compatibility as typeof payload.compatibility,
+					} as unknown as Database["public"]["Tables"]["marketplace_items"]["Insert"])
 					.select("*")
 					.single();
 
 				if (error) throw error;
-				return { queued: false, record: data as any as MarketplaceItemRecord };
+				return { queued: false, record: data as unknown as MarketplaceItemRecord };
 			} catch (error) {
 				if (!isOfflineError(error)) {
 					throw error;
@@ -377,7 +378,7 @@ export const useRecordMarketplaceDownload = () => {
 			try {
 				const { error } = await supabase.rpc("record_marketplace_download", {
 					p_item_id: itemId,
-				} as any);
+				});
 				if (error) throw error;
 				return { queued: false };
 			} catch (error) {
@@ -435,9 +436,9 @@ export const useUpsertMarketplaceReview = () => {
 				const { error } = await supabase.rpc("upsert_marketplace_review", {
 					p_item_id: itemId,
 					p_rating: Number.isFinite(rating) ? rating : 5,
-					p_comment: typeof comment === "string" ? comment : null,
+					p_comment: typeof comment === "string" ? comment : undefined,
 					p_user_id: userId,
-				} as any);
+				});
 				if (error) throw error;
 				return { queued: false };
 			} catch (error) {

@@ -20,7 +20,7 @@ import type { ActiveEffectRef, GeminiStateRef } from "@/lib/domainEvents";
 // Types
 // ---------------------------------------------------------------------------
 
-export interface GeminiModifier {
+interface GeminiModifier {
 	stat: string; // e.g. 'ac', 'attack_bonus', 'spell_save_dc', 'damage', 'speed', 'hp_max'
 	value: number;
 	operation: "add" | "set" | "multiply";
@@ -28,7 +28,7 @@ export interface GeminiModifier {
 	condition?: string; // optional condition like 'while_raging', 'on_crit'
 }
 
-export interface GeminiRuntimeState {
+interface GeminiRuntimeState {
 	sovereignId: string | null;
 	sovereignName: string | null;
 	isActive: boolean;
@@ -162,7 +162,7 @@ export function toGeminiEffectRefs(
 
 	return state.modifiers.map((mod) => ({
 		sourceType: "gemini" as const,
-		sourceId: state.sovereignId!,
+		sourceId: state.sovereignId || "",
 		effectName: mod.source,
 		modifiers: {
 			stat: mod.stat,

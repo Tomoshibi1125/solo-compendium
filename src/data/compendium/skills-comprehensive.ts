@@ -7,20 +7,20 @@ export interface Skill {
 	name: string;
 	description: string;
 	ability:
-	| "Strength"
-	| "Dexterity"
-	| "Constitution"
-	| "Intelligence"
-	| "Wisdom"
-	| "Charisma";
+		| "Strength"
+		| "Dexterity"
+		| "Constitution"
+		| "Intelligence"
+		| "Wisdom"
+		| "Charisma";
 	type:
-	| "combat"
-	| "exploration"
-	| "social"
-	| "magical"
-	| "shadow"
-	| "crafting"
-	| "survival";
+		| "combat"
+		| "exploration"
+		| "social"
+		| "magical"
+		| "shadow"
+		| "crafting"
+		| "survival";
 	uses: string;
 	mechanics: {
 		check: string;

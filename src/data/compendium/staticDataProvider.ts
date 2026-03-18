@@ -222,7 +222,7 @@ export interface StaticCompendiumEntry {
 	path_tier?: number | null;
 }
 
-export interface StaticDataProvider {
+interface StaticDataProvider {
 	getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -658,8 +658,8 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 	const skillNames = normalizeStringArray(monster.skills);
 	const skillMap = skillNames
 		? Object.fromEntries(
-			skillNames.map((name) => [name, proficiencyBonus ?? 0]),
-		)
+				skillNames.map((name) => [name, proficiencyBonus ?? 0]),
+			)
 		: null;
 
 	return {
@@ -718,10 +718,10 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 				: null,
 		saving_throws: savingThrows
 			? (Object.fromEntries(
-				Object.entries(savingThrows)
-					.filter(([, v]) => typeof v === "number")
-					.map(([k, v]) => [k, v as number]),
-			) as Record<string, number>)
+					Object.entries(savingThrows)
+						.filter(([, v]) => typeof v === "number")
+						.map(([k, v]) => [k, v as number]),
+				) as Record<string, number>)
 			: null,
 		skills: skillMap,
 		damage_resistances: normalizeStringArray(monster.damageResistances) ?? null,
@@ -928,25 +928,25 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 			: derivedEffects) as Record<string, unknown>,
 		mechanics: (spell.mechanics && typeof spell.mechanics === "object"
 			? spell.mechanics
-			: (spell as Record<string, any>).spellAttack
-				? { attack: (spell as Record<string, any>).spellAttack }
+			: (spell as Record<string, unknown>).spellAttack
+				? { attack: (spell as Record<string, unknown>).spellAttack }
 				: {
-					saving_throw: { ability: "dexterity", effect: "half damage" },
-				}) as Record<string, unknown>,
+						saving_throw: { ability: "dexterity", effect: "half damage" },
+					}) as Record<string, unknown>,
 		limitations: (spell.limitations && typeof spell.limitations === "object"
 			? {
-				...spell.limitations,
-				concentration,
-				ritual,
-				casting_time: castingTime,
-				spell_classes: classes,
-			}
+					...spell.limitations,
+					concentration,
+					ritual,
+					casting_time: castingTime,
+					spell_classes: classes,
+				}
 			: {
-				concentration,
-				ritual,
-				casting_time: castingTime,
-				spell_classes: classes,
-			}) as Record<string, unknown>,
+					concentration,
+					ritual,
+					casting_time: castingTime,
+					spell_classes: classes,
+				}) as Record<string, unknown>,
 		flavor:
 			typeof spell.flavor === "string" ? spell.flavor : spell.description || "",
 		higher_levels: spell.higher_levels || spell.atHigherLevels || null,
@@ -993,11 +993,17 @@ function transformLocation(
 	};
 }
 
-function transformRune(rune: StaticRuneSource & Record<string, any>): StaticCompendiumEntry {
-	const { range, duration, activation_action, lore, discovery_lore, ...rest } = rune;
+function transformRune(
+	rune: StaticRuneSource & Record<string, unknown>,
+): StaticCompendiumEntry {
+	const { range, duration, activation_action, lore, discovery_lore, ...rest } =
+		rune;
 	return {
 		...rest, // Preserve all native System Ascendant properties (inscription_difficulty, effect_type etc)
-		id: rune.id || (rune.name && rune.name.toLowerCase().replace(/\s+/g, "-")) || "unknown-rune",
+		id:
+			rune.id ||
+			rune.name?.toLowerCase().replace(/\s+/g, "-") ||
+			"unknown-rune",
 		name: rune.name || "Unknown Rune",
 		display_name: rune.name || "Unknown Rune",
 		description: rune.effect_description || rune.description || "",
@@ -1005,7 +1011,7 @@ function transformRune(rune: StaticRuneSource & Record<string, any>): StaticComp
 		tags: (rune.tags || [rune.element || rune.rune_type, rune.rarity]).filter(
 			Boolean,
 		) as string[],
-		source_book: rune.source_book || "System Ascendant Canon",
+		source_book: (rune.source_book as string) || "System Ascendant Canon",
 		image_url: rune.image,
 		rune_type: rune.rune_type || rune.element || null,
 		rune_category: rune.rune_category || rune.element || null,
@@ -1100,12 +1106,12 @@ function deriveMonarchClassFeatures(
 		| undefined;
 	const abilities = monarch.abilities as
 		| Array<{
-			name: string;
-			description: string;
-			power_level?: number;
-			type?: string;
-			frequency?: string;
-		}>
+				name: string;
+				description: string;
+				power_level?: number;
+				type?: string;
+				frequency?: string;
+		  }>
 		| undefined;
 	if (!features && !abilities) return null;
 
@@ -1147,17 +1153,18 @@ function deriveMonarchClassFeatures(
 	return result.length > 0 ? result : null;
 }
 
-function transformMonarch(monarch: any): StaticCompendiumEntry {
+function transformMonarch(
+	monarch: StaticMonarchSource,
+): StaticCompendiumEntry {
 	const classFeatures = deriveMonarchClassFeatures(monarch);
 
 	return {
 		id: monarch.id || monarch.name.toLowerCase().replace(/\s+/g, "-"),
 		name: monarch.name,
 		display_name: monarch.name,
-		description: monarch.description,
+		description: monarch.description || "",
 		created_at: new Date().toISOString(),
-		tags:
-			monarch.tags || (["monarch", monarch.theme].filter(Boolean) as string[]),
+		tags: monarch.tags || (["monarch", monarch.theme].filter(Boolean) as string[]),
 		source_book: monarch.source_book || "System Ascendant Canon",
 		image_url: monarch.image,
 		title: monarch.title,
@@ -1431,8 +1438,8 @@ export const staticDataProvider: StaticDataProvider = {
 				"feat",
 				"ability",
 				...(typeof feat.prerequisites !== "string" &&
-					Array.isArray((feat.prerequisites as Record<string, any>).feats)
-					? ((feat.prerequisites as Record<string, any>).feats as string[])
+				Array.isArray((feat.prerequisites as Record<string, unknown>).feats)
+					? ((feat.prerequisites as Record<string, unknown>).feats as string[])
 					: []),
 			].filter(Boolean) as string[],
 			source_book: feat.source,
@@ -1440,8 +1447,8 @@ export const staticDataProvider: StaticDataProvider = {
 				? typeof feat.prerequisites === "string"
 					? feat.prerequisites
 					: Object.entries(feat.prerequisites)
-						.map(([key, value]) => `${key}: ${value}`)
-						.join(", ")
+							.map(([key, value]) => `${key}: ${value}`)
+							.join(", ")
 				: undefined,
 			benefits: feat.benefits ? [feat.benefits] : null,
 		}));
@@ -1664,9 +1671,9 @@ export const staticDataProvider: StaticDataProvider = {
 			theme: artifact.rarity,
 			rarity: artifact.rarity,
 			level:
-				typeof (artifact.requirements as Record<string, any>)?.level ===
-					"number"
-					? ((artifact.requirements as Record<string, any>).level as number)
+				typeof (artifact.requirements as Record<string, unknown>)?.level ===
+				"number"
+					? ((artifact.requirements as Record<string, unknown>).level as number)
 					: undefined,
 		}));
 	},
@@ -1793,7 +1800,8 @@ export const staticDataProvider: StaticDataProvider = {
 };
 
 // Export a hook to check if we should use static data
-export const useStaticDataFallback = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useStaticDataFallback = () => {
 	// Use static data when Supabase is not configured or fails
 	return (
 		!(window as unknown as Record<string, unknown>).supabaseConfigured || false

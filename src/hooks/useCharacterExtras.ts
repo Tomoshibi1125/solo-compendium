@@ -5,7 +5,7 @@ import type { Database } from "@/integrations/supabase/types";
 
 type CharacterExtra = Database["public"]["Tables"]["character_extras"]["Row"];
 
-export type CharacterExtraWithMonster = CharacterExtra & {
+type CharacterExtraWithMonster = CharacterExtra & {
 	monster?:
 		| (Database["public"]["Tables"]["compendium_monsters"]["Row"] & {
 				actions?: Database["public"]["Tables"]["compendium_monster_actions"]["Row"][];

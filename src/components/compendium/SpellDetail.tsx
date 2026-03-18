@@ -138,19 +138,19 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 	};
 
 	const buildResolutionPayload = (): ActionResolutionPayload | null => {
-		const mechanicsAny = (data.mechanics ?? null) as Record<string, any>;
+		const mechanicsAny = (data.mechanics ?? null) as Record<string, unknown>;
 
 		const id = crypto.randomUUID();
 		const name = displayName;
 
 		const damageRoll =
-			typeof mechanicsAny?.attack?.damage === "string"
-				? mechanicsAny.attack.damage
+			typeof (mechanicsAny?.attack as Record<string, unknown>)?.damage === "string"
+				? (mechanicsAny.attack as Record<string, unknown>).damage
 				: null;
 
 		const healingRoll =
-			typeof mechanicsAny?.healing?.dice === "string"
-				? mechanicsAny.healing.dice
+			typeof (mechanicsAny?.healing as Record<string, unknown>)?.dice === "string"
+				? (mechanicsAny.healing as Record<string, unknown>).dice
 				: null;
 
 		if (mechanicsAny?.attack) {
@@ -171,13 +171,13 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 
 		if (mechanicsAny?.saving_throw) {
 			const dc =
-				typeof mechanicsAny.saving_throw.dc === "number"
-					? mechanicsAny.saving_throw.dc
+				typeof (mechanicsAny.saving_throw as Record<string, unknown>).dc === "number"
+					? ((mechanicsAny.saving_throw as Record<string, unknown>).dc as number)
 					: rankSaveDC(data.rank);
 
 			const ability =
-				typeof mechanicsAny.saving_throw.ability === "string"
-					? mechanicsAny.saving_throw.ability
+				typeof (mechanicsAny.saving_throw as Record<string, unknown>).ability === "string"
+					? ((mechanicsAny.saving_throw as Record<string, unknown>).ability as string)
 					: undefined;
 
 			return {

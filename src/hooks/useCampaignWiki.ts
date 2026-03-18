@@ -6,9 +6,9 @@ import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 
 export type WikiArticle =
 	Database["public"]["Tables"]["campaign_wiki_articles"]["Row"];
-export type WikiArticleInsert =
+type WikiArticleInsert =
 	Database["public"]["Tables"]["campaign_wiki_articles"]["Insert"];
-export type WikiArticleUpdate =
+type WikiArticleUpdate =
 	Database["public"]["Tables"]["campaign_wiki_articles"]["Update"];
 
 export const useCampaignWiki = (campaignId: string | null) => {

@@ -53,7 +53,7 @@ interface JobData {
 	} | null;
 }
 
-interface JobFeature {
+export interface JobFeature {
 	id: string;
 	name: string;
 	display_name?: string | null;
@@ -63,7 +63,7 @@ interface JobFeature {
 	is_path_feature: boolean;
 }
 
-interface JobPath {
+export interface JobPath {
 	id: string;
 	name: string;
 	display_name?: string | null;
@@ -103,6 +103,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 		// Create enhanced job data that includes both database fields and static awakening features/traits
 		const enhancedJobData = {
 			...data,
+			class_features: data.class_features ?? undefined,
 			awakeningFeatures: staticJob.awakeningFeatures || [],
 			jobTraits: staticJob.jobTraits || [],
 		};
@@ -118,6 +119,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 		// Create enhanced job data that includes both database fields and static awakening features/traits
 		const enhancedJobData = {
 			...data,
+			class_features: data.class_features ?? undefined,
 			awakeningFeatures: staticJob.awakeningFeatures || [],
 			jobTraits: staticJob.jobTraits || [],
 		};
@@ -297,16 +299,16 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							totalChoices.items > 0 ||
 							totalChoices.tools > 0 ||
 							totalChoices.languages > 0) && (
-								<Badge variant="outline" className="text-xs ml-2">
-									+
-									{Object.values(totalChoices).reduce(
-										(sum, val, idx) =>
-											idx === 0 ? val - data.skill_choice_count : sum + val,
-										0,
-									)}{" "}
-									more choices
-								</Badge>
-							)}
+							<Badge variant="outline" className="text-xs ml-2">
+								+
+								{Object.values(totalChoices).reduce(
+									(sum, val, idx) =>
+										idx === 0 ? val - data.skill_choice_count : sum + val,
+									0,
+								)}{" "}
+								more choices
+							</Badge>
+						)}
 					</div>
 				</SystemWindow>
 			</div>
@@ -349,8 +351,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						<p className="font-heading">
 							{data.armor_proficiencies
 								? data.armor_proficiencies
-									.map(formatMonarchVernacular)
-									.join(", ")
+										.map(formatMonarchVernacular)
+										.join(", ")
 								: "None"}
 						</p>
 					</div>
@@ -361,8 +363,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						<p className="font-heading">
 							{data.weapon_proficiencies
 								? data.weapon_proficiencies
-									.map(formatMonarchVernacular)
-									.join(", ")
+										.map(formatMonarchVernacular)
+										.join(", ")
 								: "None"}
 						</p>
 					</div>
@@ -373,8 +375,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						<p className="font-heading">
 							{data.tool_proficiencies
 								? data.tool_proficiencies
-									.map(formatMonarchVernacular)
-									.join(", ")
+										.map(formatMonarchVernacular)
+										.join(", ")
 								: "None"}
 						</p>
 					</div>
@@ -396,7 +398,10 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				<SystemWindow title="STARTING EQUIPMENT">
 					<ul className="space-y-2">
 						{data.starting_equipment.map((choice, i) => (
-							<li key={i} className="flex items-start gap-2">
+							<li
+								key={JSON.stringify(choice)}
+								className="flex items-start gap-2"
+							>
 								<span className="text-primary font-heading">
 									({String.fromCharCode(97 + i)})
 								</span>
@@ -630,9 +635,9 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 									</tr>
 								</thead>
 								<tbody>
-									{data.class_features.map((cf, idx) => (
+									{data.class_features.map((cf) => (
 										<tr
-											key={idx}
+											key={`cf-${cf.level}-${cf.name}`}
 											className="border-b border-border/50 hover:bg-muted/20"
 										>
 											<td className="py-2 px-3 font-heading font-semibold text-primary">

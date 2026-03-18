@@ -195,7 +195,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 								<FileText className="mr-2 h-4 w-4" />
 								{formatRegentVernacular(item.name)}
 								<span className="ml-2 text-xs text-muted-foreground">
-									{formatRegentVernacular(item.type)}
+									export {formatRegentVernacular(item.type)}
 								</span>
 							</CommandItem>
 						))}

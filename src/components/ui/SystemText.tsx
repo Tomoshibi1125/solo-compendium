@@ -4,15 +4,15 @@ import { cn } from "@/lib/utils";
 interface SystemTextProps {
 	children: ReactNode;
 	variant?:
-	| "heading"
-	| "subheading"
-	| "body"
-	| "system"
-	| "data"
-	| "sovereign"
-	| "rift"
-	| "gate"
-	| "shadow";
+		| "heading"
+		| "subheading"
+		| "body"
+		| "system"
+		| "data"
+		| "sovereign"
+		| "rift"
+		| "gate"
+		| "shadow";
 	size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
 	glow?: boolean;
 	dimensional?: boolean;
@@ -94,7 +94,8 @@ const dimensionalShadows: Record<string, string> = {
 	body: "",
 	system: "0 0 8px hsl(145 85% 45% / 0.4), 0 0 16px hsl(145 85% 45% / 0.15)",
 	data: "0 0 6px hsl(275 72% 59% / 0.3)",
-	sovereign: "0 0 10px hsl(260 30% 78% / 0.4), 0 0 24px hsl(275 72% 59% / 0.15)",
+	sovereign:
+		"0 0 10px hsl(260 30% 78% / 0.4), 0 0 24px hsl(275 72% 59% / 0.15)",
 	rift: "0 0 8px hsl(330 90% 52% / 0.4), 0 0 20px hsl(330 90% 52% / 0.15)",
 	gate: "0 0 8px hsl(220 35% 75% / 0.4), 0 0 16px hsl(220 35% 75% / 0.15)",
 	shadow: "0 0 6px hsl(270 60% 20% / 0.5)",
@@ -194,12 +195,7 @@ export const SystemHeading = ({
 
 	return (
 		<Component
-			className={cn(
-				styles.font,
-				styles.color,
-				sizeStyles[level],
-				className,
-			)}
+			className={cn(styles.font, styles.color, sizeStyles[level], className)}
 			style={
 				dimensional
 					? { textShadow: dimensionalShadows[variant] || "" }
@@ -222,7 +218,6 @@ interface DataStreamTextProps {
 export const DataStreamText = ({
 	children,
 	variant = "system",
-	speed = "normal",
 	className,
 }: DataStreamTextProps) => {
 	const variantStyles = {
@@ -250,9 +245,9 @@ export const DataStreamText = ({
 				textShadow: dimensionalShadows[variant] || "",
 			}}
 		>
-			{children}
+			export {children}
 		</span>
 	);
 };
 
-export default SystemText;
+

@@ -106,7 +106,8 @@ export function initSentry() {
 /**
  * Set user context for Sentry
  */
-export function setSentryUser(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function setSentryUser(
 	user: { id: string; email?: string; username?: string } | null,
 ) {
 	if (!SENTRY_DSN) return;
@@ -159,7 +160,8 @@ export function captureMessage(
 /**
  * Add breadcrumb
  */
-export function addBreadcrumb(breadcrumb: Sentry.Breadcrumb) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function addBreadcrumb(breadcrumb: Sentry.Breadcrumb) {
 	if (!SENTRY_DSN) return;
 
 	Sentry.addBreadcrumb(breadcrumb);

@@ -2,7 +2,7 @@
 // ALL feats for the complete compendium system
 // SA-flavored names and descriptions on 5e mechanical backbone
 
-export interface Feat {
+interface Feat {
 	id: string;
 	name: string;
 	description: string;

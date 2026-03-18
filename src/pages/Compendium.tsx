@@ -57,7 +57,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
-import { staticDataProvider } from "@/data/compendium/staticDataProvider";
 import { useToast } from "@/hooks/use-toast";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -91,7 +90,7 @@ const categories = [
 
 	// Character Foundation
 	{ id: "backgrounds", name: "Backgrounds", icon: Users },
-	{ id: "jobs", name: "Classes", icon: Swords },
+	{ id: "jobs", name: "Jobs", icon: Swords },
 	{ id: "paths", name: "Paths", icon: GitBranch },
 	{ id: "regents", name: MONARCH_LABEL_PLURAL, icon: Crown },
 
@@ -202,6 +201,10 @@ const Compendium = () => {
 
 			const allEntries: CompendiumEntry[] = [];
 
+			const { staticDataProvider } = await import(
+				"@/data/compendium/staticDataProvider"
+			);
+
 			// Always use static data provider for comprehensive loading
 			logger.debug("Using comprehensive static data provider");
 
@@ -307,7 +310,7 @@ const Compendium = () => {
 								level: item.level ?? undefined,
 								created_at: item.created_at,
 								source_book: item.source_book,
-								source_kind: (item as any).source_kind || "sa",
+								source_kind: (item as unknown as { source_kind?: string }).source_kind || "sa",
 								image_url: item.image_url,
 								isFavorite: favorites.has(`${category}:${item.id}`) || false,
 								// Include type-specific fields
@@ -412,7 +415,22 @@ const Compendium = () => {
 		setShowMiniBossOnly(filters.showMiniBossOnly);
 		setMinCR(filters.minCR);
 		setMaxCR(filters.maxCR);
-	}, []);
+	}, [
+		filters.maxCR,
+		filters.maxLevel,
+		filters.minCR,
+		filters.minLevel,
+		filters.selectedCategory,
+		filters.selectedGateRanks,
+		filters.selectedRarities,
+		filters.selectedSchools,
+		filters.selectedSourceBooks,
+		filters.showBossOnly,
+		filters.showFavoritesOnly,
+		filters.showMiniBossOnly,
+		filters.sortBy,
+		filters.viewMode,
+	]);
 
 	// Save filters when they change
 	useEffect(() => {
@@ -859,12 +877,12 @@ const Compendium = () => {
 		if (!displayQuery.trim()) return displayText;
 		const escapedQuery = displayQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 		const parts = displayText.split(new RegExp(`(${escapedQuery})`, "gi"));
-		return parts.map((part, i) =>
+		return parts.map((part, _i) =>
 			part.toLowerCase() === displayQuery.toLowerCase() ? (
 				<mark
-					key={i}
+					key={part}
 					className="bg-primary/20 text-primary font-semibold"
-					aria-label={`Search match: ${part}`}
+					title={`Search match: ${part}`}
 				>
 					{part}
 				</mark>
@@ -1152,6 +1170,7 @@ const Compendium = () => {
 										aria-label={`View ${entry.name} details`}
 									>
 										<button
+											type="button"
 											onClick={(e) => handleToggleFavorite(e, entry)}
 											className={cn(
 												"absolute top-2 right-2 z-10 p-1.5 rounded-full transition-all duration-200",

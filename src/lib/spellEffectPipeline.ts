@@ -42,7 +42,7 @@ export interface SpellModifier {
 	description?: string;
 }
 
-export type EffectTarget =
+type EffectTarget =
 	| "ac"
 	| "attack_rolls"
 	| "saving_throws"
@@ -202,7 +202,8 @@ export function createActiveSpellEffect(
 /**
  * Convert active spell effects into SpellEngineEffect[] for stat computation
  */
-export function spellEffectsToEngineEffects(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function spellEffectsToEngineEffects(
 	activeSpells: ActiveSpellEffectEntry[],
 ): SpellEngineEffect[] {
 	const engineEffects: SpellEngineEffect[] = [];
@@ -227,7 +228,8 @@ export function spellEffectsToEngineEffects(
  * Process round advancement — decrement remaining rounds on active spells
  * Returns array of expired spell IDs
  */
-export function advanceRound(activeSpells: ActiveSpellEffectEntry[]): {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function advanceRound(activeSpells: ActiveSpellEffectEntry[]): {
 	updated: ActiveSpellEffectEntry[];
 	expired: string[];
 } {
@@ -254,7 +256,8 @@ export function advanceRound(activeSpells: ActiveSpellEffectEntry[]): {
 /**
  * Drop concentration — removes all concentration spells from a caster
  */
-export function dropConcentration(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function dropConcentration(
 	activeSpells: ActiveSpellEffectEntry[],
 	casterId: string,
 ): { updated: ActiveSpellEffectEntry[]; dropped: string[] } {
@@ -279,6 +282,7 @@ export function hasKnownEffects(spellName: string): boolean {
 /**
  * Get all known spell names with effects
  */
-export function getKnownSpellEffects(): string[] {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getKnownSpellEffects(): string[] {
 	return Object.keys(SPELL_EFFECT_MAP);
 }

@@ -245,10 +245,10 @@ export function GeminiProtocolGenerator() {
 		if (autoMode) {
 			if (regentUnlocksLoading) return;
 			const primary =
-				regentUnlocks.find((unlock: any) => unlock.is_primary) ||
+				regentUnlocks.find((unlock: unknown) => (unlock as { is_primary?: boolean }).is_primary) ||
 				regentUnlocks[0];
 			const secondary = regentUnlocks.find(
-				(unlock: any) => unlock.id !== primary?.id,
+				(unlock: unknown) => (unlock as { id?: string }).id !== (primary as { id?: string })?.id,
 			);
 			if (primary && selectedRegentA !== primary.regent_id) {
 				setSelectedRegentA(primary.regent_id);
@@ -435,10 +435,10 @@ export function GeminiProtocolGenerator() {
 					generatedSovereign.path.name.replace("Path of the ", ""),
 				),
 				regentATheme: formatMonarchVernacular(
-					(generatedSovereign as Record<string, any>).regentA.theme,
+					(generatedSovereign as unknown as { regentA?: { theme?: string } }).regentA?.theme,
 				),
 				regentBTheme: formatMonarchVernacular(
-					(generatedSovereign as Record<string, any>).regentB.theme,
+					(generatedSovereign as unknown as { regentB?: { theme?: string } }).regentB?.theme,
 				),
 				fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
 				powerMultiplier: formatMonarchVernacular(
@@ -880,9 +880,9 @@ export function GeminiProtocolGenerator() {
 							<h4 className="font-semibold mb-3">Fusion Abilities (8 Total)</h4>
 							<ScrollArea className="h-[500px] pr-4">
 								<div className="space-y-3">
-									{displaySovereign.abilities.map((ability, index) => (
+									{displaySovereign.abilities.map((ability, _index) => (
 										<div
-											key={ability.name || `ability-${index}`}
+											key={ability.name}
 											data-testid="fusion-ability-card"
 											className={`p-3 rounded-lg border ${
 												ability.is_capstone
@@ -918,9 +918,9 @@ export function GeminiProtocolGenerator() {
 												{ability.description}
 											</p>
 											<div className="flex flex-wrap gap-1 mt-2">
-												{ability.origin_sources.map((source, i) => (
+												{ability.origin_sources.map((source, _i) => (
 													<span
-														key={i}
+														key={source}
 														className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded"
 													>
 														{source}

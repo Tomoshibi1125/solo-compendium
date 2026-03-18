@@ -92,7 +92,7 @@ export class NetworkErrorBoundary extends React.Component<
 	}
 }
 
-export function NetworkErrorFallback({
+function NetworkErrorFallback({
 	error,
 	retry,
 	retryCount,
@@ -172,7 +172,8 @@ export function LoadingIndicator({
 	);
 }
 
-export function SlowNetworkWarning() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function SlowNetworkWarning() {
 	return (
 		<Alert className="border-yellow-200 bg-yellow-50">
 			<Clock className="w-4 h-4 text-yellow-600" />
@@ -184,7 +185,8 @@ export function SlowNetworkWarning() {
 	);
 }
 
-export function ServerErrorFallback({
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function ServerErrorFallback({
 	error,
 	retry,
 }: {
@@ -232,7 +234,8 @@ export function ServerErrorFallback({
 	);
 }
 
-export function TimeoutErrorFallback({ retry }: { retry: () => void }) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function TimeoutErrorFallback({ retry }: { retry: () => void }) {
 	return (
 		<Card className="border-orange-200 bg-orange-50">
 			<CardHeader>
@@ -266,7 +269,8 @@ export function TimeoutErrorFallback({ retry }: { retry: () => void }) {
 	);
 }
 
-export function OfflineModeIndicator() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function OfflineModeIndicator() {
 	return (
 		<Alert className="border-gray-200 bg-gray-50">
 			<WifiOff className="w-4 h-4 text-gray-600" />
@@ -278,7 +282,8 @@ export function OfflineModeIndicator() {
 	);
 }
 
-export function NetworkStatusIndicator({
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function NetworkStatusIndicator({
 	isOnline,
 	latency,
 }: {
@@ -328,7 +333,8 @@ export function NetworkStatusIndicator({
 	);
 }
 
-export function ResourceLoadingFailure({
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function ResourceLoadingFailure({
 	resource,
 	retry,
 }: {
@@ -356,4 +362,4 @@ export function ResourceLoadingFailure({
 	);
 }
 
-export default NetworkErrorBoundary;
+

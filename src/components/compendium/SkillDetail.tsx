@@ -63,8 +63,8 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 			{data.examples && data.examples.length > 0 && (
 				<SystemWindow title="EXAMPLE USES">
 					<ul className="space-y-3">
-						{data.examples.map((example, i) => (
-							<li key={i} className="flex items-start gap-3">
+						{data.examples.map((example, _i) => (
+							<li key={example} className="flex items-start gap-3">
 								<BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
 								<span className="text-foreground">
 									{formatMonarchVernacular(example)}

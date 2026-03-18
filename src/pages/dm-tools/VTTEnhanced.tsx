@@ -1,3 +1,88 @@
+import { QuestGenerator } from "@/components/dm-tools/QuestGenerator";
+import { Layout } from "@/components/layout/Layout";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { SystemHeading, SystemText } from "@/components/ui/SystemText";
+import { SystemWindow } from "@/components/ui/SystemWindow";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DMToolsPanel } from "@/components/vtt/DMToolsPanel";
+import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
+import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
+import { VTTInitiativePanel } from "@/components/vtt/VTTInitiativePanel";
+import { VttPixiStage } from "@/components/vtt/VttPixiStage";
+import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
+import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
+import {
+	DEFAULT_TOKENS,
+	type LibraryToken,
+	mergeBaseTokens,
+	normalizeLibraryTokens,
+} from "@/data/tokenLibraryDefaults";
+import { useToast } from "@/hooks/use-toast";
+import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
+import {
+	type CampaignMember,
+	useCampaignMembers,
+	useCampaignRole,
+} from "@/hooks/useCampaigns";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import {
+	readLocalToolState,
+	useCampaignToolState,
+	useUserToolState,
+} from "@/hooks/useToolState";
+import {
+	useCreateVTTAudioTrack,
+	useDeleteVTTAudioTrack,
+	useUpdateVTTAudioTrack,
+	useVTTAudioTracks,
+	vttAudioManager,
+} from "@/hooks/useVTTAudio";
+import type { VTTToken } from "@/hooks/useVTTManager";
+import { useVTTRealtime } from "@/hooks/useVTTRealtime";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
+import { getBestImageFormat } from "@/lib/imageOptimization";
+import { cn } from "@/lib/utils";
+import {
+	type AmbientSoundZone,
+	createDrawing,
+	getWeatherCSSAnimation,
+	type HexGridConfig,
+	type LightSource,
+	type MusicMood,
+	snapToHexCenter,
+	type TerrainZone,
+	type VTTDrawing,
+	VttMusicEngine,
+	type WallSegment,
+	WEATHER_PRESETS,
+	type WeatherType,
+} from "@/lib/vtt";
+import PlayerMapView from "@/pages/player-tools/PlayerMapView";
+import "@/styles/vtt-enhanced-dynamic.css";
+import "@/styles/vtt-enhanced.css";
+import { useQuery } from "@tanstack/react-query";
 import {
 	ArrowLeft,
 	BookOpen,
@@ -29,89 +114,28 @@ import {
 	useParams,
 	useSearchParams,
 } from "react-router-dom";
-import { Layout } from "@/components/layout/Layout";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import "@/styles/vtt-enhanced.css";
-import "@/styles/vtt-enhanced-dynamic.css";
-import { useQuery } from "@tanstack/react-query";
-import { QuestGenerator } from "@/components/dm-tools/QuestGenerator";
-import { OptimizedImage } from "@/components/ui/OptimizedImage";
-import { SystemHeading, SystemText } from "@/components/ui/SystemText";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DMToolsPanel } from "@/components/vtt/DMToolsPanel";
-import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
-import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
-import { VTTInitiativePanel } from "@/components/vtt/VTTInitiativePanel";
-import { VttPixiStage } from "@/components/vtt/VttPixiStage";
-import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
-import {
-	DEFAULT_TOKENS,
-	type LibraryToken,
-	mergeBaseTokens,
-	normalizeLibraryTokens,
-} from "@/data/tokenLibraryDefaults";
-import { useToast } from "@/hooks/use-toast";
-import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
-import {
-	type CampaignMember,
-	useCampaignMembers,
-	useCampaignRole,
-} from "@/hooks/useCampaigns";
-import { useDebounce } from "@/hooks/useDebounce";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
-import {
-	readLocalToolState,
-	useCampaignToolState,
-	useUserToolState,
-} from "@/hooks/useToolState";
-import {
-	useCreateVTTAudioTrack,
-	useDeleteVTTAudioTrack,
-	useUpdateVTTAudioTrack,
-	useVTTAudioTracks,
-	vttAudioManager,
-} from "@/hooks/useVTTAudio";
-import { useVTTRealtime } from "@/hooks/useVTTRealtime";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/lib/auth/authContext";
-import { getBestImageFormat } from "@/lib/imageOptimization";
-import { cn } from "@/lib/utils";
-import {
-	type AmbientSoundZone,
-	createDrawing,
-	getWeatherCSSAnimation,
-	type HexGridConfig,
-	type LightSource,
-	type MusicMood,
-	snapToHexCenter,
-	type TerrainZone,
-	type VTTDrawing,
-	VttMusicEngine,
-	type WallSegment,
-	WEATHER_PRESETS,
-	type WeatherType,
-} from "@/lib/vtt";
-import PlayerMapView from "@/pages/player-tools/PlayerMapView";
+
+/** Safe React component for rendering dice display text with **bold** and ~~strikethrough~~ */
+function DiceDisplayText({ text }: { text: string }) {
+	const tokens: React.ReactNode[] = [];
+	const pattern = /\*\*(.+?)\*\*|~~(.+?)~~/g;
+	let lastIndex = 0;
+	for (const m of text.matchAll(pattern)) {
+		if (m.index > lastIndex) {
+			tokens.push(text.slice(lastIndex, m.index));
+		}
+		if (m[1] !== undefined) {
+			tokens.push(<strong key={m.index}>{m[1]}</strong>);
+		} else if (m[2] !== undefined) {
+			tokens.push(<del key={m.index} className="opacity-40">{m[2]}</del>);
+		}
+		lastIndex = m.index + m[0].length;
+	}
+	if (lastIndex < text.length) {
+		tokens.push(text.slice(lastIndex));
+	}
+	return <>{tokens}</>;
+}
 
 interface PlacedToken {
 	id: string;
@@ -189,7 +213,7 @@ interface DiceRoll {
 	critical?: boolean;
 }
 
-interface ChatMessage {
+interface _ChatMessage {
 	id: string;
 	player: string;
 	message: string;
@@ -556,9 +580,12 @@ const VTTEnhanced = () => {
 				chars &&
 				typeof chars === "object" &&
 				"id" in chars &&
-				typeof (chars as Record<string, any>).id === "string"
+				typeof (chars as Record<string, unknown>).id === "string"
 			) {
-				map.set((chars as Record<string, any>).id as string, member.user_id);
+				map.set(
+					(chars as Record<string, unknown>).id as string,
+					member.user_id,
+				);
 			}
 		}
 		return map;
@@ -808,7 +835,7 @@ const VTTEnhanced = () => {
 			void saveVTTScene(campaignId, {
 				name: currentScene.name,
 				backgroundImage: currentScene.backgroundImage,
-				tokens: currentScene.tokens,
+				tokens: currentScene.tokens as unknown as VTTToken[],
 			});
 		}
 
@@ -1073,7 +1100,7 @@ const VTTEnhanced = () => {
 				setIsUploadingMap(false);
 			}
 		},
-		[campaignId, currentScene, isAuthed, toast, updateScene, uploadVTTAsset],
+		[campaignId, currentScene, isAuthed, updateScene, uploadVTTAsset, toast],
 	);
 
 	const resizeScene = useCallback(
@@ -1262,21 +1289,20 @@ const VTTEnhanced = () => {
 			setActiveTokenId(null);
 		},
 		[
-			appendToken,
-			currentLayer,
-			currentScene,
-			isGM,
-			libraryTokens,
-			measurementStart,
-			noteText,
-			resolvedCharacters,
-			selectedCharacterId,
-			selectedLibraryTokenId,
-			selectedTool,
-			toast,
-			characterOwnerMap.get,
-			updateScene,
-			vttRealtime.userId,
+			appendToken, 
+			currentLayer, 
+			currentScene, 
+			isGM, 
+			libraryTokens, 
+			measurementStart, 
+			noteText, 
+			resolvedCharacters, 
+			selectedCharacterId, 
+			selectedLibraryTokenId, 
+			selectedTool, 
+			characterOwnerMap.get, 
+			updateScene, 
+			vttRealtime.userId, toast
 		],
 	);
 
@@ -1422,7 +1448,7 @@ const VTTEnhanced = () => {
 	);
 
 	const handleAnnotationKeyDown = useCallback(
-		(noteId: string, e: React.KeyboardEvent<HTMLDivElement>) => {
+		(noteId: string, e: React.KeyboardEvent<HTMLElement>) => {
 			if (!isGM) return;
 			if (e.key === "Enter" || e.key === "Delete" || e.key === "Backspace") {
 				e.preventDefault();
@@ -1580,7 +1606,7 @@ const VTTEnhanced = () => {
 			);
 
 			if (combatant) {
-				const stats = combatant.stats as Record<string, any>;
+				const stats = combatant.stats as Record<string, unknown>;
 				if (typeof stats?.hp === "number") hp = stats.hp;
 				if (typeof stats?.maxHp === "number") maxHp = stats.maxHp;
 				if (Array.isArray(combatant.conditions)) {
@@ -1771,10 +1797,12 @@ const VTTEnhanced = () => {
 
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-[1920px]">
 				{!isGM ? (
-					<PlayerMapView
-						campaignId={campaignId || ""}
-						sessionId={sessionId || undefined}
-					/>
+					<EmbeddedProvider>
+						<PlayerMapView
+							campaignId={campaignId || ""}
+							sessionId={sessionId || undefined}
+						/>
+					</EmbeddedProvider>
 				) : (
 					<>
 						<div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -1952,6 +1980,7 @@ const VTTEnhanced = () => {
 														)}
 													>
 														<button
+															type="button"
 															onClick={() => {
 																setCurrentScene(scene);
 																vttRealtime.broadcastSceneChange(scene.id);
@@ -1963,6 +1992,7 @@ const VTTEnhanced = () => {
 														{currentScene?.id === scene.id && (
 															<div className="flex gap-0.5 pr-1">
 																<button
+																	type="button"
 																	onClick={() => {
 																		const newName = window.prompt(
 																			"Scene name:",
@@ -1978,6 +2008,7 @@ const VTTEnhanced = () => {
 																	\u270E
 																</button>
 																<button
+																	type="button"
 																	onClick={() => {
 																		const dup: Scene = {
 																			...scene,
@@ -1998,6 +2029,7 @@ const VTTEnhanced = () => {
 																</button>
 																{scenes.length > 1 && (
 																	<button
+																		type="button"
 																		onClick={() => {
 																			if (
 																				!window.confirm(
@@ -2041,6 +2073,7 @@ const VTTEnhanced = () => {
 													] as const
 												).map((tool) => (
 													<button
+														type="button"
 														key={tool.key}
 														onClick={() => setSelectedTool(tool.key)}
 														className={cn(
@@ -2067,6 +2100,7 @@ const VTTEnhanced = () => {
 															] as const
 														).map((shape) => (
 															<button
+																type="button"
 																key={shape.key}
 																onClick={() => setMeasureShape(shape.key)}
 																className={cn(
@@ -2388,6 +2422,7 @@ const VTTEnhanced = () => {
 																className="flex items-center justify-between gap-2"
 															>
 																<button
+																	type="button"
 																	onClick={() => setCurrentLayer(layer.id)}
 																	className={cn(
 																		"flex-1 rounded border px-2 py-1 text-xs text-left",
@@ -2399,6 +2434,7 @@ const VTTEnhanced = () => {
 																	{layer.label}
 																</button>
 																<button
+																	type="button"
 																	onClick={() =>
 																		setVisibleLayers((prev) => ({
 																			...prev,
@@ -2515,7 +2551,7 @@ const VTTEnhanced = () => {
 																gridSize: Math.max(
 																	20,
 																	Number(e.target.value) ||
-																	DEFAULT_SCENE_SETTINGS.gridSize,
+																		DEFAULT_SCENE_SETTINGS.gridSize,
 																),
 															})
 														}
@@ -2644,6 +2680,7 @@ const VTTEnhanced = () => {
 												<div className="grid grid-cols-2 gap-2">
 													{PREMADE_MAPS.map((map) => (
 														<button
+															type="button"
 															key={map.id}
 															onClick={() => applyPremadeMap(map)}
 															className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
@@ -2793,22 +2830,24 @@ const VTTEnhanced = () => {
 									<DMToolsPanel
 										campaignId={campaignId || ""}
 										onRoll={vttRealtime.rollAndBroadcast}
-										onAddToken={(token) => {
+										onAddToken={(token: unknown) => {
+											const t = token as Record<string, unknown>;
 											// Add token to current scene
 											if (currentScene) {
 												updateScene({
 													tokens: [
 														...(currentScene.tokens || []),
-														{ ...token, id: token.id || `token-${Date.now()}` },
+														{ ...t, id: (t.id as string) || `token-${Date.now()}` } as PlacedToken,
 													],
 												});
 											}
 										}}
-										onAddEffect={(effect) => {
+										onAddEffect={(effect: unknown) => {
+											const e = effect as Record<string, unknown>;
 											// Add effect to current scene (could be stored in annotations or a separate effects array)
 											toast({
 												title: "Effect Added",
-												description: `${effect.name} effect placed on map`,
+												description: `${e.name as string} effect placed on map`,
 											});
 										}}
 										onPlaySound={(soundId) => {
@@ -2871,6 +2910,7 @@ const VTTEnhanced = () => {
 															: null;
 													return (
 														<button
+															type="button"
 															key={char.id}
 															onClick={() => {
 																setSelectedCharacterId(char.id);
@@ -2932,6 +2972,7 @@ const VTTEnhanced = () => {
 																	)));
 														return (
 															<button
+																type="button"
 																key={token.id}
 																onClick={() => {
 																	setSelectedLibraryTokenId(token.id);
@@ -3129,10 +3170,10 @@ const VTTEnhanced = () => {
 														tokenType: isEffect ? "effect" : undefined,
 														render: isEffect
 															? {
-																mode: "overlay" as const,
-																blendMode: "screen" as const,
-																opacity: 0.9,
-															}
+																	mode: "overlay" as const,
+																	blendMode: "screen" as const,
+																	opacity: 0.9,
+																}
 															: undefined,
 														x: gx,
 														y: gy,
@@ -3158,8 +3199,8 @@ const VTTEnhanced = () => {
 											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto",
 											selectedTool !== "select" && "cursor-crosshair",
 											selectedTool === "select" &&
-											(selectedCharacterId || selectedLibraryTokenId) &&
-											"cursor-crosshair",
+												(selectedCharacterId || selectedLibraryTokenId) &&
+												"cursor-crosshair",
 										)}
 									>
 										<div className={cn("vtt-scene-container", sceneClass)}>
@@ -3193,7 +3234,8 @@ const VTTEnhanced = () => {
 											{currentScene?.terrain &&
 												currentScene.terrain.length > 0 && (
 													<div className="absolute inset-0 pointer-events-none z-[1]">
-														<svg className="absolute inset-0 w-full h-full overflow-visible">
+														<svg className="absolute inset-0 w-full h-full overflow-visible" role="img" aria-label="Terrain overlay">
+															<title>Terrain zones</title>
 															{currentScene.terrain.map((zone) => {
 																if (!zone.visible && !isGM) return null;
 																const gZoom = gridSize * zoom;
@@ -3226,7 +3268,8 @@ const VTTEnhanced = () => {
 												currentScene?.ambientSounds &&
 												currentScene.ambientSounds.length > 0 && (
 													<div className="absolute inset-0 pointer-events-none z-[1]">
-														<svg className="absolute inset-0 w-full h-full overflow-visible">
+														<svg className="absolute inset-0 w-full h-full overflow-visible" role="img" aria-label="Ambient sounds overlay">
+															<title>Ambient sound zones</title>
 															{currentScene.ambientSounds.map((zone) => {
 																const gZoom = gridSize * zoom;
 																const cx = (zone.x + 0.5) * gZoom;
@@ -3291,7 +3334,10 @@ const VTTEnhanced = () => {
 																<svg
 																	key={drawing.id}
 																	className="absolute inset-0 w-full h-full overflow-visible"
+																	role="img"
+																	aria-label="Freehand drawing"
 																>
+																	<title>Freehand drawing</title>
 																	<polyline
 																		points={pointsStr}
 																		fill="none"
@@ -3335,7 +3381,8 @@ const VTTEnhanced = () => {
 														if (!effectiveVisibleLayers[note.layer])
 															return null;
 														return (
-															<div
+															<button
+																type="button"
 																key={note.id}
 																className={cn(
 																	"vtt-annotation",
@@ -3349,7 +3396,6 @@ const VTTEnhanced = () => {
 																onKeyDown={(e) =>
 																	handleAnnotationKeyDown(note.id, e)
 																}
-																role="button"
 																tabIndex={isGM ? 0 : -1}
 																aria-label={
 																	isGM
@@ -3358,7 +3404,7 @@ const VTTEnhanced = () => {
 																}
 															>
 																{note.text}
-															</div>
+															</button>
 														);
 													})}
 												</div>
@@ -3432,7 +3478,7 @@ const VTTEnhanced = () => {
 											{currentScene?.weather &&
 												currentScene.weather !== "clear" &&
 												WEATHER_PRESETS[
-												currentScene.weather as keyof typeof WEATHER_PRESETS
+													currentScene.weather as keyof typeof WEATHER_PRESETS
 												] && (
 													<div
 														className="absolute inset-0 pointer-events-none z-[10] overflow-hidden mix-blend-screen opacity-80"
@@ -3441,7 +3487,7 @@ const VTTEnhanced = () => {
 														<style>
 															{getWeatherCSSAnimation(
 																WEATHER_PRESETS[
-																currentScene.weather as keyof typeof WEATHER_PRESETS
+																	currentScene.weather as keyof typeof WEATHER_PRESETS
 																],
 															)}
 														</style>
@@ -3460,7 +3506,7 @@ const VTTEnhanced = () => {
 															const delay = Math.random() * -2;
 															return (
 																<div
-																	key={i}
+																	key={`slot-${[...Array(i + 1)].length}`}
 																	className="absolute rounded-full"
 																	style={{
 																		width: `${size}px`,
@@ -3483,42 +3529,42 @@ const VTTEnhanced = () => {
 											{/* Remote cursors overlay */}
 											{vttRealtime.activeUsers.filter((u) => u.cursor).length >
 												0 && (
-													<div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
-														{vttRealtime.activeUsers
-															.filter((u) => u.cursor)
-															.map((u) => (
+												<div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
+													{vttRealtime.activeUsers
+														.filter((u) => u.cursor)
+														.map((u) => (
+															<div
+																key={u.userId}
+																className="absolute transition-all duration-100 vtt-cursor"
+																style={
+																	{
+																		["--cursor-x" as string]: `${((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom}px`,
+																		["--cursor-y" as string]: `${((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom}px`,
+																	} as React.CSSProperties
+																}
+															>
 																<div
-																	key={u.userId}
-																	className="absolute transition-all duration-100 vtt-cursor"
+																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
 																	style={
 																		{
-																			["--cursor-x" as string]: `${((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom}px`,
-																			["--cursor-y" as string]: `${((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom}px`,
+																			["--user-color" as string]: u.color,
+																		} as React.CSSProperties
+																	}
+																/>
+																<div
+																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+																	style={
+																		{
+																			["--user-color" as string]: u.color,
 																		} as React.CSSProperties
 																	}
 																>
-																	<div
-																		className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
-																		style={
-																			{
-																				["--user-color" as string]: u.color,
-																			} as React.CSSProperties
-																		}
-																	/>
-																	<div
-																		className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																		style={
-																			{
-																				["--user-color" as string]: u.color,
-																			} as React.CSSProperties
-																		}
-																	>
-																		{u.userName}
-																	</div>
+																	{u.userName}
 																</div>
-															))}
-													</div>
-												)}
+															</div>
+														))}
+												</div>
+											)}
 										</div>
 									</div>
 								</SystemWindow>
@@ -3711,6 +3757,7 @@ const VTTEnhanced = () => {
 																activeToken.conditions?.includes(cond);
 															return (
 																<button
+																	type="button"
 																	key={cond}
 																	onClick={() => {
 																		const current =
@@ -4089,18 +4136,18 @@ const VTTEnhanced = () => {
 													const isCurrentTurn =
 														vttRealtime.initiativeState.active &&
 														index ===
-														vttRealtime.initiativeState.currentTurnIndex;
+															vttRealtime.initiativeState.currentTurnIndex;
 													return (
 														<div
 															key={token.id}
 															className={cn(
 																"p-2 rounded border flex items-center justify-between transition-all",
 																isCurrentTurn &&
-																"bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50",
+																	"bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50",
 																!isCurrentTurn &&
-																index === 0 &&
-																!vttRealtime.initiativeState.active &&
-																"bg-muted/40 border-muted-foreground/30",
+																	index === 0 &&
+																	!vttRealtime.initiativeState.active &&
+																	"bg-muted/40 border-muted-foreground/30",
 															)}
 														>
 															<div className="flex items-center gap-2 flex-1 min-w-0">
@@ -4253,31 +4300,21 @@ const VTTEnhanced = () => {
 																	className={cn(
 																		"p-2 rounded",
 																		msg.type === "chat" &&
-																		"border border-border bg-muted/20",
+																			"border border-border bg-muted/20",
 																		msg.type === "system" &&
-																		"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
+																			"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
 																		msg.type === "dice" &&
-																		"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
+																			"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
 																		msg.type === "gmroll" &&
-																		"border border-amber-500/40 bg-amber-950/30 text-amber-100",
+																			"border border-amber-500/40 bg-amber-950/30 text-amber-100",
 																		msg.type === "whisper" &&
-																		"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
+																			"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",
 																	)}
 																>
 																	{msg.diceDisplayText ? (
-																		<span
-																			dangerouslySetInnerHTML={{
-																				__html: msg.diceDisplayText
-																					.replace(
-																						/\*\*(.+?)\*\*/g,
-																						"<strong>$1</strong>",
-																					)
-																					.replace(
-																						/~~(.+?)~~/g,
-																						'<del class="opacity-40">$1</del>',
-																					),
-																			}}
-																		/>
+																		<span>
+																			<DiceDisplayText text={msg.diceDisplayText} />
+																		</span>
 																	) : (
 																		msg.message
 																	)}
@@ -4426,6 +4463,7 @@ const VTTEnhanced = () => {
 																			{macro.name}
 																		</Button>
 																		<button
+																			type="button"
 																			onClick={() =>
 																				vttRealtime.removeMacro(macro.id)
 																			}
@@ -4502,20 +4540,9 @@ const VTTEnhanced = () => {
 																	</span>
 																</div>
 																{roll.diceDisplayText && (
-																	<div
-																		className="text-[10px] text-muted-foreground mt-0.5"
-																		dangerouslySetInnerHTML={{
-																			__html: roll.diceDisplayText
-																				.replace(
-																					/\*\*(.+?)\*\*/g,
-																					"<strong>$1</strong>",
-																				)
-																				.replace(
-																					/~~(.+?)~~/g,
-																					'<del class="opacity-40">$1</del>',
-																				),
-																		}}
-																	/>
+																	<div className="text-[10px] text-muted-foreground mt-0.5">
+																		<DiceDisplayText text={roll.diceDisplayText} />
+																	</div>
 																)}
 															</div>
 														))}
@@ -4661,6 +4688,7 @@ const VTTEnhanced = () => {
 								] as const
 							).map((tool) => (
 								<button
+									type="button"
 									key={tool.key}
 									className={cn(selectedTool === tool.key && "active")}
 									onClick={() => {
@@ -4673,6 +4701,7 @@ const VTTEnhanced = () => {
 							))}
 							<div className="w-px h-8 bg-border/30 mx-1" />
 							<button
+								type="button"
 								className={cn(mobilePanel === "tools" && "active")}
 								onClick={() =>
 									setMobilePanel(mobilePanel === "tools" ? null : "tools")
@@ -4681,6 +4710,7 @@ const VTTEnhanced = () => {
 								⚙ Tools
 							</button>
 							<button
+								type="button"
 								className={cn(mobilePanel === "sidebar" && "active")}
 								onClick={() =>
 									setMobilePanel(mobilePanel === "sidebar" ? null : "sidebar")
@@ -4689,13 +4719,19 @@ const VTTEnhanced = () => {
 								☰ Panel
 							</button>
 							<div className="w-px h-8 bg-border/30 mx-1" />
-							<button onClick={() => setZoom(Math.max(0.5, zoom - 0.15))}>
+							<button
+								type="button"
+								onClick={() => setZoom(Math.max(0.5, zoom - 0.15))}
+							>
 								−
 							</button>
 							<span className="text-[10px] text-muted-foreground min-w-[32px] text-center">
 								{Math.round(zoom * 100)}%
 							</span>
-							<button onClick={() => setZoom(Math.min(2, zoom + 0.15))}>
+							<button
+								type="button"
+								onClick={() => setZoom(Math.min(2, zoom + 0.15))}
+							>
 								+
 							</button>
 						</div>
@@ -4739,6 +4775,7 @@ const VTTEnhanced = () => {
 													{(["line", "circle", "cone", "cube"] as const).map(
 														(s) => (
 															<button
+																type="button"
 																key={s}
 																onClick={() => setMeasureShape(s)}
 																className={cn(
@@ -4761,6 +4798,7 @@ const VTTEnhanced = () => {
 											</h4>
 											{scenes.map((scene) => (
 												<button
+													type="button"
 													key={scene.id}
 													onClick={() => {
 														setCurrentScene(scene);
@@ -4827,19 +4865,9 @@ const VTTEnhanced = () => {
 															{msg.userName}:{" "}
 														</span>
 														{msg.diceDisplayText ? (
-															<span
-																dangerouslySetInnerHTML={{
-																	__html: msg.diceDisplayText
-																		.replace(
-																			/\*\*(.+?)\*\*/g,
-																			"<strong>$1</strong>",
-																		)
-																		.replace(
-																			/~~(.+?)~~/g,
-																			'<del class="opacity-40">$1</del>',
-																		),
-																}}
-															/>
+															<span>
+																<DiceDisplayText text={msg.diceDisplayText} />
+															</span>
 														) : (
 															msg.message
 														)}
@@ -4994,9 +5022,11 @@ const VTTEnhanced = () => {
 						if (!token) return null;
 						return (
 							<>
-								<div
-									className="fixed inset-0 z-[99]"
+								<button
+									type="button"
+									className="fixed inset-0 z-[99] appearance-none bg-transparent border-none cursor-default"
 									onClick={() => setContextMenu(null)}
+									aria-label="Close context menu"
 								/>
 								<div
 									className="vtt-context-menu"
@@ -5008,6 +5038,7 @@ const VTTEnhanced = () => {
 									}
 								>
 									<button
+										type="button"
 										onClick={() => {
 											setActiveTokenId(token.id);
 											setContextMenu(null);
@@ -5017,6 +5048,7 @@ const VTTEnhanced = () => {
 									</button>
 									{isGM && (
 										<button
+											type="button"
 											onClick={() => {
 												updateToken(token.id, { locked: !token.locked });
 												setContextMenu(null);
@@ -5027,6 +5059,7 @@ const VTTEnhanced = () => {
 									)}
 									{isGM && (
 										<button
+											type="button"
 											onClick={() => {
 												updateToken(token.id, { visible: !token.visible });
 												setContextMenu(null);
@@ -5037,6 +5070,7 @@ const VTTEnhanced = () => {
 									)}
 									{token.characterId && (
 										<button
+											type="button"
 											onClick={() => {
 												window.open(
 													`/characters/${token.characterId}`,
@@ -5051,6 +5085,7 @@ const VTTEnhanced = () => {
 									<div className="ctx-separator" />
 									{isGM && (
 										<button
+											type="button"
 											className="ctx-danger"
 											onClick={() => {
 												removeToken(token.id);
@@ -5067,19 +5102,26 @@ const VTTEnhanced = () => {
 
 				{/* Handout Share Popup Overlay */}
 				{vttRealtime.sharedHandout && (
-					<div
-						className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+					<button
+						type="button"
+						className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm appearance-none border-none cursor-default w-full h-full"
 						onClick={vttRealtime.dismissHandout}
+						onKeyDown={(e) => { if (e.key === 'Escape') vttRealtime.dismissHandout(); }}
+						aria-label="Close handout"
 					>
 						<div
 							className="bg-background border-2 border-primary rounded-lg shadow-2xl max-w-lg w-full mx-4 p-6"
 							onClick={(e) => e.stopPropagation()}
+							onKeyDown={(e) => e.stopPropagation()}
+							role="dialog"
+							aria-label="Shared handout"
 						>
 							<div className="flex items-center justify-between mb-4">
 								<h3 className="font-arise text-lg font-bold gradient-text-shadow">
 									{vttRealtime.sharedHandout.title}
 								</h3>
 								<button
+									type="button"
 									onClick={vttRealtime.dismissHandout}
 									className="text-muted-foreground hover:text-foreground text-lg"
 								>
@@ -5105,7 +5147,7 @@ const VTTEnhanced = () => {
 								Shared by {vttRealtime.sharedHandout.sharedBy}
 							</div>
 						</div>
-					</div>
+					</button>
 				)}
 			</div>
 		</Layout>

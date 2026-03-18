@@ -20,7 +20,7 @@ export interface ChoiceGrant {
 	description: string;
 }
 
-export interface TotalChoices {
+interface TotalChoices {
 	skills: number;
 	feats: number;
 	spells: number;
@@ -55,7 +55,7 @@ const writtenNumberToDigit = (word: string): number => {
 /**
  * Parse a description for choice grants using comprehensive pattern matching
  */
-export function parseChoiceGrants(
+function parseChoiceGrants(
 	description: string,
 	source: string,
 ): ChoiceGrant[] {
@@ -319,10 +319,19 @@ export function parseChoiceGrants(
 /**
  * Calculate total additional choices from all sources (job, path, regent)
  */
+interface ChoiceSourceData {
+	skill_choice_count?: number;
+	awakeningFeatures?: Array<{ level: number; description: string; name: string }>;
+	jobTraits?: Array<{ description: string; name: string }>;
+	features?: Array<{ level: number; description: string; name: string }>;
+	class_features?: Array<{ level: number; description: string; name: string }>;
+	name?: string;
+}
+
 export function calculateTotalChoices(
-	jobData: any,
-	pathData: any,
-	regentData: any[],
+	jobData: ChoiceSourceData | null | undefined,
+	pathData: ChoiceSourceData | null | undefined,
+	regentData: ChoiceSourceData[] | null | undefined,
 	level: number = 1,
 ): TotalChoices {
 	const totals: TotalChoices = {
@@ -412,9 +421,9 @@ export function calculateTotalChoices(
  * Get all choice grants with details for UI display
  */
 export function getChoiceGrantDetails(
-	jobData: any,
-	pathData: any,
-	regentData: any[],
+	jobData: ChoiceSourceData | null | undefined,
+	pathData: ChoiceSourceData | null | undefined,
+	regentData: ChoiceSourceData[] | null | undefined,
 	level: number = 1,
 ): ChoiceGrant[] {
 	const allGrants: ChoiceGrant[] = [];

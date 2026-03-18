@@ -11,13 +11,13 @@
 // Condition definitions (SRD 5e)
 // ---------------------------------------------------------------------------
 
-export interface ConditionEffect {
+interface ConditionEffect {
 	name: string;
 	description: string;
 	mechanicalEffects: MechanicalEffect[];
 }
 
-export interface MechanicalEffect {
+interface MechanicalEffect {
 	type:
 		| "disadvantage"
 		| "advantage"
@@ -147,7 +147,7 @@ export const CONDITION_EFFECTS: Record<string, ConditionEffect> = {
 // Exhaustion table (SRD 5e)
 // ---------------------------------------------------------------------------
 
-export interface ExhaustionLevel {
+interface ExhaustionLevel {
 	level: number;
 	effects: MechanicalEffect[];
 	description: string;
@@ -214,7 +214,7 @@ export const EXHAUSTION_TABLE: ExhaustionLevel[] = [
 
 export type AdvantageState = "advantage" | "disadvantage" | "normal";
 
-export interface RollModifiers {
+interface RollModifiers {
 	advantageState: AdvantageState;
 	autoFail: boolean;
 	flatModifier: number;
@@ -412,7 +412,8 @@ import type { ActiveCondition } from "./characterEngine";
  * Remove all conditions tied to a specific concentration spell.
  * Called when concentration is broken (damage, casting another spell, etc.)
  */
-export function breakConcentrationConditions(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function breakConcentrationConditions(
 	conditions: ActiveCondition[],
 	spellId: string,
 ): ActiveCondition[] {
@@ -423,7 +424,8 @@ export function breakConcentrationConditions(
  * Tick round-based durations (call at end of each round).
  * Returns { active, expired } condition arrays.
  */
-export function tickRoundDurations(conditions: ActiveCondition[]): {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function tickRoundDurations(conditions: ActiveCondition[]): {
 	active: ActiveCondition[];
 	expired: ActiveCondition[];
 } {
@@ -455,7 +457,8 @@ export function tickRoundDurations(conditions: ActiveCondition[]): {
 /**
  * Filter out time-expired conditions (minutes/hours with expiresAt).
  */
-export function filterExpiredConditions(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function filterExpiredConditions(
 	conditions: ActiveCondition[],
 	now: Date = new Date(),
 ): { active: ActiveCondition[]; expired: ActiveCondition[] } {

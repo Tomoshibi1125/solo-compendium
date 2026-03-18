@@ -7,14 +7,14 @@
 
 import { AppError } from "@/lib/appError";
 
-export interface DiceRoll {
+interface DiceRoll {
 	dice: number;
 	sides: number;
 	modifier: number;
 	advantage?: "advantage" | "disadvantage" | "normal";
 }
 
-export interface RollResult {
+interface RollResult {
 	formula: string;
 	rolls: number[];
 	modifier: number;
@@ -77,7 +77,7 @@ export interface DeathSaveResult extends RollResult {
 /**
  * Parse a dice formula string (e.g., "2d6+4", "1d20+5")
  */
-export function parseFormula(formula: string): DiceRoll {
+function parseFormula(formula: string): DiceRoll {
 	const match = formula.match(/^(\d+)?d(\d+)([+-]\d+)?$/i);
 	if (!match) {
 		throw new AppError(`Invalid dice formula: ${formula}`, "INVALID_INPUT");
@@ -521,7 +521,8 @@ export function applyExpertise(
 /**
  * Format roll result for display
  */
-export function formatRollResult(roll: RollResult): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function formatRollResult(roll: RollResult): string {
 	const rollsStr = roll.rolls.join(" + ");
 
 	if (roll.droppedRolls && roll.droppedRolls.length > 0) {
@@ -551,7 +552,8 @@ export function formatRollResult(roll: RollResult): string {
 /**
  * Validate dice string format
  */
-export function validateDiceString(diceString: string): boolean {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function validateDiceString(diceString: string): boolean {
 	if (!diceString || typeof diceString !== "string") return false;
 
 	// Basic pattern: NdS+/-M where N=dice count, S=sides, M=modifier

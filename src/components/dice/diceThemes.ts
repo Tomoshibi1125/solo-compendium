@@ -13,7 +13,7 @@ export type DiceTheme =
 	| "arise-violet"
 	| "monarch-gold";
 
-export interface DiceThemeConfig {
+interface DiceThemeConfig {
 	baseColor: string;
 	emissiveColor: string;
 	glowIntensity: number;

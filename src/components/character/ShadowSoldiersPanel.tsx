@@ -6,7 +6,7 @@ import {
 	Flame,
 	Ghost,
 	Heart,
-	Map,
+	Map as MapIcon,
 	Minus,
 	Mountain,
 	Plus,
@@ -156,9 +156,11 @@ export function ShadowSoldiersPanel({
 	};
 
 	// Check if character has Umbral Regent unlock
-	const hasUmbralRegent = regentUnlocks.some((unlock: any) => {
-		const theme = unlock.regent?.theme?.toLowerCase() || "";
-		const name = normalizeRegentSearch(unlock.regent?.name || "").toLowerCase();
+	const hasUmbralRegent = regentUnlocks.some((unlock: unknown) => {
+		const theme = (unlock as { regent?: { theme?: string } }).regent?.theme?.toLowerCase() || "";
+		const name = normalizeRegentSearch(
+			(unlock as { regent?: { name?: string } }).regent?.name || "",
+		).toLowerCase();
 		return (
 			theme.includes("umbral") ||
 			name.includes("umbral regent") ||
@@ -431,7 +433,7 @@ export function ShadowSoldiersPanel({
 													}
 													title="Add Shadow to VTT Map Token Library"
 												>
-													<Map className="w-3 h-3 mr-1" />
+													<MapIcon className="w-3 h-3 mr-1" />
 													To Map
 												</Button>
 											</div>
@@ -542,9 +544,9 @@ export function ShadowSoldiersPanel({
 														<p className="text-xs font-display text-shadow-purple tracking-wider">
 															ABILITIES:
 														</p>
-														{soldier.abilities.map((ability, i) => (
+														{soldier.abilities.map((ability, _i) => (
 															<div
-																key={i}
+																key={ability.name}
 																className="text-xs p-2 rounded bg-muted/50"
 															>
 																<span className="font-heading font-semibold text-foreground">

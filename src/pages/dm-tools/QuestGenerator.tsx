@@ -32,6 +32,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import { LocalAIIntegration } from "@/lib/localAIIntegration";
 import { cn } from "@/lib/utils";
 import { formatMonarchVernacular } from "@/lib/vernacular";
 
@@ -274,6 +275,10 @@ const QuestGenerator = () => {
 		if (hydratedRef.current) return;
 		setSelectedRank(hydrated.selectedRank);
 		setQuest(hydrated.quest);
+		
+		// Wire up local AI integration
+		LocalAIIntegration.getInstance().initializeAI().catch(console.error);
+		
 		hydratedRef.current = true;
 	}, [hydrated.quest, hydrated.selectedRank, isLoading]);
 
@@ -556,8 +561,8 @@ ${quest.description}
 											Objectives
 										</h3>
 										<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-											{quest.objectives.map((objective, idx) => (
-												<li key={idx}>{objective}</li>
+											{quest.objectives.map((objective) => (
+												<li key={`quest-obj-${objective}`}>{objective}</li>
 											))}
 										</ul>
 									</div>
@@ -569,8 +574,10 @@ ${quest.description}
 												Complications
 											</h3>
 											<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-												{quest.complications.map((complication, idx) => (
-													<li key={idx}>{complication}</li>
+												{quest.complications.map((complication) => (
+													<li key={`quest-comp-${complication}`}>
+														{complication}
+													</li>
 												))}
 											</ul>
 										</div>
@@ -583,8 +590,8 @@ ${quest.description}
 											</Badge>
 										</h3>
 										<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-											{quest.rewards.map((reward, idx) => (
-												<li key={idx}>{reward}</li>
+											{quest.rewards.map((reward) => (
+												<li key={`quest-reward-${reward}`}>{reward}</li>
 											))}
 										</ul>
 									</div>

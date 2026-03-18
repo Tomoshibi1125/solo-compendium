@@ -1,7 +1,7 @@
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 
-export type SourcebookAccessContext = {
+type SourcebookAccessContext = {
 	campaignId?: string | null;
 };
 
@@ -95,7 +95,7 @@ const fetchAccessibleSourcebooks = (
 ): Promise<RpcResponse> =>
 	supabaseRpc.rpc("get_accessible_sourcebooks", {
 		p_campaign_id: campaignId,
-		p_user_id: userId,
+		puser_id: userId,
 	});
 
 export const sourcebookCandidates = (
@@ -138,7 +138,7 @@ export function filterRowsByAccessibleSourcebooks<T>(
 	});
 }
 
-export async function getAccessibleSourcebookSet(
+async function getAccessibleSourcebookSet(
 	context: SourcebookAccessContext = {},
 ): Promise<Set<string> | null> {
 	if (!isSupabaseConfigured) {

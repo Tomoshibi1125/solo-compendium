@@ -2,7 +2,7 @@
 // Status effects and conditions that affect characters in combat and exploration
 // Based on SRD 5e conditions with System Ascendant themed additions
 
-export interface Condition {
+interface Condition {
 	id: string;
 	name: string;
 	type: "combat" | "exploration" | "magical" | "shadow";

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
-import { staticDataProvider } from "@/data/compendium/staticDataProvider";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
@@ -10,27 +9,27 @@ export interface CompendiumEntry {
 	id: string;
 	name: string;
 	type:
-	| "jobs"
-	| "paths"
-	| "powers"
-	| "runes"
-	| "relics"
-	| "monsters"
-	| "backgrounds"
-	| "conditions"
-	| "regents"
-	| "monarchs"
-	| "feats"
-	| "skills"
-	| "equipment"
-	| "shadow-soldiers"
-	| "techniques"
-	| "items"
-	| "spells"
-	| "artifacts"
-	| "locations"
-	| "sigils"
-	| "sovereigns";
+		| "jobs"
+		| "paths"
+		| "powers"
+		| "runes"
+		| "relics"
+		| "monsters"
+		| "backgrounds"
+		| "conditions"
+		| "regents"
+		| "monarchs"
+		| "feats"
+		| "skills"
+		| "equipment"
+		| "shadow-soldiers"
+		| "techniques"
+		| "items"
+		| "spells"
+		| "artifacts"
+		| "locations"
+		| "sigils"
+		| "sovereigns";
 	rarity?: string;
 	description: string; // Required in Compendium.tsx
 	level?: number;
@@ -80,7 +79,7 @@ const STARTUP_CATEGORIES = [
 	"sigils",
 ] as const;
 
-type StartupCategory = (typeof STARTUP_CATEGORIES)[number];
+type _StartupCategory = (typeof STARTUP_CATEGORIES)[number];
 
 type StartupSupabaseEntry = {
 	id: string;
@@ -123,6 +122,10 @@ export const useStartupData = () => {
 		queryFn: async (): Promise<StartupData> => {
 			const allEntries: CompendiumEntry[] = [];
 			const totalCounts: Record<string, number> = {};
+
+			const { staticDataProvider } = await import(
+				"@/data/compendium/staticDataProvider"
+			);
 
 			if (!isSupabaseConfigured) {
 				// Use static data for development/preview - load ALL categories with COMPLETE data
@@ -260,7 +263,7 @@ export const useStartupData = () => {
 			try {
 				// Parallel fetch of ALL startup categories
 				const promises = STARTUP_CATEGORIES.map(async (category) => {
-					let query;
+					let query: unknown;
 
 					switch (category) {
 						case "jobs":
@@ -408,7 +411,7 @@ export const useStartupData = () => {
 						}
 					}
 
-					const { data, error } = await query;
+					const { data, error } = (await query) as { data: StartupSupabaseEntry[] | null; error: { message?: string } | null };
 					if (error || !data) return { entries: [], count: 0 };
 
 					const rows = data as StartupSupabaseEntry[];

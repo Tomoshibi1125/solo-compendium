@@ -27,7 +27,7 @@ export const GateEnergyFlow = ({
 	className,
 }: GateEnergyFlowProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const { reducedMotion, fx, tier: performanceTier } = usePerformanceProfile();
+	const { reducedMotion, tier: performanceTier } = usePerformanceProfile();
 
 	const reduceEffects = reducedMotion || performanceTier === "low";
 	const finalIntensity = reduceEffects ? "low" : intensity;
@@ -153,11 +153,11 @@ export const GateEnergyFlow = ({
 					width: "20px",
 					height: "20px",
 					background: `hsl(var(--${getTierGlowColor(tier)}))`,
-					boxShadow: `0 0 30px hsl(var(--${getTierGlowColor(tier)}) / 0.8)`,
+					boxShadow: `0 0 30px hsl(var(--$export {getTierGlowColor(tier)}) / 0.8)`,
 				}}
 			/>
 		</div>
 	);
 };
 
-export default GateEnergyFlow;
+

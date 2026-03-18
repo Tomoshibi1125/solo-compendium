@@ -5,16 +5,16 @@ import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
 const supabaseAny = supabase as unknown as {
-	from: (table: string) => any;
+	from: (table: string) => unknown;
 	rpc: (
 		fn: string,
 		args?: Record<string, unknown>,
 	) => Promise<{ data: unknown; error: { message?: string } | null }>;
 };
 
-type CampaignCombatSession =
+type _CampaignCombatSession =
 	Database["public"]["Tables"]["campaign_combat_sessions"]["Row"];
-type CampaignCombatant =
+type _CampaignCombatant =
 	Database["public"]["Tables"]["campaign_combatants"]["Row"];
 
 interface EncounterRewards {
@@ -33,6 +33,7 @@ interface EncounterRewards {
 
 export function useEncounterRewards() {
 	const { toast } = useToast();
+
 	const { user } = useAuth();
 
 	const calculateEncounterRewards = useCallback(
@@ -136,7 +137,7 @@ export function useEncounterRewards() {
 					.eq("id", campaignId)
 					.single();
 
-				const settings = campaign?.settings as Record<string, any>;
+				const settings = campaign?.settings as Record<string, unknown>;
 				const isXPMode = settings?.leveling_mode === "xp";
 
 				// Distribute XP if in XP mode
@@ -179,7 +180,7 @@ export function useEncounterRewards() {
 									variant: "destructive",
 								});
 							} else if (data && Array.isArray(data) && data.length > 0) {
-								const result = data[0] as Record<string, any>;
+								const result = data[0] as { success?: boolean; message?: string };
 								if (result.success) {
 									toast({
 										title: "XP Awarded",

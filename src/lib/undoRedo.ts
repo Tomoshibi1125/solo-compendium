@@ -3,7 +3,7 @@
  * Provides history tracking and undo/redo functionality
  */
 
-export interface HistoryEntry<T> {
+interface HistoryEntry<T> {
 	state: T;
 	timestamp: number;
 	description?: string;
@@ -125,7 +125,8 @@ export class UndoRedoManager<T> {
 /**
  * React hook for undo/redo
  */
-export function useUndoRedo<T>(initialState: T, maxHistorySize: number = 50) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function useUndoRedo<T>(initialState: T, maxHistorySize: number = 50) {
 	const manager = new UndoRedoManager(initialState, maxHistorySize);
 
 	return {

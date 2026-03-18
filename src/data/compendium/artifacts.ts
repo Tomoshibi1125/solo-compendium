@@ -2,7 +2,7 @@
 // God-tier items and legendary artifacts
 // Based on System Ascendant mechanics
 
-export interface Artifact {
+interface Artifact {
 	id: string;
 	name: string;
 	description: string;
@@ -30,11 +30,11 @@ export interface Artifact {
 			description: string;
 			type: "passive" | "active" | "triggered";
 			frequency?:
-			| "at-will"
-			| "once-per-turn"
-			| "once-per-day"
-			| "once-per-week"
-			| "once-per-month";
+				| "at-will"
+				| "once-per-turn"
+				| "once-per-day"
+				| "once-per-week"
+				| "once-per-month";
 			action?: "action" | "bonus-action" | "reaction" | "free";
 		};
 		secondary?: {
@@ -42,11 +42,11 @@ export interface Artifact {
 			description: string;
 			type: "passive" | "active" | "triggered";
 			frequency?:
-			| "at-will"
-			| "once-per-turn"
-			| "once-per-day"
-			| "once-per-week"
-			| "once-per-month";
+				| "at-will"
+				| "once-per-turn"
+				| "once-per-day"
+				| "once-per-week"
+				| "once-per-month";
 			action?: "action" | "bonus-action" | "reaction" | "free";
 		};
 		tertiary?: {
@@ -54,11 +54,11 @@ export interface Artifact {
 			description: string;
 			type: "passive" | "active" | "triggered";
 			frequency?:
-			| "at-will"
-			| "once-per-turn"
-			| "once-per-day"
-			| "once-per-week"
-			| "once-per-month";
+				| "at-will"
+				| "once-per-turn"
+				| "once-per-day"
+				| "once-per-week"
+				| "once-per-month";
 			action?: "action" | "bonus-action" | "reaction" | "free";
 		};
 		ultimate?: {
@@ -66,9 +66,9 @@ export interface Artifact {
 			description: string;
 			type: "active" | "triggered";
 			frequency:
-			| "once-per-lifetime"
-			| "once-per-century"
-			| "once-per-millennium";
+				| "once-per-lifetime"
+				| "once-per-century"
+				| "once-per-millennium";
 			action?: "action" | "bonus-action" | "reaction" | "free";
 		};
 	};
@@ -81,13 +81,13 @@ export interface Artifact {
 	mechanics: {
 		bonus?: {
 			type:
-			| "AC"
-			| "attack"
-			| "damage"
-			| "saving-throws"
-			| "skill-checks"
-			| "ability-checks"
-			| "speed";
+				| "AC"
+				| "attack"
+				| "damage"
+				| "saving-throws"
+				| "skill-checks"
+				| "ability-checks"
+				| "speed";
 			value: number;
 			ability?: string;
 			skills?: string[];
@@ -982,4 +982,4 @@ export const artifacts: Artifact[] = [
 	},
 ];
 
-export default artifacts;
+

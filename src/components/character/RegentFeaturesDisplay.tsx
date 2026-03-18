@@ -19,7 +19,6 @@ interface RegentFeaturesDisplayProps {
 }
 
 export function RegentFeaturesDisplay({
-	characterId,
 	characterLevel,
 	regentId,
 	regentLevel = 1,
@@ -106,10 +105,13 @@ export function RegentFeaturesDisplay({
 				<div className="space-y-4">
 					<h4 className="font-medium">Regent Abilities</h4>
 					<div className="space-y-3">
-						{regentFeatures.map((feature, index) => (
-							<div key={index} className="p-4 border rounded-lg bg-background">
+						{regentFeatures.map((feature, _index) => (
+							<div
+								key={feature.name as string}
+								className="p-4 border rounded-lg bg-background"
+							>
 								<div className="flex items-center gap-2 mb-2">
-									<span className="font-medium">{feature.name}</span>
+									<span className="font-medium">{feature.name as React.ReactNode}</span>
 									<Badge variant="outline" className="text-xs">
 										{feature.type}
 									</Badge>
@@ -123,7 +125,7 @@ export function RegentFeaturesDisplay({
 									</Badge>
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{feature.description}
+									{(feature.description as React.ReactNode) ?? ""}
 								</p>
 							</div>
 						))}
@@ -138,7 +140,7 @@ export function RegentFeaturesDisplay({
 				{/* Spell Slots */}
 				{regentData?.spellcasting && (
 					<div className="space-y-4">
-						<h4 className="font-medium">Regent Spell Slots</h4>
+						<h4 className="font-medium">Regent Power Slots</h4>
 						<div className="grid grid-cols-9 gap-2 text-center">
 							{Array.from({ length: 9 }, (_, i) => i + 1).map((level) => {
 								const slotKey =
@@ -179,8 +181,8 @@ export function RegentFeaturesDisplay({
 										Armor Proficiencies
 									</div>
 									<div className="flex flex-wrap gap-1">
-										{regentData.armor_proficiencies.map((prof, index) => (
-											<Badge key={index} variant="outline" className="text-xs">
+										{regentData.armor_proficiencies.map((prof, _index) => (
+											<Badge key={prof} variant="outline" className="text-xs">
 												{prof}
 											</Badge>
 										))}
@@ -194,8 +196,8 @@ export function RegentFeaturesDisplay({
 										Weapon Proficiencies
 									</div>
 									<div className="flex flex-wrap gap-1">
-										{regentData.weapon_proficiencies.map((prof, index) => (
-											<Badge key={index} variant="outline" className="text-xs">
+										{regentData.weapon_proficiencies.map((prof, _index) => (
+											<Badge key={prof} variant="outline" className="text-xs">
 												{prof}
 											</Badge>
 										))}
@@ -209,8 +211,8 @@ export function RegentFeaturesDisplay({
 										Skill Proficiencies
 									</div>
 									<div className="flex flex-wrap gap-1">
-										{regentData.skill_proficiencies.map((prof, index) => (
-											<Badge key={index} variant="outline" className="text-xs">
+										{regentData.skill_proficiencies.map((prof, _index) => (
+											<Badge key={prof} variant="outline" className="text-xs">
 												{prof}
 											</Badge>
 										))}
@@ -225,8 +227,7 @@ export function RegentFeaturesDisplay({
 					<div className="space-y-4">
 						<h4 className="font-medium">Special Abilities</h4>
 						<div className="space-y-2">
-							{(regentData.mechanics as Record<string, any>)
-								.shadow_legion_command && (
+							{Boolean((regentData.mechanics as Record<string, unknown>).shadow_legion_command) && (
 								<div className="p-3 border rounded-lg bg-purple-50 border-purple-200">
 									<div className="text-sm font-medium text-purple-800">
 										Shadow Legion Command
@@ -236,8 +237,7 @@ export function RegentFeaturesDisplay({
 									</div>
 								</div>
 							)}
-							{(regentData.mechanics as Record<string, any>)
-								.essence_manipulation && (
+							{Boolean((regentData.mechanics as Record<string, unknown>).essence_manipulation) && (
 								<div className="p-3 border rounded-lg bg-blue-50 border-blue-200">
 									<div className="text-sm font-medium text-blue-800">
 										Essence Manipulation

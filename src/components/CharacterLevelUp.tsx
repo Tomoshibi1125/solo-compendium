@@ -153,4 +153,4 @@ export function CharacterLevelUp({
 	);
 }
 
-export default CharacterLevelUp;
+

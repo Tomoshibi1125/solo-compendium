@@ -348,9 +348,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 								{feature.origin_sources &&
 									feature.origin_sources.length > 0 && (
 										<div className="flex flex-wrap gap-1 pt-1">
-											{feature.origin_sources.map((source, idx) => (
+											{feature.origin_sources.map((source) => (
 												<Badge
-													key={idx}
+													key={`source-core-${source}`}
 													variant="outline"
 													className="text-xs text-muted-foreground border-muted-foreground/30"
 												>
@@ -405,9 +405,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 								{feature.origin_sources &&
 									feature.origin_sources.length > 0 && (
 										<div className="flex flex-wrap gap-1 pt-1">
-											{feature.origin_sources.map((source, idx) => (
+											{feature.origin_sources.map((source) => (
 												<Badge
-													key={idx}
+													key={`source-capstone-${source}`}
 													variant="outline"
 													className="text-xs text-amber-400/70 border-amber-500/30"
 												>

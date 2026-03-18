@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
  */
 
 // Test user credentials
-export const TEST_USERS = {
+const TEST_USERS = {
 	DM: {
 		email: "dm@test.com",
 		password: "test1234",
@@ -24,7 +24,7 @@ export const TEST_USERS = {
 /**
  * Create test users in Supabase for development/testing
  */
-export async function createTestUsers() {
+async function createTestUsers() {
 	try {
 		// Create DM user
 		const { data: dmData, error: dmError } = await supabase.auth.signUp({
@@ -70,7 +70,7 @@ export async function createTestUsers() {
 /**
  * Authenticate test user
  */
-export async function authenticateTestUser(userType: keyof typeof TEST_USERS) {
+async function authenticateTestUser(userType: keyof typeof TEST_USERS) {
 	const user = TEST_USERS[userType];
 
 	try {
@@ -117,7 +117,8 @@ export async function setupTestAccounts() {
 /**
  * Clean up test users (for teardown)
  */
-export async function cleanupTestUsers() {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function cleanupTestUsers() {
 	try {
 		// Sign out current user
 		await supabase.auth.signOut();

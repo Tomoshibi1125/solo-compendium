@@ -60,7 +60,6 @@ export function VTTCharacterPanel({
 	characterId,
 	onRoll,
 	onChat,
-	readOnly = false,
 	compact = false,
 	campaignId,
 }: VTTCharacterPanelProps) {
@@ -319,6 +318,7 @@ export function VTTCharacterPanel({
 						const mod = getAbilityModifier(score);
 						return (
 							<button
+								type="button"
 								key={ability}
 								onClick={() =>
 									rollCheck(`${ABILITY_NAMES[ability]} Check`, mod, "ability")
@@ -354,6 +354,7 @@ export function VTTCharacterPanel({
 							character.saving_throw_proficiencies?.includes(ability);
 						return (
 							<button
+								type="button"
 								key={ability}
 								onClick={() =>
 									rollCheck(`${ABILITY_NAMES[ability]} Save`, save, "save")
@@ -389,6 +390,7 @@ export function VTTCharacterPanel({
 						.sort(([a], [b]) => a.localeCompare(b))
 						.map(([name, skill]) => (
 							<button
+								type="button"
 								key={name}
 								onClick={() =>
 									rollCheck(

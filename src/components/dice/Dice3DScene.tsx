@@ -435,7 +435,7 @@ const getLabelTexture = (label: string, style: LabelStyle) => {
 	}
 	ctx.imageSmoothingEnabled = true;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- canvas optional API varies by browser
-	(ctx as Record<string, any>).imageSmoothingQuality = "high";
+	(ctx as unknown as Record<string, unknown>).imageSmoothingQuality = "high";
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	const center = canvas.width / 2;
 	const plateRadius = canvasSize * 0.36;
@@ -959,7 +959,7 @@ function DieFlair({
 		<group ref={groupRef} position={[0, spec.floatHeight, 0]}>
 			{Array.from({ length: spec.ringCount }).map((_, index) => (
 				<mesh
-					key={`ring-${sides}-${index}`}
+					key={`slot-${[...Array(index + 1)].length}`}
 					rotation={[Math.PI / 2, 0, (Math.PI / 2) * index]}
 				>
 					<ringGeometry
@@ -1012,7 +1012,6 @@ function Die({
 	rotation = [0, 0, 0],
 	theme = "umbral-ascendant",
 	bounds,
-	rollId,
 	onImpact,
 	quality,
 }: DieProps) {
@@ -1690,7 +1689,7 @@ function Dice3DScene({
 
 				{dice.map((die, index) => (
 					<Die
-						key={index}
+						key={JSON.stringify(die)}
 						sides={die.sides}
 						value={die.value}
 						displayValue={die.displayValue ?? die.value}

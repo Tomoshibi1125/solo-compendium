@@ -4,11 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { setupTestAccounts } from "@/test/utils/testUsers";
 
+interface TestResults {
+	createResult: unknown;
+	dmLoginResult: unknown;
+	playerLoginResult: unknown;
+}
+
 export default function TestUserSetup() {
 	const [status, setStatus] = useState<
 		"idle" | "creating" | "testing" | "done" | "error"
 	>("idle");
-	const [results, setResults] = useState<any>(null);
+	const [results, setResults] = useState<TestResults | null>(null);
 	const [error, setError] = useState<string>("");
 
 	const handleSetup = async () => {

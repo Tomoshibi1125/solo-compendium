@@ -10,7 +10,7 @@ import {
 import type { Database } from "@/integrations/supabase/types";
 import { downloadCharacterJSON, exportCharacterPDF } from "@/lib/export";
 
-type Character = Database["public"]["Tables"]["characters"]["Row"];
+export type Character = Database["public"]["Tables"]["characters"]["Row"];
 type CharacterWithAbilities = Character & {
 	abilities: Record<string, number>;
 };

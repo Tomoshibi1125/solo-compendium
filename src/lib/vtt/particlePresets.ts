@@ -47,32 +47,32 @@ export type ParticleCategory =
 	| "sa-specific";
 
 // ─── Helpers ────────────────────────────────────────────────
-const alpha = (pairs: [number, number][]) => ({
+export const alpha = (pairs: [number, number][]) => ({
 	list: pairs.map(([value, time]) => ({ value, time })),
 	isStepped: false,
 });
-const scale = alpha;
-const speed = alpha;
-const color = (pairs: [string, number][]) => ({
+export const scale = alpha;
+export const speed = alpha;
+export const color = (pairs: [string, number][]) => ({
 	list: pairs.map(([value, time]) => ({ value, time })),
 	isStepped: false,
 });
 
-const pointSpawn = (x = 0, y = 0) => ({
+export const pointSpawn = (x = 0, y = 0) => ({
 	spawnType: "point" as const,
 	pos: { x, y },
 });
-const burstSpawn = (x = 0, y = 0) => ({
+export const burstSpawn = (x = 0, y = 0) => ({
 	spawnType: "burst" as const,
 	pos: { x, y },
 	particleSpacing: 15,
 });
-const ringSpawn = (x = 0, y = 0, r = 50) => ({
+export const ringSpawn = (x = 0, y = 0, r = 50) => ({
 	spawnType: "ring" as const,
 	pos: { x, y },
 	spawnCircle: { x: 0, y: 0, r, minR: r * 0.85 },
 });
-const rectSpawn = (x: number, y: number, w: number, h: number) => ({
+export const rectSpawn = (x: number, y: number, w: number, h: number) => ({
 	spawnType: "rect" as const,
 	pos: { x: 0, y: 0 },
 	spawnRect: { x, y, w, h },

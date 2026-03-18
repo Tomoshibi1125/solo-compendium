@@ -40,7 +40,7 @@ export const CosmicBackground = ({
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const ashRef = useRef<HTMLDivElement>(null);
 	const hexRef = useRef<HTMLDivElement>(null);
-	const { reducedMotion, fx, tier } = usePerformanceProfile();
+	const { reducedMotion, tier } = usePerformanceProfile();
 
 	const reduceEffects = reducedMotion || tier === "low";
 	const finalIntensity = reduceEffects ? "low" : intensity;
@@ -125,10 +125,10 @@ export const CosmicBackground = ({
 		window.addEventListener("resize", resizeCanvas);
 
 		let animationId: number;
-		let time = 0;
+		let _time = 0;
 
 		// Data stream configuration
-		const streams = Array.from({ length: 8 }, (_, i) => ({
+		const streams = Array.from({ length: 8 }, (_, _i) => ({
 			x: Math.random() * canvas.width,
 			y: Math.random() * canvas.height,
 			length: Math.random() * 200 + 100,
@@ -138,7 +138,7 @@ export const CosmicBackground = ({
 		}));
 
 		const animate = () => {
-			time += 0.01;
+			_time += 0.01;
 			// Dark trailing effect for light trails
 			ctx.fillStyle = "rgba(10, 10, 15, 0.1)"; // Dark obsidian fade
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -170,8 +170,18 @@ export const CosmicBackground = ({
 				}
 
 				const grad = stream.horizontal
-					? ctx.createLinearGradient(stream.x, stream.y, stream.x + stream.length, stream.y)
-					: ctx.createLinearGradient(stream.x, stream.y, stream.x, stream.y + stream.length);
+					? ctx.createLinearGradient(
+							stream.x,
+							stream.y,
+							stream.x + stream.length,
+							stream.y,
+						)
+					: ctx.createLinearGradient(
+							stream.x,
+							stream.y,
+							stream.x,
+							stream.y + stream.length,
+						);
 
 				grad.addColorStop(0, "rgba(0,0,0,0)");
 				grad.addColorStop(0.5, stream.color);
@@ -202,7 +212,12 @@ export const CosmicBackground = ({
 	}, [enableAnimation, finalIntensity, variant]);
 
 	return (
-		<div className={cn("fixed inset-0 pointer-events-none z-0 overflow-hidden bg-background", className)}>
+		<div
+			className={cn(
+				"fixed inset-0 pointer-events-none z-0 overflow-hidden bg-background",
+				className,
+			)}
+		>
 			{/* Base canvas for data streams */}
 			<canvas
 				ref={canvasRef}
@@ -217,7 +232,7 @@ export const CosmicBackground = ({
 						key={node.id}
 						className={cn(
 							"absolute flex items-center justify-center",
-							enableAnimation && "animate-spin-slow"
+							enableAnimation && "animate-spin-slow",
 						)}
 						style={{
 							left: `${node.x}%`,
@@ -225,13 +240,21 @@ export const CosmicBackground = ({
 							width: `${node.size}px`,
 							height: `${node.size}px`,
 							opacity: node.opacity,
-							animationDelay: enableAnimation ? `${node.animationDelay}s` : undefined,
-							animationDuration: enableAnimation ? `${40 + node.id * 10}s` : undefined,
+							animationDelay: enableAnimation
+								? `${node.animationDelay}s`
+								: undefined,
+							animationDuration: enableAnimation
+								? `${40 + node.id * 10}s`
+								: undefined,
 							animationDirection: node.id % 2 === 0 ? "normal" : "reverse",
 						}}
 					>
 						{/* CSS Hexagon shape */}
-						<svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
+						<svg
+							viewBox="0 0 100 100"
+							className="w-full h-full overflow-visible"
+						>
+							<title>Hexagon Theme Background Overlay</title>
 							<polygon
 								points="50 3, 93 28, 93 72, 50 97, 7 72, 7 28"
 								fill="none"
@@ -240,7 +263,7 @@ export const CosmicBackground = ({
 								className={cn(enableAnimation && "animate-pulse")}
 								style={{
 									filter: `drop-shadow(0 0 10px ${node.color})`,
-									animationDuration: `${3 + (node.id % 3)}s`
+									animationDuration: `${3 + (node.id % 3)}s`,
 								}}
 							/>
 							{/* Inner geometric accent */}
@@ -251,7 +274,7 @@ export const CosmicBackground = ({
 									r="3"
 									fill={node.color}
 									className={cn(enableAnimation && "animate-ping")}
-									style={{ animationDuration: '4s' }}
+									style={{ animationDuration: "4s" }}
 								/>
 							)}
 						</svg>
@@ -289,7 +312,8 @@ export const CosmicBackground = ({
 			<div
 				className="absolute inset-0"
 				style={{
-					background: "radial-gradient(circle at center, transparent 30%, hsl(var(--background)) 100%)",
+					background:
+						"radial-gradient(circle at center, transparent 30%, hsl(var(--background)) 100%)",
 				}}
 			/>
 
@@ -305,4 +329,4 @@ export const CosmicBackground = ({
 	);
 };
 
-export default CosmicBackground;
+

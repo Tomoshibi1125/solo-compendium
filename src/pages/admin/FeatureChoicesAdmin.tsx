@@ -66,8 +66,7 @@ type ExtendedDatabase = Database & {
 	};
 };
 
-const supabaseExtended =
-	supabase as unknown as SupabaseClient<ExtendedDatabase>;
+const supabaseExtended = supabase as unknown as SupabaseClient<ExtendedDatabase>;
 
 function isChoicePointFeature(feature: FeatureRow): boolean {
 	const blob = `${feature.name}\n${feature.description || ""}\n${feature.prerequisites || ""}`;
@@ -165,7 +164,9 @@ export default function FeatureChoicesAdmin() {
 
 	const jobNameById = useMemo(() => {
 		const map = new Map<string, string>();
-		jobs.forEach((j) => map.set(j.id, j.name));
+		jobs.forEach((j) => {
+			map.set(j.id, j.name);
+		});
 		return map;
 	}, [jobs]);
 
@@ -308,7 +309,7 @@ export default function FeatureChoicesAdmin() {
 						const chunk = pending.slice(i, i + chunkSize);
 						await supabaseExtended
 							.from("compendium_feature_choice_options")
-							.insert(chunk as any);
+							.insert(chunk as never);
 						seededOptionCount += chunk.length;
 					}
 				}

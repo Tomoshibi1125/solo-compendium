@@ -10,15 +10,18 @@ import type { Database, Json } from "./types";
 
 // ─── Base Row Aliases ───────────────────────────────────────────────────────────
 
-export type CharacterRow = Database["public"]["Tables"]["characters"]["Row"];
-export type EquipmentRow =
+type CharacterRow = Database["public"]["Tables"]["characters"]["Row"];
+type EquipmentRow =
 	Database["public"]["Tables"]["character_equipment"]["Row"];
-export type FeatureRow =
+type FeatureRow =
 	Database["public"]["Tables"]["character_features"]["Row"];
-export type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
-export type ActiveSpellRow =
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type ActiveSpellRow =
 	Database["public"]["Tables"]["character_active_spells"]["Row"];
-export type CampaignRow = Database["public"]["Tables"]["campaigns"]["Row"];
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type CampaignRow = Database["public"]["Tables"]["campaigns"]["Row"];
 
 // ─── Character Extended ─────────────────────────────────────────────────────────
 
@@ -42,7 +45,8 @@ export interface CharacterExtended extends CharacterRow {
 // ─── Equipment Extended ─────────────────────────────────────────────────────────
 
 /** Equipment properties as structured data (stored as Json in DB) */
-export interface EquipmentProperties {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface EquipmentProperties {
 	passive?: Record<string, unknown>;
 	weapon?: {
 		damage?: string;
@@ -58,7 +62,8 @@ export interface EquipmentProperties {
 }
 
 /** Equipment with extended fields used by AddEquipmentDialog and stat computation */
-export interface EquipmentExtended extends EquipmentRow {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface EquipmentExtended extends EquipmentRow {
 	/** AC formula string (e.g. "13 + DEX" for chain shirt) */
 	ac_formula?: string;
 	/** Generic type indicator (weapon, armor, etc.) */
@@ -77,14 +82,16 @@ export interface EquipmentExtended extends EquipmentRow {
 // ─── Feature Extended ───────────────────────────────────────────────────────────
 
 /** Character feature with homebrew support and formula fields */
-export interface FeatureExtended extends FeatureRow {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface FeatureExtended extends FeatureRow {
 	// homebrew_id and modifiers already in FeatureRow
 	/** Formula for computing uses (e.g. "PB + CHA") */
 	uses_formula?: string;
 }
 
 /** A single feature modifier entry */
-export interface FeatureModifier {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface FeatureModifier {
 	type: string;
 	value: number;
 	target: string | null;
@@ -95,7 +102,8 @@ export interface FeatureModifier {
 // ─── Compendium Extended ────────────────────────────────────────────────────────
 
 /** Compendium item effects (stored as Json) */
-export interface CompendiumItemEffects {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface CompendiumItemEffects {
 	passive?: Record<string, unknown>;
 	[key: string]: unknown;
 }
@@ -108,13 +116,15 @@ export interface MonarchExtended {
 }
 
 /** Compendium feat prerequisites (stored as Json) */
-export interface FeatPrerequisites {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface FeatPrerequisites {
 	feats?: string[];
 	[key: string]: unknown;
 }
 
 /** Compendium artifact requirements (stored as Json) */
-export interface ArtifactRequirements {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface ArtifactRequirements {
 	level?: number;
 	[key: string]: unknown;
 }
@@ -122,21 +132,24 @@ export interface ArtifactRequirements {
 // ─── Combat / Encounter Extended ────────────────────────────────────────────────
 
 /** Combatant stats (stored as Json in encounter combatants) */
-export interface CombatantStats {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface CombatantStats {
 	xp_worth?: number;
 	loot_worth?: number;
 	[key: string]: unknown;
 }
 
 /** Campaign settings (stored as Json in campaigns) */
-export interface CampaignSettings {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface CampaignSettings {
 	[key: string]: unknown;
 }
 
 // ─── Sheet State Extended ───────────────────────────────────────────────────────
 
 /** Character sheet state with regent unlock data */
-export interface SheetStateExtended {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface SheetStateExtended {
 	primaryRegentUnlock?: {
 		regent_id: string;
 		[key: string]: unknown;
@@ -149,7 +162,8 @@ export interface SheetStateExtended {
 // ─── Computed Stats Extended ────────────────────────────────────────────────────
 
 /** Extended calculated stats with encumbrance */
-export interface CalculatedStatsExtended {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface CalculatedStatsExtended {
 	encumbrance?: {
 		status: "normal" | "heavy" | "overloaded";
 		[key: string]: unknown;
@@ -159,7 +173,8 @@ export interface CalculatedStatsExtended {
 
 // ─── Spell Duration Types ───────────────────────────────────────────────────────
 
-export type SpellDurationType =
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type SpellDurationType =
 	| "rounds"
 	| "minutes"
 	| "hours"
@@ -168,7 +183,8 @@ export type SpellDurationType =
 // ─── Character Feature Choice Data ──────────────────────────────────────────────
 
 /** Extended choice data with eligible power names set */
-export interface ChoiceDataExtended {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface ChoiceDataExtended {
 	eligiblePowerNames?: Set<string>;
 	featureById?: Map<string, unknown>;
 	[key: string]: unknown;
@@ -177,7 +193,7 @@ export interface ChoiceDataExtended {
 // ─── Regent/Sovereign Types ─────────────────────────────────────────────────────
 
 /** Regent with source book info */
-export interface RegentExtended {
+interface RegentExtended {
 	id: string;
 	name: string;
 	source_book?: string;
@@ -186,13 +202,15 @@ export interface RegentExtended {
 }
 
 /** Regent unlock with nested regent data */
-export interface RegentUnlockExtended {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface RegentUnlockExtended {
 	regent?: RegentExtended;
 	[key: string]: unknown;
 }
 
 /** Generated sovereign with regent theme data */
-export interface GeneratedSovereignExtended {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface GeneratedSovereignExtended {
 	regentA?: { theme: string; [key: string]: unknown };
 	regentB?: { theme: string; [key: string]: unknown };
 	[key: string]: unknown;
@@ -201,7 +219,8 @@ export interface GeneratedSovereignExtended {
 // ─── VTT Types ──────────────────────────────────────────────────────────────────
 
 /** Weather type for VTT scenes */
-export type VTTWeatherType =
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+type VTTWeatherType =
 	| "clear"
 	| "rain"
 	| "snow"
@@ -212,7 +231,8 @@ export type VTTWeatherType =
 // ─── Utility Types ──────────────────────────────────────────────────────────────
 
 /** Type-safe helper for JSON column access */
-export function asRecord(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function asRecord(
 	json: Json | null | undefined,
 ): Record<string, unknown> {
 	if (json && typeof json === "object" && !Array.isArray(json)) {
@@ -222,7 +242,7 @@ export function asRecord(
 }
 
 /** Type-safe helper for JSON array column access */
-export function asJsonArray(json: Json | null | undefined): unknown[] {
+function _asJsonArray(json: Json | null | undefined): unknown[] {
 	if (Array.isArray(json)) return json;
 	return [];
 }

@@ -10,7 +10,7 @@ interface OAuthButtonProps {
 	size?: "default" | "sm" | "lg" | "icon";
 }
 
-export function OAuthButton({
+function OAuthButton({
 	provider,
 	isLoading = false,
 	onClick,

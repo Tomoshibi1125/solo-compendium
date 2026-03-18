@@ -11,7 +11,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { useCreateCharacter } from "@/hooks/useCharacters";
+import { useCharacterImport } from "@/hooks/useCharacterExportImport";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
 	type CharacterExportSchema,
@@ -33,7 +33,7 @@ export function ImportDialog({
 	const [errors, setErrors] = useState<string[]>([]);
 	const [importing, setImporting] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const createCharacter = useCreateCharacter();
+	const { importCharacterJson } = useCharacterImport();
 	const { toast } = useToast();
 	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
 	const ddbEnhancements = usePlayerToolsEnhancements();
@@ -60,47 +60,15 @@ export function ImportDialog({
 	};
 
 	const handleImport = async () => {
-		if (!preview) return;
+		if (!preview || !file) return;
 		setImporting(true);
 
 		try {
-			const character = await createCharacter.mutateAsync({
-				name: preview.name,
-				level: preview.level,
-				job: preview.job,
-				path: preview.path,
-				background: preview.background,
-				hp_current: preview.stats.hp.current,
-				hp_max: preview.stats.hp.max,
-				hp_temp: preview.stats.hp.temp,
-				hit_dice_current: preview.stats.hitDice.current,
-				hit_dice_max: preview.stats.hitDice.max,
-				hit_dice_size: preview.stats.hitDice.size,
-				system_favor_current: preview.stats.systemFavor.current,
-				system_favor_max: preview.stats.systemFavor.max,
-				system_favor_die: preview.stats.systemFavor.die,
-				armor_class: preview.stats.armorClass,
-				speed: preview.stats.speed,
-				initiative: preview.stats.initiative,
-				proficiency_bonus: preview.stats.proficiencyBonus,
-				conditions: preview.conditions || [],
-				exhaustion_level: preview.exhaustionLevel || 0,
-				experience: preview.experience || 0,
-				notes: preview.notes,
-				appearance: preview.appearance,
-				backstory: preview.backstory,
-				saving_throw_proficiencies: (preview.proficiencies?.savingThrows ||
-					[]) as ("STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE")[],
-				skill_proficiencies: preview.proficiencies?.skills || [],
-				armor_proficiencies: preview.proficiencies?.armor || [],
-				weapon_proficiencies: preview.proficiencies?.weapons || [],
-				tool_proficiencies: preview.proficiencies?.tools || [],
-			});
+			const character = await importCharacterJson(file);
 
-			toast({
-				title: "Character imported",
-				description: `${preview.name} has been created from the import file.`,
-			});
+			if (!character) {
+				throw new Error("Import returned no character.");
+			}
 
 			ddbEnhancements
 				.trackCustomFeatureUsage(
@@ -156,8 +124,9 @@ export function ImportDialog({
 
 				<div className="space-y-4">
 					{/* File Upload */}
-					<div
-						className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 transition-colors"
+					<button
+						type="button"
+						className="w-full border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 transition-colors bg-transparent"
 						onClick={() => fileInputRef.current?.click()}
 					>
 						<input
@@ -184,7 +153,7 @@ export function ImportDialog({
 								</p>
 							</div>
 						)}
-					</div>
+					</button>
 
 					{/* Validation Errors */}
 					{errors.length > 0 && (
@@ -192,8 +161,8 @@ export function ImportDialog({
 							<AlertCircle className="h-4 w-4" />
 							<AlertDescription>
 								<ul className="list-disc list-inside text-xs space-y-1">
-									{errors.map((error, i) => (
-										<li key={i}>{error}</li>
+									{errors.map((error) => (
+										<li key={error}>{error}</li>
 									))}
 								</ul>
 							</AlertDescription>

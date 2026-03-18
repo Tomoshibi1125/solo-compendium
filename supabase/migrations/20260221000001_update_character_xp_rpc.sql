@@ -17,17 +17,14 @@ DECLARE
     current_xp INTEGER;
     new_xp INTEGER;
     character_name TEXT;
-    user_id UUID;
 BEGIN
     -- Get current character data and validate ownership
     SELECT 
         c.experience,
-        c.name,
-        c.user_id
+        c.name
     INTO 
         current_xp,
-        character_name,
-        user_id
+        character_name
     FROM characters c
     WHERE c.id = character_id;
     
@@ -56,7 +53,7 @@ BEGIN
     IF campaign_id IS NOT NULL THEN
         INSERT INTO campaign_session_logs (
             campaign_id,
-            type,
+            log_type,
             title,
             content,
             metadata,
@@ -65,7 +62,7 @@ BEGIN
             campaign_id,
             'reward',
             'XP Award',
-            format('%s gained %d XP', character_name, xp_amount),
+            format('%s gained %s XP', character_name, xp_amount),
             json_build_object(
                 'character_id', character_id,
                 'xp_amount', xp_amount,
@@ -81,7 +78,7 @@ BEGIN
     RETURN QUERY SELECT 
         true, 
         new_xp, 
-        format('%s gained %d XP (Total: %d)', character_name, xp_amount, new_xp)::TEXT;
+        format('%s gained %s XP (Total: %s)', character_name, xp_amount, new_xp)::TEXT;
     
 EXCEPTION
     WHEN OTHERS THEN

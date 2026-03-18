@@ -453,8 +453,8 @@ export function ArtGenerator({
 											<p className="text-sm font-medium">Generated files:</p>
 											<ul className="text-xs text-muted-foreground">
 												{generationResult.paths.map(
-													(path: string, i: number) => (
-														<li key={i}>- {path}</li>
+													(path: string, _i: number) => (
+														<li key={path}>- {path}</li>
 													),
 												)}
 											</ul>

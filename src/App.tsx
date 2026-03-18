@@ -1,14 +1,14 @@
+import "@/lib/rapierCompat";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-import { Loader2 } from "lucide-react";
 import { ThemeProvider } from "next-themes";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { NetworkErrorBoundary } from "@/components/NetworkErrorHandling";
+import { LoadingIndicator, NetworkErrorBoundary } from "@/components/NetworkErrorHandling";
 import { NavBar } from "@/components/navigation/NavBar";
 import PerformancePreload from "@/components/PerformancePreload";
 import { OfflineStatus } from "@/components/pwa/PWAComponents";
@@ -16,7 +16,7 @@ import { RouteEffects } from "@/components/RouteEffects";
 import { AnalyticsConsentBanner } from "@/components/ui/AnalyticsConsentBanner";
 import { CommandPalette } from "@/components/ui/CommandPalette";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
-import GlobalEffects from "@/components/ui/GlobalEffects";
+import { GlobalEffects } from "@/components/ui/GlobalEffects";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { ServiceWorkerUpdatePrompt } from "@/components/ui/ServiceWorkerUpdatePrompt";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -28,9 +28,12 @@ import { useGlobalShortcuts } from "@/hooks/useGlobalShortcuts";
 import { useOfflineCacheWarmer } from "@/hooks/useOfflineCacheWarmer";
 import { useOfflineSyncStatus } from "@/hooks/useOfflineSyncStatus";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
+import { useStartupData } from "@/hooks/useStartupData";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import { AuthProvider, useAuth } from "@/lib/auth/authContext";
+import { migrateLegacyConditions } from "@/lib/conditionSystem";
 import { validateEnv } from "@/lib/envValidation";
+import { useFeatureFlags } from "@/lib/featureFlags";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { warn as logWarn } from "@/lib/logger";
 import { PerformanceProvider } from "@/lib/performanceProfile";
@@ -50,8 +53,18 @@ if (!envResult.valid) {
 			.join("\n")}\n\nThe app will run in setup/guest mode until configured.`,
 	);
 }
+
+// Ensure condition system is initialized for legacy compatibility
+try {
+	migrateLegacyConditions([]);
+} catch (_e) {
+	// silent
+}
+
 if (envResult.warnings.length > 0) {
-	envResult.warnings.forEach((w) => logWarn(w));
+	envResult.warnings.forEach((w) => {
+		logWarn(w);
+	});
 }
 
 // Lazy load routes for code splitting
@@ -168,7 +181,7 @@ const queryClient = new QueryClient({
 // Loading fallback component
 const PageLoader = () => (
 	<div className="flex items-center justify-center min-h-screen">
-		<Loader2 className="w-8 h-8 animate-spin text-primary" />
+		<LoadingIndicator />
 	</div>
 );
 
@@ -192,6 +205,12 @@ const AppContent = () => {
 
 	// Enable background sync for offline → online data reconciliation (DDB parity)
 	useBackgroundSync();
+
+	// Prefetch compendium data into React Query cache for faster navigation
+	useStartupData();
+
+	// Load feature flags from environment (used by components to gate features)
+	const _featureFlags = useFeatureFlags();
 
 	// Register command palette opener
 	useEffect(() => {
@@ -728,8 +747,8 @@ const AppContent = () => {
 const App = () => {
 	const routerBase = normalizeBasePath(
 		getRuntimeEnvValue("VITE_ROUTER_BASE") ||
-		getRuntimeEnvValue("VITE_BASE_PATH") ||
-		import.meta.env.BASE_URL,
+			getRuntimeEnvValue("VITE_BASE_PATH") ||
+			import.meta.env.BASE_URL,
 	);
 	const { isOnline, queueLength } = useOfflineSyncStatus();
 
@@ -755,7 +774,9 @@ const App = () => {
 										<NavBar />
 										<RouteEffects />
 										<PageViewTracker />
-										<AppContent />
+										<ErrorBoundary>
+											<AppContent />
+										</ErrorBoundary>
 									</BrowserRouter>
 									<ServiceWorkerUpdatePrompt />
 									<OfflineIndicator />

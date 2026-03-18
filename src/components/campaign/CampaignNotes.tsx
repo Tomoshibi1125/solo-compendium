@@ -38,6 +38,13 @@ import {
 	useUpdateCampaignNote,
 } from "@/hooks/useCampaignNotes";
 import { useHasDMAccess } from "@/hooks/useCampaigns";
+import { useAuth } from "@/lib/auth/authContext";
+import {
+	canEditNote,
+	createPrivacySettings,
+	filterVisibleNotes,
+	type SecuredNote,
+} from "@/lib/notePrivacy";
 
 interface CampaignNotesProps {
 	campaignId: string;
@@ -53,9 +60,28 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 
 	const { data: notes = [], isLoading } = useCampaignNotes(campaignId);
 	const { data: hasDMAccess = false } = useHasDMAccess(campaignId);
+	const { user } = useAuth();
 	const createNote = useCreateCampaignNote();
 	const updateNote = useUpdateCampaignNote();
 	const deleteNote = useDeleteCampaignNote();
+
+	// Bridge Supabase notes into SecuredNote format for privacy filtering
+	const securedNotes: SecuredNote[] = notes.map((n) => ({
+		id: n.id,
+		title: n.title,
+		content: n.content || "",
+		campaignId,
+		privacy: {
+			...createPrivacySettings(n.user_id),
+			visibility: n.is_shared ? "shared" : "private",
+		},
+		createdAt: n.created_at,
+		updatedAt: n.updated_at,
+		category: (n.category as SecuredNote["category"]) || "campaign_note",
+	}));
+
+	const userId = user?.id ?? "";
+	const visibleNotes = filterVisibleNotes(securedNotes, userId, hasDMAccess);
 
 	const handleOpenDialog = (noteId?: string) => {
 		if (noteId) {
@@ -152,8 +178,16 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 						<p className="text-center text-muted-foreground py-8">
 							No notes yet. Create your first note!
 						</p>
+					) : visibleNotes.length === 0 ? (
+						<p className="text-center text-muted-foreground py-8">
+							No notes visible with your permissions.
+						</p>
 					) : (
-						notes.map((note) => (
+						visibleNotes.map((secured) => {
+							const note = notes.find((n) => n.id === secured.id);
+							if (!note) return null;
+							const userCanEdit = canEditNote(secured, userId, hasDMAccess);
+							return (
 							<div
 								key={note.id}
 								className="p-4 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
@@ -174,6 +208,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 											<Lock className="w-3 h-3 text-muted-foreground" />
 										)}
 									</div>
+									{userCanEdit && (
 									<div className="flex gap-1">
 										<Button
 											variant="ghost"
@@ -192,6 +227,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 											<Trash2 className="w-3 h-3" />
 										</Button>
 									</div>
+									)}
 								</div>
 								{note.content && (
 									<p className="text-sm whitespace-pre-wrap">{note.content}</p>
@@ -200,7 +236,8 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 									{format(new Date(note.updated_at), "PPp")}
 								</p>
 							</div>
-						))
+							);
+						})
 					)}
 				</div>
 			</SystemWindow>

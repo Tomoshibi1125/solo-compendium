@@ -42,40 +42,51 @@ interface OptimizationSuggestions {
 }
 
 export class LocalAIIntegration {
-	private static ollamaEndpoint = "http://localhost:11434/api/generate";
-	private static model = "mixtral:8x7b"; // Best free model available
-	private static isAvailable = false;
+	private static instance: LocalAIIntegration;
+
+	private constructor() {}
+
+	public static getInstance(): LocalAIIntegration {
+		if (!LocalAIIntegration.instance) {
+			LocalAIIntegration.instance = new LocalAIIntegration();
+		}
+		return LocalAIIntegration.instance;
+	}
+
+	private ollamaEndpoint = "http://localhost:11434/api/generate";
+	private model = "mixtral:8x7b"; // Best free model available
+	private isAvailable = false;
 
 	// Initialize AI connection
-	static async initializeAI(): Promise<boolean> {
+	async initializeAI(): Promise<boolean> {
 		try {
 			// Check if Ollama is running
 			const response = await fetch("http://localhost:11434/api/tags");
 			const data = await response.json();
 
 			if (data.models && data.models.length > 0) {
-				LocalAIIntegration.isAvailable = true;
+				this.isAvailable = true;
 				log("✅ Local AI (Ollama) connected with Mixtral 8x7B");
 				return true;
 			}
 
-			LocalAIIntegration.isAvailable = false;
+			this.isAvailable = false;
 			log("⚠️ Ollama not available, using fallback logic");
 			return false;
 		} catch (error: unknown) {
 			logError("AI initialization failed, using fallback:", error);
-			LocalAIIntegration.isAvailable = false;
+			this.isAvailable = false;
 			return false;
 		}
 	}
 
 	// Generate regent choices using local AI
-	static async generateRegentChoices(
+	async generateRegentChoices(
 		character: AICharacterInput,
 		availableRegents: AIRegentInput[],
 		highestStat: string,
 	): Promise<unknown[]> {
-		if (LocalAIIntegration.isAvailable) {
+		if (this.isAvailable) {
 			try {
 				const prompt = `
 You are an expert RPG game master AI for System Ascendant, a d20-based TTRPG with dark manhwa-inspired flavor.
@@ -118,19 +129,19 @@ Return as JSON array with this structure:
 Focus on: stat synergy, class compatibility, and playstyle enhancement.
 `;
 
-				const choices = await LocalAIIntegration.callLocalAI(prompt);
-				const parsed = LocalAIIntegration.parseAIResponse(choices);
+				const choices = await this.callLocalAI(prompt);
+				const parsed = this.parseAIResponse(choices);
 				return Array.isArray(parsed) ? parsed : [];
 			} catch (error: unknown) {
 				logError("AI generation failed:", error);
-				return LocalAIIntegration.generateFallbackChoices(
+				return this.generateFallbackChoices(
 					character,
 					availableRegents,
 					highestStat,
 				);
 			}
 		} else {
-			return LocalAIIntegration.generateFallbackChoices(
+			return this.generateFallbackChoices(
 				character,
 				availableRegents,
 				highestStat,
@@ -139,12 +150,12 @@ Focus on: stat synergy, class compatibility, and playstyle enhancement.
 	}
 
 	// Generate Gemini fusion using local AI
-	static async generateGeminiFusion(
+	async generateGeminiFusion(
 		character: AICharacterInput,
 		regent1: AIRegentInput,
 		regent2: AIRegentInput,
 	): Promise<unknown> {
-		if (LocalAIIntegration.isAvailable) {
+		if (this.isAvailable) {
 			try {
 				const prompt = `
 You are an expert RPG fusion AI creating a unique sovereign class by combining two regents with the character's base class.
@@ -200,18 +211,18 @@ Return as JSON with this structure:
 Be creative! Features should include action types (action/bonus action/reaction/passive) and uses/recharge where appropriate.
 `;
 
-				const fusion = await LocalAIIntegration.callLocalAI(prompt);
-				return LocalAIIntegration.parseAIResponse(fusion);
+				const fusion = await this.callLocalAI(prompt);
+				return this.parseAIResponse(fusion);
 			} catch (error: unknown) {
 				logError("Fusion generation failed:", error);
-				return LocalAIIntegration.generateFallbackFusion(
+				return this.generateFallbackFusion(
 					character,
 					regent1,
 					regent2,
 				);
 			}
 		} else {
-			return LocalAIIntegration.generateFallbackFusion(
+			return this.generateFallbackFusion(
 				character,
 				regent1,
 				regent2,
@@ -220,11 +231,11 @@ Be creative! Features should include action types (action/bonus action/reaction/
 	}
 
 	// Generate quest recommendations using local AI
-	static async generateQuestRecommendations(
+	async generateQuestRecommendations(
 		character: AICharacterInput,
 		availableQuests: AIQuestInput[],
 	): Promise<unknown[]> {
-		if (LocalAIIntegration.isAvailable) {
+		if (this.isAvailable) {
 			try {
 				const prompt = `
 You are an expert RPG quest master AI recommending quests for a player.
@@ -263,18 +274,18 @@ Return as JSON array with this structure:
 Focus on: level appropriateness, class synergy, and character strengths.
 `;
 
-				const recommendations = await LocalAIIntegration.callLocalAI(prompt);
-				const parsed = LocalAIIntegration.parseAIResponse(recommendations);
+				const recommendations = await this.callLocalAI(prompt);
+				const parsed = this.parseAIResponse(recommendations);
 				return Array.isArray(parsed) ? parsed : [];
 			} catch (error: unknown) {
 				logError("Quest recommendations failed:", error);
-				return LocalAIIntegration.generateFallbackQuests(
+				return this.generateFallbackQuests(
 					character,
 					availableQuests,
 				);
 			}
 		} else {
-			return LocalAIIntegration.generateFallbackQuests(
+			return this.generateFallbackQuests(
 				character,
 				availableQuests,
 			);
@@ -282,15 +293,15 @@ Focus on: level appropriateness, class synergy, and character strengths.
 	}
 
 	// Call local Ollama API
-	private static async callLocalAI(prompt: string): Promise<string> {
+	private async callLocalAI(prompt: string): Promise<string> {
 		try {
-			const response = await fetch(LocalAIIntegration.ollamaEndpoint, {
+			const response = await fetch(this.ollamaEndpoint, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					model: LocalAIIntegration.model,
+					model: this.model,
 					prompt: prompt,
 					stream: false,
 					options: {
@@ -314,7 +325,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 	}
 
 	// Parse AI response
-	private static parseAIResponse(response: string): unknown {
+	private parseAIResponse(response: string): unknown {
 		try {
 			// Try to extract JSON from response
 			const jsonMatch = response.match(/\{[\s\S]*\}/);
@@ -331,7 +342,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 	}
 
 	// Fallback regent choices (when AI unavailable)
-	private static generateFallbackChoices(
+	private generateFallbackChoices(
 		character: AICharacterInput,
 		availableRegents: AIRegentInput[],
 		highestStat: string,
@@ -348,7 +359,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 	}
 
 	// Fallback fusion (when AI unavailable)
-	private static generateFallbackFusion(
+	private generateFallbackFusion(
 		character: AICharacterInput,
 		regent1: AIRegentInput,
 		regent2: AIRegentInput,
@@ -433,7 +444,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 	}
 
 	// Fallback quest recommendations (when AI unavailable)
-	private static generateFallbackQuests(
+	private generateFallbackQuests(
 		character: AICharacterInput,
 		availableQuests: AIQuestInput[],
 	): unknown[] {
@@ -463,32 +474,32 @@ Focus on: level appropriateness, class synergy, and character strengths.
 	}
 
 	// Check AI availability
-	static isAIAvailable(): boolean {
-		return LocalAIIntegration.isAvailable;
+	isAIAvailable(): boolean {
+		return this.isAvailable;
 	}
 
 	// Get AI status
-	static async getAIStatus(): Promise<{
+	async getAIStatus(): Promise<{
 		available: boolean;
 		model: string;
 		endpoint: string;
 		lastCheck: Date;
 	}> {
-		await LocalAIIntegration.initializeAI();
+		await this.initializeAI();
 
 		return {
-			available: LocalAIIntegration.isAvailable,
-			model: LocalAIIntegration.model,
-			endpoint: LocalAIIntegration.ollamaEndpoint,
+			available: this.isAvailable,
+			model: this.model,
+			endpoint: this.ollamaEndpoint,
 			lastCheck: new Date(),
 		};
 	}
 
 	// Generate character optimization suggestions
-	static async generateOptimizationSuggestions(
+	async generateOptimizationSuggestions(
 		character: AICharacterInput,
 	): Promise<OptimizationSuggestions | null> {
-		if (LocalAIIntegration.isAvailable) {
+		if (this.isAvailable) {
 			try {
 				const prompt = `
 You are an expert RPG character optimizer AI.
@@ -521,21 +532,21 @@ Return as JSON with this structure:
 Focus on maximizing character effectiveness and synergy.
 `;
 
-				const suggestions = await LocalAIIntegration.callLocalAI(prompt);
-				return LocalAIIntegration.parseAIResponse(
+				const suggestions = await this.callLocalAI(prompt);
+				return this.parseAIResponse(
 					suggestions,
 				) as OptimizationSuggestions | null;
 			} catch (error: unknown) {
 				logError("Optimization suggestions failed:", error);
-				return LocalAIIntegration.generateFallbackOptimizations(character);
+				return this.generateFallbackOptimizations(character);
 			}
 		} else {
-			return LocalAIIntegration.generateFallbackOptimizations(character);
+			return this.generateFallbackOptimizations(character);
 		}
 	}
 
 	// Fallback optimizations (when AI unavailable)
-	private static generateFallbackOptimizations(
+	private generateFallbackOptimizations(
 		character: AICharacterInput,
 	): OptimizationSuggestions {
 		const abilities = character.abilities;
@@ -566,4 +577,4 @@ Focus on maximizing character effectiveness and synergy.
 	}
 }
 
-export default LocalAIIntegration;
+

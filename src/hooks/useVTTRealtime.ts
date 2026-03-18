@@ -20,8 +20,10 @@ import { useAuth } from "@/lib/auth/authContext";
 import {
 	type ChatParticipant,
 	createPing,
+	createWhisperMessage,
 	formatInlineRoll,
 	hasInlineRolls,
+	isMessageVisibleTo,
 	type MapPing,
 	parseInlineRolls,
 	parseWhisperCommand,
@@ -31,7 +33,7 @@ import {
 // Types
 // ---------------------------------------------------------------------------
 
-export interface VTTChatMessage {
+interface VTTChatMessage {
 	id: string;
 	userId: string;
 	userName: string;
@@ -55,7 +57,7 @@ export interface VTTChatMessage {
 	timestamp: number;
 }
 
-export interface VTTDiceRoll {
+interface VTTDiceRoll {
 	formula: string;
 	result: number;
 	rolls: number[];
@@ -63,31 +65,31 @@ export interface VTTDiceRoll {
 	fumble: boolean;
 }
 
-export interface VTTTokenMove {
+interface VTTTokenMove {
 	tokenId: string;
 	x: number;
 	y: number;
 	movedBy: string;
 }
 
-export interface VTTTokenUpdate {
+interface VTTTokenUpdate {
 	tokenId: string;
 	updates: Record<string, unknown>;
 	updatedBy: string;
 }
 
-export interface VTTSceneChange {
+interface VTTSceneChange {
 	sceneId: string;
 	changedBy: string;
 }
 
-export interface VTTFogUpdate {
+interface VTTFogUpdate {
 	sceneId: string;
 	fogData: boolean[][];
 	updatedBy: string;
 }
 
-export interface VTTInitiativeState {
+interface VTTInitiativeState {
 	order: {
 		tokenId: string;
 		name: string;
@@ -101,14 +103,13 @@ export interface VTTInitiativeState {
 }
 
 import type { MapPing as VTTPing } from "@/lib/vtt";
-export type { VTTPing };
 
-export interface VTTCursorPosition {
+interface VTTCursorPosition {
 	x: number;
 	y: number;
 }
 
-export interface VTTPresenceUser {
+interface VTTPresenceUser {
 	userId: string;
 	userName: string;
 	role: "dm" | "player";
@@ -118,7 +119,7 @@ export interface VTTPresenceUser {
 }
 
 // Broadcast event discriminated union
-export interface VTTRulerSegment {
+interface VTTRulerSegment {
 	fromX: number;
 	fromY: number;
 	toX: number;
@@ -128,7 +129,7 @@ export interface VTTRulerSegment {
 	color: string;
 }
 
-export interface VTTHandoutShare {
+interface VTTHandoutShare {
 	title: string;
 	imageUrl?: string;
 	content?: string;
@@ -137,7 +138,7 @@ export interface VTTHandoutShare {
 	timestamp: number;
 }
 
-export type VTTBroadcastEvent =
+type VTTBroadcastEvent =
 	| { type: "token_move"; payload: VTTTokenMove }
 	| { type: "token_update"; payload: VTTTokenUpdate }
 	| {
@@ -225,7 +226,7 @@ interface DiceTermResult {
 	subtotal: number;
 }
 
-export interface VTTDiceRollDetailed {
+interface VTTDiceRollDetailed {
 	formula: string;
 	result: number;
 	rolls: number[]; // flat array of all kept rolls for backward compat
@@ -324,7 +325,8 @@ function formatTermDisplay(term: DiceTermResult): string {
 	return `[${parts.join(", ")}]`;
 }
 
-export function rollDiceFormula(formula: string): VTTDiceRoll {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function rollDiceFormula(formula: string): VTTDiceRoll {
 	const detailed = rollDiceFormulaDetailed(formula);
 	return {
 		formula: detailed.formula,
@@ -335,7 +337,7 @@ export function rollDiceFormula(formula: string): VTTDiceRoll {
 	};
 }
 
-export function rollDiceFormulaDetailed(
+function rollDiceFormulaDetailed(
 	rawFormula: string,
 ): VTTDiceRollDetailed {
 	let formula = rawFormula.trim().toLowerCase();
@@ -349,12 +351,13 @@ export function rollDiceFormulaDetailed(
 	const tokenRegex =
 		/([+-]?)(\d+d\d+(?:!)?(?:kh\d+)?(?:kl\d+)?(?:ro<\d+)?|\d+)/gi;
 	const tokens: { sign: number; raw: string; isDice: boolean }[] = [];
-	let m: RegExpExecArray | null;
-	while ((m = tokenRegex.exec(formula)) !== null) {
+	let m = tokenRegex.exec(formula);
+	while (m !== null) {
 		const sign = m[1] === "-" ? -1 : 1;
 		const raw = m[2];
 		const isDice = /d/i.test(raw);
 		tokens.push({ sign, raw, isDice });
+		m = tokenRegex.exec(formula);
 	}
 
 	if (tokens.length === 0) {
@@ -421,7 +424,7 @@ export function rollDiceFormulaDetailed(
 // ---------------------------------------------------------------------------
 // Chat command parser
 // ---------------------------------------------------------------------------
-export type ChatCommand =
+type ChatCommand =
 	| { type: "chat"; message: string }
 	| { type: "roll"; formula: string }
 	| { type: "gmroll"; formula: string }
@@ -429,7 +432,7 @@ export type ChatCommand =
 	| { type: "emote"; message: string }
 	| { type: "desc"; message: string };
 
-export function parseChatCommand(input: string): ChatCommand {
+function parseChatCommand(input: string): ChatCommand {
 	const trimmed = input.trim();
 
 	// /roll or /r
@@ -463,7 +466,7 @@ export function parseChatCommand(input: string): ChatCommand {
 // ---------------------------------------------------------------------------
 // Macro types
 // ---------------------------------------------------------------------------
-export interface VTTMacro {
+interface VTTMacro {
 	id: string;
 	name: string;
 	command: string; // e.g. "/roll 1d20+5" or "/roll 8d6"
@@ -475,7 +478,7 @@ export interface VTTMacro {
 // Hook
 // ---------------------------------------------------------------------------
 
-export interface UseVTTRealtimeOptions {
+interface UseVTTRealtimeOptions {
 	campaignId: string;
 	sessionId?: string | null;
 	isDM?: boolean;
@@ -505,7 +508,7 @@ export function useVTTRealtime({
 	});
 
 	const channelRef = useRef<RealtimeChannel | null>(null);
-	const eventHandlersRef = useRef<Map<string, Set<(payload: any) => void>>>(
+	const eventHandlersRef = useRef<Map<string, Set<(payload: unknown) => void>>>(
 		new Map(),
 	);
 
@@ -528,11 +531,11 @@ export function useVTTRealtime({
 			}
 			eventHandlersRef.current
 				.get(eventType)
-				?.add(handler as (payload: any) => void);
+				?.add(handler as (payload: unknown) => void);
 			return () => {
 				eventHandlersRef.current
 					.get(eventType)
-					?.delete(handler as (payload: any) => void);
+					?.delete(handler as (payload: unknown) => void);
 			};
 		},
 		[],
@@ -541,7 +544,9 @@ export function useVTTRealtime({
 	const emit = useCallback((eventType: string, payload: unknown) => {
 		const handlers = eventHandlersRef.current.get(eventType);
 		if (handlers) {
-			handlers.forEach((handler) => handler(payload));
+			handlers.forEach((handler) => {
+				handler(payload);
+			});
 		}
 	}, []);
 
@@ -743,33 +748,42 @@ export function useVTTRealtime({
 			if (whisperCmd) {
 				if (whisperCmd.type === "roll_whisper") {
 					const roll = rollDiceFormulaDetailed(whisperCmd.content);
+					const contentStr = `${whisperCmd.content} = ${roll.result}${roll.critical ? " CRITICAL!" : roll.fumble ? " FUMBLE!" : ""}`;
+					
+					const whisper = createWhisperMessage(userId, userName, whisperCmd.recipientIds, whisperCmd.recipientNames, contentStr, whisperCmd.type, {
+						formula: roll.formula,
+						result: roll.result,
+						details: roll.displayText,
+					});
+					
 					const msg: VTTChatMessage = {
-						id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-						userId,
-						userName,
-						message: `${whisperCmd.content} = ${roll.result}${roll.critical ? " CRITICAL!" : roll.fumble ? " FUMBLE!" : ""}`,
-						type: whisperCmd.type,
-						whisperTo: whisperCmd.recipientIds.join(","),
-						timestamp: Date.now(),
-						diceFormula: roll.formula,
-						diceResult: roll.result,
+						id: whisper.id,
+						userId: whisper.senderId,
+						userName: whisper.senderName,
+						message: whisper.content,
+						type: whisper.type,
+						whisperTo: whisper.recipientIds.join(","),
+						timestamp: new Date(whisper.timestamp).getTime(),
+						diceFormula: whisper.rollData?.formula,
+						diceResult: whisper.rollData?.result,
 						diceCritical: roll.critical,
 						diceFumble: roll.fumble,
-						diceDisplayText: roll.displayText,
+						diceDisplayText: whisper.rollData?.details,
 					};
 					setChatMessages((prev) => [...prev, msg].slice(-200));
 					broadcast({ type: "chat_message", payload: msg });
 					return;
 				}
 
+				const whisper = createWhisperMessage(userId, userName, whisperCmd.recipientIds, whisperCmd.recipientNames, whisperCmd.content, whisperCmd.type);
 				const msg: VTTChatMessage = {
-					id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-					userId,
-					userName,
-					message: whisperCmd.content,
-					type: whisperCmd.type,
-					whisperTo: whisperCmd.recipientIds.join(","),
-					timestamp: Date.now(),
+					id: whisper.id,
+					userId: whisper.senderId,
+					userName: whisper.senderName,
+					message: whisper.content,
+					type: whisper.type,
+					whisperTo: whisper.recipientIds.join(","),
+					timestamp: new Date(whisper.timestamp).getTime(),
 				};
 				setChatMessages((prev) => [...prev, msg].slice(-200));
 				broadcast({ type: "chat_message", payload: msg });
@@ -1005,11 +1019,29 @@ export function useVTTRealtime({
 					// Internal handling
 					switch (payload.type) {
 						case "chat_message":
-						case "dice_roll":
+						case "dice_roll": {
+							const msgPayload = payload.payload as VTTChatMessage;
+							// If it's a whisper, only allow it into state if we're meant to see it.
+							if (["whisper", "gm_whisper", "roll_whisper"].includes(msgPayload.type)) {
+								const mockWhisper = {
+									id: msgPayload.id,
+									senderId: msgPayload.userId,
+									senderName: msgPayload.userName,
+									recipientIds: msgPayload.whisperTo ? msgPayload.whisperTo.split(',') : [],
+									recipientNames: [],
+									content: msgPayload.message,
+									timestamp: new Date(msgPayload.timestamp).toISOString(),
+									type: msgPayload.type as "whisper" | "gm_whisper" | "roll_whisper",
+								};
+								if (!isMessageVisibleTo(mockWhisper, userId)) {
+									break; // ignore this message entirely
+								}
+							}
 							setChatMessages((prev) =>
-								[...prev, payload.payload as VTTChatMessage].slice(-200),
+								[...prev, msgPayload].slice(-200),
 							);
 							break;
+						}
 						case "initiative_update":
 							setInitiativeState(payload.payload as VTTInitiativeState);
 							break;
@@ -1109,17 +1141,17 @@ export function useVTTRealtime({
 				.eq("campaign_id", campaignId)
 				.order("created_at", { ascending: false })
 				.limit(50)
-				.then(({ data }: { data: any[] | null }) => {
+				.then(({ data }: { data: Array<Record<string, unknown>> | null }) => {
 					if (data && data.length > 0) {
-						const msgs: VTTChatMessage[] = data.reverse().map((row: any) => ({
-							id: row.id,
-							userId: row.user_id || "unknown",
-							userName: row.user_name || "Anonymous",
-							message: row.message || "",
-							type: row.message_type || "chat",
-							diceFormula: row.dice_formula || undefined,
-							diceResult: row.dice_result ?? undefined,
-							timestamp: new Date(row.created_at).getTime(),
+						const msgs: VTTChatMessage[] = data.reverse().map((row) => ({
+							id: row.id as string,
+							userId: (row.user_id as string) || "unknown",
+							userName: (row.user_name as string) || "Anonymous",
+							message: (row.message as string) || "",
+							type: (row.message_type as VTTChatMessage["type"]) || "chat",
+							diceFormula: (row.dice_formula as string) || undefined,
+							diceResult: (row.dice_result as number) ?? undefined,
+							timestamp: new Date(row.created_at as string).getTime(),
 						}));
 						setChatMessages((prev) => {
 							// Merge: keep DB messages + any local messages not in DB

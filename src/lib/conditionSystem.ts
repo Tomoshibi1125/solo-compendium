@@ -191,7 +191,6 @@ export function getConditionsFromSource(
 ): ConditionEntry[] {
 	return conditions.filter((c) => c.sourceId === sourceId && c.isActive);
 }
-
 /**
  * Get condition summary for display
  */

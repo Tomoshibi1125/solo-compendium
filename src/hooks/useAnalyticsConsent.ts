@@ -7,11 +7,12 @@
 
 import { useCallback } from "react";
 import { useUserLocalState } from "@/hooks/useToolState";
+import { useAuth } from "@/lib/auth/authContext";
 
 const CONSENT_STORAGE_KEY = "analytics-consent";
 const CONSENT_VERSION = 1; // Increment to re-prompt users
 
-export type ConsentStatus = "pending" | "accepted" | "rejected";
+type ConsentStatus = "pending" | "accepted" | "rejected";
 
 interface ConsentData {
 	status: ConsentStatus;
@@ -32,6 +33,8 @@ export function getConsentStatus(): ConsentStatus {
  * Hook to manage analytics consent
  */
 export function useAnalyticsConsent() {
+	const _auth = useAuth(); // Call useAuth unconditionally but let values be assigned correctly
+
 	const { state: consentData, setState: setConsentData } =
 		useUserLocalState<ConsentData | null>(CONSENT_STORAGE_KEY, {
 			initialState: null,

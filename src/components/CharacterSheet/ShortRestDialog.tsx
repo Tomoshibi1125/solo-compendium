@@ -156,7 +156,7 @@ export function ShortRestDialog({
 						<div className="rounded-md border bg-muted/50 p-3 max-h-40 overflow-y-auto space-y-1">
 							{rolls.map((r, i) => (
 								<div
-									key={i}
+									key={JSON.stringify(r)}
 									className="flex items-center justify-between text-xs"
 								>
 									<span className="text-muted-foreground">Roll {i + 1}</span>

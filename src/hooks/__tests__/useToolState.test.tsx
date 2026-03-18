@@ -35,7 +35,7 @@ type ProbeSnapshot = {
 
 let remoteUserState: ProbeState | null = null;
 let remoteCampaignState: ProbeState | null = null;
-const upsertCalls: Array<{ table: string; payload: unknown }> = [];
+const upsertCalls: Array<{ table: string; payload: Record<string, unknown> }> = [];
 let storage: Storage;
 
 const createMemoryStorage = (): Storage => {
@@ -86,7 +86,7 @@ const createFromChain = (table: string) => {
 
 	return {
 		select: () => selectChain,
-		upsert: async (payload: unknown) => {
+		upsert: async (payload: Record<string, unknown>) => {
 			upsertCalls.push({ table, payload });
 			return { error: null };
 		},
@@ -149,7 +149,7 @@ const UserProbe = ({
 	storageKey: string;
 	onSnapshot: (snapshot: ProbeSnapshot) => void;
 }) => {
-	const result = useUserToolState<ProbeState>("tool_state_user_probe", {
+	const result = useUserToolState<ProbeState>("tool_stateuser_probe", {
 		initialState: { value: 0 },
 		storageKey,
 	});

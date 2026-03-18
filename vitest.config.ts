@@ -6,7 +6,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    include: ['src/**/*.{test,spec,property.test,integration.test}.{ts,tsx}'],
     exclude: [
       '**/*.e2e.{test,spec}.{ts,tsx}',
       '**/*.e2e.{test,spec}.ts',
@@ -18,6 +18,9 @@ export default defineConfig({
       'test-results/**',
       'node_modules/**',
       'dist/**',
+    ],
+    execArgv: [
+      '--localstorage-file=node_modules/.cache/vitest/localstorage/data.json',
     ],
   },
   resolve: {

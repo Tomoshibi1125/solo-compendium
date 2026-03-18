@@ -605,9 +605,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 					<TabsContent value="chat" className="space-y-4">
 						<SystemWindow title="QUICK MESSAGES" compact>
 							<div className="grid grid-cols-2 gap-2">
-								{quickMessages.map((message, index) => (
+								{quickMessages.map((message, _index) => (
 									<Button
-										key={index}
+										key={JSON.stringify(message)}
 										size="sm"
 										variant="outline"
 										onClick={() => {

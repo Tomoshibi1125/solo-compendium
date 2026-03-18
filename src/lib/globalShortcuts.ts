@@ -3,7 +3,7 @@
  * Provides comprehensive keyboard navigation and quick actions
  */
 
-export interface GlobalShortcut {
+interface GlobalShortcut {
 	key: string;
 	ctrl?: boolean;
 	shift?: boolean;
@@ -253,7 +253,8 @@ function showShortcutsHelp() {
 /**
  * Get shortcuts by category
  */
-export function getShortcutsByCategory(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getShortcutsByCategory(
 	category: GlobalShortcut["category"],
 ): GlobalShortcut[] {
 	return GLOBAL_SHORTCUTS.filter((s) => s.category === category);
@@ -262,14 +263,16 @@ export function getShortcutsByCategory(
 /**
  * Get all global shortcuts (work everywhere)
  */
-export function getGlobalShortcuts(): GlobalShortcut[] {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function getGlobalShortcuts(): GlobalShortcut[] {
 	return GLOBAL_SHORTCUTS.filter((s) => s.global === true);
 }
 
 /**
  * Format shortcut for display
  */
-export function formatShortcut(shortcut: GlobalShortcut): string {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function formatShortcut(shortcut: GlobalShortcut): string {
 	const parts: string[] = [];
 	if (shortcut.ctrl || shortcut.meta) parts.push(shortcut.meta ? "⌘" : "Ctrl");
 	if (shortcut.shift) parts.push("Shift");

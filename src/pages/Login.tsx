@@ -192,10 +192,11 @@ export default function Login() {
 								type="button"
 								onClick={() => setRole("player")}
 								aria-label="Select Player role"
-								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${role === "player"
-									? "bg-primary text-primary-foreground shadow-lg shadow-primary/50 border border-primary/60"
-									: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-primary/30"
-									}`}
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
+									role === "player"
+										? "bg-primary text-primary-foreground shadow-lg shadow-primary/50 border border-primary/60"
+										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-primary/30"
+								}`}
 							>
 								<Users className="w-4 h-4" />
 								Player
@@ -204,10 +205,11 @@ export default function Login() {
 								type="button"
 								onClick={() => setRole("dm")}
 								aria-label="Select Protocol Warden role"
-								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${role === "dm"
-									? "bg-shadow-purple text-white shadow-lg shadow-shadow-purple/50 border border-shadow-purple/60"
-									: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-shadow-purple/30"
-									}`}
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
+									role === "dm"
+										? "bg-shadow-purple text-white shadow-lg shadow-shadow-purple/50 border border-shadow-purple/60"
+										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-shadow-purple/30"
+								}`}
 							>
 								<Shield className="w-4 h-4" />
 								Protocol Warden

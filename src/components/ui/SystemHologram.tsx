@@ -33,7 +33,7 @@ export const SystemHologram = ({
 }: HolographicPanelProps) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const streamsRef = useRef<HTMLDivElement>(null);
-	const { reducedMotion, fx, tier } = usePerformanceProfile();
+	const { reducedMotion, tier } = usePerformanceProfile();
 
 	const reduceEffects = reducedMotion || tier === "low";
 	const finalStreams = reduceEffects ? Math.floor(streams / 2) : streams;
@@ -316,4 +316,4 @@ export const SystemHologram = ({
 	);
 };
 
-export default SystemHologram;
+

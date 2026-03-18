@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { Brain, Loader2, Send, Sparkles, Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,6 +37,27 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 	const sendMessage = useSendCampaignMessage();
 	const deleteMessage = useDeleteCampaignMessage();
 
+	const handleManualNarration = useCallback(
+		async (msg: CampaignMessage) => {
+			if (isNarratingMsg) return;
+			try {
+				setIsNarratingMsg(msg.id);
+				const narration = await narrateCombatEvent(msg.content);
+
+				await sendMessage.mutateAsync({
+					campaignId,
+					content: `Protocol Warden: ${narration}`,
+					messageType: "whisper", // Use whisper type to visually distinguish AI flavor text
+				});
+			} catch (error) {
+				console.error("Narration failed", error);
+			} finally {
+				setIsNarratingMsg(null);
+			}
+		},
+		[isNarratingMsg, sendMessage, campaignId],
+	);
+
 	// Get current user ID
 	useEffect(() => {
 		supabase.auth.getUser().then(({ data: { user } }) => {
@@ -51,7 +72,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 	}, []);
 
 	// Real-time updates handler
-	const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => { });
+	const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});
 
 	useEffect(() => {
 		handleNewMessage.current = (newMessage: CampaignMessage) => {
@@ -101,24 +122,6 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 	const handleDelete = async (messageId: string) => {
 		if (confirm("Delete this message?")) {
 			await deleteMessage.mutateAsync({ messageId, campaignId });
-		}
-	};
-
-	async function handleManualNarration(msg: CampaignMessage) {
-		if (isNarratingMsg) return;
-		try {
-			setIsNarratingMsg(msg.id);
-			const narration = await narrateCombatEvent(msg.content);
-
-			await sendMessage.mutateAsync({
-				campaignId,
-				content: `Protocol Warden: ${narration}`,
-				messageType: "whisper", // Use whisper type to visually distinguish AI flavor text
-			});
-		} catch (error) {
-			console.error("Narration failed", error);
-		} finally {
-			setIsNarratingMsg(null);
 		}
 	};
 

@@ -8,20 +8,25 @@ interface UsePWAReturn {
 	syncQueueLength: number;
 }
 
+interface BeforeInstallPromptEvent extends Event {
+	prompt: () => Promise<void>;
+	userChoice: Promise<{ outcome: string }>;
+}
+
 export function usePWA(): UsePWAReturn {
 	const [isInstallable, setIsInstallable] = useState(false);
 	const [isInstalled, setIsInstalled] = useState(false);
 	const [isOnline, setIsOnline] = useState(
 		typeof navigator !== "undefined" ? navigator.onLine : true,
 	);
-	const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+	const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 	const [syncQueueLength, _setSyncQueueLength] = useState(0);
 
 	useEffect(() => {
 		// Check if app is already installed
 		if (
 			window.matchMedia("(display-mode: standalone)").matches ||
-			(window.navigator as Record<string, any>).standalone === true
+			(window.navigator as unknown as { standalone?: boolean }).standalone === true
 		) {
 			setIsInstalled(true);
 		}
@@ -31,7 +36,7 @@ export function usePWA(): UsePWAReturn {
 			// Prevent Chrome 67 and earlier from automatically showing the prompt
 			e.preventDefault();
 			// Stash the event so it can be triggered later
-			setDeferredPrompt(e);
+			setDeferredPrompt(e as BeforeInstallPromptEvent);
 			setIsInstallable(true);
 		};
 

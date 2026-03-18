@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Zod schemas for content validation
-export const JobSchema = z.object({
+const JobSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
@@ -32,7 +32,7 @@ export const JobSchema = z.object({
 	theme_tags: z.array(z.string()).optional(),
 });
 
-export const JobPathSchema = z.object({
+const JobPathSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
@@ -48,7 +48,7 @@ export const JobPathSchema = z.object({
 	theme_tags: z.array(z.string()).optional(),
 });
 
-export const JobFeatureSchema = z.object({
+const JobFeatureSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
@@ -63,7 +63,7 @@ export const JobFeatureSchema = z.object({
 	is_path_feature: z.boolean().default(false),
 });
 
-export const PowerSchema = z.object({
+const PowerSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
@@ -87,7 +87,7 @@ export const PowerSchema = z.object({
 	theme_tags: z.array(z.string()).optional(),
 });
 
-export const RelicSchema = z.object({
+const RelicSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
@@ -110,7 +110,7 @@ export const RelicSchema = z.object({
 	theme_tags: z.array(z.string()).optional(),
 });
 
-export const MonsterSchema = z.object({
+const MonsterSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
@@ -155,7 +155,7 @@ export const MonsterSchema = z.object({
 	theme_tags: z.array(z.string()).optional(),
 });
 
-export const BackgroundSchema = z.object({
+const BackgroundSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),

@@ -5,7 +5,8 @@
 // Kael Voss is the Supreme Deity / Prime Architect — NOT selectable as a regent
 // Shadow soldiers and umbral features are exclusive to Umbral Regent
 
-export interface Regent {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+interface Regent {
 	id: string;
 	name: string;
 	title: string;

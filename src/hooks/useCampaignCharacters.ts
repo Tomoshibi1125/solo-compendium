@@ -6,7 +6,7 @@ import { getLocalUserId } from "@/lib/guestStore";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-export interface CampaignCharacterShare {
+interface CampaignCharacterShare {
 	id: string;
 	campaign_id: string;
 	character_id: string;
@@ -221,7 +221,8 @@ export const useUnshareCharacter = () => {
 };
 
 // Update share permissions
-export const useUpdateSharePermissions = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useUpdateSharePermissions = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 

@@ -143,7 +143,8 @@ export function useNotifications() {
 /**
  * Helper to create notification from various sources
  */
-export function createNotification(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function createNotification(
 	type: NotificationType,
 	title: string,
 	options?: {

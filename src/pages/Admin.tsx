@@ -413,9 +413,9 @@ const Admin = () => {
 												ERRORS ({validationResult.errors.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
-												{validationResult.errors.map((error, i) => (
+												{validationResult.errors.map((error, _i) => (
 													<div
-														key={i}
+														key={JSON.stringify(error)}
 														className="text-sm p-2 rounded bg-destructive/10 border border-destructive/20"
 													>
 														<div className="font-mono text-xs text-muted-foreground">
@@ -434,9 +434,9 @@ const Admin = () => {
 												WARNINGS ({validationResult.warnings.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
-												{validationResult.warnings.map((warning, i) => (
+												{validationResult.warnings.map((warning, _i) => (
 													<div
-														key={i}
+														key={JSON.stringify(warning)}
 														className="text-sm p-2 rounded bg-amber-500/10 border border-amber-500/20"
 													>
 														<div className="font-mono text-xs text-muted-foreground">
@@ -560,9 +560,9 @@ const Admin = () => {
 												ERRORS ({importResult.errors.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
-												{importResult.errors.map((error, i) => (
+												{importResult.errors.map((error, _i) => (
 													<div
-														key={i}
+														key={error}
 														className="text-sm p-2 rounded bg-destructive/10 border border-destructive/20 font-heading"
 													>
 														{error}
@@ -578,9 +578,9 @@ const Admin = () => {
 												WARNINGS ({importResult.warnings.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
-												{importResult.warnings.map((warning, i) => (
+												{importResult.warnings.map((warning, _i) => (
 													<div
-														key={i}
+														key={warning}
 														className="text-sm p-2 rounded bg-amber-500/10 border border-amber-500/20 font-heading"
 													>
 														{warning}

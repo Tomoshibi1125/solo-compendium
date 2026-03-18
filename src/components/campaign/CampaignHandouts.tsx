@@ -157,6 +157,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 						) : (
 							visibleEntries.map((entry) => (
 								<button
+									type="button"
 									key={entry.id}
 									onClick={() => setSelectedEntryId(entry.id)}
 									className={cn(

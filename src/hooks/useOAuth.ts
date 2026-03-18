@@ -1,4 +1,4 @@
-﻿import type { User } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -43,7 +43,7 @@ export const OAUTH_PROVIDERS: OAuthProvider[] = [
 	},
 ];
 
-export interface UseOAuthReturn {
+interface UseOAuthReturn {
 	isLoading: boolean;
 	signInWithProvider: (provider: OAuthProvider) => Promise<void>;
 	signOut: () => Promise<void>;

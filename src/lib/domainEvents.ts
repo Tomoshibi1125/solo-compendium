@@ -34,7 +34,7 @@ export interface ActiveEffectRef {
 	modifiers: Record<string, unknown>;
 }
 
-export interface CorePayloadFields {
+interface CorePayloadFields {
 	characterId: string;
 	characterName: string;
 	classId: string | null;
@@ -149,17 +149,17 @@ export type DomainEventType = DomainEvent["type"];
 type EventHandler<T extends DomainEvent = DomainEvent> = (event: T) => void;
 
 class DomainEventBusImpl {
-	private handlers = new Map<DomainEventType, Set<EventHandler<any>>>();
+	private handlers = new Map<DomainEventType, Set<EventHandler<DomainEvent>>>();
 
 	on<T extends DomainEvent>(type: T["type"], handler: EventHandler<T>): void {
 		if (!this.handlers.has(type)) {
 			this.handlers.set(type, new Set());
 		}
-		this.handlers.get(type)?.add(handler);
+		this.handlers.get(type)?.add(handler as EventHandler<DomainEvent>);
 	}
 
 	off<T extends DomainEvent>(type: T["type"], handler: EventHandler<T>): void {
-		this.handlers.get(type)?.delete(handler);
+		this.handlers.get(type)?.delete(handler as EventHandler<DomainEvent>);
 	}
 
 	emit<T extends DomainEvent>(event: T): void {

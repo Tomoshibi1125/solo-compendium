@@ -7,7 +7,7 @@ import { getLocalUserId } from "@/lib/guestStore";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-export interface CampaignNote {
+interface CampaignNote {
 	id: string;
 	campaign_id: string;
 	user_id: string;

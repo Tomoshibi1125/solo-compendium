@@ -10,7 +10,7 @@
 // Types
 // ---------------------------------------------------------------------------
 
-export interface CantripScalingResult {
+interface CantripScalingResult {
 	diceCount: number;
 	dieSize: number;
 	formula: string;

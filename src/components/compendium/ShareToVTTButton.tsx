@@ -12,7 +12,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 
-export interface ShareToVTTButtonProps {
+interface ShareToVTTButtonProps {
 	itemType: "Monster" | "Item" | "Spell";
 	itemName: string;
 }
@@ -23,7 +23,7 @@ export function ShareToVTTButton({
 }: ShareToVTTButtonProps) {
 	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
 	const playerTools = usePlayerToolsEnhancements();
-	const [campaigns, setCampaigns] = useState<any[]>([]);
+	const [campaigns, setCampaigns] = useState<unknown[]>([]);
 	const [loading, setLoading] = useState(false);
 	const { toast } = useToast();
 
@@ -82,12 +82,12 @@ export function ShareToVTTButton({
 				) : campaigns.length === 0 ? (
 					<DropdownMenuItem disabled>No active campaigns</DropdownMenuItem>
 				) : (
-					campaigns.map((camp: any) => (
+					campaigns.map((camp: unknown) => (
 						<DropdownMenuItem
-							key={camp.id}
-							onClick={() => handleShare(camp.id)}
+							key={(camp as { id: string }).id}
+							onClick={() => handleShare((camp as { id: string }).id)}
 						>
-							{camp.name}
+							{(camp as { name: string }).name}
 						</DropdownMenuItem>
 					))
 				)}

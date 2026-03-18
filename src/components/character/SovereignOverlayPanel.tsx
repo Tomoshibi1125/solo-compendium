@@ -30,9 +30,10 @@ function AbilityCard({
 	const [expanded, setExpanded] = useState(false);
 
 	return (
-		<div
+		<button
+			type="button"
 			className={cn(
-				"rounded-lg border p-3 transition-colors cursor-pointer",
+				"w-full text-left rounded-lg border p-3 transition-colors cursor-pointer",
 				ability.is_capstone
 					? "border-arise-violet/60 bg-arise-violet/8"
 					: "border-border bg-muted/20 hover:border-arise-violet/30",
@@ -82,7 +83,7 @@ function AbilityCard({
 					</p>
 				</div>
 			)}
-		</div>
+		</button>
 	);
 }
 

@@ -6,7 +6,7 @@ export interface SkillDefinition {
 	ability: AbilityScore;
 }
 
-export const SKILLS: Record<string, SkillDefinition> = {
+const SKILLS: Record<string, SkillDefinition> = {
 	Athletics: { name: "Athletics", ability: "STR" },
 	Acrobatics: { name: "Acrobatics", ability: "AGI" },
 	"Sleight of Hand": { name: "Sleight of Hand", ability: "AGI" },
@@ -48,7 +48,8 @@ export function calculateSkillModifier(
 	return modifier;
 }
 
-export function calculatePassiveSkill(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function calculatePassiveSkill(
 	skillName: string,
 	abilities: Record<AbilityScore, number>,
 	proficiencies: string[],

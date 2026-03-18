@@ -22,7 +22,7 @@ const readLocalJournalEntries = (characterId: string): JournalEntry[] => {
 			buildJournalStorageKey(characterId),
 		);
 		if (!raw) return [];
-		const parsed = JSON.parse(raw) as unknown;
+		const parsed = JSON.parse(raw);
 		return Array.isArray(parsed) ? (parsed as JournalEntry[]) : [];
 	} catch {
 		return [];
@@ -115,7 +115,8 @@ export const useCreateJournalEntry = () => {
 	});
 };
 
-export const useUpdateJournalEntry = () => {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+const useUpdateJournalEntry = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({

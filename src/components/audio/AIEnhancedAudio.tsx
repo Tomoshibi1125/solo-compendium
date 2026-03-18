@@ -209,8 +209,9 @@ export function AIEnhancedAudio({
 							ref={audioRef}
 							onTimeUpdate={handleTimeUpdate}
 							onLoadedMetadata={handleLoadedMetadata}
-							onEnded={() => setIsPlaying(false)}
-						/>
+						>
+							<track kind="captions" />
+						</audio>
 
 						<div className="flex items-center gap-4">
 							<Button variant="outline" size="sm" onClick={togglePlayPause}>
@@ -319,8 +320,8 @@ export function AIEnhancedAudio({
 						<div>
 							<h4 className="font-medium mb-2">Detected Instruments</h4>
 							<div className="flex flex-wrap gap-2">
-								{analysis.instruments.map((instrument, index) => (
-									<Badge key={index} variant="outline">
+								{analysis.instruments.map((instrument, _index) => (
+									<Badge key={instrument} variant="outline">
 										{instrument}
 									</Badge>
 								))}
@@ -346,8 +347,8 @@ export function AIEnhancedAudio({
 							<div>
 								<h4 className="font-medium mb-2">AI-Generated Tags</h4>
 								<div className="flex flex-wrap gap-2">
-									{aiTags.map((tag, index) => (
-										<Badge key={index} variant="outline" className="text-xs">
+									{aiTags.map((tag, _index) => (
+										<Badge key={tag} variant="outline" className="text-xs">
 											<Tag className="w-3 h-3 mr-1" />
 											{tag}
 										</Badge>

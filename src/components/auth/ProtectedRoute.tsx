@@ -53,6 +53,7 @@ const AccessDenied = ({
 			</div>
 			<div className="pt-4 border-t border-border">
 				<button
+					type="button"
 					onClick={() => window.history.back()}
 					className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2"
 				>

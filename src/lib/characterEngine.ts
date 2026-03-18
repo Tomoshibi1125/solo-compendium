@@ -81,18 +81,18 @@ export type EffectTarget =
 
 export interface EffectSource {
 	sourceType:
-	| "equipment"
-	| "feature"
-	| "condition"
-	| "rune"
-	| "level"
-	| "job"
-	| "path"
-	| "awakening"
-	| "trait"
-	| "feat"
-	| "race"
-	| "item";
+		| "equipment"
+		| "feature"
+		| "condition"
+		| "rune"
+		| "level"
+		| "job"
+		| "path"
+		| "awakening"
+		| "trait"
+		| "feat"
+		| "race"
+		| "item";
 	sourceId: string;
 	sourceName?: string;
 }
@@ -120,7 +120,7 @@ import {
 /**
  * Equipment instance with effects
  */
-export interface EquipmentInstance {
+interface EquipmentInstance {
 	id: string;
 	name: string;
 	type: "armor" | "weapon" | "accessory" | "consumable" | "tool" | "other";
@@ -159,7 +159,7 @@ export interface ActiveCondition {
 /**
  * Feature instance with usage tracking
  */
-export interface FeatureInstance {
+interface FeatureInstance {
 	id: string;
 	name: string;
 	sourceType: "job" | "path" | "feat" | "race" | "item" | "awakening" | "trait";
@@ -174,7 +174,7 @@ export interface FeatureInstance {
 /**
  * Active spell effect (concentration, duration-based)
  */
-export interface ActiveSpellEffect {
+interface ActiveSpellEffect {
 	spellId: string;
 	spellName: string;
 	level: number;
@@ -190,11 +190,22 @@ export interface ActiveSpellEffect {
 /**
  * Character job/regent overlay data
  */
-export interface CharacterJob {
+interface CharacterJob {
 	job: string; // System Ascendant job name (Destroyer, Mage, etc.)
 	path?: string; // System Ascendant subclass/path name (level 3, automatic)
 	regent?: string; // Regent path ID (quest-gated, DM unlocks)
-	gemini?: any; // Full GeminiSovereign AI payload
+	gemini?: {
+		id?: string;
+		sovereignId?: string;
+		regent1Id?: string;
+		regent1?: { id: string };
+		regent2Id?: string;
+		regent2?: { id: string };
+		features?: Array<{ name: string; description: string; type?: string }>;
+		traits?: Array<{ name: string; description: string; type?: string }>;
+		statBonuses?: Record<string, number>;
+		[key: string]: unknown;
+	}; // Full GeminiSovereign AI payload
 	level: number;
 	hitDie: number; // d6, d8, d10, d12
 }
@@ -202,7 +213,7 @@ export interface CharacterJob {
 /**
  * Base character data - everything stored in database
  */
-export interface CharacterBaseData {
+interface CharacterBaseData {
 	// Identity
 	id: string;
 	name: string;
@@ -253,7 +264,7 @@ export interface CharacterBaseData {
 /**
  * All computed/derived character stats
  */
-export interface ComputedCharacterStats {
+interface ComputedCharacterStats {
 	// Core derived stats
 	proficiencyBonus: number;
 	abilityModifiers: Record<AbilityScore, number>;
@@ -285,10 +296,10 @@ export interface ComputedCharacterStats {
 	carryingCapacity: number;
 	currentWeight: number;
 	encumbranceTier:
-	| "normal"
-	| "encumbered"
-	| "heavily-encumbered"
-	| "over-capacity";
+		| "normal"
+		| "encumbered"
+		| "heavily-encumbered"
+		| "over-capacity";
 
 	// System Favor (homebrew inspiration mechanic)
 	systemFavorMax: number;
@@ -317,7 +328,7 @@ export interface ComputedCharacterStats {
 /**
  * Computed effect after resolution
  */
-export interface ComputedEffect {
+interface ComputedEffect {
 	source: EffectSource;
 	target: EffectTarget;
 	value: number | string | boolean | Record<string, unknown>;
@@ -328,7 +339,7 @@ export interface ComputedEffect {
 /**
  * Roll modifier summary for a roll type
  */
-export interface RollModifierSummary {
+interface RollModifierSummary {
 	advantage: boolean;
 	disadvantage: boolean;
 	flatModifier: number;
@@ -809,7 +820,7 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
 			// Find regent data for both regents (handles legacy IDs or full objects)
 			const regent1Id = charJob.gemini.regent1Id || charJob.gemini.regent1?.id;
 			const regent2Id = charJob.gemini.regent2Id || charJob.gemini.regent2?.id;
-			const sovereignId = charJob.gemini.sovereignId || charJob.gemini.id;
+			const sovereignId = (charJob.gemini.sovereignId || charJob.gemini.id || "unknown") as string;
 
 			const regent1 = RegentGeminiSystem.REGENT_DATABASE.find(
 				(r: { id: string }) => r.id === regent1Id,
@@ -885,11 +896,11 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
 			// Load AI-generated stat bonuses
 			if (charJob.gemini.statBonuses) {
 				const bonuses = charJob.gemini.statBonuses;
-				const statEffects: any[] = [];
+				const statEffects: Effect[] = [];
 				for (const [stat, bonus] of Object.entries(bonuses)) {
 					statEffects.push({
 						type: "modifier",
-						target: stat,
+						target: stat as EffectTarget,
 						value: bonus,
 						priority: 180,
 					});
@@ -1074,7 +1085,7 @@ function computeAbilityModifiers(
 	baseAbilities: Record<AbilityScore, number>,
 	effects: Effect[],
 ): Record<AbilityScore, number> {
-	const modifiers: Record<AbilityScore, number> = {} as Record<
+	const modifiers = {} as Record<
 		AbilityScore,
 		number
 	>;
@@ -1142,10 +1153,10 @@ function computeSkills(
 	string,
 	{ modifier: number; proficient: boolean; expertise: boolean }
 > {
-	const skills: Record<
+	const skills = {} as Record<
 		string,
 		{ modifier: number; proficient: boolean; expertise: boolean }
-	> = {};
+	>;
 
 	for (const skill of SKILLS) {
 		const abilityMod = abilityModifiers[skill.ability];
@@ -1303,7 +1314,7 @@ function computeSpellSlots(
 	jobs: CharacterJob[],
 	level: number,
 ): Record<number, { current: number; max: number }> {
-	const slots: Record<number, { current: number; max: number }> = {};
+	const slots = {} as Record<number, { current: number; max: number }>;
 	for (let i = 1; i <= 9; i++) {
 		slots[i] = { current: 0, max: 0 };
 	}
@@ -1362,8 +1373,8 @@ function extractEquipmentSenses(items: EquipmentInstance[]): Array<{
 	for (const item of items) {
 		if (!item.isEquipped) continue;
 		for (const prop of item.properties ?? []) {
-			let match: RegExpExecArray | null;
-			while ((match = sensePattern.exec(prop)) !== null) {
+			const matches = Array.from(prop.matchAll(sensePattern));
+			for (const match of matches) {
 				senses.push({
 					type: "equipment",
 					name: item.name,
@@ -1372,10 +1383,9 @@ function extractEquipmentSenses(items: EquipmentInstance[]): Array<{
 						| "blindsight"
 						| "tremorsense"
 						| "truesight",
-					range: parseInt(match[2], 10),
+					range: match[2] ? parseInt(match[2], 10) : 0,
 				});
 			}
-			sensePattern.lastIndex = 0;
 		}
 	}
 	return senses;
@@ -1494,7 +1504,8 @@ function computeEncumbrance(
  * @param base - Base character data from database
  * @returns Fully computed character stats
  */
-export function computeCharacterStats(
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function computeCharacterStats(
 	base: CharacterBaseData,
 ): ComputedCharacterStats {
 	// 1. Calculate proficiency bonus from total level
@@ -1605,8 +1616,8 @@ export function computeCharacterStats(
 
 	// 17. Compute senses (DDB/Foundry parity — darkvision, blindsight, tremorsense, passives)
 	const regentIds = base.jobs
-		.filter((j) => j.regent)
-		.map((j) => j.regent!) as string[];
+		.filter((j) => Boolean(j.regent))
+		.map((j) => j.regent as string);
 	const senses = computeSenses(
 		base.jobs[0]?.job ?? null,
 		base.jobs[0]?.path ?? null,

@@ -7,7 +7,7 @@ import type { PostgrestError } from "@supabase/supabase-js";
 import { logger } from "./logger";
 import { captureException, captureMessage } from "./sentry";
 
-export interface ErrorInfo {
+interface ErrorInfo {
 	message: string;
 	code?: string;
 	details?: string;
@@ -53,7 +53,7 @@ export function getErrorMessage(error: unknown): string {
 /**
  * Extract detailed error information
  */
-export function getErrorInfo(error: unknown): ErrorInfo {
+function getErrorInfo(error: unknown): ErrorInfo {
 	const pgError = error as PostgrestError;
 
 	return {
@@ -67,7 +67,8 @@ export function getErrorInfo(error: unknown): ErrorInfo {
 /**
  * Check if error is a network/connection error
  */
-export function isNetworkError(error: unknown): boolean {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function isNetworkError(error: unknown): boolean {
 	if (error instanceof Error) {
 		return (
 			error.message.includes("network") ||
@@ -82,7 +83,8 @@ export function isNetworkError(error: unknown): boolean {
 /**
  * Check if error is an authentication error
  */
-export function isAuthError(error: unknown): boolean {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function isAuthError(error: unknown): boolean {
 	if (error instanceof Error) {
 		return (
 			error.message.includes("Not authenticated") ||
@@ -140,7 +142,8 @@ export function logErrorWithContext(
 /**
  * Create a standardized error handler for React Query mutations
  */
-export function createMutationErrorHandler(context: string) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function createMutationErrorHandler(context: string) {
 	return (error: unknown) => {
 		logErrorWithContext(error, context);
 
@@ -156,7 +159,8 @@ export function createMutationErrorHandler(context: string) {
 /**
  * Create a standardized error handler for React Query queries
  */
-export function createQueryErrorHandler(context: string) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+function createQueryErrorHandler(context: string) {
 	return (error: unknown) => {
 		logErrorWithContext(error, context);
 

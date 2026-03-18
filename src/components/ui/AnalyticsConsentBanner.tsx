@@ -16,12 +16,6 @@ export function AnalyticsConsentBanner() {
 	const { showBanner, acceptConsent, rejectConsent, dismissBanner } =
 		useAnalyticsConsent();
 
-	// Don't show analytics banner during E2E tests
-	const isE2E = import.meta.env.VITE_E2E === "true";
-	if (isE2E) {
-		return null;
-	}
-
 	// Initialize analytics if consent is accepted
 	useEffect(() => {
 		const consent = localStorage.getItem("solo-compendium-analytics-consent");
@@ -32,6 +26,12 @@ export function AnalyticsConsentBanner() {
 			}
 		}
 	}, []);
+
+	// Don't show analytics banner during E2E tests
+	const isE2E = import.meta.env.VITE_E2E === "true";
+	if (isE2E) {
+		return null;
+	}
 
 	if (!showBanner) {
 		return null;

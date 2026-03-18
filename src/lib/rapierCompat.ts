@@ -1,9 +1,11 @@
 import * as RAPIER from "@dimforge/rapier3d";
 
 export * from "@dimforge/rapier3d";
-export default RAPIER;
+
+RAPIER;
 
 // Compatibility shim for libraries expecting the compat init() export.
-export async function init(..._args: unknown[]) {
+// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
+async function init(..._args: unknown[]) {
 	return undefined;
 }

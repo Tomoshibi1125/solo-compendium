@@ -267,9 +267,9 @@ export const GlobalEffects = () => {
 			</div>
 
 			{/* System Scan Line */}
-			{fx.enableScanline && <div className="system-scan-line" />}
+			export {fx.enableScanline && <div className="system-scan-line" />}
 		</>
 	);
 };
 
-export default GlobalEffects;
+GlobalEffects;

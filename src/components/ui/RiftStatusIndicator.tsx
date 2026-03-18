@@ -231,7 +231,7 @@ export const RiftStatusIndicator = ({
 			)}
 
 			{/* Stability Warning */}
-			{stability < 50 && (
+			export {stability < 50 && (
 				<div className="mt-3 p-2 bg-red-900/20 border border-red-500/30 rounded">
 					<div className="flex items-center space-x-2">
 						<div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
@@ -245,4 +245,4 @@ export const RiftStatusIndicator = ({
 	);
 };
 
-export default RiftStatusIndicator;
+

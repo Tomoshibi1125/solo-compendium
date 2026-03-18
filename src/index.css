@@ -153,7 +153,9 @@
    Forces ALL inputs, selects, textareas to use SA glassmorphism
    ============================================================ */
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+		[type="color"]
+	):not([type="file"]),
 select,
 textarea {
 	background: rgba(0, 0, 0, 0.4);
@@ -165,12 +167,16 @@ textarea {
 	transition: all 0.2s ease;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"])::placeholder,
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+		[type="color"]
+	):not([type="file"])::placeholder,
 textarea::placeholder {
 	color: hsl(var(--muted-foreground));
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+		[type="color"]
+	):not([type="file"]):focus,
 select:focus,
 textarea:focus {
 	border-color: hsl(var(--primary) / 0.6);
@@ -234,10 +240,10 @@ h3 {
 }
 
 .hero-bg-image {
-	background-image: -webkit-image-set(url("/ui/landing-page-hero.avif") type("image/avif"),
-			url("/ui/landing-page-hero.webp") type("image/webp"));
-	background-image: image-set(url("/ui/landing-page-hero.avif") type("image/avif"),
-			url("/ui/landing-page-hero.webp") type("image/webp"));
+	background-image: image-set(
+		url("/ui/landing-page-hero.avif") type("image/avif"),
+		url("/ui/landing-page-hero.webp") type("image/webp")
+	);
 	filter: brightness(0.3) saturate(1.2) contrast(1.1);
 }
 
@@ -442,7 +448,7 @@ h3 {
 
 	/* Ensure proper spacing */
 
-	.space-y-6>*+* {
+	.space-y-6 > * + * {
 		margin-top: 1rem;
 	}
 }

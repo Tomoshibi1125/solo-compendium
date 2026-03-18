@@ -182,9 +182,9 @@ function Recommendations({ recommendations }: { recommendations: string[] }) {
 	return (
 		<SystemWindow title="RECOMMENDATIONS">
 			<div className="space-y-2">
-				{recommendations.map((rec, index) => (
+				{recommendations.map((rec, _index) => (
 					<div
-						key={index}
+						key={rec}
 						className="flex items-start gap-2 p-2 rounded bg-muted/30"
 					>
 						<AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
@@ -472,8 +472,11 @@ function LinkIntegritySection() {
 							Broken Links Details:
 						</div>
 						<div className="max-h-64 overflow-y-auto space-y-2">
-							{integrityReport.brokenLinks.slice(0, 20).map((link, index) => (
-								<div key={index} className="p-2 bg-muted rounded text-xs">
+							{integrityReport.brokenLinks.slice(0, 20).map((link, _index) => (
+								<div
+									key={JSON.stringify(link)}
+									className="p-2 bg-muted rounded text-xs"
+								>
 									<div className="font-medium">{link.characterName}</div>
 									<div className="text-muted-foreground">
 										{link.location}: {link.message}
@@ -492,5 +495,7 @@ function LinkIntegritySection() {
 		</SystemWindow>
 	);
 }
+
+
 
 export default ContentAudit;

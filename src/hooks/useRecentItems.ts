@@ -1,6 +1,6 @@
 import { useUserLocalState } from "@/hooks/useToolState";
 
-export interface RecentItem {
+interface RecentItem {
 	id: string;
 	type: string;
 	name: string;

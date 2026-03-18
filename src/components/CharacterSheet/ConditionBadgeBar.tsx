@@ -74,6 +74,7 @@ export function ConditionBadgeBar({
 										<AlertTriangle className="h-3 w-3" />
 										{info?.name ?? condition}
 										<button
+											type="button"
 											onClick={() => onRemoveCondition(condition)}
 											className="ml-0.5 hover:opacity-70"
 											aria-label={`Remove ${condition}`}
@@ -91,8 +92,8 @@ export function ConditionBadgeBar({
 									</p>
 									{info?.mechanicalEffects.length ? (
 										<ul className="mt-1 text-xs list-disc pl-3">
-											{info.mechanicalEffects.map((e, i) => (
-												<li key={i}>
+											{info.mechanicalEffects.map((e, _i) => (
+												<li key={JSON.stringify(e)}>
 													{e.type === "disadvantage" &&
 														`Disadvantage on ${e.target.replace(/_/g, " ")}`}
 													{e.type === "advantage" &&
@@ -118,6 +119,7 @@ export function ConditionBadgeBar({
 									Exhaustion {exhaustionLevel}
 									{onClearExhaustion && (
 										<button
+											type="button"
 											onClick={onClearExhaustion}
 											className="ml-0.5 hover:opacity-70"
 											aria-label="Clear Exhaustion"

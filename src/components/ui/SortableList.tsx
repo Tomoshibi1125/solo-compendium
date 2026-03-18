@@ -42,8 +42,8 @@ function SortableItem({
 	} = useSortable({ id, disabled });
 
 	const style = {
-		transform: CSS.Transform.toString(transform),
-		transition,
+		transform: CSS.Transform.toString(transform as never),
+		transition: transition as never,
 		opacity: isDragging ? 0.5 : 1,
 	};
 
@@ -55,8 +55,9 @@ function SortableItem({
 		>
 			{!disabled && (
 				<button
-					{...attributes}
-					{...listeners}
+					type="button"
+					{...(attributes as Record<string, unknown>)}
+					{...(listeners as Record<string, unknown>)}
 					className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing p-1"
 					aria-label="Drag to reorder"
 				>
@@ -99,9 +100,11 @@ export function SortableList<T extends { id: string }>({
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
 
-		if (over && active.id !== over.id) {
-			const oldIndex = items.findIndex((item) => item.id === active.id);
-			const newIndex = items.findIndex((item) => item.id === over.id);
+		if (over && String((active as { id: string }).id) !== String((over as { id: string }).id)) {
+			const oldIndex = items.findIndex(
+				(item) => item.id === String((active as { id: string }).id),
+			);
+			const newIndex = items.findIndex((item) => item.id === String((over as { id: string }).id));
 			const newOrder = arrayMove(items, oldIndex, newIndex);
 			onReorder(newOrder);
 		}
@@ -125,7 +128,7 @@ export function SortableList<T extends { id: string }>({
 							disabled={disabled}
 							className={itemClassName}
 						>
-							{renderItem(item, index)}
+							export {renderItem(item, index)}
 						</SortableItem>
 					))}
 				</div>

@@ -303,7 +303,7 @@ export function VttPixiStage({
 			particleGraphic.fill(0xffffff);
 			const texture = app.renderer.generateTexture(particleGraphic);
 
-			let config: any = null;
+			let config: unknown = null;
 
 			if (weather === "rain") {
 				config = {
@@ -483,7 +483,7 @@ export function VttPixiStage({
 			if (config) {
 				weatherEmitterRef.current = new Emitter(
 					weatherLayer as never,
-					upgradeConfig(config, [texture]),
+					upgradeConfig(config as never, [texture]),
 				);
 				weatherEmitterRef.current.emit = true;
 			}
@@ -512,7 +512,7 @@ export function VttPixiStage({
 					originY: 0,
 				});
 
-				hexGridObj.forEach((hex: any) => {
+				hexGridObj.forEach((hex: { corners: Array<{ x: number; y: number }> }) => {
 					const corners = hex.corners;
 					if (corners && corners.length >= 6) {
 						g.moveTo(corners[0].x, corners[0].y);

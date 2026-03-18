@@ -20,7 +20,7 @@ type CampaignRuleSettings = {
 	failure_injection_note?: string | null;
 };
 
-const DEFAULT_RULES: CampaignRuleSettings = {
+export const DEFAULT_RULES: CampaignRuleSettings = {
 	economy_enabled: true,
 	economy_max_loot_value: null,
 	economy_max_relic_value: null,
@@ -36,7 +36,7 @@ const toNumberOrNull = (value: unknown) => {
 	return Number.isFinite(parsed) ? parsed : null;
 };
 
-const normalizeRules = (
+export const normalizeRules = (
 	rules: Json | null | undefined,
 ): CampaignRuleSettings => {
 	if (!rules || typeof rules !== "object" || Array.isArray(rules)) {
@@ -58,8 +58,6 @@ const normalizeRules = (
 	};
 };
 
-export type { CampaignRuleSettings, CampaignRuleEvent };
-export { DEFAULT_RULES, normalizeRules };
 
 export const useCampaignRules = (campaignId: string) => {
 	return useQuery({

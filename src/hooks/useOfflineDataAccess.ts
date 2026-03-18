@@ -1,17 +1,18 @@
 import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 
-interface OfflineDataCache {
-	compendium: Record<string, any>;
-	characters: Record<string, any>;
-	campaigns: Record<string, any>;
-	diceRolls: any[];
+interface _OfflineDataCache {
+	compendium: Record<string, unknown>;
+	characters: Record<string, unknown>;
+	campaigns: Record<string, unknown>;
+	diceRolls: unknown[];
 }
 
 export function useOfflineDataAccess() {
 	const { toast } = useToast();
 
-	const cacheCompendiumItem = useCallback(async (item: any) => {
+
+	const cacheCompendiumItem = useCallback(async (item: { id: string } & Record<string, unknown>) => {
 		try {
 			if (typeof window === "undefined") return;
 
@@ -52,7 +53,7 @@ export function useOfflineDataAccess() {
 		}
 	}, []);
 
-	const cacheCharacter = useCallback(async (character: any) => {
+	const cacheCharacter = useCallback(async (character: { id: string } & Record<string, unknown>) => {
 		try {
 			if (typeof window === "undefined") return;
 
@@ -93,7 +94,7 @@ export function useOfflineDataAccess() {
 		}
 	}, []);
 
-	const cacheCampaign = useCallback(async (campaign: any) => {
+	const cacheCampaign = useCallback(async (campaign: { id: string } & Record<string, unknown>) => {
 		try {
 			if (typeof window === "undefined") return;
 
@@ -146,7 +147,7 @@ export function useOfflineDataAccess() {
 					key.startsWith("campaign_"),
 			);
 
-			cacheKeys.forEach((key) => localStorage.removeItem(key));
+			cacheKeys.forEach((key) => { localStorage.removeItem(key); });
 
 			toast({
 				title: "Cache Cleared",
@@ -189,7 +190,7 @@ export function useOfflineDataAccess() {
 
 	// Enhanced caching for D&D Beyond parity
 	const cacheWithExpiration = useCallback(
-		(key: string, data: any, ttlMs: number) => {
+		(key: string, data: unknown, ttlMs: number) => {
 			try {
 				if (typeof window === "undefined") return;
 

@@ -146,7 +146,7 @@ const GATE_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
 
 const CELL_TYPES: {
 	type: CellType;
-	icon: any;
+	icon: unknown;
 	color: string;
 	label: string;
 }[] = [
@@ -792,9 +792,10 @@ READ-ALOUD ENTRANCE:
 							<div className="space-y-2">
 								{CELL_TYPES.filter((ct) => ct.type !== "empty").map(
 									(cellType) => {
-										const Icon = cellType.icon;
+										const Icon = cellType.icon as React.ComponentType<{ className?: string }>;
 										return (
 											<button
+												type="button"
 												key={cellType.type}
 												onClick={() => setSelectedCellType(cellType.type)}
 												className={cn(
@@ -960,7 +961,7 @@ READ-ALOUD ENTRANCE:
 									<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 										{CELL_TYPES.filter((ct) => ct.type !== "empty").map(
 											(cellType) => {
-												const Icon = cellType.icon;
+												const Icon = cellType.icon as React.ComponentType<{ className?: string }>;
 												return (
 													<div
 														key={cellType.type}

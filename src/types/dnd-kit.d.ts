@@ -1,111 +1,110 @@
 // Type declarations for @dnd-kit modules
 declare module "@dnd-kit/core" {
 	export interface DragEndEvent {
-		active: any;
-		collisions: any;
+		active: unknown;
+		collisions: unknown;
 		delta: {
 			x: number;
 			y: number;
 		};
-		over: any;
+		over: unknown;
 	}
 
 	export interface DragStartEvent {
-		active: any;
+		active: unknown;
 	}
 
 	export interface DragOverlayEvent {
-		active: any;
-		droppableContainers: any[];
-		droppableRects: any[];
+		active: unknown;
+		droppableContainers: unknown[];
+		droppableRects: unknown[];
 	}
 
 	export interface DndContextType {
-		active: any;
-		activator: any;
-		activatorNode: any;
-		activators: any[];
-		over: any;
-		rect: any;
-		sensors: any[];
-		sensorContext: any;
+		active: unknown;
+		activator: unknown;
+		activatorNode: unknown;
+		activators: unknown[];
+		over: unknown;
+		rect: unknown;
+		sensors: unknown[];
+		sensorContext: unknown;
 		willEnd: boolean;
 	}
 
 	export interface UseDndContextReturnValue {
-		active: any;
-		activator: any;
-		activatorNode: any;
-		activators: any[];
-		over: any;
-		rect: any;
-		sensors: any[];
-		sensorContext: any;
+		activator: unknown;
+		activatorNode: unknown;
+		activators: unknown[];
+		over: unknown;
+		rect: unknown;
+		sensors: unknown[];
+		sensorContext: unknown;
 		willEnd: boolean;
-		dragNode: any;
-		dragOperation: any;
-		draggableNodes: any[];
-		droppableRects: any[];
-		droppableContainers: any[];
+		dragNode: unknown;
+		dragOperation: unknown;
+		draggableNodes: unknown[];
+		droppableRects: unknown[];
+		droppableContainers: unknown[];
 		overId: string;
 	}
 
 	export function useDndContext(): UseDndContextReturnValue;
 	export function DndContext(props: {
 		children: React.ReactNode;
-		sensors?: any[];
-		collisionDetection?: any;
+		sensors?: unknown[];
+		collisionDetection?: unknown;
 		onDragEnd?: (event: DragEndEvent) => void;
 	}): JSX.Element;
 
-	export function closestCenter(): any;
-	export function KeyboardSensor(props: any): any;
-	export function PointerSensor(props: any): any;
-	export function useSensor(sensor: any, options?: any): any;
-	export function useSensors(...sensors: any[]): any[];
+	export function closestCenter(): unknown;
+	export function KeyboardSensor(props: unknown): unknown;
+	export function PointerSensor(props: unknown): unknown;
+	export function useSensor(sensor: unknown, options?: unknown): unknown;
+	export function useSensors(...sensors: unknown[]): unknown[];
 }
 
 declare module "@dnd-kit/sortable" {
 	export interface SortableContextType {
-		active: any;
-		container: any;
+		active: unknown;
+		container: unknown;
 		containerId: string;
-		items: any[];
-		over: any;
-		rect: any;
+		items: unknown[];
+		over: unknown;
+		rect: unknown;
 		index: number;
 		oldIndex: number;
 		offset: number;
-		pressNode: any;
-		pressRect: any;
-		transform: any;
+		pressNode: unknown;
+		pressRect: unknown;
+		transform: unknown;
 	}
 
 	export interface UseSortableReturnValue {
-		active: any;
-		attributes: any;
-		listeners: any;
+		active: unknown;
+		attributes: unknown;
+		listeners: unknown;
 		isDragging: boolean;
 		index: number;
-		items: any[];
-		over: any;
+		items: unknown[];
+		over: unknown;
 		overIndex: number;
-		transform: any;
+		transform: unknown;
 		setNodeRef: (node: HTMLElement | null) => void;
 		setDroppableNodeRef: (node: HTMLElement | null) => void;
-		transition?: any;
+		transition?: unknown;
 	}
 
-	export function useSortable(args: any): UseSortableReturnValue;
+	export function useSortable(args: unknown): UseSortableReturnValue;
 	export function SortableContext(props: {
 		children: React.ReactNode;
 		value?: SortableContextType;
-		items?: any[];
-		strategy?: any;
+		items?: unknown[];
+		strategy?: unknown;
 	}): JSX.Element;
 	export function arrayMove<T>(array: T[], from: number, to: number): T[];
-	export function sortableKeyboardCoordinates(): any;
-	export function verticalListSortingStrategy(): any;
+	export function sortableKeyboardCoordinates(): unknown;
+	export function verticalListSortingStrategy(): unknown;
 }
 
 declare module "@dnd-kit/utilities" {
@@ -125,6 +124,6 @@ declare module "@dnd-kit/utilities" {
 		};
 	};
 
-	export function useDraggable(options: any): any;
-	export function useDroppable(options: any): any;
+	export function useDraggable(options: unknown): unknown;
+	export function useDroppable(options: unknown): unknown;
 }

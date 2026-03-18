@@ -185,8 +185,12 @@ export function HomebrewFeatureApplicator({
 									)}
 									{feature.modifiers && feature.modifiers.length > 0 && (
 										<div className="flex flex-wrap gap-1 mt-2">
-											{feature.modifiers.map((mod, i) => (
-												<Badge key={i} variant="secondary" className="text-xs">
+											{feature.modifiers.map((mod, _i) => (
+												<Badge
+													key={JSON.stringify(mod)}
+													variant="secondary"
+													className="text-xs"
+												>
 													{formatModifier(mod)}
 												</Badge>
 											))}
@@ -271,9 +275,9 @@ export function HomebrewFeatureApplicator({
 														)}
 														{modifiers.length > 0 && (
 															<div className="flex flex-wrap gap-1 mt-2">
-																{modifiers.map((mod, i) => (
+																{modifiers.map((mod, _i) => (
 																	<Badge
-																		key={i}
+																		key={JSON.stringify(mod)}
 																		variant="secondary"
 																		className="text-xs"
 																	>

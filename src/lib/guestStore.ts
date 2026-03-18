@@ -41,7 +41,7 @@ type RuneKnowledgeRow =
 	Database["public"]["Tables"]["character_rune_knowledge"]["Row"];
 type RollHistoryRow = Database["public"]["Tables"]["roll_history"]["Row"];
 
-export interface GuestCharacterState {
+interface GuestCharacterState {
 	character: CharacterRow;
 	abilities: Record<AbilityScore, number>;
 	equipment: EquipmentRow[];
@@ -65,7 +65,7 @@ const STORAGE_KEY = "solo-compendium.guest.v1";
 const USER_KEY = "solo-compendium.guest.user";
 const ROLE_KEY = "solo-compendium.guest.role";
 
-export type GuestRole = "dm" | "player";
+type GuestRole = "dm" | "player";
 
 function hasLocalStorage(): boolean {
 	try {
@@ -97,7 +97,7 @@ export function isLocalCharacterId(id: string): boolean {
 	return id.startsWith("local_");
 }
 
-export function createLocalId(prefix: string): string {
+function createLocalId(prefix: string): string {
 	const uuid =
 		typeof crypto !== "undefined" && "randomUUID" in crypto
 			? (crypto.randomUUID as () => string)()
@@ -196,7 +196,7 @@ export function getLocalCharacterWithAbilities(
 	};
 }
 
-export function upsertLocalCharacter(
+function upsertLocalCharacter(
 	character: CharacterRow,
 	abilities?: Record<AbilityScore, number>,
 ): void {
@@ -276,9 +276,9 @@ export function createLocalCharacter(
 		exhaustion_level: data.exhaustion_level ?? 0,
 		monarch_overlays: data.monarch_overlays ?? null,
 		active_sovereign_id:
-			(data as Record<string, any>).active_sovereign_id ?? null,
-		gemini_state: (data as Record<string, any>).gemini_state ?? null,
-		regent_overlays: (data as Record<string, any>).regent_overlays ?? null,
+			((data as Record<string, unknown>).active_sovereign_id as string) ?? null,
+		gemini_state: ((data as Record<string, unknown>).gemini_state as CharacterRow["gemini_state"]) ?? null,
+		regent_overlays: ((data as Record<string, unknown>).regent_overlays as string[]) ?? null,
 	};
 
 	upsertLocalCharacter(character);
@@ -583,8 +583,8 @@ export function addLocalFeature(
 		uses_current: feature.uses_current ?? null,
 		uses_max: feature.uses_max ?? null,
 		is_active: feature.is_active ?? true,
-		homebrew_id: (feature as Record<string, any>).homebrew_id ?? null,
-		modifiers: (feature as Record<string, any>).modifiers ?? null,
+		homebrew_id: ((feature as Record<string, unknown>).homebrew_id as string) ?? null,
+		modifiers: ((feature as Record<string, unknown>).modifiers as FeatureRow["modifiers"]) ?? null,
 	};
 
 	const state = loadGuestState();

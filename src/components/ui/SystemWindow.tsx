@@ -9,20 +9,20 @@ interface SystemWindowProps {
 	className?: string;
 	contentClassName?: string;
 	variant?:
-	| "default"
-	| "alert"
-	| "quest"
-	| "monarch"
-	| "regent"
-	| "arise"
-	| "gate-e"
-	| "gate-d"
-	| "gate-c"
-	| "gate-b"
-	| "gate-a"
-	| "gate-s"
-	| "gate-ss"
-	| "gate-national";
+		| "default"
+		| "alert"
+		| "quest"
+		| "monarch"
+		| "regent"
+		| "arise"
+		| "gate-e"
+		| "gate-d"
+		| "gate-c"
+		| "gate-b"
+		| "gate-a"
+		| "gate-s"
+		| "gate-ss"
+		| "gate-national";
 	compact?: boolean;
 	animated?: boolean;
 	id?: string;
@@ -40,9 +40,12 @@ export function SystemWindow({
 	id,
 }: SystemWindowProps) {
 	const variantStyles = {
-		default: "border-primary/40 from-primary/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		alert: "border-destructive/40 from-destructive/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		quest: "border-accent/40 from-accent/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		default:
+			"border-primary/40 from-primary/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		alert:
+			"border-destructive/40 from-destructive/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		quest:
+			"border-accent/40 from-accent/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		monarch:
 			"border-shadow-purple/50 from-shadow-purple/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		arise:
@@ -50,10 +53,14 @@ export function SystemWindow({
 		"gate-e": "border-gate-e/40 from-gate-e/10 via-card/80 to-void-black/90",
 		"gate-d": "border-gate-d/40 from-gate-d/10 via-card/80 to-void-black/90",
 		"gate-c": "border-gate-c/40 from-gate-c/10 via-card/80 to-void-black/90",
-		"gate-b": "border-gate-b/40 from-gate-b/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		"gate-a": "border-gate-a/50 from-gate-a/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		"gate-s": "border-gate-s/50 from-gate-s/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		"gate-ss": "border-gate-ss/50 from-gate-ss/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-b":
+			"border-gate-b/40 from-gate-b/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-a":
+			"border-gate-a/50 from-gate-a/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-s":
+			"border-gate-s/50 from-gate-s/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		"gate-ss":
+			"border-gate-ss/50 from-gate-ss/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		"gate-national":
 			"border-gate-national/50 from-gate-national/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		regent:
@@ -104,7 +111,7 @@ export function SystemWindow({
 			id={id}
 			className={cn(
 				"relative bg-gradient-to-br border rounded-lg backdrop-blur-2xl overflow-hidden transition-all duration-300 w-full max-w-full",
-				"system-panel hologram-flicker sw-root hover:border-open/50",
+				"sa-panel system-panel hologram-flicker sw-root hover:border-open/50",
 				variantStyles[variant],
 				animated && "animate-shadow-pulse",
 				id && "scroll-mt-4",
@@ -114,11 +121,11 @@ export function SystemWindow({
 			{...{ style: { "--sw-glow": `var(${glowVar})` } as React.CSSProperties }}
 			{...(animated
 				? {
-					initial: { opacity: 0, scale: 0.95, y: -20 },
-					animate: { opacity: 1, scale: 1, y: 0 },
-					exit: { opacity: 0, scale: 0.95, y: -20 },
-					transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
-				}
+						initial: { opacity: 0, scale: 0.95, y: -20 },
+						animate: { opacity: 1, scale: 1, y: 0 },
+						exit: { opacity: 0, scale: 0.95, y: -20 },
+						transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+					}
 				: {})}
 		>
 			{/* Hex grid texture overlay */}
@@ -171,20 +178,20 @@ export function SystemWindow({
 interface CornerDecorationProps {
 	position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 	variant:
-	| "default"
-	| "alert"
-	| "quest"
-	| "monarch"
-	| "regent"
-	| "arise"
-	| "gate-e"
-	| "gate-d"
-	| "gate-c"
-	| "gate-b"
-	| "gate-a"
-	| "gate-s"
-	| "gate-ss"
-	| "gate-national";
+		| "default"
+		| "alert"
+		| "quest"
+		| "monarch"
+		| "regent"
+		| "arise"
+		| "gate-e"
+		| "gate-d"
+		| "gate-c"
+		| "gate-b"
+		| "gate-a"
+		| "gate-s"
+		| "gate-ss"
+		| "gate-national";
 }
 
 function CornerDecoration({ position, variant }: CornerDecorationProps) {

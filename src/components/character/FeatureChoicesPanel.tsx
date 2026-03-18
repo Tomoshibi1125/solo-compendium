@@ -377,9 +377,10 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 				if (!option) continue;
 
 				if (
-					(choiceData as Record<string, any>)?.eligiblePowerNames instanceof Set
+					(choiceData as Record<string, unknown>)?.eligiblePowerNames instanceof
+					Set
 				) {
-					const eligiblePowerNames = (choiceData as Record<string, any>)
+					const eligiblePowerNames = (choiceData as Record<string, unknown>)
 						.eligiblePowerNames as Set<string>;
 					const grantedPowers = extractGrantedPowerNames(option.grants);
 					const invalidPower = grantedPowers.find(

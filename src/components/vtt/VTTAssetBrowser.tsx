@@ -161,7 +161,7 @@ export function VTTAssetBrowser({
 		setPreviewAsset((prev) => (prev?.id === asset.id ? null : asset));
 	}, []);
 
-	const useAsset = useCallback(
+	const handleUseAsset = useCallback(
 		(asset: VTTAsset, action: "map" | "token" | "effect" | "handout") => {
 			addRecentAssetId(asset.id);
 			setShowRecent(false);
@@ -271,6 +271,7 @@ export function VTTAssetBrowser({
 				/>
 				{search && (
 					<button
+						type="button"
 						onClick={() => setSearch("")}
 						className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 						aria-label="Clear search"
@@ -283,6 +284,7 @@ export function VTTAssetBrowser({
 			{/* Category pills */}
 			<div className="flex flex-wrap gap-1">
 				<button
+					type="button"
 					onClick={() => setActiveCategory(null)}
 					className={cn(
 						"px-2 py-0.5 rounded-full text-[10px] border transition-all",
@@ -295,6 +297,7 @@ export function VTTAssetBrowser({
 				</button>
 				{VTT_ASSET_CATEGORIES.map((cat) => (
 					<button
+						type="button"
 						key={cat.id}
 						onClick={() =>
 							setActiveCategory(activeCategory === cat.id ? null : cat.id)
@@ -316,6 +319,7 @@ export function VTTAssetBrowser({
 			{recentAssets.length > 0 && (
 				<div>
 					<button
+						type="button"
 						onClick={() => setShowRecent(!showRecent)}
 						className="flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors w-full"
 					>
@@ -332,6 +336,7 @@ export function VTTAssetBrowser({
 						<div className="grid grid-cols-6 gap-1 mt-1">
 							{recentAssets.map((asset) => (
 								<button
+									type="button"
 									key={asset.id}
 									onClick={() => trackAndPreview(asset)}
 									className="rounded border border-border/40 overflow-hidden hover:border-amber-500/50 transition-all"
@@ -420,6 +425,7 @@ export function VTTAssetBrowser({
 			>
 				{results.map((asset) => (
 					<button
+						type="button"
 						key={asset.id}
 						onClick={() => trackAndPreview(asset)}
 						draggable
@@ -515,7 +521,7 @@ export function VTTAssetBrowser({
 										variant="default"
 										size="sm"
 										className="flex-1 text-[10px] h-7"
-										onClick={() => useAsset(previewAsset, "map")}
+										onClick={() => handleUseAsset(previewAsset, "map")}
 									>
 										<MapPin className="w-3 h-3 mr-1" /> Use as Map
 									</Button>
@@ -528,7 +534,7 @@ export function VTTAssetBrowser({
 										variant="default"
 										size="sm"
 										className="flex-1 text-[10px] h-7"
-										onClick={() => useAsset(previewAsset, "token")}
+										onClick={() => handleUseAsset(previewAsset, "token")}
 									>
 										<Image className="w-3 h-3 mr-1" /> Place Token
 									</Button>
@@ -541,7 +547,7 @@ export function VTTAssetBrowser({
 										variant="default"
 										size="sm"
 										className="flex-1 text-[10px] h-7"
-										onClick={() => useAsset(previewAsset, "effect")}
+										onClick={() => handleUseAsset(previewAsset, "effect")}
 									>
 										<Sparkles className="w-3 h-3 mr-1" /> Place Effect
 									</Button>
@@ -551,7 +557,7 @@ export function VTTAssetBrowser({
 									variant="default"
 									size="sm"
 									className="flex-1 text-[10px] h-7"
-									onClick={() => useAsset(previewAsset, "effect")}
+									onClick={() => handleUseAsset(previewAsset, "effect")}
 								>
 									<Box className="w-3 h-3 mr-1" /> Place Prop
 								</Button>
@@ -561,7 +567,7 @@ export function VTTAssetBrowser({
 									variant="default"
 									size="sm"
 									className="flex-1 text-[10px] h-7"
-									onClick={() => useAsset(previewAsset, "effect")}
+									onClick={() => handleUseAsset(previewAsset, "effect")}
 								>
 									<Wand2 className="w-3 h-3 mr-1" /> Place Spell
 								</Button>
@@ -571,7 +577,7 @@ export function VTTAssetBrowser({
 									variant="default"
 									size="sm"
 									className="flex-1 text-[10px] h-7"
-									onClick={() => useAsset(previewAsset, "token")}
+									onClick={() => handleUseAsset(previewAsset, "token")}
 								>
 									<Swords className="w-3 h-3 mr-1" /> Place Item
 								</Button>
@@ -581,7 +587,7 @@ export function VTTAssetBrowser({
 									variant="default"
 									size="sm"
 									className="flex-1 text-[10px] h-7"
-									onClick={() => useAsset(previewAsset, "handout")}
+									onClick={() => handleUseAsset(previewAsset, "handout")}
 								>
 									<BookOpen className="w-3 h-3 mr-1" /> Share Handout
 								</Button>
@@ -595,7 +601,7 @@ export function VTTAssetBrowser({
 										variant="outline"
 										size="sm"
 										className="text-[10px] h-7 px-2"
-										onClick={() => useAsset(previewAsset, "map")}
+										onClick={() => handleUseAsset(previewAsset, "map")}
 										title="Use as map background"
 									>
 										<MapPin className="w-3 h-3" />
@@ -609,7 +615,7 @@ export function VTTAssetBrowser({
 										variant="outline"
 										size="sm"
 										className="text-[10px] h-7 px-2"
-										onClick={() => useAsset(previewAsset, "token")}
+										onClick={() => handleUseAsset(previewAsset, "token")}
 										title="Place as token"
 									>
 										<Image className="w-3 h-3" />
@@ -625,7 +631,7 @@ export function VTTAssetBrowser({
 										variant="outline"
 										size="sm"
 										className="text-[10px] h-7 px-2"
-										onClick={() => useAsset(previewAsset, "effect")}
+										onClick={() => handleUseAsset(previewAsset, "effect")}
 										title="Place as effect overlay"
 									>
 										<Sparkles className="w-3 h-3" />
@@ -636,7 +642,7 @@ export function VTTAssetBrowser({
 									variant="outline"
 									size="sm"
 									className="text-[10px] h-7 px-2"
-									onClick={() => useAsset(previewAsset, "handout")}
+									onClick={() => handleUseAsset(previewAsset, "handout")}
 									title="Share as handout"
 								>
 									<BookOpen className="w-3 h-3" />

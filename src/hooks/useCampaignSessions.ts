@@ -1,5 +1,4 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { enqueueOfflineSync } from "@/lib/offlineSync";
@@ -17,7 +16,7 @@ export type CampaignSessionLogType =
 	| "event"
 	| "note";
 
-export interface CampaignSessionRecord {
+interface CampaignSessionRecord {
 	id: string;
 	campaign_id: string;
 	title: string;
@@ -30,7 +29,7 @@ export interface CampaignSessionRecord {
 	updated_at: string;
 }
 
-export interface CampaignSessionLogRecord {
+interface CampaignSessionLogRecord {
 	id: string;
 	campaign_id: string;
 	session_id: string | null;
@@ -142,7 +141,7 @@ export const useCampaignSessionLogs = (
 
 			const { data: rows, error } = await query;
 			if (error) throw error;
-			return (rows || []) as any as CampaignSessionLogRecord[];
+			return (rows || []) as unknown as CampaignSessionLogRecord[];
 		},
 		enabled: !!campaignId,
 	});
@@ -150,12 +149,10 @@ export const useCampaignSessionLogs = (
 
 export const useUpsertCampaignSession = () => {
 	const _queryClient = useQueryClient();
-	const { toast } = useToast();
-
 	return useOptimisticMutation<
 		{ queued: boolean; sessionId: string | null },
 		UpsertSessionInput,
-		{ previousData: CampaignSessionRecord[] | undefined; mutationKey: any }
+		{ previousData: CampaignSessionRecord[] | undefined; mutationKey: unknown }
 	>(
 		(variables) => [...KEY, variables.campaignId],
 		async (input: UpsertSessionInput) => {
@@ -172,7 +169,7 @@ export const useUpsertCampaignSession = () => {
 				p_scheduled_for: input.scheduledFor ?? undefined,
 				p_status: input.status ?? undefined,
 				p_location: input.location ?? undefined,
-			} as any);
+			});
 
 			if (error) throw error;
 			return {
@@ -181,7 +178,8 @@ export const useUpsertCampaignSession = () => {
 			};
 		},
 		// Optimistic calculation
-		(oldData: CampaignSessionRecord[] | undefined, input) => {
+		(raw: unknown, input: UpsertSessionInput) => {
+			const oldData = raw as CampaignSessionRecord[] | undefined;
 			if (!oldData) return oldData;
 
 			const sessionIndex = oldData.findIndex((s) => s.id === input.sessionId);
@@ -232,21 +230,13 @@ export const useUpsertCampaignSession = () => {
 
 export const useDeleteCampaignSession = () => {
 	const _queryClient = useQueryClient();
-	const { toast } = useToast();
-
 	return useOptimisticMutation<
 		{ queued: boolean },
 		{ campaignId: string; sessionId: string },
-		{ previousData: CampaignSessionRecord[] | undefined; mutationKey: any }
+		{ previousData: CampaignSessionRecord[] | undefined; mutationKey: unknown }
 	>(
 		(variables) => [...KEY, variables.campaignId],
-		async ({
-			campaignId,
-			sessionId,
-		}: {
-			campaignId: string;
-			sessionId: string;
-		}) => {
+		async ({ sessionId }: { campaignId: string; sessionId: string }) => {
 			if (!isSupabaseConfigured) {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
@@ -259,7 +249,8 @@ export const useDeleteCampaignSession = () => {
 			if (error) throw error;
 			return { queued: false };
 		},
-		(oldData: CampaignSessionRecord[] | undefined, { sessionId }) => {
+		(raw: unknown, { sessionId }: { campaignId: string; sessionId: string }) => {
+			const oldData = raw as CampaignSessionRecord[] | undefined;
 			if (!oldData) return oldData;
 			return oldData.filter((s) => s.id !== sessionId);
 		},
@@ -275,12 +266,11 @@ export const useDeleteCampaignSession = () => {
 
 export const useAddCampaignSessionLog = () => {
 	const _queryClient = useQueryClient();
-	const { toast } = useToast();
 
 	return useOptimisticMutation<
 		{ queued: boolean; logId: string | null },
 		CreateSessionLogInput,
-		{ previousData: CampaignSessionLogRecord[] | undefined; mutationKey: any }
+		{ previousData: CampaignSessionLogRecord[] | undefined; mutationKey: unknown }
 	>(
 		(variables) => [
 			...KEY,
@@ -300,9 +290,9 @@ export const useAddCampaignSessionLog = () => {
 				p_log_type: input.logType ?? "session",
 				p_title: input.title,
 				p_content: input.content,
-				p_metadata: (input.metadata as any) ?? {},
+				p_metadata: (input.metadata as unknown as Record<string, never>) ?? {},
 				p_is_player_visible: input.isPlayerVisible ?? true,
-			} as any);
+			});
 
 			if (error) throw error;
 			return {
@@ -311,7 +301,8 @@ export const useAddCampaignSessionLog = () => {
 			};
 		},
 		// Optimistic Calculation
-		(oldData: CampaignSessionLogRecord[] | undefined, input) => {
+		(raw: unknown, input: CreateSessionLogInput) => {
+			const oldData = raw as CampaignSessionLogRecord[] | undefined;
 			if (!oldData) return oldData;
 			const newLog: CampaignSessionLogRecord = {
 				id: `temp-${Date.now()}`,
