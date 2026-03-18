@@ -101,6 +101,7 @@ import {
 	useCharacterFeatures,
 } from "@/hooks/useCharacterFeatures";
 import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
+import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import {
 	useCharacter,
 	useGenerateShareToken,
@@ -507,7 +508,7 @@ const CharacterSheet = () => {
 	};
 
 	const memoizedStats = useCharacterDerivedStats(
-		character,
+		character as CharacterWithAbilities | null,
 		equipment,
 		activeRunes,
 		customModifiers,
@@ -1599,14 +1600,12 @@ const CharacterSheet = () => {
 													</span>
 												</div>
 												<div className="h-2 rounded-[2px] bg-black border border-primary/30 overflow-hidden relative shadow-[inset_0_0_8px_rgba(0,0,0,0.8)]">
-													<div
-														className="h-full bg-primary relative"
-														style={{
-															width: `${Math.min(100, ((character.experience || 0) % 1000) / 10)}%`,
-														}}
-													>
-														<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-white/10 animate-[shimmer_2s_infinite]" />
-													</div>
+													<progress
+														className="character-sheet-xp-progress"
+														value={(character.experience || 0) % 1000}
+														max={1000}
+													/>
+													<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-white/10 animate-[shimmer_2s_infinite] pointer-events-none" />
 												</div>
 											</div>
 										)}
@@ -1902,19 +1901,17 @@ const CharacterSheet = () => {
 									{/* Status Bar Visualization */}
 									<div className="mt-4 px-2">
 										<div className="h-1.5 w-full bg-obsidian-charcoal rounded-full overflow-hidden border border-white/5">
-											<div
+											<progress
 												className={cn(
-													"h-full transition-all duration-500 ease-out",
+													"character-sheet-hp-progress",
 													character.hp_current < character.hp_max * 0.25
-														? "bg-destructive shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+														? "hp-critical"
 														: character.hp_current < character.hp_max * 0.5
-															? "bg-orange-500"
-															: "bg-red-500",
+															? "hp-danger"
+															: "hp-healthy",
 												)}
-												// eslint-disable-next-line react/no-inline-styles
-												style={{
-													width: `${Math.min(100, (character.hp_current / character.hp_max) * 100)}%`,
-												}}
+												value={character.hp_current}
+												max={character.hp_max + effectiveTempHp}
 											/>
 										</div>
 									</div>

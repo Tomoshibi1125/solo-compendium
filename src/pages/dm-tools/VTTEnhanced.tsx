@@ -117,6 +117,8 @@ import {
 	useSearchParams,
 } from "react-router-dom";
 
+import { getBestImageFormat } from "@/lib/imageOptimization";
+
 /** Safe React component for rendering dice display text with **bold** and ~~strikethrough~~ */
 function DiceDisplayText({ text }: { text: string }) {
 	const tokens: React.ReactNode[] = [];

@@ -107,12 +107,12 @@ export function RegentFeaturesDisplay({
 					<div className="space-y-3">
 						{regentFeatures.map((feature, _index) => (
 							<div
-								key={feature.name as string}
+								key={feature.name}
 								className="p-4 border rounded-lg bg-background"
 							>
 								<div className="flex items-center gap-2 mb-2">
 									<span className="font-medium">
-										{feature.name as React.ReactNode}
+										{feature.name}
 									</span>
 									<Badge variant="outline" className="text-xs">
 										{feature.type}
@@ -127,7 +127,7 @@ export function RegentFeaturesDisplay({
 									</Badge>
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{(feature.description as React.ReactNode) ?? ""}
+									{feature.description || ""}
 								</p>
 							</div>
 						))}
@@ -145,10 +145,11 @@ export function RegentFeaturesDisplay({
 						<h4 className="font-medium">Regent Power Slots</h4>
 						<div className="grid grid-cols-9 gap-2 text-center">
 							{Array.from({ length: 9 }, (_, i) => i + 1).map((level) => {
+								const sc = regentData.spellcasting!;
 								const slotKey =
-									`${level}${level === 1 ? "st" : level === 2 ? "nd" : level === 3 ? "rd" : "th"}` as keyof typeof regentData.spellcasting.spell_slots;
+									`${level}${level === 1 ? "st" : level === 2 ? "nd" : level === 3 ? "rd" : "th"}` as keyof typeof sc.spell_slots;
 								const slots =
-									regentData.spellcasting.spell_slots[slotKey]?.[
+									sc.spell_slots[slotKey]?.[
 										regentLevel - 1
 									] || 0;
 								return (
