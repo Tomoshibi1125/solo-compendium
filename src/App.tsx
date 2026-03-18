@@ -149,14 +149,6 @@ const CatchAllRedirect = () => {
 };
 const PlayerToolDetail = lazy(() => import("./pages/PlayerToolDetail"));
 
-const CompendiumLegacyRegentRedirect = () => {
-	const params = new URLSearchParams(window.location.search);
-	const path = window.location.pathname;
-	const parts = path.split("/").filter(Boolean);
-	const id = parts.length >= 3 ? parts[2] : "";
-	const suffix = params.toString() ? `?${params.toString()}` : "";
-	return <Navigate to={`/compendium/regents/${id}${suffix}`} replace />;
-};
 
 // Configure React Query with better caching and error handling
 const queryClient = new QueryClient({
@@ -330,10 +322,6 @@ const AppContent = () => {
 							<Compendium />
 						</Suspense>
 					}
-				/>
-				<Route
-					path="/compendium/regents/:id"
-					element={<CompendiumLegacyRegentRedirect />}
 				/>
 				<Route
 					path="/compendium/:type/:id"
