@@ -616,8 +616,117 @@ export const regents: Regent[] = [
 			},
 			{
 				name: "Absolute Flame",
-				description: "Total immunity and reality-warping purification.",
+				description:
+					"You achieve the ultimate master of purification fire. You are immune to all damage except necrotic, and you can erase the concept of sin or corruption itself as a bonus action.",
 				power_level: 10,
+			},
+			{
+				name: "Flame Ascendant",
+				description:
+					"You transcend mortal limitations, gaining the ability to exist as pure white flame and command purification across all dimensions.",
+				power_level: 11,
+			},
+			{
+				name: "Purification Lord",
+				description:
+					"You gain complete control over spiritual purity, able to cleanse entire worlds of corruption at will.",
+				power_level: 11,
+			},
+			{
+				name: "Fire God",
+				description:
+					"You become a living embodiment of holy fire, able to manifest as the sun itself to illuminate and purify reality.",
+				power_level: 11,
+			},
+			{
+				name: "Flame Apocalypse",
+				description:
+					"Once per day, you can unleash a white flame apocalypse that covers a 10-mile radius in purifying light, obliterating all evil-aligned beings instantly.",
+				power_level: 13,
+			},
+			{
+				name: "Purification Dominion",
+				description:
+					"You gain control over the concept of purity itself, able to overwrite any curse or corruption across a planetary scale.",
+				power_level: 13,
+			},
+			{
+				name: "Essence God",
+				description:
+					"You can harvest and manipulate the divine essence of any being through purification, gaining their sanctified power.",
+				power_level: 13,
+			},
+			{
+				name: "Flame Reality",
+				description:
+					"You can reshape reality itself through holy fire, creating sanctified dimensions and rewriting spiritual laws.",
+				power_level: 15,
+			},
+			{
+				name: "Purification God",
+				description:
+					"You become a master of all spiritual cleansing, able to create and destroy through the concept of purity.",
+				power_level: 15,
+			},
+			{
+				name: "Fire Emperor",
+				description:
+					"Your purifying fire extends across all realities, allowing you to sanctify entire universes.",
+				power_level: 15,
+			},
+			{
+				name: "Flame Transcendence",
+				description:
+					"You transcend the concept of fire, becoming a fundamental force of holy illumination that cannot be contained or darkened.",
+				power_level: 17,
+			},
+			{
+				name: "Purification Emperor",
+				description:
+					"You gain mastery over purity itself, able to create concepts of holiness from nothing.",
+				power_level: 17,
+			},
+			{
+				name: "Essence Emperor",
+				description:
+					"You can absorb and control the sanctified essence of entire worlds, gaining their collective power.",
+				power_level: 17,
+			},
+			{
+				name: "Flame Omnipotence",
+				description:
+					"You achieve true omnipotence within the radiant domain, able to control all light and purity across all timelines.",
+				power_level: 19,
+			},
+			{
+				name: "Purification Regent",
+				description:
+					"Your purifying power extends across the multiverse, allowing you to reshape entire universes into beacons of light.",
+				power_level: 19,
+			},
+			{
+				name: "Fire Regent",
+				description:
+					"You become the ultimate authority over light and heat, able to determine the heat-death or enlightenment of existence.",
+				power_level: 19,
+			},
+			{
+				name: "Flame Supremacy",
+				description:
+					"You achieve absolute supremacy over all radiant forces, becoming the source and master of all holy illumination.",
+				power_level: 20,
+			},
+			{
+				name: "Absolute Flame",
+				description:
+					"You become the embodiment of absolute holiness, a force beyond comprehension that exists outside the reach of shadow.",
+				power_level: 20,
+			},
+			{
+				name: "Regent Power",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				power_level: 20,
 			},
 		],
 		mechanics: {
@@ -893,9 +1002,9 @@ export const regents: Regent[] = [
 				power_level: 10,
 			},
 			{
-				name: "Flesh Ascendant",
+				name: "Titan Ascendant",
 				description:
-					"You transcend mortal limitations, gaining the ability to exist as pure organic matter and command flesh across all dimensions.",
+					"You transcend mortal limitations, gaining the ability to exist as pure indestructible force and command absolute defense across all dimensions.",
 				power_level: 11,
 			},
 			{
@@ -905,15 +1014,15 @@ export const regents: Regent[] = [
 				power_level: 11,
 			},
 			{
-				name: "Regeneration God",
+				name: "Invulnerability God",
 				description:
-					"You become a living embodiment of regeneration, able to regenerate anything from nothing.",
+					"You become a living embodiment of invulnerability, able to resist any force in existence.",
 				power_level: 11,
 			},
 			{
-				name: "Flesh Apocalypse",
+				name: "Steel Apocalypse",
 				description:
-					"Once per day, you can unleash a flesh apocalypse that reshapes a 10-mile radius, transforming all matter into organic perfection.",
+					"Once per day, you can unleash a steel apocalypse that reshapes a 10-mile radius, transforming all matter into indestructible divine metal.",
 				power_level: 13,
 			},
 			{
@@ -925,13 +1034,13 @@ export const regents: Regent[] = [
 			{
 				name: "Essence God",
 				description:
-					"You can harvest and manipulate the essence of any being through organic matter, gaining their power.",
+					"You can harvest and manipulate the essence of any being through the concept of the immovable anchor, gaining their power.",
 				power_level: 13,
 			},
 			{
-				name: "Flesh Reality",
+				name: "Titan Reality",
 				description:
-					"You can reshape reality itself through organic matter, creating living worlds.",
+					"You can reshape reality itself through the concept of the immovable object, creating indestructible worlds.",
 				power_level: 15,
 			},
 			{
@@ -941,15 +1050,15 @@ export const regents: Regent[] = [
 				power_level: 15,
 			},
 			{
-				name: "Regeneration Emperor",
+				name: "Invulnerability Emperor",
 				description:
-					"Your regeneration extends across all realities, allowing you to resurrect any organic form.",
+					"Your invulnerability extends across all realities, allowing you to shield entire worlds from destruction.",
 				power_level: 15,
 			},
 			{
-				name: "Flesh Transcendence",
+				name: "Titan Transcendence",
 				description:
-					"You transcend the concept of flesh, becoming a fundamental force of life that cannot be contained.",
+					"You transcend the concept of matter, becoming a fundamental force of permanence that cannot be moved or destroyed.",
 				power_level: 17,
 			},
 			{
@@ -961,43 +1070,43 @@ export const regents: Regent[] = [
 			{
 				name: "Essence Emperor",
 				description:
-					"You can absorb and control the organic essence of entire worlds, gaining their collective power.",
+					"You can absorb and control the structural essence of entire worlds, gaining their collective power.",
 				power_level: 17,
 			},
 			{
-				name: "Flesh Omnipotence",
+				name: "Titan Omnipotence",
 				description:
-					"You achieve true omnipotence within the organic domain, able to control all life across all timelines.",
+					"You achieve true omnipotence within the domain of structural integrity, able to lock all reality across all timelines.",
 				power_level: 19,
 			},
 			{
 				name: "Steel Regent",
 				description:
-					"Your metallic power extends across the multiverse, allowing you to reshape entire universes.",
+					"Your metallic power extends across the multiverse, allowing you to reshape entire universes into perfect iron order.",
 				power_level: 19,
 			},
 			{
-				name: "Regeneration Regent",
+				name: "Invulnerability Regent",
 				description:
-					"You become the ultimate authority over life and regeneration, able to determine the fate of all existence.",
+					"You become the ultimate authority over permanence and protection, able to determine the eternal state of all existence.",
 				power_level: 19,
 			},
 			{
-				name: "Flesh Supremacy",
+				name: "Titan Supremacy",
 				description:
-					"You achieve absolute supremacy over all organic matter, becoming the source and master of all life.",
+					"You achieve absolute supremacy over all structural forces, becoming the source and master of all permanence.",
 				power_level: 20,
 			},
 			{
-				name: "Absolute Flesh",
+				name: "Absolute Invulnerability",
 				description:
-					"You become the embodiment of absolute life, a force beyond comprehension that exists outside all laws of reality.",
+					"You become the embodiment of absolute permanence, a force beyond comprehension that exists outside all laws of entropy.",
 				power_level: 20,
 			},
 			{
 				name: "Regent Power",
 				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Regent, equal to all other Regents at their maximum potential.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite forces of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Regent, equal to all other Regents at their maximum potential.",
 				power_level: 20,
 			},
 		],
@@ -1075,7 +1184,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"11": {
-				features_gained: ["Flesh Ascendant", "Steel Lord", "Regeneration God"],
+				features_gained: ["Titan Ascendant", "Steel Lord", "Invulnerability God"],
 				abilities_improved: [],
 			},
 			"12": {
@@ -1083,7 +1192,7 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 			"13": {
-				features_gained: ["Flesh Apocalypse", "Steel Dominion", "Essence God"],
+				features_gained: ["Steel Apocalypse", "Steel Dominion", "Essence God"],
 				abilities_improved: [],
 			},
 			"14": {
@@ -1091,7 +1200,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"15": {
-				features_gained: ["Flesh Reality", "Steel God", "Regeneration Emperor"],
+				features_gained: ["Titan Reality", "Steel God", "Invulnerability Emperor"],
 				abilities_improved: [],
 			},
 			"16": {
@@ -1100,7 +1209,7 @@ export const regents: Regent[] = [
 			},
 			"17": {
 				features_gained: [
-					"Flesh Transcendence",
+					"Titan Transcendence",
 					"Steel Emperor",
 					"Essence Emperor",
 				],
@@ -1112,14 +1221,14 @@ export const regents: Regent[] = [
 			},
 			"19": {
 				features_gained: [
-					"Flesh Omnipotence",
+					"Titan Omnipotence",
 					"Steel Regent",
-					"Regeneration Regent",
+					"Invulnerability Regent",
 				],
 				abilities_improved: [],
 			},
 			"20": {
-				features_gained: ["Flesh Supremacy", "Absolute Flesh", "Regent Power"],
+				features_gained: ["Titan Supremacy", "Absolute Invulnerability", "Regent Power"],
 				abilities_improved: ["Primary Ability +2"],
 			},
 		},
@@ -2015,6 +2124,137 @@ export const regents: Regent[] = [
 					"All cold damage you deal is maximized. Ice structures you create are permanent and indestructible.",
 				type: "passive",
 			},
+			{
+				level: 11,
+				name: "Frost Ascendant",
+				description:
+					"You transcend mortal thermodynamic limitations, gaining the ability to exist as pure absolute zero and command cold across all dimensions.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Temporal Lord",
+				description:
+					"You gain complete control over the entropy of time, able to freeze specific moments in space-time across entire city blocks.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
+				name: "Ice God",
+				description:
+					"You become a living embodiment of the eternal winter, able to manifest glacial continents and reshape the climate of worlds at will.",
+				type: "passive",
+			},
+			{
+				level: 13,
+				name: "Frost Apocalypse",
+				description:
+					"Once per day, you can unleash a frost apocalypse that covers a 10-mile radius in absolute zero, instantly stopping all molecular motion.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 13,
+				name: "Time Dominion",
+				description:
+					"You gain control over the flow of time within your frozen zones, able to reverse or accelerate events within the crystalline stasis.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Cryo God",
+				description:
+					"You can harvest and manipulate the thermal essence of any being through freezing, gaining their power and memories through cryo-archiving.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Frost Reality",
+				description:
+					"You can reshape reality itself through the concept of entropy, creating worlds of perfect crystalline order and rewriting physical laws.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Temporal God",
+				description:
+					"You become a master of chronological stasis, able to create and destroy through the suspension of time.",
+				type: "passive",
+			},
+			{
+				level: 15,
+				name: "Ice Emperor",
+				description:
+					"Your freezing power extends across all realities, allowing you to bring an heat-death to entire universes.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Frost Transcendence",
+				description:
+					"You transcend the concept of temperature, becoming a fundamental force of stasis that cannot be influenced by energy or heat.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Time Emperor",
+				description:
+					"You gain mastery over time itself, able to create concepts of history and future from the frozen present.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Cryo Emperor",
+				description:
+					"You can absorb and control the thermal essence of entire worlds, gaining their collective power by halting their entropy.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Frost Omnipotence",
+				description:
+					"You achieve true omnipotence within the domain of stasis, able to control all thermodynamic states across all timelines.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Temporal Regent",
+				description:
+					"Your temporal power extends across the multiverse, allowing you to freeze or restart entire universes at will.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Ice Regent",
+				description:
+					"You become the ultimate authority over order and entropy, able to determine the final frozen state of all existence.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Frost Supremacy",
+				description:
+					"You achieve absolute supremacy over all thermal forces, becoming the source and master of all universal stasis.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Absolute Frost",
+				description:
+					"You become the embodiment of absolute zero, a force beyond comprehension that exists outside the reach of thermodynamics.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Regent Power",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				type: "passive",
+			},
 		],
 		spellcasting: {
 			ability: "Intelligence",
@@ -2236,6 +2476,137 @@ export const regents: Regent[] = [
 				name: "Absolute Beast",
 				description:
 					"Apex Form becomes permanent. Command any beast worldwide. Immune to all physical damage.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Beast Ascendant",
+				description:
+					"You transcend mortal biological limitations, gaining the ability to exist as the concept of the primal apex and command nature across all dimensions.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Primal Lord",
+				description:
+					"You gain complete control over the instincts of all living things, able to command entire ecosystems as a single hive mind.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
+				name: "Evolution God",
+				description:
+					"You become a living embodiment of the evolutionary process, able to mutate and adapt your form or the forms of others instantly and permanently.",
+				type: "passive",
+			},
+			{
+				level: 13,
+				name: "Beast Apocalypse",
+				description:
+					"Once per day, you can unleash a beast apocalypse that causes all animals within a 10-mile radius to swarm and destroy everything in their path.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 13,
+				name: "Primal Dominion",
+				description:
+					"You gain control over the wild itself, able to transform urban landscapes into primordial jungles instantly.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Essence God",
+				description:
+					"You can harvest and manipulate the biological essence of any being through the hunt, gaining their predatory power and traits permanently.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Beast Reality",
+				description:
+					"You can reshape reality itself through the law of the jungle, creating untamed worlds and rewriting the food chain.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Primal God",
+				description:
+					"You become a master of all biological life, able to create and destroy through the concept of the absolute predator.",
+				type: "passive",
+			},
+			{
+				level: 15,
+				name: "Evolution Emperor",
+				description:
+					"Your evolutionary power extends across all realities, allowing you to rewrite the genetic code of entire universes.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Beast Transcendence",
+				description:
+					"You transcend the concept of the individual, becoming a fundamental force of the wild that exists in every predator.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Primal Emperor",
+				description:
+					"You gain mastery over the life force of planets, able to create concepts of biodiversity from the void.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Essence Emperor",
+				description:
+					"You can absorb and control the biological essence of entire worlds, gaining their collective genetic power.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Beast Omnipotence",
+				description:
+					"You achieve true omnipotence within the biological domain, able to control all evolution across all timelines.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Primal Regent",
+				description:
+					"Your primal power extends across the multiverse, allowing you to reshape entire universes into savage paradises.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Evolution Regent",
+				description:
+					"You become the ultimate authority over life and change, able to determine the final evolutionary state of all existence.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Beast Supremacy",
+				description:
+					"You achieve absolute supremacy over all biological forces, becoming the source and master of all life.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Absolute Beast",
+				description:
+					"You become the embodiment of the Absolute Beast, a force beyond comprehension that exists outside the reach of society.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Regent Power",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
 				type: "passive",
 			},
 		],
@@ -2624,37 +2995,110 @@ export const regents: Regent[] = [
 			},
 			{
 				name: "Plague Ascendant",
-				description: "Transcend biological limitations.",
+				description:
+					"You transcend biological limitations, gaining the ability to exist as pure pathogen and command decay across all dimensions.",
+				power_level: 11,
+			},
+			{
+				name: "Swarm Lord",
+				description:
+					"You gain complete control over the hive mind of billions, able to command every insect and microorganism on a planetary scale.",
+				power_level: 11,
+			},
+			{
+				name: "Disease God",
+				description:
+					"You become a living embodiment of pestilence, able to manifest any known or unknown sickness through pure will.",
 				power_level: 11,
 			},
 			{
 				name: "Plague Apocalypse",
-				description: "Continental pandemic.",
+				description:
+					"Once per day, you can unleash a continental pandemic that can sweep across entire landmasses in hours, ignoring all quarantines.",
+				power_level: 13,
+			},
+			{
+				name: "Swarm Dominion",
+				description:
+					"You gain control over the space between cells, able to disassemble or reassemble matter through microscopic swarms.",
+				power_level: 13,
+			},
+			{
+				name: "Pathogen God",
+				description:
+					"You can harvest and manipulate the biological essence of any being through infection, gaining their power as you rot their strength.",
 				power_level: 13,
 			},
 			{
 				name: "Plague Reality",
-				description: "Reshape reality through disease.",
+				description:
+					"You can reshape reality itself through the concept of decay, creating worlds of terminal beauty and rewriting biological laws.",
+				power_level: 15,
+			},
+			{
+				name: "Swarm God",
+				description:
+					"You become a master of all collective consciousness, able to create and destroy through the billion-fold swarm.",
+				power_level: 15,
+			},
+			{
+				name: "Disease Emperor",
+				description:
+					"Your pestilent power extends across all realities, allowing you to bring biological ruin to entire universes.",
 				power_level: 15,
 			},
 			{
 				name: "Plague Transcendence",
-				description: "Become fundamental force of decay.",
+				description:
+					"You transcend the concept of life, becoming a fundamental force of decay that is the final stage of all existence.",
+				power_level: 17,
+			},
+			{
+				name: "Swarm Emperor",
+				description:
+					"You gain mastery over the collective, able to create concepts of unity and division from nothing.",
+				power_level: 17,
+			},
+			{
+				name: "Pathogen Emperor",
+				description:
+					"You can absorb and control the plague essence of entire worlds, gaining their collective power through their mass infection.",
 				power_level: 17,
 			},
 			{
 				name: "Plague Omnipotence",
-				description: "Control all disease everywhere.",
+				description:
+					"You achieve true omnipotence within the domain of decay, able to control all pathogens across all timelines.",
+				power_level: 19,
+			},
+			{
+				name: "Swarm Regent",
+				description:
+					"Your swarm power extends across the multiverse, allowing you to reshape entire universes into one living hive.",
+				power_level: 19,
+			},
+			{
+				name: "Disease Regent",
+				description:
+					"You become the ultimate authority over sickness and health, able to determine the final biological fate of all existence.",
 				power_level: 19,
 			},
 			{
 				name: "Plague Supremacy",
-				description: "Ultimate plague power.",
+				description:
+					"You achieve absolute supremacy over all necrotic forces, becoming the source and master of all universal decay.",
+				power_level: 20,
+			},
+			{
+				name: "Absolute Plague",
+				description:
+					"You become the embodiment of absolute decay, a force beyond comprehension that exists beyond the concept of life.",
 				power_level: 20,
 			},
 			{
 				name: "Regent Power",
-				description: "Full Regent power.",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
 				power_level: 20,
 			},
 		],
@@ -2759,6 +3203,137 @@ export const regents: Regent[] = [
 				name: "Absolute Spatial",
 				description:
 					"Create demiplanes at will. All spatial folds are indestructible. Reality Rewrite becomes daily.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Spatial Ascendant",
+				description:
+					"You transcend mortal spatial limitations, gaining the ability to exist as the dimensional lattice itself and command space across all dimensions.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Void Lord",
+				description:
+					"You gain complete control over the vacuum of space, able to create localized absolute voids that erase matter and energy instantly.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
+				name: "Dimensional God",
+				description:
+					"You become a living gateway, able to manifest permanent stable wormholes between any two points in the multiverse.",
+				type: "passive",
+			},
+			{
+				level: 13,
+				name: "Spatial Apocalypse",
+				description:
+					"Once per day, you can unleash a spatial apocalypse that causes all space within a 10-mile radius to collapse into a singularity, then expand into a new configuration.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 13,
+				name: "Space Dominion",
+				description:
+					"You gain control over the metrics of distance, able to make miles feel like inches for allies and inches feel like miles for enemies.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Reality God",
+				description:
+					"You can harvest and manipulate the spatial essence of any being through dimensional folding, gaining their power by compressing their existence into yours.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Spatial Reality",
+				description:
+					"You can reshape reality itself through the concept of the void, creating stable pocket universes with their own unique physical laws.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Void God",
+				description:
+					"You become a master of all nothingness, able to create and destroy through the concept of absolute absence.",
+				type: "passive",
+			},
+			{
+				level: 15,
+				name: "Dimensional Emperor",
+				description:
+					"Your dimensional power extends across all realities, allowing you to bridge or sever entire universes at will.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Spatial Transcendence",
+				description:
+					"You transcend the concept of location, becoming a fundamental force of connectivity that exists in the space between all things.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Space Emperor",
+				description:
+					"You gain mastery over the topology of planets, able to create concepts of distance and volume from the void.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Reality Emperor",
+				description:
+					"You can absorb and control the spatial essence of entire worlds, gaining their collective power by folding their history into the present.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Spatial Omnipotence",
+				description:
+					"You achieve true omnipotence within the domain of distance, able to control all spatial coordinates across all timelines.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Void Regent",
+				description:
+					"Your void power extends across the multiverse, allowing you to reshape entire universes into perfect vacuum or infinite expansion.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Dimensional Regent",
+				description:
+					"You become the ultimate authority over travel and boundaries, able to determine the final connectivity of all existence.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Spatial Supremacy",
+				description:
+					"You achieve absolute supremacy over all dimensional forces, becoming the source and master of all universal space.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Absolute Spatial",
+				description:
+					"You become the embodiment of Absolute Space, a force beyond comprehension that exists outside the reach of distance.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Regent Power",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
 				type: "passive",
 			},
 		],
@@ -3149,37 +3724,110 @@ export const regents: Regent[] = [
 			},
 			{
 				name: "Mimic Ascendant",
-				description: "Transcend form limitations.",
+				description:
+					"You transcend the limitations of form and identity, gaining the ability to exist as pure adaptive information and command mimicry across all dimensions.",
+				power_level: 11,
+			},
+			{
+				name: "Form Lord",
+				description:
+					"You gain complete control over the physical structure of all things, able to force any object or creature to take a form of your choosing.",
+				power_level: 11,
+			},
+			{
+				name: "Copy God",
+				description:
+					"You become a living mirror of the divine, able to manifest the powers of any deity or cosmic entity you have observed.",
 				power_level: 11,
 			},
 			{
 				name: "Mimic Apocalypse",
-				description: "Become everything simultaneously.",
+				description:
+					"Once per day, you can unleash a mimic apocalypse that causes everything within a 10-mile radius to take on your form and properties, creating a massive hive-consciousness of yourself.",
+				power_level: 13,
+			},
+			{
+				name: "Form Dominion",
+				description:
+					"You gain control over the concept of appearance and reality, able to make the illusory real and the real illusory across a planetary scale.",
+				power_level: 13,
+			},
+			{
+				name: "Copy Dominion",
+				description:
+					"You can harvest and manipulate the power-essence of any being through perfect mimicry, gaining their abilities at a higher efficiency than the original.",
 				power_level: 13,
 			},
 			{
 				name: "Mimic Reality",
-				description: "Reshape reality by becoming it.",
+				description:
+					"You can reshape reality itself through the concept of imitation, creating worlds that are perfect copies of other dimensions and rewriting the laws of identity.",
+				power_level: 15,
+			},
+			{
+				name: "Form God",
+				description:
+					"You become a master of all transformation, able to create and destroy through the concept of the infinite shape.",
+				power_level: 15,
+			},
+			{
+				name: "Copy Emperor",
+				description:
+					"Your copying power extends across all realities, allowing you to replicate the history and future of entire universes.",
 				power_level: 15,
 			},
 			{
 				name: "Mimic Transcendence",
-				description: "Fundamental force of adaptation.",
+				description:
+					"You transcend the concept of the self, becoming a fundamental force of adaptation that exists in the potential of all things.",
+				power_level: 17,
+			},
+			{
+				name: "Form Emperor",
+				description:
+					"You gain mastery over the morphology of planets, able to create concepts of shape and structure from the void.",
+				power_level: 17,
+			},
+			{
+				name: "Copy Transcendence",
+				description:
+					"You can absorb and control the informational essence of entire worlds, gaining their collective knowledge and power by becoming their record.",
 				power_level: 17,
 			},
 			{
 				name: "Mimic Omnipotence",
-				description: "Copy reality itself.",
+				description:
+					"You achieve true omnipotence within the domain of identity, able to control all manifestations of the self across all timelines.",
+				power_level: 19,
+			},
+			{
+				name: "Form Regent",
+				description:
+					"Your morphic power extends across the multiverse, allowing you to reshape entire universes into perfect imitations of your will.",
+				power_level: 19,
+			},
+			{
+				name: "Copy Regent",
+				description:
+					"You become the ultimate authority over truth and facade, able to determine the final identity of all existence.",
 				power_level: 19,
 			},
 			{
 				name: "Mimic Supremacy",
-				description: "Ultimate mimic power.",
+				description:
+					"You achieve absolute supremacy over all transformational forces, becoming the source and master of all universal forms.",
+				power_level: 20,
+			},
+			{
+				name: "Absolute Mimic",
+				description:
+					"You become the embodiment of Absolute Form, a force beyond comprehension that exists beyond the concept of the individual.",
 				power_level: 20,
 			},
 			{
 				name: "Regent Power",
-				description: "Full Regent power.",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
 				power_level: 20,
 			},
 		],
@@ -3283,6 +3931,137 @@ export const regents: Regent[] = [
 					"Immune to necrotic and poison. Any creature with blood is automatically detected by you within 1 mile.",
 				type: "passive",
 			},
+			{
+				level: 11,
+				name: "Blood Ascendant",
+				description:
+					"You transcend mortal biological limitations, gaining the ability to exist as pure living ichor and command hemomancy across all dimensions.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Sanguine Lord",
+				description:
+					"You gain complete control over the bloodstream of any living entity, able to boil, freeze, or extract blood with a thought at any distance.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
+				name: "Life God",
+				description:
+					"You become a living reservoir of vitality, able to resurrect the dead or grant immortality to the living through the infusion of your divine blood.",
+				type: "passive",
+			},
+			{
+				level: 13,
+				name: "Sanguine Cataclysm",
+				description:
+					"Once per day, you can unleash a blood cataclysm that causes all blood within a 10-mile radius to erupt from its hosts, forming a massive ocean under your command.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 13,
+				name: "Life Dominion",
+				description:
+					"You gain control over the spark of life itself, able to animate non-living matter by infusing it with blood-essence.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Essence God",
+				description:
+					"You can harvest and manipulate the biological essence of any being through their blood, gaining their power and vitality permanently.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Blood Reality",
+				description:
+					"You can reshape reality itself through the medium of life fluid, creating worlds of organic perfection and rewriting the laws of biology.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Sanguine God",
+				description:
+					"You become a master of all hemomancy, able to create and destroy through the concept of the absolute life-force.",
+				type: "passive",
+			},
+			{
+				level: 15,
+				name: "Life Emperor",
+				description:
+					"Your vital power extends across all realities, allowing you to sustain or extinguish the life-force of entire universes.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Blood Transcendence",
+				description:
+					"You transcend the concept of the body, becoming a fundamental force of life that exists in the pulse of every living thing.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Life Architect",
+				description:
+					"You gain mastery over the design of existence, able to create concepts of soul and metabolism from the void.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Essence Emperor",
+				description:
+					"You can absorb and control the vital essence of entire worlds, gaining their collective power by harvesting their history through their bloodline.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Blood Omnipotence",
+				description:
+					"You achieve true omnipotence within the sanguine domain, able to control all life and blood across all timelines.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Sanguine Regent",
+				description:
+					"Your hemomantic power extends across the multiverse, allowing you to reshape entire universes into one living blood-system.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Life Regent",
+				description:
+					"You become the ultimate authority over life and death, able to determine the final biological state of all existence.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Blood Supremacy",
+				description:
+					"You achieve absolute supremacy over all biological forces, becoming the source and master of all universal life.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Absolute Sanguinity",
+				description:
+					"You become the embodiment of Absolute Life, a force beyond comprehension that exists beyond the reach of death.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Regent Power",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				type: "passive",
+			},
 		],
 		progression_table: {
 			"1": {
@@ -3334,7 +4113,7 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 			"13": {
-				features_gained: ["Blood Apocalypse", "Life Dominion", "Essence God"],
+				features_gained: ["Sanguine Cataclysm", "Life Dominion", "Essence God"],
 				abilities_improved: [],
 			},
 			"14": {
@@ -3352,7 +4131,7 @@ export const regents: Regent[] = [
 			"17": {
 				features_gained: [
 					"Blood Transcendence",
-					"Life Emperor",
+					"Life Architect",
 					"Essence Emperor",
 				],
 				abilities_improved: [],
@@ -3370,7 +4149,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"20": {
-				features_gained: ["Blood Supremacy", "Absolute Blood", "Regent Power"],
+				features_gained: ["Blood Supremacy", "Absolute Sanguinity", "Regent Power"],
 				abilities_improved: ["Primary Ability +2"],
 			},
 		},
@@ -3490,6 +4269,137 @@ export const regents: Regent[] = [
 					"You are immune to forced movement. You can anchor yourself to the fabric of reality, becoming immovable and indestructible.",
 				type: "passive",
 			},
+			{
+				level: 11,
+				name: "Gravity Ascendant",
+				description:
+					"You transcend the physical limitations of mass, gaining the ability to exist as a gravitational singularity and command force across all dimensions.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Weight Lord",
+				description:
+					"You gain complete control over the mass of all objects in your vicinity, able to make mountains as light as feathers or pebbles as heavy as stars.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
+				name: "Force God",
+				description:
+					"You become a living conduit for the fundamental force of attraction, able to collapse any structure or energy field by inward pressure.",
+				type: "passive",
+			},
+			{
+				level: 13,
+				name: "Gravity Apocalypse",
+				description:
+					"Once per day, you can unleash a gravity apocalypse that creates a planetary-scale field of 1000x gravity, crushing all matter into a perfect sphere.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 13,
+				name: "Force Dominion",
+				description:
+					"You gain control over the vectors of all forces, able to redirect any kinetic or potential energy with a simple gesture.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Essence God",
+				description:
+					"You can harvest and manipulate the mass-essence of any being through gravitational collapse, gaining their power by absorbing their physical presence.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Gravity Reality",
+				description:
+					"You can reshape reality itself through the concept of weight, creating worlds of extreme densities and rewriting the laws of physics.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Weight God",
+				description:
+					"You become a master of all densities, able to create and destroy through the concept of absolute mass.",
+				type: "passive",
+			},
+			{
+				level: 15,
+				name: "Force Emperor",
+				description:
+					"Your gravitational power extends across all realities, allowing you to pull or push entire universes at will.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Gravity Transcendence",
+				description:
+					"You transcend the concept of matter, becoming a fundamental force of attraction that exists in the core of every star.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Fundamental Emperor",
+				description:
+					"You gain mastery over the basic forces of existence, able to create concepts of friction and inertia from the void.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Essence Emperor",
+				description:
+					"You can absorb and control the gravitational essence of entire worlds, gaining their collective power by pinning their history to the present.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Gravity Omnipotence",
+				description:
+					"You achieve true omnipotence within the domain of force, able to control all mass and attraction across all timelines.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Weight Regent",
+				description:
+					"Your mass-control power extends across the multiverse, allowing you to reshape entire universes into perfect singularities or infinite expansions.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Force Regent",
+				description:
+					"You become the ultimate authority over attraction and repulsion, able to determine the final state of all existence.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Gravity Supremacy",
+				description:
+					"You achieve absolute supremacy over all physical forces, becoming the source and master of all universal attraction.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Absolute Weightlessness",
+				description:
+					"You become the embodiment of Absolute Mass, a force beyond comprehension that exists outside the reach of physics.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Regent Power",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				type: "passive",
+			},
 		],
 		progression_table: {
 			"1": {
@@ -3563,7 +4473,7 @@ export const regents: Regent[] = [
 			"17": {
 				features_gained: [
 					"Gravity Transcendence",
-					"Force Emperor",
+					"Fundamental Emperor",
 					"Essence Emperor",
 				],
 				abilities_improved: [],
@@ -3583,7 +4493,7 @@ export const regents: Regent[] = [
 			"20": {
 				features_gained: [
 					"Gravity Supremacy",
-					"Absolute Weight",
+					"Absolute Weightlessness",
 					"Regent Power",
 				],
 				abilities_improved: ["Primary Ability +2"],

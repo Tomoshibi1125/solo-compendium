@@ -29,7 +29,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 			name: f.name,
 			description: f.description,
 			level: f.level,
-			is_signature: false,
+			is_signature: f.level >= 11,
 			type: f.type,
 			recharge: f.frequency,
 		}),
