@@ -53,7 +53,10 @@ interface DMToolsEnhancements {
 	exportAnalytics: (campaignId: string) => Promise<Blob | null>;
 	pauseCombatSession: (sessionId: string) => Promise<boolean>;
 	resumeCombatSession: (sessionId: string) => Promise<boolean>;
-	saveVTTScene: (campaignId: string, scene: Partial<VTTScene>) => Promise<unknown>;
+	saveVTTScene: (
+		campaignId: string,
+		scene: Partial<VTTScene>,
+	) => Promise<unknown>;
 	loadVTTScene: (campaignId: string, sceneId?: string) => Promise<unknown>;
 	uploadVTTAsset: (
 		campaignId: string,
@@ -78,7 +81,11 @@ interface PlayerToolsEnhancements {
 		},
 	) => Promise<unknown>;
 	getCampaignsForRolling: () => Promise<unknown[]>;
-	accessOfflineData: () => Promise<{ characters: unknown[]; compendium: unknown[]; campaigns: unknown[] }>;
+	accessOfflineData: () => Promise<{
+		characters: unknown[];
+		compendium: unknown[];
+		campaigns: unknown[];
+	}>;
 	syncOfflineData: () => Promise<void>;
 	trackHealthChange: (
 		characterId: string,

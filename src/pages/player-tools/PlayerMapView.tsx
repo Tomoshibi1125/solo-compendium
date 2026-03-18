@@ -116,7 +116,9 @@ const PlayerMapView = ({
 	const { data: members } = useCampaignMembers(effectiveCampaignId);
 	const myCharacterId = useMemo(() => {
 		if (!user?.id || !members) return null;
-		const myMember = members.find((m: { user_id?: string }) => m.user_id === user.id);
+		const myMember = members.find(
+			(m: { user_id?: string }) => m.user_id === user.id,
+		);
 		if (!myMember) return null;
 		const chars = (myMember as Record<string, unknown>).characters;
 		if (chars && typeof chars === "object" && "id" in chars)
@@ -587,436 +589,441 @@ const PlayerMapView = ({
 									<ErrorBoundary>
 										<div
 											className="vtt-map-container vtt-map-scene"
-										style={{
-											width: `${sceneWidth * gridSize * zoom}px`,
-											height: `${sceneHeight * gridSize * zoom}px`,
-										}}
-									>
-										{/* Background image */}
-										{currentScene?.backgroundImage && (
-											<div className="absolute inset-0">
-												<OptimizedImage
-													src={currentScene.backgroundImage}
-													alt="Map background"
-													className="w-full h-full object-cover vtt-background-image"
-													size="large"
-													style={
-														{
-															"--bg-scale": currentScene.backgroundScale ?? 1,
-														} as React.CSSProperties
-													}
-												/>
-											</div>
-										)}
-
-										{/* Grid overlay */}
-										{showGrid && (
-											<div
-												className="vtt-grid-overlay"
-												style={
-													{
-														"--grid-bg-size": `${gridSize * zoom}px ${gridSize * zoom}px`,
-														"--grid-border-color": "hsl(var(--border))",
-													} as React.CSSProperties
-												}
-											/>
-										)}
-
-										{/* Fog of war */}
-										{currentScene?.fogOfWar && currentScene.fogData && (
-											<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
-												{currentScene.fogData
-													.flatMap((row, ry) =>
-														row.map((revealed, rx) => ({ revealed, rx, ry })),
-													)
-													.map((cell) =>
-														!cell.revealed ? (
-															<div
-																key={`fog-${cell.rx}-${cell.ry}`}
-																className="absolute vtt-fog-cell bg-black"
-																style={
-																	{
-																		left: `${cell.rx * gridSize * zoom}px`,
-																		top: `${cell.ry * gridSize * zoom}px`,
-																		width: `${gridSize * zoom}px`,
-																		height: `${gridSize * zoom}px`,
-																		opacity: 0.9,
-																	} as React.CSSProperties
-																}
-															/>
-														) : null,
-													)}
-											</div>
-										)}
-
-										{/* DOM Overlays (Drawings, Terrain, Weather, Ambient Sounds) */}
-										{currentScene?.terrain &&
-											currentScene.terrain.length > 0 && (
-												<div className="absolute inset-0 pointer-events-none z-[1]">
-													<svg className="absolute inset-0 w-full h-full overflow-visible">
-														<title>Map Terrain Zones</title>
-														{currentScene.terrain.map((zone) => {
-															if (!zone.visible) return null;
-															const gZoom = gridSize * zoom;
-															const pointsStr = zone.vertices
-																.map(
-																	(v) =>
-																		`${(v.x + 0.5) * gZoom},${(v.y + 0.5) * gZoom}`,
-																)
-																.join(" ");
-															return (
-																<polygon
-																	key={zone.id}
-																	points={pointsStr}
-																	fill={zone.fillColor}
-																	stroke={zone.fillColor.replace(
-																		/[\d.]+\)$/g,
-																		"1)",
-																	)}
-																	strokeWidth={2}
-																/>
-															);
-														})}
-													</svg>
+											style={{
+												width: `${sceneWidth * gridSize * zoom}px`,
+												height: `${sceneHeight * gridSize * zoom}px`,
+											}}
+										>
+											{/* Background image */}
+											{currentScene?.backgroundImage && (
+												<div className="absolute inset-0">
+													<OptimizedImage
+														src={currentScene.backgroundImage}
+														alt="Map background"
+														className="w-full h-full object-cover vtt-background-image"
+														size="large"
+														style={
+															{
+																"--bg-scale": currentScene.backgroundScale ?? 1,
+															} as React.CSSProperties
+														}
+													/>
 												</div>
 											)}
 
-										{currentScene?.drawings &&
-											currentScene.drawings.length > 0 && (
-												<div className="absolute inset-0 pointer-events-none z-[2]">
-													{currentScene.drawings.map((drawing) => {
-														if (drawing.layer === "gm") return null; // Only player layers
+											{/* Grid overlay */}
+											{showGrid && (
+												<div
+													className="vtt-grid-overlay"
+													style={
+														{
+															"--grid-bg-size": `${gridSize * zoom}px ${gridSize * zoom}px`,
+															"--grid-border-color": "hsl(var(--border))",
+														} as React.CSSProperties
+													}
+												/>
+											)}
 
-														if (drawing.type === "freehand") {
-															const gZoom = gridSize * zoom;
-															const pointsStr = drawing.points
-																.map(
-																	(p) =>
-																		`${(p.x + 0.5) * gZoom},${(p.y + 0.5) * gZoom}`,
-																)
-																.join(" ");
-															return (
-																<svg
-																	key={drawing.id}
-																	className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
-																>
-																	<title>Map Freehand Drawing</title>
-																	<polyline
+											{/* Fog of war */}
+											{currentScene?.fogOfWar && currentScene.fogData && (
+												<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
+													{currentScene.fogData
+														.flatMap((row, ry) =>
+															row.map((revealed, rx) => ({ revealed, rx, ry })),
+														)
+														.map((cell) =>
+															!cell.revealed ? (
+																<div
+																	key={`fog-${cell.rx}-${cell.ry}`}
+																	className="absolute vtt-fog-cell bg-black"
+																	style={
+																		{
+																			left: `${cell.rx * gridSize * zoom}px`,
+																			top: `${cell.ry * gridSize * zoom}px`,
+																			width: `${gridSize * zoom}px`,
+																			height: `${gridSize * zoom}px`,
+																			opacity: 0.9,
+																		} as React.CSSProperties
+																	}
+																/>
+															) : null,
+														)}
+												</div>
+											)}
+
+											{/* DOM Overlays (Drawings, Terrain, Weather, Ambient Sounds) */}
+											{currentScene?.terrain &&
+												currentScene.terrain.length > 0 && (
+													<div className="absolute inset-0 pointer-events-none z-[1]">
+														<svg className="absolute inset-0 w-full h-full overflow-visible">
+															<title>Map Terrain Zones</title>
+															{currentScene.terrain.map((zone) => {
+																if (!zone.visible) return null;
+																const gZoom = gridSize * zoom;
+																const pointsStr = zone.vertices
+																	.map(
+																		(v) =>
+																			`${(v.x + 0.5) * gZoom},${(v.y + 0.5) * gZoom}`,
+																	)
+																	.join(" ");
+																return (
+																	<polygon
+																		key={zone.id}
 																		points={pointsStr}
-																		fill="none"
-																		stroke={drawing.color}
-																		strokeWidth={drawing.strokeWidth}
-																		strokeLinecap="round"
-																		strokeLinejoin="round"
-																		opacity={drawing.fillOpacity ?? 1}
+																		fill={zone.fillColor}
+																		stroke={zone.fillColor.replace(
+																			/[\d.]+\)$/g,
+																			"1)",
+																		)}
+																		strokeWidth={2}
 																	/>
-																</svg>
-															);
-														}
+																);
+															})}
+														</svg>
+													</div>
+												)}
 
-														if (drawing.type === "line") {
+											{currentScene?.drawings &&
+												currentScene.drawings.length > 0 && (
+													<div className="absolute inset-0 pointer-events-none z-[2]">
+														{currentScene.drawings.map((drawing) => {
+															if (drawing.layer === "gm") return null; // Only player layers
+
+															if (drawing.type === "freehand") {
+																const gZoom = gridSize * zoom;
+																const pointsStr = drawing.points
+																	.map(
+																		(p) =>
+																			`${(p.x + 0.5) * gZoom},${(p.y + 0.5) * gZoom}`,
+																	)
+																	.join(" ");
+																return (
+																	<svg
+																		key={drawing.id}
+																		className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
+																	>
+																		<title>Map Freehand Drawing</title>
+																		<polyline
+																			points={pointsStr}
+																			fill="none"
+																			stroke={drawing.color}
+																			strokeWidth={drawing.strokeWidth}
+																			strokeLinecap="round"
+																			strokeLinejoin="round"
+																			opacity={drawing.fillOpacity ?? 1}
+																		/>
+																	</svg>
+																);
+															}
+
+															if (drawing.type === "line") {
+																return (
+																	<div
+																		key={drawing.id}
+																		className={cn(
+																			"vtt-drawing-line absolute origin-left rounded-full pointer-events-none",
+																			`vtt-drawing-line-${toSafeClassName(drawing.id)}`,
+																		)}
+																	/>
+																);
+															}
 															return (
 																<div
 																	key={drawing.id}
 																	className={cn(
-																		"vtt-drawing-line absolute origin-left rounded-full pointer-events-none",
-																		`vtt-drawing-line-${toSafeClassName(drawing.id)}`,
+																		"vtt-drawing-shape absolute border-solid box-border pointer-events-none",
+																		drawing.type === "circle" && "rounded-full",
+																		`vtt-drawing-shape-${toSafeClassName(drawing.id)}`,
 																	)}
 																/>
 															);
-														}
-														return (
-															<div
-																key={drawing.id}
-																className={cn(
-																	"vtt-drawing-shape absolute border-solid box-border pointer-events-none",
-																	drawing.type === "circle" && "rounded-full",
-																	`vtt-drawing-shape-${toSafeClassName(drawing.id)}`,
-																)}
-															/>
-														);
-													})}
-												</div>
-											)}
-
-										{/* Weather overlay */}
-										{currentScene?.weather &&
-											currentScene.weather !== "clear" &&
-											WEATHER_PRESETS[
-												currentScene.weather as keyof typeof WEATHER_PRESETS
-											] && (
-												<div
-													className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80"
-													data-testid="vtt-weather-overlay"
-												>
-													<style>
-														{getWeatherCSSAnimation(
-															WEATHER_PRESETS[
-																currentScene.weather as keyof typeof WEATHER_PRESETS
-															],
-														)}
-													</style>
-													{Array.from({
-														length: Math.min(
-															WEATHER_PRESETS[
-																currentScene.weather as keyof typeof WEATHER_PRESETS
-															].particleCount,
-															200,
-														),
-													})
-														.map((_, idx) => idx)
-														.map((i) => {
-															const size = Math.random() * 4 + 2;
-															const left = Math.random() * 100;
-															const top = Math.random() * 100;
-															const animDuration = Math.random() * 2 + 1;
-															const delay = Math.random() * -2;
-															return (
-																<div
-																	key={`weather-particle-${currentScene.weather}-${i}`}
-																	className="absolute rounded-full"
-																	style={{
-																		width: `${size}px`,
-																		height: `${size}px`,
-																		left: `${left}%`,
-																		top: `${top}%`,
-																		backgroundColor:
-																			WEATHER_PRESETS[
-																				currentScene?.weather as keyof typeof WEATHER_PRESETS
-																			].particleColor,
-																		animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
-																		animationDelay: `${delay}s`,
-																	}}
-																/>
-															);
 														})}
-												</div>
-											)}
-
-										{/* Token Auras */}
-										{visibleTokens
-											.filter((t) => t.auraRadius && t.auraRadius > 0)
-											.map((token) => {
-												const auraSize =
-													((token.auraRadius as number) * 2 + 1) *
-													gridSize *
-													zoom;
-												const tokenSize = SIZE_VALUES[token.size] * zoom;
-												const centerOffset = tokenSize / 2 - auraSize / 2;
-												return (
-													<div
-														key={`aura-${token.id}`}
-														className="absolute rounded-full pointer-events-none animate-pulse vtt-token-aura"
-														style={
-															{
-																"--aura-left":
-																	token.x * gridSize * zoom + centerOffset,
-																"--aura-top":
-																	token.y * gridSize * zoom + centerOffset,
-																"--aura-size": `${auraSize}px`,
-																"--aura-bg-color": `${token.auraColor || "#3b82f6"}18`,
-																"--aura-border-color": `${token.auraColor || "#3b82f6"}40`,
-																"--aura-z-index": token.layer * 10 + 5,
-															} as React.CSSProperties
-														}
-													/>
-												);
-											})}
-
-										{/* Tokens */}
-										{visibleTokens.map((token) => {
-											const size = SIZE_VALUES[token.size] * zoom;
-											const canDrag = isOwnToken(token) && !token.locked;
-											const hpPercent =
-												token.maxHp && token.maxHp > 0
-													? ((token.hp ?? 0) / token.maxHp) * 100
-													: null;
-											const isOverlay =
-												token.tokenType === "effect" ||
-												token.tokenType === "prop";
-											return (
-												<button type="button"
-													key={token.id}
-													className={cn(
-														"vtt-token-container transition-all p-0 bg-transparent border-none text-left",
-														canDrag ? "cursor-move" : "cursor-default",
-														draggedTokenId === token.id && "opacity-70",
-													)}
-													style={
-														{
-															"--token-x": token.x * gridSize * zoom,
-															"--token-y": token.y * gridSize * zoom,
-															"--token-size": `${size}px`,
-															"--token-rotation": `${token.rotation}deg`,
-															"--token-z-index": token.layer,
-														} as React.CSSProperties
-													}
-													onMouseDown={
-														canDrag
-															? (e) => handleTokenMouseDown(token, e)
-															: undefined
-													}
-													title={`${token.name}${token.hp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ""}${canDrag ? " — drag to move" : ""}`}
-												>
-													<div
-														className={cn(
-															"vtt-token-inner",
-															isOverlay
-																? "vtt-token-overlay"
-																: "rounded-full vtt-token-base",
-														)}
-														style={
-															{
-																"--token-bg-color": isOverlay
-																	? "transparent"
-																	: token.color
-																		? `${token.color}40`
-																		: "rgba(0,0,0,0.3)",
-																"--token-border-color": isOverlay
-																	? "transparent"
-																	: token.color || "hsl(var(--primary))",
-																"--token-font-size": `${size * 0.35}px`,
-															} as React.CSSProperties
-														}
-													>
-														{token.imageUrl ? (
-															<OptimizedImage
-																src={token.imageUrl}
-																alt={token.name}
-																className={cn(
-																	"w-full h-full",
-																	isOverlay
-																		? "object-contain"
-																		: "object-cover rounded-full",
-																)}
-																size="small"
-															/>
-														) : (
-															token.emoji || token.name.charAt(0).toUpperCase()
-														)}
 													</div>
+												)}
 
-													{/* HP bar */}
-													{hpPercent !== null && !isOverlay && (
-														<div className="vtt-hp-bar-container">
-															<div
-																className={cn(
-																	"vtt-hp-bar vtt-hp-bar-fill",
-																	(hpPercent as number) > 50 && "high",
-																	(hpPercent as number) > 25 &&
-																		(hpPercent as number) <= 50 &&
-																		"medium",
-																	(hpPercent as number) <= 25 && "low",
-																)}
-																style={
-																	{
-																		"--hp-width": `${Math.max(0, Math.min(100, hpPercent))}%`,
-																	} as React.CSSProperties
-																}
-															/>
-														</div>
-													)}
-
-													{/* Conditions */}
-													{token.conditions && token.conditions.length > 0 && (
-														<div className="vtt-conditions">
-															{token.conditions.slice(0, 3).map((cond) => (
-																<span
-																	key={`${token.id}-cond-${cond}`}
-																	className="vtt-condition-badge"
-																	title={cond}
-																>
-																	{cond.charAt(0).toUpperCase()}
-																</span>
-															))}
-														</div>
-													)}
-												</button>
-											);
-										})}
-
-										{/* Pings overlay */}
-										{vttRealtime.pings.length > 0 && (
-											<div className="absolute inset-0 pointer-events-none vtt-pings-overlay z-[100]">
-												{vttRealtime.pings.map((ping) => (
+											{/* Weather overlay */}
+											{currentScene?.weather &&
+												currentScene.weather !== "clear" &&
+												WEATHER_PRESETS[
+													currentScene.weather as keyof typeof WEATHER_PRESETS
+												] && (
 													<div
-														key={ping.createdAt}
-														className="absolute animate-ping vtt-ping"
-														style={
-															{
-																"--ping-left": (ping.x + 0.5) * gridSize * zoom,
-																"--ping-top": (ping.y + 0.5) * gridSize * zoom,
-																"--ping-color": ping.color,
-																left: "var(--ping-left)px",
-																top: "var(--ping-top)px",
-																width: "40px",
-																height: "40px",
-																borderRadius: "50%",
-																transform: "translate(-50%, -50%)",
-																border: `4px solid ${ping.color}`,
-															} as React.CSSProperties
-														}
-													/>
-												))}
-											</div>
-										)}
+														className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80"
+														data-testid="vtt-weather-overlay"
+													>
+														<style>
+															{getWeatherCSSAnimation(
+																WEATHER_PRESETS[
+																	currentScene.weather as keyof typeof WEATHER_PRESETS
+																],
+															)}
+														</style>
+														{Array.from({
+															length: Math.min(
+																WEATHER_PRESETS[
+																	currentScene.weather as keyof typeof WEATHER_PRESETS
+																].particleCount,
+																200,
+															),
+														})
+															.map((_, idx) => idx)
+															.map((i) => {
+																const size = Math.random() * 4 + 2;
+																const left = Math.random() * 100;
+																const top = Math.random() * 100;
+																const animDuration = Math.random() * 2 + 1;
+																const delay = Math.random() * -2;
+																return (
+																	<div
+																		key={`weather-particle-${currentScene.weather}-${i}`}
+																		className="absolute rounded-full"
+																		style={{
+																			width: `${size}px`,
+																			height: `${size}px`,
+																			left: `${left}%`,
+																			top: `${top}%`,
+																			backgroundColor:
+																				WEATHER_PRESETS[
+																					currentScene?.weather as keyof typeof WEATHER_PRESETS
+																				].particleColor,
+																			animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
+																			animationDelay: `${delay}s`,
+																		}}
+																	/>
+																);
+															})}
+													</div>
+												)}
 
-										{/* Remote cursors */}
-										{vttRealtime.activeUsers.filter((u) => u.cursor).length >
-											0 && (
-											<div className="absolute inset-0 pointer-events-none vtt-cursors-overlay">
-												{vttRealtime.activeUsers
-													.filter((u) => u.cursor)
-													.map((u) => (
+											{/* Token Auras */}
+											{visibleTokens
+												.filter((t) => t.auraRadius && t.auraRadius > 0)
+												.map((token) => {
+													const auraSize =
+														((token.auraRadius as number) * 2 + 1) *
+														gridSize *
+														zoom;
+													const tokenSize = SIZE_VALUES[token.size] * zoom;
+													const centerOffset = tokenSize / 2 - auraSize / 2;
+													return (
 														<div
-															key={u.userId}
-															className="absolute transition-all duration-100"
+															key={`aura-${token.id}`}
+															className="absolute rounded-full pointer-events-none animate-pulse vtt-token-aura"
 															style={
 																{
-																	"--cursor-left":
-																		((u.cursor?.x ?? 0) + 0.5) *
-																		gridSize *
-																		zoom,
-																	"--cursor-top":
-																		((u.cursor?.y ?? 0) + 0.5) *
-																		gridSize *
-																		zoom,
+																	"--aura-left":
+																		token.x * gridSize * zoom + centerOffset,
+																	"--aura-top":
+																		token.y * gridSize * zoom + centerOffset,
+																	"--aura-size": `${auraSize}px`,
+																	"--aura-bg-color": `${token.auraColor || "#3b82f6"}18`,
+																	"--aura-border-color": `${token.auraColor || "#3b82f6"}40`,
+																	"--aura-z-index": token.layer * 10 + 5,
+																} as React.CSSProperties
+															}
+														/>
+													);
+												})}
+
+											{/* Tokens */}
+											{visibleTokens.map((token) => {
+												const size = SIZE_VALUES[token.size] * zoom;
+												const canDrag = isOwnToken(token) && !token.locked;
+												const hpPercent =
+													token.maxHp && token.maxHp > 0
+														? ((token.hp ?? 0) / token.maxHp) * 100
+														: null;
+												const isOverlay =
+													token.tokenType === "effect" ||
+													token.tokenType === "prop";
+												return (
+													<button
+														type="button"
+														key={token.id}
+														className={cn(
+															"vtt-token-container transition-all p-0 bg-transparent border-none text-left",
+															canDrag ? "cursor-move" : "cursor-default",
+															draggedTokenId === token.id && "opacity-70",
+														)}
+														style={
+															{
+																"--token-x": token.x * gridSize * zoom,
+																"--token-y": token.y * gridSize * zoom,
+																"--token-size": `${size}px`,
+																"--token-rotation": `${token.rotation}deg`,
+																"--token-z-index": token.layer,
+															} as React.CSSProperties
+														}
+														onMouseDown={
+															canDrag
+																? (e) => handleTokenMouseDown(token, e)
+																: undefined
+														}
+														title={`${token.name}${token.hp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ""}${canDrag ? " — drag to move" : ""}`}
+													>
+														<div
+															className={cn(
+																"vtt-token-inner",
+																isOverlay
+																	? "vtt-token-overlay"
+																	: "rounded-full vtt-token-base",
+															)}
+															style={
+																{
+																	"--token-bg-color": isOverlay
+																		? "transparent"
+																		: token.color
+																			? `${token.color}40`
+																			: "rgba(0,0,0,0.3)",
+																	"--token-border-color": isOverlay
+																		? "transparent"
+																		: token.color || "hsl(var(--primary))",
+																	"--token-font-size": `${size * 0.35}px`,
 																} as React.CSSProperties
 															}
 														>
+															{token.imageUrl ? (
+																<OptimizedImage
+																	src={token.imageUrl}
+																	alt={token.name}
+																	className={cn(
+																		"w-full h-full",
+																		isOverlay
+																			? "object-contain"
+																			: "object-cover rounded-full",
+																	)}
+																	size="small"
+																/>
+															) : (
+																token.emoji ||
+																token.name.charAt(0).toUpperCase()
+															)}
+														</div>
+
+														{/* HP bar */}
+														{hpPercent !== null && !isOverlay && (
+															<div className="vtt-hp-bar-container">
+																<div
+																	className={cn(
+																		"vtt-hp-bar vtt-hp-bar-fill",
+																		(hpPercent as number) > 50 && "high",
+																		(hpPercent as number) > 25 &&
+																			(hpPercent as number) <= 50 &&
+																			"medium",
+																		(hpPercent as number) <= 25 && "low",
+																	)}
+																	style={
+																		{
+																			"--hp-width": `${Math.max(0, Math.min(100, hpPercent))}%`,
+																		} as React.CSSProperties
+																	}
+																/>
+															</div>
+														)}
+
+														{/* Conditions */}
+														{token.conditions &&
+															token.conditions.length > 0 && (
+																<div className="vtt-conditions">
+																	{token.conditions.slice(0, 3).map((cond) => (
+																		<span
+																			key={`${token.id}-cond-${cond}`}
+																			className="vtt-condition-badge"
+																			title={cond}
+																		>
+																			{cond.charAt(0).toUpperCase()}
+																		</span>
+																	))}
+																</div>
+															)}
+													</button>
+												);
+											})}
+
+											{/* Pings overlay */}
+											{vttRealtime.pings.length > 0 && (
+												<div className="absolute inset-0 pointer-events-none vtt-pings-overlay z-[100]">
+													{vttRealtime.pings.map((ping) => (
+														<div
+															key={ping.createdAt}
+															className="absolute animate-ping vtt-ping"
+															style={
+																{
+																	"--ping-left":
+																		(ping.x + 0.5) * gridSize * zoom,
+																	"--ping-top":
+																		(ping.y + 0.5) * gridSize * zoom,
+																	"--ping-color": ping.color,
+																	left: "var(--ping-left)px",
+																	top: "var(--ping-top)px",
+																	width: "40px",
+																	height: "40px",
+																	borderRadius: "50%",
+																	transform: "translate(-50%, -50%)",
+																	border: `4px solid ${ping.color}`,
+																} as React.CSSProperties
+															}
+														/>
+													))}
+												</div>
+											)}
+
+											{/* Remote cursors */}
+											{vttRealtime.activeUsers.filter((u) => u.cursor).length >
+												0 && (
+												<div className="absolute inset-0 pointer-events-none vtt-cursors-overlay">
+													{vttRealtime.activeUsers
+														.filter((u) => u.cursor)
+														.map((u) => (
 															<div
-																className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+																key={u.userId}
+																className="absolute transition-all duration-100"
 																style={
 																	{
-																		"--cursor-dot-bg": u.color,
-																	} as React.CSSProperties
-																}
-															/>
-															<div
-																className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																style={
-																	{
-																		"--cursor-label-bg": u.color,
+																		"--cursor-left":
+																			((u.cursor?.x ?? 0) + 0.5) *
+																			gridSize *
+																			zoom,
+																		"--cursor-top":
+																			((u.cursor?.y ?? 0) + 0.5) *
+																			gridSize *
+																			zoom,
 																	} as React.CSSProperties
 																}
 															>
-																{u.userName}
+																<div
+																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+																	style={
+																		{
+																			"--cursor-dot-bg": u.color,
+																		} as React.CSSProperties
+																	}
+																/>
+																<div
+																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+																	style={
+																		{
+																			"--cursor-label-bg": u.color,
+																		} as React.CSSProperties
+																	}
+																>
+																	{u.userName}
+																</div>
 															</div>
-														</div>
-													))}
-											</div>
-										)}
-
-										{/* Empty state */}
-										{visibleTokens.length === 0 &&
-											!currentScene?.backgroundImage && (
-												<div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-													<p className="text-sm">
-														Waiting for DM to set up the map...
-													</p>
+														))}
 												</div>
 											)}
-									</div>
+
+											{/* Empty state */}
+											{visibleTokens.length === 0 &&
+												!currentScene?.backgroundImage && (
+													<div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+														<p className="text-sm">
+															Waiting for DM to set up the map...
+														</p>
+													</div>
+												)}
+										</div>
 									</ErrorBoundary>
 								</div>
 							</SystemWindow>
@@ -1156,15 +1163,38 @@ const PlayerMapView = ({
 															>
 																{msg.diceDisplayText ? (
 																	<span>
-																		{msg.diceDisplayText.split(/(\*\*.*?\*\*|~~.*?~~)/).map((part) => {
-																			if (part.startsWith('**') && part.endsWith('**')) {
-																				return <strong key={crypto.randomUUID()}>{part.slice(2, -2)}</strong>;
-																			}
-																			if (part.startsWith('~~') && part.endsWith('~~')) {
-																				return <del key={crypto.randomUUID()} className="opacity-40">{part.slice(2, -2)}</del>;
-																			}
-																			return <span key={crypto.randomUUID()}>{part}</span>;
-																		})}
+																		{msg.diceDisplayText
+																			.split(/(\*\*.*?\*\*|~~.*?~~)/)
+																			.map((part) => {
+																				if (
+																					part.startsWith("**") &&
+																					part.endsWith("**")
+																				) {
+																					return (
+																						<strong key={crypto.randomUUID()}>
+																							{part.slice(2, -2)}
+																						</strong>
+																					);
+																				}
+																				if (
+																					part.startsWith("~~") &&
+																					part.endsWith("~~")
+																				) {
+																					return (
+																						<del
+																							key={crypto.randomUUID()}
+																							className="opacity-40"
+																						>
+																							{part.slice(2, -2)}
+																						</del>
+																					);
+																				}
+																				return (
+																					<span key={crypto.randomUUID()}>
+																						{part}
+																					</span>
+																				);
+																			})}
 																	</span>
 																) : (
 																	msg.message
@@ -1483,15 +1513,38 @@ const PlayerMapView = ({
 													</span>
 													{msg.diceDisplayText ? (
 														<span>
-															{msg.diceDisplayText.split(/(\*\*.*?\*\*|~~.*?~~)/).map((part) => {
-																if (part.startsWith('**') && part.endsWith('**')) {
-																	return <strong key={crypto.randomUUID()}>{part.slice(2, -2)}</strong>;
-																}
-																if (part.startsWith('~~') && part.endsWith('~~')) {
-																	return <del key={crypto.randomUUID()} className="opacity-40">{part.slice(2, -2)}</del>;
-																}
-																return <span key={crypto.randomUUID()}>{part}</span>;
-															})}
+															{msg.diceDisplayText
+																.split(/(\*\*.*?\*\*|~~.*?~~)/)
+																.map((part) => {
+																	if (
+																		part.startsWith("**") &&
+																		part.endsWith("**")
+																	) {
+																		return (
+																			<strong key={crypto.randomUUID()}>
+																				{part.slice(2, -2)}
+																			</strong>
+																		);
+																	}
+																	if (
+																		part.startsWith("~~") &&
+																		part.endsWith("~~")
+																	) {
+																		return (
+																			<del
+																				key={crypto.randomUUID()}
+																				className="opacity-40"
+																			>
+																				{part.slice(2, -2)}
+																			</del>
+																		);
+																	}
+																	return (
+																		<span key={crypto.randomUUID()}>
+																			{part}
+																		</span>
+																	);
+																})}
 														</span>
 													) : (
 														msg.message

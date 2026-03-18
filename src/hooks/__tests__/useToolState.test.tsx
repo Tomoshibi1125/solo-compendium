@@ -35,7 +35,8 @@ type ProbeSnapshot = {
 
 let remoteUserState: ProbeState | null = null;
 let remoteCampaignState: ProbeState | null = null;
-const upsertCalls: Array<{ table: string; payload: Record<string, unknown> }> = [];
+const upsertCalls: Array<{ table: string; payload: Record<string, unknown> }> =
+	[];
 let storage: Storage;
 
 const createMemoryStorage = (): Storage => {

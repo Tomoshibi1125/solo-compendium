@@ -55,10 +55,7 @@ const writtenNumberToDigit = (word: string): number => {
 /**
  * Parse a description for choice grants using comprehensive pattern matching
  */
-function parseChoiceGrants(
-	description: string,
-	source: string,
-): ChoiceGrant[] {
+function parseChoiceGrants(description: string, source: string): ChoiceGrant[] {
 	const grants: ChoiceGrant[] = [];
 	const desc = description.toLowerCase();
 
@@ -321,7 +318,11 @@ function parseChoiceGrants(
  */
 interface ChoiceSourceData {
 	skill_choice_count?: number;
-	awakeningFeatures?: Array<{ level: number; description: string; name: string }>;
+	awakeningFeatures?: Array<{
+		level: number;
+		description: string;
+		name: string;
+	}>;
 	jobTraits?: Array<{ description: string; name: string }>;
 	features?: Array<{ level: number; description: string; name: string }>;
 	class_features?: Array<{ level: number; description: string; name: string }>;

@@ -847,7 +847,8 @@ const VTTMap = () => {
 												}
 											: undefined;
 										return (
-											<button type="button"
+											<button
+												type="button"
 												key={token.id}
 												draggable={!token.locked}
 												onDragStart={(e) => handleTokenDragStart(token, e)}

@@ -104,7 +104,10 @@ export function PowersList({
 				"@/data/compendium/staticDataProvider"
 			);
 			const staticPowers = await staticDataProvider.getPowers("");
-			return staticPowers.map((p: { id: string; name: string }) => ({ id: p.id, name: p.name }));
+			return staticPowers.map((p: { id: string; name: string }) => ({
+				id: p.id,
+				name: p.name,
+			}));
 		},
 	});
 

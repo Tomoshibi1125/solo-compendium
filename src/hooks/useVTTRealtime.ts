@@ -337,9 +337,7 @@ function rollDiceFormula(formula: string): VTTDiceRoll {
 	};
 }
 
-function rollDiceFormulaDetailed(
-	rawFormula: string,
-): VTTDiceRollDetailed {
+function rollDiceFormulaDetailed(rawFormula: string): VTTDiceRollDetailed {
 	let formula = rawFormula.trim().toLowerCase();
 
 	// Shorthand: adv → 2d20kh1, dis → 2d20kl1
@@ -749,13 +747,21 @@ export function useVTTRealtime({
 				if (whisperCmd.type === "roll_whisper") {
 					const roll = rollDiceFormulaDetailed(whisperCmd.content);
 					const contentStr = `${whisperCmd.content} = ${roll.result}${roll.critical ? " CRITICAL!" : roll.fumble ? " FUMBLE!" : ""}`;
-					
-					const whisper = createWhisperMessage(userId, userName, whisperCmd.recipientIds, whisperCmd.recipientNames, contentStr, whisperCmd.type, {
-						formula: roll.formula,
-						result: roll.result,
-						details: roll.displayText,
-					});
-					
+
+					const whisper = createWhisperMessage(
+						userId,
+						userName,
+						whisperCmd.recipientIds,
+						whisperCmd.recipientNames,
+						contentStr,
+						whisperCmd.type,
+						{
+							formula: roll.formula,
+							result: roll.result,
+							details: roll.displayText,
+						},
+					);
+
 					const msg: VTTChatMessage = {
 						id: whisper.id,
 						userId: whisper.senderId,
@@ -775,7 +781,14 @@ export function useVTTRealtime({
 					return;
 				}
 
-				const whisper = createWhisperMessage(userId, userName, whisperCmd.recipientIds, whisperCmd.recipientNames, whisperCmd.content, whisperCmd.type);
+				const whisper = createWhisperMessage(
+					userId,
+					userName,
+					whisperCmd.recipientIds,
+					whisperCmd.recipientNames,
+					whisperCmd.content,
+					whisperCmd.type,
+				);
 				const msg: VTTChatMessage = {
 					id: whisper.id,
 					userId: whisper.senderId,
@@ -1022,24 +1035,31 @@ export function useVTTRealtime({
 						case "dice_roll": {
 							const msgPayload = payload.payload as VTTChatMessage;
 							// If it's a whisper, only allow it into state if we're meant to see it.
-							if (["whisper", "gm_whisper", "roll_whisper"].includes(msgPayload.type)) {
+							if (
+								["whisper", "gm_whisper", "roll_whisper"].includes(
+									msgPayload.type,
+								)
+							) {
 								const mockWhisper = {
 									id: msgPayload.id,
 									senderId: msgPayload.userId,
 									senderName: msgPayload.userName,
-									recipientIds: msgPayload.whisperTo ? msgPayload.whisperTo.split(',') : [],
+									recipientIds: msgPayload.whisperTo
+										? msgPayload.whisperTo.split(",")
+										: [],
 									recipientNames: [],
 									content: msgPayload.message,
 									timestamp: new Date(msgPayload.timestamp).toISOString(),
-									type: msgPayload.type as "whisper" | "gm_whisper" | "roll_whisper",
+									type: msgPayload.type as
+										| "whisper"
+										| "gm_whisper"
+										| "roll_whisper",
 								};
 								if (!isMessageVisibleTo(mockWhisper, userId)) {
 									break; // ignore this message entirely
 								}
 							}
-							setChatMessages((prev) =>
-								[...prev, msgPayload].slice(-200),
-							);
+							setChatMessages((prev) => [...prev, msgPayload].slice(-200));
 							break;
 						}
 						case "initiative_update":

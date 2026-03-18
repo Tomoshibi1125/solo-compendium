@@ -334,7 +334,12 @@ const DiceRoller = () => {
 					roll_type: newRoll.type ?? "normal",
 					rolls: newRoll.rolls,
 					context: "dice",
-					modifiers: newRoll.modifier ? { modifier: newRoll.modifier } as Record<string, import("@/integrations/supabase/types").Json> : undefined,
+					modifiers: newRoll.modifier
+						? ({ modifier: newRoll.modifier } as Record<
+								string,
+								import("@/integrations/supabase/types").Json
+							>)
+						: undefined,
 					character_id: undefined,
 				});
 			} else {
@@ -345,7 +350,12 @@ const DiceRoller = () => {
 						roll_type: newRoll.type ?? "normal",
 						rolls: newRoll.rolls,
 						context: "dice",
-						modifiers: newRoll.modifier ? { modifier: newRoll.modifier } as Record<string, import("@/integrations/supabase/types").Json> : undefined,
+						modifiers: newRoll.modifier
+							? ({ modifier: newRoll.modifier } as Record<
+									string,
+									import("@/integrations/supabase/types").Json
+								>)
+							: undefined,
 						campaign_id: campaignId || undefined,
 						character_id: null,
 					},
@@ -592,10 +602,10 @@ const DiceRoller = () => {
 														c.id !== null && c.name !== null,
 												)
 												.map((c) => (
-												<SelectItem key={c.id} value={c.id}>
-													{c.name}
-												</SelectItem>
-											))}
+													<SelectItem key={c.id} value={c.id}>
+														{c.name}
+													</SelectItem>
+												))}
 										</SelectContent>
 									</Select>
 								</div>

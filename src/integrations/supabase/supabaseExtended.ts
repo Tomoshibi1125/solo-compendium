@@ -11,10 +11,8 @@ import type { Database, Json } from "./types";
 // ─── Base Row Aliases ───────────────────────────────────────────────────────────
 
 type CharacterRow = Database["public"]["Tables"]["characters"]["Row"];
-type EquipmentRow =
-	Database["public"]["Tables"]["character_equipment"]["Row"];
-type FeatureRow =
-	Database["public"]["Tables"]["character_features"]["Row"];
+type EquipmentRow = Database["public"]["Tables"]["character_equipment"]["Row"];
+type FeatureRow = Database["public"]["Tables"]["character_features"]["Row"];
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
 type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
@@ -174,11 +172,7 @@ interface CalculatedStatsExtended {
 // ─── Spell Duration Types ───────────────────────────────────────────────────────
 
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type SpellDurationType =
-	| "rounds"
-	| "minutes"
-	| "hours"
-	| "concentration";
+type SpellDurationType = "rounds" | "minutes" | "hours" | "concentration";
 
 // ─── Character Feature Choice Data ──────────────────────────────────────────────
 
@@ -220,21 +214,13 @@ interface GeneratedSovereignExtended {
 
 /** Weather type for VTT scenes */
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-type VTTWeatherType =
-	| "clear"
-	| "rain"
-	| "snow"
-	| "fog"
-	| "storm"
-	| string;
+type VTTWeatherType = "clear" | "rain" | "snow" | "fog" | "storm" | string;
 
 // ─── Utility Types ──────────────────────────────────────────────────────────────
 
 /** Type-safe helper for JSON column access */
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function asRecord(
-	json: Json | null | undefined,
-): Record<string, unknown> {
+function asRecord(json: Json | null | undefined): Record<string, unknown> {
 	if (json && typeof json === "object" && !Array.isArray(json)) {
 		return json as Record<string, unknown>;
 	}

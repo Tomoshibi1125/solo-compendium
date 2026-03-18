@@ -8,7 +8,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { LoadingIndicator, NetworkErrorBoundary } from "@/components/NetworkErrorHandling";
+import {
+	LoadingIndicator,
+	NetworkErrorBoundary,
+} from "@/components/NetworkErrorHandling";
 import { NavBar } from "@/components/navigation/NavBar";
 import PerformancePreload from "@/components/PerformancePreload";
 import { OfflineStatus } from "@/components/pwa/PWAComponents";

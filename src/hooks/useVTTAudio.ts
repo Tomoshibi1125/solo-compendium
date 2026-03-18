@@ -34,9 +34,18 @@ const supabaseAny = supabase as unknown as {
 	auth: { getUser: () => Promise<{ data: { user: { id: string } | null } }> };
 	from: (table: string) => {
 		select: (columns: string) => {
-			eq: (col: string, val: string) => {
-				order: (col: string, opts?: { ascending: boolean }) => Promise<{ data: unknown; error: { message?: string } | null }>;
-				maybeSingle: () => Promise<{ data: unknown; error: { message?: string } | null }>;
+			eq: (
+				col: string,
+				val: string,
+			) => {
+				order: (
+					col: string,
+					opts?: { ascending: boolean },
+				) => Promise<{ data: unknown; error: { message?: string } | null }>;
+				maybeSingle: () => Promise<{
+					data: unknown;
+					error: { message?: string } | null;
+				}>;
 			};
 		};
 	};

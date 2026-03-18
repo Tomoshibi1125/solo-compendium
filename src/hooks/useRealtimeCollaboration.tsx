@@ -425,11 +425,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 
 // React component for displaying active users
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function ActiveUsersList({
-	activeUsers,
-}: {
-	activeUsers: ActiveUser[];
-}) {
+function ActiveUsersList({ activeUsers }: { activeUsers: ActiveUser[] }) {
 	return (
 		<div className="flex items-center space-x-2 p-2 bg-muted rounded-lg">
 			<div className="flex -space-x-2">
@@ -452,11 +448,7 @@ function ActiveUsersList({
 
 // React component for collaborative cursors
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function CollaborativeCursors({
-	activeUsers,
-}: {
-	activeUsers: ActiveUser[];
-}) {
+function CollaborativeCursors({ activeUsers }: { activeUsers: ActiveUser[] }) {
 	const setCursorVars = (
 		el: HTMLDivElement | null,
 		cursor: { x: number; y: number },

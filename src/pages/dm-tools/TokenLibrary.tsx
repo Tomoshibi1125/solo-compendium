@@ -571,7 +571,8 @@ const TokenLibrary = () => {
 												const CategoryIcon = getCategoryIcon(token.category);
 
 												return (
-													<button type="button"
+													<button
+														type="button"
 														key={token.id}
 														className={cn(
 															"w-full text-left p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 transition-all cursor-pointer group",

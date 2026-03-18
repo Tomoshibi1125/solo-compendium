@@ -215,7 +215,9 @@ Generated: ${new Date().toLocaleDateString()}
 
 				const { data: createdCharacter, error: createError } = await supabase
 					.from("characters")
-					.insert(newCharacter as Database["public"]["Tables"]["characters"]["Insert"])
+					.insert(
+						newCharacter as Database["public"]["Tables"]["characters"]["Insert"],
+					)
 					.select()
 					.single();
 
@@ -225,30 +227,45 @@ Generated: ${new Date().toLocaleDateString()}
 
 				// Import related data if present
 				if (data.abilities && data.abilities.length > 0) {
-					const abilities = data.abilities.map((ability: Record<string, unknown>) => ({
-						...ability,
-						character_id: createdCharacter.id,
-						id: undefined, // Let DB generate new ID
-					})) as Database["public"]["Tables"]["character_abilities"]["Insert"][];
-					await supabase.from("character_abilities").insert(abilities).throwOnError();
+					const abilities = data.abilities.map(
+						(ability: Record<string, unknown>) => ({
+							...ability,
+							character_id: createdCharacter.id,
+							id: undefined, // Let DB generate new ID
+						}),
+					) as Database["public"]["Tables"]["character_abilities"]["Insert"][];
+					await supabase
+						.from("character_abilities")
+						.insert(abilities)
+						.throwOnError();
 				}
 
 				if (data.equipment && data.equipment.length > 0) {
-					const equipment = data.equipment.map((item: Record<string, unknown>) => ({
-						...item,
-						character_id: createdCharacter.id,
-						id: undefined,
-					})) as Database["public"]["Tables"]["character_equipment"]["Insert"][];
-					await supabase.from("character_equipment").insert(equipment).throwOnError();
+					const equipment = data.equipment.map(
+						(item: Record<string, unknown>) => ({
+							...item,
+							character_id: createdCharacter.id,
+							id: undefined,
+						}),
+					) as Database["public"]["Tables"]["character_equipment"]["Insert"][];
+					await supabase
+						.from("character_equipment")
+						.insert(equipment)
+						.throwOnError();
 				}
 
 				if (data.features && data.features.length > 0) {
-					const features = data.features.map((feature: Record<string, unknown>) => ({
-						...feature,
-						character_id: createdCharacter.id,
-						id: undefined,
-					})) as Database["public"]["Tables"]["character_features"]["Insert"][];
-					await supabase.from("character_features").insert(features).throwOnError();
+					const features = data.features.map(
+						(feature: Record<string, unknown>) => ({
+							...feature,
+							character_id: createdCharacter.id,
+							id: undefined,
+						}),
+					) as Database["public"]["Tables"]["character_features"]["Insert"][];
+					await supabase
+						.from("character_features")
+						.insert(features)
+						.throwOnError();
 				}
 
 				// Skip spells import for now as table structure may differ
@@ -332,7 +349,9 @@ export function useCharacterImport() {
 
 				const { data: createdCharacter, error: createError } = await supabase
 					.from("characters")
-					.insert(newCharacter as Database["public"]["Tables"]["characters"]["Insert"])
+					.insert(
+						newCharacter as Database["public"]["Tables"]["characters"]["Insert"],
+					)
 					.select()
 					.single();
 
@@ -342,30 +361,45 @@ export function useCharacterImport() {
 
 				// Import related data if present
 				if (data.abilities && data.abilities.length > 0) {
-					const abilities = data.abilities.map((ability: Record<string, unknown>) => ({
-						...ability,
-						character_id: createdCharacter.id,
-						id: undefined, // Let DB generate new ID
-					})) as Database["public"]["Tables"]["character_abilities"]["Insert"][];
-					await supabase.from("character_abilities").insert(abilities).throwOnError();
+					const abilities = data.abilities.map(
+						(ability: Record<string, unknown>) => ({
+							...ability,
+							character_id: createdCharacter.id,
+							id: undefined, // Let DB generate new ID
+						}),
+					) as Database["public"]["Tables"]["character_abilities"]["Insert"][];
+					await supabase
+						.from("character_abilities")
+						.insert(abilities)
+						.throwOnError();
 				}
 
 				if (data.equipment && data.equipment.length > 0) {
-					const equipment = data.equipment.map((item: Record<string, unknown>) => ({
-						...item,
-						character_id: createdCharacter.id,
-						id: undefined,
-					})) as Database["public"]["Tables"]["character_equipment"]["Insert"][];
-					await supabase.from("character_equipment").insert(equipment).throwOnError();
+					const equipment = data.equipment.map(
+						(item: Record<string, unknown>) => ({
+							...item,
+							character_id: createdCharacter.id,
+							id: undefined,
+						}),
+					) as Database["public"]["Tables"]["character_equipment"]["Insert"][];
+					await supabase
+						.from("character_equipment")
+						.insert(equipment)
+						.throwOnError();
 				}
 
 				if (data.features && data.features.length > 0) {
-					const features = data.features.map((feature: Record<string, unknown>) => ({
-						...feature,
-						character_id: createdCharacter.id,
-						id: undefined,
-					})) as Database["public"]["Tables"]["character_features"]["Insert"][];
-					await supabase.from("character_features").insert(features).throwOnError();
+					const features = data.features.map(
+						(feature: Record<string, unknown>) => ({
+							...feature,
+							character_id: createdCharacter.id,
+							id: undefined,
+						}),
+					) as Database["public"]["Tables"]["character_features"]["Insert"][];
+					await supabase
+						.from("character_features")
+						.insert(features)
+						.throwOnError();
 				}
 
 				// Skip spells import for now as table structure may differ

@@ -4,8 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 
-type CampaignExtra =
-	Database["public"]["Tables"]["campaign_extras"]["Row"];
+type CampaignExtra = Database["public"]["Tables"]["campaign_extras"]["Row"];
 type CampaignExtraInsert =
 	Database["public"]["Tables"]["campaign_extras"]["Insert"];
 type CampaignExtraUpdate =

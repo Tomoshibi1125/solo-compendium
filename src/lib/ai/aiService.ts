@@ -841,10 +841,10 @@ export class AIServiceManager {
 				metadata: { model: data?.model || "gemini-2.0-flash" },
 				usage: data?.usage
 					? {
-						promptTokens: data.usage.promptTokens,
-						completionTokens: data.usage.completionTokens,
-						totalTokens: data.usage.totalTokens,
-					}
+							promptTokens: data.usage.promptTokens,
+							completionTokens: data.usage.completionTokens,
+							totalTokens: data.usage.totalTokens,
+						}
 					: undefined,
 			};
 		} catch (error) {
@@ -1032,13 +1032,13 @@ export class AIServiceManager {
 			const data = await response.json();
 			const availableModels = Array.isArray(data?.models)
 				? data.models
-					.map((entry: { name?: string } | string) =>
-						typeof entry === "string" ? entry : entry?.name,
-					)
-					.filter(
-						(name: unknown): name is string =>
-							typeof name === "string" && name.trim().length > 0,
-					)
+						.map((entry: { name?: string } | string) =>
+							typeof entry === "string" ? entry : entry?.name,
+						)
+						.filter(
+							(name: unknown): name is string =>
+								typeof name === "string" && name.trim().length > 0,
+						)
 				: [];
 
 			if (availableModels.length === 0) {
@@ -1107,7 +1107,7 @@ export class AIServiceManager {
 			if (!response.ok) {
 				throw new Error(
 					data?.error?.message ||
-					`Custom AI request failed: ${response.status}`,
+						`Custom AI request failed: ${response.status}`,
 				);
 			}
 

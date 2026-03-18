@@ -165,7 +165,8 @@ export function MonarchUnlocksPanel({
 			if (!error && data && data.length > 0) {
 				return filterRowsBySourcebookAccess(
 					data,
-					(regent) => ((regent as Record<string, unknown>).source_book as string | null),
+					(regent) =>
+						(regent as Record<string, unknown>).source_book as string | null,
 					{ campaignId },
 				);
 			}
@@ -185,7 +186,9 @@ export function MonarchUnlocksPanel({
 		},
 	});
 
-	const unlockedIds = new Set(unlocks.map((u: { regent_id: string }) => u.regent_id));
+	const unlockedIds = new Set(
+		unlocks.map((u: { regent_id: string }) => u.regent_id),
+	);
 	const availableLockedRegents = allRegents.filter(
 		(r) => !unlockedIds.has(r.id),
 	);
@@ -480,45 +483,45 @@ export function MonarchUnlocksPanel({
 										{adaptiveChoices.map((regent) => {
 											if (!regent.id) return null;
 											return (
-											<button
-												type="button"
-												key={regent.id}
-												className={cn(
-													"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
-													selectedMonarchId === regent.id
-														? "border-monarch-gold bg-monarch-gold/10 shadow-[0_0_10px_hsl(var(--monarch-gold)/0.2)]"
-														: "border-border hover:border-monarch-gold/50 bg-background/50",
-												)}
-												onClick={() => setSelectedMonarchId(regent.id)}
-											>
-												<div className="flex items-center gap-3">
-													<div
-														className={cn(
-															"w-8 h-8 rounded-full flex items-center justify-center",
-															selectedMonarchId === regent.id
-																? "bg-monarch-gold text-background"
-																: "bg-muted text-muted-foreground",
-														)}
-													>
-														{themeIcons[regent.theme as string] || (
-															<Crown className="h-4 w-4" />
-														)}
-													</div>
-													<div>
-														<div className="font-heading font-semibold text-sm">
-															{formatRegentVernacular(
-																regent.title || regent.name,
+												<button
+													type="button"
+													key={regent.id}
+													className={cn(
+														"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
+														selectedMonarchId === regent.id
+															? "border-monarch-gold bg-monarch-gold/10 shadow-[0_0_10px_hsl(var(--monarch-gold)/0.2)]"
+															: "border-border hover:border-monarch-gold/50 bg-background/50",
+													)}
+													onClick={() => setSelectedMonarchId(regent.id)}
+												>
+													<div className="flex items-center gap-3">
+														<div
+															className={cn(
+																"w-8 h-8 rounded-full flex items-center justify-center",
+																selectedMonarchId === regent.id
+																	? "bg-monarch-gold text-background"
+																	: "bg-muted text-muted-foreground",
+															)}
+														>
+															{themeIcons[regent.theme as string] || (
+																<Crown className="h-4 w-4" />
 															)}
 														</div>
-														<div className="text-xs text-muted-foreground">
-															{regent.theme} Theme
+														<div>
+															<div className="font-heading font-semibold text-sm">
+																{formatRegentVernacular(
+																	regent.title || regent.name,
+																)}
+															</div>
+															<div className="text-xs text-muted-foreground">
+																{regent.theme} Theme
+															</div>
 														</div>
 													</div>
-												</div>
-												{selectedMonarchId === regent.id && (
-													<CheckCircle className="h-4 w-4 text-monarch-gold" />
-												)}
-											</button>
+													{selectedMonarchId === regent.id && (
+														<CheckCircle className="h-4 w-4 text-monarch-gold" />
+													)}
+												</button>
 											);
 										})}
 									</div>

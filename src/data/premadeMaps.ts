@@ -278,6 +278,4 @@ const PREMADE_MAPS: PremadeMap[] = [
 	},
 ];
 
-
-
 export default PREMADE_MAPS;

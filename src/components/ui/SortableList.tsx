@@ -100,11 +100,17 @@ export function SortableList<T extends { id: string }>({
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
 
-		if (over && String((active as { id: string }).id) !== String((over as { id: string }).id)) {
+		if (
+			over &&
+			String((active as { id: string }).id) !==
+				String((over as { id: string }).id)
+		) {
 			const oldIndex = items.findIndex(
 				(item) => item.id === String((active as { id: string }).id),
 			);
-			const newIndex = items.findIndex((item) => item.id === String((over as { id: string }).id));
+			const newIndex = items.findIndex(
+				(item) => item.id === String((over as { id: string }).id),
+			);
 			const newOrder = arrayMove(items, oldIndex, newIndex);
 			onReorder(newOrder);
 		}

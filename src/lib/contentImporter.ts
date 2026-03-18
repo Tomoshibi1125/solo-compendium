@@ -555,9 +555,7 @@ export function parseJSONContent(jsonString: string): ContentBundle {
 
 // Parse YAML content
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function parseYAMLContent(
-	yamlString: string,
-): Promise<ContentBundle> {
+async function parseYAMLContent(yamlString: string): Promise<ContentBundle> {
 	try {
 		const { parse } = await import("yaml");
 		const parsed = parse(yamlString);

@@ -25,9 +25,7 @@ interface BrokenLink {
  * @param characterId - The character ID to check
  * @returns Array of broken links found
  */
-async function checkLinkIntegrity(
-	characterId: string,
-): Promise<BrokenLink[]> {
+async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 	const brokenLinks: BrokenLink[] = [];
 
 	// Fetch character data

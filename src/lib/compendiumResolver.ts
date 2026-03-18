@@ -328,10 +328,7 @@ export function getTableName(
  * Validate that a reference exists
  */
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-async function validateRef(
-	type: EntryType,
-	id: string,
-): Promise<boolean> {
+async function validateRef(type: EntryType, id: string): Promise<boolean> {
 	const entity = await resolveRef(type, id);
 	return entity !== null;
 }
@@ -409,9 +406,9 @@ async function mergeHomebrewEntries(
 				.eq("status", condition.status)
 				.eq(
 					"user_id",
-					((condition as Record<string, string>).user_id ||
+					(condition as Record<string, string>).user_id ||
 						(condition as Record<string, string>).campaign_id ||
-						""),
+						"",
 				)
 				.neq("user_id", userId); // Don't include user's own content twice
 

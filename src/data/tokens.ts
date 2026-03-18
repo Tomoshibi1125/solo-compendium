@@ -86,6 +86,4 @@ const tokensCompendium: Token[] = [
 	},
 ];
 
-
-
 export default tokensCompendium;

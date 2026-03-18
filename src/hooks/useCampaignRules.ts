@@ -58,7 +58,6 @@ export const normalizeRules = (
 	};
 };
 
-
 export const useCampaignRules = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "rules"],

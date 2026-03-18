@@ -981,5 +981,3 @@ export const artifacts: Artifact[] = [
 		image: "/generated/compendium/artifacts/order-crystal.webp",
 	},
 ];
-
-

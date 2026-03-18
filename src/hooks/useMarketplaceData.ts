@@ -251,7 +251,8 @@ export const useSaveMarketplaceItem = () => {
 							...payload,
 							content: payload.content as typeof payload.content,
 							requirements: payload.requirements as typeof payload.requirements,
-							compatibility: payload.compatibility as typeof payload.compatibility,
+							compatibility:
+								payload.compatibility as typeof payload.compatibility,
 						} as unknown as Database["public"]["Tables"]["marketplace_items"]["Update"])
 						.eq("id", input.id)
 						.select("*")
@@ -271,13 +272,17 @@ export const useSaveMarketplaceItem = () => {
 						author_id: userId,
 						content: payload.content as typeof payload.content,
 						requirements: payload.requirements as typeof payload.requirements,
-						compatibility: payload.compatibility as typeof payload.compatibility,
+						compatibility:
+							payload.compatibility as typeof payload.compatibility,
 					} as unknown as Database["public"]["Tables"]["marketplace_items"]["Insert"])
 					.select("*")
 					.single();
 
 				if (error) throw error;
-				return { queued: false, record: data as unknown as MarketplaceItemRecord };
+				return {
+					queued: false,
+					record: data as unknown as MarketplaceItemRecord,
+				};
 			} catch (error) {
 				if (!isOfflineError(error)) {
 					throw error;

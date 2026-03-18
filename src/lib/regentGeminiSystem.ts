@@ -8,8 +8,6 @@ import { NINE_REGENTS } from "./nineRegents";
 type AbilityScore = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
 export type Job = string;
 
-
-
 import {
 	type Feature,
 	type RegentPath,
@@ -747,7 +745,9 @@ export class RegentGeminiSystem {
 		}
 
 		const charRecord = character as unknown as Record<string, unknown>;
-		const abilityScores = charRecord.abilityScores as Record<string, number> | undefined;
+		const abilityScores = charRecord.abilityScores as
+			| Record<string, number>
+			| undefined;
 		return {
 			STR: abilityScores?.strength ?? 10,
 			AGI: abilityScores?.dexterity ?? abilityScores?.agility ?? 10,

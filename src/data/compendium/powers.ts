@@ -790,5 +790,3 @@ export const powers: Power[] = [
 		image: "/generated/compendium/powers/arcane-ascension.webp",
 	},
 ];
-
-

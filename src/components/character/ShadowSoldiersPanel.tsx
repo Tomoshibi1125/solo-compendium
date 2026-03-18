@@ -157,7 +157,10 @@ export function ShadowSoldiersPanel({
 
 	// Check if character has Umbral Regent unlock
 	const hasUmbralRegent = regentUnlocks.some((unlock: unknown) => {
-		const theme = (unlock as { regent?: { theme?: string } }).regent?.theme?.toLowerCase() || "";
+		const theme =
+			(
+				unlock as { regent?: { theme?: string } }
+			).regent?.theme?.toLowerCase() || "";
 		const name = normalizeRegentSearch(
 			(unlock as { regent?: { name?: string } }).regent?.name || "",
 		).toLowerCase();

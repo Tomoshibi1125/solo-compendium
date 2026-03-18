@@ -111,7 +111,9 @@ export function RegentFeaturesDisplay({
 								className="p-4 border rounded-lg bg-background"
 							>
 								<div className="flex items-center gap-2 mb-2">
-									<span className="font-medium">{feature.name as React.ReactNode}</span>
+									<span className="font-medium">
+										{feature.name as React.ReactNode}
+									</span>
 									<Badge variant="outline" className="text-xs">
 										{feature.type}
 									</Badge>
@@ -227,7 +229,10 @@ export function RegentFeaturesDisplay({
 					<div className="space-y-4">
 						<h4 className="font-medium">Special Abilities</h4>
 						<div className="space-y-2">
-							{Boolean((regentData.mechanics as Record<string, unknown>).shadow_legion_command) && (
+							{Boolean(
+								(regentData.mechanics as Record<string, unknown>)
+									.shadow_legion_command,
+							) && (
 								<div className="p-3 border rounded-lg bg-purple-50 border-purple-200">
 									<div className="text-sm font-medium text-purple-800">
 										Shadow Legion Command
@@ -237,7 +242,10 @@ export function RegentFeaturesDisplay({
 									</div>
 								</div>
 							)}
-							{Boolean((regentData.mechanics as Record<string, unknown>).essence_manipulation) && (
+							{Boolean(
+								(regentData.mechanics as Record<string, unknown>)
+									.essence_manipulation,
+							) && (
 								<div className="p-3 border rounded-lg bg-blue-50 border-blue-200">
 									<div className="text-sm font-medium text-blue-800">
 										Essence Manipulation

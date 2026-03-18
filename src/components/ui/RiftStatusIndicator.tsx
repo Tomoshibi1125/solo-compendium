@@ -171,7 +171,6 @@ export const RiftStatusIndicator = ({
 					{tierConfig.name}
 				</span>
 			</div>
-
 			{/* Rift Visualization Canvas */}
 			<div className="relative mb-3">
 				<canvas
@@ -192,7 +191,6 @@ export const RiftStatusIndicator = ({
 					</div>
 				</div>
 			</div>
-
 			{/* Coordinates Display */}
 			{showCoordinates && (
 				<div className="space-y-2">
@@ -229,9 +227,9 @@ export const RiftStatusIndicator = ({
 					</div>
 				</div>
 			)}
-
 			{/* Stability Warning */}
-			export {stability < 50 && (
+			export{" "}
+			{stability < 50 && (
 				<div className="mt-3 p-2 bg-red-900/20 border border-red-500/30 rounded">
 					<div className="flex items-center space-x-2">
 						<div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
@@ -244,5 +242,3 @@ export const RiftStatusIndicator = ({
 		</div>
 	);
 };
-
-

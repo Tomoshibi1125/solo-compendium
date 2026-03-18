@@ -275,10 +275,10 @@ const QuestGenerator = () => {
 		if (hydratedRef.current) return;
 		setSelectedRank(hydrated.selectedRank);
 		setQuest(hydrated.quest);
-		
+
 		// Wire up local AI integration
 		LocalAIIntegration.getInstance().initializeAI().catch(console.error);
-		
+
 		hydratedRef.current = true;
 	}, [hydrated.quest, hydrated.selectedRank, isLoading]);
 

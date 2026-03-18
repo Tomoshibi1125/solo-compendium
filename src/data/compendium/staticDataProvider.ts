@@ -1153,9 +1153,7 @@ function deriveMonarchClassFeatures(
 	return result.length > 0 ? result : null;
 }
 
-function transformMonarch(
-	monarch: StaticMonarchSource,
-): StaticCompendiumEntry {
+function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
 	const classFeatures = deriveMonarchClassFeatures(monarch);
 
 	return {
@@ -1164,7 +1162,8 @@ function transformMonarch(
 		display_name: monarch.name,
 		description: monarch.description || "",
 		created_at: new Date().toISOString(),
-		tags: monarch.tags || (["monarch", monarch.theme].filter(Boolean) as string[]),
+		tags:
+			monarch.tags || (["monarch", monarch.theme].filter(Boolean) as string[]),
 		source_book: monarch.source_book || "System Ascendant Canon",
 		image_url: monarch.image,
 		title: monarch.title,

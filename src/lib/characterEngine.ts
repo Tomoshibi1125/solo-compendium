@@ -820,7 +820,9 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
 			// Find regent data for both regents (handles legacy IDs or full objects)
 			const regent1Id = charJob.gemini.regent1Id || charJob.gemini.regent1?.id;
 			const regent2Id = charJob.gemini.regent2Id || charJob.gemini.regent2?.id;
-			const sovereignId = (charJob.gemini.sovereignId || charJob.gemini.id || "unknown") as string;
+			const sovereignId = (charJob.gemini.sovereignId ||
+				charJob.gemini.id ||
+				"unknown") as string;
 
 			const regent1 = RegentGeminiSystem.REGENT_DATABASE.find(
 				(r: { id: string }) => r.id === regent1Id,
@@ -1085,10 +1087,7 @@ function computeAbilityModifiers(
 	baseAbilities: Record<AbilityScore, number>,
 	effects: Effect[],
 ): Record<AbilityScore, number> {
-	const modifiers = {} as Record<
-		AbilityScore,
-		number
-	>;
+	const modifiers = {} as Record<AbilityScore, number>;
 
 	for (const ability of [
 		"STR",

@@ -76,9 +76,7 @@ function loadLocalBackups(characterId: string): CharacterBackup[] {
  * Restore a character from backup
  */
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function restoreFromBackup(
-	backup: CharacterBackup,
-): CharacterWithAbilities {
+function restoreFromBackup(backup: CharacterBackup): CharacterWithAbilities {
 	return backup.backup_data as unknown as CharacterWithAbilities;
 }
 

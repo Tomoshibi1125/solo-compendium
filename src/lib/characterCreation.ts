@@ -179,7 +179,9 @@ export async function autoUpdateFeatureUses(
 	if (!features) return;
 
 	for (const feature of features) {
-		const usesFormula = (feature as Record<string, unknown>).uses_formula as string | undefined;
+		const usesFormula = (feature as Record<string, unknown>).uses_formula as
+			| string
+			| undefined;
 		if (usesFormula) {
 			const newMax = calculateFeatureUses(
 				usesFormula,
@@ -325,8 +327,10 @@ async function insertCharacterFeature(
 			uses_current: payload.uses_current ?? null,
 			recharge: payload.recharge ?? null,
 			is_active: payload.is_active ?? true,
-			modifiers: ((payload as Record<string, unknown>).modifiers ?? null) as Database["public"]["Tables"]["character_features"]["Row"]["modifiers"],
-			homebrew_id: ((payload as Record<string, unknown>).homebrew_id as string) ?? null,
+			modifiers: ((payload as Record<string, unknown>).modifiers ??
+				null) as Database["public"]["Tables"]["character_features"]["Row"]["modifiers"],
+			homebrew_id:
+				((payload as Record<string, unknown>).homebrew_id as string) ?? null,
 		});
 		return;
 	}
@@ -815,7 +819,12 @@ function getJobAwakeningFeatureModifiers(
 			feature === "mana-dense-physiology"
 		) {
 			return [
-				{ type: "hp-max", value: level, target: null as unknown as string, source: featureName },
+				{
+					type: "hp-max",
+					value: level,
+					target: null as unknown as string,
+					source: featureName,
+				},
 			];
 		}
 		if (feature === "toxin purge") {
@@ -1011,7 +1020,12 @@ function getJobAwakeningFeatureModifiers(
 			feature === "mana-dense-physiology"
 		) {
 			return [
-				{ type: "hp-max", value: level, target: null as unknown as string, source: featureName },
+				{
+					type: "hp-max",
+					value: level,
+					target: null as unknown as string,
+					source: featureName,
+				},
 			];
 		}
 		if (feature === "unstable reactor") {
@@ -1626,7 +1640,12 @@ function getPathFeatureModifiers(
 				];
 			if (feature === "draconic resilience")
 				return [
-					{ type: "hp-max", value: level, target: null as unknown as string, source: featureName },
+					{
+						type: "hp-max",
+						value: level,
+						target: null as unknown as string,
+						source: featureName,
+					},
 				];
 		}
 	}

@@ -127,7 +127,11 @@ function DiceDisplayText({ text }: { text: string }) {
 		if (m[1] !== undefined) {
 			tokens.push(<strong key={m.index}>{m[1]}</strong>);
 		} else if (m[2] !== undefined) {
-			tokens.push(<del key={m.index} className="opacity-40">{m[2]}</del>);
+			tokens.push(
+				<del key={m.index} className="opacity-40">
+					{m[2]}
+				</del>,
+			);
 		}
 		lastIndex = m.index + m[0].length;
 	}
@@ -1289,20 +1293,21 @@ const VTTEnhanced = () => {
 			setActiveTokenId(null);
 		},
 		[
-			appendToken, 
-			currentLayer, 
-			currentScene, 
-			isGM, 
-			libraryTokens, 
-			measurementStart, 
-			noteText, 
-			resolvedCharacters, 
-			selectedCharacterId, 
-			selectedLibraryTokenId, 
-			selectedTool, 
-			characterOwnerMap.get, 
-			updateScene, 
-			vttRealtime.userId, toast
+			appendToken,
+			currentLayer,
+			currentScene,
+			isGM,
+			libraryTokens,
+			measurementStart,
+			noteText,
+			resolvedCharacters,
+			selectedCharacterId,
+			selectedLibraryTokenId,
+			selectedTool,
+			characterOwnerMap.get,
+			updateScene,
+			vttRealtime.userId,
+			toast,
 		],
 	);
 
@@ -2837,7 +2842,10 @@ const VTTEnhanced = () => {
 												updateScene({
 													tokens: [
 														...(currentScene.tokens || []),
-														{ ...t, id: (t.id as string) || `token-${Date.now()}` } as PlacedToken,
+														{
+															...t,
+															id: (t.id as string) || `token-${Date.now()}`,
+														} as PlacedToken,
 													],
 												});
 											}
@@ -3234,7 +3242,11 @@ const VTTEnhanced = () => {
 											{currentScene?.terrain &&
 												currentScene.terrain.length > 0 && (
 													<div className="absolute inset-0 pointer-events-none z-[1]">
-														<svg className="absolute inset-0 w-full h-full overflow-visible" role="img" aria-label="Terrain overlay">
+														<svg
+															className="absolute inset-0 w-full h-full overflow-visible"
+															role="img"
+															aria-label="Terrain overlay"
+														>
 															<title>Terrain zones</title>
 															{currentScene.terrain.map((zone) => {
 																if (!zone.visible && !isGM) return null;
@@ -3268,7 +3280,11 @@ const VTTEnhanced = () => {
 												currentScene?.ambientSounds &&
 												currentScene.ambientSounds.length > 0 && (
 													<div className="absolute inset-0 pointer-events-none z-[1]">
-														<svg className="absolute inset-0 w-full h-full overflow-visible" role="img" aria-label="Ambient sounds overlay">
+														<svg
+															className="absolute inset-0 w-full h-full overflow-visible"
+															role="img"
+															aria-label="Ambient sounds overlay"
+														>
 															<title>Ambient sound zones</title>
 															{currentScene.ambientSounds.map((zone) => {
 																const gZoom = gridSize * zoom;
@@ -4313,7 +4329,9 @@ const VTTEnhanced = () => {
 																>
 																	{msg.diceDisplayText ? (
 																		<span>
-																			<DiceDisplayText text={msg.diceDisplayText} />
+																			<DiceDisplayText
+																				text={msg.diceDisplayText}
+																			/>
 																		</span>
 																	) : (
 																		msg.message
@@ -4541,7 +4559,9 @@ const VTTEnhanced = () => {
 																</div>
 																{roll.diceDisplayText && (
 																	<div className="text-[10px] text-muted-foreground mt-0.5">
-																		<DiceDisplayText text={roll.diceDisplayText} />
+																		<DiceDisplayText
+																			text={roll.diceDisplayText}
+																		/>
 																	</div>
 																)}
 															</div>
@@ -5106,7 +5126,9 @@ const VTTEnhanced = () => {
 						type="button"
 						className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm appearance-none border-none cursor-default w-full h-full"
 						onClick={vttRealtime.dismissHandout}
-						onKeyDown={(e) => { if (e.key === 'Escape') vttRealtime.dismissHandout(); }}
+						onKeyDown={(e) => {
+							if (e.key === "Escape") vttRealtime.dismissHandout();
+						}}
 						aria-label="Close handout"
 					>
 						<div

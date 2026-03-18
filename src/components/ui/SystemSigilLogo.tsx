@@ -91,7 +91,6 @@ export function SystemSigilLogo({
 						</feMerge>
 					</filter>
 				</defs>
-
 				{/* Outer Ring - Ascendant's Domain */}
 				<circle
 					cx="50"
@@ -104,7 +103,6 @@ export function SystemSigilLogo({
 					className={styles.outerGlow}
 					strokeDasharray="8 4"
 				/>
-
 				{/* Second Ring - Shadow Authority */}
 				<circle
 					cx="50"
@@ -116,7 +114,6 @@ export function SystemSigilLogo({
 					opacity="0.7"
 					className={styles.outerGlow}
 				/>
-
 				{/* Umbral Energy Core */}
 				<circle
 					cx="50"
@@ -125,7 +122,6 @@ export function SystemSigilLogo({
 					fill={`url(#${shadowCoreId})`}
 					className={styles.innerPulse}
 				/>
-
 				{/* Ascendant's Seal - The Crown */}
 				<path
 					d="M 50 15 L 62 35 L 85 35 L 68 52 L 75 75 L 50 62 L 25 75 L 32 52 L 15 35 L 38 35 Z"
@@ -134,7 +130,6 @@ export function SystemSigilLogo({
 					filter={`url(#${shadowGlowId})`}
 					className={styles.innerPulse}
 				/>
-
 				{/* Inner Shadow Star */}
 				<path
 					d="M 50 28 L 55 42 L 70 42 L 58 52 L 62 66 L 50 58 L 38 66 L 42 52 L 30 42 L 45 42 Z"
@@ -142,7 +137,6 @@ export function SystemSigilLogo({
 					opacity="0.9"
 					className={styles.corePulse}
 				/>
-
 				{/* Central Core - Prime Architect's Eye */}
 				<circle
 					cx="50"
@@ -152,7 +146,6 @@ export function SystemSigilLogo({
 					className={styles.corePulse}
 					filter={`url(#${shadowGlowId})`}
 				/>
-
 				{/* Inner Eye */}
 				<circle
 					cx="50"
@@ -161,7 +154,6 @@ export function SystemSigilLogo({
 					fill="hsl(280 85% 75%)"
 					className="animate-pulse"
 				/>
-
 				export {/* Central Point - Divine Spark */}
 				<circle cx="50" cy="50" r="1.5" fill="white" opacity="0.9" />
 			</svg>

@@ -310,7 +310,9 @@ const Compendium = () => {
 								level: item.level ?? undefined,
 								created_at: item.created_at,
 								source_book: item.source_book,
-								source_kind: (item as unknown as { source_kind?: string }).source_kind || "sa",
+								source_kind:
+									(item as unknown as { source_kind?: string }).source_kind ||
+									"sa",
 								image_url: item.image_url,
 								isFavorite: favorites.has(`${category}:${item.id}`) || false,
 								// Include type-specific fields

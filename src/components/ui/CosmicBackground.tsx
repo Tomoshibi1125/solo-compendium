@@ -328,5 +328,3 @@ export const CosmicBackground = ({
 		</div>
 	);
 };
-
-

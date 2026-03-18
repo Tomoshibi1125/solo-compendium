@@ -47,9 +47,7 @@ export function startConcentration(
 
 // Maintain concentration (called at start of turn)
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function maintainConcentration(
-	state: ConcentrationState,
-): ConcentrationState {
+function maintainConcentration(state: ConcentrationState): ConcentrationState {
 	if (!state.isConcentrating || !state.currentEffect) {
 		return state;
 	}

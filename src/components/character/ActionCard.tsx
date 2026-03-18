@@ -8,7 +8,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { formatModifier } from "@/lib/characterCalculations";
-import { type DiceRoll, formatRollResult, rollDiceString } from "@/lib/diceRoller";
+import {
+	type DiceRoll,
+	formatRollResult,
+	rollDiceString,
+} from "@/lib/diceRoller";
 import { cn } from "@/lib/utils";
 import { formatMonarchVernacular } from "@/lib/vernacular";
 
@@ -73,7 +77,9 @@ function ActionCardComponent({
 	const { rollInCampaign } = usePlayerToolsEnhancements();
 	const { _quickRoll } = useCharacterSheetEnhancements(characterId || "");
 
-	const Icon = (type ? TYPE_ICONS[type] || Star : Star) as React.ComponentType<{ className?: string }>;
+	const Icon = (type ? TYPE_ICONS[type] || Star : Star) as React.ComponentType<{
+		className?: string;
+	}>;
 	const displayName = formatMonarchVernacular(name);
 	const displayDescription = formatMonarchVernacular(description);
 	const displayRange = range ? formatMonarchVernacular(range) : undefined;

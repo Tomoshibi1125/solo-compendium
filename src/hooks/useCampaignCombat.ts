@@ -10,7 +10,8 @@ const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
 type CombatSession =
 	Database["public"]["Tables"]["campaign_combat_sessions"]["Row"];
-export type Combatant = Database["public"]["Tables"]["campaign_combatants"]["Row"];
+export type Combatant =
+	Database["public"]["Tables"]["campaign_combatants"]["Row"];
 
 type UpdateCombatSessionInput = {
 	campaignId: string;

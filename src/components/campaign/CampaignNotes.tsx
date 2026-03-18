@@ -188,54 +188,58 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 							if (!note) return null;
 							const userCanEdit = canEditNote(secured, userId, hasDMAccess);
 							return (
-							<div
-								key={note.id}
-								className="p-4 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
-							>
-								<div className="flex items-start justify-between mb-2">
-									<div className="flex items-center gap-2">
-										<FileText className="w-4 h-4 text-primary" />
-										<h4 className="font-heading font-semibold">{note.title}</h4>
-										<Badge
-											variant="secondary"
-											className={getCategoryColor(note.category)}
-										>
-											{note.category}
-										</Badge>
-										{note.is_shared ? (
-											<Share2 className="w-3 h-3 text-muted-foreground" />
-										) : (
-											<Lock className="w-3 h-3 text-muted-foreground" />
+								<div
+									key={note.id}
+									className="p-4 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
+								>
+									<div className="flex items-start justify-between mb-2">
+										<div className="flex items-center gap-2">
+											<FileText className="w-4 h-4 text-primary" />
+											<h4 className="font-heading font-semibold">
+												{note.title}
+											</h4>
+											<Badge
+												variant="secondary"
+												className={getCategoryColor(note.category)}
+											>
+												{note.category}
+											</Badge>
+											{note.is_shared ? (
+												<Share2 className="w-3 h-3 text-muted-foreground" />
+											) : (
+												<Lock className="w-3 h-3 text-muted-foreground" />
+											)}
+										</div>
+										{userCanEdit && (
+											<div className="flex gap-1">
+												<Button
+													variant="ghost"
+													size="icon"
+													className="h-7 w-7"
+													onClick={() => handleOpenDialog(note.id)}
+												>
+													<Edit className="w-3 h-3" />
+												</Button>
+												<Button
+													variant="ghost"
+													size="icon"
+													className="h-7 w-7"
+													onClick={() => handleDelete(note.id)}
+												>
+													<Trash2 className="w-3 h-3" />
+												</Button>
+											</div>
 										)}
 									</div>
-									{userCanEdit && (
-									<div className="flex gap-1">
-										<Button
-											variant="ghost"
-											size="icon"
-											className="h-7 w-7"
-											onClick={() => handleOpenDialog(note.id)}
-										>
-											<Edit className="w-3 h-3" />
-										</Button>
-										<Button
-											variant="ghost"
-											size="icon"
-											className="h-7 w-7"
-											onClick={() => handleDelete(note.id)}
-										>
-											<Trash2 className="w-3 h-3" />
-										</Button>
-									</div>
+									{note.content && (
+										<p className="text-sm whitespace-pre-wrap">
+											{note.content}
+										</p>
 									)}
+									<p className="text-xs text-muted-foreground mt-2">
+										{format(new Date(note.updated_at), "PPp")}
+									</p>
 								</div>
-								{note.content && (
-									<p className="text-sm whitespace-pre-wrap">{note.content}</p>
-								)}
-								<p className="text-xs text-muted-foreground mt-2">
-									{format(new Date(note.updated_at), "PPp")}
-								</p>
-							</div>
 							);
 						})
 					)}

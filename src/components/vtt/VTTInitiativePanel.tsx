@@ -331,9 +331,7 @@ export function VTTInitiativePanel({
 							)}
 
 							{isExpanded && isGM && (
-								<div
-									className="mt-2 pt-2 border-t border-border/50 space-y-2"
-								>
+								<div className="mt-2 pt-2 border-t border-border/50 space-y-2">
 									{/* HP adjustment */}
 									<div className="flex items-center gap-1">
 										<span className="text-[10px] text-muted-foreground w-6">
@@ -422,5 +420,3 @@ export function VTTInitiativePanel({
 		</div>
 	);
 }
-
-

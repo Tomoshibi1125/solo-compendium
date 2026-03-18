@@ -96,7 +96,10 @@ export function Layout({ children, className }: LayoutProps) {
 
 	if (embedded) {
 		return (
-			<div className={cn("relative overflow-hidden w-full", className)} data-sa-zone={saZone}>
+			<div
+				className={cn("relative overflow-hidden w-full", className)}
+				data-sa-zone={saZone}
+			>
 				{children || <Outlet />}
 			</div>
 		);

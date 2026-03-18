@@ -66,9 +66,7 @@ export function getAssetUrl(
  * Get fallback asset URL for a given asset type.
  */
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function getFallbackUrl(
-	assetType: keyof typeof DEFAULT_FALLBACKS,
-): string {
+function getFallbackUrl(assetType: keyof typeof DEFAULT_FALLBACKS): string {
 	return DEFAULT_FALLBACKS[assetType] || DEFAULT_FALLBACKS.portrait;
 }
 

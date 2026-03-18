@@ -1,256 +1,311 @@
 {
-  "audit_metadata": {
-    "audit_date": "2025-07-14",
-    "target_baseline": "D&D Beyond Feb 2026 feature set",
-    "app_name": "System Ascendant (solo-compendium)",
-    "total_features": 72,
-    "implemented": 59,
-    "partial": 11,
-    "not_implemented": 2,
-    "parity_score": "82%"
-  },
-  "gaps": [
-    {
-      "id": "GAP-C10",
-      "feature_id": "C10",
-      "title": "Inline Character Sheet Rolls",
-      "status": "partial",
-      "category": "character_management",
-      "description": "Character sheet does not have contextual one-click roll buttons that auto-populate formula from character stats (ability checks, saving throws, skill checks, attack rolls, damage rolls).",
-      "root_cause": "RollHistoryPanel exists and displays typed rolls, but no RollButton components are wired into the character sheet sections.",
-      "implementation_steps": [
-        "Create useCharacterRoll(characterId) hook that computes modifiers from character abilities/proficiencies",
-        "Add RollButton component accepting { label, formula, rollType, characterId, campaignId? }",
-        "Wire into character sheet sections: ability scores, saves, skills, attacks, spells",
-        "Record via existing useRecordRoll with character_id and optional campaign_id"
-      ],
-      "complexity": "M",
-      "dependencies": ["C3"],
-      "priority": 1,
-      "tier": "must_have"
-    },
-    {
-      "id": "GAP-C12",
-      "feature_id": "C12",
-      "title": "Character Export/Import",
-      "status": "not_implemented",
-      "category": "character_management",
-      "description": "No export-to-PDF/JSON or import-from-file functionality exists.",
-      "root_cause": "Feature was never built.",
-      "implementation_steps": [
-        "exportCharacterJson(characterId) — fetch character + abilities + equipment + features + spells → download as .json",
-        "exportCharacterPdf(characterId) — generate styled PDF using jspdf or @react-pdf/renderer",
-        "importCharacterJson(file) — validate JSON schema, create character via existing mutation",
-        "Add Export/Import buttons to character list page and character sheet header"
-      ],
-      "complexity": "M",
-      "dependencies": ["C3"],
-      "priority": 6,
-      "tier": "must_have"
-    },
-    {
-      "id": "GAP-E5",
-      "feature_id": "E5",
-      "title": "Post-Encounter XP/Reward Distribution",
-      "status": "partial",
-      "category": "encounter_combat",
-      "description": "Combat sessions can be ended but there is no dedicated UI for calculating and distributing XP/loot after an encounter.",
-      "root_cause": "useEndCombatSession only sets status to 'ended'; no reward calculation or distribution step follows.",
-      "implementation_steps": [
-        "Add EncounterRewards component shown when combat session status becomes 'ended'",
-        "Compute XP from encounter monster CRs (data available in encounter builder)",
-        "Provide party member selector and distribution mode (equal/custom)",
-        "Call useUpdateCharacter to increment XP on each selected character",
-        "Optionally log reward event via campaign_session log"
-      ],
-      "complexity": "L",
-      "dependencies": ["E2", "E3", "K4"],
-      "priority": 5,
-      "tier": "must_have"
-    },
-    {
-      "id": "GAP-V4",
-      "feature_id": "V4",
-      "title": "Player Map View",
-      "status": "partial",
-      "category": "vtt_maps",
-      "description": "VTT routes exist but appear DM-centric. No evidence of a read-only player view with shared fog-of-war state synced in real-time.",
-      "root_cause": "VTT components were built for DM use; no role-based rendering or realtime player subscription layer.",
-      "implementation_steps": [
-        "Create VTTPlayerView component that subscribes to VTT state via Supabase realtime",
-        "Filter token visibility based on fog-of-war mask set by DM",
-        "Allow player to drag their own token, broadcasting position via realtime channel",
-        "Route /campaigns/:campaignId/vtt with role-based rendering (DM full controls, player view)"
-      ],
-      "complexity": "XL",
-      "dependencies": ["V1", "V3", "K5"],
-      "priority": 10,
-      "tier": "important"
-    },
-    {
-      "id": "GAP-H4",
-      "feature_id": "H4",
-      "title": "Homebrew in Character Flows",
-      "status": "partial",
-      "category": "homebrew",
-      "description": "Homebrew content has structured types matching compendium categories, but character creation and level-up flows pull options only from static compendium data, not from user's homebrew library.",
-      "root_cause": "compendiumResolver.ts does not merge homebrew records into option pools served to character flows.",
-      "implementation_steps": [
-        "In compendiumResolver.ts, add merge step fetching user's published homebrew + campaign-scoped homebrew",
-        "Tag merged entries with source: 'homebrew' for UI differentiation",
-        "Filter by content_type matching current selection context",
-        "Add visual badge in selection UIs to distinguish homebrew from official content"
-      ],
-      "complexity": "L",
-      "dependencies": ["H1", "H2", "S3"],
-      "priority": 4,
-      "tier": "must_have"
-    },
-    {
-      "id": "GAP-M4",
-      "feature_id": "M4",
-      "title": "Marketplace Content Injection",
-      "status": "partial",
-      "category": "marketplace",
-      "description": "Downloads are recorded and entitlements tracked, but downloaded content is not injected into user's compendium or character creation flows.",
-      "root_cause": "useRecordMarketplaceDownload only records the download event; no content merge into compendium resolver.",
-      "implementation_steps": [
-        "Add useMarketplaceEntitledContent hook to fetch entitled items' content payloads",
-        "Merge into compendium resolver alongside homebrew merge",
-        "Check entitlement in character flow selection filters"
-      ],
-      "complexity": "L",
-      "dependencies": ["M1", "H4"],
-      "priority": 7,
-      "tier": "important"
-    },
-    {
-      "id": "GAP-M5",
-      "feature_id": "M5",
-      "title": "Content License Enforcement",
-      "status": "partial",
-      "category": "marketplace",
-      "description": "License field exists on marketplace items but no validation or enforcement occurs when content is consumed.",
-      "root_cause": "License field is stored but never checked in any consumption pathway.",
-      "implementation_steps": [
-        "Add license display dialog in marketplace detail view before download confirmation",
-        "Store license acceptance in entitlement record",
-        "Show attribution badge on content sourced from marketplace"
-      ],
-      "complexity": "S",
-      "dependencies": ["M4"],
-      "priority": 9,
-      "tier": "important"
-    },
-    {
-      "id": "GAP-D4",
-      "feature_id": "D4",
-      "title": "Campaign-Scoped Dice Rolls",
-      "status": "partial",
-      "category": "dice_rolls",
-      "description": "roll_history has campaign_id column and campaign chat supports roll message type, but DiceRoller page always passes campaign_id: null.",
-      "root_cause": "DiceRoller.tsx does not expose a campaign selector; useRecordRoll always receives null campaign_id.",
-      "implementation_steps": [
-        "Add campaign selector dropdown to DiceRoller page (from useMyCampaigns + useJoinedCampaigns)",
-        "Pass selected campaign_id to useRecordRoll",
-        "Optionally send roll as message_type 'roll' to campaign chat via useSendCampaignMessage"
-      ],
-      "complexity": "S",
-      "dependencies": ["D1", "K5"],
-      "priority": 2,
-      "tier": "must_have"
-    },
-    {
-      "id": "GAP-D5",
-      "feature_id": "D5",
-      "title": "Inline Character Rolls",
-      "status": "partial",
-      "category": "dice_rolls",
-      "description": "Same gap as GAP-C10 — character sheet needs contextual roll buttons with auto-populated modifiers.",
-      "root_cause": "See GAP-C10.",
-      "implementation_steps": ["See GAP-C10 implementation steps."],
-      "complexity": "M",
-      "dependencies": ["C3"],
-      "priority": 1,
-      "tier": "must_have",
-      "duplicate_of": "GAP-C10"
-    },
-    {
-      "id": "GAP-P3",
-      "feature_id": "P3",
-      "title": "Offline Data Caching (Populate IndexedDB)",
-      "status": "partial",
-      "category": "offline_pwa",
-      "description": "OfflineStorageManager has IndexedDB stores with full CRUD methods, but no code path populates these caches during normal online use.",
-      "root_cause": "storeCompendiumItem/storeCharacter methods exist but are never called from React hooks or data-fetching layers.",
-      "implementation_steps": [
-        "In useCharacter/useCharacters, after successful Supabase fetch, call offlineStorage.storeCharacter(data)",
-        "In compendium resolver, after fetching detail, call offlineStorage.storeCompendiumItem(data)",
-        "In query queryFn, if fetch fails due to offline error, fall back to offlineStorage.getCharacter(id) / searchCompendium(query)",
-        "Add 'cached' badge in UI when serving stale offline data"
-      ],
-      "complexity": "M",
-      "dependencies": ["P2"],
-      "priority": 3,
-      "tier": "must_have"
-    },
-    {
-      "id": "GAP-P6",
-      "feature_id": "P6",
-      "title": "Push Notifications",
-      "status": "not_implemented",
-      "category": "offline_pwa",
-      "description": "No Web Push API integration — no PushManager.subscribe(), no VAPID key configuration, no push endpoint registration. useNotifications is localStorage-only in-app notifications.",
-      "root_cause": "Feature was never built. Only in-app notification center exists.",
-      "implementation_steps": [
-        "Generate VAPID key pair; store public key in env, private key in server config",
-        "Add usePushSubscription hook: request permission → pushManager.subscribe() → store subscription in user_push_subscriptions table",
-        "Server-side (Edge Function or API route): web-push library to send notifications",
-        "Service worker: add push event listener to display Notification",
-        "Trigger points: session scheduled, combat turn change, campaign invite received, chat @mention",
-        "Settings UI: user can toggle notification categories"
-      ],
-      "complexity": "XL",
-      "dependencies": ["P1", "P5", "K5", "K7"],
-      "priority": 11,
-      "tier": "beyond_parity"
-    },
-    {
-      "id": "GAP-P7",
-      "feature_id": "P7",
-      "title": "Background Sync API Integration",
-      "status": "partial",
-      "category": "offline_pwa",
-      "description": "useOfflineSyncStatus processes queue when isOnline changes via React re-render, but does not use the Background Sync API for processing when app is in background.",
-      "root_cause": "Sync is React-driven; no service worker sync event registration.",
-      "implementation_steps": [
-        "In BackgroundSyncManager.addToQueue, after saving to localStorage, call navigator.serviceWorker.ready.then(reg => reg.sync.register('offline-sync-queue'))",
-        "In service worker, handle sync event to process queue",
-        "Keep existing React-based sync as fallback for browsers without Background Sync support"
-      ],
-      "complexity": "M",
-      "dependencies": ["P4", "P5"],
-      "priority": 8,
-      "tier": "important"
-    }
-  ],
-  "roadmap": {
-    "tier_1_must_have": [
-      {"priority": 1, "gap_id": "GAP-C10", "title": "Inline character sheet rolls", "complexity": "M"},
-      {"priority": 2, "gap_id": "GAP-D4", "title": "Campaign-scoped dice rolls", "complexity": "S"},
-      {"priority": 3, "gap_id": "GAP-P3", "title": "Offline data caching (populate IndexedDB)", "complexity": "M"},
-      {"priority": 4, "gap_id": "GAP-H4", "title": "Homebrew in character creation/level-up", "complexity": "L"},
-      {"priority": 5, "gap_id": "GAP-E5", "title": "Post-encounter XP/reward distribution", "complexity": "L"},
-      {"priority": 6, "gap_id": "GAP-C12", "title": "Character export/import", "complexity": "M"}
-    ],
-    "tier_2_important": [
-      {"priority": 7, "gap_id": "GAP-M4", "title": "Marketplace content injection", "complexity": "L"},
-      {"priority": 8, "gap_id": "GAP-P7", "title": "Background Sync API integration", "complexity": "M"},
-      {"priority": 9, "gap_id": "GAP-M5", "title": "Content license enforcement", "complexity": "S"},
-      {"priority": 10, "gap_id": "GAP-V4", "title": "Player-facing VTT map view", "complexity": "XL"}
-    ],
-    "tier_3_beyond_parity": [
-      {"priority": 11, "gap_id": "GAP-P6", "title": "Web Push Notifications", "complexity": "XL"}
-    ]
-  }
+	"audit_metadata": {
+		"audit_date": "2025-07-14",
+		"target_baseline": "D&D Beyond Feb 2026 feature set",
+		"app_name": "System Ascendant (solo-compendium)",
+		"total_features": 72,
+		"implemented": 59,
+		"partial": 11,
+		"not_implemented": 2,
+		"parity_score": "82%"
+	},
+	"gaps": [
+		{
+			"id": "GAP-C10",
+			"feature_id": "C10",
+			"title": "Inline Character Sheet Rolls",
+			"status": "partial",
+			"category": "character_management",
+			"description": "Character sheet does not have contextual one-click roll buttons that auto-populate formula from character stats (ability checks, saving throws, skill checks, attack rolls, damage rolls).",
+			"root_cause": "RollHistoryPanel exists and displays typed rolls, but no RollButton components are wired into the character sheet sections.",
+			"implementation_steps": [
+				"Create useCharacterRoll(characterId) hook that computes modifiers from character abilities/proficiencies",
+				"Add RollButton component accepting { label, formula, rollType, characterId, campaignId? }",
+				"Wire into character sheet sections: ability scores, saves, skills, attacks, spells",
+				"Record via existing useRecordRoll with character_id and optional campaign_id"
+			],
+			"complexity": "M",
+			"dependencies": ["C3"],
+			"priority": 1,
+			"tier": "must_have"
+		},
+		{
+			"id": "GAP-C12",
+			"feature_id": "C12",
+			"title": "Character Export/Import",
+			"status": "not_implemented",
+			"category": "character_management",
+			"description": "No export-to-PDF/JSON or import-from-file functionality exists.",
+			"root_cause": "Feature was never built.",
+			"implementation_steps": [
+				"exportCharacterJson(characterId) — fetch character + abilities + equipment + features + spells → download as .json",
+				"exportCharacterPdf(characterId) — generate styled PDF using jspdf or @react-pdf/renderer",
+				"importCharacterJson(file) — validate JSON schema, create character via existing mutation",
+				"Add Export/Import buttons to character list page and character sheet header"
+			],
+			"complexity": "M",
+			"dependencies": ["C3"],
+			"priority": 6,
+			"tier": "must_have"
+		},
+		{
+			"id": "GAP-E5",
+			"feature_id": "E5",
+			"title": "Post-Encounter XP/Reward Distribution",
+			"status": "partial",
+			"category": "encounter_combat",
+			"description": "Combat sessions can be ended but there is no dedicated UI for calculating and distributing XP/loot after an encounter.",
+			"root_cause": "useEndCombatSession only sets status to 'ended'; no reward calculation or distribution step follows.",
+			"implementation_steps": [
+				"Add EncounterRewards component shown when combat session status becomes 'ended'",
+				"Compute XP from encounter monster CRs (data available in encounter builder)",
+				"Provide party member selector and distribution mode (equal/custom)",
+				"Call useUpdateCharacter to increment XP on each selected character",
+				"Optionally log reward event via campaign_session log"
+			],
+			"complexity": "L",
+			"dependencies": ["E2", "E3", "K4"],
+			"priority": 5,
+			"tier": "must_have"
+		},
+		{
+			"id": "GAP-V4",
+			"feature_id": "V4",
+			"title": "Player Map View",
+			"status": "partial",
+			"category": "vtt_maps",
+			"description": "VTT routes exist but appear DM-centric. No evidence of a read-only player view with shared fog-of-war state synced in real-time.",
+			"root_cause": "VTT components were built for DM use; no role-based rendering or realtime player subscription layer.",
+			"implementation_steps": [
+				"Create VTTPlayerView component that subscribes to VTT state via Supabase realtime",
+				"Filter token visibility based on fog-of-war mask set by DM",
+				"Allow player to drag their own token, broadcasting position via realtime channel",
+				"Route /campaigns/:campaignId/vtt with role-based rendering (DM full controls, player view)"
+			],
+			"complexity": "XL",
+			"dependencies": ["V1", "V3", "K5"],
+			"priority": 10,
+			"tier": "important"
+		},
+		{
+			"id": "GAP-H4",
+			"feature_id": "H4",
+			"title": "Homebrew in Character Flows",
+			"status": "partial",
+			"category": "homebrew",
+			"description": "Homebrew content has structured types matching compendium categories, but character creation and level-up flows pull options only from static compendium data, not from user's homebrew library.",
+			"root_cause": "compendiumResolver.ts does not merge homebrew records into option pools served to character flows.",
+			"implementation_steps": [
+				"In compendiumResolver.ts, add merge step fetching user's published homebrew + campaign-scoped homebrew",
+				"Tag merged entries with source: 'homebrew' for UI differentiation",
+				"Filter by content_type matching current selection context",
+				"Add visual badge in selection UIs to distinguish homebrew from official content"
+			],
+			"complexity": "L",
+			"dependencies": ["H1", "H2", "S3"],
+			"priority": 4,
+			"tier": "must_have"
+		},
+		{
+			"id": "GAP-M4",
+			"feature_id": "M4",
+			"title": "Marketplace Content Injection",
+			"status": "partial",
+			"category": "marketplace",
+			"description": "Downloads are recorded and entitlements tracked, but downloaded content is not injected into user's compendium or character creation flows.",
+			"root_cause": "useRecordMarketplaceDownload only records the download event; no content merge into compendium resolver.",
+			"implementation_steps": [
+				"Add useMarketplaceEntitledContent hook to fetch entitled items' content payloads",
+				"Merge into compendium resolver alongside homebrew merge",
+				"Check entitlement in character flow selection filters"
+			],
+			"complexity": "L",
+			"dependencies": ["M1", "H4"],
+			"priority": 7,
+			"tier": "important"
+		},
+		{
+			"id": "GAP-M5",
+			"feature_id": "M5",
+			"title": "Content License Enforcement",
+			"status": "partial",
+			"category": "marketplace",
+			"description": "License field exists on marketplace items but no validation or enforcement occurs when content is consumed.",
+			"root_cause": "License field is stored but never checked in any consumption pathway.",
+			"implementation_steps": [
+				"Add license display dialog in marketplace detail view before download confirmation",
+				"Store license acceptance in entitlement record",
+				"Show attribution badge on content sourced from marketplace"
+			],
+			"complexity": "S",
+			"dependencies": ["M4"],
+			"priority": 9,
+			"tier": "important"
+		},
+		{
+			"id": "GAP-D4",
+			"feature_id": "D4",
+			"title": "Campaign-Scoped Dice Rolls",
+			"status": "partial",
+			"category": "dice_rolls",
+			"description": "roll_history has campaign_id column and campaign chat supports roll message type, but DiceRoller page always passes campaign_id: null.",
+			"root_cause": "DiceRoller.tsx does not expose a campaign selector; useRecordRoll always receives null campaign_id.",
+			"implementation_steps": [
+				"Add campaign selector dropdown to DiceRoller page (from useMyCampaigns + useJoinedCampaigns)",
+				"Pass selected campaign_id to useRecordRoll",
+				"Optionally send roll as message_type 'roll' to campaign chat via useSendCampaignMessage"
+			],
+			"complexity": "S",
+			"dependencies": ["D1", "K5"],
+			"priority": 2,
+			"tier": "must_have"
+		},
+		{
+			"id": "GAP-D5",
+			"feature_id": "D5",
+			"title": "Inline Character Rolls",
+			"status": "partial",
+			"category": "dice_rolls",
+			"description": "Same gap as GAP-C10 — character sheet needs contextual roll buttons with auto-populated modifiers.",
+			"root_cause": "See GAP-C10.",
+			"implementation_steps": ["See GAP-C10 implementation steps."],
+			"complexity": "M",
+			"dependencies": ["C3"],
+			"priority": 1,
+			"tier": "must_have",
+			"duplicate_of": "GAP-C10"
+		},
+		{
+			"id": "GAP-P3",
+			"feature_id": "P3",
+			"title": "Offline Data Caching (Populate IndexedDB)",
+			"status": "partial",
+			"category": "offline_pwa",
+			"description": "OfflineStorageManager has IndexedDB stores with full CRUD methods, but no code path populates these caches during normal online use.",
+			"root_cause": "storeCompendiumItem/storeCharacter methods exist but are never called from React hooks or data-fetching layers.",
+			"implementation_steps": [
+				"In useCharacter/useCharacters, after successful Supabase fetch, call offlineStorage.storeCharacter(data)",
+				"In compendium resolver, after fetching detail, call offlineStorage.storeCompendiumItem(data)",
+				"In query queryFn, if fetch fails due to offline error, fall back to offlineStorage.getCharacter(id) / searchCompendium(query)",
+				"Add 'cached' badge in UI when serving stale offline data"
+			],
+			"complexity": "M",
+			"dependencies": ["P2"],
+			"priority": 3,
+			"tier": "must_have"
+		},
+		{
+			"id": "GAP-P6",
+			"feature_id": "P6",
+			"title": "Push Notifications",
+			"status": "not_implemented",
+			"category": "offline_pwa",
+			"description": "No Web Push API integration — no PushManager.subscribe(), no VAPID key configuration, no push endpoint registration. useNotifications is localStorage-only in-app notifications.",
+			"root_cause": "Feature was never built. Only in-app notification center exists.",
+			"implementation_steps": [
+				"Generate VAPID key pair; store public key in env, private key in server config",
+				"Add usePushSubscription hook: request permission → pushManager.subscribe() → store subscription in user_push_subscriptions table",
+				"Server-side (Edge Function or API route): web-push library to send notifications",
+				"Service worker: add push event listener to display Notification",
+				"Trigger points: session scheduled, combat turn change, campaign invite received, chat @mention",
+				"Settings UI: user can toggle notification categories"
+			],
+			"complexity": "XL",
+			"dependencies": ["P1", "P5", "K5", "K7"],
+			"priority": 11,
+			"tier": "beyond_parity"
+		},
+		{
+			"id": "GAP-P7",
+			"feature_id": "P7",
+			"title": "Background Sync API Integration",
+			"status": "partial",
+			"category": "offline_pwa",
+			"description": "useOfflineSyncStatus processes queue when isOnline changes via React re-render, but does not use the Background Sync API for processing when app is in background.",
+			"root_cause": "Sync is React-driven; no service worker sync event registration.",
+			"implementation_steps": [
+				"In BackgroundSyncManager.addToQueue, after saving to localStorage, call navigator.serviceWorker.ready.then(reg => reg.sync.register('offline-sync-queue'))",
+				"In service worker, handle sync event to process queue",
+				"Keep existing React-based sync as fallback for browsers without Background Sync support"
+			],
+			"complexity": "M",
+			"dependencies": ["P4", "P5"],
+			"priority": 8,
+			"tier": "important"
+		}
+	],
+	"roadmap": {
+		"tier_1_must_have": [
+			{
+				"priority": 1,
+				"gap_id": "GAP-C10",
+				"title": "Inline character sheet rolls",
+				"complexity": "M"
+			},
+			{
+				"priority": 2,
+				"gap_id": "GAP-D4",
+				"title": "Campaign-scoped dice rolls",
+				"complexity": "S"
+			},
+			{
+				"priority": 3,
+				"gap_id": "GAP-P3",
+				"title": "Offline data caching (populate IndexedDB)",
+				"complexity": "M"
+			},
+			{
+				"priority": 4,
+				"gap_id": "GAP-H4",
+				"title": "Homebrew in character creation/level-up",
+				"complexity": "L"
+			},
+			{
+				"priority": 5,
+				"gap_id": "GAP-E5",
+				"title": "Post-encounter XP/reward distribution",
+				"complexity": "L"
+			},
+			{
+				"priority": 6,
+				"gap_id": "GAP-C12",
+				"title": "Character export/import",
+				"complexity": "M"
+			}
+		],
+		"tier_2_important": [
+			{
+				"priority": 7,
+				"gap_id": "GAP-M4",
+				"title": "Marketplace content injection",
+				"complexity": "L"
+			},
+			{
+				"priority": 8,
+				"gap_id": "GAP-P7",
+				"title": "Background Sync API integration",
+				"complexity": "M"
+			},
+			{
+				"priority": 9,
+				"gap_id": "GAP-M5",
+				"title": "Content license enforcement",
+				"complexity": "S"
+			},
+			{
+				"priority": 10,
+				"gap_id": "GAP-V4",
+				"title": "Player-facing VTT map view",
+				"complexity": "XL"
+			}
+		],
+		"tier_3_beyond_parity": [
+			{
+				"priority": 11,
+				"gap_id": "GAP-P6",
+				"title": "Web Push Notifications",
+				"complexity": "XL"
+			}
+		]
+	}
 }

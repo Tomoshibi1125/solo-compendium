@@ -95,8 +95,16 @@ export function AddEquipmentDialog({
 							}
 						}
 					}
-					const weapon = (item.properties as Record<string, unknown>)
-						?.weapon as { isSimple?: boolean; isMartial?: boolean; isFirearm?: boolean; damage?: string; damageType?: string; finesse?: boolean; } | undefined;
+					const weapon = (item.properties as Record<string, unknown>)?.weapon as
+						| {
+								isSimple?: boolean;
+								isMartial?: boolean;
+								isFirearm?: boolean;
+								damage?: string;
+								damageType?: string;
+								finesse?: boolean;
+						  }
+						| undefined;
 					if (weapon) {
 						if (
 							typeof weapon.damage === "string" &&
@@ -107,8 +115,9 @@ export function AddEquipmentDialog({
 						if (weapon.finesse === true) props.push("finesse");
 					}
 
-					const armor = (item.properties as Record<string, unknown>)
-						?.armor as { baseAC?: number; type?: string } | undefined;
+					const armor = (item.properties as Record<string, unknown>)?.armor as
+						| { baseAC?: number; type?: string }
+						| undefined;
 					if (armor) {
 						if (typeof armor.baseAC === "number")
 							props.push(`AC ${armor.baseAC}`);
@@ -116,7 +125,15 @@ export function AddEquipmentDialog({
 					}
 
 					const magical = (item.properties as Record<string, unknown>)
-						?.magical as { bonus?: { armorClass?: number; attack?: number; damage?: number } } | undefined;
+						?.magical as
+						| {
+								bonus?: {
+									armorClass?: number;
+									attack?: number;
+									damage?: number;
+								};
+						  }
+						| undefined;
 					if (
 						magical?.bonus?.armorClass &&
 						typeof magical.bonus.armorClass === "number"
@@ -149,9 +166,15 @@ export function AddEquipmentDialog({
 				weight: item.weight ?? null,
 				source_book: item.source_book ?? null,
 				rarity: item.rarity ?? null,
-				damage: (item.properties as { weapon?: { damage?: string } })?.weapon?.damage ?? null,
-				damage_type: (item.properties as { weapon?: { damageType?: string } })?.weapon?.damageType ?? null,
-				armor_class: (item.properties as { armor?: { baseAC?: number } })?.armor?.baseAC ?? null,
+				damage:
+					(item.properties as { weapon?: { damage?: string } })?.weapon
+						?.damage ?? null,
+				damage_type:
+					(item.properties as { weapon?: { damageType?: string } })?.weapon
+						?.damageType ?? null,
+				armor_class:
+					(item.properties as { armor?: { baseAC?: number } })?.armor?.baseAC ??
+					null,
 				attunement: item.attunement ?? false,
 			}));
 		},
@@ -234,11 +257,19 @@ export function AddEquipmentDialog({
 							</div>
 						) : (
 							equipment.map((item) => {
-								const itemRarity = (item as unknown as { rarity?: string }).rarity;
-								const itemAttunement = (item as unknown as { attunement?: boolean }).attunement;
-								const itemDamage = (item as unknown as { damage?: string }).damage;
-								const itemDamageType = (item as unknown as { damage_type?: string }).damage_type;
-								const itemArmorClass = (item as unknown as { armor_class?: number }).armor_class;
+								const itemRarity = (item as unknown as { rarity?: string })
+									.rarity;
+								const itemAttunement = (
+									item as unknown as { attunement?: boolean }
+								).attunement;
+								const itemDamage = (item as unknown as { damage?: string })
+									.damage;
+								const itemDamageType = (
+									item as unknown as { damage_type?: string }
+								).damage_type;
+								const itemArmorClass = (
+									item as unknown as { armor_class?: number }
+								).armor_class;
 								const eqType = (item.equipment_type || "gear").toLowerCase();
 								const TypeIcon =
 									eqType === "weapon"
@@ -295,13 +326,10 @@ export function AddEquipmentDialog({
 												<div className="flex items-center gap-3 text-[10px] text-muted-foreground mb-1">
 													{itemDamage && (
 														<span>
-															Damage: {itemDamage}{" "}
-															{itemDamageType || ""}
+															Damage: {itemDamage} {itemDamageType || ""}
 														</span>
 													)}
-													{itemArmorClass && (
-														<span>AC: {itemArmorClass}</span>
-													)}
+													{itemArmorClass && <span>AC: {itemArmorClass}</span>}
 													{item.weight != null && item.weight > 0 && (
 														<span>{item.weight} lb.</span>
 													)}

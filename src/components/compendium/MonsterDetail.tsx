@@ -253,12 +253,26 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						id: String(action.id),
 						name: String(action.name),
 						description: String(action.description ?? ""),
-						attack_bonus: typeof action.attack_bonus === "number" ? action.attack_bonus : undefined,
-						damage: typeof action.damage === "string" ? action.damage : undefined,
-						damage_type: typeof action.damage_type === "string" ? action.damage_type : undefined,
-						recharge: typeof action.recharge === "string" ? action.recharge : undefined,
-						legendary_cost: typeof action.legendary_cost === "number" ? action.legendary_cost : undefined,
-						action_type: typeof action.action_type === "string" ? action.action_type : "action",
+						attack_bonus:
+							typeof action.attack_bonus === "number"
+								? action.attack_bonus
+								: undefined,
+						damage:
+							typeof action.damage === "string" ? action.damage : undefined,
+						damage_type:
+							typeof action.damage_type === "string"
+								? action.damage_type
+								: undefined,
+						recharge:
+							typeof action.recharge === "string" ? action.recharge : undefined,
+						legendary_cost:
+							typeof action.legendary_cost === "number"
+								? action.legendary_cost
+								: undefined,
+						action_type:
+							typeof action.action_type === "string"
+								? action.action_type
+								: "action",
 					})) as MonsterAction[],
 				);
 			} else if (staticActions) {

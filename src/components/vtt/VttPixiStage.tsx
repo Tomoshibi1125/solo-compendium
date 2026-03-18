@@ -512,16 +512,18 @@ export function VttPixiStage({
 					originY: 0,
 				});
 
-				hexGridObj.forEach((hex: { corners: Array<{ x: number; y: number }> }) => {
-					const corners = hex.corners;
-					if (corners && corners.length >= 6) {
-						g.moveTo(corners[0].x, corners[0].y);
-						for (let i = 1; i < corners.length; i++) {
-							g.lineTo(corners[i].x, corners[i].y);
+				hexGridObj.forEach(
+					(hex: { corners: Array<{ x: number; y: number }> }) => {
+						const corners = hex.corners;
+						if (corners && corners.length >= 6) {
+							g.moveTo(corners[0].x, corners[0].y);
+							for (let i = 1; i < corners.length; i++) {
+								g.lineTo(corners[i].x, corners[i].y);
+							}
+							g.closePath();
 						}
-						g.closePath();
-					}
-				});
+					},
+				);
 			} else {
 				for (let x = 0; x <= width; x += step) {
 					g.moveTo(x, 0);

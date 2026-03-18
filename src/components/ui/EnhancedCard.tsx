@@ -225,7 +225,6 @@ const EnhancedCard = ({
 					</div>
 				</>
 			)}
-
 			{/* Badge */}
 			{badge && (
 				<div className="absolute top-3 right-3 z-10">
@@ -234,14 +233,12 @@ const EnhancedCard = ({
 					</Badge>
 				</div>
 			)}
-
 			{/* Background Pattern */}
 			{variant !== "default" && (
 				<div className="absolute inset-0 opacity-10">
 					<div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
 				</div>
 			)}
-
 			{/* Card Content */}
 			<div className="relative z-10 p-6">
 				{/* Header */}
@@ -308,14 +305,12 @@ const EnhancedCard = ({
 				{/* Actions */}
 				{renderActions()}
 			</div>
-
 			{/* Footer */}
 			{footer && (
 				<div className="px-6 py-4 bg-background/60 border-t border-border">
 					{footer}
 				</div>
 			)}
-
 			{/* Hover Overlay */}
 			{interactive && (
 				<div
@@ -329,9 +324,9 @@ const EnhancedCard = ({
 					</div>
 				</div>
 			)}
-
 			{/* Loading Overlay */}
-			export {loading && (
+			export{" "}
+			{loading && (
 				<div className="absolute inset-0 bg-background/80 flex items-center justify-center z-20">
 					<div className="flex flex-col items-center space-y-3">
 						<div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>

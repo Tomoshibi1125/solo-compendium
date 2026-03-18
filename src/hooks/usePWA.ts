@@ -19,14 +19,16 @@ export function usePWA(): UsePWAReturn {
 	const [isOnline, setIsOnline] = useState(
 		typeof navigator !== "undefined" ? navigator.onLine : true,
 	);
-	const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+	const [deferredPrompt, setDeferredPrompt] =
+		useState<BeforeInstallPromptEvent | null>(null);
 	const [syncQueueLength, _setSyncQueueLength] = useState(0);
 
 	useEffect(() => {
 		// Check if app is already installed
 		if (
 			window.matchMedia("(display-mode: standalone)").matches ||
-			(window.navigator as unknown as { standalone?: boolean }).standalone === true
+			(window.navigator as unknown as { standalone?: boolean }).standalone ===
+				true
 		) {
 			setIsInstalled(true);
 		}

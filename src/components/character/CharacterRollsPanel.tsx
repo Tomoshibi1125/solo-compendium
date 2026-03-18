@@ -81,7 +81,12 @@ export function CharacterRollsPanel({
 	};
 
 	// Calculate skill modifiers
-	const getSkillModifier = (skill: { name: string; ability?: string; proficiency?: string } | undefined | null) => {
+	const getSkillModifier = (
+		skill:
+			| { name: string; ability?: string; proficiency?: string }
+			| undefined
+			| null,
+	) => {
 		if (!skill || !skill.ability || !skill.name) return 0;
 
 		const abilityMod = getAbilityModifier(
@@ -233,25 +238,31 @@ export function CharacterRollsPanel({
 				<div>
 					<h4 className="font-medium mb-2">Skills</h4>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-						{skills?.map((skill: { name: string; ability: string; proficiency?: string }) => (
-							<SkillRollButton
-								key={skill.name}
-								characterId={characterId}
-								characterName={characterName}
-								rollKey={skill.name}
-								label={skill.name}
-								modifier={getSkillModifier(skill)}
-								campaignId={campaignId}
-								advantageState={resolveAdv({
-									rollType: "ability_checks",
-									targets: [
-										"ability_checks",
-										`skill:${skill.name.toLowerCase()}`,
-										skill.name,
-									],
-								})}
-							/>
-						))}
+						{skills?.map(
+							(skill: {
+								name: string;
+								ability: string;
+								proficiency?: string;
+							}) => (
+								<SkillRollButton
+									key={skill.name}
+									characterId={characterId}
+									characterName={characterName}
+									rollKey={skill.name}
+									label={skill.name}
+									modifier={getSkillModifier(skill)}
+									campaignId={campaignId}
+									advantageState={resolveAdv({
+										rollType: "ability_checks",
+										targets: [
+											"ability_checks",
+											`skill:${skill.name.toLowerCase()}`,
+											skill.name,
+										],
+									})}
+								/>
+							),
+						)}
 					</div>
 				</div>
 

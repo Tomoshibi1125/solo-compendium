@@ -411,7 +411,10 @@ export const useStartupData = () => {
 						}
 					}
 
-					const { data, error } = (await query) as { data: StartupSupabaseEntry[] | null; error: { message?: string } | null };
+					const { data, error } = (await query) as {
+						data: StartupSupabaseEntry[] | null;
+						error: { message?: string } | null;
+					};
 					if (error || !data) return { entries: [], count: 0 };
 
 					const rows = data as StartupSupabaseEntry[];

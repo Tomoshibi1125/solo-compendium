@@ -1142,5 +1142,3 @@ export const techniques: Technique[] = [
 		image: "/generated/compendium/techniques/arcane-overload.webp",
 	},
 ];
-
-

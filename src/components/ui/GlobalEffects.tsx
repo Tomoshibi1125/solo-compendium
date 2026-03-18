@@ -234,7 +234,6 @@ export const GlobalEffects = () => {
 					))}
 				</div>
 			)}
-
 			{enableAdvancedParticles && ParticlesComponent && (
 				<div
 					ref={fxOpacityRef}
@@ -247,7 +246,6 @@ export const GlobalEffects = () => {
 					/>
 				</div>
 			)}
-
 			{/* Mouse Follow Effect */}
 			{enablePointerGlow && (
 				<div
@@ -255,7 +253,6 @@ export const GlobalEffects = () => {
 					className="pointer-events-none fixed z-50 transition-transform duration-100 ease-out mouse-follow-glow"
 				/>
 			)}
-
 			{/* Ambient Glow Effects */}
 			<div
 				ref={ambientRef}
@@ -265,7 +262,6 @@ export const GlobalEffects = () => {
 				<div className="ambient-glow-blue ambient-glow-2" />
 				<div className="ambient-glow-violet ambient-glow-3" />
 			</div>
-
 			{/* System Scan Line */}
 			export {fx.enableScanline && <div className="system-scan-line" />}
 		</>

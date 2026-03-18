@@ -357,7 +357,10 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 					if (editingArticle) {
 						await updateArticle({ updates: data, id: editingArticle.id });
 					} else {
-						const payload = data as Omit<WikiArticle, "campaign_id" | "id" | "created_at" | "updated_at" | "created_by">;
+						const payload = data as Omit<
+							WikiArticle,
+							"campaign_id" | "id" | "created_at" | "updated_at" | "created_by"
+						>;
 						const newlyCreated = await addArticle(payload);
 						if (newlyCreated) setSelectedId(newlyCreated.id);
 					}
@@ -377,7 +380,12 @@ function WikiEditorDialog({
 	isOpen: boolean;
 	onClose: () => void;
 	article: WikiArticle | null;
-	onSubmit: (data: { title: string; content: string; category: string; is_public: boolean }) => Promise<void>;
+	onSubmit: (data: {
+		title: string;
+		content: string;
+		category: string;
+		is_public: boolean;
+	}) => Promise<void>;
 }) {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");

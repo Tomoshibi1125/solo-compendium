@@ -215,18 +215,10 @@ Be creative! Features should include action types (action/bonus action/reaction/
 				return this.parseAIResponse(fusion);
 			} catch (error: unknown) {
 				logError("Fusion generation failed:", error);
-				return this.generateFallbackFusion(
-					character,
-					regent1,
-					regent2,
-				);
+				return this.generateFallbackFusion(character, regent1, regent2);
 			}
 		} else {
-			return this.generateFallbackFusion(
-				character,
-				regent1,
-				regent2,
-			);
+			return this.generateFallbackFusion(character, regent1, regent2);
 		}
 	}
 
@@ -279,16 +271,10 @@ Focus on: level appropriateness, class synergy, and character strengths.
 				return Array.isArray(parsed) ? parsed : [];
 			} catch (error: unknown) {
 				logError("Quest recommendations failed:", error);
-				return this.generateFallbackQuests(
-					character,
-					availableQuests,
-				);
+				return this.generateFallbackQuests(character, availableQuests);
 			}
 		} else {
-			return this.generateFallbackQuests(
-				character,
-				availableQuests,
-			);
+			return this.generateFallbackQuests(character, availableQuests);
 		}
 	}
 
@@ -576,5 +562,3 @@ Focus on maximizing character effectiveness and synergy.
 		};
 	}
 }
-
-

@@ -315,5 +315,3 @@ export const SystemHologram = ({
 		</div>
 	);
 };
-
-

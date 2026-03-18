@@ -122,10 +122,13 @@ async function canInscribeRune(
 		// Check requirements
 		const abilities = (
 			(character.abilities as Array<{ ability: string; score: number }>) || []
-		).reduce((acc, ab) => {
-			acc[ab.ability] = ab.score;
-			return acc;
-		}, {} as Record<string, number>);
+		).reduce(
+			(acc, ab) => {
+				acc[ab.ability] = ab.score;
+				return acc;
+			},
+			{} as Record<string, number>,
+		);
 
 		const requirements = [
 			{ ability: "STR", score: rune.requirement_str || 0 },

@@ -792,7 +792,9 @@ READ-ALOUD ENTRANCE:
 							<div className="space-y-2">
 								{CELL_TYPES.filter((ct) => ct.type !== "empty").map(
 									(cellType) => {
-										const Icon = cellType.icon as React.ComponentType<{ className?: string }>;
+										const Icon = cellType.icon as React.ComponentType<{
+											className?: string;
+										}>;
 										return (
 											<button
 												type="button"
@@ -961,7 +963,9 @@ READ-ALOUD ENTRANCE:
 									<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 										{CELL_TYPES.filter((ct) => ct.type !== "empty").map(
 											(cellType) => {
-												const Icon = cellType.icon as React.ComponentType<{ className?: string }>;
+												const Icon = cellType.icon as React.ComponentType<{
+													className?: string;
+												}>;
 												return (
 													<div
 														key={cellType.type}

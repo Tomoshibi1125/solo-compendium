@@ -22,7 +22,10 @@ export function useOptimisticMutation<
 >(
 	mutationKeyFn: (variables: TVariables) => MutationKey,
 	mutationFn: MutationFunction<TData, TVariables>,
-	optimisticUpdateFn: (oldData: unknown | undefined, variables: TVariables) => unknown,
+	optimisticUpdateFn: (
+		oldData: unknown | undefined,
+		variables: TVariables,
+	) => unknown,
 	onOfflineQueue: (variables: TVariables) => void,
 ) {
 	const queryClient = useQueryClient();
@@ -38,7 +41,9 @@ export function useOptimisticMutation<
 			}
 
 			// If online, perform the actual remote mutation immediately.
-			return await (mutationFn as unknown as (v: TVariables) => Promise<TData>)(variables);
+			return await (mutationFn as unknown as (v: TVariables) => Promise<TData>)(
+				variables,
+			);
 		},
 		onMutate: async (variables) => {
 			const resolvedKey = mutationKeyFn(variables);

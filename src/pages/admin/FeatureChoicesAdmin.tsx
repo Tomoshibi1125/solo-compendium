@@ -66,7 +66,8 @@ type ExtendedDatabase = Database & {
 	};
 };
 
-const supabaseExtended = supabase as unknown as SupabaseClient<ExtendedDatabase>;
+const supabaseExtended =
+	supabase as unknown as SupabaseClient<ExtendedDatabase>;
 
 function isChoicePointFeature(feature: FeatureRow): boolean {
 	const blob = `${feature.name}\n${feature.description || ""}\n${feature.prerequisites || ""}`;

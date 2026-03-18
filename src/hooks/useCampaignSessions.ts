@@ -249,7 +249,10 @@ export const useDeleteCampaignSession = () => {
 			if (error) throw error;
 			return { queued: false };
 		},
-		(raw: unknown, { sessionId }: { campaignId: string; sessionId: string }) => {
+		(
+			raw: unknown,
+			{ sessionId }: { campaignId: string; sessionId: string },
+		) => {
 			const oldData = raw as CampaignSessionRecord[] | undefined;
 			if (!oldData) return oldData;
 			return oldData.filter((s) => s.id !== sessionId);
@@ -270,7 +273,10 @@ export const useAddCampaignSessionLog = () => {
 	return useOptimisticMutation<
 		{ queued: boolean; logId: string | null },
 		CreateSessionLogInput,
-		{ previousData: CampaignSessionLogRecord[] | undefined; mutationKey: unknown }
+		{
+			previousData: CampaignSessionLogRecord[] | undefined;
+			mutationKey: unknown;
+		}
 	>(
 		(variables) => [
 			...KEY,

@@ -127,9 +127,7 @@ function getEncounterMultiplier(monsterCount: number): number {
 }
 
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function calculateEncounterXP(
-	monsters: { cr: string; count: number }[],
-): {
+function calculateEncounterXP(monsters: { cr: string; count: number }[]): {
 	baseXP: number;
 	adjustedXP: number;
 	totalMonsters: number;

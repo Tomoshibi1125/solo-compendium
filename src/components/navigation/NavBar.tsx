@@ -82,7 +82,7 @@ export function NavBar() {
 					{/* Right Actions: Search, Notifications, User Profile */}
 					<div className="flex items-center gap-2 sm:gap-4">
 						<GlobalSearch className="hidden md:block w-48 lg:w-64" />
-						
+
 						<Button
 							variant="ghost"
 							size="icon"
@@ -90,7 +90,11 @@ export function NavBar() {
 							className="text-muted-foreground hover:text-primary transition-colors hidden sm:flex"
 							title={soundEnabled ? "Mute Sounds" : "Enable Sounds"}
 						>
-							{soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+							{soundEnabled ? (
+								<Volume2 className="h-4 w-4" />
+							) : (
+								<VolumeX className="h-4 w-4" />
+							)}
 						</Button>
 
 						<NotificationCenter />

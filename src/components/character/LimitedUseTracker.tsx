@@ -213,7 +213,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 									aria-label={`Toggle use ${i + 1} of ${feature.name}`}
 									className={cn(
 										"w-5 h-5 rounded border flex items-center justify-center transition-all",
-										i < (feature.uses_current ?? (feature.uses_max ?? 0))
+										i < (feature.uses_current ?? feature.uses_max ?? 0)
 											? "bg-cyan-500/20 border-cyan-500 text-cyan-400 hover:bg-cyan-500/30" // Available
 											: "bg-background border-white/10 text-transparent hover:border-white/30", // Used
 									)}
@@ -229,7 +229,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 									<div
 										className={cn(
 											"w-2.5 h-2.5 rounded-sm transition-transform",
-											i < (feature.uses_current ?? (feature.uses_max ?? 0))
+											i < (feature.uses_current ?? feature.uses_max ?? 0)
 												? "bg-cyan-400 scale-100"
 												: "scale-0",
 										)}
@@ -258,7 +258,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 									aria-label={`Toggle use ${i + 1} of ${entry.rune?.name}`}
 									className={cn(
 										"w-5 h-5 rounded border flex items-center justify-center transition-all",
-										i < (entry.uses_current ?? (entry.uses_max ?? 0))
+										i < (entry.uses_current ?? entry.uses_max ?? 0)
 											? "bg-amethyst-purple/20 border-amethyst-purple text-amethyst-purple hover:bg-amethyst-purple/30" // Available
 											: "bg-background border-white/10 text-transparent hover:border-white/30", // Used
 									)}
@@ -274,7 +274,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 									<div
 										className={cn(
 											"w-2.5 h-2.5 rounded-sm transition-transform",
-											i < (entry.uses_current ?? (entry.uses_max ?? 0))
+											i < (entry.uses_current ?? entry.uses_max ?? 0)
 												? "bg-amethyst-purple scale-100"
 												: "scale-0",
 										)}

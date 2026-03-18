@@ -285,7 +285,10 @@ const CharacterSheet = () => {
 	);
 	const featureCustomModifiers =
 		featureModifiersToCustomModifiers(charFeatures);
-	const customModifiers = useMemo(() => [...baseCustomModifiers, ...featureCustomModifiers], [baseCustomModifiers, featureCustomModifiers]);
+	const customModifiers = useMemo(
+		() => [...baseCustomModifiers, ...featureCustomModifiers],
+		[baseCustomModifiers, featureCustomModifiers],
+	);
 	const [hpEditOpen, setHpEditOpen] = useState(false);
 	const [hpEditValue, setHpEditValue] = useState("");
 	const [hpDeltaValue, setHpDeltaValue] = useState("");
@@ -500,7 +503,12 @@ const CharacterSheet = () => {
 		}
 	};
 
-	const memoizedStats = useCharacterDerivedStats(character, equipment, activeRunes, customModifiers);
+	const memoizedStats = useCharacterDerivedStats(
+		character,
+		equipment,
+		activeRunes,
+		customModifiers,
+	);
 
 	const applyRestResourceUpdates = useCallback(
 		async (restType: "short" | "long") => {
@@ -559,15 +567,16 @@ const CharacterSheet = () => {
 			});
 		}
 	}, [
-		character?.id, 
-		queryClient, 
-		applyRestResourceUpdates, 
-		campaignId, 
-		isCampaignConnected, 
-		broadcastDiceRoll, 
-		recordRoll, 
-		character?.name, 
-		character, toast
+		character?.id,
+		queryClient,
+		applyRestResourceUpdates,
+		campaignId,
+		isCampaignConnected,
+		broadcastDiceRoll,
+		recordRoll,
+		character?.name,
+		character,
+		toast,
 	]);
 
 	if (isLoading) {

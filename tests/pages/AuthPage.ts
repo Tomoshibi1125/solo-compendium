@@ -1,6 +1,6 @@
-import { Page } from '@playwright/test';
+import type { Page } from "@playwright/test";
 
-export type Role = 'dm' | 'player';
+export type Role = "dm" | "player";
 
 /**
  * Page Object Model for the Login page.
@@ -11,39 +11,48 @@ export type Role = 'dm' | 'player';
  *   3. CSS          – button[type="submit"]
  */
 export class AuthPage {
-  constructor(public page: Page) { }
+	constructor(public page: Page) {}
 
-  /** Dismiss analytics consent banner via localStorage (matches existing E2E pattern). */
-  async dismissAnalytics() {
-    await this.page.addInitScript(() => {
-      localStorage.setItem(
-        'solo-compendium-analytics-consent',
-        JSON.stringify({ status: 'rejected', version: 1, timestamp: Date.now() }),
-      );
-    });
-  }
+	/** Dismiss analytics consent banner via localStorage (matches existing E2E pattern). */
+	async dismissAnalytics() {
+		await this.page.addInitScript(() => {
+			localStorage.setItem(
+				"solo-compendium-analytics-consent",
+				JSON.stringify({
+					status: "rejected",
+					version: 1,
+					timestamp: Date.now(),
+				}),
+			);
+		});
+	}
 
-  async goto() {
-    await this.page.goto('/login');
-  }
+	async goto() {
+		await this.page.goto("/login");
+	}
 
-  /** Continue as guest with the chosen role (no Supabase account required). */
-  async continueAsGuest(role: Role) {
-    await this.dismissAnalytics();
-    await this.goto();
+	/** Continue as guest with the chosen role (no Supabase account required). */
+	async continueAsGuest(role: Role) {
+		await this.dismissAnalytics();
+		await this.goto();
 
-    // Select role (this sets the role state in Login.tsx)
-    if (role === 'dm') {
-      await this.page.getByRole('button', { name: /Protocol Warden/i }).click();
-    } else {
-      await this.page.getByRole('button', { name: /Player/i }).first().click();
-    }
+		// Select role (this sets the role state in Login.tsx)
+		if (role === "dm") {
+			await this.page.getByRole("button", { name: /Protocol Warden/i }).click();
+		} else {
+			await this.page
+				.getByRole("button", { name: /Player/i })
+				.first()
+				.click();
+		}
 
-    // Click the specific guest button
-    const buttonText = `Continue as Guest (${role === 'dm' ? 'Protocol Warden' : 'Player'})`;
-    await this.page.getByRole('button', { name: buttonText, exact: true }).click();
+		// Click the specific guest button
+		const buttonText = `Continue as Guest (${role === "dm" ? "Protocol Warden" : "Player"})`;
+		await this.page
+			.getByRole("button", { name: buttonText, exact: true })
+			.click();
 
-    const expectedUrl = role === 'dm' ? /\/dm-tools/ : /\/player-tools/;
-    await this.page.waitForURL(expectedUrl, { timeout: 15_000 });
-  }
+		const expectedUrl = role === "dm" ? /\/dm-tools/ : /\/player-tools/;
+		await this.page.waitForURL(expectedUrl, { timeout: 15_000 });
+	}
 }

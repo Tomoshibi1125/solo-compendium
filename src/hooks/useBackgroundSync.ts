@@ -310,7 +310,11 @@ export function useBackgroundSync() {
 
 		if (supported) {
 			navigator.serviceWorker.ready.then((registration: unknown) => {
-				(registration as { addEventListener?: (t: string, cb: unknown) => void }).addEventListener?.("sync", handleSyncEvent);
+				(
+					registration as {
+						addEventListener?: (t: string, cb: unknown) => void;
+					}
+				).addEventListener?.("sync", handleSyncEvent);
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -345,7 +349,9 @@ export function useBackgroundSync() {
 				navigator.serviceWorker.ready.then((registration: unknown) => {
 					// Register background sync
 					if ("sync" in (registration as Record<string, unknown>)) {
-						const syncManager = (registration as Record<string, { register: (t: string) => void }>).sync;
+						const syncManager = (
+							registration as Record<string, { register: (t: string) => void }>
+						).sync;
 						if (syncManager) {
 							syncManager.register("offline-sync-queue");
 						}

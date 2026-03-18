@@ -1,27 +1,27 @@
 ﻿[
-  {
-    "function": "extensions.index_advisor",
-    "issues": [
-      {
-        "level": "warning extra",
-        "message": "never read variable \"statements\"",
-        "sqlState": "00000"
-      },
-      {
-        "level": "warning extra",
-        "message": "unused parameter \"p_sql\"",
-        "sqlState": "00000"
-      }
-    ]
-  },
-  {
-    "function": "public.update_character_xp",
-    "issues": [
-      {
-        "level": "warning extra",
-        "message": "never read variable \"user_id\"",
-        "sqlState": "00000"
-      }
-    ]
-  }
+	{
+		"function": "extensions.index_advisor",
+		"issues": [
+			{
+				"level": "warning extra",
+				"message": "never read variable \"statements\"",
+				"sqlState": "00000"
+			},
+			{
+				"level": "warning extra",
+				"message": "unused parameter \"p_sql\"",
+				"sqlState": "00000"
+			}
+		]
+	},
+	{
+		"function": "public.update_character_xp",
+		"issues": [
+			{
+				"level": "warning extra",
+				"message": "never read variable \"user_id\"",
+				"sqlState": "00000"
+			}
+		]
+	}
 ]

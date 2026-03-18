@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"
+encoding="UTF-8"?>
 <tileset version="1.5" tiledversion="1.6.0" name="Wall - Metal 1 64x64" tilewidth="64" tileheight="64" tilecount="48" columns="8">
  <image source="../Wall - Metal 1 64x64.png" trans="ff00ff" width="512" height="384"/>
  <wangsets>

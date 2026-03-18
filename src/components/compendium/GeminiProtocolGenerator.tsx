@@ -245,10 +245,12 @@ export function GeminiProtocolGenerator() {
 		if (autoMode) {
 			if (regentUnlocksLoading) return;
 			const primary =
-				regentUnlocks.find((unlock: unknown) => (unlock as { is_primary?: boolean }).is_primary) ||
-				regentUnlocks[0];
+				regentUnlocks.find(
+					(unlock: unknown) => (unlock as { is_primary?: boolean }).is_primary,
+				) || regentUnlocks[0];
 			const secondary = regentUnlocks.find(
-				(unlock: unknown) => (unlock as { id?: string }).id !== (primary as { id?: string })?.id,
+				(unlock: unknown) =>
+					(unlock as { id?: string }).id !== (primary as { id?: string })?.id,
 			);
 			if (primary && selectedRegentA !== primary.regent_id) {
 				setSelectedRegentA(primary.regent_id);
@@ -435,10 +437,12 @@ export function GeminiProtocolGenerator() {
 					generatedSovereign.path.name.replace("Path of the ", ""),
 				),
 				regentATheme: formatMonarchVernacular(
-					(generatedSovereign as unknown as { regentA?: { theme?: string } }).regentA?.theme,
+					(generatedSovereign as unknown as { regentA?: { theme?: string } })
+						.regentA?.theme,
 				),
 				regentBTheme: formatMonarchVernacular(
-					(generatedSovereign as unknown as { regentB?: { theme?: string } }).regentB?.theme,
+					(generatedSovereign as unknown as { regentB?: { theme?: string } })
+						.regentB?.theme,
 				),
 				fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
 				powerMultiplier: formatMonarchVernacular(

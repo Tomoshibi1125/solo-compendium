@@ -564,8 +564,8 @@ const PlayerTools = () => {
 									className="justify-start"
 									onClick={() => navigate("/dm-tools/vtt")}
 								>
-										<MapIcon className="w-4 h-4 mr-2" />
-										VTT Map
+									<MapIcon className="w-4 h-4 mr-2" />
+									VTT Map
 								</Button>
 							</div>
 						</CardContent>

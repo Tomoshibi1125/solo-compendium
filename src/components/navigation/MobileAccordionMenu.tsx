@@ -99,7 +99,9 @@ export function MobileAccordionMenu({
 									{openSection === item.title && item.items && (
 										<div className="bg-muted/10 px-6 pb-3 pt-1 animate-in zoom-in-95 duration-200">
 											{item.items.map((subItem) => {
-												const Icon = subItem.icon as React.ComponentType<{ className?: string }>;
+												const Icon = subItem.icon as React.ComponentType<{
+													className?: string;
+												}>;
 												return (
 													<Link
 														key={subItem.title}

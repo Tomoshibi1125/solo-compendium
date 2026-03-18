@@ -199,7 +199,8 @@ export const LevelUpWizardModal = ({
 
 			// Filter feats by prerequisites (level-based)
 			return accessible.filter((feat: unknown) => {
-				const prereqs = (feat as { prerequisites?: Record<string, unknown> }).prerequisites;
+				const prereqs = (feat as { prerequisites?: Record<string, unknown> })
+					.prerequisites;
 				if (!prereqs || typeof prereqs.level !== "number") return true;
 				return prereqs.level <= newLevel;
 			});
@@ -214,9 +215,12 @@ export const LevelUpWizardModal = ({
 	// Regent progression: show new regent features unlocked at this level
 	const { unlocks: regentUnlocks } = useRegentUnlocks(characterId || "");
 	const primaryRegentUnlock =
-		regentUnlocks.find((u: { is_primary?: boolean }) => u.is_primary) ?? regentUnlocks[0];
+		regentUnlocks.find((u: { is_primary?: boolean }) => u.is_primary) ??
+		regentUnlocks[0];
 	const regentData = primaryRegentUnlock
-		? regents.find((m: { id: string }) => m.id === primaryRegentUnlock.regent_id)
+		? regents.find(
+				(m: { id: string }) => m.id === primaryRegentUnlock.regent_id,
+			)
 		: null;
 	const newRegentFeatures =
 		regentData?.class_features?.filter(
@@ -273,7 +277,8 @@ export const LevelUpWizardModal = ({
 					if (!pathError && pathFeatures) {
 						const accessiblePathFeatures = await filterRowsBySourcebookAccess(
 							pathFeatures,
-							(feature) => (feature as { source_name?: string | null }).source_name,
+							(feature) =>
+								(feature as { source_name?: string | null }).source_name,
 							{ campaignId },
 						);
 
@@ -1028,58 +1033,64 @@ export const LevelUpWizardModal = ({
 										</p>
 										<div className="space-y-2 max-h-48 overflow-y-auto">
 											{availableFeats.map((_feat: unknown) => {
-												const feat = _feat as { id: string; name: string; description?: string };
+												const feat = _feat as {
+													id: string;
+													name: string;
+													description?: string;
+												};
 												const isSelected = selectedFeats.includes(feat.id);
 												return (
-												<div
-													key={feat.id}
-													className="flex items-center gap-3 p-2 rounded-lg bg-background/50 border border-purple-500/10"
-												>
-													<input
-														type="checkbox"
-														id={`feat-${feat.id}`}
-														checked={isSelected}
-														onChange={(e) => {
-															if (e.target.checked) {
-																if (
-																	selectedFeats.length < availableChoices.feats
-																) {
-																	setSelectedFeats([
-																		...selectedFeats,
-																		feat.id,
-																	]);
-																}
-															} else {
-																setSelectedFeats(
-																	selectedFeats.filter(
-																		(id) => id !== feat.id,
-																	),
-																);
-															}
-														}}
-														disabled={
-															!isSelected &&
-															selectedFeats.length >= availableChoices.feats
-														}
-														className="rounded border-purple-500/30"
-													/>
-													<label
-														htmlFor={`feat-${feat.id}`}
-														className="flex-1 cursor-pointer"
+													<div
+														key={feat.id}
+														className="flex items-center gap-3 p-2 rounded-lg bg-background/50 border border-purple-500/10"
 													>
-														<div>
-															<span className="font-arise text-sm text-purple-400">
-																{formatMonarchVernacular(feat.name)}
-															</span>
-															<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-																{formatMonarchVernacular(
-																	feat.description || "",
-																)}
-															</p>
-														</div>
-													</label>
-												</div>
-											)})}
+														<input
+															type="checkbox"
+															id={`feat-${feat.id}`}
+															checked={isSelected}
+															onChange={(e) => {
+																if (e.target.checked) {
+																	if (
+																		selectedFeats.length <
+																		availableChoices.feats
+																	) {
+																		setSelectedFeats([
+																			...selectedFeats,
+																			feat.id,
+																		]);
+																	}
+																} else {
+																	setSelectedFeats(
+																		selectedFeats.filter(
+																			(id) => id !== feat.id,
+																		),
+																	);
+																}
+															}}
+															disabled={
+																!isSelected &&
+																selectedFeats.length >= availableChoices.feats
+															}
+															className="rounded border-purple-500/30"
+														/>
+														<label
+															htmlFor={`feat-${feat.id}`}
+															className="flex-1 cursor-pointer"
+														>
+															<div>
+																<span className="font-arise text-sm text-purple-400">
+																	{formatMonarchVernacular(feat.name)}
+																</span>
+																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																	{formatMonarchVernacular(
+																		feat.description || "",
+																	)}
+																</p>
+															</div>
+														</label>
+													</div>
+												);
+											})}
 										</div>
 										<p className="text-xs text-muted-foreground mt-2 font-heading">
 											Selected: {selectedFeats.length}/{availableChoices.feats}
@@ -1105,62 +1116,61 @@ export const LevelUpWizardModal = ({
 													prerequisites?: string;
 												};
 												return (
-												<div
-													key={feature.id}
-													className={cn(
-														"p-4 rounded-lg border transition-all duration-300",
-														"border-border bg-muted/30",
-													)}
-												>
-													<div className="flex items-start gap-3">
-														<div className="flex-1">
-															<div className="flex items-center gap-2 mb-1 flex-wrap">
-																<Label
-																	htmlFor={`feature-${feature.id}`}
-																	className="font-arise font-semibold cursor-pointer text-amber-400 tracking-wide"
-																>
-																	{formatMonarchVernacular(
-																		feature.name,
+													<div
+														key={feature.id}
+														className={cn(
+															"p-4 rounded-lg border transition-all duration-300",
+															"border-border bg-muted/30",
+														)}
+													>
+														<div className="flex items-start gap-3">
+															<div className="flex-1">
+																<div className="flex items-center gap-2 mb-1 flex-wrap">
+																	<Label
+																		htmlFor={`feature-${feature.id}`}
+																		className="font-arise font-semibold cursor-pointer text-amber-400 tracking-wide"
+																	>
+																		{formatMonarchVernacular(feature.name)}
+																	</Label>
+																	{feature.action_type && (
+																		<Badge
+																			variant="secondary"
+																			className="text-xs font-heading"
+																		>
+																			{formatMonarchVernacular(
+																				feature.action_type,
+																			)}
+																		</Badge>
 																	)}
-																</Label>
-																{feature.action_type && (
-																	<Badge
-																		variant="secondary"
-																		className="text-xs font-heading"
-																	>
-																		{formatMonarchVernacular(
-																			feature.action_type,
-																		)}
-																	</Badge>
-																)}
-																{feature.uses_formula && (
-																	<Badge
-																		variant="outline"
-																		className="text-xs font-heading border-amber-500/30 text-amber-400"
-																	>
-																		{formatMonarchVernacular(
-																			feature.uses_formula,
-																		)}
-																	</Badge>
-																)}
-															</div>
-															<p className="text-sm text-muted-foreground font-heading">
-																{formatMonarchVernacular(
-																	feature.description || "",
-																)}
-															</p>
-															{feature.prerequisites && (
-																<p className="text-xs text-muted-foreground mt-1 italic">
-																	Prerequisites:{" "}
+																	{feature.uses_formula && (
+																		<Badge
+																			variant="outline"
+																			className="text-xs font-heading border-amber-500/30 text-amber-400"
+																		>
+																			{formatMonarchVernacular(
+																				feature.uses_formula,
+																			)}
+																		</Badge>
+																	)}
+																</div>
+																<p className="text-sm text-muted-foreground font-heading">
 																	{formatMonarchVernacular(
-																		feature.prerequisites,
+																		feature.description || "",
 																	)}
 																</p>
-															)}
+																{feature.prerequisites && (
+																	<p className="text-xs text-muted-foreground mt-1 italic">
+																		Prerequisites:{" "}
+																		{formatMonarchVernacular(
+																			feature.prerequisites,
+																		)}
+																	</p>
+																)}
+															</div>
 														</div>
 													</div>
-												</div>
-											)})}
+												);
+											})}
 										</div>
 									</div>
 								)}
@@ -1184,41 +1194,42 @@ export const LevelUpWizardModal = ({
 														description?: string;
 													};
 													return (
-													<div
-														key={
-															feature.id ||
-															`regent-feature-${idx}-${feature.name}`
-														}
-														className="p-4 rounded-lg border border-monarch-gold/10 bg-muted/30"
-													>
-														<div className="flex items-center gap-2 mb-1 flex-wrap">
-															<span className="font-arise font-semibold text-monarch-gold tracking-wide">
-																{formatRegentVernacular(feature.name)}
-															</span>
-															{feature.type && (
-																<Badge
-																	variant="secondary"
-																	className="text-xs font-heading"
-																>
-																	{feature.type}
-																</Badge>
-															)}
-															{feature.frequency && (
-																<Badge
-																	variant="outline"
-																	className="text-xs font-heading border-monarch-gold/30 text-monarch-gold"
-																>
-																	{feature.frequency}
-																</Badge>
-															)}
+														<div
+															key={
+																feature.id ||
+																`regent-feature-${idx}-${feature.name}`
+															}
+															className="p-4 rounded-lg border border-monarch-gold/10 bg-muted/30"
+														>
+															<div className="flex items-center gap-2 mb-1 flex-wrap">
+																<span className="font-arise font-semibold text-monarch-gold tracking-wide">
+																	{formatRegentVernacular(feature.name)}
+																</span>
+																{feature.type && (
+																	<Badge
+																		variant="secondary"
+																		className="text-xs font-heading"
+																	>
+																		{feature.type}
+																	</Badge>
+																)}
+																{feature.frequency && (
+																	<Badge
+																		variant="outline"
+																		className="text-xs font-heading border-monarch-gold/30 text-monarch-gold"
+																	>
+																		{feature.frequency}
+																	</Badge>
+																)}
+															</div>
+															<p className="text-sm text-muted-foreground font-heading">
+																{formatRegentVernacular(
+																	feature.description || "",
+																)}
+															</p>
 														</div>
-														<p className="text-sm text-muted-foreground font-heading">
-															{formatRegentVernacular(
-																feature.description || "",
-															)}
-														</p>
-													</div>
-												)},
+													);
+												},
 											)}
 										</div>
 									</div>

@@ -144,12 +144,14 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 		const name = displayName;
 
 		const damageRoll =
-			typeof (mechanicsAny?.attack as Record<string, unknown>)?.damage === "string"
+			typeof (mechanicsAny?.attack as Record<string, unknown>)?.damage ===
+			"string"
 				? (mechanicsAny.attack as Record<string, unknown>).damage
 				: null;
 
 		const healingRoll =
-			typeof (mechanicsAny?.healing as Record<string, unknown>)?.dice === "string"
+			typeof (mechanicsAny?.healing as Record<string, unknown>)?.dice ===
+			"string"
 				? (mechanicsAny.healing as Record<string, unknown>).dice
 				: null;
 
@@ -171,13 +173,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 
 		if (mechanicsAny?.saving_throw) {
 			const dc =
-				typeof (mechanicsAny.saving_throw as Record<string, unknown>).dc === "number"
-					? ((mechanicsAny.saving_throw as Record<string, unknown>).dc as number)
+				typeof (mechanicsAny.saving_throw as Record<string, unknown>).dc ===
+				"number"
+					? ((mechanicsAny.saving_throw as Record<string, unknown>)
+							.dc as number)
 					: rankSaveDC(data.rank);
 
 			const ability =
-				typeof (mechanicsAny.saving_throw as Record<string, unknown>).ability === "string"
-					? ((mechanicsAny.saving_throw as Record<string, unknown>).ability as string)
+				typeof (mechanicsAny.saving_throw as Record<string, unknown>)
+					.ability === "string"
+					? ((mechanicsAny.saving_throw as Record<string, unknown>)
+							.ability as string)
 					: undefined;
 
 			return {

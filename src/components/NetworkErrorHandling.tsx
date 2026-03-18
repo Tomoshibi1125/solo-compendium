@@ -361,5 +361,3 @@ function ResourceLoadingFailure({
 		</Card>
 	);
 }
-
-

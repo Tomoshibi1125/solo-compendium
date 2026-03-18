@@ -180,7 +180,10 @@ export function useEncounterRewards() {
 									variant: "destructive",
 								});
 							} else if (data && Array.isArray(data) && data.length > 0) {
-								const result = data[0] as { success?: boolean; message?: string };
+								const result = data[0] as {
+									success?: boolean;
+									message?: string;
+								};
 								if (result.success) {
 									toast({
 										title: "XP Awarded",

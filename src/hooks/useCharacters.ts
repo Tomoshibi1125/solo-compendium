@@ -45,7 +45,8 @@ type ExtendedDatabase = Database & {
 	};
 };
 
-const supabaseExtended = supabase as unknown as SupabaseClient<ExtendedDatabase>;
+const supabaseExtended =
+	supabase as unknown as SupabaseClient<ExtendedDatabase>;
 
 // Fetch all characters for current user
 export const useCharacters = () => {

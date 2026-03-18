@@ -49,7 +49,7 @@ export default function ArtGenerationAdmin() {
 		isGenerating: isBatchGenerating,
 	} = useBatchArtGeneration();
 	const queueMonitor = useArtQueueMonitor(enabled ? 2000 : 0);
-	
+
 	// biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
 	const aiService = useAIService();
 

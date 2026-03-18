@@ -21,7 +21,9 @@ export const enqueueOfflineSync = (
 	if ("serviceWorker" in navigator) {
 		navigator.serviceWorker.ready.then((reg) => {
 			const regExt = reg as unknown as Record<string, unknown>;
-			const sync = regExt?.sync as { register?: (tag: string) => Promise<void> } | undefined;
+			const sync = regExt?.sync as
+				| { register?: (tag: string) => Promise<void> }
+				| undefined;
 			if (sync?.register) {
 				sync.register("offline-queue").catch((err: unknown) => {
 					warn("[Background Sync] Registration failed:", err);

@@ -362,7 +362,8 @@ export const usePublishedHomebrew = (
 				.eq("visibility_scope", "public")
 				.neq("user_id", userId)
 				.in("content_type", types);
-			if (publicData) results.push(...(publicData as unknown as HomebrewRecord[]));
+			if (publicData)
+				results.push(...(publicData as unknown as HomebrewRecord[]));
 
 			// Campaign-scoped published
 			if (campaignId) {
@@ -374,7 +375,7 @@ export const usePublishedHomebrew = (
 					.eq("campaign_id", campaignId)
 					.neq("user_id", userId)
 					.in("content_type", types);
-					results.push(...(campaignData as unknown as HomebrewRecord[]));
+				results.push(...(campaignData as unknown as HomebrewRecord[]));
 			}
 
 			// Deduplicate by id
@@ -487,10 +488,9 @@ function useHomebrewCharacterIntegration() {
 			}
 
 			// Get all homebrew content from cache
-			const allHomebrew = queryClient.getQueryData([
-				"homebrew",
-				"list",
-			]) as { pages?: HomebrewRecord[][] } | undefined;
+			const allHomebrew = queryClient.getQueryData(["homebrew", "list"]) as
+				| { pages?: HomebrewRecord[][] }
+				| undefined;
 			const homebrewRecords = allHomebrew?.pages?.flat() || [];
 
 			const transformToCharacterOption = (

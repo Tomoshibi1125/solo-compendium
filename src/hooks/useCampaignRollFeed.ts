@@ -59,9 +59,17 @@ export function useCampaignRollFeed(campaignId: string) {
 	const untypedSupabase = supabase as unknown as {
 		from: (table: string) => {
 			select: (cols: string) => {
-				eq: (col: string, val: string) => {
-					order: (col: string, opts: { ascending: boolean }) => {
-						limit: (num: number) => Promise<{ data: unknown[] | null; error: unknown }>;
+				eq: (
+					col: string,
+					val: string,
+				) => {
+					order: (
+						col: string,
+						opts: { ascending: boolean },
+					) => {
+						limit: (
+							num: number,
+						) => Promise<{ data: unknown[] | null; error: unknown }>;
 					};
 				};
 			};

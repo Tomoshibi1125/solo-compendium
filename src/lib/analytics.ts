@@ -164,10 +164,7 @@ export function trackPageView(page: AnalyticsPageView): void {
  * Identify a user (only when consented)
  */
 // biome-ignore lint/correctness/noUnusedVariables: exported for use in other modules
-function identifyUser(
-	userId: string,
-	traits?: Record<string, unknown>,
-): void {
+function identifyUser(userId: string, traits?: Record<string, unknown>): void {
 	const config = getAnalyticsConfig();
 	if (!shouldTrack(config)) return;
 

@@ -363,5 +363,3 @@ const AscensionMeter = ({
 		</div>
 	);
 };
-
-

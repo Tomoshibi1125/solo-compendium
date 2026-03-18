@@ -11,23 +11,25 @@ interface _OfflineDataCache {
 export function useOfflineDataAccess() {
 	const { toast } = useToast();
 
+	const cacheCompendiumItem = useCallback(
+		async (item: { id: string } & Record<string, unknown>) => {
+			try {
+				if (typeof window === "undefined") return;
 
-	const cacheCompendiumItem = useCallback(async (item: { id: string } & Record<string, unknown>) => {
-		try {
-			if (typeof window === "undefined") return;
-
-			const cacheKey = `compendium_${item.id}`;
-			localStorage.setItem(
-				cacheKey,
-				JSON.stringify({
-					data: item,
-					cached_at: new Date().toISOString(),
-				}),
-			);
-		} catch (error) {
-			console.warn("Failed to cache compendium item:", error);
-		}
-	}, []);
+				const cacheKey = `compendium_${item.id}`;
+				localStorage.setItem(
+					cacheKey,
+					JSON.stringify({
+						data: item,
+						cached_at: new Date().toISOString(),
+					}),
+				);
+			} catch (error) {
+				console.warn("Failed to cache compendium item:", error);
+			}
+		},
+		[],
+	);
 
 	const getCachedCompendiumItem = useCallback((itemId: string) => {
 		try {
@@ -53,22 +55,25 @@ export function useOfflineDataAccess() {
 		}
 	}, []);
 
-	const cacheCharacter = useCallback(async (character: { id: string } & Record<string, unknown>) => {
-		try {
-			if (typeof window === "undefined") return;
+	const cacheCharacter = useCallback(
+		async (character: { id: string } & Record<string, unknown>) => {
+			try {
+				if (typeof window === "undefined") return;
 
-			const cacheKey = `character_${character.id}`;
-			localStorage.setItem(
-				cacheKey,
-				JSON.stringify({
-					data: character,
-					cached_at: new Date().toISOString(),
-				}),
-			);
-		} catch (error) {
-			console.warn("Failed to cache character:", error);
-		}
-	}, []);
+				const cacheKey = `character_${character.id}`;
+				localStorage.setItem(
+					cacheKey,
+					JSON.stringify({
+						data: character,
+						cached_at: new Date().toISOString(),
+					}),
+				);
+			} catch (error) {
+				console.warn("Failed to cache character:", error);
+			}
+		},
+		[],
+	);
 
 	const getCachedCharacter = useCallback((characterId: string) => {
 		try {
@@ -94,22 +99,25 @@ export function useOfflineDataAccess() {
 		}
 	}, []);
 
-	const cacheCampaign = useCallback(async (campaign: { id: string } & Record<string, unknown>) => {
-		try {
-			if (typeof window === "undefined") return;
+	const cacheCampaign = useCallback(
+		async (campaign: { id: string } & Record<string, unknown>) => {
+			try {
+				if (typeof window === "undefined") return;
 
-			const cacheKey = `campaign_${campaign.id}`;
-			localStorage.setItem(
-				cacheKey,
-				JSON.stringify({
-					data: campaign,
-					cached_at: new Date().toISOString(),
-				}),
-			);
-		} catch (error) {
-			console.warn("Failed to cache campaign:", error);
-		}
-	}, []);
+				const cacheKey = `campaign_${campaign.id}`;
+				localStorage.setItem(
+					cacheKey,
+					JSON.stringify({
+						data: campaign,
+						cached_at: new Date().toISOString(),
+					}),
+				);
+			} catch (error) {
+				console.warn("Failed to cache campaign:", error);
+			}
+		},
+		[],
+	);
 
 	const getCachedCampaign = useCallback((campaignId: string) => {
 		try {
@@ -147,7 +155,9 @@ export function useOfflineDataAccess() {
 					key.startsWith("campaign_"),
 			);
 
-			cacheKeys.forEach((key) => { localStorage.removeItem(key); });
+			cacheKeys.forEach((key) => {
+				localStorage.removeItem(key);
+			});
 
 			toast({
 				title: "Cache Cleared",

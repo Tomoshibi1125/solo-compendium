@@ -114,7 +114,8 @@ export function useCampaignAnalytics() {
 						return {
 							member_id: member.id,
 							member_name:
-								(member as { user_profiles?: { display_name?: string } }).user_profiles?.display_name || "Unknown",
+								(member as { user_profiles?: { display_name?: string } })
+									.user_profiles?.display_name || "Unknown",
 							sessions_participated: memberSessions.length,
 							last_active:
 								memberSessions.length > 0
@@ -125,13 +126,16 @@ export function useCampaignAnalytics() {
 
 				// Level progression analysis
 				const levelProgression =
-					(characterProgression as unknown as Record<string, unknown>[] | null)?.map((char) => {
+					(
+						characterProgression as unknown as Record<string, unknown>[] | null
+					)?.map((char) => {
 						// This would need to be enhanced with actual level tracking
 						// For now, we'll provide basic structure
 						return {
 							character_id: char.character_id as string,
 							character_name:
-								((char.user_characters as Record<string, unknown> | undefined)?.character_name as string) || "Unknown",
+								((char.user_characters as Record<string, unknown> | undefined)
+									?.character_name as string) || "Unknown",
 							starting_level: 1,
 							current_level: 1,
 							levels_gained: 0,

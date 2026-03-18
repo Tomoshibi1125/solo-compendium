@@ -5787,5 +5787,3 @@ export const locations = [
 		],
 	},
 ];
-
-
