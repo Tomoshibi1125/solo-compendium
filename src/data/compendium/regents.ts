@@ -2,12 +2,12 @@ import type { Regent } from "@/lib/regentTypes";
 
 export const regents: Regent[] = [
 	{
-		id: "umbral-regent",
+		id: "umbral_regent",
 		name: "Umbral Regent",
-		title: "Umbral Regent Ascendant Class",
+		title: "Umbral Regent (Monarch of Shadows)",
 		theme: "Umbral and Death",
 		description:
-			"The ultimate umbral manipulation Ascendant class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Ascendant class available to players, granting true Regent-level power over the umbral realm and the ability to command shadows.",
+			"The ultimate umbral manipulation Ascendant class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Ascendant class available to players, granting true Regent-level power over the umbral realm and the ability to command umbral shadows.",
 		rank: "S",
 		image: "/generated/compendium/Regents/umbral-sovereign.webp",
 		type: "ascendant-class-overlay",
@@ -46,7 +46,7 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 1,
-				name: "Umbral Dominion",
+				name: "Umbral Dominion (Passive)",
 				description:
 					"You gain immunity to necrotic damage and advantage on all saving throws against umbral effects.",
 				type: "passive",
@@ -113,7 +113,7 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 7,
-				name: "Umbral Dominion",
+				name: "Umbral Dominion (Active)",
 				description:
 					"As an action, create a 1-mile radius area of absolute umbral control. All umbral creatures within gain advantage on all attacks.",
 				type: "action",
@@ -154,6 +154,166 @@ export const regents: Regent[] = [
 				name: "Absolute Umbral",
 				description:
 					"You achieve the ultimate umbral power, becoming immune to all effects and able to reshape reality through the veil.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Shadow Ascendant",
+				description:
+					"You transcend mortal limitations, gaining the ability to exist in multiple planes simultaneously and command shadows across dimensions.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Dimensional Lord",
+				description:
+					"You gain complete control over dimensional travel, able to create permanent portals and reshape dimensional boundaries.",
+				type: "passive",
+			},
+			{
+				level: 11,
+				name: "Death God",
+				description:
+					"You become a living embodiment of death, able to command all undead and determine the fate of souls.",
+				type: "passive",
+			},
+			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by +2, reflecting your growing Regent power.",
+				type: "passive",
+			},
+			{
+				level: 13,
+				name: "Shadow Apocalypse",
+				description:
+					"Once per day, you can unleash a shadow apocalypse that covers a 10-mile radius in absolute darkness, where only you and your shadow creatures can see.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 13,
+				name: "Void Dominion",
+				description:
+					"You gain control over the void itself, able to create pockets of nothingness that erase matter and energy.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Essence God",
+				description:
+					"You can harvest and manipulate the essence of any being, gaining their memories, abilities, and power permanently.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your abilities resonate with the power of the Monarchs, increasing their effectiveness and reducing cooldowns.",
+				type: "passive",
+			},
+			{
+				level: 15,
+				name: "Shadow Reality",
+				description:
+					"You can reshape reality itself through shadows, creating alternate dimensions and rewriting physical laws.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Dimensional God",
+				description:
+					"You become a master of all dimensions, able to create, destroy, and reshape entire planes of existence.",
+				type: "passive",
+			},
+			{
+				level: 15,
+				name: "Death Emperor",
+				description:
+					"Your command over death extends across all realities, allowing you to resurrect or destroy any being at will.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by another +2.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Shadow Transcendence",
+				description:
+					"You transcend the concept of shadows, becoming a fundamental force of the universe that cannot be contained or destroyed.",
+				type: "passive",
+			},
+			{
+				level: 17,
+				name: "Void God",
+				description:
+					"You gain mastery over nothingness itself, able to erase concepts, memories, and even existence from reality.",
+				type: "action",
+				frequency: "once-per-day",
+			},
+			{
+				level: 17,
+				name: "Essence Emperor",
+				description:
+					"You can absorb and control the essence of entire worlds, gaining the collective power of civilizations.",
+				type: "passive",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent powers reach their peak resonance, further enhancing all your class features.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Shadow Omnipotence",
+				description:
+					"You achieve true omnipotence within the shadow domain, able to control all shadows across all timelines and realities simultaneously.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Dimensional Emperor",
+				description:
+					"Your dimensional power extends across the multiverse, allowing you to create and destroy entire universes.",
+				type: "passive",
+			},
+			{
+				level: 19,
+				name: "Death Regent",
+				description:
+					"You become the ultimate authority over death and life, able to determine the fate of all existence.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Shadow Supremacy",
+				description:
+					"You achieve absolute supremacy over all shadows, becoming the source and master of all shadow power in existence.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Absolute Shadow",
+				description:
+					"You become the embodiment of absolute shadow, a force beyond comprehension that exists outside all laws of reality.",
+				type: "passive",
+			},
+			{
+				level: 20,
+				name: "Ultimate Umbral Power",
+				description:
+					"You achieve the full power of the Umbral Regent at peak performance - the ability to command infinite shadow armies and master death itself.",
 				type: "passive",
 			},
 		],
@@ -293,242 +453,6 @@ export const regents: Regent[] = [
 			quest_completion: "Complete the Umbral Regent Ascension quest series",
 			dm_approval: true,
 		},
-		abilities: [
-			{
-				name: "Umbral Command",
-				description:
-					"Command up to 20 umbral creatures as if they were your loyal followers. They obey your telepathic commands.",
-				type: "action",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
-				name: "Legion of the Veil",
-				description:
-					"As an action, summon 2d6 umbral legionnaires that fight for you for 1 hour. They have the stats of shadows but obey your commands.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 3,
-			},
-			{
-				name: "Veilstep Supreme",
-				description:
-					"As a bonus action, teleport up to 120 feet to any unoccupied space in dim light or darkness.",
-				type: "bonus-action",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
-				name: "Essence Harvest",
-				description:
-					"When a creature dies within 30 feet, you can harvest its essence to regain 2d10 hit points.",
-				type: "reaction",
-				frequency: "short-rest",
-				power_level: 2,
-			},
-			{
-				name: "Dimensional Regent",
-				description:
-					"You can cast gate and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 5,
-			},
-			{
-				name: "Umbral Dominion",
-				description:
-					"As an action, create a 1-mile radius area of absolute umbral control. All umbral creatures within gain advantage on all attacks.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 7,
-			},
-			{
-				name: "Death's Authority",
-				description:
-					"As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your loyal servants.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Umbral",
-				description:
-					"You become the ultimate master of the veil, gaining immunity to all damage and the ability to command any umbral creature anywhere in the multiverse.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 10,
-			},
-		],
-		features: [
-			{
-				name: "Umbral Dominion",
-				description:
-					"You gain immunity to necrotic damage and advantage on all saving throws against umbral effects.",
-				power_level: 1,
-			},
-			{
-				name: "Regent's Presence",
-				description:
-					"Frightening presence: enemies within 30 feet must make a Wisdom saving throw (DC 18) or be frightened of you.",
-				power_level: 2,
-			},
-			{
-				name: "Umbral Mastery",
-				description:
-					"You can cast umbral spells at will without expending spell slots.",
-				power_level: 3,
-			},
-			{
-				name: "Army of the Damned",
-				description:
-					"Once per long rest, you can raise an army of up to 100 shadow creatures that serve you for 24 hours.",
-				power_level: 4,
-			},
-			{
-				name: "Dimensional Authority",
-				description:
-					"You can travel between planes at will and control dimensional gates.",
-				power_level: 5,
-			},
-			{
-				name: "Essence Lord",
-				description:
-					"You can harvest the essence of any creature, gaining their memories and abilities temporarily.",
-				power_level: 6,
-			},
-			{
-				name: "Umbral God",
-				description:
-					"You become a living embodiment of the veil, able to shape umbral essence at will.",
-				power_level: 7,
-			},
-			{
-				name: "Death's Command",
-				description:
-					"You can command any undead creature, regardless of its origin or power.",
-				power_level: 8,
-			},
-			{
-				name: "Umbral Emperor",
-				description:
-					"Your umbral powers extend across multiple planes, allowing you to affect the veil anywhere.",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Umbral",
-				description:
-					"You achieve the ultimate umbral power, becoming immune to all effects and able to reshape reality through the veil.",
-				power_level: 10,
-			},
-			{
-				name: "Shadow Ascendant",
-				description:
-					"You transcend mortal limitations, gaining the ability to exist in multiple planes simultaneously and command shadows across dimensions.",
-				power_level: 11,
-			},
-			{
-				name: "Dimensional Lord",
-				description:
-					"You gain complete control over dimensional travel, able to create permanent portals and reshape dimensional boundaries.",
-				power_level: 11,
-			},
-			{
-				name: "Death God",
-				description:
-					"You become a living embodiment of death, able to command all undead and determine the fate of souls.",
-				power_level: 11,
-			},
-			{
-				name: "Shadow Apocalypse",
-				description:
-					"Once per day, you can unleash a shadow apocalypse that covers a 10-mile radius in absolute darkness, where only you and your shadow creatures can see.",
-				power_level: 13,
-			},
-			{
-				name: "Void Dominion",
-				description:
-					"You gain control over the void itself, able to create pockets of nothingness that erase matter and energy.",
-				power_level: 13,
-			},
-			{
-				name: "Essence God",
-				description:
-					"You can harvest and manipulate the essence of any being, gaining their memories, abilities, and power permanently.",
-				power_level: 13,
-			},
-			{
-				name: "Shadow Reality",
-				description:
-					"You can reshape reality itself through shadows, creating alternate dimensions and rewriting physical laws.",
-				power_level: 15,
-			},
-			{
-				name: "Dimensional God",
-				description:
-					"You become a master of all dimensions, able to create, destroy, and reshape entire planes of existence.",
-				power_level: 15,
-			},
-			{
-				name: "Death Emperor",
-				description:
-					"Your command over death extends across all realities, allowing you to resurrect or destroy any being at will.",
-				power_level: 15,
-			},
-			{
-				name: "Shadow Transcendence",
-				description:
-					"You transcend the concept of shadows, becoming a fundamental force of the universe that cannot be contained or destroyed.",
-				power_level: 17,
-			},
-			{
-				name: "Void God",
-				description:
-					"You gain mastery over nothingness itself, able to erase concepts, memories, and even existence from reality.",
-				power_level: 17,
-			},
-			{
-				name: "Essence Emperor",
-				description:
-					"You can absorb and control the essence of entire worlds, gaining the collective power of civilizations.",
-				power_level: 17,
-			},
-			{
-				name: "Shadow Omnipotence",
-				description:
-					"You achieve true omnipotence within the shadow domain, able to control all shadows across all timelines and realities simultaneously.",
-				power_level: 19,
-			},
-			{
-				name: "Dimensional Emperor",
-				description:
-					"Your dimensional power extends across the multiverse, allowing you to create and destroy entire universes.",
-				power_level: 19,
-			},
-			{
-				name: "Death Regent",
-				description:
-					"You become the ultimate authority over death and life, able to determine the fate of all existence.",
-				power_level: 19,
-			},
-			{
-				name: "Shadow Supremacy",
-				description:
-					"You achieve absolute supremacy over all shadows, becoming the source and master of all shadow power in existence.",
-				power_level: 20,
-			},
-			{
-				name: "Absolute Umbral",
-				description:
-					"You become the embodiment of absolute shadow, a force beyond comprehension that exists outside all laws of reality.",
-				power_level: 20,
-			},
-			{
-				name: "Kael's Power",
-				description:
-					"You achieve the full power of Kael Voss at his peak - the ability to command infinite shadow armies, reshape reality, control all dimensions, master death itself, and transcend to become a fundamental force of the multiverse. This is the ultimate power of the Umbral Regent, surpassing all other beings in existence.",
-				power_level: 20,
-			},
-		],
 		mechanics: {
 			stat_bonuses: {
 				strength: 4,
@@ -551,16 +475,16 @@ export const regents: Regent[] = [
 		},
 	},
 	{
-		id: "flame-regent",
-		name: "Flame Regent",
-		title: "Flame Regent Class",
-		theme: "White Flames",
+		id: "radiant_regent",
+		name: "Radiant Regent",
+		title: "Radiant Regent (Monarch of White Flames)",
+		theme: "White Flames and Purification",
 		description:
-			"A powerful fire-based class overlay that grants mastery over white flames and purification fire. Users can incinerate enemies and purify corruption with sacred flames, embodying the Regent of White Flames' absolute control over fire.",
+			"The ultimate manifestation of purification fire, embodying the power of the Monarch of White Flames. You command sacred flames that incinerate corruption, cleanse the wicked, and illuminate the darkest depths of the multiverse.",
 		rank: "S",
 		image: "/generated/compendium/Regents/white-flame-Regent.webp",
-		type: "class-overlay",
-		tags: ["Regent", "flame", "fire", "white-flames", "class-overlay"],
+		type: "ascendant-class-overlay",
+		tags: ["regent", "radiant", "white-flames", "purification", "fire"],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		hit_dice: "1d10",
@@ -580,39 +504,39 @@ export const regents: Regent[] = [
 			{
 				name: "White Flame Burst",
 				description:
-					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Constitution saving throw (DC 18) or be blinded for 1 minute. This mirrors the Regent of White Flames' devastating fire attacks.",
+					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Constitution saving throw (DC 18) or be blinded for 1 minute. Purification fire that erases corruption.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 3,
 			},
 			{
+				name: "Seraphim Wings",
+				description:
+					"As a bonus action, manifest 6 wings of white flame. Fly 120 ft. Light up 300 ft radius. Evil/fiend/undead within 60 ft must save or be blinded + 6d8 radiant damage per turn.",
+				type: "bonus-action",
+				frequency: "long-rest",
+				power_level: 5,
+			},
+			{
 				name: "Purification Flame",
 				description:
-					"As an action, cleanse an area of 60-foot radius of all curses, diseases, and poisons. Fiends and undead in the area take 8d8 radiant damage. This reflects the purifying nature of white flames.",
+					"As an action, target a creature or area to purge all diseases, curses, and fiendish influence. Undead take 10d10 radiant damage. This mirrors the Monarch of White Flames' holy domain.",
 				type: "action",
-				frequency: "long-rest",
+				frequency: "short-rest",
 				power_level: 2,
 			},
 			{
-				name: "Flame Step",
+				name: "Divine Judgment",
 				description:
-					"As a bonus action, teleport through flames up to 120 feet to any unoccupied space you can see. This mirrors the Regent of White Flames' fire-based mobility.",
-				type: "bonus-action",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
-				name: "Flame Shield",
-				description:
-					"As a reaction when targeted by an attack, create a shield of white flames that grants resistance to the damage and deals 2d6 fire damage to the attacker. This reflects the defensive capabilities of white flames.",
+					"As a reaction, point at a creature dealing damage to you. PRE save (DC 20) or they take 8d10 radiant damage and are stunned. On kill, their soul is purified and released.",
 				type: "reaction",
-				frequency: "short-rest",
+				frequency: "at-will",
 				power_level: 2,
 			},
 			{
 				name: "Immolation Aura",
 				description:
-					"Enemies within 10 feet take 1d6 fire damage at the start of their turn. You are immune to fire damage. This represents the Regent of White Flames' passive fire control.",
+					"Enemies within 30 feet take 2d12 radiant damage and are unable to benefit from regeneration or healing. This reflects your passive purifying presence.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 1,
@@ -620,7 +544,7 @@ export const regents: Regent[] = [
 			{
 				name: "Flame Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute flame control. All fire creatures within gain advantage on all attacks. This mirrors the Regent's domain over fire.",
+					"As an action, create a 1-mile radius area of absolute holy protection. All allies within gain immunity to fire and radiant damage. This mirrors the Monarch's sanctification sovereignty.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
@@ -628,15 +552,15 @@ export const regents: Regent[] = [
 			{
 				name: "Purification Authority",
 				description:
-					"As an action, force all fiends and undead within 300 feet to make a Wisdom save (DC 20) or be purified and become your allies. This reflects the purifying power of white flames.",
+					"As an action, force all fiends or undead within 300 feet to make a Wisdom save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
 			},
 			{
-				name: "Flame Dominion",
+				name: "Absolute Flame",
 				description:
-					"You become the ultimate master of flames, gaining immunity to all damage and the ability to command any fire creature anywhere in the multiverse. This represents the Regent of White Flames' ultimate power.",
+					"You become the ultimate master of purification fire. You are immune to all damage except necrotic, and you can erase the concept of sin or corruption itself as a bonus action.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,
@@ -644,188 +568,72 @@ export const regents: Regent[] = [
 		],
 		features: [
 			{
-				name: "Flame Dominion",
+				name: "White Flame Mastery",
 				description:
-					"You gain immunity to fire damage and resistance to radiant damage.",
+					"Immunity to fire and radiant damage. Your presence purifies any magical or mundane pollution within 60 ft.",
 				power_level: 1,
 			},
 			{
-				name: "Purifying Presence",
-				description:
-					"Fiends and undead cannot willingly approach within 30 feet of you. This reflects the purifying aura of white flames.",
+				name: "Purification Flame",
+				description: "Purge diseases and curses from any living creature.",
 				power_level: 2,
 			},
 			{
-				name: "White Flame Mastery",
-				description:
-					"You can cast fire-based spells at will without expending spell slots.",
+				name: "Phoenix Rebirth",
+				description: "On death, explode in white fire and reform with full HP.",
 				power_level: 3,
 			},
 			{
-				name: "Phoenix Rebirth",
-				description:
-					"Once per long rest, when reduced to 0 hit points, you can explode in white flames (dealing 10d10 fire damage to all enemies within 30 feet) and return to life with full hit points.",
+				name: "Holy Light",
+				description: "Permanent aura of light that dispels magical darkness.",
 				power_level: 4,
 			},
 			{
-				name: "Flame Authority",
-				description:
-					"You can travel through flames at will and control any fire source.",
+				name: "Flame authority",
+				description: "Command all elemental fire and light creatures.",
 				power_level: 5,
 			},
 			{
-				name: "Purification Lord",
+				name: "Radiant Judgment",
 				description:
-					"You can purify any creature, object, or area, removing all curses, diseases, and corruption.",
+					"Target a creature to judge their soul and deal radiant damage.",
 				power_level: 6,
 			},
 			{
 				name: "Flame God",
-				description:
-					"You become a living embodiment of flame, able to create and control fire at will.",
+				description: "Incarnate as the fundamental force of holy fire.",
 				power_level: 7,
 			},
 			{
-				name: "Purification Command",
-				description:
-					"You can command any fiend or undead creature, forcing them to serve your will.",
+				name: "Purification Lord",
+				description: "Absolute control over all spiritual corruption.",
 				power_level: 8,
 			},
 			{
-				name: "Flame Emperor",
-				description:
-					"Your flame powers extend across multiple planes, allowing you to affect fire anywhere.",
+				name: "White Flame Emperor",
+				description: "Universal reach of your purifying fire.",
 				power_level: 9,
 			},
 			{
 				name: "Absolute Flame",
-				description:
-					"You achieve the ultimate flame power, becoming immune to all effects and able to reshape reality through fire.",
+				description: "Total immunity and reality-warping purification.",
 				power_level: 10,
-			},
-			{
-				name: "Flame Ascendant",
-				description:
-					"You transcend mortal limitations, gaining the ability to exist as pure flame and command fire across all dimensions.",
-				power_level: 11,
-			},
-			{
-				name: "Purification Lord",
-				description:
-					"You gain complete control over purification, able to cleanse entire worlds of corruption and evil.",
-				power_level: 11,
-			},
-			{
-				name: "Fire God",
-				description:
-					"You become a living embodiment of fire, able to create and control flames that can reshape reality.",
-				power_level: 11,
-			},
-			{
-				name: "Flame Apocalypse",
-				description:
-					"Once per day, you can unleash a flame apocalypse that purifies a 10-mile radius, burning away all evil and corruption.",
-				power_level: 13,
-			},
-			{
-				name: "Purification Dominion",
-				description:
-					"You gain control over purification itself, able to remove any impurity from any being or object.",
-				power_level: 13,
-			},
-			{
-				name: "Essence God",
-				description:
-					"You can harvest and manipulate the essence of any being through purification, gaining their purified power.",
-				power_level: 13,
-			},
-			{
-				name: "Flame Reality",
-				description:
-					"You can reshape reality itself through white flames, creating worlds of pure light and purification.",
-				power_level: 15,
-			},
-			{
-				name: "Purification God",
-				description:
-					"You become a master of purification, able to cleanse entire universes of corruption.",
-				power_level: 15,
-			},
-			{
-				name: "Fire Emperor",
-				description:
-					"Your command over fire extends across all realities, allowing you to create and destroy with white flames.",
-				power_level: 15,
-			},
-			{
-				name: "Flame Transcendence",
-				description:
-					"You transcend the concept of fire, becoming a fundamental force of purification that cannot be contained.",
-				power_level: 17,
-			},
-			{
-				name: "Purification Emperor",
-				description:
-					"You gain mastery over purification itself, able to remove concepts like evil and corruption from existence.",
-				power_level: 17,
-			},
-			{
-				name: "Essence Emperor",
-				description:
-					"You can absorb and control the purified essence of entire worlds, gaining their collective power.",
-				power_level: 17,
-			},
-			{
-				name: "Flame Omnipotence",
-				description:
-					"You achieve true omnipotence within the flame domain, able to control all fire across all timelines.",
-				power_level: 19,
-			},
-			{
-				name: "Purification Regent",
-				description:
-					"Your purification power extends across the multiverse, allowing you to cleanse entire universes.",
-				power_level: 19,
-			},
-			{
-				name: "Fire Regent",
-				description:
-					"You become the ultimate authority over fire and purification, able to determine the fate of all existence.",
-				power_level: 19,
-			},
-			{
-				name: "Flame Supremacy",
-				description:
-					"You achieve absolute supremacy over all flames, becoming the source and master of all fire power in existence.",
-				power_level: 20,
-			},
-			{
-				name: "Absolute Flame",
-				description:
-					"You become the embodiment of absolute flame, a force beyond comprehension that exists outside all laws of reality.",
-				power_level: 20,
-			},
-			{
-				name: "Regent Power",
-				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Regent, equal to all other Regents at their maximum potential.",
-				power_level: 20,
 			},
 		],
 		mechanics: {
 			stat_bonuses: {
-				strength: 2,
+				strength: 4,
 				dexterity: 2,
-				constitution: 4,
+				constitution: 2,
 				intelligence: 2,
-				wisdom: 2,
-				charisma: 4,
+				wisdom: 4,
+				charisma: 6,
 			},
 			special_abilities: [
-				"Immune to fire and poison damage",
-				"Can see through smoke and flames without penalty",
-				"Fire creatures are automatically friendly toward you",
-				"Can purify corrupted areas and creatures",
+				"Immune to fire and radiant damage",
+				"Can see through any smoke or magical darkness",
+				"White fire automatically purifies any area you stand in",
+				"Fiends and undead are automatically hostile toward you",
 			],
 			restrictions: [
 				"Requires Warden verification of quest completion",
@@ -834,7 +642,11 @@ export const regents: Regent[] = [
 		},
 		progression_table: {
 			"1": {
-				features_gained: ["Flame Step", "Immolation Aura", "Flame Dominion"],
+				features_gained: [
+					"White Flame Mastery",
+					"Immolation Aura",
+					"Flame Dominion",
+				],
 				abilities_improved: [],
 			},
 			"2": {
@@ -844,7 +656,7 @@ export const regents: Regent[] = [
 			"3": {
 				features_gained: [
 					"White Flame Burst",
-					"White Flame Mastery",
+					"Purification Flame",
 					"Purifying Presence",
 				],
 				abilities_improved: [],
@@ -854,7 +666,11 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 			"5": {
-				features_gained: ["Flame Shield", "Flame Authority", "Phoenix Rebirth"],
+				features_gained: [
+					"Seraphim Wings",
+					"Flame Authority",
+					"Phoenix Rebirth",
+				],
 				abilities_improved: [],
 			},
 			"6": {
@@ -862,7 +678,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"7": {
-				features_gained: ["Flame Dominion", "Flame God", "Purification Lord"],
+				features_gained: ["Flame God", "Purification Lord"],
 				abilities_improved: [],
 			},
 			"8": {
@@ -870,15 +686,11 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 			"9": {
-				features_gained: [
-					"Purification Authority",
-					"Purification Command",
-					"Flame Emperor",
-				],
+				features_gained: ["Purification Authority", "Flame Emperor"],
 				abilities_improved: [],
 			},
 			"10": {
-				features_gained: ["Flame Dominion", "Absolute Flame"],
+				features_gained: ["Absolute Flame"],
 				abilities_improved: [],
 			},
 			"11": {
@@ -936,23 +748,16 @@ export const regents: Regent[] = [
 		},
 	},
 	{
-		id: "steel-regent",
+		id: "steel_regent",
 		name: "Steel Regent",
-		title: "Steel Regent Class",
-		theme: "Steel and Flesh",
+		title: "Steel Regent (Monarch of Iron Body)",
+		theme: "Conceptual Invulnerability & Absolutist Defense",
 		description:
-			"A defensive class overlay that grants control over flesh manipulation and steel enhancement. Users can reinforce their bodies and manipulate organic matter, embodying the Steel Regent's absolute mastery over biological and metallic matter.",
+			"Embodiment of absolute defense and iron-willed sovereignty, wielding the power of the Monarch of Iron Body. You are conceptually invulnerable, an immovable object that disregards the laws of physics. The Ascendant Bureau classifies you as an unkillable entity whose containment is fundamentally impossible.",
 		rank: "S",
 		image: "/generated/compendium/Regents/steel-flesh-Regent.webp",
-		type: "class-overlay",
-		tags: [
-			"Regent",
-			"steel",
-			"flesh",
-			"defense",
-			"steel-Regent",
-			"class-overlay",
-		],
+		type: "ascendant-class-overlay",
+		tags: ["regent", "iron_body", "tarnak", "invulnerable", "titan", "defense"],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		hit_dice: "1d12",
@@ -970,65 +775,65 @@ export const regents: Regent[] = [
 		},
 		abilities: [
 			{
-				name: "Flesh Reconstruction",
+				name: "Conceptual Invulnerability",
 				description:
-					"As an action, reshape your body to gain resistance to all damage for 1 minute and regenerate 10 hit points per round. This mirrors the Steel Regent's ultimate flesh manipulation.",
+					"As an action, enter a state of absolute defense for 1 minute. You are immune to ALL damage and your AC becomes 30. This mirrors the Monarch of Iron Body's physics-defying resilience.",
 				type: "action",
 				frequency: "long-rest",
 				power_level: 3,
 			},
 			{
+				name: "Immovable Anchor",
+				description:
+					"As a bonus action, root yourself in space. You cannot be moved, grappled, or teleported against your will. Gravity ceases to affect you. This reflects the Titan's immovable nature.",
+				type: "bonus-action",
+				frequency: "at-will",
+				power_level: 2,
+			},
+			{
 				name: "Steel Weaving",
 				description:
-					"As a bonus action, create steel armor that provides +3 AC and resistance to piercing and slashing damage. This reflects the Steel Regent's steel manipulation abilities.",
+					"As a bonus action, reinforce your structure to gain +3 AC and resistance to all physical damage. This reflects the Steel Regent's core defensive capabilities.",
 				type: "bonus-action",
 				frequency: "short-rest",
-				power_level: 2,
+				power_level: 1,
 			},
 			{
-				name: "Organic Manipulation",
+				name: "Titan's Law",
 				description:
-					"As an action, reshape organic matter within 60 feet. Can heal allies or reshape terrain. This represents the Steel Regent's control over biological matter.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 5,
-			},
-			{
-				name: "Adaptive Defense",
-				description:
-					"As a reaction when targeted by an attack, adapt your body to gain immunity to that damage type until your next turn. This mirrors the Steel Regent's adaptive defenses.",
+					"As a reaction, reflect the damage of an attack back at the attacker (force damage). This mirrors the Titan Regent's law of retribution.",
 				type: "reaction",
-				frequency: "short-rest",
+				frequency: "at-will",
 				power_level: 2,
 			},
 			{
-				name: "Regeneration Core",
+				name: "Infinite Stamina",
 				description:
-					"You regenerate 1 hit point at the start of your turn if you have at least 1 hit point. This represents the Steel Regent's passive regeneration.",
+					"You no longer require sleep, food, or air. You are immune to exhaustion and all vital-sign based targeting. This represents the Steel Regent's perfect biology.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 1,
 			},
 			{
-				name: "Flesh Dominion",
+				name: "Iron Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute flesh control. All organic creatures within gain regeneration. This mirrors the Steel Regent's domain over organic matter.",
+					"As an action, create a 1-mile radius area of absolute defensive control. All allies within gain your resistances. This mirrors the Steel Regent's territorial sovereignty.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
 			},
 			{
-				name: "Steel Authority",
+				name: "Titan Authority",
 				description:
-					"As an action, force all constructs within 300 feet to make a Wisdom save (DC 20) or become your loyal servants. This reflects the Steel Regent's command over steel.",
+					"As an action, command any construct within 300 feet (Wis save DC 20) to serve you permanently. This reflects your absolute command over the 'Monstrous Humanoids'.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
 			},
 			{
-				name: "Flesh Dominion",
+				name: "Absolute Invulnerability",
 				description:
-					"You become the ultimate master of flesh and steel, gaining immunity to all damage and the ability to reshape any organic matter anywhere in the multiverse. This represents the Steel Regent's ultimate power.",
+					"You become the ultimate master of defense. You are permanently resistant to all damage, and can toggle full invulnerability as a bonus action. Physics itself bows to your iron will.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,
@@ -1036,63 +841,55 @@ export const regents: Regent[] = [
 		],
 		features: [
 			{
-				name: "Flesh Dominion",
+				name: "Iron Body",
 				description:
-					"You gain immunity to poison damage and disease. You cannot be aged or polymorphed.",
+					"Your skin becomes hard as dragon scales. Immunity to poison and disease. Cannot be aged or polymorphed.",
 				power_level: 1,
 			},
 			{
-				name: "Steel Presence",
-				description:
-					"Constructs and metal objects cannot willingly approach within 30 feet of you. This reflects the Steel Regent's metallic aura.",
+				name: "Immovable Anchor",
+				description: "Root yourself in space. Gravity cannot affect you.",
 				power_level: 2,
 			},
 			{
-				name: "Flesh Mastery",
-				description:
-					"You can cast healing and transmutation spells at will without expending spell slots. This represents the Steel Regent's complete mastery over flesh magic.",
+				name: "Steel Weaving",
+				description: "Reinforce structure for massive AC and resistance.",
 				power_level: 3,
 			},
 			{
-				name: "Living Fortress",
-				description:
-					"Your natural armor class becomes 20 + your Constitution modifier. You cannot be knocked prone.",
+				name: "Titan's Law",
+				description: "Reflect damage back at attackers (force damage).",
 				power_level: 4,
 			},
 			{
-				name: "Steel Authority",
-				description:
-					"You can control any metal object within 120 feet as if with telekinesis.",
+				name: "Infinite Stamina",
+				description: "No need for sleep, food, or air. Immune to exhaustion.",
 				power_level: 5,
 			},
 			{
 				name: "Regeneration Lord",
 				description:
-					"You can regenerate any lost limb or organ in 1 minute, and can regenerate others at will.",
+					"Regrow any lost limb in 1 minute. Mastery over biological repair.",
 				power_level: 6,
 			},
 			{
-				name: "Flesh God",
-				description:
-					"You become a living embodiment of flesh and steel, able to create and reshape organic matter at will.",
+				name: "Iron God",
+				description: "Incarnate as the fundamental force of defense.",
 				power_level: 7,
 			},
 			{
-				name: "Steel Command",
-				description:
-					"You can command any construct creature, regardless of its origin or power.",
+				name: "Titan Command",
+				description: "Command all constructs and Monstrous Humanoids.",
 				power_level: 8,
 			},
 			{
-				name: "Flesh Emperor",
-				description:
-					"Your flesh powers extend across multiple planes, allowing you to affect organic matter anywhere.",
+				name: "Iron Emperor",
+				description: "Universal reach of your defensive sovereignty.",
 				power_level: 9,
 			},
 			{
-				name: "Absolute Flesh",
-				description:
-					"You achieve the ultimate flesh power, becoming immune to all effects and able to reshape reality through organic matter.",
+				name: "Absolute Invulnerability",
+				description: "Total immunity and reality-warping defense.",
 				power_level: 10,
 			},
 			{
@@ -1226,11 +1023,7 @@ export const regents: Regent[] = [
 		},
 		progression_table: {
 			"1": {
-				features_gained: [
-					"Regeneration Core",
-					"Flesh Dominion",
-					"Steel Presence",
-				],
+				features_gained: ["Iron Body", "Immovable Anchor", "Infinite Stamina"],
 				abilities_improved: [],
 			},
 			"2": {
@@ -1239,9 +1032,9 @@ export const regents: Regent[] = [
 			},
 			"3": {
 				features_gained: [
-					"Flesh Reconstruction",
-					"Flesh Mastery",
-					"Adaptive Defense",
+					"Steel Weaving",
+					"Titan's Law",
+					"Conceptual Invulnerability",
 				],
 				abilities_improved: [],
 			},
@@ -1251,9 +1044,9 @@ export const regents: Regent[] = [
 			},
 			"5": {
 				features_gained: [
-					"Steel Weaving",
-					"Steel Authority",
-					"Living Fortress",
+					"Iron Dominion",
+					"Titan Authority",
+					"Regeneration Lord",
 				],
 				abilities_improved: [],
 			},
@@ -1332,16 +1125,23 @@ export const regents: Regent[] = [
 		},
 	},
 	{
-		id: "destruction-regent",
+		id: "destruction_regent",
 		name: "Destruction Regent",
-		title: "Destruction Regent Class",
-		theme: "Destruction",
+		title: "Destruction Regent (Monarch of Destruction)",
+		theme: "Primordial Destruction and Draconic Apocalypse",
 		description:
-			"A destructive class overlay focused on pure annihilation and devastation. Users can obliterate targets with overwhelming destructive force, embodying Varkun' absolute power over destruction.",
+			"Incarnation of primordial destruction, embodying the power of the Monarch of Destruction. You can transform into the dragon of apocalypse, whose breath incinerates reality and presence melts the very asphalt. As the ultimate force of annihilation, you are classified as a Kaiju-class extinction event.",
 		rank: "S",
 		image: "/generated/compendium/Regents/destruction-Regent.webp",
-		type: "class-overlay",
-		tags: ["Regent", "destruction", "annihilation", "varkun", "class-overlay"],
+		type: "ascendant-class-overlay",
+		tags: [
+			"regent",
+			"destruction",
+			"annihilation",
+			"dragon",
+			"antares",
+			"apocalypse",
+		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
 		hit_dice: "1d12",
@@ -1359,20 +1159,20 @@ export const regents: Regent[] = [
 		},
 		abilities: [
 			{
-				name: "Annihilation Wave",
+				name: "Breath of Annihilation",
 				description:
-					"As an action, unleash a wave of pure destructive force in a 60-foot line. Creatures take 15d10 force damage and objects are destroyed. This mirrors Varkun' devastating destructive power.",
+					"120-ft cone: 12d10 fire damage (AGI save DC 18). On kill, target is erased from reality (no resurrection). Buildings collapse, steel melts, and stone sublimates. This mirrors the Monarch of Destruction's devastating breath.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 3,
 			},
 			{
-				name: "Decimation Field",
+				name: "True Dragon Form",
 				description:
-					"As an action, create a 30-foot radius field where all creatures take 6d6 force damage at the start of their turn for 1 minute. This reflects the Destruction Regent's area of devastation.",
+					"Transform into an ancient red dragon for 1 hour. Gargantuan size, fly 120 ft, AC 22, and immunity fire/physical. News declares 'dragon sighting confirmed.' You become the living embodiment of the apocalypse.",
 				type: "action",
 				frequency: "long-rest",
-				power_level: 2,
+				power_level: 5,
 			},
 			{
 				name: "Destruction Step",
@@ -1415,9 +1215,9 @@ export const regents: Regent[] = [
 				power_level: 9,
 			},
 			{
-				name: "Destruction Dominion",
+				name: "Calamity Wings",
 				description:
-					"You become the ultimate master of destruction, gaining immunity to all damage and the ability to destroy any object or creature anywhere in the multiverse. This represents Varkun' ultimate destructive power.",
+					"Manifest draconic wings. Fly 90 ft. Wing buffet (30-ft cone, STR save or 6d6 + knocked prone). Hurricanes form from your wingbeats.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,
@@ -1425,63 +1225,60 @@ export const regents: Regent[] = [
 		],
 		features: [
 			{
-				name: "Destruction Dominion",
+				name: "Breath of Annihilation",
 				description:
-					"You gain resistance to force damage and advantage on saving throws against being moved against your will.",
+					"Unleash a cone of apocalyptic fire that erases matter from existence.",
+				power_level: 1,
+			},
+			{
+				name: "Destruction Step",
+				description: "Teleport by destroying the space between points.",
 				power_level: 1,
 			},
 			{
 				name: "Annihilation Presence",
 				description:
-					"Constructs and objects cannot willingly approach within 30 feet of you. This reflects the Destruction Regent's destructive aura.",
+					"Your mere presence causes structures to weaken and enemies to falter.",
 				power_level: 2,
 			},
 			{
 				name: "Destruction Mastery",
-				description:
-					"You can cast force-based spells at will without expending spell slots. This represents the Destruction Regent's complete mastery over destructive magic.",
+				description: "Perfect control over destructive force and energy.",
 				power_level: 3,
 			},
 			{
 				name: "Cataclysmic Rebirth",
-				description:
-					"Once per long rest, when reduced to 0 hit points, you can explode in destructive force (dealing 12d10 force damage to all enemies within 60 feet) and reform with full hit points.",
+				description: "Explode on death and reform with full power.",
 				power_level: 4,
 			},
 			{
-				name: "Destruction Authority",
-				description:
-					"You can destroy any non-magical object at will and control destructive energy.",
+				name: "True Dragon Form",
+				description: "Transform into a gargantuan dragon of destruction.",
 				power_level: 5,
 			},
 			{
 				name: "Ruin Lord",
-				description:
-					"You can reshape terrain through destruction, creating permanent areas of devastation.",
+				description: "Reshape the world through pure destructive will.",
 				power_level: 6,
 			},
 			{
 				name: "Destruction God",
-				description:
-					"You become a living embodiment of destruction, able to create and control destructive energy at will.",
+				description: "Incarnate as the fundamental force of annihilation.",
 				power_level: 7,
 			},
 			{
 				name: "Annihilation Command",
-				description:
-					"You can command any construct creature, forcing them to serve your will.",
+				description: "Command all constructs and destructive forces.",
 				power_level: 8,
 			},
 			{
 				name: "Destruction Emperor",
-				description:
-					"Your destruction powers extend across multiple planes, allowing you to affect destruction anywhere.",
+				description: "Universal reach of your destructive powers.",
 				power_level: 9,
 			},
 			{
 				name: "Absolute Destruction",
-				description:
-					"You achieve the ultimate destruction power, becoming immune to all effects and able to reshape reality through destruction.",
+				description: "Total immunity and reality-warping annihilation.",
 				power_level: 10,
 			},
 			{
@@ -1616,8 +1413,8 @@ export const regents: Regent[] = [
 		progression_table: {
 			"1": {
 				features_gained: [
+					"Breath of Annihilation",
 					"Destruction Step",
-					"Aura of Ruin",
 					"Destruction Dominion",
 				],
 				abilities_improved: [],
@@ -1628,9 +1425,9 @@ export const regents: Regent[] = [
 			},
 			"3": {
 				features_gained: [
-					"Annihilation Wave",
-					"Destruction Mastery",
 					"Annihilation Presence",
+					"Destruction Mastery",
+					"Aura of Ruin",
 				],
 				abilities_improved: [],
 			},
@@ -1641,7 +1438,7 @@ export const regents: Regent[] = [
 			"5": {
 				features_gained: [
 					"Decimation Field",
-					"Destruction Authority",
+					"True Dragon Form",
 					"Cataclysmic Rebirth",
 				],
 				abilities_improved: [],
@@ -1736,786 +1533,24 @@ export const regents: Regent[] = [
 			},
 		},
 	},
+
 	{
-		id: "blood-regent",
-		name: "Blood Regent",
-		title: "Blood Regent Class",
-		theme: "Blood Manipulation",
-		description:
-			"A hemomancy-based class overlay that grants control over blood and life force. Users can manipulate blood in living beings and enhance their physical abilities, embodying the Regent of Blood's absolute mastery over blood.",
-		rank: "S",
-		image: "/generated/compendium/Regents/blood-Regent.webp",
-		type: "class-overlay",
-		tags: [
-			"Regent",
-			"blood",
-			"life-force",
-			"hemomancy",
-			"blood-Regent",
-			"class-overlay",
-		],
-		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "System Ascendant Canon",
-		hit_dice: "1d10",
-		primary_ability: ["Vitality", "Presence"],
-		saving_throws: ["Vitality", "Presence"],
-		skill_proficiencies: ["Medicine", "Athletics", "Intimidation"],
-		armor_proficiencies: ["Light armor", "Medium armor"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
-		tool_proficiencies: [],
-		requirements: {
-			quest_completion: "Complete the Blood Regent Ascension trials",
-			dm_verification: true,
-			prerequisite_job: "Any base job",
-			power_level: 10,
-		},
-		abilities: [
-			{
-				name: "Blood Boil",
-				description:
-					"As an action, cause the blood of all creatures in 60-foot radius to boil. Victims take 14d8 necrotic damage and must make Constitution saves (DC 18) or be incapacitated. This mirrors the Regent of Blood's devastating blood attacks.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 3,
-			},
-			{
-				name: "Life Drain",
-				description:
-					"As an action, drain life force from up to 6 creatures within 30 feet. You regain 2d10 hit points per creature affected. This reflects the Regent of Blood's life force manipulation.",
-				type: "action",
-				frequency: "long-rest",
-				power_level: 2,
-			},
-			{
-				name: "Blood Step",
-				description:
-					"As a bonus action, teleport through blood vessels and life force up to 120 feet, leaving behind a trail of blood. This mirrors the Regent of Blood's blood-based mobility.",
-				type: "bonus-action",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
-				name: "Hemomantic Shield",
-				description:
-					"As a reaction when targeted by an attack, create a shield of blood that absorbs the damage and heals you for half the damage prevented. This reflects the Regent of Blood's defensive blood capabilities.",
-				type: "reaction",
-				frequency: "short-rest",
-				power_level: 2,
-			},
-			{
-				name: "Vampiric Aura",
-				description:
-					"Enemies within 20 feet lose 1d6 hit points at the start of their turn, and you regain the same amount. This represents the Regent of Blood's passive blood aura.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
-				name: "Blood Dominion",
-				description:
-					"As an action, create a 1-mile radius area of absolute blood control. All blood creatures within gain regeneration. This mirrors the Regent of Blood's domain over blood.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 7,
-			},
-			{
-				name: "Life Authority",
-				description:
-					"As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your blood servants. This reflects the Regent of Blood's command over life force.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 9,
-			},
-			{
-				name: "Blood Dominion",
-				description:
-					"You become the ultimate master of blood, gaining immunity to all damage and the ability to command any blood creature anywhere in the multiverse. This represents the Regent of Blood's ultimate power.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 10,
-			},
-		],
-		features: [
-			{
-				name: "Blood Dominion",
-				description:
-					"You gain immunity to necrotic damage and cannot be drained of life force. You regenerate 5 hit points per round.",
-				power_level: 1,
-			},
-			{
-				name: "Life Force Presence",
-				description:
-					"Undead and constructs cannot willingly approach within 30 feet of you. This reflects the Regent of Blood's life force aura.",
-				power_level: 2,
-			},
-			{
-				name: "Hemomancy Mastery",
-				description:
-					"You can cast blood and life force-based spells at will without expending spell slots. This represents the Regent of Blood's complete mastery over blood magic.",
-				power_level: 3,
-			},
-			{
-				name: "Rebirth from Blood",
-				description:
-					"Once per long rest, when reduced to 0 hit points, you can dissolve into blood and reform with full hit points, draining 1d10 hit points from each enemy within 60 feet.",
-				power_level: 4,
-			},
-			{
-				name: "Blood Authority",
-				description:
-					"You can sense and manipulate blood in living creatures within 120 feet.",
-				power_level: 5,
-			},
-			{
-				name: "Life Lord",
-				description:
-					"You can drain life force from any creature, gaining their memories and abilities temporarily.",
-				power_level: 6,
-			},
-			{
-				name: "Blood God",
-				description:
-					"You become a living embodiment of blood, able to create and control blood at will.",
-				power_level: 7,
-			},
-			{
-				name: "Life Command",
-				description:
-					"You can command any undead creature, forcing them to serve your will through blood manipulation.",
-				power_level: 8,
-			},
-			{
-				name: "Blood Emperor",
-				description:
-					"Your blood powers extend across multiple planes, allowing you to affect blood anywhere.",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Blood",
-				description:
-					"You achieve the ultimate blood power, becoming immune to all effects and able to reshape reality through blood.",
-				power_level: 10,
-			},
-			{
-				name: "Blood Ascendant",
-				description:
-					"You transcend mortal limitations, gaining the ability to exist as pure blood and command blood across all dimensions.",
-				power_level: 11,
-			},
-			{
-				name: "Life Lord",
-				description:
-					"You gain complete control over life force and blood, able to reshape entire worlds through blood.",
-				power_level: 11,
-			},
-			{
-				name: "Hemomancy God",
-				description:
-					"You become a living embodiment of hemomancy, able to control any blood.",
-				power_level: 11,
-			},
-			{
-				name: "Blood Apocalypse",
-				description:
-					"Once per day, you can unleash a blood apocalypse that transforms a 10-mile radius into pure blood.",
-				power_level: 13,
-			},
-			{
-				name: "Life Dominion",
-				description:
-					"You gain control over life force itself, able to create or destroy any life.",
-				power_level: 13,
-			},
-			{
-				name: "Essence God",
-				description:
-					"You can harvest and manipulate the essence of any being through blood, gaining their life force.",
-				power_level: 13,
-			},
-			{
-				name: "Blood Reality",
-				description:
-					"You can reshape reality itself through blood, creating worlds of pure life force.",
-				power_level: 15,
-			},
-			{
-				name: "Life God",
-				description:
-					"You become a master of all life force, able to create and destroy through blood.",
-				power_level: 15,
-			},
-			{
-				name: "Hemomancy Emperor",
-				description:
-					"Your blood extends across all realities, allowing you to control entire universes.",
-				power_level: 15,
-			},
-			{
-				name: "Blood Transcendence",
-				description:
-					"You transcend the concept of blood, becoming a fundamental force of life that cannot be contained.",
-				power_level: 17,
-			},
-			{
-				name: "Life Emperor",
-				description:
-					"You gain mastery over life force itself, able to create concepts of life from nothing.",
-				power_level: 17,
-			},
-			{
-				name: "Essence Emperor",
-				description:
-					"You can absorb and control the blood essence of entire worlds, gaining their collective power.",
-				power_level: 17,
-			},
-			{
-				name: "Blood Omnipotence",
-				description:
-					"You achieve true omnipotence within the blood domain, able to control all life force across all timelines.",
-				power_level: 19,
-			},
-			{
-				name: "Life Regent",
-				description:
-					"Your blood power extends across the multiverse, allowing you to reshape entire universes.",
-				power_level: 19,
-			},
-			{
-				name: "Hemomancy Regent",
-				description:
-					"You become the ultimate authority over blood and life force, able to determine the fate of all existence.",
-				power_level: 19,
-			},
-			{
-				name: "Blood Supremacy",
-				description:
-					"You achieve absolute supremacy over all blood, becoming the source and master of all life force.",
-				power_level: 20,
-			},
-			{
-				name: "Absolute Blood",
-				description:
-					"You become the embodiment of absolute life force, a force beyond comprehension that exists outside all laws of reality.",
-				power_level: 20,
-			},
-			{
-				name: "Regent Power",
-				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Regent, equal to all other Regents at their maximum potential.",
-				power_level: 20,
-			},
-		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 4,
-				dexterity: 2,
-				constitution: 6,
-				intelligence: 2,
-				wisdom: 2,
-				charisma: 2,
-			},
-			special_abilities: [
-				"Immune to life drain and necrotic damage",
-				"Can sense and manipulate blood in living creatures",
-				"Can heal through blood manipulation",
-				"Blood creatures are automatically friendly toward you",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		progression_table: {
-			"1": {
-				features_gained: ["Blood Step", "Vampiric Aura", "Blood Dominion"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: [
-					"Blood Boil",
-					"Hemomancy Mastery",
-					"Life Force Presence",
-				],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: [
-					"Life Drain",
-					"Blood Authority",
-					"Rebirth from Blood",
-				],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Hemomantic Shield", "Blood God", "Life Lord"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Blood Dominion", "Life Command", "Blood Emperor"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Life Authority", "Absolute Blood"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Blood Ascendant", "Life Lord", "Hemomancy God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: ["Blood Apocalypse", "Life Dominion", "Essence God"],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Blood Reality", "Life God", "Hemomancy Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Blood Transcendence",
-					"Life Emperor",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Blood Omnipotence",
-					"Life Regent",
-					"Hemomancy Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: ["Blood Supremacy", "Absolute Blood", "Regent Power"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-	},
-	{
-		id: "berserker-regent",
-		name: "Berserker Regent",
-		title: "Berserk Regent Class",
-		theme: "Berserker Rage",
-		description:
-			"A rage-based class overlay that grants uncontrollable power through berserker fury. Users become unstoppable forces of destruction when enraged, embodying the Berserk Regent's absolute mastery over rage.",
-		rank: "S",
-		image: "/generated/compendium/Regents/berserker-Regent.webp",
-		type: "class-overlay",
-		tags: [
-			"Regent",
-			"berserk",
-			"rage",
-			"fury",
-			"berserk-Regent",
-			"class-overlay",
-		],
-		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "System Ascendant Canon",
-		hit_dice: "1d12",
-		primary_ability: ["Strength", "Vitality"],
-		saving_throws: ["Strength", "Vitality"],
-		skill_proficiencies: ["Athletics", "Intimidation", "Survival"],
-		armor_proficiencies: ["Light armor", "Medium armor"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
-		tool_proficiencies: [],
-		requirements: {
-			quest_completion: "Complete the Berserk Regent Ascension trials",
-			dm_verification: true,
-			prerequisite_job: "Any base job",
-			power_level: 10,
-		},
-		abilities: [
-			{
-				name: "Unstoppable Rage",
-				description:
-					"As an action, enter a berserk rage for 1 minute. You gain advantage on all attack rolls, resistance to all damage, and your attacks deal maximum damage. This mirrors the Berserk Regent's ultimate rage state.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 3,
-			},
-			{
-				name: "Fury Storm",
-				description:
-					"As an action, unleash a storm of fury that forces all creatures in 60-foot radius to make Wisdom saves (DC 18) or be frightened and take 8d8 psychic damage. This reflects the Berserk Regent's area rage control.",
-				type: "action",
-				frequency: "long-rest",
-				power_level: 2,
-			},
-			{
-				name: "Rage Step",
-				description:
-					"As a bonus action, teleport through pure rage up to 120 feet, leaving behind a trail of destructive energy. This mirrors the Berserk Regent's rage-based mobility.",
-				type: "bonus-action",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
-				name: "Fury Shield",
-				description:
-					"As a reaction when targeted by an attack, absorb the damage and add it to your next attack roll as bonus damage. This reflects the Berserk Regent's defensive rage capabilities.",
-				type: "reaction",
-				frequency: "short-rest",
-				power_level: 2,
-			},
-			{
-				name: "Berserk Aura",
-				description:
-					"Enemies within 20 feet must make Wisdom saves each turn or be frightened and take 1d8 psychic damage. This represents the Berserk Regent's passive rage aura.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
-				name: "Rage Dominion",
-				description:
-					"As an action, create a 1-mile radius area of absolute rage control. All berserk creatures within gain advantage on all attacks. This mirrors the Berserk Regent's domain over rage.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 7,
-			},
-			{
-				name: "Fury Authority",
-				description:
-					"As an action, force all peaceful creatures within 300 feet to make a Wisdom save (DC 20) or become enraged and serve your will. This reflects the Berserk Regent's command over rage.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 9,
-			},
-			{
-				name: "Berserk Dominion",
-				description:
-					"You become the ultimate master of rage, gaining immunity to all damage and the ability to command any berserk creature anywhere in the multiverse. This represents the Berserk Regent's ultimate power.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 10,
-			},
-		],
-		features: [
-			{
-				name: "Berserk Dominion",
-				description:
-					"You gain immunity to being frightened and charmed. You cannot be knocked unconscious while raging. This reflects the Berserk Regent's mental fortitude.",
-				power_level: 1,
-			},
-			{
-				name: "Fury Presence",
-				description:
-					"Peaceful creatures cannot willingly approach within 30 feet of you. This reflects the Berserk Regent's intimidating aura.",
-				power_level: 2,
-			},
-			{
-				name: "Rage Mastery",
-				description:
-					"You can cast rage-based spells at will without expending spell slots. This represents the Berserk Regent's complete mastery over rage magic.",
-				power_level: 3,
-			},
-			{
-				name: "Rebirth from Fury",
-				description:
-					"Once per long rest, when reduced to 0 hit points, you can explode in fury (dealing 10d8 psychic damage to all enemies within 60 feet) and reform with full hit points in a rage state.",
-				power_level: 4,
-			},
-			{
-				name: "Rage Authority",
-				description:
-					"You can sense and manipulate rage in others within 120 feet.",
-				power_level: 5,
-			},
-			{
-				name: "Fury Lord",
-				description:
-					"You can induce rage in any creature, gaining their loyalty through fury.",
-				power_level: 6,
-			},
-			{
-				name: "Berserk God",
-				description:
-					"You become a living embodiment of rage, able to create and control fury at will.",
-				power_level: 7,
-			},
-			{
-				name: "Fury Command",
-				description:
-					"You can command any berserk creature, forcing them to serve your will.",
-				power_level: 8,
-			},
-			{
-				name: "Berserk Emperor",
-				description:
-					"Your rage powers extend across multiple planes, allowing you to affect fury anywhere.",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Rage",
-				description:
-					"You achieve the ultimate rage power, becoming immune to all effects and able to reshape reality through fury.",
-				power_level: 10,
-			},
-			{
-				name: "Rage Ascendant",
-				description:
-					"You transcend mortal limitations, gaining the ability to exist as pure rage and command fury across all dimensions.",
-				power_level: 11,
-			},
-			{
-				name: "Fury Lord",
-				description:
-					"You gain complete control over rage and fury, able to reshape entire worlds through anger.",
-				power_level: 11,
-			},
-			{
-				name: "Berserk God",
-				description:
-					"You become a living embodiment of berserk rage, able to unleash unlimited fury.",
-				power_level: 11,
-			},
-			{
-				name: "Rage Apocalypse",
-				description:
-					"Once per day, you can unleash a rage apocalypse that transforms a 10-mile radius into pure berserk fury.",
-				power_level: 13,
-			},
-			{
-				name: "Fury Dominion",
-				description:
-					"You gain control over rage itself, able to create or destroy any anger.",
-				power_level: 13,
-			},
-			{
-				name: "Essence God",
-				description:
-					"You can harvest and manipulate the essence of any being through rage, gaining their furious power.",
-				power_level: 13,
-			},
-			{
-				name: "Rage Reality",
-				description:
-					"You can reshape reality itself through rage, creating worlds of pure fury.",
-				power_level: 15,
-			},
-			{
-				name: "Fury God",
-				description:
-					"You become a master of all rage, able to create and destroy through fury.",
-				power_level: 15,
-			},
-			{
-				name: "Berserk Emperor",
-				description:
-					"Your rage extends across all realities, allowing you to control entire universes.",
-				power_level: 15,
-			},
-			{
-				name: "Rage Transcendence",
-				description:
-					"You transcend the concept of rage, becoming a fundamental force of fury that cannot be contained.",
-				power_level: 17,
-			},
-			{
-				name: "Fury Emperor",
-				description:
-					"You gain mastery over rage itself, able to create concepts of fury from nothing.",
-				power_level: 17,
-			},
-			{
-				name: "Essence Emperor",
-				description:
-					"You can absorb and control the rage essence of entire worlds, gaining their collective power.",
-				power_level: 17,
-			},
-			{
-				name: "Rage Omnipotence",
-				description:
-					"You achieve true omnipotence within the rage domain, able to control all fury across all timelines.",
-				power_level: 19,
-			},
-			{
-				name: "Fury Regent",
-				description:
-					"Your rage power extends across the multiverse, allowing you to reshape entire universes.",
-				power_level: 19,
-			},
-			{
-				name: "Berserker Regent",
-				description:
-					"You become the ultimate authority over rage and fury, able to determine the fate of all existence.",
-				power_level: 19,
-			},
-			{
-				name: "Rage Supremacy",
-				description:
-					"You achieve absolute supremacy over all rage, becoming the source and master of all fury.",
-				power_level: 20,
-			},
-			{
-				name: "Absolute Rage",
-				description:
-					"You become the embodiment of absolute fury, a force beyond comprehension that exists outside all laws of reality.",
-				power_level: 20,
-			},
-			{
-				name: "Regent Power",
-				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Regent, equal to all other Regents at their maximum potential.",
-				power_level: 20,
-			},
-		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 8,
-				dexterity: 2,
-				constitution: 6,
-				intelligence: 2,
-				wisdom: 2,
-				charisma: 2,
-			},
-			special_abilities: [
-				"Immune to fear and charm effects",
-				"Cannot be reduced below 1 hit point while raging",
-				"Can sense and manipulate rage in others",
-				"Berserk creatures are automatically friendly toward you",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		progression_table: {
-			"1": {
-				features_gained: ["Rage Step", "Berserk Aura", "Berserk Dominion"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: ["Unstoppable Rage", "Rage Mastery", "Fury Presence"],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: ["Fury Storm", "Rage Authority", "Rebirth from Fury"],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Fury Shield", "Berserk God", "Fury Lord"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Rage Dominion", "Fury Command", "Berserk Emperor"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Fury Authority", "Absolute Rage"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Rage Ascendant", "Fury Lord", "Berserk God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: ["Rage Apocalypse", "Fury Dominion", "Essence God"],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Rage Reality", "Fury God", "Berserk Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Rage Transcendence",
-					"Fury Emperor",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: ["Rage Omnipotence", "Fury Regent", "Berserk Regent"],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: ["Rage Supremacy", "Absolute Rage", "Regent Power"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-	},
-	{
-		id: "war-regent",
+		id: "war_regent",
 		name: "War Regent",
-		title: "War Regent Ascendant Class",
-		theme: "Tactical Battlefield Supremacy",
+		title: "War Regent (Monarch of Command)",
+		theme: "Tactical Battlefield Supremacy & Absolute Command",
 		description:
-			"A leadership-based class overlay that grants command over vanguard legions and tactical supremacy. Users can lead legions of vanguard soldiers, embodying the Commander Regent's absolute mastery over shadow command.",
+			"Embodiment of tactical genius and absolute battlefield authority, wielding the power of the Monarch of Command. You command the vanguard legions with unmatched supremacy, turning every conflict into a masterpiece of war. Your presence governs the flow of battle across dimensions, as you lead the charge of the eternal vanguard.",
 		rank: "S",
 		image: "/generated/compendium/Regents/shadow-command-Regent.webp",
-		type: "class-overlay",
+		type: "ascendant-class-overlay",
 		tags: [
-			"Regent",
+			"regent",
+			"war",
 			"command",
 			"leadership",
 			"tactics",
-			"commander-Regent",
+			"vanguard",
 			"class-overlay",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
@@ -2536,29 +1571,31 @@ export const regents: Regent[] = [
 		abilities: [
 			{
 				name: "Warlord's Command",
-				description: "Grant an ally within 60 feet an immediate action.",
+				description:
+					"As a bonus action, grant an ally within 60 feet an immediate action. This reflects the War Regent's ability to dictate the tempo of battle.",
 				type: "bonus-action",
 				power_level: 1,
 			},
 			{
+				name: "Tactical Step",
+				description:
+					"Teleport up to 120 feet, bringing up to 10 allies with you. This mirrors the War Regent's absolute control over position and deployment.",
+				type: "bonus-action",
+				frequency: "at-will",
+				power_level: 2,
+			},
+			{
 				name: "Conquest",
-				description: "100-ft AoE tactical stun.",
+				description:
+					"Unleash a 100-ft wave of tactical suppression that stuns all enemies (Presence save DC 20). This represents your absolute authority on the field.",
 				type: "action",
 				frequency: "long-rest",
 				power_level: 3,
 			},
 			{
-				name: "Tactical Step",
-				description:
-					"As a bonus action, teleport through command authority up to 120 feet, bringing up to 5 allies with you. This mirrors the Commander Regent's tactical mobility.",
-				type: "bonus-action",
-				frequency: "at-will",
-				power_level: 1,
-			},
-			{
 				name: "Command Shield",
 				description:
-					"As a reaction when an ally is targeted by an attack, redirect the attack to yourself and gain resistance to the damage. This reflects the Commander Regent's protective command capabilities.",
+					"Redirect an attack from an ally to yourself and gain resistance. This reflects your role as the unbreakable center of the vanguard.",
 				type: "reaction",
 				frequency: "short-rest",
 				power_level: 2,
@@ -2566,31 +1603,31 @@ export const regents: Regent[] = [
 			{
 				name: "Leadership Aura",
 				description:
-					"Allies within 30 feet gain advantage on attack rolls and saving throws. Enemies within this range have disadvantage on attacks against your allies. This represents the Commander Regent's passive leadership aura.",
+					"Allies within 60 feet gain advantage on all rolls. Enemies have disadvantage against them. This represents your passive tactical dominance.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 1,
 			},
 			{
-				name: "Command Dominion",
+				name: "War Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute command control. All allied creatures within gain advantage on all attacks and cannot be frightened. This mirrors the Commander Regent's domain over command.",
+					"Create a 1-mile radius area of absolute war control. Allies cannot be frightened and gain extra attacks. This mirrors your domain over the battlefield.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
 			},
 			{
-				name: "Tactical Authority",
+				name: "Vanguard Authority",
 				description:
-					"As an action, force all enemy commanders within 300 feet to make a Wisdom save (DC 20) or surrender their forces to your command. This reflects the Commander Regent's command over enemy leadership.",
+					"Force all enemy leaders within 300 feet to surrender (Wis save DC 20). Surrendered forces join your legion for 24 hours.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
 			},
 			{
-				name: "Command Dominion",
+				name: "Absolute Command",
 				description:
-					"You become the ultimate commander, gaining immunity to all damage and the ability to command any army anywhere in the multiverse. This represents the Commander Regent's ultimate power.",
+					"You become the ultimate master of war. You are immune to all damage while leading an army, and can command any soul in existence to take a tactical action.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,
@@ -2598,63 +1635,54 @@ export const regents: Regent[] = [
 		],
 		features: [
 			{
-				name: "Command Dominion",
+				name: "War Dominion",
 				description:
-					"You gain immunity to being frightened and charmed. You cannot be compelled to act against your will. This reflects the Commander Regent's mental fortitude.",
+					"Immunity to fear and charm. Your tactical mind cannot be breached or influenced.",
 				power_level: 1,
 			},
 			{
-				name: "Leadership Presence",
-				description:
-					"Enemy commanders cannot willingly approach within 30 feet of you. This reflects the Commander Regent's intimidating leadership aura.",
+				name: "Vanguard Step",
+				description: "Tactical teleportation for you and your soldiers.",
 				power_level: 2,
 			},
 			{
 				name: "Command Mastery",
-				description:
-					"You can cast command-based spells at will without expending spell slots. This represents the Commander Regent's complete mastery over command magic.",
+				description: "Perfect control over military magic and strategy.",
 				power_level: 3,
 			},
 			{
 				name: "Army Rebirth",
-				description:
-					"Once per long rest, when reduced to 0 hit points, you can rally your forces through pure command authority. All allies within 60 feet regain 4d8 hit points, and you return to life with full hit points, appearing as a beacon of tactical hope on the battlefield. This reflects the Commander Regent's ability to pull victory from the jaws of defeat.",
+				description: "Rally fallen troops and cheat death through sheer will.",
 				power_level: 4,
 			},
 			{
 				name: "Command Authority",
-				description:
-					"You can communicate telepathically with any creature within 1 mile and issue commands.",
+				description: "Telepathic command over any being within 1 mile.",
 				power_level: 5,
 			},
 			{
 				name: "Tactical Lord",
-				description:
-					"You can command any army, gaining their loyalty through tactical superiority.",
+				description: "Subjugate enemy armies through strategic brilliance.",
 				power_level: 6,
 			},
 			{
-				name: "Command God",
-				description:
-					"You become a living embodiment of command, able to create and control armies at will.",
+				name: "War God",
+				description: "Incarnate as the fundamental force of conflict.",
 				power_level: 7,
 			},
 			{
 				name: "Tactical Command",
-				description:
-					"You can command any commander, forcing them to serve your will.",
+				description: "Absolute control over enemy leadership and intent.",
 				power_level: 8,
 			},
 			{
-				name: "Command Emperor",
-				description:
-					"Your command powers extend across multiple planes, allowing you to affect armies anywhere.",
+				name: "War Emperor",
+				description: "Command entire planets and dimensions as one unit.",
 				power_level: 9,
 			},
 			{
-				name: "Absolute Command",
-				description:
-					"You achieve the ultimate command power, becoming immune to all effects and able to reshape reality through tactical supremacy.",
+				name: "Absolute War",
+				description: "Total immunity while commanding; reshape reality by war.",
 				power_level: 10,
 			},
 			{
@@ -2789,22 +1817,18 @@ export const regents: Regent[] = [
 		progression_table: {
 			"1": {
 				features_gained: [
-					"Army Command",
+					"Warlord's Command",
 					"Leadership Aura",
-					"Command Dominion",
+					"War Dominion",
 				],
 				abilities_improved: [],
 			},
 			"2": {
-				features_gained: ["Regent Power Resonance"],
+				features_gained: ["Vanguard Step", "Regent Power Resonance"],
 				abilities_improved: [],
 			},
 			"3": {
-				features_gained: [
-					"Legion Summon",
-					"Tactical Mastery",
-					"Leadership Presence",
-				],
+				features_gained: ["Conquest", "Command Mastery", "Leadership Presence"],
 				abilities_improved: [],
 			},
 			"4": {
@@ -2820,7 +1844,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"7": {
-				features_gained: ["Command Shield", "Command God", "Tactical Lord"],
+				features_gained: ["Command Shield", "War God", "Tactical Lord"],
 				abilities_improved: [],
 			},
 			"8": {
@@ -2828,15 +1852,11 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 			"9": {
-				features_gained: [
-					"Command Dominion",
-					"Tactical Command",
-					"Command Emperor",
-				],
+				features_gained: ["War Dominion", "Tactical Command", "War Emperor"],
 				abilities_improved: [],
 			},
 			"10": {
-				features_gained: ["Tactical Authority", "Absolute Command"],
+				features_gained: ["Vanguard Authority", "Absolute War"],
 				abilities_improved: [],
 			},
 			"11": {
@@ -2906,16 +1926,24 @@ export const regents: Regent[] = [
 		},
 	},
 	{
-		id: "frost-regent",
+		id: "frost_regent",
 		name: "Frost Regent",
-		title: "Frost Regent Ascendant Class",
-		theme: "Eternal Winter",
+		title: "Frost Regent (Monarch of Frost)",
+		theme: "Eternal Winter & absolute Zero",
 		description:
-			"Herald of the eternal winter. Bring ice age to modern cities. Thermometers break showing impossible temperatures and the Ascendant Bureau classifies you as a climate catastrophe event. Your power taps into the absolute zero boundary — the point where molecular motion ceases and time itself slows to a crawl. Scientists monitoring your activities have documented localized temporal distortions near frost zones.",
+			"Herald of eternal winter and absolute zero, wielding the power of the Monarch of Frost. You command the biting winds, glacial shards, and the crystalline silence of the void. Your presence freezes the very soul of the world, turning landscapes into frozen wastes of pure order. The Ascendant Bureau classifies you as a Climate Catastrophe event, capable of bringing a global ice age.",
 		rank: "S",
-		image: "/generated/compendium/Regents/frost-regent.webp",
+		image: "/generated/compendium/Regents/frost-Regent.webp",
 		type: "ascendant-class-overlay",
-		tags: ["regent", "frost", "ice", "cold", "time", "class-overlay"],
+		tags: [
+			"regent",
+			"frost",
+			"cold",
+			"winter",
+			"monarch_of_frost",
+			"ice",
+			"legia",
+		],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
 		hit_dice: "1d10",
@@ -2928,9 +1956,9 @@ export const regents: Regent[] = [
 		class_features: [
 			{
 				level: 1,
-				name: "Ice Age Advent",
+				name: "Ice Age Protocol",
 				description:
-					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. The City declares a state of emergency as blizzard conditions reduce visibility to 10 feet. This heralds the arrival of the eternal winter.",
+					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. This mirrors the Monarch of Frost's climate-shattering power.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2943,17 +1971,17 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 2,
-				name: "Absolute Zero",
+				name: "Absolute Zero Touch",
 				description:
-					"As a touch attack, you channel the boundary of absolute zero into a target. They take 10d10 cold damage and must make a VIT save or be paralyzed. On kill, the target becomes a diamond-hard ice statue at -273.15°C, requiring a Wish to thaw. Forensics find the temperature physics-defying.",
+					"As a touch attack, channel the boundary of absolute zero. Target takes 10d10 cold damage and must make a VIT save or be paralyzed. On kill, they become a permanent ice statue at -273.15°C.",
 				type: "action",
 				frequency: "short-rest",
 			},
 			{
 				level: 3,
-				name: "Glacial Time",
+				name: "Glacial Eternity",
 				description:
-					"60-ft radius: enemies half speed, disadvantage AGI, no reactions. 1 min, prof/long rest.",
+					"60-ft radius: enemies half speed, disadvantage AGI, no reactions. 1 min, prof/long rest. Time slows as heat is drained from the area.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2961,14 +1989,14 @@ export const regents: Regent[] = [
 				level: 5,
 				name: "Winter's Immortality",
 				description:
-					"Immune to cold, fire, aging. Regenerate 20 HP/round below freezing. Auto-stabilize at 0 HP.",
+					"Immune to cold, fire, aging. Regenerate 20 HP/round in freezing temperatures. Auto-stabilize at 0 HP.",
 				type: "passive",
 			},
 			{
 				level: 7,
 				name: "Cryogenic Prison",
 				description:
-					"Encase target in absolute-zero ice. VIT save DC 20 or imprisoned (only Wish frees).",
+					"Encase a target in absolute-zero ice. VIT save DC 20 or imprisoned indefinitely until thawed by Wish.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2976,7 +2004,7 @@ export const regents: Regent[] = [
 				level: 9,
 				name: "Temporal Frost",
 				description:
-					"Freeze time in 120-ft radius for 1 round. Only you act. 1/long rest.",
+					"Freeze time in a 120-ft radius for 1 round. Only you can act. This reflects your absolute thermodynamic authority.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2984,7 +2012,7 @@ export const regents: Regent[] = [
 				level: 10,
 				name: "Absolute Frost",
 				description:
-					"All cold damage you deal is maximized. Ice structures you create are permanent.",
+					"All cold damage you deal is maximized. Ice structures you create are permanent and indestructible.",
 				type: "passive",
 			},
 		],
@@ -3011,15 +2039,15 @@ export const regents: Regent[] = [
 		},
 		progression_table: {
 			"1": {
-				features_gained: ["Ice Age Advent", "Frost Dominion"],
+				features_gained: ["Ice Age Protocol", "Frost Dominion"],
 				abilities_improved: [],
 			},
 			"2": {
-				features_gained: ["Absolute Zero"],
+				features_gained: ["Regent Power Resonance"],
 				abilities_improved: [],
 			},
 			"3": {
-				features_gained: ["Glacial Time"],
+				features_gained: ["Absolute Zero Touch", "Glacial Eternity"],
 				abilities_improved: [],
 			},
 			"4": {
@@ -3095,13 +2123,25 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 		},
-		regent_requirements: {
-			level: 10,
-			abilities: {
-				intelligence: 16,
+		mechanics: {
+			stat_bonuses: {
+				strength: 2,
+				dexterity: 2,
+				constitution: 6,
+				intelligence: 8,
+				wisdom: 4,
+				charisma: 2,
 			},
-			quest_completion: "Complete the Trial of the Frost Gate",
-			dm_approval: true,
+			special_abilities: [
+				"Immune to cold damage",
+				"Resistance to fire damage",
+				"Cannot slip on ice",
+				"Slow time within 60-ft radius",
+			],
+			restrictions: [
+				"Requires Warden verification of quest completion",
+				"Once chosen, cannot be changed without Warden approval",
+			],
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Frost Gate",
@@ -3109,144 +2149,25 @@ export const regents: Regent[] = [
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
-		abilities: [
-			{
-				name: "Ice Age Advent",
-				description: "5-mile ice storm, 8 hours. -100°C.",
-				type: "action",
-				frequency: "long-rest",
-				power_level: 1,
-			},
-			{
-				name: "Absolute Zero",
-				description: "Touch: 10d10 cold + paralyzed.",
-				type: "action",
-				frequency: "short-rest",
-				power_level: 2,
-			},
-			{
-				name: "Glacial Time",
-				description: "Slow time in 60-ft radius.",
-				type: "action",
-				frequency: "long-rest",
-				power_level: 3,
-			},
-			{
-				name: "Temporal Frost",
-				description: "Freeze time 120-ft for 1 round.",
-				type: "action",
-				frequency: "long-rest",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Frost",
-				description: "Maximize cold damage. Permanent ice structures.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 10,
-			},
-		],
-		features: [
-			{
-				name: "Frost Dominion",
-				description: "Immune to cold, resistance to fire.",
-				power_level: 1,
-			},
-			{
-				name: "Absolute Zero",
-				description: "Touch attack: 10d10 cold + paralyzed.",
-				power_level: 2,
-			},
-			{
-				name: "Glacial Time",
-				description: "Slow time in 60-ft radius.",
-				power_level: 3,
-			},
-			{
-				name: "Winter's Immortality",
-				description: "Immune to cold/fire/aging, regeneration.",
-				power_level: 5,
-			},
-			{
-				name: "Cryogenic Prison",
-				description: "Imprison in absolute-zero ice.",
-				power_level: 7,
-			},
-			{
-				name: "Temporal Frost",
-				description: "Freeze time for 1 round.",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Frost",
-				description: "Maximize cold, permanent ice.",
-				power_level: 10,
-			},
-			{
-				name: "Frost Ascendant",
-				description: "Transcend mortal limitations of cold.",
-				power_level: 11,
-			},
-			{
-				name: "Frost Apocalypse",
-				description: "Continental ice age.",
-				power_level: 13,
-			},
-			{
-				name: "Frost Reality",
-				description: "Reshape reality through ice.",
-				power_level: 15,
-			},
-			{
-				name: "Frost Transcendence",
-				description: "Become fundamental force of entropy.",
-				power_level: 17,
-			},
-			{
-				name: "Frost Omnipotence",
-				description: "Control cold across all timelines.",
-				power_level: 19,
-			},
-			{
-				name: "Frost Supremacy",
-				description: "Ultimate frost power.",
-				power_level: 20,
-			},
-			{
-				name: "Regent Power",
-				description: "Full Regent power.",
-				power_level: 20,
-			},
-		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 2,
-				dexterity: 2,
-				constitution: 4,
-				intelligence: 4,
-				wisdom: 2,
-				charisma: 2,
-			},
-			special_abilities: [
-				"Immune to cold damage",
-				"Resistance to fire damage",
-				"Cannot slip on ice",
-				"Slow time in radius",
-			],
-			restrictions: ["Requires Warden verification", "INT 16+ required"],
-		},
 	},
 	{
-		id: "beast-regent",
+		id: "beast_regent",
 		name: "Beast Regent",
-		title: "Beast Regent Ascendant Class",
-		theme: "Primal Evolution",
+		title: "Beast Regent (Monarch of Beasts)",
+		theme: "Primal Evolution & Apex Sovereignty",
 		description:
-			"Avatar of primordial evolution. All beasts recognize you as alpha. Transform into an apex predator from before human history. The Ascendant Bureau classifies you as an Alpha-class biodiversity threat. Zoo animals break containment when you pass, police K-9 units refuse to engage, and wildlife documentarians film you instead of their subjects.",
+			"Avatar of primordial evolution and sovereign of the wild, wielding the power of the Monarch of Beasts. All creatures recognize you as the ultimate alpha, and your roar can shatter the instincts of any living being. You embody the perfect predatory form, adaptive and unstoppable. The Ascendant Bureau classifies you as an Alpha-class biodiversity threat.",
 		rank: "S",
 		image: "/generated/compendium/Regents/beast-regent.webp",
 		type: "ascendant-class-overlay",
-		tags: ["regent", "beast", "primal", "evolution", "class-overlay"],
+		tags: [
+			"regent",
+			"beast",
+			"primal",
+			"evolution",
+			"monarch_of_beasts",
+			"nature",
+		],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
 		hit_dice: "1d12",
@@ -3261,7 +2182,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Apex Form",
 				description:
-					"Transform into a gargantuan primordial beast for 10 minutes (prof/long rest). You gain +6 to STR/AGI/VIT (max 26), 3d10+STR natural weapons, and regenerate 15 HP/turn. Your tremorsense extends to 120 ft as you become the ultimate evolutionary apex predator from before human history.",
+					"Transform into a gargantuan primordial beast for 10 minutes (prof/long rest). You gain +6 to STR/AGI/VIT (max 26), 3d10+STR natural weapons, and regenerate 15 HP/turn. Your tremorsense extends to 120 ft as you become the ultimate evolutionary apex predator.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -3269,14 +2190,14 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Alpha's Presence",
 				description:
-					"You emit a constant 120-foot aura of primal dominance. All beasts within this range recognize you as the alpha and are automatically friendly. Hostile creatures must make a SENSE save or be frightened and unable to attack you as their primal instincts trigger an apex predator response.",
+					"You emit a constant 120-foot aura of primal dominance. All beasts within this range recognize you as the alpha and are automatically friendly. Hostile creatures must make a SENSE save or be frightened.",
 				type: "passive",
 			},
 			{
 				level: 2,
 				name: "Beast King's Call",
 				description:
-					"Exert mental command over all beasts within a 10-mile radius (CR ≤ level). They obey your orders absolutely for 1 hour. Animals in zoos break containment, police K-9 units turn on their handlers, and any beast recognizes you as their king. Useable 1/week.",
+					"Exert mental command over all beasts within a 10-mile radius (CR ≤ level). They obey your orders absolutely for 1 hour. useable 1/week. Zoo animals break containment, police K-9 units refuse to engage you.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -3284,14 +2205,14 @@ export const regents: Regent[] = [
 				level: 3,
 				name: "Primordial Regeneration",
 				description:
-					"Your cellular structure adapts with impossible speed. You regrow lost limbs in 1 minute and regain 25 HP at the start of your turn if below half health. You are immune to aging and disease, and all toxins are metabolized instantly. Medical reports describe an unprecedented healing factor.",
+					"Your cellular structure adapts with impossible speed. Regrow lost limbs in 1 minute and regain 25 HP at the start of your turn if below half health. Immune to aging and disease.",
 				type: "passive",
 			},
 			{
 				level: 5,
 				name: "Evolutionary Leap",
 				description:
-					"Adapt to any environment. Grow gills, wings, or thermal insulation as needed. 1 action.",
+					"Adapt to any environment. Grow gills, wings, or thermal insulation as needed as a bonus action.",
 				type: "bonus-action",
 				frequency: "at-will",
 			},
@@ -3306,7 +2227,7 @@ export const regents: Regent[] = [
 				level: 9,
 				name: "Extinction Event",
 				description:
-					"1-mile radius: all hostile creatures take 6d10 force + frightened (SENSE save). 1/long rest.",
+					"1-mile radius: all hostile creatures take 6d10 force + frightened (SENSE save DC 20). 1/long rest.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -3408,13 +2329,25 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 		},
-		regent_requirements: {
-			level: 11,
-			abilities: {
-				strength: 17,
+		mechanics: {
+			stat_bonuses: {
+				strength: 4,
+				dexterity: 2,
+				constitution: 6,
+				intelligence: 2,
+				wisdom: 4,
+				charisma: 2,
 			},
-			quest_completion: "Complete the Trial of the Beast Gate",
-			dm_approval: true,
+			special_abilities: [
+				"Beasts automatically friendly",
+				"Regeneration 25 HP/turn",
+				"Tremorsense 120 ft",
+				"Immune to disease and aging",
+			],
+			restrictions: [
+				"Requires Warden verification of quest completion",
+				"Once chosen, cannot be changed without Warden approval",
+			],
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Beast Gate",
@@ -3422,130 +2355,9 @@ export const regents: Regent[] = [
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
-		abilities: [
-			{
-				name: "Apex Form",
-				description:
-					"Huge primordial beast. +6 STR/AGI/VIT, 3d10 natural weapons, regen.",
-				type: "action",
-				frequency: "long-rest",
-				power_level: 1,
-			},
-			{
-				name: "Beast King's Call",
-				description: "Command all beasts within 10 miles.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 2,
-			},
-			{
-				name: "Extinction Event",
-				description: "1-mile AoE: 6d10 force + frightened.",
-				type: "action",
-				frequency: "long-rest",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Beast",
-				description:
-					"Permanent Apex Form. Global beast command. Physical immunity.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 10,
-			},
-		],
-		features: [
-			{
-				name: "Alpha's Presence",
-				description: "120-ft aura. Beasts friendly, enemies frightened.",
-				power_level: 1,
-			},
-			{
-				name: "Beast King's Call",
-				description: "Command all beasts within 10 miles.",
-				power_level: 2,
-			},
-			{
-				name: "Primordial Regeneration",
-				description: "Regrow limbs, 25 HP/turn below half, immune age/disease.",
-				power_level: 3,
-			},
-			{
-				name: "Evolutionary Leap",
-				description: "Adapt to any environment on demand.",
-				power_level: 5,
-			},
-			{
-				name: "Pack Tactics",
-				description: "Allies gain advantage on your targets.",
-				power_level: 7,
-			},
-			{
-				name: "Extinction Event",
-				description: "1-mile AoE devastation.",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Beast",
-				description: "Permanent form, total physical immunity.",
-				power_level: 10,
-			},
-			{
-				name: "Beast Ascendant",
-				description: "Transcend biology.",
-				power_level: 11,
-			},
-			{
-				name: "Beast Apocalypse",
-				description: "Global primal event.",
-				power_level: 13,
-			},
-			{
-				name: "Beast Reality",
-				description: "Reshape reality through evolution.",
-				power_level: 15,
-			},
-			{
-				name: "Beast Transcendence",
-				description: "Fundamental force of nature.",
-				power_level: 17,
-			},
-			{
-				name: "Beast Omnipotence",
-				description: "Control all life.",
-				power_level: 19,
-			},
-			{
-				name: "Beast Supremacy",
-				description: "Ultimate primal power.",
-				power_level: 20,
-			},
-			{
-				name: "Regent Power",
-				description: "Full Regent power.",
-				power_level: 20,
-			},
-		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 4,
-				dexterity: 2,
-				constitution: 4,
-				intelligence: 2,
-				wisdom: 2,
-				charisma: 2,
-			},
-			special_abilities: [
-				"Beasts automatically friendly",
-				"Regeneration 15 HP/turn",
-				"Tremorsense 120 ft",
-				"Immune to disease and aging",
-			],
-			restrictions: ["Requires Warden verification", "STR or VIT 17+ required"],
-		},
 	},
 	{
-		id: "plague-regent",
+		id: "plague_regent",
 		name: "Plague Regent",
 		title: "Plague Regent Ascendant Class",
 		theme: "Pandemic Incarnate",
@@ -3868,22 +2680,16 @@ export const regents: Regent[] = [
 		},
 	},
 	{
-		id: "spatial-regent",
+		id: "spatial_regent",
 		name: "Spatial Regent",
-		title: "Spatial Regent Ascendant Class",
+		title: "Spatial Regent (Monarch of Space)",
 		theme: "Cosmic Weaving & Dimensional Void",
 		description:
-			"Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your Cosmic Senses shows universe blueprints. The Ascendant Bureau classifies you as a Dimensional sovereignty threat. You build structures from nothing, create pocket dimensions for storage/bases/prisons, and place dimensional anchors worldwide for instant teleportation. ",
+			"Sovereign of the void and master of the dimensional weave. You reshape space, time, and distance with absolute authority. Your Cosmic Senses allow you to perceive the very fabric of the multiverse. The Ascendant Bureau classifies you as a Dimensional Sovereignty Threat. You collapse distances, create pocket dimensions, and place anchors that bypass the laws of physics.",
 		rank: "S",
-		image: "/generated/compendium/Regents/architect-regent.webp",
+		image: "/generated/compendium/Regents/spatial-regent.webp",
 		type: "ascendant-class-overlay",
-		tags: [
-			"regent",
-			"architect",
-			"dimensional",
-			"construction",
-			"class-overlay",
-		],
+		tags: ["regent", "spatial", "dimensional", "void", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
 		hit_dice: "1d8",
@@ -3892,7 +2698,7 @@ export const regents: Regent[] = [
 		skill_proficiencies: ["Arcana", "Investigation", "History", "Perception"],
 		armor_proficiencies: ["Light armor"],
 		weapon_proficiencies: ["Simple weapons"],
-		tool_proficiencies: ["Mason's tools", "Cartographer's tools"],
+		tool_proficiencies: ["Cartographer's tools", "Navigator's tools"],
 		class_features: [
 			{
 				level: 1,
@@ -3900,6 +2706,7 @@ export const regents: Regent[] = [
 				description:
 					"You create a localized gravity well of pure void essence at a point within 120 feet. All creatures within a 20-foot radius are pulled toward the center and take 6d10 force damage. You perceive the blueprints of reality and can tear them apart to crush your enemies.",
 				type: "action",
+				frequency: "at-will",
 			},
 			{
 				level: 1,
@@ -3907,6 +2714,7 @@ export const regents: Regent[] = [
 				description:
 					"You achieve the ability to step through the dimensional lattice of the universe. As a bonus action, you can teleport up to 30 feet to any unoccupied space you can see. This 'blink' is instantaneous and creates a minor spatial ripple that only specialized sensors can detect.",
 				type: "bonus-action",
+				frequency: "at-will",
 			},
 			{
 				level: 2,
@@ -3918,9 +2726,9 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 3,
-				name: "Living Lair",
+				name: "Dimensional Sanctum",
 				description:
-					"In your structures: reshape layout as bonus action, create/remove doors/walls/floors, control gravity per room.",
+					"In your pocket dimensions or anchored zones: reshape the physical layout as a bonus action, control gravity per room, and decide who can enter.",
 				type: "passive",
 			},
 			{
@@ -3933,9 +2741,9 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 7,
-				name: "Blueprint Vision",
+				name: "Lattice Vision",
 				description:
-					"See structural weaknesses, hidden rooms, and dimensional instabilities. Detect all portals/gates within 5 miles.",
+					"See spatial weaknesses, hidden dimensions, and dimensional instabilities. Detect all portals/gates within 5 miles.",
 				type: "passive",
 			},
 			{
@@ -3944,19 +2752,19 @@ export const regents: Regent[] = [
 				description:
 					"Reshape 1-mile area: change terrain, gravity direction, physics rules. Permanent. 1/week.",
 				type: "action",
-				frequency: "once-per-day",
+				frequency: "long-rest",
 			},
 			{
 				level: 10,
-				name: "Absolute Architect",
+				name: "Absolute Spatial",
 				description:
-					"Create demiplanes at will. All structures are indestructible. Reality Rewrite becomes daily.",
+					"Create demiplanes at will. All spatial folds are indestructible. Reality Rewrite becomes daily.",
 				type: "passive",
 			},
 		],
 		progression_table: {
 			"1": {
-				features_gained: ["World Creation", "Instant Architecture"],
+				features_gained: ["Void Singularity", "Planar Blink"],
 				abilities_improved: [],
 			},
 			"2": {
@@ -3964,7 +2772,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"3": {
-				features_gained: ["Living Lair"],
+				features_gained: ["Dimensional Sanctum"],
 				abilities_improved: [],
 			},
 			"4": {
@@ -3980,7 +2788,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"7": {
-				features_gained: ["Blueprint Vision"],
+				features_gained: ["Lattice Vision"],
 				abilities_improved: [],
 			},
 			"8": {
@@ -3992,15 +2800,11 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"10": {
-				features_gained: ["Absolute Architect"],
+				features_gained: ["Absolute Spatial"],
 				abilities_improved: [],
 			},
 			"11": {
-				features_gained: [
-					"Architect Ascendant",
-					"Spatial Lord",
-					"Dimensional God",
-				],
+				features_gained: ["Spatial Ascendant", "Void Lord", "Dimensional God"],
 				abilities_improved: [],
 			},
 			"12": {
@@ -4009,7 +2813,7 @@ export const regents: Regent[] = [
 			},
 			"13": {
 				features_gained: [
-					"Architect Apocalypse",
+					"Spatial Apocalypse",
 					"Space Dominion",
 					"Reality God",
 				],
@@ -4020,11 +2824,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"15": {
-				features_gained: [
-					"Architect Reality",
-					"Spatial God",
-					"Dimensional Emperor",
-				],
+				features_gained: ["Spatial Reality", "Void God", "Dimensional Emperor"],
 				abilities_improved: [],
 			},
 			"16": {
@@ -4033,7 +2833,7 @@ export const regents: Regent[] = [
 			},
 			"17": {
 				features_gained: [
-					"Architect Transcendence",
+					"Spatial Transcendence",
 					"Space Emperor",
 					"Reality Emperor",
 				],
@@ -4045,165 +2845,50 @@ export const regents: Regent[] = [
 			},
 			"19": {
 				features_gained: [
-					"Architect Omnipotence",
-					"Spatial Regent",
+					"Spatial Omnipotence",
+					"Void Regent",
 					"Dimensional Regent",
 				],
 				abilities_improved: [],
 			},
 			"20": {
 				features_gained: [
-					"Architect Supremacy",
-					"Absolute Architect",
+					"Spatial Supremacy",
+					"Absolute Spatial",
 					"Regent Power",
 				],
 				abilities_improved: ["Primary Ability +2"],
 			},
 		},
-		regent_requirements: {
-			level: 13,
-			abilities: {
-				intelligence: 18,
-			},
-			quest_completion: "Complete the Trial of the Architect Gate",
-			dm_approval: true,
-		},
-		requirements: {
-			quest_completion: "Complete the Trial of the Architect Gate",
-			dm_verification: true,
-			prerequisite_job: "Any base job",
-			power_level: 10,
-		},
-		abilities: [
-			{
-				name: "World Creation",
-				description:
-					"Fabricator of reality. You perceive the dimensional weave of the universe and can fold, tear, or reshape it at will. You are the master of the void, capable of creating ethereal domains and manipulating gravity to crush your foes.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 1,
-			},
-			{
-				name: "Instant Architecture",
-				description: "Create 300-ft structure instantly.",
-				type: "action",
-				frequency: "short-rest",
-				power_level: 1,
-			},
-			{
-				name: "Spatial Anchors",
-				description: "12 teleport anchors, unlimited use.",
-				type: "action",
-				frequency: "at-will",
-				power_level: 2,
-			},
-			{
-				name: "Reality Rewrite",
-				description: "Reshape 1-mile area permanently.",
-				type: "action",
-				frequency: "once-per-day",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Architect",
-				description: "At-will demiplanes, indestructible structures.",
-				type: "passive",
-				frequency: "at-will",
-				power_level: 10,
-			},
-		],
-		features: [
-			{
-				name: "Instant Architecture",
-				description: "Create any structure as action.",
-				power_level: 1,
-			},
-			{
-				name: "Spatial Anchors",
-				description: "12 permanent teleport points.",
-				power_level: 2,
-			},
-			{
-				name: "Living Lair",
-				description: "Control structures you created.",
-				power_level: 3,
-			},
-			{
-				name: "Dimensional Lock",
-				description: "Block teleportation in 1-mile.",
-				power_level: 5,
-			},
-			{
-				name: "Blueprint Vision",
-				description: "See structure internals and portals.",
-				power_level: 7,
-			},
-			{
-				name: "Reality Rewrite",
-				description: "Reshape 1-mile permanently.",
-				power_level: 9,
-			},
-			{
-				name: "Absolute Architect",
-				description: "At-will creation, indestructible.",
-				power_level: 10,
-			},
-			{
-				name: "Architect Ascendant",
-				description: "Build across dimensions.",
-				power_level: 11,
-			},
-			{
-				name: "Architect Apocalypse",
-				description: "Reshape continents.",
-				power_level: 13,
-			},
-			{
-				name: "Architect Reality",
-				description: "Create/destroy planes.",
-				power_level: 15,
-			},
-			{
-				name: "Architect Transcendence",
-				description: "Fundamental force of space.",
-				power_level: 17,
-			},
-			{
-				name: "Architect Omnipotence",
-				description: "Control all space.",
-				power_level: 19,
-			},
-			{
-				name: "Architect Supremacy",
-				description: "Ultimate spatial power.",
-				power_level: 20,
-			},
-			{
-				name: "Regent Power",
-				description: "Full Regent power.",
-				power_level: 20,
-			},
-		],
 		mechanics: {
 			stat_bonuses: {
 				strength: 2,
 				dexterity: 2,
 				constitution: 2,
-				intelligence: 4,
+				intelligence: 8,
 				wisdom: 4,
 				charisma: 2,
 			},
 			special_abilities: [
 				"Create permanent demiplanes",
-				"Instant construction",
+				"Instant spatial folding",
 				"Teleport via spatial anchors",
 				"Detect portals within 5 miles",
 			],
-			restrictions: ["Requires Warden verification", "INT 18+ required"],
+			restrictions: [
+				"Requires Warden verification of quest completion",
+				"Once chosen, cannot be changed without Warden approval",
+			],
+		},
+		requirements: {
+			quest_completion: "Complete the Trial of the Spatial Gate",
+			dm_verification: true,
+			prerequisite_job: "Any base job",
+			power_level: 10,
 		},
 	},
 	{
-		id: "mimic-regent",
+		id: "mimic_regent",
 		name: "Mimic Regent",
 		title: "Mimic Regent Ascendant Class",
 		theme: "Infinite Forms",
@@ -4514,6 +3199,421 @@ export const regents: Regent[] = [
 				"Access mimicked memories",
 			],
 			restrictions: ["Requires Warden verification", "AGI or PRE 17+ required"],
+		},
+	},
+	{
+		id: "blood_regent",
+		name: "Blood Regent",
+		title: "Blood Regent (Monarch of Blood)",
+		theme: "Hemomancy & Sanguine Sovereignty",
+		description:
+			"Sovereign of life essence and master of hemomancy, wielding the power of the Monarch of Blood. You control the very fluid of life, turning it into a weapon or a restorative force at your whim. Your presence causes the hearts of enemies to falter and the wounds of allies to seal instantly. The Ascendant Bureau classifies you as a Sanguine Catastrophe, capable of draining the life from an entire city.",
+		rank: "S",
+		image: "/generated/compendium/Regents/blood-regent.webp",
+		type: "ascendant-class-overlay",
+		tags: ["regent", "blood", "hemomancy", "life", "monarch_of_blood"],
+		created_at: "2026-02-26T00:00:00.000Z",
+		source_book: "System Ascendant Canon",
+		hit_dice: "1d10",
+		primary_ability: ["Vitality", "Charisma"],
+		saving_throws: ["Vitality", "Charisma"],
+		skill_proficiencies: ["Medicine", "Persuasion", "Intimidation", "Arcana"],
+		armor_proficiencies: ["Light armor", "Medium armor"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
+		class_features: [
+			{
+				level: 1,
+				name: "Sanguine Command",
+				description:
+					"Control the blood of any creature you've damaged. They must make a VIT save or be forced to move or attack a target of your choice.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 1,
+				name: "Blood Shield",
+				description:
+					"As a reaction to taking damage, create a shield of blood that reduces the damage by 2d10 + class level. You regain HP equal to half the damage reduced.",
+				type: "reaction",
+				frequency: "short-rest",
+			},
+			{
+				level: 2,
+				name: "Crimson Lance",
+				description:
+					"Form a spear of pressurized blood. Range 120 ft, 6d8 piercing + 4d8 necrotic. On hit, you regain 10 HP.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 3,
+				name: "Life Drain Aura",
+				description:
+					"30-ft aura: enemies take 2d6 necrotic damage at start of turn, you gain total damage dealt as temporary HP.",
+				type: "passive",
+			},
+			{
+				level: 5,
+				name: "Sanguine Rebirth",
+				description:
+					"When you drop to 0 HP, explode in a burst of blood (10d10 necrotic to all within 30 ft) and reappear at full HP. 1/long rest.",
+				type: "passive",
+			},
+			{
+				level: 7,
+				name: "Hemocentric Control",
+				description:
+					"Stop the blood flow in a target. VIT save or paralyzed and 5d10 necrotic per turn until they succeed.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 9,
+				name: "Blood Apocalypse",
+				description:
+					"1-mile radius: drain the blood of all living things. All take 20d10 necrotic, you gain 1000 temporary HP. 1/week.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 10,
+				name: "Absolute Blood",
+				description:
+					"Immune to necrotic and poison. Any creature with blood is automatically detected by you within 1 mile.",
+				type: "passive",
+			},
+		],
+		progression_table: {
+			"1": {
+				features_gained: ["Sanguine Command", "Blood Shield"],
+				abilities_improved: [],
+			},
+			"2": {
+				features_gained: ["Crimson Lance"],
+				abilities_improved: [],
+			},
+			"3": {
+				features_gained: ["Life Drain Aura"],
+				abilities_improved: [],
+			},
+			"4": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"5": {
+				features_gained: ["Sanguine Rebirth"],
+				abilities_improved: [],
+			},
+			"6": {
+				features_gained: ["Regent Power Resonance"],
+				abilities_improved: [],
+			},
+			"7": {
+				features_gained: ["Hemocentric Control"],
+				abilities_improved: [],
+			},
+			"8": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"9": {
+				features_gained: ["Blood Apocalypse"],
+				abilities_improved: [],
+			},
+			"10": {
+				features_gained: ["Absolute Blood"],
+				abilities_improved: [],
+			},
+			"11": {
+				features_gained: ["Blood Ascendant", "Sanguine Lord", "Life God"],
+				abilities_improved: [],
+			},
+			"12": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"13": {
+				features_gained: ["Blood Apocalypse", "Life Dominion", "Essence God"],
+				abilities_improved: [],
+			},
+			"14": {
+				features_gained: ["Regent Power Resonance"],
+				abilities_improved: [],
+			},
+			"15": {
+				features_gained: ["Blood Reality", "Sanguine God", "Life Emperor"],
+				abilities_improved: [],
+			},
+			"16": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"17": {
+				features_gained: [
+					"Blood Transcendence",
+					"Life Emperor",
+					"Essence Emperor",
+				],
+				abilities_improved: [],
+			},
+			"18": {
+				features_gained: ["Regent Power Resonance"],
+				abilities_improved: [],
+			},
+			"19": {
+				features_gained: [
+					"Blood Omnipotence",
+					"Sanguine Regent",
+					"Life Regent",
+				],
+				abilities_improved: [],
+			},
+			"20": {
+				features_gained: ["Blood Supremacy", "Absolute Blood", "Regent Power"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+		},
+		mechanics: {
+			stat_bonuses: {
+				strength: 2,
+				dexterity: 2,
+				constitution: 8,
+				intelligence: 2,
+				wisdom: 2,
+				charisma: 6,
+			},
+			special_abilities: [
+				"Sense all living beings within 1 mile",
+				"Regen HP when dealing damage",
+				"Immune to bloodborne diseases",
+				"Control blood of enemies",
+			],
+			restrictions: [
+				"Requires Warden verification of quest completion",
+				"Once chosen, cannot be changed without Warden approval",
+			],
+		},
+		requirements: {
+			quest_completion: "Complete the Sanguine Ritual of the Monarch",
+			dm_verification: true,
+			prerequisite_job: "Any base job",
+			power_level: 10,
+		},
+	},
+	{
+		id: "gravity_regent",
+		name: "Gravity Regent",
+		title: "Gravity Regent (Monarch of Weight)",
+		theme: "Gravitational Mastery & Fundamental Force",
+		description:
+			"God of attraction and repulsion, wielding the absolute authority of the Monarch of Weight. You command the fundamental force that binds galaxies and collapses stars. Your presence causes the Earth to groan under your footfall, and the air itself thickens as your will fluctuates. The Ascendant Bureau classifies you as a Singularity Event.",
+		rank: "S",
+		image: "/generated/compendium/Regents/gravity-regent.webp",
+		type: "ascendant-class-overlay",
+		tags: [
+			"regent",
+			"gravity",
+			"weight",
+			"force",
+			"monarch_of_weight",
+			"physics",
+		],
+		created_at: "2026-02-26T00:00:00.000Z",
+		source_book: "System Ascendant Canon",
+		hit_dice: "1d12",
+		primary_ability: ["Strength", "Intelligence"],
+		saving_throws: ["Strength", "Intelligence"],
+		skill_proficiencies: ["Athletics", "Arcana", "Science", "Perception"],
+		armor_proficiencies: ["Light armor", "Medium armor", "Heavy armor"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
+		class_features: [
+			{
+				level: 1,
+				name: "Gravity Well",
+				description:
+					"Create a 30-ft radius zone where gravity is 10x normal. Enemies must make a STR save or be restrained. Ranged attacks automatically fail through the zone.",
+				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 1,
+				name: "Weightless Step",
+				description:
+					"You can fly at your walking speed by negating your own gravity. You also have advantage on AGI checks.",
+				type: "passive",
+			},
+			{
+				level: 2,
+				name: "Crushing Blows",
+				description:
+					"Increase the weight of your weapon at the moment of impact. Add 4d10 force damage to all melee attacks.",
+				type: "passive",
+			},
+			{
+				level: 3,
+				name: "Planetary Field",
+				description:
+					"60-ft aura: you decide the direction of gravity for each creature within. You can cause enemies to fall upward or toward each other.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 5,
+				name: "Event Horizon",
+				description:
+					"As a reaction, collapse space around you. Any attack made against you is sucked into a micro-singularity and negated.",
+				type: "reaction",
+				frequency: "short-rest",
+			},
+			{
+				level: 7,
+				name: "Orbital Striker",
+				description:
+					"Launch yourself into orbit and come down like a meteor. 1-mile impact: 20d10 force/fire damage. 1/long rest.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 9,
+				name: "Singularity Genesis",
+				description:
+					"Create a black hole that pulls all matter within 500 ft into its center. Targets take 40d10 force damage and are erased from existence on kill.",
+				type: "action",
+				frequency: "long-rest",
+			},
+			{
+				level: 10,
+				name: "Absolute Weight",
+				description:
+					"You are immune to forced movement. You can anchor yourself to the fabric of reality, becoming immovable and indestructible.",
+				type: "passive",
+			},
+		],
+		progression_table: {
+			"1": {
+				features_gained: ["Gravity Well", "Weightless Step"],
+				abilities_improved: [],
+			},
+			"2": {
+				features_gained: ["Crushing Blows"],
+				abilities_improved: [],
+			},
+			"3": {
+				features_gained: ["Planetary Field"],
+				abilities_improved: [],
+			},
+			"4": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"5": {
+				features_gained: ["Event Horizon"],
+				abilities_improved: [],
+			},
+			"6": {
+				features_gained: ["Regent Power Resonance"],
+				abilities_improved: [],
+			},
+			"7": {
+				features_gained: ["Orbital Striker"],
+				abilities_improved: [],
+			},
+			"8": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"9": {
+				features_gained: ["Singularity Genesis"],
+				abilities_improved: [],
+			},
+			"10": {
+				features_gained: ["Absolute Weight"],
+				abilities_improved: [],
+			},
+			"11": {
+				features_gained: ["Gravity Ascendant", "Weight Lord", "Force God"],
+				abilities_improved: [],
+			},
+			"12": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"13": {
+				features_gained: [
+					"Gravity Apocalypse",
+					"Force Dominion",
+					"Essence God",
+				],
+				abilities_improved: [],
+			},
+			"14": {
+				features_gained: ["Regent Power Resonance"],
+				abilities_improved: [],
+			},
+			"15": {
+				features_gained: ["Gravity Reality", "Weight God", "Force Emperor"],
+				abilities_improved: [],
+			},
+			"16": {
+				features_gained: ["Regent Attribute Enhancement"],
+				abilities_improved: ["Primary Ability +2"],
+			},
+			"17": {
+				features_gained: [
+					"Gravity Transcendence",
+					"Force Emperor",
+					"Essence Emperor",
+				],
+				abilities_improved: [],
+			},
+			"18": {
+				features_gained: ["Regent Power Resonance"],
+				abilities_improved: [],
+			},
+			"19": {
+				features_gained: [
+					"Gravity Omnipotence",
+					"Weight Regent",
+					"Force Regent",
+				],
+				abilities_improved: [],
+			},
+			"20": {
+				features_gained: [
+					"Gravity Supremacy",
+					"Absolute Weight",
+					"Regent Power",
+				],
+				abilities_improved: ["Primary Ability +2"],
+			},
+		},
+		mechanics: {
+			stat_bonuses: {
+				strength: 8,
+				dexterity: 2,
+				constitution: 6,
+				intelligence: 6,
+				wisdom: 2,
+				charisma: 2,
+			},
+			special_abilities: [
+				"Immune to forced movement",
+				"Fly at walk speed",
+				"Crush armor with focus",
+				"Control gravitational vectors",
+			],
+			restrictions: [
+				"Requires Warden verification of quest completion",
+				"Once chosen, cannot be changed without Warden approval",
+			],
+		},
+		requirements: {
+			quest_completion: "Complete the Trial of the Star-Crusher",
+			dm_verification: true,
+			prerequisite_job: "Any base job",
+			power_level: 10,
 		},
 	},
 ];

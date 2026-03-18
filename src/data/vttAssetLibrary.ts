@@ -670,7 +670,7 @@ const MONSTER_ASSETS: VTTAsset[] = monsters.map((m) => ({
 	id: `vtt-${m.id}`,
 	name: m.name,
 	category: "monster" as VTTAssetCategory,
-	imageUrl: m.image,
+	imageUrl: m.image ?? "",
 	tags: [
 		"monster",
 		(m.rank || "").toLowerCase(),
@@ -685,7 +685,7 @@ const LOCATION_ASSETS: VTTAsset[] = locations.map((l) => ({
 	id: `vtt-${l.id}`,
 	name: l.name,
 	category: "location" as VTTAssetCategory,
-	imageUrl: l.image,
+	imageUrl: l.image ?? "",
 	tags: [
 		"location",
 		(l.rank || "").toLowerCase(),
@@ -790,7 +790,7 @@ const SPELL_ASSETS: VTTAsset[] = (
 	id: `vtt-${s.id}`,
 	name: s.name,
 	category: "spell" as VTTAssetCategory,
-	imageUrl: s.image,
+	imageUrl: s.image ?? "",
 	tags: [
 		"spell",
 		(s.type || "").toLowerCase(),
@@ -814,7 +814,7 @@ const COMPENDIUM_ITEMS: VTTAsset[] = (
 	id: `vtt-${i.id}`,
 	name: i.name,
 	category: "item" as VTTAssetCategory,
-	imageUrl: i.image,
+	imageUrl: i.image ?? "",
 	tags: [
 		"item",
 		(i.rarity || "").toLowerCase(),

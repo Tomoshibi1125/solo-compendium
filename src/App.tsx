@@ -149,7 +149,6 @@ const CatchAllRedirect = () => {
 };
 const PlayerToolDetail = lazy(() => import("./pages/PlayerToolDetail"));
 
-
 // Configure React Query with better caching and error handling
 const queryClient = new QueryClient({
 	defaultOptions: {
