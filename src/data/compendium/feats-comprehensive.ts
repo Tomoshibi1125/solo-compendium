@@ -50,16 +50,15 @@ export const comprehensiveFeats: Feat[] = [
 	// SHADOW FEATS
 	// ═══════════════════════════════════════════
 	{
-		id: "shadow-mastery",
-		name: "Shadow Mastery",
+		id: "shadow-attunement",
+		name: "Shadow Attunement",
 		description:
 			"Your mana signature has attuned to shadow-frequency energy, granting instinctive control over darkness.",
 		prerequisites: { level: 5, ability: "Wisdom", score: 13 },
 		benefits: [
 			"Advantage on Dexterity (Stealth) checks in dim light or darkness",
-			"Can use Shadow Step as a bonus action 3 times per long rest (teleport up to 30 ft between shadows)",
+			"Can use Shadow Step as a bonus action (teleport up to 15 ft between shadows) 2 times per short rest",
 			"Resistance to necrotic damage",
-			"Can see through magical darkness up to 60 feet",
 		],
 		mechanics: { type: "passive", frequency: "at-will" },
 		flavor: "[SHADOW ATTUNEMENT: COMPLETE — DARKNESS RESPONDS TO YOUR WILL]",
@@ -83,25 +82,6 @@ export const comprehensiveFeats: Feat[] = [
 			action: "free",
 		},
 		flavor: "The kill feeds you. Every death refills your reserves.",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "regent-aura",
-		name: "Regent's Aura",
-		description:
-			"You project an aura of dimensional authority that suppresses lesser shadow creatures and undead.",
-		prerequisites: {
-			level: 15,
-			feats: ["shadow-mastery", "essence-absorption"],
-		},
-		benefits: [
-			"Undead and shadow creatures with CR less than your level are frightened of you",
-			"Can command shadow creatures as an action (Wisdom check contested)",
-			"Allies within 30 feet gain +1 to saving throws against fear",
-			"Shadow creatures have disadvantage on attack rolls against you",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[AUTHORITY: REGENT-CLASS — SHADOW ENTITIES: SUPPRESSED]",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -441,42 +421,6 @@ export const comprehensiveFeats: Feat[] = [
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "reactive-mana-pulse",
-		name: "Reactive Mana Pulse",
-		description:
-			"Your mana circuits react instantaneously to impacts, hardening your defenses at the point of contact.",
-		prerequisites: { armor_proficiencies: ["Light armor"] },
-		benefits: [
-			"When hit by a melee attack, use reaction to deal 1d6 force damage to the attacker.",
-			"Gain a +1 bonus to AC while wearing armor.",
-			"You ignore Stealth disadvantage from any armor.",
-		],
-		mechanics: { type: "active", frequency: "at-will", action: "reaction" },
-		flavor: "[IMPACT DETECTED — DEPLOYING REACTIVE PULSE... SUCCESS]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "dimensional-anchor-feet",
-		name: "Mana Blade Resonance",
-		description:
-			"You have mastered the art of imbuing melee weapons with raw mana, creating a resonant field that slices through armor.",
-		prerequisites: { ability: "Strength", score: 13 },
-		benefits: [
-			"Your melee weapon attacks deal extra force damage equal to your proficiency bonus.",
-			"Once per turn, when you hit a creature with a melee attack, you can force it to make a Strength save (DC 8 + prof + Str mod) or be pushed 10 feet.",
-			"You gain proficiency with shortswords and longswords.",
-		],
-		mechanics: {
-			type: "passive",
-			frequency: "once-per-turn",
-			ability: "Strength",
-			save: "Strength",
-			dc: "ability-modifier",
-		},
-		flavor: "[RESONANCE ESTABLISHED — ARMOR PENETRATION: MAXIMIZED]",
-		source: "System Ascendant Canon",
-	},
-	{
 		id: "kinetic-redirection",
 		name: "Kinetic Redirection",
 		description:
@@ -489,307 +433,6 @@ export const comprehensiveFeats: Feat[] = [
 		],
 		mechanics: { type: "active", frequency: "at-will", action: "reaction" },
 		flavor: "[KINETIC VECTOR: REVERSED — TARGETING ORIGIN POINT]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "system-medic-protocol",
-		name: "System Medic Protocol",
-		description:
-			"You have unlocked the healer-class diagnostic HUD, allowing you to patch wounds with supernatural efficiency.",
-		benefits: [
-			"When you use a healer's kit to stabilize a dying creature, that creature also regains 1 HP.",
-			"As an action, you can spend one use of a healer's kit to tend to a creature and restore 1d6 + 4 + its maximum number of Hit Dice HP.",
-			"Proficiency in Medicine and with the herbalism kit.",
-		],
-		mechanics: { type: "active", frequency: "short-rest", action: "action" },
-		flavor: "[DIAGNOSTIC COMPLETE — APPLYING BIOLOGICAL PATCH... SUCCESS]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "phantom-strike-algorithm",
-		name: "Phantom Strike Algorithm",
-		description:
-			"The System provides you with predictive movement patterns, allowing you to strike and fade before an enemy can react.",
-		prerequisites: { ability: "Dexterity", score: 13 },
-		benefits: [
-			"When you make a melee attack against a creature, you don't provoke opportunity attacks from that creature for the rest of the turn.",
-			"Your speed increases by 10 feet.",
-			"When you take the Dash action, difficult terrain doesn't cost you extra movement.",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor:
-			"[PREDICTIVE ALGORITHM: ACTIVE — TARGET RESPONSE TIME: INSUFFICIENT]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "heavy-mana-plating",
-		name: "Heavy Mana Plating",
-		description:
-			"You have adapted to the heaviest armor by reinforcing your frame with mana-dense muscle fibers.",
-		prerequisites: { armor_proficiencies: ["Medium armor"] },
-		benefits: [
-			"Gain proficiency with heavy armor.",
-			"+1 to Constitution score (max 20).",
-			"Reduce all non-magical bludgeoning, piercing, and slashing damage by 3 while wearing heavy armor.",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor:
-			"[PHYSICAL EVOLUTION: PLATING INTEGRATION — DURABILITY: REINFORCED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "neural-sync-duelist",
-		name: "Neural Sync Duelist",
-		description:
-			"Your neural pathways are perfectly synced for one-on-one combat, making you a master of the single blade.",
-		benefits: [
-			"+1 to AC while you are wielding a melee weapon in one hand and no other weapons.",
-			"When you use the Ready action to prepare an attack, you gain advantage on that attack.",
-			"Use reaction to parry: gain +prof bonus to AC against one melee attack.",
-		],
-		mechanics: { type: "active", frequency: "at-will", action: "reaction" },
-		flavor: "One blade, one intent. The System clears the static.",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "logic-bomb-hack",
-		name: "Logic Bomb Hack",
-		description:
-			"You can insert viral mana-code into magical effects or constructs, causing them to fail or detonate.",
-		prerequisites: { ability: "Intelligence", score: 13 },
-		benefits: [
-			"As an action, target a construct or an ongoing magical effect within 60 feet.",
-			"Constructs must make an Int save or be stunned for 1 round.",
-			"Ongoing effects are suppressed for 1 minute (Intelligence check DC = 10 + spell level).",
-			"Proficiency in Hacking Tools.",
-		],
-		mechanics: {
-			type: "active",
-			frequency: "short-rest",
-			action: "action",
-			save: "Intelligence",
-			dc: "ability-modifier",
-		},
-		flavor: "[VIRAL PAYLOAD DEPLOYED — SYSTEM INTEGRITY: COMPROMISED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "mana-well-vessel",
-		name: "Mana Well Vessel",
-		description:
-			"Your body acts as a natural reservoir for ambient mana, allowing you to cast spells more frequently.",
-		prerequisites: { ability: "Intelligence", score: 13 },
-		benefits: [
-			"Increase your Intelligence, Wisdom, or Charisma score by 1 (max 20).",
-			"Once per long rest, you can recover a spent spell slot of level equal to half your level (rounded up, max 5th).",
-			"You gain one additional cantrip of your choice.",
-		],
-		mechanics: { type: "active", frequency: "long-rest", action: "free" },
-		flavor: "[AMBIENT MANA DETECTED — HARVESTING... RESERVES REPLENISHED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "apex-predator-scent",
-		name: "Apex Predator Scent",
-		description:
-			"Your awakening heightened your primal senses to a supernatural degree. No one can hide from you.",
-		prerequisites: { ability: "Wisdom", score: 13 },
-		benefits: [
-			"You gain advantage on Wisdom (Perception) and Wisdom (Survival) checks that rely on smell.",
-			"You can track creatures through magically obscured areas or even between dimensions if the trail is fresh.",
-			"Gain blindsight out to 10 feet.",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[OLFACTORY SENSORS: OVERCLOCKED — TARGET SCENT: LOCKED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "dimensional-shover",
-		name: "Dimensional Shover",
-		description:
-			"You use small rifts to amplify your physical force, tossing enemies across the battlefield.",
-		prerequisites: { ability: "Strength", score: 13 },
-		benefits: [
-			"When you hit a creature with an unarmed strike or a melee weapon, you can use a bonus action to shove them.",
-			"If you successfully shove a creature, they are pushed an additional 10 feet.",
-			"You gain advantage on Athletics checks made to initiate or resist a grapple.",
-		],
-		mechanics: { type: "active", frequency: "at-will", action: "bonus-action" },
-		flavor:
-			"[KINETIC AMPLIFICATION: RIFT-ASSISTED — MASS DISPLACEMENT: AUTHORIZED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "arcane-eye-overseer",
-		name: "Arcane Eye Overseer",
-		description:
-			"You have manifested a secondary, spectral eye that floats near you, providing a total view of the battlefield.",
-		prerequisites: { ability: "Intelligence", score: 13 },
-		benefits: [
-			"You cannot be surprised while conscious.",
-			"Other creatures don't gain advantage on attack rolls against you as a result of being hidden from you.",
-			"You can see into the Ethereal Plane out to 60 feet.",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[FIELD OF VIEW: 360 DEGREES — BLIND SPOTS: ELIMINATED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "heavy-weapon-stabilizer",
-		name: "Heavy Weapon Stabilizer",
-		description:
-			"The System provides micro-adjustments to your posture and grip, allowing you to wield massive weapons with ease.",
-		prerequisites: { ability: "Strength", score: 15 },
-		benefits: [
-			"You ignore the heavy property of weapons.",
-			"When you hit with a heavy weapon, you can reroll 1s and 2s on damage dice (must use new result).",
-			"+1 to Strength score (max 20).",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[GYROSCOPIC STABILIZATION: ONLINE — RECOIL COMPENSATED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "void-step-reflex",
-		name: "Void Step Reflex",
-		description:
-			"You can momentarily phase out of existence to avoid certain death.",
-		prerequisites: { ability: "Dexterity", score: 13 },
-		benefits: [
-			"When you are subjected to an effect that allows you to make a Dexterity save for half damage, you take no damage on a success and half on a failure.",
-			"Use reaction to teleport 5 feet when an attack misses you.",
-			"+1 to Dexterity score (max 20).",
-		],
-		mechanics: { type: "passive", frequency: "at-will", action: "reaction" },
-		flavor: "[THREAT DETECTED — PHASING TO VOID... COMPLETE]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "system-authority-command",
-		name: "System Authority Command",
-		description:
-			"Your voice carries the weight of the System, compelling others to follow your directives.",
-		prerequisites: { ability: "Charisma", score: 13 },
-		benefits: [
-			"You can cast Command at 1st level without expending a spell slot (Charisma save).",
-			"Once per long rest, you can use an action to inspire up to 5 allies — they gain temp HP equal to your level + Cha mod.",
-			"Advantage on Intimidation checks against creatures of a lower rank.",
-		],
-		mechanics: {
-			type: "active",
-			frequency: "long-rest",
-			action: "action",
-			save: "Charisma",
-			dc: "ability-modifier",
-		},
-		flavor: "[VOICE AUTHORIZATION: REGENT — COMMAND PROTOCOL: ISSUED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "mana-vampire-fangs",
-		name: "Mana Vampire Fangs",
-		description:
-			"Your awakening allows you to feast on the mana of your enemies through direct contact.",
-		benefits: [
-			"Your unarmed strikes deal 1d4 piercing + Str mod. You regain HP equal to the damage dealt.",
-			"When you hit a creature with a melee attack, you can use a bonus action to drain their mana — they lose their next lowest spell slot, and you regain 1d4 HP.",
-			"Resistance to necrotic damage.",
-		],
-		mechanics: {
-			type: "active",
-			frequency: "once-per-turn",
-			action: "bonus-action",
-		},
-		flavor: "The System converts their essence into your vitality.",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "gate-raider-stamina",
-		name: "Gate Raider Stamina",
-		description:
-			"You have survived more gate collapses than most ascendants see in a lifetime. Your endurance is legendary.",
-		prerequisites: { ability: "Constitution", score: 13 },
-		benefits: [
-			"You have advantage on saving throws against exhaustion.",
-			"Short rests take only 10 minutes for you.",
-			"You can go without food or water for 3 days without penalty.",
-			"+1 to Constitution score (max 20).",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[STAMINA STAT: PEAK HUMAN — FATIGUE RECOVERY: OPTIMIZED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "tactical-hud-analyzer",
-		name: "Tactical HUD Analyzer",
-		description:
-			"Your System interface provides real-time combat analysis, highlighting enemy weaknesses.",
-		prerequisites: { ability: "Intelligence", score: 13 },
-		benefits: [
-			"You can take the Search action as a bonus action.",
-			"As a bonus action, analyze a creature you can see. Your next attack against it has advantage.",
-			"You gain proficiency in Investigation and Perception.",
-		],
-		mechanics: { type: "active", frequency: "at-will", action: "bonus-action" },
-		flavor: "[TARGET ANALYSIS: COMPLETE — WEAK POINT IDENTIFIED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "firewall-mind",
-		name: "Firewall Mind",
-		description:
-			"Your brain is shielded by a mana-reinforced firewall, making you nearly immune to mental intrusion.",
-		prerequisites: { ability: "Wisdom", score: 13 },
-		benefits: [
-			"You have advantage on saving throws against being charmed or frightened.",
-			"You are immune to effects that would read your thoughts or sense your emotions.",
-			"Resistance to psychic damage.",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[COGNITIVE FIREWALL: ACTIVE — UNAUTHORIZED ACCESS: DENIED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "reactive-armor-mana",
-		name: "Reactive Mana Armor",
-		description:
-			"Your mana circuits react instantaneously to impacts, hardening your defenses at the point of contact.",
-		prerequisites: { armor_proficiencies: ["Light armor"] },
-		benefits: [
-			"When you are hit by a melee attack, you can use your reaction to deal 1d6 force damage to the attacker.",
-			"You gain a +1 bonus to AC while wearing armor.",
-			"You ignore Stealth disadvantage from any armor.",
-		],
-		mechanics: { type: "active", frequency: "at-will", action: "reaction" },
-		flavor: "[IMPACT DETECTED — DEPLOYING REACTIVE PULSE... SUCCESS]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "dimensional-anchor-feet",
-		name: "Dimensional Anchor Feet",
-		description:
-			"You can anchor your position to the dimensional membrane, making you impossible to move against your will.",
-		benefits: [
-			"You have advantage on Strength and Dexterity saving throws made against effects that would move you or knock you prone.",
-			"You can walk on liquid surfaces as if they were solid ground.",
-			"Your speed cannot be reduced below 10 feet unless you are incapacitated.",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[DIMENSIONAL COHESION: 100% — POSITION: FIXED]",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "system-linguist-protocol",
-		name: "System Linguist Protocol",
-		description:
-			"You have decrypted the underlying code of the System's translation layer, allowing you to understand any spoken or written language.",
-		benefits: [
-			"You learn three languages of your choice.",
-			"You have advantage on Intelligence (History) checks made to decipher ancient texts or gate-script.",
-			"The System provides real-time subtitles for any language you don't know (passive).",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[TRANSLATION LAYER: DECRYPTED — ALL LINGUISTIC BARRIERS: REMOVED]",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1406,21 +1049,7 @@ export const comprehensiveFeats: Feat[] = [
 		flavor: "[DEFENSIVE STANCE: LOCKED — PERIMETER: SECURE]",
 		source: "System Ascendant Canon",
 	},
-	{
-		id: "system-overseer-eyes",
-		name: "Overseer Eyes",
-		description:
-			"The System grants you the ability to see through all deceptions.",
-		prerequisites: { level: 12 },
-		benefits: [
-			"You gain Truesight out to 30 feet.",
-			"You can see through any magical or non-magical illusion.",
-			"You have advantage on all saving throws against being blinded or dazzled.",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[VISUAL DATA: UNFILTERED — TRUTH: REVEALED]",
-		source: "System Ascendant Canon",
-	},
+
 	{
 		id: "kinetic-redirection-expert",
 		name: "Kinetic Redirection Expert",
@@ -1919,22 +1548,6 @@ export const comprehensiveFeats: Feat[] = [
 			action: "bonus-action",
 		},
 		flavor: "The shadows themselves become your shield against harm.",
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "regents-resilience",
-		name: "Regent's Resilience",
-		description:
-			"The power of a Regent flows through you, granting durability that transcends mortal limits.",
-		prerequisites: { level: 20, feats: ["shadow-mastery", "regent-aura"] },
-		benefits: [
-			"Resistance to all damage types except radiant",
-			"Cannot be reduced below 1 HP by shadow damage",
-			"Regenerate 5 HP per round",
-			"When reduced to 0 HP, spend 1 resolve point to return to 50% HP (once per long rest)",
-		],
-		mechanics: { type: "passive", frequency: "at-will" },
-		flavor: "[REGENT RESILIENCE: ACTIVE — MORTALITY: SUSPENDED]",
 		source: "System Ascendant Canon",
 	},
 

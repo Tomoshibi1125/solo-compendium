@@ -563,6 +563,13 @@ export const regents: Regent[] = [
 		tags: ["Regent", "flame", "fire", "white-flames", "class-overlay"],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
+		hit_dice: "1d10",
+		primary_ability: ["Presence", "Strength"],
+		saving_throws: ["Presence", "Dexterity"],
+		skill_proficiencies: ["Perception", "Insight", "Religion", "Athletics"],
+		armor_proficiencies: ["Light armor", "Medium armor", "Shields"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Flame Regent Trials quest series",
 			dm_verification: true,
@@ -948,6 +955,13 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
+		hit_dice: "1d12",
+		primary_ability: ["Vitality", "Strength"],
+		saving_throws: ["Vitality", "Constitution"],
+		skill_proficiencies: ["Athletics", "Intimidation", "Survival"],
+		armor_proficiencies: ["All armor", "Shields"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Steel Regent Ascension trials",
 			dm_verification: true,
@@ -1330,6 +1344,13 @@ export const regents: Regent[] = [
 		tags: ["Regent", "destruction", "annihilation", "varkun", "class-overlay"],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
+		hit_dice: "1d12",
+		primary_ability: ["Strength", "Vitality"],
+		saving_throws: ["Strength", "Dexterity"],
+		skill_proficiencies: ["Athletics", "Intimidation", "Perception"],
+		armor_proficiencies: ["Light armor", "Medium armor", "Shields"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Path of Destruction quest series",
 			dm_verification: true,
@@ -1735,6 +1756,13 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
+		hit_dice: "1d10",
+		primary_ability: ["Vitality", "Presence"],
+		saving_throws: ["Vitality", "Presence"],
+		skill_proficiencies: ["Medicine", "Athletics", "Intimidation"],
+		armor_proficiencies: ["Light armor", "Medium armor"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Blood Regent Ascension trials",
 			dm_verification: true,
@@ -2116,6 +2144,13 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
+		hit_dice: "1d12",
+		primary_ability: ["Strength", "Vitality"],
+		saving_throws: ["Strength", "Vitality"],
+		skill_proficiencies: ["Athletics", "Intimidation", "Survival"],
+		armor_proficiencies: ["Light armor", "Medium armor"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Berserk Regent Ascension trials",
 			dm_verification: true,
@@ -2485,6 +2520,13 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "System Ascendant Canon",
+		hit_dice: "1d10",
+		primary_ability: ["Presence", "Intelligence"],
+		saving_throws: ["Presence", "Intelligence"],
+		skill_proficiencies: ["History", "Insight", "Persuasion", "Intimidation"],
+		armor_proficiencies: ["All armor", "Shields"],
+		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Command Regent Ascension trials",
 			dm_verification: true,
@@ -2496,12 +2538,14 @@ export const regents: Regent[] = [
 				name: "Warlord's Command",
 				description: "Grant an ally within 60 feet an immediate action.",
 				type: "bonus-action",
+				power_level: 1,
 			},
 			{
 				name: "Conquest",
 				description: "100-ft AoE tactical stun.",
 				type: "action",
 				frequency: "long-rest",
+				power_level: 3,
 			},
 			{
 				name: "Tactical Step",
@@ -2574,7 +2618,8 @@ export const regents: Regent[] = [
 			{
 				name: "Army Rebirth",
 				description:
-					"Once per long rest, when reduced to 0 hit points, you can rally your forces (healing all allies within 60 feet for 4d8 hit points) and return to life with full hit points.",
+					"Once per long rest, when reduced to 0 hit points, you can rally your forces through pure command authority. All allies within 60 feet regain 4d8 hit points, and you return to life with full hit points, appearing as a beacon of tactical hope on the battlefield. This reflects the Commander Regent's ability to pull victory from the jaws of defeat.",
+				power_level: 4,
 			},
 			{
 				name: "Command Authority",
@@ -2885,7 +2930,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Ice Age Advent",
 				description:
-					"5-mile radius ice storm (1/long rest, 8 hours). Temperature -100°C. Fire impossible.",
+					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. The City declares a state of emergency as blizzard conditions reduce visibility to 10 feet. This heralds the arrival of the eternal winter.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2900,7 +2945,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Absolute Zero",
 				description:
-					"Touch: 10d10 cold + paralyzed (VIT save). On kill: diamond-hard ice statue at -273.15°C.",
+					"As a touch attack, you channel the boundary of absolute zero into a target. They take 10d10 cold damage and must make a VIT save or be paralyzed. On kill, the target becomes a diamond-hard ice statue at -273.15°C, requiring a Wish to thaw. Forensics find the temperature physics-defying.",
 				type: "action",
 				frequency: "short-rest",
 			},
@@ -3216,7 +3261,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Apex Form",
 				description:
-					"Transform into primordial beast (10 min, prof/long rest). Huge, +6 STR/AGI/VIT (max 26), 3d10+STR natural weapons, regen 15 HP/turn, tremorsense 120 ft.",
+					"Transform into a gargantuan primordial beast for 10 minutes (prof/long rest). You gain +6 to STR/AGI/VIT (max 26), 3d10+STR natural weapons, and regenerate 15 HP/turn. Your tremorsense extends to 120 ft as you become the ultimate evolutionary apex predator from before human history.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -3224,14 +3269,14 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Alpha's Presence",
 				description:
-					"120-ft aura. Beasts friendly. Enemies: SENSE save or frightened + cannot attack you.",
+					"You emit a constant 120-foot aura of primal dominance. All beasts within this range recognize you as the alpha and are automatically friendly. Hostile creatures must make a SENSE save or be frightened and unable to attack you as their primal instincts trigger an apex predator response.",
 				type: "passive",
 			},
 			{
 				level: 2,
 				name: "Beast King's Call",
 				description:
-					"Command ALL beasts within 10 miles (CR ≤ level). 1 hour, 1/week.",
+					"Exert mental command over all beasts within a 10-mile radius (CR ≤ level). They obey your orders absolutely for 1 hour. Animals in zoos break containment, police K-9 units turn on their handlers, and any beast recognizes you as their king. Useable 1/week.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -3239,7 +3284,7 @@ export const regents: Regent[] = [
 				level: 3,
 				name: "Primordial Regeneration",
 				description:
-					"Regrow limbs in 1 min. 25 HP/turn below half. Immune to age/disease. Toxins metabolize instantly.",
+					"Your cellular structure adapts with impossible speed. You regrow lost limbs in 1 minute and regain 25 HP at the start of your turn if below half health. You are immune to aging and disease, and all toxins are metabolized instantly. Medical reports describe an unprecedented healing factor.",
 				type: "passive",
 			},
 			{
@@ -3524,14 +3569,14 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Typhoid Incarnate",
 				description:
-					"60-ft aura: VIT save DC 8+prof+INT or contract supernatural disease (4d12 necrotic/day, spreads). Only you or Wish can cure.",
+					"You emit a 60-foot aura of supernatural pestilence. Any creature entering the aura must make a VIT save (DC 8+prof+INT) or contract a disease that causes 4d12 necrotic damage per day and spreads to others. You see the infected via the System HUD as [INFECTED: TARGET]. Only you or a Wish can cure it.",
 				type: "passive",
 			},
 			{
 				level: 1,
 				name: "Insect God",
 				description:
-					"Command all insects within 5 miles. Insect Plague centered on any point.",
+					"Command all insects within a 5-mile radius with a mental link. You can direct insect swarms to attack specific targets or create an Insect Plague effect at will. Food supplies collapse and biblical-level locust swarms follow in your wake.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -3539,7 +3584,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Pandemic Protocol",
 				description:
-					"Create supernatural pandemic (1/month). Choose properties. R0=10. Only you can cure.",
+					"You can design and release a supernatural pandemic once per month. You determine its transmission method (airborne, touch, or water), symptoms, and lethality. The disease spreads with an R0 of 10 and cannot be cured by conventional medicine or magic. The System displays [PANDEMIC STATUS: ACTIVE] and tracks the infection rate globally.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -3547,7 +3592,7 @@ export const regents: Regent[] = [
 				level: 3,
 				name: "Billion Swarm",
 				description:
-					"Dissolve into insect swarm (1 hour). Fly 60 ft, squeeze 1-inch gaps, immune to non-AoE.",
+					"Your physical form disintegrates into a massive swarm of billions of insects for up to 1 hour (1/long rest). In this form, you gain a fly speed of 60 feet, can squeeze through gaps as small as 1 inch, and are immune to all non-area-of-effect damage. You can split into multiple sub-swarms to overwhelm city blocks simultaneously.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -3852,20 +3897,22 @@ export const regents: Regent[] = [
 			{
 				level: 1,
 				name: "Void Singularity",
-				description: "Localized gravity well dealing force damage.",
+				description:
+					"You create a localized gravity well of pure void essence at a point within 120 feet. All creatures within a 20-foot radius are pulled toward the center and take 6d10 force damage. You perceive the blueprints of reality and can tear them apart to crush your enemies.",
 				type: "action",
 			},
 			{
 				level: 1,
 				name: "Planar Blink",
-				description: "At-will 30-ft teleport.",
+				description:
+					"You achieve the ability to step through the dimensional lattice of the universe. As a bonus action, you can teleport up to 30 feet to any unoccupied space you can see. This 'blink' is instantaneous and creates a minor spatial ripple that only specialized sensors can detect.",
 				type: "bonus-action",
 			},
 			{
 				level: 2,
 				name: "Spatial Anchors",
 				description:
-					"Place 12 invisible anchors anywhere. Teleport between them (action, unlimited). Permanent.",
+					"You can place up to 12 invisible dimensional anchors anywhere in the multiverse. As an action, you can teleport between these anchors regardless of distance. These anchors are permanent and undetectable by normal means, appearing on your System HUD as [QUANTUM TUNNEL POINTS].",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -4180,7 +4227,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Perfect Imitation",
 				description:
-					"Transform into ANYTHING you've seen (Tiny to Gargantuan, CR ≤ level). Undetectable. DNA matches. Unlimited duration.",
+					"Transform into ANYTHING you've seen, from Tiny to Gargantuan (CR ≤ level). The imitation is perfect and undetectable by True Seeing or Divine Sense. Your DNA matches the target, and the transformation lasts indefinitely. You become the ultimate master of infinite forms.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -4188,7 +4235,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Power Theft",
 				description:
-					"Observe any ability: copy it permanently (no save). Store up to level/2 stolen powers. Prof uses/long rest.",
+					"By observing a feature, spell, or ability being used, you can archive and copy it perfectly (no save required). You can store up to level/2 stolen powers in your System's [ABILITY ARCHIVE]. You can use any stolen power a number of times equal to your proficiency bonus per long rest.",
 				type: "reaction",
 				frequency: "long-rest",
 			},
@@ -4196,7 +4243,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Reactive Evolution",
 				description:
-					"Damaged by element: gain immunity. Failed save: auto-succeed next. Attacked by weapon: gain resistance.",
+					"Your cellular structure adapts instantly to incoming threats. If you are damaged by an element, you gain immunity to it. If you fail a saving throw, you automatically succeed on the next save of that type. If attacked by a weapon, you gain resistance to its damage. Biologists describe this as 'physics-defying evolution speed'.",
 				type: "reaction",
 				frequency: "at-will",
 			},

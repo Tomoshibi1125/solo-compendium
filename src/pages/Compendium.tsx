@@ -103,8 +103,10 @@ const categories = [
 	// Magic & Equipment
 	{ id: "spells", name: "Spells", icon: ScrollText },
 	{ id: "runes", name: "Runes", icon: Gem },
+	{ id: "sigils", name: "Sigils", icon: Sparkles },
 	{ id: "relics", name: "Relics", icon: Skull },
 	{ id: "artifacts", name: "Artifacts", icon: Crown },
+	{ id: "equipment", name: "Equipment", icon: Swords },
 
 	// World & Entities
 	{ id: "monsters", name: "Monsters", icon: Skull },

@@ -111,9 +111,7 @@ export function RegentFeaturesDisplay({
 								className="p-4 border rounded-lg bg-background"
 							>
 								<div className="flex items-center gap-2 mb-2">
-									<span className="font-medium">
-										{feature.name}
-									</span>
+									<span className="font-medium">{feature.name}</span>
 									<Badge variant="outline" className="text-xs">
 										{feature.type}
 									</Badge>
@@ -145,13 +143,11 @@ export function RegentFeaturesDisplay({
 						<h4 className="font-medium">Regent Power Slots</h4>
 						<div className="grid grid-cols-9 gap-2 text-center">
 							{Array.from({ length: 9 }, (_, i) => i + 1).map((level) => {
-								const sc = regentData.spellcasting!;
+								const sc = regentData.spellcasting;
+								if (!sc) return null;
 								const slotKey =
 									`${level}${level === 1 ? "st" : level === 2 ? "nd" : level === 3 ? "rd" : "th"}` as keyof typeof sc.spell_slots;
-								const slots =
-									sc.spell_slots[slotKey]?.[
-										regentLevel - 1
-									] || 0;
+								const slots = sc.spell_slots[slotKey]?.[regentLevel - 1] || 0;
 								return (
 									<div key={level} className="p-2 border rounded">
 										<div className="text-xs font-medium">Lvl {level}</div>

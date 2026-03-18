@@ -444,27 +444,29 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 
 			{/* Paths */}
 			{paths.length > 0 && (
-				<SystemWindow title="PATHS">
-					<div className="grid md:grid-cols-2 gap-4">
-						{paths.map((path) => (
-							<Link
-								key={path.id}
-								to={`/compendium/paths/${path.id}`}
-								className="glass-card p-4 border border-border hover:border-primary/30 transition-colors"
-							>
-								<h4 className="font-heading text-lg font-semibold text-primary mb-2 hover:underline">
-									{formatRegentVernacular(path.display_name || path.name)}
-								</h4>
-								<p className="text-sm text-muted-foreground line-clamp-3">
-									{formatRegentVernacular(path.description)}
-								</p>
-								<p className="text-xs text-muted-foreground mt-2">
-									Available at level {path.path_level}
-								</p>
-							</Link>
-						))}
-					</div>
-				</SystemWindow>
+				<div id="paths-section">
+					<SystemWindow title="PATHS">
+						<div className="grid md:grid-cols-2 gap-4">
+							{paths.map((path) => (
+								<Link
+									key={path.id}
+									to={`/compendium/paths/${path.id}`}
+									className="glass-card p-4 border border-border hover:border-primary/30 transition-colors"
+								>
+									<h4 className="font-heading text-lg font-semibold text-primary mb-2 hover:underline">
+										{formatRegentVernacular(path.display_name || path.name)}
+									</h4>
+									<p className="text-sm text-muted-foreground line-clamp-3">
+										{formatRegentVernacular(path.description)}
+									</p>
+									<p className="text-xs text-muted-foreground mt-2">
+										Available at level {path.path_level}
+									</p>
+								</Link>
+							))}
+						</div>
+					</SystemWindow>
+				</div>
 			)}
 
 			{/* Related Powers */}
@@ -589,8 +591,22 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							>
 								<div className="flex items-center gap-2 mb-1">
 									<h4 className="font-heading font-semibold">
-										{formatRegentVernacular(
-											feature.display_name || feature.name,
+										{feature.name.toLowerCase() === "path feature" ? (
+											<a
+												href="#paths-section"
+												className="text-primary hover:underline"
+											>
+												{formatRegentVernacular(
+													feature.display_name || feature.name,
+												)}{" "}
+												<span className="text-xs font-normal text-muted-foreground">
+													(See Paths)
+												</span>
+											</a>
+										) : (
+											formatRegentVernacular(
+												feature.display_name || feature.name,
+											)
 										)}
 									</h4>
 									<Badge variant="outline" className="text-xs">
@@ -641,7 +657,19 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 												{cf.level}
 											</td>
 											<td className="py-2 px-3 font-heading font-semibold">
-												{formatRegentVernacular(cf.name)}
+												{cf.name.toLowerCase() === "path feature" ? (
+													<a
+														href="#paths-section"
+														className="text-primary hover:underline"
+													>
+														{formatRegentVernacular(cf.name)}{" "}
+														<span className="text-xs font-normal text-muted-foreground">
+															(See Paths)
+														</span>
+													</a>
+												) : (
+													formatRegentVernacular(cf.name)
+												)}
 											</td>
 											<td className="py-2 px-3 text-sm text-muted-foreground">
 												{formatRegentVernacular(cf.description)}

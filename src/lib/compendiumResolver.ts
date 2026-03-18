@@ -25,7 +25,6 @@ export const entryTypes = [
 	"backgrounds",
 	"conditions",
 	"regents",
-	"regents",
 	"feats",
 	"skills",
 	"equipment",
