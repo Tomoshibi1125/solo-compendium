@@ -1,7 +1,7 @@
 project_id = "rhqrtowjgocwkncqcerm"
 
 [auth]
-leaked_password_protection.enabled = true
+leaked_password_protection = true
 
 [functions.signup]
 verify_jwt = false
