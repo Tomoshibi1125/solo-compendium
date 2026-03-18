@@ -326,6 +326,8 @@ const upsertScene = (scenes: Scene[], nextScene: Scene): Scene[] => {
 	return next;
 };
 
+const EMPTY_ARRAY: any[] = [];
+
 const VTTEnhanced = () => {
 	const { campaignId } = useParams<{ campaignId: string }>();
 	const navigate = useNavigate();
@@ -1646,6 +1648,11 @@ const VTTEnhanced = () => {
 			currentScene?.tokens.find((token) => token.id === activeTokenId) ?? null,
 		[activeTokenId, currentScene?.tokens],
 	);
+
+	const memoizedGridConfig = useMemo(() => ({
+		type: currentScene?.gridType ?? "square" as const,
+		size: gridSize,
+	}), [currentScene?.gridType, gridSize]);
 
 	const MemoizedVttPixiStage = React.memo(VttPixiStage);
 
@@ -3217,12 +3224,9 @@ const VTTEnhanced = () => {
 												containerRef={mapRef}
 												scene={currentScene}
 												tokens={visibleTokens}
-												walls={currentScene?.walls ?? []}
-												lightSources={currentScene?.lights ?? []}
-												gridConfig={{
-													type: currentScene?.gridType ?? "square",
-													size: gridSize,
-												}}
+												walls={currentScene?.walls ?? EMPTY_ARRAY}
+												lightSources={currentScene?.lights ?? EMPTY_ARRAY}
+												gridConfig={memoizedGridConfig}
 												gridSize={gridSize}
 												zoom={zoom}
 												showGrid={showGrid}

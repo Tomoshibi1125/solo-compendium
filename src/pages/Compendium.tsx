@@ -148,35 +148,55 @@ const rarityOrder: Record<string, number> = {
 const gateRanks = ["E", "D", "C", "B", "A", "S", "SS"];
 
 const Compendium = () => {
-	const [searchQuery, setSearchQuery] = useState("");
-	const debouncedSearchQuery = useDebounce(searchQuery, 300);
-	const parsedQuery = useMemo(
-		() => parseSearchQuery(debouncedSearchQuery),
-		[debouncedSearchQuery],
-	);
-	const [selectedCategory, setSelectedCategory] = useState("all");
+	const [searchDraft, setSearchDraft] = useState("");
+	const debouncedSearchDraft = useDebounce(searchDraft, 300);
+
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-	const [sortBy, setSortBy] = useState<SortOption>("name-asc");
-	const [selectedRarities, setSelectedRarities] = useState<string[]>([]);
-	const [minLevel, setMinLevel] = useState<number | "">("");
-	const [maxLevel, setMaxLevel] = useState<number | "">("");
-	const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [selectedSourceBooks, setSelectedSourceBooks] = useState<string[]>([]);
-	const [selectedSchools, setSelectedSchools] = useState<string[]>([]);
-	const [selectedGateRanks, setSelectedGateRanks] = useState<string[]>([]);
-	const [showBossOnly, setShowBossOnly] = useState(false);
-	const [showMiniBossOnly, setShowMiniBossOnly] = useState(false);
-	const [minCR, setMinCR] = useState<number | "">("");
-	const [maxCR, setMaxCR] = useState<number | "">("");
 	const [showGeminiProtocol, setShowGeminiProtocol] = useState(false);
 	const itemsPerPage = 24;
+
 	const { favorites, toggleFavorite } = useFavorites();
 	const { toast } = useToast();
 	const { canAccessMarketplace } = useLicenseEnforcement();
 	const isE2E = import.meta.env.VITE_E2E === "true";
 	const setupRouteEnabled = isSetupRouteEnabled();
 	const showSetup = !isSupabaseConfigured && setupRouteEnabled && !isE2E;
+
+	// Persist filters
+	const [filters, setFilters] = useFilterPersistence("compendium", {
+		selectedCategory: "all",
+		searchQuery: "",
+		sortBy: "name-asc" as SortOption,
+		selectedRarities: [] as string[],
+		minLevel: "" as number | "",
+		maxLevel: "" as number | "",
+		showFavoritesOnly: false,
+		selectedSourceBooks: [] as string[],
+		selectedSchools: [] as string[],
+		selectedGateRanks: [] as string[],
+		showBossOnly: false,
+		showMiniBossOnly: false,
+		minCR: "" as number | "",
+		maxCR: "" as number | "",
+	});
+
+	// Sync local search draft with persisted filter (for clear all / back nav)
+	useEffect(() => {
+		setSearchDraft(filters.searchQuery);
+	}, [filters.searchQuery]);
+
+	// Update persisted search when debounced draft changes
+	useEffect(() => {
+		if (debouncedSearchDraft !== filters.searchQuery) {
+			setFilters((prev) => ({ ...prev, searchQuery: debouncedSearchDraft }));
+		}
+	}, [debouncedSearchDraft, filters.searchQuery, setFilters]);
+
+	const parsedQuery = useMemo(
+		() => parseSearchQuery(filters.searchQuery),
+		[filters.searchQuery],
+	);
 
 	// Fetch compendium data (using comprehensive static data loading)
 	const {
@@ -186,7 +206,7 @@ const Compendium = () => {
 	} = useQuery({
 		queryKey: [
 			"compendium",
-			selectedCategory,
+			filters.selectedCategory,
 			parsedQuery.text,
 			parsedQuery.operators,
 			currentPage,
@@ -194,7 +214,7 @@ const Compendium = () => {
 		queryFn: async () => {
 			logger.debug("=== COMPREHENSIVE DATA LOADING ===");
 			logger.debug("Query called with:", {
-				selectedCategory,
+				selectedCategory: filters.selectedCategory,
 				searchQuery: parsedQuery.text,
 				isSupabaseConfigured,
 			});
@@ -231,7 +251,10 @@ const Compendium = () => {
 			] as const;
 
 			for (const category of categories) {
-				if (selectedCategory === "all" || selectedCategory === category) {
+				if (
+					filters.selectedCategory === "all" ||
+					filters.selectedCategory === category
+				) {
 					logger.debug(`Fetching ${category} data...`);
 					let data: StaticCompendiumEntry[] = [];
 
@@ -362,113 +385,27 @@ const Compendium = () => {
 	// Track search history
 	const { addToHistory } = useSearchHistory();
 	useEffect(() => {
-		if (debouncedSearchQuery.trim() && entries.length > 0) {
+		if (filters.searchQuery.trim() && entries.length > 0) {
 			addToHistory(
-				debouncedSearchQuery,
+				filters.searchQuery,
 				{
-					category: selectedCategory,
-					rarities: selectedRarities,
-					schools: selectedSchools,
+					category: filters.selectedCategory,
+					rarities: filters.selectedRarities,
+					schools: filters.selectedSchools,
 				},
 				entries.length,
 			);
 		}
 	}, [
-		debouncedSearchQuery,
+		filters.searchQuery,
 		entries.length,
-		selectedCategory,
-		selectedRarities,
-		selectedSchools,
+		filters.selectedCategory,
+		filters.selectedRarities,
+		filters.selectedSchools,
 		addToHistory,
 	]);
 
-	// Persist filters
-	const [filters, setFilters] = useFilterPersistence("compendium", {
-		selectedCategory: "all",
-		viewMode: "grid" as "grid" | "list",
-		sortBy: "name-asc" as SortOption,
-		selectedRarities: [] as string[],
-		minLevel: "" as number | "",
-		maxLevel: "" as number | "",
-		showFavoritesOnly: false,
-		selectedSourceBooks: [] as string[],
-		selectedSchools: [] as string[],
-		selectedGateRanks: [] as string[],
-		showBossOnly: false,
-		showMiniBossOnly: false,
-		minCR: "" as number | "",
-		maxCR: "" as number | "",
-	});
 
-	// Load persisted filters on mount
-	// eslint-disable-next-line react-hooks/exhaustive-deps -- Intentional one-time hydration from localStorage-backed state.
-	useEffect(() => {
-		setSelectedCategory(filters.selectedCategory);
-		setViewMode(filters.viewMode);
-		setSortBy(filters.sortBy);
-		setSelectedRarities(filters.selectedRarities);
-		setMinLevel(filters.minLevel);
-		setMaxLevel(filters.maxLevel);
-		setShowFavoritesOnly(filters.showFavoritesOnly);
-		setSelectedSourceBooks(filters.selectedSourceBooks);
-		setSelectedSchools(filters.selectedSchools);
-		setSelectedGateRanks(filters.selectedGateRanks);
-		setShowBossOnly(filters.showBossOnly);
-		setShowMiniBossOnly(filters.showMiniBossOnly);
-		setMinCR(filters.minCR);
-		setMaxCR(filters.maxCR);
-	}, [
-		filters.maxCR,
-		filters.maxLevel,
-		filters.minCR,
-		filters.minLevel,
-		filters.selectedCategory,
-		filters.selectedGateRanks,
-		filters.selectedRarities,
-		filters.selectedSchools,
-		filters.selectedSourceBooks,
-		filters.showBossOnly,
-		filters.showFavoritesOnly,
-		filters.showMiniBossOnly,
-		filters.sortBy,
-		filters.viewMode,
-	]);
-
-	// Save filters when they change
-	useEffect(() => {
-		setFilters({
-			selectedCategory,
-			viewMode,
-			sortBy,
-			selectedRarities,
-			minLevel,
-			maxLevel,
-			showFavoritesOnly,
-			selectedSourceBooks,
-			selectedSchools,
-			selectedGateRanks,
-			showBossOnly,
-			showMiniBossOnly,
-			minCR,
-			maxCR,
-		});
-	}, [
-		selectedCategory,
-		viewMode,
-		sortBy,
-		selectedRarities,
-		minLevel,
-		maxLevel,
-		showFavoritesOnly,
-		selectedSourceBooks,
-		selectedSchools,
-		selectedGateRanks,
-		showBossOnly,
-		showMiniBossOnly,
-		minCR,
-		maxCR,
-		setFilters,
-	]);
 
 	// Extract unique source books
 	const { sourceBooks, counts, favoriteCount } = useMemo(() => {
@@ -495,16 +432,24 @@ const Compendium = () => {
 		let filtered = [...entries];
 
 		const selectedSourceBooksSet =
-			selectedSourceBooks.length > 0 ? new Set(selectedSourceBooks) : null;
+			filters.selectedSourceBooks.length > 0
+				? new Set(filters.selectedSourceBooks)
+				: null;
 		const selectedSchoolsSet =
-			selectedSchools.length > 0 ? new Set(selectedSchools) : null;
+			filters.selectedSchools.length > 0
+				? new Set(filters.selectedSchools)
+				: null;
 		const selectedGateRanksSet =
-			selectedGateRanks.length > 0 ? new Set(selectedGateRanks) : null;
+			filters.selectedGateRanks.length > 0
+				? new Set(filters.selectedGateRanks)
+				: null;
 		const selectedRaritiesSet =
-			selectedRarities.length > 0 ? new Set(selectedRarities) : null;
+			filters.selectedRarities.length > 0
+				? new Set(filters.selectedRarities)
+				: null;
 
 		// Filter by favorites
-		if (showFavoritesOnly) {
+		if (filters.showFavoritesOnly) {
 			filtered = filtered.filter((e) => e.isFavorite);
 		}
 
@@ -537,38 +482,38 @@ const Compendium = () => {
 		}
 
 		// Filter by level
-		if (minLevel !== "") {
+		if (filters.minLevel !== "") {
 			filtered = filtered.filter(
-				(e) => e.level !== undefined && e.level >= minLevel,
+				(e) => e.level !== undefined && e.level >= (filters.minLevel as number),
 			);
 		}
-		if (maxLevel !== "") {
+		if (filters.maxLevel !== "") {
 			filtered = filtered.filter(
-				(e) => e.level !== undefined && e.level <= maxLevel,
+				(e) => e.level !== undefined && e.level <= (filters.maxLevel as number),
 			);
 		}
 
 		// Filter by CR
-		if (minCR !== "") {
+		if (filters.minCR !== "") {
 			filtered = filtered.filter((e) => {
 				if (!e.cr) return false;
 				const crNum = parseFloat(e.cr);
-				return !Number.isNaN(crNum) && crNum >= minCR;
+				return !Number.isNaN(crNum) && crNum >= (filters.minCR as number);
 			});
 		}
-		if (maxCR !== "") {
+		if (filters.maxCR !== "") {
 			filtered = filtered.filter((e) => {
 				if (!e.cr) return false;
 				const crNum = parseFloat(e.cr);
-				return !Number.isNaN(crNum) && crNum <= maxCR;
+				return !Number.isNaN(crNum) && crNum <= (filters.maxCR as number);
 			});
 		}
 
 		// Filter by boss/mini-boss
-		if (showBossOnly) {
+		if (filters.showBossOnly) {
 			filtered = filtered.filter((e) => e.is_boss === true);
 		}
-		if (showMiniBossOnly) {
+		if (filters.showMiniBossOnly) {
 			filtered = filtered.filter((e) => e.tags?.includes("mini-boss") === true);
 		}
 
@@ -577,7 +522,7 @@ const Compendium = () => {
 
 		// Sort
 		filtered.sort((a, b) => {
-			switch (sortBy) {
+			switch (filters.sortBy) {
 				case "name-asc":
 					return a.name.localeCompare(b.name);
 				case "name-desc":
@@ -607,21 +552,7 @@ const Compendium = () => {
 		});
 
 		return filtered;
-	}, [
-		entries,
-		showFavoritesOnly,
-		selectedSourceBooks,
-		selectedSchools,
-		selectedGateRanks,
-		selectedRarities,
-		minLevel,
-		maxLevel,
-		minCR,
-		maxCR,
-		showBossOnly,
-		showMiniBossOnly,
-		sortBy,
-	]);
+	}, [entries, filters]);
 
 	// Paginate results
 	const paginatedEntries = useMemo(() => {
@@ -632,22 +563,30 @@ const Compendium = () => {
 
 	const totalPages = Math.ceil(filteredAndSortedEntries.length / itemsPerPage);
 
-	// Reset to page 1 when filters change
-	useEffect(() => {
-		setCurrentPage(1);
-	}, []);
-
 	// Load URL parameters on mount
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
-		if (params.get("category"))
-			setSelectedCategory(params.get("category") || "all");
-		if (params.get("search")) setSearchQuery(params.get("search") || "");
-		if (params.get("favorites") === "true") setShowFavoritesOnly(true);
-		if (params.get("sources")) {
-			setSelectedSourceBooks(params.get("sources")?.split(",") || []);
+		const updates: Partial<typeof filters> = {};
+
+		if (params.get("category")) {
+			updates.selectedCategory = params.get("category") || "all";
 		}
-	}, []);
+		if (params.get("search")) {
+			// update draft immediately
+			setSearchDraft(params.get("search") || "");
+			updates.searchQuery = params.get("search") || "";
+		}
+		if (params.get("favorites") === "true") {
+			updates.showFavoritesOnly = true;
+		}
+		if (params.get("sources")) {
+			updates.selectedSourceBooks = params.get("sources")?.split(",") || [];
+		}
+
+		if (Object.keys(updates).length > 0) {
+			setFilters((prev) => ({ ...prev, ...updates }));
+		}
+	}, [setFilters]);
 
 	// counts + favoriteCount are derived above in a single pass
 
@@ -660,126 +599,140 @@ const Compendium = () => {
 			onRemove: () => void;
 		}> = [];
 
-		if (showFavoritesOnly) {
+		if (filters.showFavoritesOnly) {
 			chips.push({
 				id: "favorites",
 				label: "Favorites",
 				value: "Only",
-				onRemove: () => setShowFavoritesOnly(false),
+				onRemove: () =>
+					setFilters((prev) => ({ ...prev, showFavoritesOnly: false })),
 			});
 		}
 
-		selectedSourceBooks.forEach((book) => {
+		filters.selectedSourceBooks.forEach((book) => {
 			chips.push({
 				id: `source-${book}`,
 				label: "Source",
 				value: book,
 				onRemove: () =>
-					setSelectedSourceBooks(selectedSourceBooks.filter((b) => b !== book)),
+					setFilters((prev) => ({
+						...prev,
+						selectedSourceBooks: prev.selectedSourceBooks.filter(
+							(b) => b !== book,
+						),
+					})),
 			});
 		});
 
-		selectedSchools.forEach((school) => {
+		filters.selectedSchools.forEach((school) => {
 			chips.push({
 				id: `school-${school}`,
 				label: "School",
 				value: school,
 				onRemove: () =>
-					setSelectedSchools(selectedSchools.filter((s) => s !== school)),
+					setFilters((prev) => ({
+						...prev,
+						selectedSchools: prev.selectedSchools.filter((s) => s !== school),
+					})),
 			});
 		});
 
-		selectedGateRanks.forEach((rank) => {
+		filters.selectedGateRanks.forEach((rank) => {
 			chips.push({
 				id: `rank-${rank}`,
 				label: "Rank",
 				value: `${rank}-Rank`,
 				onRemove: () =>
-					setSelectedGateRanks(selectedGateRanks.filter((r) => r !== rank)),
+					setFilters((prev) => ({
+						...prev,
+						selectedGateRanks: prev.selectedGateRanks.filter((r) => r !== rank),
+					})),
 			});
 		});
 
-		selectedRarities.forEach((rarity) => {
+		filters.selectedRarities.forEach((rarity) => {
 			chips.push({
 				id: `rarity-${rarity}`,
 				label: "Rarity",
 				value: rarity.replace("_", " "),
 				onRemove: () =>
-					setSelectedRarities(selectedRarities.filter((r) => r !== rarity)),
+					setFilters((prev) => ({
+						...prev,
+						selectedRarities: prev.selectedRarities.filter((r) => r !== rarity),
+					})),
 			});
 		});
 
-		if (minLevel !== "" || maxLevel !== "") {
+		if (filters.minLevel !== "" || filters.maxLevel !== "") {
 			chips.push({
 				id: "level",
 				label: "Level",
-				value: `${minLevel || 0}-${maxLevel || 9}`,
+				value: `${filters.minLevel || 0}-${filters.maxLevel || 9}`,
 				onRemove: () => {
-					setMinLevel("");
-					setMaxLevel("");
+					setFilters((prev) => ({ ...prev, minLevel: "", maxLevel: "" }));
 				},
 			});
 		}
 
-		if (minCR !== "" || maxCR !== "") {
+		if (filters.minCR !== "" || filters.maxCR !== "") {
 			chips.push({
 				id: "cr",
 				label: "CR",
-				value: `${minCR || 0}-${maxCR || 30}`,
+				value: `${filters.minCR || 0}-${filters.maxCR || 30}`,
 				onRemove: () => {
-					setMinCR("");
-					setMaxCR("");
+					setFilters((prev) => ({ ...prev, minCR: "", maxCR: "" }));
 				},
 			});
 		}
 
 		return chips;
-	}, [
-		showFavoritesOnly,
-		selectedSourceBooks,
-		selectedSchools,
-		selectedGateRanks,
-		selectedRarities,
-		minLevel,
-		maxLevel,
-		minCR,
-		maxCR,
-	]);
+	}, [filters, setFilters]);
 
 	const handleClearAllFilters = () => {
-		setShowFavoritesOnly(false);
-		setSelectedSourceBooks([]);
-		setSelectedSchools([]);
-		setSelectedGateRanks([]);
-		setSelectedRarities([]);
-		setMinLevel("");
-		setMaxLevel("");
-		setMinCR("");
-		setMaxCR("");
+		setFilters((prev) => ({
+			...prev,
+			showFavoritesOnly: false,
+			selectedSourceBooks: [],
+			selectedSchools: [],
+			selectedGateRanks: [],
+			selectedRarities: [],
+			minLevel: "",
+			maxLevel: "",
+			minCR: "",
+			maxCR: "",
+			searchQuery: "",
+		}));
+		setSearchDraft("");
 	};
 
 	const handleSourceBookToggle = (book: string) => {
-		if (selectedSourceBooks.includes(book)) {
-			setSelectedSourceBooks(selectedSourceBooks.filter((b) => b !== book));
-		} else {
-			setSelectedSourceBooks([...selectedSourceBooks, book]);
-		}
+		setFilters((prev) => {
+			const current = prev.selectedSourceBooks;
+			const next = current.includes(book)
+				? current.filter((b) => b !== book)
+				: [...current, book];
+			return { ...prev, selectedSourceBooks: next };
+		});
 	};
 
 	const handleSchoolToggle = (school: string) => {
-		if (selectedSchools.includes(school)) {
-			setSelectedSchools(selectedSchools.filter((s) => s !== school));
-		} else {
-			setSelectedSchools([...selectedSchools, school]);
-		}
+		setFilters((prev) => {
+			const current = prev.selectedSchools;
+			const next = current.includes(school)
+				? current.filter((s) => s !== school)
+				: [...current, school];
+			return { ...prev, selectedSchools: next };
+		});
 	};
 
 	const handleGateRankToggle = (rank: string) => {
-		if (selectedGateRanks.includes(rank)) {
-			setSelectedGateRanks(selectedGateRanks.filter((r) => r !== rank));
-		} else {
-			setSelectedGateRanks([...selectedGateRanks, rank]);
-		}
+		setFilters((prev) => {
+			const current = prev.selectedGateRanks;
+			const next = current.includes(rank)
+				? current.filter((r) => r !== rank)
+				: [...current, rank];
+			return { ...prev, selectedGateRanks: next };
+		});
 	};
 
 	const getRarityOrRankColor = (entry: CompendiumEntry) => {
@@ -849,11 +802,12 @@ const Compendium = () => {
 
 	const handleShare = () => {
 		const params = new URLSearchParams();
-		if (selectedCategory !== "all") params.set("category", selectedCategory);
-		if (searchQuery) params.set("search", searchQuery);
-		if (showFavoritesOnly) params.set("favorites", "true");
-		if (selectedSourceBooks.length > 0)
-			params.set("sources", selectedSourceBooks.join(","));
+		if (filters.selectedCategory !== "all")
+			params.set("category", filters.selectedCategory);
+		if (filters.searchQuery) params.set("search", filters.searchQuery);
+		if (filters.showFavoritesOnly) params.set("favorites", "true");
+		if (filters.selectedSourceBooks.length > 0)
+			params.set("sources", filters.selectedSourceBooks.join(","));
 		const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 		navigator.clipboard
 			.writeText(url)
@@ -947,8 +901,8 @@ const Compendium = () => {
 								<Input
 									placeholder="[ QUERY_TERMINAL ] awaiting input... (e.g., type:power, level:>3)"
 									aria-label="Search compendium"
-									value={searchQuery || ""}
-									onChange={(e) => setSearchQuery(e.target.value)}
+									value={searchDraft || ""}
+									onChange={(e) => setSearchDraft(e.target.value)}
 									className="pl-12 h-14 bg-black/80 border-primary/50 text-primary font-mono tracking-widest focus:ring-1 focus:ring-primary focus:shadow-[0_0_15px_hsl(var(--primary)/0.2),inset_0_0_10px_hsl(var(--primary)/0.1)] rounded-[2px] transition-all duration-300 placeholder:text-primary/40 placeholder:font-system"
 									autoComplete="off"
 									spellCheck="false"
@@ -956,13 +910,15 @@ const Compendium = () => {
 								/>
 							</div>
 							<SearchHistoryDropdown
-								onSelect={(query) => setSearchQuery(query)}
+								onSelect={(query) => setSearchDraft(query)}
 							/>
 						</div>
 						<div className="flex gap-2 flex-wrap sm:flex-nowrap">
 							<Select
-								value={sortBy}
-								onValueChange={(v) => setSortBy(v as SortOption)}
+								value={filters.sortBy}
+								onValueChange={(v) =>
+									setFilters((prev) => ({ ...prev, sortBy: v as SortOption }))
+								}
 							>
 								<SelectTrigger
 									className="w-full sm:w-[180px] min-h-[44px]"
@@ -1009,7 +965,7 @@ const Compendium = () => {
 					)}
 
 					{/* Search hint */}
-					{searchQuery !== debouncedSearchQuery && (
+					{searchDraft !== filters.searchQuery && (
 						<div className="text-xs text-muted-foreground flex items-center gap-1">
 							<Loader2 className="w-3 h-3 animate-spin" />
 							Searching...
@@ -1024,24 +980,41 @@ const Compendium = () => {
 							...cat,
 							count: counts[cat.id],
 						}))}
-						selectedCategory={selectedCategory}
-						onCategoryChange={setSelectedCategory}
+						selectedCategory={filters.selectedCategory}
+						onCategoryChange={(cat) =>
+							setFilters((prev) => ({ ...prev, selectedCategory: cat }))
+						}
 						sourceBooks={sourceBooks}
-						selectedSourceBooks={selectedSourceBooks}
+						selectedSourceBooks={filters.selectedSourceBooks}
 						onSourceBookToggle={handleSourceBookToggle}
 						schools={availableSchools}
-						selectedSchools={selectedSchools}
+						selectedSchools={filters.selectedSchools}
 						onSchoolToggle={handleSchoolToggle}
 						gateRanks={gateRanks}
-						selectedGateRanks={selectedGateRanks}
+						selectedGateRanks={filters.selectedGateRanks}
 						onGateRankToggle={handleGateRankToggle}
-						showFavoritesOnly={showFavoritesOnly}
-						onToggleFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
+						showFavoritesOnly={filters.showFavoritesOnly}
+						onToggleFavorites={() =>
+							setFilters((prev) => ({
+								...prev,
+								showFavoritesOnly: !prev.showFavoritesOnly,
+							}))
+						}
 						favoriteCount={favoriteCount}
-						showBossOnly={showBossOnly}
-						onToggleBossOnly={() => setShowBossOnly(!showBossOnly)}
-						showMiniBossOnly={showMiniBossOnly}
-						onToggleMiniBossOnly={() => setShowMiniBossOnly(!showMiniBossOnly)}
+						showBossOnly={filters.showBossOnly}
+						onToggleBossOnly={() =>
+							setFilters((prev) => ({
+								...prev,
+								showBossOnly: !prev.showBossOnly,
+							}))
+						}
+						showMiniBossOnly={filters.showMiniBossOnly}
+						onToggleMiniBossOnly={() =>
+							setFilters((prev) => ({
+								...prev,
+								showMiniBossOnly: !prev.showMiniBossOnly,
+							}))
+						}
 					/>
 
 					{/* Results Grid */}
@@ -1240,7 +1213,7 @@ const Compendium = () => {
 													</div>
 												</div>
 												<h3 className="font-heading text-lg font-semibold mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
-													{highlightText(entry.name, searchQuery)}
+													{highlightText(entry.name, filters.searchQuery)}
 													{entry.source_book !== "System Ascendant Canon" &&
 														!canAccessMarketplace && (
 															<span title="Premium Content">
@@ -1249,7 +1222,7 @@ const Compendium = () => {
 														)}
 												</h3>
 												<SystemText className="block text-sm text-muted-foreground line-clamp-2">
-													{highlightText(entry.description, searchQuery)}
+													{highlightText(entry.description, filters.searchQuery)}
 												</SystemText>
 												<div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
 													{entry.cr && <span>CR {entry.cr}</span>}
@@ -1288,7 +1261,7 @@ const Compendium = () => {
 												</span>
 												<div className="flex-1 min-w-0">
 													<h3 className="font-heading font-semibold group-hover:text-primary transition-colors leading-tight flex items-center gap-2">
-														{highlightText(entry.name, searchQuery)}
+														{highlightText(entry.name, filters.searchQuery)}
 														{entry.source_book !== "System Ascendant Canon" &&
 															!canAccessMarketplace && (
 																<span title="Premium Content">
@@ -1297,7 +1270,7 @@ const Compendium = () => {
 															)}
 													</h3>
 													<SystemText className="block text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
-														{highlightText(entry.description, searchQuery)}
+														{highlightText(entry.description, filters.searchQuery)}
 													</SystemText>
 												</div>
 												<div className="flex items-center gap-2 flex-shrink-0">
@@ -1320,15 +1293,18 @@ const Compendium = () => {
 						{!isLoading && filteredAndSortedEntries.length === 0 && (
 							<EmptyState
 								type={
-									showFavoritesOnly
+									filters.showFavoritesOnly
 										? "no-favorites"
-										: searchQuery || filterChips.length > 0
+										: filters.searchQuery || filterChips.length > 0
 											? "no-results"
 											: "no-category"
 								}
-								searchQuery={searchQuery}
+								searchQuery={filters.searchQuery}
 								onClearFilters={handleClearAllFilters}
-								onClearSearch={() => setSearchQuery("")}
+								onClearSearch={() => {
+									setFilters((prev) => ({ ...prev, searchQuery: "" }));
+									setSearchDraft("");
+								}}
 							/>
 						)}
 

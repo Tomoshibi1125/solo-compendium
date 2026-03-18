@@ -7,7 +7,7 @@ import {
 	RotateCcw,
 	Trash2,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
@@ -466,20 +466,22 @@ const InitiativeTracker = () => {
 		isSyncingCombatSession,
 		persistenceContext,
 		saveNow,
-		updateCombatSession,
-		upsertCombatants,
+		updateCombatSession.mutate,
+		upsertCombatants.mutate,
 	]);
 
-	const sortedCombatants = [...combatants].sort((a, b) => {
-		if (b.initiative !== a.initiative) {
-			return b.initiative - a.initiative;
-		}
-		// Tiebreaker: ascendants go first
-		if (a.isHunter !== b.isHunter) {
-			return a.isHunter ? -1 : 1;
-		}
-		return a.name.localeCompare(b.name);
-	});
+	const sortedCombatants = useMemo(() => {
+		return [...combatants].sort((a, b) => {
+			if (b.initiative !== a.initiative) {
+				return b.initiative - a.initiative;
+			}
+			// Tiebreaker: ascendants go first
+			if (a.isHunter !== b.isHunter) {
+				return a.isHunter ? -1 : 1;
+			}
+			return a.name.localeCompare(b.name);
+		});
+	}, [combatants]);
 
 	const addCombatant = () => {
 		if (!newCombatant.name) {
@@ -665,7 +667,7 @@ const InitiativeTracker = () => {
 		);
 	};
 
-	const cleanupExpiredConditions = (nextRound: number) => {
+	const cleanupExpiredConditions = useCallback((nextRound: number) => {
 		const expiredAnnouncements: string[] = [];
 
 		setCombatants((prev) => {
@@ -718,9 +720,9 @@ const InitiativeTracker = () => {
 
 			return updated;
 		});
-	};
+	}, [campaignId, playerTools, sendMessage]);
 
-	const nextTurn = () => {
+	const nextTurn = useCallback(() => {
 		if (sortedCombatants.length === 0) return;
 		setCurrentTurn((prev) => {
 			const next = (prev + 1) % sortedCombatants.length;
@@ -745,9 +747,9 @@ const InitiativeTracker = () => {
 
 			return next;
 		});
-	};
+	}, [sortedCombatants, round, cleanupExpiredConditions, playerTools]);
 
-	const previousTurn = () => {
+	const previousTurn = useCallback(() => {
 		if (sortedCombatants.length === 0) return;
 		setCurrentTurn((prev) => {
 			if (prev === 0) {
@@ -756,7 +758,7 @@ const InitiativeTracker = () => {
 			}
 			return prev - 1;
 		});
-	};
+	}, [sortedCombatants, round]);
 
 	const resetCombat = () => {
 		setCombatants([]);

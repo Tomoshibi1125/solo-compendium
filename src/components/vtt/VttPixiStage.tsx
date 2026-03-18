@@ -125,10 +125,10 @@ export function VttPixiStage({
 	} | null>(null);
 
 	const worldSize = useMemo(() => {
-		const w = (scene?.width ?? 0) * gridSize * zoom;
-		const h = (scene?.height ?? 0) * gridSize * zoom;
+		const w = (scene?.width ?? 0) * gridSize;
+		const h = (scene?.height ?? 0) * gridSize;
 		return { w, h };
-	}, [gridSize, scene?.height, scene?.width, zoom]);
+	}, [gridSize, scene?.height, scene?.width]);
 
 	const dragStateRef = useRef<{ tokenId: string; pointerId: number } | null>(
 		null,
@@ -162,6 +162,7 @@ export function VttPixiStage({
 
 	// Weather state
 	const weatherEmitterRef = useRef<Emitter | null>(null);
+	const rootContainerRef = useRef<Container | null>(null);
 
 	useEffect(() => {
 		if (!canvasHostRef.current) return;
@@ -231,8 +232,9 @@ export function VttPixiStage({
 
 		const stage = app.stage;
 		stage.removeChildren();
-
+ 
 		const root = new Container();
+		rootContainerRef.current = root;
 		stage.addChild(root);
 
 		const bg = new Container();
@@ -906,6 +908,7 @@ export function VttPixiStage({
 				weatherEmitterRef.current.destroy();
 			}
 			stage.removeChildren();
+			rootContainerRef.current = null;
 		};
 	}, [
 		activeTokenId,
@@ -919,13 +922,19 @@ export function VttPixiStage({
 		tokens,
 		walls,
 		lightSources,
-		zoom,
 		weather,
 		gridConfig?.type, // Expose the app + effects container so parent components can trigger particle presets
 		onStageReady,
 		onTokenDragStart,
 		updateToken,
 	]);
+
+	// Optimized Zoom Effect: Scale the root container instead of rebuilding the stage
+	useEffect(() => {
+		if (rootContainerRef.current) {
+			rootContainerRef.current.scale.set(zoom);
+		}
+	}, [zoom]);
 
 	useEffect(() => {
 		const host = canvasHostRef.current;

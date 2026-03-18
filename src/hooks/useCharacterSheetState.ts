@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -159,7 +160,7 @@ export function useCharacterSheetState(characterId: string) {
 		},
 	});
 
-	const saveSheetState = async (updates: Partial<CharacterSheetState>) => {
+	const saveSheetState = useCallback(async (updates: Partial<CharacterSheetState>) => {
 		const current =
 			queryClient.getQueryData<CharacterSheetState>([
 				"character-sheet-state",
@@ -170,12 +171,12 @@ export function useCharacterSheetState(characterId: string) {
 			customModifiers: updates.customModifiers ?? current.customModifiers,
 		};
 		return updateSheetState.mutateAsync(next);
-	};
+	}, [characterId, queryClient, updateSheetState]);
 
-	return {
+	return useMemo(() => ({
 		state: query.data || defaultState,
 		isLoading: query.isLoading,
 		isSaving: updateSheetState.isPending,
 		saveSheetState,
-	};
+	}), [query.data, query.isLoading, updateSheetState.isPending, saveSheetState]);
 }

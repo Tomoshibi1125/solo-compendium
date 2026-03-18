@@ -280,11 +280,11 @@ const CharacterSheet = () => {
 		character?.id || "",
 	);
 	const { data: charFeatures = [] } = useCharacterFeatures(character?.id || "");
-	const baseCustomModifiers = normalizeCustomModifiers(
+	const baseCustomModifiers = useMemo(() => normalizeCustomModifiers(
 		sheetState.customModifiers,
-	);
-	const featureCustomModifiers =
-		featureModifiersToCustomModifiers(charFeatures);
+	), [sheetState.customModifiers]);
+	const featureCustomModifiers = useMemo(() => 
+		featureModifiersToCustomModifiers(charFeatures), [charFeatures]);
 	const customModifiers = useMemo(
 		() => [...baseCustomModifiers, ...featureCustomModifiers],
 		[baseCustomModifiers, featureCustomModifiers],
