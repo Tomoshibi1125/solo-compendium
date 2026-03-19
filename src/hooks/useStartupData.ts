@@ -43,6 +43,11 @@ export interface CompendiumEntry {
 	isFavorite: boolean;
 	// Type-specific fields
 	power_level?: number | null;
+	flavor?: string | null;
+	higher_levels?: string | null;
+	atHigherLevels?: string | null;
+	properties?: string[] | Record<string, unknown> | null;
+	abilities?: Record<string, unknown> | null;
 	school?: string | null;
 	title?: string | null;
 	theme?: string | null;

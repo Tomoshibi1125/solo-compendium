@@ -244,6 +244,7 @@ const Compendium = () => {
 				"runes",
 				"relics",
 				"artifacts",
+				"equipment",
 				"monsters",
 				"locations",
 				"conditions",
@@ -255,7 +256,9 @@ const Compendium = () => {
 			for (const category of categories) {
 				if (
 					filters.selectedCategory === "all" ||
-					filters.selectedCategory === category
+					filters.selectedCategory === category ||
+					(filters.selectedCategory === "equipment" && category === "items") ||
+					(filters.selectedCategory === "items" && category === "items")
 				) {
 					logger.debug(`Fetching ${category} data...`);
 					let data: StaticCompendiumEntry[] = [];
@@ -325,47 +328,69 @@ const Compendium = () => {
 						logger.debug(`Got ${data.length} ${category} entries`);
 
 						allEntries.push(
-							...data.map((item) => ({
-								id: item.id,
-								name: item.display_name || item.name,
-								type: category,
-								description: item.description || "No description available",
-								rarity: item.rarity || "common",
-								tags: item.tags || [],
-								level: item.level ?? undefined,
-								created_at: item.created_at,
-								source_book: item.source_book,
-								source_kind:
-									(item as unknown as { source_kind?: string }).source_kind ||
-									"sa",
-								image_url: item.image_url,
-								isFavorite: favorites.has(`${category}:${item.id}`) || false,
-								// Include type-specific fields
-								...(category === "monsters" && {
-									cr: item.cr ?? undefined,
-									gate_rank: item.gate_rank ?? undefined,
-									is_boss: item.is_boss,
-								}),
-								...(category === "powers" && {
-									power_level: item.power_level,
-									school: item.school,
-								}),
-								...(category === "runes" && {
-									rune_type: item.rune_type,
-									rune_category: item.rune_category,
-									level: item.rune_level ?? undefined,
-								}),
-								...(category === "skills" && {
-									ability: item.ability,
-								}),
-								...(category === "feats" && {
-									prerequisites: item.prerequisites,
-								}),
-								...(category === "regents" && {
-									title: item.title,
-									theme: item.theme,
-								}),
-							})),
+							...data.map((item): CompendiumEntry => {
+								// Determine display type (especially for items vs equipment)
+								let displayType: string = category;
+								if (category === "items") {
+									const itemType = item.item_type || item.equipment_type;
+									if (
+										itemType === "weapon" ||
+										itemType === "armor" ||
+										itemType === "shield" ||
+										itemType === "gear" ||
+										itemType === "tools"
+									) {
+										displayType = "equipment";
+									} else {
+										displayType = "items";
+									}
+								}
+
+								return {
+									id: item.id,
+									name: item.display_name || item.name,
+									type: displayType as CompendiumEntry["type"],
+									description: item.description || "No description available",
+									rarity: item.rarity || "common",
+									tags: item.tags || [],
+									level: item.level ?? undefined,
+									created_at: item.created_at,
+									source_book: item.source_book,
+									image_url: item.image_url,
+									isFavorite:
+										favorites.has(`${displayType}:${item.id}`) || false,
+									// Include type-specific fields
+									...(category === "monsters" && {
+										cr: item.cr ?? undefined,
+										gate_rank: item.gate_rank ?? undefined,
+										is_boss: item.is_boss,
+									}),
+									...(category === "powers" && {
+										power_level: item.power_level,
+										school: item.school,
+									}),
+									...(category === "runes" && {
+										rune_type: item.rune_type,
+										rune_category: item.rune_category,
+										level: item.rune_level ?? undefined,
+									}),
+									...(category === "sigils" && {
+										rune_type: item.rune_type,
+										rune_category: item.rune_category,
+										level: item.level ?? undefined,
+									}),
+									...(category === "skills" && {
+										ability: item.ability,
+									}),
+									...(category === "feats" && {
+										prerequisites: item.prerequisites,
+									}),
+									...(category === "regents" && {
+										title: item.title,
+										theme: item.theme,
+									}),
+								};
+							}),
 						);
 					} catch (error) {
 						logger.error(`Error fetching ${category}:`, error);
@@ -1191,9 +1216,9 @@ const Compendium = () => {
 																powers: Wand2,
 																relics: Gem,
 																monsters: Skull,
-																equipment: Package,
+																equipment: Swords,
 															};
-															const Icon = IconMap[entry.type] || Package;
+															const Icon = IconMap[entry.type] || Swords;
 															return (
 																<Icon className="w-8 h-8 text-muted-foreground" />
 															);
@@ -1254,9 +1279,9 @@ const Compendium = () => {
 															powers: Wand2,
 															relics: Gem,
 															monsters: Skull,
-															equipment: Package,
+															equipment: Swords,
 														};
-														const Icon = IconMap[entry.type] || Package;
+														const Icon = IconMap[entry.type] || Swords;
 														return (
 															<Icon className="w-8 h-8 text-muted-foreground" />
 														);

@@ -98,6 +98,9 @@ export interface StaticCompendiumEntry {
 	encounters?: string[] | null;
 	treasures?: string[] | null;
 	style?: string | null;
+	image?: string | null;
+	cost_credits?: number | null;
+	item_properties?: Record<string, unknown> | null;
 	activation?: Record<string, unknown> | null;
 	duration?: Record<string, unknown> | null;
 	components?: Record<string, unknown> | null;
@@ -107,7 +110,7 @@ export interface StaticCompendiumEntry {
 	flavor?: string | null;
 	higher_levels?: string | null;
 	atHigherLevels?: string | null;
-	properties?: Record<string, unknown> | null;
+	properties?: string[] | Record<string, unknown> | null;
 	abilities?: Record<string, unknown> | null;
 	lore?: Record<string, unknown> | null;
 	attunement?: boolean | null;
@@ -791,10 +794,12 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		tags: [item.type, item.rarity].filter(Boolean) as string[],
 		source_book: "System Ascendant Homebrew",
 		image_url: item.image,
+		image: item.image,
 		equipment_type: item.type,
 		item_type: item.type,
 		requirements: item.requirements ?? null,
-		properties: deriveItemProperties(item),
+		properties: Array.isArray(item.properties) ? item.properties : [],
+		item_properties: deriveItemProperties(item),
 		effects: item.effects ?? null,
 		attunement: item.attunement ?? null,
 		cursed: item.cursed ?? null,
@@ -802,6 +807,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		stats: item.stats,
 		effect: item.effect,
 		value: item.value,
+		cost_credits: item.value,
 		weight: item.weight,
 		source: item.source,
 		rarity: item.rarity,
@@ -1346,18 +1352,19 @@ export const staticDataProvider: StaticDataProvider = {
 			display_name: relic.name,
 			description: relic.description,
 			created_at: new Date().toISOString(),
-			tags: [relic.type, relic.rarity].filter(Boolean) as string[],
-			source_book: relic.source,
+			tags: [relic.type, relic.rarity, "relic"].filter(Boolean) as string[],
+			source_book: relic.source || "System Ascendant Canon",
 			image_url: relic.image,
-			rarity: relic.rarity,
-			item_type: relic.type,
-			equipment_type: relic.type,
+			rarity: relic.rarity || "rare",
+			item_type: relic.type || "relic",
+			equipment_type: relic.type || "relic",
 			attunement: relic.attunement ?? null,
 			requirements: relic.requirements ?? null,
 			properties: relic.properties ?? null,
 			abilities: relic.abilities ?? null,
 			lore: relic.lore ?? null,
 			mechanics: relic.mechanics ?? null,
+			flavor: (relic.lore as { description?: string })?.description || null,
 		}));
 	},
 
@@ -1658,9 +1665,9 @@ export const staticDataProvider: StaticDataProvider = {
 			tags: ["artifact", artifact.type, artifact.rarity].filter(
 				Boolean,
 			) as string[],
-			source_book: artifact.source,
+			source_book: artifact.source || "System Ascendant Canon",
 			image_url: artifact.image,
-			artifact_type: artifact.type,
+			artifact_type: artifact.type || "artifact",
 			attunement: artifact.attunement,
 			requirements: artifact.requirements || null,
 			properties: artifact.properties || null,
@@ -1668,6 +1675,7 @@ export const staticDataProvider: StaticDataProvider = {
 			lore: artifact.lore || null,
 			mechanics: artifact.mechanics || null,
 			source: artifact.source,
+			flavor: (artifact.lore as { description?: string })?.description || null,
 			power_level:
 				artifact.rarity === "divine"
 					? 10
@@ -1677,7 +1685,7 @@ export const staticDataProvider: StaticDataProvider = {
 			school: artifact.type,
 			title: artifact.type,
 			theme: artifact.rarity,
-			rarity: artifact.rarity,
+			rarity: artifact.rarity || "legendary",
 			level:
 				typeof (artifact.requirements as Record<string, unknown>)?.level ===
 				"number"
@@ -1783,29 +1791,37 @@ export const staticDataProvider: StaticDataProvider = {
 			source_book?: string;
 		}>("sigils");
 		const filtered = filterBySearch(allSigils, search, ["name", "description"]);
-		return filtered.map((sigil) => ({
-			id: sigil.id,
-			name: sigil.name,
-			display_name: sigil.name,
-			description: sigil.effect_description || sigil.description,
-			created_at:
-				(sigil as { created_at?: string }).created_at ||
-				"2024-01-01T00:00:00.000Z",
-			tags: (sigil.tags || [sigil.rune_type, sigil.rarity]).filter(
-				Boolean,
-			) as string[],
-			source_book: sigil.source_book || "System Ascendant Canon",
-			image_url: sigil.image,
-			rune_type: sigil.rune_type,
-			rune_category: sigil.rune_category,
-			rune_level: sigil.rune_level,
-			rarity: sigil.rarity,
-			level: sigil.requires_level,
-			effect: sigil.effect_description,
-			passive_bonuses: sigil.passive_bonuses || null,
-			can_inscribe_on: sigil.can_inscribe_on || null,
-			inscription_difficulty: sigil.inscription_difficulty || null,
-		}));
+		return filtered.map((sigil) => {
+			const { effect_description, description, passive_bonuses, ...rest } =
+				sigil;
+			return {
+				...rest,
+				id: sigil.id,
+				name: sigil.name,
+				display_name: sigil.name,
+				description: effect_description || description || "",
+				created_at:
+					(sigil as { created_at?: string }).created_at ||
+					"2024-01-01T00:00:00.000Z",
+				tags: (sigil.tags || [sigil.rune_type, sigil.rarity, "sigil"]).filter(
+					Boolean,
+				) as string[],
+				source_book: sigil.source_book || "System Ascendant Canon",
+				image_url: sigil.image,
+				image: sigil.image,
+				rune_type: sigil.rune_type,
+				rune_category: sigil.rune_category,
+				rune_level: sigil.rune_level,
+				rarity: sigil.rarity || "rare",
+				level: sigil.requires_level || sigil.rune_level,
+				effect: effect_description,
+				effect_description: effect_description,
+				passive_bonuses: passive_bonuses || null,
+				can_inscribe_on: sigil.can_inscribe_on || null,
+				inscription_difficulty: sigil.inscription_difficulty || null,
+				flavor: description || null,
+			};
+		});
 	},
 };
 
