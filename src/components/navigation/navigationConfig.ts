@@ -45,6 +45,30 @@ export const navigationConfig: NavItemConfig[] = [
 				description: "Discover paths of ascension and abilities.",
 				icon: Shield,
 			},
+			{
+				title: "Equipment",
+				href: "/compendium?category=equipment",
+				description: "Weapons, armor, shields, and adventuring gear.",
+				icon: Shield,
+			},
+			{
+				title: "Items",
+				href: "/compendium?category=items",
+				description: "Consumables, materials, and miscellaneous items.",
+				icon: Store,
+			},
+			{
+				title: "Runes",
+				href: "/compendium?category=runes",
+				description: "Absorbable runes and rune protocols.",
+				icon: Sparkles,
+			},
+			{
+				title: "Sigils",
+				href: "/compendium?category=sigils",
+				description: "Command sigils and system inscriptions.",
+				icon: Sparkles,
+			},
 		],
 	},
 	{

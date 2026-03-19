@@ -128,6 +128,7 @@ const Auth = lazy(() => import("./pages/Auth"));
 const AuthCallback = lazy(() => import("./pages/AuthCallback"));
 const Landing = lazy(() => import("./pages/Landing"));
 const Setup = lazy(() => import("./pages/Setup"));
+const SourceBook = lazy(() => import("./pages/compendium/SourceBook"));
 
 const CatchAllRedirect = () => {
 	const { user, loading } = useAuth();
@@ -327,6 +328,22 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<CompendiumDetail />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/source-book"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<SourceBook />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/source-book/:section"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<SourceBook />
 						</Suspense>
 					}
 				/>

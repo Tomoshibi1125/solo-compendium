@@ -1184,7 +1184,11 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"11": {
-				features_gained: ["Titan Ascendant", "Steel Lord", "Invulnerability God"],
+				features_gained: [
+					"Titan Ascendant",
+					"Steel Lord",
+					"Invulnerability God",
+				],
 				abilities_improved: [],
 			},
 			"12": {
@@ -1200,7 +1204,11 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"15": {
-				features_gained: ["Titan Reality", "Steel God", "Invulnerability Emperor"],
+				features_gained: [
+					"Titan Reality",
+					"Steel God",
+					"Invulnerability Emperor",
+				],
 				abilities_improved: [],
 			},
 			"16": {
@@ -1228,7 +1236,11 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"20": {
-				features_gained: ["Titan Supremacy", "Absolute Invulnerability", "Regent Power"],
+				features_gained: [
+					"Titan Supremacy",
+					"Absolute Invulnerability",
+					"Regent Power",
+				],
 				abilities_improved: ["Primary Ability +2"],
 			},
 		},
@@ -4149,7 +4161,11 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"20": {
-				features_gained: ["Blood Supremacy", "Absolute Sanguinity", "Regent Power"],
+				features_gained: [
+					"Blood Supremacy",
+					"Absolute Sanguinity",
+					"Regent Power",
+				],
 				abilities_improved: ["Primary Ability +2"],
 			},
 		},

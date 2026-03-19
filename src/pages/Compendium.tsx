@@ -87,10 +87,6 @@ type SortOption =
 
 const categories = [
 	{ id: "all", name: "All", icon: Grid3X3 },
-	{ id: "equipment", name: "Equipment", icon: Swords },
-	{ id: "items", name: "Items", icon: Package },
-	{ id: "runes", name: "Runes", icon: Gem },
-	{ id: "sigils", name: "Sigils", icon: Sparkles },
 
 	// World & Entities
 	{ id: "monsters", name: "Monsters", icon: Skull },
@@ -107,8 +103,12 @@ const categories = [
 
 	// Magic & Lore
 	{ id: "spells", name: "Spells", icon: ScrollText },
+	{ id: "runes", name: "Runes", icon: Gem },
+	{ id: "sigils", name: "Sigils", icon: Sparkles },
 	{ id: "relics", name: "Relics", icon: Skull },
 	{ id: "artifacts", name: "Artifacts", icon: Crown },
+	{ id: "equipment", name: "Equipment", icon: Swords },
+	{ id: "items", name: "Items", icon: Package },
 	{ id: "locations", name: "Locations", icon: MapPin },
 	{ id: "conditions", name: "Conditions", icon: AlertTriangle },
 	{ id: "shadow-soldiers", name: "Umbral Legion", icon: Users },
@@ -597,8 +597,21 @@ const Compendium = () => {
 		const params = new URLSearchParams(window.location.search);
 		const updates: Partial<typeof filters> = {};
 
-		if (params.get("category")) {
-			updates.selectedCategory = params.get("category") || "all";
+		const categoryParam = params.get("category");
+		const tabParam = params.get("tab");
+		if (categoryParam) {
+			updates.selectedCategory = categoryParam || "all";
+		} else if (tabParam) {
+			// Backward-compatible mapping for older links like /compendium?tab=classes
+			const tabToCategory: Record<string, string> = {
+				classes: "jobs",
+				features: "feats",
+				gear: "equipment",
+				items: "items",
+				runes: "runes",
+				sigils: "sigils",
+			};
+			updates.selectedCategory = tabToCategory[tabParam] || "all";
 		}
 		if (params.get("search")) {
 			// update draft immediately
