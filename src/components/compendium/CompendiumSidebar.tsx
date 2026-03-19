@@ -86,8 +86,8 @@ export function CompendiumSidebar({
 			</SystemWindow>
 
 			{/* Categories */}
-			<SystemWindow title="CATEGORIES" className="p-4">
-				<ScrollArea className="h-[400px]">
+			<SystemWindow title="CATEGORIES" className="p-4 flex flex-col min-h-0">
+				<ScrollArea className="max-h-[60vh] h-full overflow-y-auto pr-2">
 					<div className="space-y-1">
 						{categories.map((category) => {
 							const Icon = category.icon;

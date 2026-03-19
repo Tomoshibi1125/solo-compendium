@@ -87,8 +87,13 @@ type SortOption =
 
 const categories = [
 	{ id: "all", name: "All", icon: Grid3X3 },
+	{ id: "equipment", name: "Equipment", icon: Swords },
+	{ id: "items", name: "Items", icon: Package },
+	{ id: "runes", name: "Runes", icon: Gem },
+	{ id: "sigils", name: "Sigils", icon: Sparkles },
 
-	// Character Foundation
+	// World & Entities
+	{ id: "monsters", name: "Monsters", icon: Skull },
 	{ id: "backgrounds", name: "Backgrounds", icon: Users },
 	{ id: "jobs", name: "Jobs", icon: Swords },
 	{ id: "paths", name: "Paths", icon: GitBranch },
@@ -100,22 +105,13 @@ const categories = [
 	{ id: "powers", name: "Powers", icon: Wand2 },
 	{ id: "techniques", name: "Techniques", icon: Package },
 
-	// Magic & Equipment
+	// Magic & Lore
 	{ id: "spells", name: "Spells", icon: ScrollText },
-	{ id: "runes", name: "Runes", icon: Gem },
-	{ id: "sigils", name: "Sigils", icon: Sparkles },
 	{ id: "relics", name: "Relics", icon: Skull },
 	{ id: "artifacts", name: "Artifacts", icon: Crown },
-	{ id: "equipment", name: "Equipment", icon: Swords },
-
-	// World & Entities
-	{ id: "monsters", name: "Monsters", icon: Skull },
 	{ id: "locations", name: "Locations", icon: MapPin },
 	{ id: "conditions", name: "Conditions", icon: AlertTriangle },
 	{ id: "shadow-soldiers", name: "Umbral Legion", icon: Users },
-
-	// Items
-	{ id: "items", name: "Items", icon: Package },
 ];
 
 // Enhanced rarity colors with System Ascendant theme
