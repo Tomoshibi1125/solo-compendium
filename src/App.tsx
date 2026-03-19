@@ -8,11 +8,11 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { MainLayout } from "@/components/layout/MainLayout";
 import {
 	LoadingIndicator,
 	NetworkErrorBoundary,
 } from "@/components/NetworkErrorHandling";
-import { NavBar } from "@/components/navigation/NavBar";
 import PerformancePreload from "@/components/PerformancePreload";
 import { OfflineStatus } from "@/components/pwa/PWAComponents";
 import { RouteEffects } from "@/components/RouteEffects";
@@ -223,7 +223,7 @@ const AppContent = () => {
 	}, [user, isSupported, permission, requestPermission]);
 
 	return (
-		<>
+		<MainLayout>
 			{isSupabaseConfigured && (
 				<CommandPalette
 					open={commandPaletteOpen}
@@ -747,7 +747,7 @@ const AppContent = () => {
 				/>
 				<Route path="*" element={<CatchAllRedirect />} />
 			</Routes>
-		</>
+		</MainLayout>
 	);
 };
 
@@ -778,7 +778,6 @@ const App = () => {
 									<Toaster />
 									<Sonner />
 									<BrowserRouter basename={routerBase}>
-										<NavBar />
 										<RouteEffects />
 										<PageViewTracker />
 										<ErrorBoundary>

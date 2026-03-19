@@ -1,7 +1,12 @@
 import { useMemo } from "react";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
-import type { EquipmentRow, Rune, RuneInscription } from "@/hooks/useRunes";
-import { calculateCharacterStats } from "@/lib/characterCalculations";
+import type { EquipmentRow } from "@/hooks/useEquipment";
+import type { Rune, RuneInscription } from "@/hooks/useRunes";
+import type { CharacterSigilInscriptionRow, SigilRow } from "@/hooks/useSigils";
+import {
+	type CalculatedStats,
+	calculateCharacterStats,
+} from "@/lib/characterCalculations";
 import { getActiveConditionEffects } from "@/lib/conditions";
 import {
 	type CustomModifier,
@@ -30,15 +35,55 @@ import {
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
+interface EquipmentModifierResult {
+	armorClass: number;
+	speed: number;
+	abilityModifiers: Record<string, number>;
+	attackBonus: number;
+	damageBonus: number;
+	savingThrowBonuses: Record<string, number>;
+	skillBonuses: Record<string, number>;
+}
+
+interface RuneBonusResult {
+	ac: number;
+	speed: number;
+	abilities: Record<string, number>;
+	attackBonus: number;
+	damageBonus: string;
+}
+
+export type DerivedStats = {
+	calculatedStats: CalculatedStats;
+	skills: Record<
+		string,
+		{
+			modifier: number;
+			passive: number;
+			ability: AbilityScore;
+			proficient: boolean;
+			expertise: boolean;
+		}
+	>;
+	encumbranceValue: number;
+	encumbranceMax: number;
+	finalAbilities: Record<AbilityScore, number>;
+	customAbilityBonuses: number;
+	allSkills: SkillDefinition[];
+	equipmentMods: EquipmentModifierResult;
+	runeBonuses: RuneBonusResult;
+	sigilBonuses: RuneBonusResult;
+	finalSpeed: number;
+	finalInitiative: number;
+	initiativeAdvantage: "normal" | "advantage" | "disadvantage";
+	baseStats: CalculatedStats;
+};
+
 export function useCharacterDerivedStats(
-	character: CharacterWithAbilities | null,
+	character: CharacterWithAbilities | null | undefined,
 	equipment: EquipmentRow[],
-	activeRunes: (RuneInscription & { rune: Rune; equipment: EquipmentRow })[],
-	activeSigils: Array<{
-		sigil: { passive_bonuses: unknown };
-		is_active: boolean;
-		equipment: EquipmentRow;
-	}>,
+	activeRunes: RuneInscription[],
+	activeSigils: CharacterSigilInscriptionRow[],
 	customModifiers: CustomModifier[],
 ) {
 	return useMemo(() => {
@@ -98,10 +143,13 @@ export function useCharacterDerivedStats(
 		);
 
 		const equippedActiveRunes = activeRunes.filter(
-			(ri) =>
-				ri.equipment?.is_equipped &&
-				(!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
-				ri.is_active,
+			(ri): ri is RuneInscription & { rune: Rune; equipment: EquipmentRow } =>
+				!!(
+					ri.rune &&
+					ri.equipment?.is_equipped &&
+					(!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
+					ri.is_active
+				),
 		);
 
 		const runeBonuses = applyRuneBonuses(
@@ -124,10 +172,18 @@ export function useCharacterDerivedStats(
 		);
 
 		const equippedActiveSigils = (activeSigils || []).filter(
-			(si) =>
-				si.equipment?.is_equipped &&
-				(!si.equipment.requires_attunement || si.equipment.is_attuned) &&
-				si.is_active,
+			(
+				si,
+			): si is CharacterSigilInscriptionRow & {
+				sigil: SigilRow;
+				equipment: EquipmentRow;
+			} =>
+				!!(
+					si.sigil &&
+					si.equipment?.is_equipped &&
+					(!si.equipment.requires_attunement || si.equipment.is_attuned) &&
+					si.is_active
+				),
 		);
 
 		const sigilBonuses = applySigilBonuses(
@@ -339,10 +395,11 @@ export function useCharacterDerivedStats(
 			allSkills,
 			equipmentMods,
 			runeBonuses,
+			sigilBonuses,
 			finalSpeed,
 			finalInitiative,
 			initiativeAdvantage,
 			baseStats,
 		};
-	}, [character, equipment, activeRunes, customModifiers]);
+	}, [character, equipment, activeRunes, customModifiers, activeSigils]);
 }

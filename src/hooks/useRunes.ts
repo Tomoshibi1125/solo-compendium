@@ -16,7 +16,10 @@ import { getProficiencyBonus } from "@/types/system-rules";
 
 export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 export type RuneInscription =
-	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"];
+	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"] & {
+		rune?: Rune;
+		equipment?: EquipmentRow;
+	};
 export type RuneKnowledge =
 	Database["public"]["Tables"]["character_rune_knowledge"]["Row"];
 export type EquipmentRow =
@@ -85,12 +88,49 @@ export function useCompendiumRunes(characterId?: string) {
 				rune_level: r.rune_level ?? 1,
 				rune_type: r.rune_type ?? "enhancement",
 				rune_category: r.rune_category ?? "general",
-				rarity: r.rarity ?? "common",
+				rarity: (r.rarity as Database["public"]["Enums"]["rarity"]) ?? "common",
 				source_book: r.source_book ?? "System Ascendant Canon",
 				created_at: r.created_at,
 				tags: r.tags ?? null,
 				image_url: r.image_url ?? null,
-			})) as unknown as Rune[];
+				// Add missing schema fields for full type compliance
+				activation_action: "",
+				activation_cost: "",
+				activation_cost_amount: null,
+				aliases: null,
+				can_inscribe_on: null,
+				caster_penalty: "",
+				caster_requirement_multiplier: null,
+				discovery_lore: "",
+				duration: "",
+				effect_description: r.description,
+				effect_type: "",
+				element: "",
+				higher_levels: "",
+				inscription_difficulty: 10,
+				license_note: "",
+				lore: "",
+				martial_penalty: "",
+				martial_requirement_multiplier: null,
+				power: r.rune_level ?? 1,
+				range: "",
+				recharge: "",
+				requirement_agi: 0,
+				requirement_int: 0,
+				requirement_pre: 0,
+				requirement_sense: 0,
+				requirement_str: 0,
+				requirement_vit: 0,
+				requires_job: null,
+				requires_level: 1,
+				source_kind: "Canon",
+				source_name: "System Ascendant",
+				theme_tags: null,
+				uses_per_rest: "",
+				concentration: false,
+				passive_bonuses: null,
+				updated_at: r.created_at,
+			})) as Rune[];
 		},
 	});
 }
@@ -129,7 +169,7 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 			const knowledgeEntries = data.map((rk) => ({
 				...rk,
 				rune: rk.rune as Rune,
-			})) as Array<RuneKnowledge & { rune: Rune }>;
+			}));
 
 			const campaignId = await getCharacterCampaignId(characterId);
 			const filtered = await filterRowsBySourcebookAccess(
@@ -187,7 +227,7 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
 				...ri,
 				rune: ri.rune as Rune,
 				equipment: ri.equipment as EquipmentRow,
-			})) as Array<RuneInscription & { rune: Rune; equipment: EquipmentRow }>;
+			}));
 
 			const campaignId = await getCharacterCampaignId(characterId);
 			const filtered = await filterRowsBySourcebookAccess(
@@ -205,6 +245,8 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
 		enabled: !!characterId,
 	});
 }
+
+export { useCharacterRuneInscriptions as useRunes };
 
 const buildEquipmentRunesCacheKey = (userId: string, equipmentId: string) => {
 	return `solo-compendium.cache.equipment-runes.${userId}.equipment:${equipmentId}.v1`;
@@ -254,7 +296,7 @@ export function useEquipmentRunes(
 			const equipmentRunes = data.map((ri) => ({
 				...ri,
 				rune: ri.rune as Rune,
-			})) as Array<RuneInscription & { rune: Rune }>;
+			}));
 
 			const resolvedCharacterId =
 				characterId || equipmentRunes[0]?.character_id || null;
@@ -652,7 +694,7 @@ export function useAbsorbRune() {
 
 			const { error: insertError } = await supabase
 				.from("character_features")
-				.insert(featurePayload as never);
+				.insert(featurePayload);
 			if (insertError) throw insertError;
 
 			// Mark rune as absorbed in knowledge (mastery_level 5 = absorbed)

@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SourceBook from "./pages/compendium/SourceBook";
 import "./index.css";
 import "./styles/system-ui.css";
@@ -13,8 +13,11 @@ if (rootElement) {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/source-book/*" element={<SourceBook />} />
-				<Route path="*" element={<Navigate to="/source-book/intro" replace />} />
+				<Route
+					path="*"
+					element={<Navigate to="/source-book/intro" replace />}
+				/>
 			</Routes>
-		</BrowserRouter>
+		</BrowserRouter>,
 	);
 }

@@ -254,102 +254,106 @@ const SourceBook: React.FC = () => {
 							archive includes all standard items and unique Relics of power.
 						</SourceBookPage>
 
-						{["mythic", "legendary", "epic", "very_rare", "rare", "uncommon", "common"].map(
-							(rarity) => {
-								const filteredItems = items.filter((i) => i.rarity === rarity);
-								const filteredRelics = relics.filter(
-									(r) => r.rarity === rarity,
-								);
-								if (filteredItems.length === 0 && filteredRelics.length === 0)
-									return null;
+						{[
+							"mythic",
+							"legendary",
+							"epic",
+							"very_rare",
+							"rare",
+							"uncommon",
+							"common",
+						].map((rarity) => {
+							const filteredItems = items.filter((i) => i.rarity === rarity);
+							const filteredRelics = relics.filter((r) => r.rarity === rarity);
+							if (filteredItems.length === 0 && filteredRelics.length === 0)
+								return null;
 
-								return (
-									<div key={rarity} className="mt-12">
-										<h2 className="sb-h2">{rarity.toUpperCase()} Assets</h2>
-										<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-											{filteredItems.map((item) => (
-												<SourceBookCallout
-													key={item.id}
-													title={item.name}
-													type="sidebar"
-												>
-													<p className="text-xs italic mb-2 text-amethyst/70">
-														{item.type} | {item.rarity}
-													</p>
-													<p className="text-sm line-clamp-4">
-														{item.description}
-													</p>
-													{item.stats && (
-														<div className="mt-2 pt-2 border-t border-cyan/20 text-[10px] grid grid-cols-2">
-															{(
-																item.stats as {
-																	attack?: number;
-																	defense?: number;
+							return (
+								<div key={rarity} className="mt-12">
+									<h2 className="sb-h2">{rarity.toUpperCase()} Assets</h2>
+									<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+										{filteredItems.map((item) => (
+											<SourceBookCallout
+												key={item.id}
+												title={item.name}
+												type="sidebar"
+											>
+												<p className="text-xs italic mb-2 text-amethyst/70">
+													{item.type} | {item.rarity}
+												</p>
+												<p className="text-sm line-clamp-4">
+													{item.description}
+												</p>
+												{item.stats && (
+													<div className="mt-2 pt-2 border-t border-cyan/20 text-[10px] grid grid-cols-2">
+														{(
+															item.stats as {
+																attack?: number;
+																defense?: number;
+															}
+														).attack && (
+															<span>
+																ATK: +
+																{
+																	(
+																		item.stats as {
+																			attack?: number;
+																			defense?: number;
+																		}
+																	).attack
 																}
-															).attack && (
-																<span>
-																	ATK: +
-																	{
-																		(
-																			item.stats as {
-																				attack?: number;
-																				defense?: number;
-																			}
-																		).attack
-																	}
-																</span>
-															)}
-															{(
-																item.stats as {
-																	attack?: number;
-																	defense?: number;
+															</span>
+														)}
+														{(
+															item.stats as {
+																attack?: number;
+																defense?: number;
+															}
+														).defense && (
+															<span>
+																DEF: +
+																{
+																	(
+																		item.stats as {
+																			attack?: number;
+																			defense?: number;
+																		}
+																	).defense
 																}
-															).defense && (
-																<span>
-																	DEF: +
-																	{
-																		(
-																			item.stats as {
-																				attack?: number;
-																				defense?: number;
-																			}
-																		).defense
-																	}
-																</span>
-															)}
-														</div>
-													)}
-												</SourceBookCallout>
-											))}
-											{filteredRelics.map((relic) => (
-												<SourceBookCallout
-													key={relic.id}
-													title={relic.name}
-													type="sidebar"
-												>
-													<p className="text-xs italic mb-2 text-cyan/70">
-														Relic | {relic.type} | {relic.rarity}
-													</p>
-													<p className="text-sm mb-2">{relic.description}</p>
-													<div className="space-y-1 mt-2 border-t border-cyan/10 pt-2">
-														{relic.abilities.map((ability) => (
-															<div key={ability.name} className="text-[10px]">
-																<span className="text-cyan font-bold">
-																	{ability.name}:
-																</span>{" "}
-																<span className="text-muted-foreground">
-																	{ability.description}
-																</span>
-															</div>
-														))}
+															</span>
+														)}
 													</div>
-												</SourceBookCallout>
-											))}
-										</div>
+												)}
+											</SourceBookCallout>
+										))}
+										{filteredRelics.map((relic) => (
+											<SourceBookCallout
+												key={relic.id}
+												title={relic.name}
+												type="sidebar"
+											>
+												<p className="text-xs italic mb-2 text-cyan/70">
+													Relic | {relic.type} | {relic.rarity}
+												</p>
+												<p className="text-sm mb-2">{relic.description}</p>
+												<div className="space-y-1 mt-2 border-t border-cyan/10 pt-2">
+													{relic.abilities.map((ability) => (
+														<div key={ability.name} className="text-[10px]">
+															<span className="text-cyan font-bold">
+																{ability.name}:
+															</span>{" "}
+															<span className="text-muted-foreground">
+																{ability.description}
+															</span>
+														</div>
+													))}
+												</div>
+											</SourceBookCallout>
+										))}
 									</div>
-								);
-							},
-						)}
+								</div>
+							);
+						})}
 					</div>
 				);
 

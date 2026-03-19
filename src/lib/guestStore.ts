@@ -35,6 +35,9 @@ type SpellSlotInsert =
 	Database["public"]["Tables"]["character_spell_slots"]["Insert"];
 type SpellSlotUpdate =
 	Database["public"]["Tables"]["character_spell_slots"]["Update"];
+type TechniqueRow = Database["public"]["Tables"]["character_techniques"]["Row"];
+type TechniqueInsert =
+	Database["public"]["Tables"]["character_techniques"]["Insert"];
 type RuneInscriptionRow =
 	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"];
 type RuneKnowledgeRow =
@@ -48,6 +51,7 @@ interface GuestCharacterState {
 	powers: PowerRow[];
 	features: FeatureRow[];
 	spellSlots: SpellSlotRow[];
+	techniques: TechniqueRow[];
 	runeInscriptions: RuneInscriptionRow[];
 	runeKnowledge: RuneKnowledgeRow[];
 	rollHistory: RollHistoryRow[];
@@ -210,6 +214,7 @@ function upsertLocalCharacter(
 		powers: existing?.powers || [],
 		features: existing?.features || [],
 		spellSlots: existing?.spellSlots || [],
+		techniques: existing?.techniques || [],
 		runeInscriptions: existing?.runeInscriptions || [],
 		runeKnowledge: existing?.runeKnowledge || [],
 		rollHistory: existing?.rollHistory || [],
@@ -388,6 +393,7 @@ export function addLocalEquipment(
 		is_active: item.is_active ?? true,
 		ignore_contents_weight: item.ignore_contents_weight ?? false,
 		custom_modifiers: item.custom_modifiers ?? null,
+		sigil_slots_base: 0,
 	};
 
 	const equipment = [...entry.equipment, next];
@@ -713,6 +719,65 @@ export function updateLocalSpellSlotRow(
 	}
 
 	throw new AppError("Spell slot not found", "NOT_FOUND");
+}
+
+// Techniques helpers
+export function listLocalTechniques(characterId: string): TechniqueRow[] {
+	const entry = getLocalCharacterState(characterId);
+	return entry?.techniques || [];
+}
+
+export function addLocalTechnique(
+	characterId: string,
+	technique: Omit<TechniqueInsert, "character_id">,
+): TechniqueRow {
+	const entry = getLocalCharacterState(characterId);
+	if (!entry) throw new AppError("Local character not found", "NOT_FOUND");
+
+	const now = nowIso();
+	const next: TechniqueRow = {
+		id: createLocalId("local_tech"),
+		character_id: characterId,
+		learned_at: now,
+		source: technique.source || null,
+		technique_id: technique.technique_id,
+	};
+
+	const state = loadGuestState();
+	state.characters[characterId] = {
+		...state.characters[characterId],
+		techniques: [...entry.techniques, next],
+		character: { ...entry.character, updated_at: now },
+	};
+	state.updatedAt = now;
+	saveGuestState(state);
+
+	return next;
+}
+
+export function removeLocalTechnique(techniqueId: string): void {
+	const state = loadGuestState();
+	const entries = Object.values(state.characters);
+
+	for (const entry of entries) {
+		const idx = entry.techniques.findIndex((t) => t.id === techniqueId);
+		if (idx === -1) continue;
+
+		const now = nowIso();
+		const characterId = entry.character.id;
+		const nextTechniques = entry.techniques.filter((t) => t.id !== techniqueId);
+
+		state.characters[characterId] = {
+			...state.characters[characterId],
+			techniques: nextTechniques,
+			character: { ...entry.character, updated_at: now },
+		};
+		state.updatedAt = now;
+		saveGuestState(state);
+		return;
+	}
+
+	throw new AppError("Technique not found", "NOT_FOUND");
 }
 
 // Roll history (optional in guest mode)

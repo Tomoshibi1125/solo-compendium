@@ -6,7 +6,10 @@
  * Import these instead of raw Row types when accessing extended fields.
  */
 
+import type { CustomModifier } from "@/lib/customModifiers";
+
 import type { Database, Json } from "./types";
+export type { Json, CustomModifier };
 
 // ─── Base Row Aliases ───────────────────────────────────────────────────────────
 
@@ -19,6 +22,81 @@ export type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
 export type ActiveSpellRow =
 	Database["public"]["Tables"]["character_active_spells"]["Row"];
 export type CampaignRow = Database["public"]["Tables"]["campaigns"]["Row"];
+export type SigilRow = {
+	id: string;
+	name: string;
+	description: string;
+	effect_description: string;
+	sigil_type: string;
+	sigil_category: string;
+	sigil_level: number;
+	rarity: string;
+	effect_type: string;
+	requires_level: number | null;
+	passive_bonuses: Json;
+	can_inscribe_on: string[] | null;
+	inscription_difficulty: number | null;
+	tags: string[] | null;
+	image_url: string | null;
+	source_book: string | null;
+	created_at: string | null;
+	updated_at: string | null;
+};
+
+export type CharacterSigilInscriptionRow = {
+	id: string;
+	character_id: string;
+	equipment_id: string;
+	sigil_id: string;
+	slot_index: number;
+	is_active: boolean;
+	sigil?: SigilRow;
+	equipment?: EquipmentRow;
+};
+
+/**
+ * Extended Database type that includes tables missing from auto-generated types.
+ * This allows for type-safe access via supabase.from() without using 'as any'.
+ */
+export type ExtendedDatabase = Database & {
+	public: {
+		Tables: Database["public"]["Tables"] & {
+			compendium_sigils: {
+				Row: SigilRow;
+				Insert: Omit<SigilRow, "id" | "created_at" | "updated_at"> & {
+					id?: string;
+				};
+				Update: Partial<SigilRow>;
+				Relationships: [];
+			};
+			character_sigil_inscriptions: {
+				Row: CharacterSigilInscriptionRow;
+				Insert: Omit<CharacterSigilInscriptionRow, "id"> & { id?: string };
+				Update: Partial<CharacterSigilInscriptionRow>;
+				Relationships: [
+					{
+						foreignKeyName: "character_sigil_inscriptions_character_id_fkey";
+						columns: ["character_id"];
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_sigil_inscriptions_equipment_id_fkey";
+						columns: ["equipment_id"];
+						referencedRelation: "character_equipment";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_sigil_inscriptions_sigil_id_fkey";
+						columns: ["sigil_id"];
+						referencedRelation: "compendium_sigils";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+		};
+	};
+};
 
 // ─── Character Extended ─────────────────────────────────────────────────────────
 
@@ -146,7 +224,7 @@ export interface SheetStateExtended {
 		[key: string]: unknown;
 	};
 	resources?: Record<string, unknown>;
-	customModifiers?: unknown[];
+	customModifiers?: CustomModifier[];
 	[key: string]: unknown;
 }
 

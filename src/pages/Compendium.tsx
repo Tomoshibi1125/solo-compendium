@@ -482,6 +482,11 @@ const Compendium = () => {
 			filtered = filtered.filter((e) => e.isFavorite);
 		}
 
+		// Filter by specific category to prevent duplicates from mixed types (e.g., items vs equipment)
+		if (filters.selectedCategory !== "all") {
+			filtered = filtered.filter((e) => e.type === filters.selectedCategory);
+		}
+
 		// Filter by source books
 		if (selectedSourceBooksSet) {
 			filtered = filtered.filter(

@@ -22,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
+import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import {
 	filterRowsBySourcebookAccess,
 	getCharacterCampaignId,
@@ -30,7 +31,6 @@ import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
-import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { AddCustomItemDialog } from "./AddCustomItemDialog";
 
 function mapCompendiumEquipmentTypeToInventoryType(
@@ -38,11 +38,7 @@ function mapCompendiumEquipmentTypeToInventoryType(
 ): "weapon" | "armor" | "tool" | "gear" {
 	const t = (equipmentType || "").toLowerCase();
 
-	if (
-		t.includes("melee") ||
-		t.includes("ranged") ||
-		t.includes("weapon")
-	) {
+	if (t.includes("melee") || t.includes("ranged") || t.includes("weapon")) {
 		return "weapon";
 	}
 
@@ -57,7 +53,9 @@ function mapCompendiumEquipmentTypeToInventoryType(
 	return "gear";
 }
 
-function isEquipableCompendiumItemType(itemType: string | null | undefined): boolean {
+function isEquipableCompendiumItemType(
+	itemType: string | null | undefined,
+): boolean {
 	const t = (itemType || "").toLowerCase();
 	return (
 		t === "weapon" ||
@@ -120,105 +118,106 @@ export function AddEquipmentDialog({
 				)
 				.slice(0, 20)
 				.map((item) => ({
-				id: item.id,
-				name: item.name,
-				description: item.description,
-				equipment_type:
-					item.equipment_type || item.item_type || ("gear" as const),
-				properties: (() => {
-					if (Array.isArray(item.properties)) return item.properties;
-					const props: string[] = [];
+					id: item.id,
+					name: item.name,
+					description: item.description,
+					equipment_type:
+						item.equipment_type || item.item_type || ("gear" as const),
+					properties: (() => {
+						if (Array.isArray(item.properties)) return item.properties;
+						const props: string[] = [];
 
-					const passiveEffects = (item.effects as Record<string, unknown>)
-						?.passive;
-					if (Array.isArray(passiveEffects)) {
-						for (const line of passiveEffects) {
-							if (typeof line === "string" && line.trim().length > 0) {
-								props.push(line.trim());
+						const passiveEffects = (item.effects as Record<string, unknown>)
+							?.passive;
+						if (Array.isArray(passiveEffects)) {
+							for (const line of passiveEffects) {
+								if (typeof line === "string" && line.trim().length > 0) {
+									props.push(line.trim());
+								}
 							}
 						}
-					}
-					const weapon = (item.properties as Record<string, unknown>)?.weapon as
-						| {
-								isSimple?: boolean;
-								isMartial?: boolean;
-								isFirearm?: boolean;
-								damage?: string;
-								damageType?: string;
-								finesse?: boolean;
-						  }
-						| undefined;
-					if (weapon) {
-						if (
-							typeof weapon.damage === "string" &&
-							typeof weapon.damageType === "string"
-						) {
-							props.push(`${weapon.damage} ${weapon.damageType}`);
+						const weapon = (item.properties as Record<string, unknown>)
+							?.weapon as
+							| {
+									isSimple?: boolean;
+									isMartial?: boolean;
+									isFirearm?: boolean;
+									damage?: string;
+									damageType?: string;
+									finesse?: boolean;
+							  }
+							| undefined;
+						if (weapon) {
+							if (
+								typeof weapon.damage === "string" &&
+								typeof weapon.damageType === "string"
+							) {
+								props.push(`${weapon.damage} ${weapon.damageType}`);
+							}
+							if (weapon.finesse === true) props.push("finesse");
 						}
-						if (weapon.finesse === true) props.push("finesse");
-					}
 
-					const armor = (item.properties as Record<string, unknown>)?.armor as
-						| { baseAC?: number; type?: string }
-						| undefined;
-					if (armor) {
-						if (typeof armor.baseAC === "number")
-							props.push(`AC ${armor.baseAC}`);
-						if (typeof armor.type === "string") props.push(armor.type);
-					}
+						const armor = (item.properties as Record<string, unknown>)?.armor as
+							| { baseAC?: number; type?: string }
+							| undefined;
+						if (armor) {
+							if (typeof armor.baseAC === "number")
+								props.push(`AC ${armor.baseAC}`);
+							if (typeof armor.type === "string") props.push(armor.type);
+						}
 
-					const magical = (item.properties as Record<string, unknown>)
-						?.magical as
-						| {
-								bonus?: {
-									armorClass?: number;
-									attack?: number;
-									damage?: number;
-								};
-						  }
-						| undefined;
-					if (
-						magical?.bonus?.armorClass &&
-						typeof magical.bonus.armorClass === "number"
-					) {
-						props.push(
-							`${magical.bonus.armorClass >= 0 ? "+" : ""}${magical.bonus.armorClass} AC`,
-						);
-					}
-					if (
-						magical?.bonus?.attack &&
-						typeof magical.bonus.attack === "number" &&
-						magical.bonus.attack !== 0
-					) {
-						props.push(
-							`${magical.bonus.attack >= 0 ? "+" : ""}${magical.bonus.attack} to attack`,
-						);
-					}
-					if (
-						magical?.bonus?.damage &&
-						typeof magical.bonus.damage === "number" &&
-						magical.bonus.damage !== 0
-					) {
-						props.push(
-							`${magical.bonus.damage >= 0 ? "+" : ""}${magical.bonus.damage} to damage`,
-						);
-					}
+						const magical = (item.properties as Record<string, unknown>)
+							?.magical as
+							| {
+									bonus?: {
+										armorClass?: number;
+										attack?: number;
+										damage?: number;
+									};
+							  }
+							| undefined;
+						if (
+							magical?.bonus?.armorClass &&
+							typeof magical.bonus.armorClass === "number"
+						) {
+							props.push(
+								`${magical.bonus.armorClass >= 0 ? "+" : ""}${magical.bonus.armorClass} AC`,
+							);
+						}
+						if (
+							magical?.bonus?.attack &&
+							typeof magical.bonus.attack === "number" &&
+							magical.bonus.attack !== 0
+						) {
+							props.push(
+								`${magical.bonus.attack >= 0 ? "+" : ""}${magical.bonus.attack} to attack`,
+							);
+						}
+						if (
+							magical?.bonus?.damage &&
+							typeof magical.bonus.damage === "number" &&
+							magical.bonus.damage !== 0
+						) {
+							props.push(
+								`${magical.bonus.damage >= 0 ? "+" : ""}${magical.bonus.damage} to damage`,
+							);
+						}
 
-					return props;
-				})(),
-				weight: item.weight ?? null,
-				source_book: item.source_book ?? null,
-				rarity: item.rarity ?? null,
-				damage:
-					(item.properties as { weapon?: { damage?: string } })?.weapon
-						?.damage ?? null,
-				damage_type:
-					(item.properties as { weapon?: { damageType?: string } })?.weapon
-						?.damageType ?? null,
-				armor_class:
-					(item.properties as { armor?: { baseAC?: number } })?.armor?.baseAC ??
-					null,
-				attunement: item.attunement ?? false,
+						return props;
+					})(),
+					weight: item.weight ?? null,
+					source_book: item.source_book ?? null,
+					rarity: item.rarity ?? null,
+					damage:
+						(item.properties as { weapon?: { damage?: string } })?.weapon
+							?.damage ?? null,
+					damage_type:
+						(item.properties as { weapon?: { damageType?: string } })?.weapon
+							?.damageType ?? null,
+					armor_class:
+						(item.properties as { armor?: { baseAC?: number } })?.armor
+							?.baseAC ?? null,
+					requires_attunement: item.attunement ?? false,
 				}));
 		},
 		enabled: open,
@@ -227,7 +226,7 @@ export function AddEquipmentDialog({
 	const handleAdd = async (item: (typeof equipment)[0]) => {
 		const displayName = formatRegentVernacular(item.name);
 		const inventoryType = mapCompendiumEquipmentTypeToInventoryType(
-			(item as unknown as { equipment_type?: string | null }).equipment_type,
+			item.equipment_type,
 		);
 		try {
 			await addEquipment({
@@ -242,13 +241,13 @@ export function AddEquipmentDialog({
 					item_type: inventoryType,
 					properties: item.properties || [],
 					name: item.name,
-					rarity: (item as unknown as { rarity?: any }).rarity ?? null,
+					rarity: item.rarity ?? null,
 				}),
 				is_container:
 					/backpack|pouch|sack|bag|chest|barrel|basket|bucket|case|flask|jug|pitcher|pot|vial|waterskin/i.test(
 						item.name || "",
 					),
-			} as any);
+			});
 
 			toast({
 				title: "Equipment added",
@@ -309,19 +308,11 @@ export function AddEquipmentDialog({
 							</div>
 						) : (
 							equipment.map((item) => {
-								const itemRarity = (item as unknown as { rarity?: string })
-									.rarity;
-								const itemAttunement = (
-									item as unknown as { attunement?: boolean }
-								).attunement;
-								const itemDamage = (item as unknown as { damage?: string })
-									.damage;
-								const itemDamageType = (
-									item as unknown as { damage_type?: string }
-								).damage_type;
-								const itemArmorClass = (
-									item as unknown as { armor_class?: number }
-								).armor_class;
+								const itemRarity = item.rarity;
+								const itemAttunement = item.requires_attunement;
+								const itemDamage = item.damage;
+								const itemDamageType = item.damage_type;
+								const itemArmorClass = item.armor_class;
 								const eqType = (item.equipment_type || "gear").toLowerCase();
 								const TypeIcon =
 									eqType === "weapon"

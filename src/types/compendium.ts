@@ -174,3 +174,101 @@ export interface CompendiumSpell {
 		  }
 		| Record<string, unknown>;
 }
+
+export interface CompendiumPower {
+	id: string;
+	name: string;
+	description: string;
+	power_type?: string;
+	power_level?: number;
+	casting_time?: string;
+	activation_time?: string;
+	range?: string;
+	duration?: string;
+	concentration?: boolean;
+	ritual?: boolean;
+	school?: string;
+	target?: string;
+	has_attack_roll?: boolean;
+	has_save?: boolean;
+	save_ability?: string;
+	damage_roll?: string;
+	damage_type?: string;
+	mechanics?: Record<string, unknown>;
+	higher_levels?: string;
+	source_book?: string;
+	tags?: string[];
+}
+
+export interface CompendiumTechnique {
+	id: string;
+	name: string;
+	description: string;
+	technique_type?: string;
+	style?: string;
+	level_requirement?: number;
+	activation_type?: string;
+	activation_cost?: string;
+	range_desc?: string;
+	duration?: string;
+	primary_effect?: string;
+	secondary_effect?: string;
+	mechanics?: Record<string, unknown>;
+	source?: string;
+	image?: string;
+}
+
+export interface CompendiumRune {
+	id: string;
+	name: string;
+	description: string;
+	effect_description: string;
+	rune_type:
+		| "martial"
+		| "caster"
+		| "hybrid"
+		| "utility"
+		| "offensive"
+		| "defensive"
+		| string;
+	rune_category: string;
+	rune_level: number;
+	rarity: "common" | "uncommon" | "rare" | "very_rare" | "legendary" | string;
+	effect_type: "active" | "passive" | "both" | string;
+	activation_action?: string | null;
+	activation_cost?: string | null;
+	activation_cost_amount?: number | null;
+	duration?: string | null;
+	range?: string | null;
+	concentration?: boolean | null;
+	uses_per_rest?: string | null;
+	recharge?: string | null;
+	higher_levels?: string | null;
+	requires_level?: number | null;
+	requires_job?: string[] | null;
+	caster_penalty?: string | null;
+	martial_penalty?: string | null;
+	passive_bonuses?: Record<string, unknown> | null;
+	can_inscribe_on?: string[] | null;
+	inscription_difficulty?: number | null;
+	lore?: string | null;
+	discovery_lore?: string | null;
+	tags?: string[] | null;
+	source_book?: string | null;
+	image?: string | null;
+}
+
+export interface CompendiumRelic {
+	id: string;
+	name: string;
+	description: string;
+	type?: string;
+	rarity?: string;
+	attunement?: boolean;
+	properties?: string[];
+	stats?: Record<string, number>;
+	image?: string;
+	source_book?: string;
+	generated_reason?: string;
+	theme_tags?: string[];
+}

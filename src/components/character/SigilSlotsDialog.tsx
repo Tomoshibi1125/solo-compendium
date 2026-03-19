@@ -9,19 +9,25 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import {
+	type SigilRow,
 	useCharacterSigilInscriptions,
 	useCompendiumSigils,
 	useInscribeSigil,
 	useRemoveSigil,
-	type SigilRow,
 } from "@/hooks/useSigils";
 import {
-	getSigilSlotBonusForRarity,
 	getEffectiveSigilSlots,
 	getEquipmentSigilCategory,
+	getSigilSlotBonusForRarity,
 } from "@/lib/sigilAutomation";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -39,14 +45,15 @@ export function SigilSlotsDialog({
 		id: string;
 		name: string;
 		item_type: string | null;
-		properties: unknown;
+		properties: string[] | null;
 		rarity: string | null;
 		sigil_slots_base?: number | null;
 	};
 	onUpdateBaseSlots: (nextBaseSlots: number) => Promise<void>;
 }) {
 	const { toast } = useToast();
-	const { data: inscriptions = [] } = useCharacterSigilInscriptions(characterId);
+	const { data: inscriptions = [] } =
+		useCharacterSigilInscriptions(characterId);
 	const { data: sigils = [] } = useCompendiumSigils(characterId);
 	const inscribeSigil = useInscribeSigil();
 	const removeSigil = useRemoveSigil();
@@ -66,10 +73,16 @@ export function SigilSlotsDialog({
 	const equipmentCategory = getEquipmentSigilCategory({
 		item_type: equipment.item_type,
 		name: equipment.name,
-		properties: Array.isArray(equipment.properties)
-			? (equipment.properties as unknown as string[])
-			: [],
+		properties: equipment.properties || [],
 	});
+
+	// Biome: noArrayIndexKey fix — generate stable unique IDs once
+	const slotsList = useMemo(() => {
+		return Array.from({ length: effectiveSlots }).map((_, idx) => ({
+			id: `sigil-slot-${equipment.id}-${idx}`,
+			idx,
+		}));
+	}, [effectiveSlots, equipment.id]);
 
 	const equipmentInscriptions = useMemo(() => {
 		return inscriptions
@@ -88,7 +101,9 @@ export function SigilSlotsDialog({
 			const allowed = Array.isArray(s.can_inscribe_on)
 				? (s.can_inscribe_on as string[])
 				: [];
-			return allowed.includes(equipmentCategory) || allowed.includes("accessory");
+			return (
+				allowed.includes(equipmentCategory) || allowed.includes("accessory")
+			);
 		});
 	}, [sigils, equipmentCategory]);
 
@@ -98,7 +113,11 @@ export function SigilSlotsDialog({
 			toast({ title: "Select a sigil", variant: "destructive" });
 			return;
 		}
-		if (!Number.isFinite(slotIndex) || slotIndex < 0 || slotIndex >= effectiveSlots) {
+		if (
+			!Number.isFinite(slotIndex) ||
+			slotIndex < 0 ||
+			slotIndex >= effectiveSlots
+		) {
 			toast({ title: "Invalid slot", variant: "destructive" });
 			return;
 		}
@@ -219,15 +238,17 @@ export function SigilSlotsDialog({
 						</div>
 					) : (
 						<div className="space-y-2">
-							{Array.from({ length: effectiveSlots }).map((_, idx) => {
-								const existing = occupiedBySlot.get(idx);
+							{slotsList.map((slot) => {
+								const existing = occupiedBySlot.get(slot.idx);
 								return (
 									<div
-										key={idx}
+										key={slot.id}
 										className="p-3 rounded-lg border bg-muted/30 flex items-center justify-between"
 									>
 										<div className="min-w-0">
-											<div className="text-xs text-muted-foreground">Slot {idx + 1}</div>
+											<div className="text-xs text-muted-foreground">
+												Slot {slot.idx + 1}
+											</div>
 											<div className="font-heading font-semibold truncate">
 												{existing?.sigil?.name
 													? formatRegentVernacular(existing.sigil.name)
@@ -235,7 +256,9 @@ export function SigilSlotsDialog({
 											</div>
 											{existing?.sigil?.effect_description && (
 												<div className="text-xs text-muted-foreground line-clamp-1">
-													{formatRegentVernacular(existing.sigil.effect_description)}
+													{formatRegentVernacular(
+														existing.sigil.effect_description,
+													)}
 												</div>
 											)}
 										</div>
@@ -266,9 +289,12 @@ export function SigilSlotsDialog({
 										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
-										{Array.from({ length: effectiveSlots }).map((_, idx) => (
-											<SelectItem key={idx} value={String(idx)}>
-												{idx + 1}
+										{slotsList.map((slot) => (
+											<SelectItem
+												key={`select-${slot.id}`}
+												value={String(slot.idx)}
+											>
+												{slot.idx + 1}
 											</SelectItem>
 										))}
 									</SelectContent>
@@ -277,7 +303,10 @@ export function SigilSlotsDialog({
 
 							<div className="space-y-1 md:col-span-2">
 								<div className="text-xs text-muted-foreground">Sigil</div>
-								<Select value={selectedSigilId} onValueChange={setSelectedSigilId}>
+								<Select
+									value={selectedSigilId}
+									onValueChange={setSelectedSigilId}
+								>
 									<SelectTrigger>
 										<SelectValue placeholder="Select a sigil..." />
 									</SelectTrigger>

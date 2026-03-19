@@ -2757,7 +2757,7 @@ export async function addStartingEquipment(
 			const itemType = compendiumItem ? deriveItemType(compendiumItem) : "gear";
 			// Auto-equip armor, shields, and weapons so new characters start ready
 			const shouldAutoEquip = ["armor", "shield", "weapon"].includes(itemType);
-			const equipData: any = compendiumItem
+			const equipData = compendiumItem
 				? {
 						name: compendiumItem.name,
 						item_type: itemType,
@@ -2777,7 +2777,7 @@ export async function addStartingEquipment(
 							item_type: itemType,
 							properties: buildItemProperties(compendiumItem),
 							name: compendiumItem.name,
-							rarity: (compendiumItem.rarity as any) ?? null,
+							rarity: compendiumItem.rarity ?? null,
 						}),
 					}
 				: {
@@ -2789,9 +2789,9 @@ export async function addStartingEquipment(
 					};
 
 			if (isLocalCharacterId(characterId)) {
-				addLocalEquipment(characterId, equipData as any);
+				addLocalEquipment(characterId, equipData);
 			} else {
-				await (supabase as unknown as any).from("character_equipment").insert({
+				await supabase.from("character_equipment").insert({
 					character_id: characterId,
 					...equipData,
 				});
@@ -2830,11 +2830,11 @@ export async function addStartingEquipment(
 							item_type: equipment.equipment_type || "gear",
 							properties: equipment.properties || [],
 							name: equipment.name,
-							rarity: (equipment as unknown as { rarity?: any }).rarity ?? null,
+							rarity: equipment.rarity ?? null,
 						}),
-					} as any);
+					});
 				} else {
-					await (supabase as unknown as any).from("character_equipment").insert({
+					await supabase.from("character_equipment").insert({
 						character_id: characterId,
 						name: equipment.name,
 						item_type: equipment.equipment_type || "gear",
@@ -2847,7 +2847,7 @@ export async function addStartingEquipment(
 							item_type: equipment.equipment_type || "gear",
 							properties: equipment.properties || [],
 							name: equipment.name,
-							rarity: (equipment as unknown as { rarity?: any }).rarity ?? null,
+							rarity: equipment.rarity ?? null,
 						}),
 					});
 				}
@@ -2859,9 +2859,9 @@ export async function addStartingEquipment(
 						quantity: 1,
 						is_equipped: false,
 						sigil_slots_base: 1,
-					} as any);
+					});
 				} else {
-					await (supabase as unknown as any).from("character_equipment").insert({
+					await supabase.from("character_equipment").insert({
 						character_id: characterId,
 						name: itemName,
 						item_type: "gear",

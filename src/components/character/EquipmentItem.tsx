@@ -15,7 +15,9 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 
 type Equipment = Database["public"]["Tables"]["character_equipment"]["Row"];
 
-function isEquipableInventoryType(itemType: string | null | undefined): boolean {
+function isEquipableInventoryType(
+	itemType: string | null | undefined,
+): boolean {
 	return (
 		itemType === "weapon" ||
 		itemType === "armor" ||

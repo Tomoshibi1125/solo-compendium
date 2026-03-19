@@ -1,6 +1,7 @@
 import type { Database } from "@/integrations/supabase/types";
 
-export type EquipmentRow = Database["public"]["Tables"]["character_equipment"]["Row"];
+export type EquipmentRow =
+	Database["public"]["Tables"]["character_equipment"]["Row"];
 
 export type SigilRarity =
 	| "common"
@@ -10,7 +11,9 @@ export type SigilRarity =
 	| "legendary"
 	| "very_rare";
 
-export function getSigilSlotBonusForRarity(rarity: string | null | undefined): number {
+export function getSigilSlotBonusForRarity(
+	rarity: string | null | undefined,
+): number {
 	switch ((rarity || "common").toLowerCase()) {
 		case "uncommon":
 			return 1;
@@ -22,7 +25,6 @@ export function getSigilSlotBonusForRarity(rarity: string | null | undefined): n
 			return 4;
 		case "very_rare":
 			return 3;
-		case "common":
 		default:
 			return 0;
 	}
@@ -36,11 +38,13 @@ export function getDefaultSigilSlotsBaseForEquipment(equipment: {
 }): number {
 	const itemType = (equipment.item_type || "").toLowerCase();
 	const name = (equipment.name || "").toLowerCase();
-	const props = (Array.isArray(equipment.properties) ? equipment.properties : []).map(
-		(p) => String(p).toLowerCase(),
-	);
+	const props = (
+		Array.isArray(equipment.properties) ? equipment.properties : []
+	).map((p) => String(p).toLowerCase());
 
-	const isShield = itemType === "armor" && (name.includes("shield") || props.includes("shield"));
+	const isShield =
+		itemType === "armor" &&
+		(name.includes("shield") || props.includes("shield"));
 	if (isShield) return 1;
 
 	if (itemType === "weapon") return 1;
@@ -55,7 +59,10 @@ export function getEffectiveSigilSlots(equipment: {
 	sigil_slots_base?: number | null;
 	rarity?: string | null;
 }): number {
-	const base = typeof equipment.sigil_slots_base === "number" ? equipment.sigil_slots_base : 0;
+	const base =
+		typeof equipment.sigil_slots_base === "number"
+			? equipment.sigil_slots_base
+			: 0;
 	return base + getSigilSlotBonusForRarity(equipment.rarity);
 }
 
@@ -66,9 +73,9 @@ export function getEquipmentSigilCategory(equipment: {
 }): string {
 	const itemType = (equipment.item_type || "").toLowerCase();
 	const name = (equipment.name || "").toLowerCase();
-	const props = (Array.isArray(equipment.properties) ? equipment.properties : []).map(
-		(p) => String(p).toLowerCase(),
-	);
+	const props = (
+		Array.isArray(equipment.properties) ? equipment.properties : []
+	).map((p) => String(p).toLowerCase());
 
 	if (itemType === "weapon") return "weapon";
 	if (itemType === "armor") {
@@ -106,7 +113,11 @@ export function getEquipmentSigilCategory(equipment: {
 		props.includes("mantle")
 	)
 		return "cloak";
-	if (name.includes("belt") || name.includes("girdle") || props.includes("belt"))
+	if (
+		name.includes("belt") ||
+		name.includes("girdle") ||
+		props.includes("belt")
+	)
 		return "belt";
 	if (
 		name.includes("glove") ||
@@ -181,7 +192,9 @@ export function applySigilBonuses(
 
 		const abilityScores = b.ability_scores;
 		if (abilityScores && typeof abilityScores === "object") {
-			for (const [k, v] of Object.entries(abilityScores as Record<string, unknown>)) {
+			for (const [k, v] of Object.entries(
+				abilityScores as Record<string, unknown>,
+			)) {
 				if (typeof v !== "number") continue;
 				const key = k.toUpperCase();
 				abilities[key] = (abilities[key] || 0) + v;

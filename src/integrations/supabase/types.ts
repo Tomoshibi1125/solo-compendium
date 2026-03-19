@@ -1954,6 +1954,7 @@ export type Database = {
 					rarity: Database["public"]["Enums"]["rarity"] | null;
 					relic_tier: Database["public"]["Enums"]["relic_tier"] | null;
 					requires_attunement: boolean;
+					sigil_slots_base: number | null;
 					value_credits: number | null;
 					weight: number | null;
 				};
@@ -1981,6 +1982,7 @@ export type Database = {
 					rarity?: Database["public"]["Enums"]["rarity"] | null;
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
 					requires_attunement?: boolean;
+					sigil_slots_base?: number | null;
 					value_credits?: number | null;
 					weight?: number | null;
 				};
@@ -2008,6 +2010,7 @@ export type Database = {
 					rarity?: Database["public"]["Enums"]["rarity"] | null;
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
 					requires_attunement?: boolean;
+					sigil_slots_base?: number | null;
 					value_credits?: number | null;
 					weight?: number | null;
 				};
@@ -3366,6 +3369,9 @@ export type Database = {
 					source_name: string | null;
 					theme_tags: string[] | null;
 					weight: number | null;
+					rarity: Database["public"]["Enums"]["rarity"] | null;
+					sigil_slots_base: number | null;
+					requires_attunement: boolean;
 				};
 				Insert: {
 					aliases?: string[] | null;
@@ -3387,6 +3393,9 @@ export type Database = {
 					source_name?: string | null;
 					theme_tags?: string[] | null;
 					weight?: number | null;
+					rarity?: Database["public"]["Enums"]["rarity"] | null;
+					sigil_slots_base?: number | null;
+					requires_attunement?: boolean;
 				};
 				Update: {
 					aliases?: string[] | null;
@@ -3408,6 +3417,9 @@ export type Database = {
 					source_name?: string | null;
 					theme_tags?: string[] | null;
 					weight?: number | null;
+					rarity?: Database["public"]["Enums"]["rarity"] | null;
+					sigil_slots_base?: number | null;
+					requires_attunement?: boolean;
 				};
 				Relationships: [];
 			};
@@ -4369,7 +4381,8 @@ export type Database = {
 					quirks?: string[] | null;
 					rarity?: Database["public"]["Enums"]["rarity"];
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
-					requires_attunement?: boolean;
+
+					sigil_slots_base?: number | null;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;
@@ -4393,7 +4406,8 @@ export type Database = {
 					quirks?: string[] | null;
 					rarity?: Database["public"]["Enums"]["rarity"];
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
-					requires_attunement?: boolean;
+
+					sigil_slots_base?: number | null;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;

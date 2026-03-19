@@ -1,0 +1,18 @@
+import type { RuneCompendiumEntry } from "../runes";
+import { runes_power_powers } from "./power-powers";
+import { runes_spell_rank_a } from "./spell-rank-a";
+import { runes_spell_rank_b } from "./spell-rank-b";
+import { runes_spell_rank_c } from "./spell-rank-c";
+import { runes_spell_rank_d } from "./spell-rank-d";
+import { runes_spell_rank_s } from "./spell-rank-s";
+import { runes_technique_techniques } from "./technique-techniques";
+
+export const allRunes: RuneCompendiumEntry[] = [
+	...runes_spell_rank_d,
+	...runes_spell_rank_c,
+	...runes_spell_rank_b,
+	...runes_spell_rank_a,
+	...runes_spell_rank_s,
+	...runes_power_powers,
+	...runes_technique_techniques,
+];

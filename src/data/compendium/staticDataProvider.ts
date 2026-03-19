@@ -8,6 +8,7 @@
  */
 
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
+import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 
 type DataLoader<T> = () => Promise<T[]>;
@@ -83,6 +84,7 @@ export interface StaticCompendiumEntry {
 	is_boss?: boolean;
 	rarity?: string;
 	level?: number | null;
+	sigil_slots_base?: number | null;
 	item_type?: string | null;
 	artifact_type?: string | null;
 	technique_type?: string | null;
@@ -310,6 +312,7 @@ type StaticItemSource = {
 	value?: number;
 	weight?: number;
 	source?: string;
+	sigil_slots_base?: number | null;
 };
 
 type StaticJobSource = {
@@ -810,7 +813,14 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		cost_credits: item.value,
 		weight: item.weight,
 		source: item.source,
-		rarity: item.rarity,
+		rarity: item.rarity || "common",
+		sigil_slots_base:
+			item.sigil_slots_base ??
+			getDefaultSigilSlotsBaseForEquipment({
+				item_type: item.type,
+				properties: Array.isArray(item.properties) ? item.properties : [],
+				name: item.name,
+			}),
 		level: undefined,
 	};
 }

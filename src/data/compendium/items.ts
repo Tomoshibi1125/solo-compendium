@@ -17,6 +17,10 @@ export interface Item {
 	armor_class?: string; // "15 + Dex modifier", "18", etc.
 	armor_type?: string; // "Light", "Medium", "Heavy", "Shield"
 	stealth_disadvantage?: boolean; // For heavy armor
+
+	// Sigils
+	sigil_slots_base?: number;
+
 	strength_requirement?: number; // For certain armor/weapons
 	magical_bonus?: number; // +1, +2, +3 for magical items
 

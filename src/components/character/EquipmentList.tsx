@@ -61,7 +61,9 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 	const { data: character } = useCharacter(characterId);
 	const { toast } = useToast();
 	const [addDialogOpen, setAddDialogOpen] = useState(false);
-	const [sigilDialogItemId, setSigilDialogItemId] = useState<string | null>(null);
+	const [sigilDialogItemId, setSigilDialogItemId] = useState<string | null>(
+		null,
+	);
 	const { ignoreCurrencyWeight, setIgnoreCurrencyWeight, isLoaded } =
 		useEncumbranceSettings(characterId);
 	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
@@ -133,8 +135,8 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 	) as Record<string, Equipment[]>;
 
 	const groupedItems = Object.fromEntries(
-		Object.entries(groupedEquipment).filter(([type]) =>
-			!EQUIPABLE_ITEM_TYPES.has(type),
+		Object.entries(groupedEquipment).filter(
+			([type]) => !EQUIPABLE_ITEM_TYPES.has(type),
 		),
 	) as Record<string, Equipment[]>;
 
@@ -336,11 +338,12 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 											</div>
 											<SortableList
 												items={items}
-												onReorder={(newOrder) => handleReorderGroup(type, newOrder)}
+												onReorder={(newOrder) =>
+													handleReorderGroup(type, newOrder)
+												}
 												renderItem={(item) => {
 													const totalSlots = getEffectiveSigilSlots({
-														sigil_slots_base: (item as unknown as { sigil_slots_base?: number | null })
-														.sigil_slots_base,
+														sigil_slots_base: item.sigil_slots_base,
 														rarity: item.rarity,
 													});
 													const usedSlots = sigilInscriptions.filter(
@@ -354,21 +357,27 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 															onToggleAttuned={handleToggleAttuned}
 															onRemove={handleRemove}
 															onChangeContainer={handleChangeContainer}
-															containers={containers.filter((c) => c.id !== item.id)}
+															containers={containers.filter(
+																(c) => c.id !== item.id,
+															)}
 															canAttune={canAttune}
 															nestedItems={equipmentByContainer[item.id] || []}
-															sigilControl={totalSlots > 0 ? (
-																<div className="mt-2">
-																	<Button
-																		variant="outline"
-																		size="sm"
-																		className="h-7 px-2 text-[10px]"
-																		onClick={() => setSigilDialogItemId(item.id)}
-																	>
-																		Sigils {usedSlots}/{totalSlots}
-																	</Button>
-																</div>
-															) : null}
+															sigilControl={
+																totalSlots > 0 ? (
+																	<div className="mt-2">
+																		<Button
+																			variant="outline"
+																			size="sm"
+																			className="h-7 px-2 text-[10px]"
+																			onClick={() =>
+																				setSigilDialogItemId(item.id)
+																			}
+																		>
+																			Sigils {usedSlots}/{totalSlots}
+																		</Button>
+																	</div>
+																) : null
+															}
 														/>
 													);
 												}}
@@ -395,7 +404,9 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 											</div>
 											<SortableList
 												items={items}
-												onReorder={(newOrder) => handleReorderGroup(type, newOrder)}
+												onReorder={(newOrder) =>
+													handleReorderGroup(type, newOrder)
+												}
 												renderItem={(item) => (
 													<EquipmentItem
 														key={item.id}
@@ -404,7 +415,9 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 														onToggleAttuned={handleToggleAttuned}
 														onRemove={handleRemove}
 														onChangeContainer={handleChangeContainer}
-														containers={containers.filter((c) => c.id !== item.id)}
+														containers={containers.filter(
+															(c) => c.id !== item.id,
+														)}
 														canAttune={canAttune}
 														nestedItems={equipmentByContainer[item.id] || []}
 													/>
@@ -433,11 +446,11 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 						if (!open) setSigilDialogItemId(null);
 					}}
 					characterId={characterId}
-					equipment={sigilDialogEquipment as unknown as any}
+					equipment={sigilDialogEquipment}
 					onUpdateBaseSlots={async (nextBaseSlots) => {
 						await updateEquipment({
 							id: sigilDialogEquipment.id,
-							updates: { sigil_slots_base: nextBaseSlots } as unknown as any,
+							updates: { sigil_slots_base: nextBaseSlots },
 						});
 					}}
 				/>

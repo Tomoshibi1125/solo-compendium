@@ -16,29 +16,30 @@ import {
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 
-type Equipment = Database["public"]["Tables"]["character_equipment"]["Row"];
-type EquipmentInsert =
+export type EquipmentRow =
+	Database["public"]["Tables"]["character_equipment"]["Row"];
+type EquipmentRowInsert =
 	Database["public"]["Tables"]["character_equipment"]["Insert"];
-type EquipmentUpdate =
+type EquipmentRowUpdate =
 	Database["public"]["Tables"]["character_equipment"]["Update"];
 
 const buildEquipmentCacheKey = (userId: string, characterId: string) => {
 	return `solo-compendium.cache.equipment.${userId}.character:${characterId}.v1`;
 };
 
-const readCachedEquipment = (key: string): Equipment[] | null => {
+const readCachedEquipment = (key: string): EquipmentRow[] | null => {
 	try {
 		if (typeof window === "undefined") return null;
 		const raw = window.localStorage.getItem(key);
 		if (!raw) return null;
 		const parsed = JSON.parse(raw) as unknown;
-		return Array.isArray(parsed) ? (parsed as Equipment[]) : null;
+		return Array.isArray(parsed) ? (parsed as EquipmentRow[]) : null;
 	} catch {
 		return null;
 	}
 };
 
-const writeCachedEquipment = (key: string, equipment: Equipment[]) => {
+const writeCachedEquipment = (key: string, equipment: EquipmentRow[]) => {
 	try {
 		if (typeof window === "undefined") return;
 		window.localStorage.setItem(key, JSON.stringify(equipment));
@@ -55,7 +56,7 @@ export const useEquipment = (characterId: string) => {
 		queryKey: ["equipment", characterId],
 		queryFn: async () => {
 			if (isLocalCharacterId(characterId)) {
-				return listLocalEquipment(characterId) as Equipment[];
+				return listLocalEquipment(characterId) as EquipmentRow[];
 			}
 
 			const {
@@ -82,7 +83,7 @@ export const useEquipment = (characterId: string) => {
 				throw error;
 			}
 
-			const equipment = (data || []) as Equipment[];
+			const equipment = (data || []) as EquipmentRow[];
 			if (equipment.length === 0) {
 				if (cacheKey) {
 					writeCachedEquipment(cacheKey, equipment);
@@ -97,7 +98,7 @@ export const useEquipment = (characterId: string) => {
 				return equipment;
 			}
 
-			const { data: compendiumEquipment, error: compendiumError } =
+			const { data: compendiumEquipmentRow, error: compendiumError } =
 				await supabase
 					.from("compendium_equipment")
 					.select("name, source_book")
@@ -115,7 +116,7 @@ export const useEquipment = (characterId: string) => {
 			}
 
 			const sourceBookByName = new Map<string, string | null>();
-			(compendiumEquipment || []).forEach((entry) => {
+			(compendiumEquipmentRow || []).forEach((entry) => {
 				sourceBookByName.set(entry.name, entry.source_book ?? null);
 			});
 
@@ -127,16 +128,17 @@ export const useEquipment = (characterId: string) => {
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const accessibleCompendiumEquipment = await filterRowsBySourcebookAccess(
-				(compendiumEquipment || []) as Array<{
-					name: string;
-					source_book: string | null;
-				}>,
-				(entry) => entry.source_book,
-				{ campaignId },
-			);
+			const accessibleCompendiumEquipmentRow =
+				await filterRowsBySourcebookAccess(
+					(compendiumEquipmentRow || []) as Array<{
+						name: string;
+						source_book: string | null;
+					}>,
+					(entry) => entry.source_book,
+					{ campaignId },
+				);
 			const accessibleNames = new Set(
-				accessibleCompendiumEquipment.map((entry) => entry.name),
+				accessibleCompendiumEquipmentRow.map((entry) => entry.name),
 			);
 
 			const filtered = equipment.filter((item) => {
@@ -157,11 +159,11 @@ export const useEquipment = (characterId: string) => {
 	});
 
 	const addEquipment = useMutation({
-		mutationFn: async (item: EquipmentInsert) => {
+		mutationFn: async (item: EquipmentRowInsert) => {
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(
 					characterId,
-					item as unknown as Omit<EquipmentInsert, "character_id">,
+					item as unknown as Omit<EquipmentRowInsert, "character_id">,
 				);
 				return null;
 			}
@@ -176,7 +178,7 @@ export const useEquipment = (characterId: string) => {
 				const cached = readCachedEquipment(cacheKey);
 				if (cached) {
 					const now = new Date().toISOString();
-					const optimistic: Equipment = {
+					const optimistic: EquipmentRow = {
 						id: `optimistic_${Date.now()}`,
 						character_id: characterId,
 						created_at: now,
@@ -196,6 +198,7 @@ export const useEquipment = (characterId: string) => {
 						charges_current: item.charges_current ?? null,
 						charges_max: item.charges_max ?? null,
 						container_id: item.container_id ?? null,
+						sigil_slots_base: 0,
 						is_container: item.is_container ?? false,
 						capacity_weight: item.capacity_weight ?? null,
 						capacity_volume: item.capacity_volume ?? null,
@@ -208,7 +211,7 @@ export const useEquipment = (characterId: string) => {
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const { data: compendiumEquipment, error: compendiumError } =
+			const { data: compendiumEquipmentRow, error: compendiumError } =
 				await supabase
 					.from("compendium_equipment")
 					.select("source_book")
@@ -224,8 +227,8 @@ export const useEquipment = (characterId: string) => {
 			}
 
 			if (
-				compendiumEquipment &&
-				!(await isSourcebookAccessible(compendiumEquipment.source_book, {
+				compendiumEquipmentRow &&
+				!(await isSourcebookAccessible(compendiumEquipmentRow.source_book, {
 					campaignId,
 				}))
 			) {
@@ -264,7 +267,7 @@ export const useEquipment = (characterId: string) => {
 			updates,
 		}: {
 			id: string;
-			updates: EquipmentUpdate;
+			updates: EquipmentRowUpdate;
 		}) => {
 			if (isLocalCharacterId(characterId)) {
 				updateLocalEquipment(id, updates);
@@ -283,7 +286,7 @@ export const useEquipment = (characterId: string) => {
 					writeCachedEquipment(
 						cacheKey,
 						cached.map((row) =>
-							row.id === id ? ({ ...row, ...updates } as Equipment) : row,
+							row.id === id ? ({ ...row, ...updates } as EquipmentRow) : row,
 						),
 					);
 				}

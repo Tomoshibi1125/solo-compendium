@@ -10,6 +10,10 @@ type JobFeatureInsert =
 	Database["public"]["Tables"]["compendium_job_features"]["Insert"];
 type PowerInsert = Database["public"]["Tables"]["compendium_powers"]["Insert"];
 type RelicInsert = Database["public"]["Tables"]["compendium_relics"]["Insert"];
+interface RelicInsertFixed extends Omit<RelicInsert, "relic_tier"> {
+	requires_attunement?: boolean;
+	relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
+}
 type MonsterInsert =
 	Database["public"]["Tables"]["compendium_monsters"]["Insert"];
 type BackgroundInsert =
@@ -355,12 +359,13 @@ export async function importContentBundle(
 						continue;
 					}
 
-					const relicInsert: RelicInsert = {
+					const relicInsert: RelicInsertFixed = {
 						name: relicData.name,
 						display_name: relicData.display_name,
 						aliases: relicData.aliases || [],
-						rarity: relicData.rarity,
-						relic_tier: relicData.relic_tier as never,
+						rarity: relicData.rarity as Database["public"]["Enums"]["rarity"],
+						relic_tier:
+							relicData.relic_tier as Database["public"]["Enums"]["relic_tier"],
 						item_type: relicData.item_type,
 						requires_attunement: relicData.requires_attunement,
 						attunement_requirements: relicData.attunement_requirements,
@@ -381,10 +386,12 @@ export async function importContentBundle(
 					if (existing && options.overwrite) {
 						await supabase
 							.from("compendium_relics")
-							.update(relicInsert)
+							.update(relicInsert as RelicInsert)
 							.eq("id", existing.id);
 					} else {
-						await supabase.from("compendium_relics").insert(relicInsert);
+						await supabase
+							.from("compendium_relics")
+							.insert(relicInsert as RelicInsert);
 					}
 					result.imported.relics++;
 				} catch (error) {

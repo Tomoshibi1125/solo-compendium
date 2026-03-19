@@ -9,7 +9,7 @@ import {
 
 export type RollRecord = Database["public"]["Tables"]["roll_history"]["Row"];
 type RollRecordInsert = Database["public"]["Tables"]["roll_history"]["Insert"];
-type RollRecordInsertClient = Omit<
+export type RollRecordInsertClient = Omit<
 	RollRecordInsert,
 	"id" | "user_id" | "created_at"
 > & {

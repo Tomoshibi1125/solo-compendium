@@ -19,6 +19,7 @@ function baseItem(
 		simple_properties?: string[];
 		range?: string;
 		effects?: Item["effects"];
+		sigil_slots_base?: number;
 	},
 ): Item {
 	const isWeapon = partial.item_type === "weapon";
@@ -57,6 +58,7 @@ function baseItem(
 		weight: partial.weight,
 		value: partial.value,
 		effects: partial.effects,
+		sigil_slots_base: partial.sigil_slots_base ?? 0,
 		properties,
 	} as Item;
 }

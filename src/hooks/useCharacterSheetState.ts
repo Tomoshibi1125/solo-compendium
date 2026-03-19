@@ -186,3 +186,15 @@ export function useCharacterSheetState(characterId: string) {
 		[query.data, query.isLoading, updateSheetState.isPending, saveSheetState],
 	);
 }
+
+/**
+ * Convenience hook for character resources
+ */
+export function useCharacterResources(characterId: string) {
+	const { state, saveSheetState } = useCharacterSheetState(characterId);
+	return [
+		state.resources,
+		(resources: CharacterSheetState["resources"]) =>
+			saveSheetState({ resources }),
+	] as const;
+}

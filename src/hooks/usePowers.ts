@@ -16,7 +16,15 @@ import {
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 
-export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
+export type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
+export type CompendiumPower =
+	Database["public"]["Tables"]["compendium_powers"]["Row"];
+
+export interface CharacterPower extends PowerRow {
+	power?: CompendiumPower;
+}
+
+export type Power = CharacterPower;
 type PowerInsert = Database["public"]["Tables"]["character_powers"]["Insert"];
 type PowerUpdate = Database["public"]["Tables"]["character_powers"]["Update"];
 
@@ -136,19 +144,27 @@ export const usePowers = (characterId: string) => {
 				accessibleCompendiumPowers.map((power) => power.name),
 			);
 
-			const filtered = powers.filter((power) => {
-				if (!sourceBookByName.has(power.name)) {
-					return true;
-				}
+			const filtered = powers
+				.filter((power) => {
+					if (!sourceBookByName.has(power.name)) {
+						return true;
+					}
 
-				return accessibleNames.has(power.name);
-			});
+					return accessibleNames.has(power.name);
+				})
+				.map((power) => ({
+					...power,
+					power: compendiumPowers?.find((cp) => cp.name === power.name),
+				}));
 
 			if (cacheKey) {
-				writeCachedPowers(cacheKey, filtered);
+				writeCachedPowers(
+					cacheKey,
+					filtered.map(({ power, ...p }) => p as PowerRow),
+				);
 			}
 
-			return filtered;
+			return filtered as CharacterPower[];
 		},
 		enabled: !!characterId,
 	});

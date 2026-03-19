@@ -85,3 +85,4 @@ __pycache__/
 .env*.local
 
 public/nul
+dist-sourcebook/
