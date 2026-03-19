@@ -116,6 +116,7 @@ import { usePowers } from "@/hooks/usePowers";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
+import { useCharacterSigilInscriptions } from "@/hooks/useSigils";
 import { useCharacterRuneInscriptions } from "@/hooks/useRunes";
 import { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
@@ -326,7 +327,10 @@ const CharacterSheet = () => {
 	const [speedDraft, setSpeedDraft] = useState("");
 	const [hpMaxDraft, setHpMaxDraft] = useState("");
 	const undoRedo = useCharacterUndoRedo(character ?? null);
-	const { data: activeRunes = [] } = useCharacterRuneInscriptions(id);
+	const { data: activeRunes = [] } = useCharacterRuneInscriptions(character?.id);
+	const { data: activeSigilInscriptions = [] } = useCharacterSigilInscriptions(
+		character?.id,
+	);
 	const { unlocks: regentUnlocks } = useRegentUnlocks(character?.id || "");
 	const deathSaves = useDeathSaves(0, 0);
 	const [lastDeathSaveResult, setLastDeathSaveResult] = useState<{
@@ -511,6 +515,15 @@ const CharacterSheet = () => {
 		character as CharacterWithAbilities | null,
 		equipment,
 		activeRunes,
+		(activeSigilInscriptions as unknown as Array<{
+			sigil: { passive_bonuses: unknown };
+			is_active: boolean;
+			equipment: unknown;
+		}>).map((row) => ({
+			sigil: row.sigil,
+			is_active: row.is_active,
+			equipment: row.equipment as any,
+		})),
 		customModifiers,
 	);
 

@@ -30,7 +30,44 @@ import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
+import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { AddCustomItemDialog } from "./AddCustomItemDialog";
+
+function mapCompendiumEquipmentTypeToInventoryType(
+	equipmentType: string | null | undefined,
+): "weapon" | "armor" | "tool" | "gear" {
+	const t = (equipmentType || "").toLowerCase();
+
+	if (
+		t.includes("melee") ||
+		t.includes("ranged") ||
+		t.includes("weapon")
+	) {
+		return "weapon";
+	}
+
+	if (t.includes("armor") || t === "shield") {
+		return "armor";
+	}
+
+	if (t === "tools" || t === "tool") {
+		return "tool";
+	}
+
+	return "gear";
+}
+
+function isEquipableCompendiumItemType(itemType: string | null | undefined): boolean {
+	const t = (itemType || "").toLowerCase();
+	return (
+		t === "weapon" ||
+		t === "armor" ||
+		t === "shield" ||
+		t === "gear" ||
+		t === "tools" ||
+		t === "tool"
+	);
+}
 
 export function AddEquipmentDialog({
 	open,
@@ -77,11 +114,17 @@ export function AddEquipmentDialog({
 			const staticItems = await staticDataProvider.getItems(
 				trimmedQuery || undefined,
 			);
-			return staticItems.slice(0, 20).map((item) => ({
+			return staticItems
+				.filter((item) =>
+					isEquipableCompendiumItemType(item.equipment_type || item.item_type),
+				)
+				.slice(0, 20)
+				.map((item) => ({
 				id: item.id,
 				name: item.name,
 				description: item.description,
-				equipment_type: item.equipment_type || item.item_type || "gear",
+				equipment_type:
+					item.equipment_type || item.item_type || ("gear" as const),
 				properties: (() => {
 					if (Array.isArray(item.properties)) return item.properties;
 					const props: string[] = [];
@@ -176,27 +219,36 @@ export function AddEquipmentDialog({
 					(item.properties as { armor?: { baseAC?: number } })?.armor?.baseAC ??
 					null,
 				attunement: item.attunement ?? false,
-			}));
+				}));
 		},
 		enabled: open,
 	});
 
 	const handleAdd = async (item: (typeof equipment)[0]) => {
 		const displayName = formatRegentVernacular(item.name);
+		const inventoryType = mapCompendiumEquipmentTypeToInventoryType(
+			(item as unknown as { equipment_type?: string | null }).equipment_type,
+		);
 		try {
 			await addEquipment({
 				character_id: characterId,
 				name: item.name,
-				item_type: item.equipment_type || "gear",
+				item_type: inventoryType,
 				description: item.description || null,
 				properties: item.properties || [],
 				weight: item.weight || null,
 				quantity: 1,
+				sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+					item_type: inventoryType,
+					properties: item.properties || [],
+					name: item.name,
+					rarity: (item as unknown as { rarity?: any }).rarity ?? null,
+				}),
 				is_container:
 					/backpack|pouch|sack|bag|chest|barrel|basket|bucket|case|flask|jug|pitcher|pot|vial|waterskin/i.test(
 						item.name || "",
 					),
-			});
+			} as any);
 
 			toast({
 				title: "Equipment added",

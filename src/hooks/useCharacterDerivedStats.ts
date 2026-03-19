@@ -15,6 +15,7 @@ import {
 } from "@/lib/encumbrance";
 import { applyEquipmentModifiers } from "@/lib/equipmentModifiers";
 import { applyRuneBonuses } from "@/lib/runeAutomation";
+import { applySigilBonuses } from "@/lib/sigilAutomation";
 import {
 	calculateSkillModifier,
 	getAllSkills,
@@ -33,6 +34,11 @@ export function useCharacterDerivedStats(
 	character: CharacterWithAbilities | null,
 	equipment: EquipmentRow[],
 	activeRunes: (RuneInscription & { rune: Rune; equipment: EquipmentRow })[],
+	activeSigils: Array<{
+		sigil: { passive_bonuses: unknown };
+		is_active: boolean;
+		equipment: EquipmentRow;
+	}>,
 	customModifiers: CustomModifier[],
 ) {
 	return useMemo(() => {
@@ -117,8 +123,29 @@ export function useCharacterDerivedStats(
 			})),
 		);
 
+		const equippedActiveSigils = (activeSigils || []).filter(
+			(si) =>
+				si.equipment?.is_equipped &&
+				(!si.equipment.requires_attunement || si.equipment.is_attuned) &&
+				si.is_active,
+		);
+
+		const sigilBonuses = applySigilBonuses(
+			{
+				ac: runeBonuses.ac,
+				speed: runeBonuses.speed,
+				abilities: runeBonuses.abilities,
+				attackBonus: runeBonuses.attackBonus,
+				damageBonus: runeBonuses.damageBonus,
+			},
+			equippedActiveSigils.map((si) => ({
+				sigil: si.sigil,
+				is_active: si.is_active,
+			})),
+		);
+
 		const finalAbilities = { ...equipmentModifiedAbilities };
-		Object.entries(runeBonuses.abilities).forEach(([ability, value]) => {
+		Object.entries(sigilBonuses.abilities).forEach(([ability, value]) => {
 			if (
 				ability in finalAbilities &&
 				value >
@@ -220,7 +247,7 @@ export function useCharacterDerivedStats(
 		const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
 		const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
 
-		let finalSpeed = runeBonuses.speed;
+		let finalSpeed = sigilBonuses.speed;
 		if (encumbrance.status === "heavy") {
 			finalSpeed = Math.max(0, finalSpeed - 10);
 		} else if (encumbrance.status === "overloaded") {

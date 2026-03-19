@@ -21,6 +21,7 @@ import {
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 import { getProficiencyBonus } from "@/types/system-rules";
+import { getDefaultSigilSlotsBaseForEquipment } from "./sigilAutomation";
 
 export type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"];
 export type Background =
@@ -2445,6 +2446,16 @@ export async function addJobAwakeningBenefitsForLevel(
 		.eq("id", characterId)
 		.single();
 	if (character?.path) {
+		const { data: pathRow } = await supabase
+			.from("compendium_job_paths")
+			.select("path_level")
+			.eq("id", character.path)
+			.maybeSingle();
+
+		if (!pathRow || pathRow.path_level !== 1) {
+			return;
+		}
+
 		const { paths: staticPaths } = await import("@/data/compendium/paths");
 		const pathData = staticPaths.find((p) => p.name === character.path);
 		if (pathData) {
@@ -2746,7 +2757,7 @@ export async function addStartingEquipment(
 			const itemType = compendiumItem ? deriveItemType(compendiumItem) : "gear";
 			// Auto-equip armor, shields, and weapons so new characters start ready
 			const shouldAutoEquip = ["armor", "shield", "weapon"].includes(itemType);
-			const equipData = compendiumItem
+			const equipData: any = compendiumItem
 				? {
 						name: compendiumItem.name,
 						item_type: itemType,
@@ -2762,18 +2773,25 @@ export async function addStartingEquipment(
 								| "very_rare") ?? null,
 						quantity: 1,
 						is_equipped: shouldAutoEquip,
+						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+							item_type: itemType,
+							properties: buildItemProperties(compendiumItem),
+							name: compendiumItem.name,
+							rarity: (compendiumItem.rarity as any) ?? null,
+						}),
 					}
 				: {
 						name: itemName,
 						item_type: "gear",
 						quantity: 1,
 						is_equipped: false,
+						sigil_slots_base: 1,
 					};
 
 			if (isLocalCharacterId(characterId)) {
-				addLocalEquipment(characterId, equipData);
+				addLocalEquipment(characterId, equipData as any);
 			} else {
-				await supabase.from("character_equipment").insert({
+				await (supabase as unknown as any).from("character_equipment").insert({
 					character_id: characterId,
 					...equipData,
 				});
@@ -2808,9 +2826,15 @@ export async function addStartingEquipment(
 						weight: equipment.weight || null,
 						quantity: 1,
 						is_equipped: false,
-					});
+						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+							item_type: equipment.equipment_type || "gear",
+							properties: equipment.properties || [],
+							name: equipment.name,
+							rarity: (equipment as unknown as { rarity?: any }).rarity ?? null,
+						}),
+					} as any);
 				} else {
-					await supabase.from("character_equipment").insert({
+					await (supabase as unknown as any).from("character_equipment").insert({
 						character_id: characterId,
 						name: equipment.name,
 						item_type: equipment.equipment_type || "gear",
@@ -2819,6 +2843,12 @@ export async function addStartingEquipment(
 						weight: equipment.weight || null,
 						quantity: 1,
 						is_equipped: false,
+						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+							item_type: equipment.equipment_type || "gear",
+							properties: equipment.properties || [],
+							name: equipment.name,
+							rarity: (equipment as unknown as { rarity?: any }).rarity ?? null,
+						}),
 					});
 				}
 			} else {
@@ -2828,14 +2858,16 @@ export async function addStartingEquipment(
 						item_type: "gear",
 						quantity: 1,
 						is_equipped: false,
-					});
+						sigil_slots_base: 1,
+					} as any);
 				} else {
-					await supabase.from("character_equipment").insert({
+					await (supabase as unknown as any).from("character_equipment").insert({
 						character_id: characterId,
 						name: itemName,
 						item_type: "gear",
 						quantity: 1,
 						is_equipped: false,
+						sigil_slots_base: 1,
 					});
 				}
 			}

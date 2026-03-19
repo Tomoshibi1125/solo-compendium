@@ -40,7 +40,7 @@ export function AddCustomItemDialog({
 
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
-	const [itemType, setItemType] = useState("gear");
+	const [itemType, setItemType] = useState("item");
 	const [weight, setWeight] = useState("");
 	const [quantity, setQuantity] = useState("1");
 
@@ -106,7 +106,7 @@ export function AddCustomItemDialog({
 			// Reset state and close
 			setName("");
 			setDescription("");
-			setItemType("gear");
+			setItemType("item");
 			setWeight("");
 			setQuantity("1");
 			setAcBonus("");
@@ -154,6 +154,7 @@ export function AddCustomItemDialog({
 										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
+										<SelectItem value="item">Item</SelectItem>
 										<SelectItem value="weapon">Weapon</SelectItem>
 										<SelectItem value="armor">Armor</SelectItem>
 										<SelectItem value="consumable">Consumable</SelectItem>

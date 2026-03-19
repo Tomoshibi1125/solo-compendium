@@ -15,6 +15,15 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 
 type Equipment = Database["public"]["Tables"]["character_equipment"]["Row"];
 
+function isEquipableInventoryType(itemType: string | null | undefined): boolean {
+	return (
+		itemType === "weapon" ||
+		itemType === "armor" ||
+		itemType === "tool" ||
+		itemType === "gear"
+	);
+}
+
 interface EquipmentItemProps {
 	item: Equipment;
 	onToggleEquipped: (item: Equipment) => void;
@@ -25,6 +34,7 @@ interface EquipmentItemProps {
 	containers?: Equipment[];
 	onChangeContainer?: (item: Equipment, containerId: string | null) => void;
 	onToggleActive?: (item: Equipment) => void;
+	sigilControl?: React.ReactNode;
 }
 
 function EquipmentItemComponent({
@@ -37,6 +47,7 @@ function EquipmentItemComponent({
 	containers,
 	onChangeContainer,
 	onToggleActive,
+	sigilControl,
 }: EquipmentItemProps) {
 	const displayName = formatRegentVernacular(item.name);
 	const displayDescription = item.description
@@ -45,6 +56,7 @@ function EquipmentItemComponent({
 	const displayRarity = item.rarity
 		? formatRegentVernacular(item.rarity)
 		: null;
+	const canEquip = isEquipableInventoryType(item.item_type);
 
 	return (
 		<div
@@ -91,6 +103,7 @@ function EquipmentItemComponent({
 							))}
 						</div>
 					)}
+					{sigilControl}
 					{containers && containers.length > 0 && (
 						<div className="mt-2 w-[140px]">
 							<Select
@@ -138,17 +151,19 @@ function EquipmentItemComponent({
 				</div>
 				<div className="flex items-center gap-2">
 					<div className="flex flex-col gap-1">
-						<Button
-							variant={item.is_equipped ? "default" : "outline"}
-							size="sm"
-							className={cn(
-								"h-7 px-2 text-[10px]",
-								item.is_equipped && "bg-primary text-primary-foreground",
-							)}
-							onClick={() => onToggleEquipped(item)}
-						>
-							{item.is_equipped ? "Equipped" : "Equip"}
-						</Button>
+						{canEquip && (
+							<Button
+								variant={item.is_equipped ? "default" : "outline"}
+								size="sm"
+								className={cn(
+									"h-7 px-2 text-[10px]",
+									item.is_equipped && "bg-primary text-primary-foreground",
+								)}
+								onClick={() => onToggleEquipped(item)}
+							>
+								{item.is_equipped ? "Equipped" : "Equip"}
+							</Button>
+						)}
 
 						{item.requires_attunement && (
 							<Button
