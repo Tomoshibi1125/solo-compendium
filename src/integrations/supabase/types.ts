@@ -12,31 +12,6 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
       active_sessions: {
@@ -3051,8 +3026,11 @@ export type Database = {
           armor_proficiencies: string[] | null
           background: string | null
           backstory: string | null
+          condition_immunities: string[] | null
           conditions: string[] | null
           created_at: string
+          death_save_failures: number | null
+          death_save_successes: number | null
           exhaustion_level: number
           experience: number
           gemini_state: Json | null
@@ -3063,6 +3041,7 @@ export type Database = {
           hp_max: number
           hp_temp: number
           id: string
+          immunities: string[] | null
           initiative: number
           job: string | null
           level: number
@@ -3073,9 +3052,11 @@ export type Database = {
           portrait_url: string | null
           proficiency_bonus: number
           regent_overlays: string[] | null
+          resistances: string[] | null
           saving_throw_proficiencies:
             | Database["public"]["Enums"]["ability_score"][]
             | null
+          senses: string[] | null
           shadow_energy_current: number
           shadow_energy_max: number
           share_token: string | null
@@ -3083,12 +3064,14 @@ export type Database = {
           skill_proficiencies: string[] | null
           sovereign_id: string | null
           speed: number
+          stable: boolean | null
           system_favor_current: number
           system_favor_die: number
           system_favor_max: number
           tool_proficiencies: string[] | null
           updated_at: string
           user_id: string
+          vulnerabilities: string[] | null
           weapon_proficiencies: string[] | null
         }
         Insert: {
@@ -3098,8 +3081,11 @@ export type Database = {
           armor_proficiencies?: string[] | null
           background?: string | null
           backstory?: string | null
+          condition_immunities?: string[] | null
           conditions?: string[] | null
           created_at?: string
+          death_save_failures?: number | null
+          death_save_successes?: number | null
           exhaustion_level?: number
           experience?: number
           gemini_state?: Json | null
@@ -3110,6 +3096,7 @@ export type Database = {
           hp_max?: number
           hp_temp?: number
           id?: string
+          immunities?: string[] | null
           initiative?: number
           job?: string | null
           level?: number
@@ -3120,9 +3107,11 @@ export type Database = {
           portrait_url?: string | null
           proficiency_bonus?: number
           regent_overlays?: string[] | null
+          resistances?: string[] | null
           saving_throw_proficiencies?:
             | Database["public"]["Enums"]["ability_score"][]
             | null
+          senses?: string[] | null
           shadow_energy_current?: number
           shadow_energy_max?: number
           share_token?: string | null
@@ -3130,12 +3119,14 @@ export type Database = {
           skill_proficiencies?: string[] | null
           sovereign_id?: string | null
           speed?: number
+          stable?: boolean | null
           system_favor_current?: number
           system_favor_die?: number
           system_favor_max?: number
           tool_proficiencies?: string[] | null
           updated_at?: string
           user_id: string
+          vulnerabilities?: string[] | null
           weapon_proficiencies?: string[] | null
         }
         Update: {
@@ -3145,8 +3136,11 @@ export type Database = {
           armor_proficiencies?: string[] | null
           background?: string | null
           backstory?: string | null
+          condition_immunities?: string[] | null
           conditions?: string[] | null
           created_at?: string
+          death_save_failures?: number | null
+          death_save_successes?: number | null
           exhaustion_level?: number
           experience?: number
           gemini_state?: Json | null
@@ -3157,6 +3151,7 @@ export type Database = {
           hp_max?: number
           hp_temp?: number
           id?: string
+          immunities?: string[] | null
           initiative?: number
           job?: string | null
           level?: number
@@ -3167,9 +3162,11 @@ export type Database = {
           portrait_url?: string | null
           proficiency_bonus?: number
           regent_overlays?: string[] | null
+          resistances?: string[] | null
           saving_throw_proficiencies?:
             | Database["public"]["Enums"]["ability_score"][]
             | null
+          senses?: string[] | null
           shadow_energy_current?: number
           shadow_energy_max?: number
           share_token?: string | null
@@ -3177,12 +3174,14 @@ export type Database = {
           skill_proficiencies?: string[] | null
           sovereign_id?: string | null
           speed?: number
+          stable?: boolean | null
           system_favor_current?: number
           system_favor_die?: number
           system_favor_max?: number
           tool_proficiencies?: string[] | null
           updated_at?: string
           user_id?: string
+          vulnerabilities?: string[] | null
           weapon_proficiencies?: string[] | null
         }
         Relationships: [
@@ -3467,6 +3466,7 @@ export type Database = {
           properties: string[] | null
           rarity: Database["public"]["Enums"]["rarity"] | null
           requires_attunement: boolean | null
+          sigil_slots_base: number | null
           source_book: string | null
           source_kind: string | null
           source_name: string | null
@@ -3491,6 +3491,7 @@ export type Database = {
           properties?: string[] | null
           rarity?: Database["public"]["Enums"]["rarity"] | null
           requires_attunement?: boolean | null
+          sigil_slots_base?: number | null
           source_book?: string | null
           source_kind?: string | null
           source_name?: string | null
@@ -3515,6 +3516,7 @@ export type Database = {
           properties?: string[] | null
           rarity?: Database["public"]["Enums"]["rarity"] | null
           requires_attunement?: boolean | null
+          sigil_slots_base?: number | null
           source_book?: string | null
           source_kind?: string | null
           source_name?: string | null
@@ -5109,6 +5111,7 @@ export type Database = {
       }
       compendium_sigils: {
         Row: {
+          active_feature: Json | null
           can_inscribe_on: string[] | null
           created_at: string
           description: string | null
@@ -5129,6 +5132,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          active_feature?: Json | null
           can_inscribe_on?: string[] | null
           created_at?: string
           description?: string | null
@@ -5149,6 +5153,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          active_feature?: Json | null
           can_inscribe_on?: string[] | null
           created_at?: string
           description?: string | null
@@ -7843,9 +7848,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       ability_score: ["STR", "AGI", "VIT", "INT", "SENSE", "PRE"],
