@@ -288,6 +288,16 @@ export function createLocalCharacter(
 			((data as Record<string, unknown>).monarch_overlays as string[]) ?? null,
 		regent_overlays:
 			((data as Record<string, unknown>).regent_overlays as string[]) ?? null,
+
+		// 100% Parity Data
+		death_save_successes: 0,
+		death_save_failures: 0,
+		stable: false,
+		senses: [],
+		resistances: [],
+		immunities: [],
+		vulnerabilities: [],
+		condition_immunities: [],
 	};
 
 	upsertLocalCharacter(character);

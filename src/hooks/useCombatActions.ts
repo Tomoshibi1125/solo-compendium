@@ -14,11 +14,23 @@ import { useTechniques } from "./useTechniques";
 
 type JsonMechanics = Record<string, unknown>;
 
+interface ActiveFeature {
+	name?: string;
+	description?: string;
+	action_type?: string;
+	range?: string;
+	target?: string;
+	uses_max?: number;
+	damage?: string;
+	resolution?: string;
+}
+
 export type CombatActionType =
 	| "weapon"
 	| "spell"
 	| "power"
 	| "technique"
+	| "item-sigil"
 	| "other";
 
 export interface CombatAction {
@@ -247,8 +259,73 @@ export const useCombatActions = (characterId: string) => {
 			});
 		});
 
+		// 4. Sigil Actions (Item Abilities)
+		(sigils || []).forEach((si) => {
+			const sigilData = si.sigil;
+			if (!sigilData?.active_feature) return;
+
+			// Check if equipment is equipped/attuned
+			const eq = (equipment || []).find((e) => e.id === si.equipment_id);
+			if (!eq?.is_equipped || (eq.requires_attunement && !eq.is_attuned))
+				return;
+
+			const feat = sigilData.active_feature as unknown as ActiveFeature;
+			const name = feat.name || sigilData.name;
+			const sourceName = eq.name;
+
+			result.push({
+				id: `sigil-action-${si.id}`,
+				name: `${name} (${sourceName})`,
+				type: "item-sigil",
+				description: feat.description || sigilData.effect_description,
+				activation: feat.action_type || "1 action",
+				range: feat.range || "Self",
+				target: feat.target || "One creature",
+				resourceCurrent: feat.uses_max
+					? (si.id.length % feat.uses_max) + 1
+					: undefined, // Placeholder for uses if not tracked
+				resourceMax: feat.uses_max,
+				payload: {
+					version: 1,
+					id: `sigil-action-${si.id}`,
+					name: name,
+					source: { type: "item", entryId: eq.id },
+					kind:
+						feat.damage || feat.resolution
+							? feat.resolution
+								? "save"
+								: "damage"
+							: "effect",
+					description: feat.description || sigilData.effect_description,
+					save: feat.resolution
+						? {
+								dc: parseInt(feat.resolution.match(/\d+/)?.[0] || "10"),
+								ability: feat.resolution.toLowerCase().includes("str")
+									? "STR"
+									: feat.resolution.toLowerCase().includes("agi")
+										? "AGI"
+										: feat.resolution.toLowerCase().includes("con")
+											? "CON"
+											: feat.resolution.toLowerCase().includes("int")
+												? "INT"
+												: feat.resolution.toLowerCase().includes("wis")
+													? "WIS"
+													: "CHA",
+							}
+						: undefined,
+					damage: feat.damage
+						? {
+								roll: feat.damage,
+								type: feat.damage.split(" ").slice(1).join(" ") || "energy",
+							}
+						: undefined,
+				},
+				sourceId: eq.id,
+			});
+		});
+
 		return result;
-	}, [character, derivedStats, equipment, powers, techniques]);
+	}, [character, derivedStats, equipment, powers, techniques, sigils]);
 
 	return {
 		actions,

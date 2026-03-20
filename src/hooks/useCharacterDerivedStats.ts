@@ -19,7 +19,7 @@ import {
 	calculateTotalWeight,
 } from "@/lib/encumbrance";
 import { applyEquipmentModifiers } from "@/lib/equipmentModifiers";
-import { applyRuneBonuses } from "@/lib/runeAutomation";
+import { applyRuneBonuses, type RuneBonusResult } from "@/lib/runeAutomation";
 import { applySigilBonuses } from "@/lib/sigilAutomation";
 import {
 	calculateSkillModifier,
@@ -45,14 +45,6 @@ interface EquipmentModifierResult {
 	skillBonuses: Record<string, number>;
 }
 
-interface RuneBonusResult {
-	ac: number;
-	speed: number;
-	abilities: Record<string, number>;
-	attackBonus: number;
-	damageBonus: string;
-}
-
 export type DerivedStats = {
 	calculatedStats: CalculatedStats;
 	skills: Record<
@@ -74,9 +66,32 @@ export type DerivedStats = {
 	runeBonuses: RuneBonusResult;
 	sigilBonuses: RuneBonusResult;
 	finalSpeed: number;
+	otherSpeeds: Record<string, number>;
 	finalInitiative: number;
 	initiativeAdvantage: "normal" | "advantage" | "disadvantage";
 	baseStats: CalculatedStats;
+	finalTraits: string[];
+	// 100% Parity Data
+	senses: {
+		darkvision: number;
+		blindsight: number;
+		tremorsense: number;
+		truesight: number;
+	};
+	senseStrings: string[];
+	resistances: string[];
+	immunities: string[];
+	vulnerabilities: string[];
+	conditionImmunities: string[];
+	acDetail: {
+		base: number;
+		modifier: number;
+		dexterity: number;
+		misc: number;
+		bonus: number;
+		total: number;
+		label: string;
+	};
 };
 
 export function useCharacterDerivedStats(
@@ -164,6 +179,7 @@ export function useCharacterDerivedStats(
 							? `+${equipmentMods.damageBonus}`
 							: ""
 						: equipmentMods.damageBonus || "",
+				traits: [],
 			},
 			equippedActiveRunes.map((ri) => ({
 				rune: ri.rune,
@@ -193,6 +209,7 @@ export function useCharacterDerivedStats(
 				abilities: runeBonuses.abilities,
 				attackBonus: runeBonuses.attackBonus,
 				damageBonus: runeBonuses.damageBonus,
+				traits: runeBonuses.traits,
 			},
 			equippedActiveSigils.map((si) => ({
 				sigil: si.sigil,
@@ -331,10 +348,93 @@ export function useCharacterDerivedStats(
 			...baseStats,
 			initiative: baseStats.initiative + customInitiativeBonus,
 			savingThrows: finalSavingThrows,
-			armorClass: runeBonuses.ac + customAcBonus,
+			armorClass: sigilBonuses.ac + customAcBonus,
 			speed: Math.max(0, finalSpeed + customSpeedBonus),
 			hpMax: Math.max(1, (character.hp_max ?? 1) + customHpMaxBonus),
 			encumbrance,
+		};
+
+		// 100% Parity Data Extraction
+		const senseStrings = character.senses || [];
+		const resistances = character.resistances || [];
+		const immunities = character.immunities || [];
+		const vulnerabilities = character.vulnerabilities || [];
+		const conditionImmunities = character.condition_immunities || [];
+
+		const parseSense = (name: string): number => {
+			const sense = senseStrings.find((s) =>
+				s.toLowerCase().startsWith(name.toLowerCase()),
+			);
+			if (!sense) return 0;
+			const match = sense.match(/\d+/);
+			return match ? parseInt(match[0], 10) : 0;
+		};
+
+		const senses = {
+			darkvision: parseSense("darkvision"),
+			blindsight: parseSense("blindsight"),
+			tremorsense: parseSense("tremorsense"),
+			truesight: parseSense("truesight"),
+		};
+
+		// Multi-Speeds Extraction
+		const otherSpeeds: Record<string, number> = {};
+		(equipment || []).forEach((item) => {
+			if (!item.is_equipped) return;
+			(item.properties || []).forEach((prop) => {
+				const lower = prop.toLowerCase();
+				const flyMatch = lower.match(/fly\s+(\d+)ft/i);
+				if (flyMatch) otherSpeeds.fly = Math.max(otherSpeeds.fly || 0, parseInt(flyMatch[1], 10));
+				const swimMatch = lower.match(/swim\s+(\d+)ft/i);
+				if (swimMatch) otherSpeeds.swim = Math.max(otherSpeeds.swim || 0, parseInt(swimMatch[1], 10));
+				const climbMatch = lower.match(/climb\s+(\d+)ft/i);
+				if (climbMatch) otherSpeeds.climb = Math.max(otherSpeeds.climb || 0, parseInt(climbMatch[1], 10));
+			});
+		});
+
+		// AC Breakdown Calculation
+		const dexMod = getAbilityModifier(finalAbilities.AGI ?? 10);
+		let acBase = 10;
+		let acDex = dexMod;
+		let acMisc = 0;
+		let acLabel = "Unarmored";
+
+		const equippedArmorItems = (equipment || []).filter(
+			(e) => e.is_equipped && (!e.requires_attunement || e.is_attuned)
+		);
+		
+		const armor = equippedArmorItems.find(e => 
+			(e.properties || []).some(p => ["light", "medium", "heavy"].includes(p.toLowerCase()))
+		);
+
+		if (armor) {
+			const props = (armor.properties || []).map(p => p.toLowerCase());
+			const baseMatch = props.find(p => p.startsWith("ac "))?.match(/\d+/);
+			acBase = baseMatch ? parseInt(baseMatch[0], 10) : 10;
+			acLabel = armor.name;
+			
+			const isMedium = props.includes("medium");
+			const isHeavy = props.includes("heavy");
+			acDex = isHeavy ? 0 : isMedium ? Math.min(dexMod, 2) : dexMod;
+		} else {
+			// Unarmored Defense (Monk/Barbarian style) if applicable
+			const unarmoredBase = getUnarmoredDefenseBaseAC(character.job, finalAbilities);
+			if (unarmoredBase !== null && unarmoredBase > 10 + dexMod) {
+				acBase = 10;
+				acDex = dexMod;
+				acMisc = unarmoredBase - 10 - dexMod;
+				acLabel = "Unarmored Defense";
+			}
+		}
+
+		const acDetail = {
+			base: acBase,
+			modifier: 0, // Profile/Base static mod
+			dexterity: acDex,
+			misc: acMisc,
+			bonus: (sigilBonuses.ac + customAcBonus) - (acBase + acDex + acMisc),
+			total: sigilBonuses.ac + customAcBonus,
+			label: acLabel,
 		};
 
 		const encumbranceMax = Math.max(
@@ -397,9 +497,19 @@ export function useCharacterDerivedStats(
 			runeBonuses,
 			sigilBonuses,
 			finalSpeed,
+			otherSpeeds,
 			finalInitiative,
+			finalTraits: sigilBonuses.traits,
 			initiativeAdvantage,
 			baseStats,
+			// 100% Parity Data
+			senses,
+			senseStrings,
+			resistances,
+			immunities,
+			vulnerabilities,
+			conditionImmunities,
+			acDetail,
 		};
 	}, [character, equipment, activeRunes, customModifiers, activeSigils]);
 }
