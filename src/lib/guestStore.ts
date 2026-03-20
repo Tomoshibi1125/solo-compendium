@@ -284,6 +284,8 @@ export function createLocalCharacter(
 		gemini_state:
 			((data as Record<string, unknown>)
 				.gemini_state as CharacterRow["gemini_state"]) ?? null,
+		monarch_overlays:
+			((data as Record<string, unknown>).monarch_overlays as string[]) ?? null,
 		regent_overlays:
 			((data as Record<string, unknown>).regent_overlays as string[]) ?? null,
 	};

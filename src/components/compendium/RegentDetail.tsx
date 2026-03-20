@@ -1,4 +1,5 @@
 import { Crown, Flame } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import type { Regent } from "@/lib/regentTypes";
@@ -83,7 +84,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 
 					{data.description && (
 						<p className="text-foreground">
-							{formatRegentVernacular(data.description)}
+							<AutoLinkText text={data.description} />
 						</p>
 					)}
 
@@ -117,11 +118,13 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									Current Quest Objective
 								</p>
 								<p className="text-foreground border-l-2 border-amber-500/30 pl-4 py-1 italic">
-									{formatRegentVernacular(
-										data.requirements?.quest_completion ||
+									<AutoLinkText
+										text={
+											data.requirements?.quest_completion ||
 											data.regent_requirements?.quest_completion ||
-											"Complete the designated Regent questline.",
-									)}
+											"Complete the designated Regent questline."
+										}
+									/>
 								</p>
 							</div>
 
@@ -224,7 +227,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{formatRegentVernacular(feature.description)}
+									<AutoLinkText text={feature.description} />
 								</p>
 							</div>
 						))}

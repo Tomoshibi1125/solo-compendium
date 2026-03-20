@@ -9,7 +9,7 @@ import type {
 
 export type { CharacterSigilInscriptionRow, ExtendedDatabase, SigilRow };
 
-import type { SupabaseClient } from "@supabase/supabase-js";
+// Type-safe client for sigil-related operations is now same as base supabase client
 import { isLocalCharacterId } from "@/lib/guestStore";
 import {
 	filterRowsBySourcebookAccess,
@@ -30,23 +30,20 @@ interface StaticSigil {
 	passive_bonuses?: Json;
 	can_inscribe_on?: string[];
 	inscription_difficulty?: number;
-	image_url?: string;
+	image?: string | null;
 	tags?: string[];
 	source_book?: string;
 	created_at: string;
 }
 
-// Type-safe client for sigil-related operations
-const sigilClient = supabase as unknown as SupabaseClient<ExtendedDatabase>;
-
 export function useCompendiumSigils(characterId?: string) {
 	return useQuery({
 		queryKey: ["compendium-sigils", characterId ?? "global"],
 		queryFn: async () => {
-			const { data, error } = await sigilClient
+			const { data, error } = await supabase
 				.from("compendium_sigils")
 				.select("*")
-				.order("sigil_level", { ascending: true })
+				.order("rune_level", { ascending: true })
 				.order("name", { ascending: true });
 
 			if (!error && data && data.length > 0) {
@@ -71,9 +68,9 @@ export function useCompendiumSigils(characterId?: string) {
 				name: s.name,
 				description: s.description,
 				effect_description: s.effect_description ?? s.description,
-				sigil_type: s.rune_type ?? "utility",
-				sigil_category: s.rune_category ?? "General",
-				sigil_level: s.rune_level ?? 1,
+				rune_type: s.rune_type ?? "utility",
+				rune_category: s.rune_category ?? "General",
+				rune_level: s.rune_level ?? 1,
 				rarity: s.rarity ?? "common",
 				effect_type: s.effect_type ?? "passive",
 				requires_level: s.requires_level ?? null,
@@ -81,11 +78,11 @@ export function useCompendiumSigils(characterId?: string) {
 				can_inscribe_on: s.can_inscribe_on ?? null,
 				inscription_difficulty: s.inscription_difficulty ?? null,
 				tags: s.tags ?? null,
-				image_url: s.image_url ?? null,
+				image: s.image ?? null,
 				source_book: s.source_book ?? null,
 				created_at: s.created_at,
-				updated_at: null,
-			}));
+				updated_at: s.created_at,
+			})) as SigilRow[];
 		},
 	});
 }
@@ -97,7 +94,7 @@ export function useCharacterSigilInscriptions(characterId: string | undefined) {
 			if (!characterId) return [];
 			if (isLocalCharacterId(characterId)) return [];
 
-			const { data, error } = await sigilClient
+			const { data, error } = await supabase
 				.from("character_sigil_inscriptions")
 				.select(
 					`*, sigil:compendium_sigils(*), equipment:character_equipment(*)`,
@@ -132,7 +129,7 @@ export function useInscribeSigil() {
 			sigilId: string;
 			slotIndex: number;
 		}) => {
-			const { error } = await sigilClient
+			const { error } = await supabase
 				.from("character_sigil_inscriptions")
 				.insert({
 					character_id: input.characterId,
@@ -161,7 +158,7 @@ export function useRemoveSigil() {
 			characterId: string;
 			inscriptionId: string;
 		}) => {
-			const { error } = await sigilClient
+			const { error } = await supabase
 				.from("character_sigil_inscriptions")
 				.delete()
 				.eq("id", input.inscriptionId);

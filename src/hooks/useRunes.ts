@@ -92,7 +92,7 @@ export function useCompendiumRunes(characterId?: string) {
 				source_book: r.source_book ?? "System Ascendant Canon",
 				created_at: r.created_at,
 				tags: r.tags ?? null,
-				image_url: r.image_url ?? null,
+				image: r.image ?? null,
 				// Add missing schema fields for full type compliance
 				activation_action: "",
 				activation_cost: "",

@@ -14,7 +14,9 @@ export type ActionResolutionPayload = {
 			| "technique"
 			| "item"
 			| "artifact"
-			| "relic";
+			| "relic"
+			| "power"
+			| "rune";
 		entryId: string;
 	};
 	kind: ResolutionKind;

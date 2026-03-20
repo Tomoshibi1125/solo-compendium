@@ -59,6 +59,7 @@ export interface CompendiumEntry {
 	rune_category?: string | null;
 	role?: string | null;
 	rank?: string | null;
+	element?: string | null;
 }
 
 // ALL categories to preload at startup - comprehensive loading

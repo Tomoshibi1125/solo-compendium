@@ -1,4 +1,4 @@
-export type Json =
+﻿export type Json =
 	| string
 	| number
 	| boolean
@@ -1954,7 +1954,7 @@ export type Database = {
 					rarity: Database["public"]["Enums"]["rarity"] | null;
 					relic_tier: Database["public"]["Enums"]["relic_tier"] | null;
 					requires_attunement: boolean;
-					sigil_slots_base: number | null;
+					sigil_slots_base: number;
 					value_credits: number | null;
 					weight: number | null;
 				};
@@ -1982,7 +1982,7 @@ export type Database = {
 					rarity?: Database["public"]["Enums"]["rarity"] | null;
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
 					requires_attunement?: boolean;
-					sigil_slots_base?: number | null;
+					sigil_slots_base?: number;
 					value_credits?: number | null;
 					weight?: number | null;
 				};
@@ -2010,7 +2010,7 @@ export type Database = {
 					rarity?: Database["public"]["Enums"]["rarity"] | null;
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
 					requires_attunement?: boolean;
-					sigil_slots_base?: number | null;
+					sigil_slots_base?: number;
 					value_credits?: number | null;
 					weight?: number | null;
 				};
@@ -2291,13 +2291,13 @@ export type Database = {
 					},
 				];
 			};
-			character_regent_unlocks: {
+			character_monarch_unlocks: {
 				Row: {
 					character_id: string;
 					dm_notes: string | null;
 					id: string;
 					is_primary: boolean;
-					regent_id: string;
+					monarch_id: string;
 					quest_name: string;
 					unlocked_at: string;
 				};
@@ -2306,7 +2306,7 @@ export type Database = {
 					dm_notes?: string | null;
 					id?: string;
 					is_primary?: boolean;
-					regent_id: string;
+					monarch_id: string;
 					quest_name: string;
 					unlocked_at?: string;
 				};
@@ -2315,30 +2315,30 @@ export type Database = {
 					dm_notes?: string | null;
 					id?: string;
 					is_primary?: boolean;
-					regent_id?: string;
+					monarch_id?: string;
 					quest_name?: string;
 					unlocked_at?: string;
 				};
 				Relationships: [
 					{
-						foreignKeyName: "character_regent_unlocks_character_id_fkey";
+						foreignKeyName: "character_monarch_unlocks_character_id_fkey";
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "characters";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "character_regent_unlocks_character_id_fkey";
+						foreignKeyName: "character_monarch_unlocks_character_id_fkey";
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "character_regent_unlocks_regent_id_fkey";
-						columns: ["regent_id"];
+						foreignKeyName: "character_monarch_unlocks_monarch_id_fkey";
+						columns: ["monarch_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_regents";
+						referencedRelation: "compendium_monarchs";
 						referencedColumns: ["id"];
 					},
 				];
@@ -2411,6 +2411,36 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 				];
+			};
+			character_regent_unlocks: {
+				Row: {
+					character_id: string;
+					dm_notes: string | null;
+					id: string;
+					is_primary: boolean;
+					quest_name: string;
+					regent_id: string;
+					unlocked_at: string;
+				};
+				Insert: {
+					character_id: string;
+					dm_notes?: string | null;
+					id?: string;
+					is_primary?: boolean;
+					quest_name: string;
+					regent_id: string;
+					unlocked_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					dm_notes?: string | null;
+					id?: string;
+					is_primary?: boolean;
+					quest_name?: string;
+					regent_id?: string;
+					unlocked_at?: string;
+				};
+				Relationships: [];
 			};
 			character_regents: {
 				Row: {
@@ -2809,6 +2839,74 @@ export type Database = {
 					},
 				];
 			};
+			character_sigil_inscriptions: {
+				Row: {
+					character_id: string;
+					created_at: string;
+					equipment_id: string;
+					id: string;
+					inscribed_by: string | null;
+					inscription_date: string;
+					inscription_quality: number | null;
+					is_active: boolean;
+					sigil_id: string;
+					slot_index: number;
+				};
+				Insert: {
+					character_id: string;
+					created_at?: string;
+					equipment_id: string;
+					id?: string;
+					inscribed_by?: string | null;
+					inscription_date?: string;
+					inscription_quality?: number | null;
+					is_active?: boolean;
+					sigil_id: string;
+					slot_index?: number;
+				};
+				Update: {
+					character_id?: string;
+					created_at?: string;
+					equipment_id?: string;
+					id?: string;
+					inscribed_by?: string | null;
+					inscription_date?: string;
+					inscription_quality?: number | null;
+					is_active?: boolean;
+					sigil_id?: string;
+					slot_index?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_sigil_inscriptions_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_sigil_inscriptions_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_sigil_inscriptions_equipment_id_fkey";
+						columns: ["equipment_id"];
+						isOneToOne: false;
+						referencedRelation: "character_equipment";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_sigil_inscriptions_sigil_id_fkey";
+						columns: ["sigil_id"];
+						isOneToOne: false;
+						referencedRelation: "compendium_sigils";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			character_spell_slots: {
 				Row: {
 					character_id: string;
@@ -2968,12 +3066,13 @@ export type Database = {
 					initiative: number;
 					job: string | null;
 					level: number;
-					regent_overlays: string[] | null;
+					monarch_overlays: string[] | null;
 					name: string;
 					notes: string | null;
 					path: string | null;
 					portrait_url: string | null;
 					proficiency_bonus: number;
+					regent_overlays: string[] | null;
 					saving_throw_proficiencies:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -3014,12 +3113,13 @@ export type Database = {
 					initiative?: number;
 					job?: string | null;
 					level?: number;
-					regent_overlays?: string[] | null;
+					monarch_overlays?: string[] | null;
 					name: string;
 					notes?: string | null;
 					path?: string | null;
 					portrait_url?: string | null;
 					proficiency_bonus?: number;
+					regent_overlays?: string[] | null;
 					saving_throw_proficiencies?:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -3060,12 +3160,13 @@ export type Database = {
 					initiative?: number;
 					job?: string | null;
 					level?: number;
-					regent_overlays?: string[] | null;
+					monarch_overlays?: string[] | null;
 					name?: string;
 					notes?: string | null;
 					path?: string | null;
 					portrait_url?: string | null;
 					proficiency_bonus?: number;
+					regent_overlays?: string[] | null;
 					saving_throw_proficiencies?:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -3364,14 +3465,14 @@ export type Database = {
 					license_note: string | null;
 					name: string;
 					properties: string[] | null;
+					rarity: Database["public"]["Enums"]["rarity"] | null;
+					requires_attunement: boolean | null;
 					source_book: string | null;
 					source_kind: string | null;
 					source_name: string | null;
 					theme_tags: string[] | null;
+					updated_at: string | null;
 					weight: number | null;
-					rarity: Database["public"]["Enums"]["rarity"] | null;
-					sigil_slots_base: number | null;
-					requires_attunement: boolean;
 				};
 				Insert: {
 					aliases?: string[] | null;
@@ -3388,14 +3489,14 @@ export type Database = {
 					license_note?: string | null;
 					name: string;
 					properties?: string[] | null;
+					rarity?: Database["public"]["Enums"]["rarity"] | null;
+					requires_attunement?: boolean | null;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;
 					theme_tags?: string[] | null;
+					updated_at?: string | null;
 					weight?: number | null;
-					rarity?: Database["public"]["Enums"]["rarity"] | null;
-					sigil_slots_base?: number | null;
-					requires_attunement?: boolean;
 				};
 				Update: {
 					aliases?: string[] | null;
@@ -3412,14 +3513,14 @@ export type Database = {
 					license_note?: string | null;
 					name?: string;
 					properties?: string[] | null;
+					rarity?: Database["public"]["Enums"]["rarity"] | null;
+					requires_attunement?: boolean | null;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;
 					theme_tags?: string[] | null;
+					updated_at?: string | null;
 					weight?: number | null;
-					rarity?: Database["public"]["Enums"]["rarity"] | null;
-					sigil_slots_base?: number | null;
-					requires_attunement?: boolean;
 				};
 				Relationships: [];
 			};
@@ -3549,6 +3650,48 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 				];
+			};
+			compendium_items: {
+				Row: {
+					created_at: string;
+					description: string | null;
+					id: string;
+					image: string | null;
+					item_type: string;
+					name: string;
+					rarity: string;
+					source_book: string | null;
+					updated_at: string;
+					value: number | null;
+					weight: number | null;
+				};
+				Insert: {
+					created_at?: string;
+					description?: string | null;
+					id?: string;
+					image?: string | null;
+					item_type: string;
+					name: string;
+					rarity?: string;
+					source_book?: string | null;
+					updated_at?: string;
+					value?: number | null;
+					weight?: number | null;
+				};
+				Update: {
+					created_at?: string;
+					description?: string | null;
+					id?: string;
+					image?: string | null;
+					item_type?: string;
+					name?: string;
+					rarity?: string;
+					source_book?: string | null;
+					updated_at?: string;
+					value?: number | null;
+					weight?: number | null;
+				};
+				Relationships: [];
 			};
 			compendium_job_features: {
 				Row: {
@@ -3783,7 +3926,7 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			compendium_regent_features: {
+			compendium_monarch_features: {
 				Row: {
 					action_type: string | null;
 					aliases: string[] | null;
@@ -3795,7 +3938,7 @@ export type Database = {
 					is_signature: boolean;
 					level: number;
 					license_note: string | null;
-					regent_id: string;
+					monarch_id: string;
 					name: string;
 					prerequisites: string | null;
 					recharge: string | null;
@@ -3815,7 +3958,7 @@ export type Database = {
 					is_signature?: boolean;
 					level: number;
 					license_note?: string | null;
-					regent_id: string;
+					monarch_id: string;
 					name: string;
 					prerequisites?: string | null;
 					recharge?: string | null;
@@ -3835,7 +3978,7 @@ export type Database = {
 					is_signature?: boolean;
 					level?: number;
 					license_note?: string | null;
-					regent_id?: string;
+					monarch_id?: string;
 					name?: string;
 					prerequisites?: string | null;
 					recharge?: string | null;
@@ -3846,15 +3989,15 @@ export type Database = {
 				};
 				Relationships: [
 					{
-						foreignKeyName: "compendium_regent_features_regent_id_fkey";
-						columns: ["regent_id"];
+						foreignKeyName: "compendium_monarch_features_monarch_id_fkey";
+						columns: ["monarch_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_regents";
+						referencedRelation: "compendium_monarchs";
 						referencedColumns: ["id"];
 					},
 				];
 			};
-			compendium_regents: {
+			compendium_monarchs: {
 				Row: {
 					aliases: string[] | null;
 					corruption_risk: string | null;
@@ -4258,85 +4401,262 @@ export type Database = {
 			};
 			compendium_powers: {
 				Row: {
+					activation_time: string | null;
 					aliases: string[] | null;
 					casting_time: string;
 					components: string | null;
 					concentration: boolean;
 					created_at: string;
+					damage_roll: string | null;
+					damage_type: string | null;
 					description: string;
 					display_name: string | null;
 					duration: string;
 					generated_reason: string | null;
+					has_attack_roll: boolean | null;
+					has_save: boolean | null;
 					higher_levels: string | null;
 					id: string;
 					job_names: string[] | null;
 					license_note: string | null;
+					mechanics: Json | null;
 					name: string;
 					path_names: string[] | null;
 					power_level: number;
+					power_type: string | null;
 					range: string;
 					regent_names: string[] | null;
 					ritual: boolean;
+					save_ability: string | null;
 					school: string | null;
 					source_book: string | null;
 					source_kind: string | null;
 					source_name: string | null;
 					tags: string[] | null;
+					target: string | null;
 					theme_tags: string[] | null;
 				};
 				Insert: {
+					activation_time?: string | null;
 					aliases?: string[] | null;
 					casting_time: string;
 					components?: string | null;
 					concentration?: boolean;
 					created_at?: string;
+					damage_roll?: string | null;
+					damage_type?: string | null;
 					description: string;
 					display_name?: string | null;
 					duration: string;
 					generated_reason?: string | null;
+					has_attack_roll?: boolean | null;
+					has_save?: boolean | null;
 					higher_levels?: string | null;
 					id?: string;
 					job_names?: string[] | null;
 					license_note?: string | null;
+					mechanics?: Json | null;
 					name: string;
 					path_names?: string[] | null;
 					power_level?: number;
+					power_type?: string | null;
 					range: string;
 					regent_names?: string[] | null;
 					ritual?: boolean;
+					save_ability?: string | null;
 					school?: string | null;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;
 					tags?: string[] | null;
+					target?: string | null;
 					theme_tags?: string[] | null;
 				};
 				Update: {
+					activation_time?: string | null;
 					aliases?: string[] | null;
 					casting_time?: string;
 					components?: string | null;
 					concentration?: boolean;
 					created_at?: string;
+					damage_roll?: string | null;
+					damage_type?: string | null;
 					description?: string;
 					display_name?: string | null;
 					duration?: string;
 					generated_reason?: string | null;
+					has_attack_roll?: boolean | null;
+					has_save?: boolean | null;
 					higher_levels?: string | null;
 					id?: string;
 					job_names?: string[] | null;
 					license_note?: string | null;
+					mechanics?: Json | null;
 					name?: string;
 					path_names?: string[] | null;
 					power_level?: number;
+					power_type?: string | null;
 					range?: string;
 					regent_names?: string[] | null;
 					ritual?: boolean;
+					save_ability?: string | null;
 					school?: string | null;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;
 					tags?: string[] | null;
+					target?: string | null;
 					theme_tags?: string[] | null;
+				};
+				Relationships: [];
+			};
+			compendium_regent_features: {
+				Row: {
+					action_type: string | null;
+					aliases: string[] | null;
+					created_at: string;
+					description: string;
+					display_name: string | null;
+					generated_reason: string | null;
+					id: string;
+					is_signature: boolean;
+					level: number;
+					license_note: string | null;
+					name: string;
+					prerequisites: string | null;
+					recharge: string | null;
+					regent_id: string;
+					source_kind: string | null;
+					source_name: string | null;
+					theme_tags: string[] | null;
+					uses_formula: string | null;
+				};
+				Insert: {
+					action_type?: string | null;
+					aliases?: string[] | null;
+					created_at?: string;
+					description: string;
+					display_name?: string | null;
+					generated_reason?: string | null;
+					id?: string;
+					is_signature?: boolean;
+					level: number;
+					license_note?: string | null;
+					name: string;
+					prerequisites?: string | null;
+					recharge?: string | null;
+					regent_id: string;
+					source_kind?: string | null;
+					source_name?: string | null;
+					theme_tags?: string[] | null;
+					uses_formula?: string | null;
+				};
+				Update: {
+					action_type?: string | null;
+					aliases?: string[] | null;
+					created_at?: string;
+					description?: string;
+					display_name?: string | null;
+					generated_reason?: string | null;
+					id?: string;
+					is_signature?: boolean;
+					level?: number;
+					license_note?: string | null;
+					name?: string;
+					prerequisites?: string | null;
+					recharge?: string | null;
+					regent_id?: string;
+					source_kind?: string | null;
+					source_name?: string | null;
+					theme_tags?: string[] | null;
+					uses_formula?: string | null;
+				};
+				Relationships: [];
+			};
+			compendium_regents: {
+				Row: {
+					aliases: string[] | null;
+					corruption_risk: string | null;
+					created_at: string;
+					damage_type: string | null;
+					description: string;
+					display_name: string | null;
+					flavor_text: string | null;
+					generated_reason: string | null;
+					id: string;
+					license_note: string | null;
+					lore: string | null;
+					manifestation_description: string | null;
+					name: string;
+					prerequisites: string | null;
+					primary_abilities:
+						| Database["public"]["Enums"]["ability_score"][]
+						| null;
+					source_book: string | null;
+					source_kind: string | null;
+					source_name: string | null;
+					tags: string[] | null;
+					theme: string;
+					theme_tags: string[] | null;
+					title: string;
+					unlock_level: number;
+					updated_at: string;
+				};
+				Insert: {
+					aliases?: string[] | null;
+					corruption_risk?: string | null;
+					created_at?: string;
+					damage_type?: string | null;
+					description: string;
+					display_name?: string | null;
+					flavor_text?: string | null;
+					generated_reason?: string | null;
+					id?: string;
+					license_note?: string | null;
+					lore?: string | null;
+					manifestation_description?: string | null;
+					name: string;
+					prerequisites?: string | null;
+					primary_abilities?:
+						| Database["public"]["Enums"]["ability_score"][]
+						| null;
+					source_book?: string | null;
+					source_kind?: string | null;
+					source_name?: string | null;
+					tags?: string[] | null;
+					theme: string;
+					theme_tags?: string[] | null;
+					title: string;
+					unlock_level?: number;
+					updated_at?: string;
+				};
+				Update: {
+					aliases?: string[] | null;
+					corruption_risk?: string | null;
+					created_at?: string;
+					damage_type?: string | null;
+					description?: string;
+					display_name?: string | null;
+					flavor_text?: string | null;
+					generated_reason?: string | null;
+					id?: string;
+					license_note?: string | null;
+					lore?: string | null;
+					manifestation_description?: string | null;
+					name?: string;
+					prerequisites?: string | null;
+					primary_abilities?:
+						| Database["public"]["Enums"]["ability_score"][]
+						| null;
+					source_book?: string | null;
+					source_kind?: string | null;
+					source_name?: string | null;
+					tags?: string[] | null;
+					theme?: string;
+					theme_tags?: string[] | null;
+					title?: string;
+					unlock_level?: number;
+					updated_at?: string;
 				};
 				Relationships: [];
 			};
@@ -4381,8 +4701,7 @@ export type Database = {
 					quirks?: string[] | null;
 					rarity?: Database["public"]["Enums"]["rarity"];
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
-
-					sigil_slots_base?: number | null;
+					requires_attunement?: boolean;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;
@@ -4406,8 +4725,7 @@ export type Database = {
 					quirks?: string[] | null;
 					rarity?: Database["public"]["Enums"]["rarity"];
 					relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
-
-					sigil_slots_base?: number | null;
+					requires_attunement?: boolean;
 					source_book?: string | null;
 					source_kind?: string | null;
 					source_name?: string | null;
@@ -4472,6 +4790,7 @@ export type Database = {
 					effect_type: string;
 					higher_levels: string | null;
 					id: string;
+					image: string | null;
 					inscription_difficulty: number | null;
 					lore: string | null;
 					martial_penalty: string | null;
@@ -4515,6 +4834,7 @@ export type Database = {
 					effect_type: string;
 					higher_levels?: string | null;
 					id?: string;
+					image?: string | null;
 					inscription_difficulty?: number | null;
 					lore?: string | null;
 					martial_penalty?: string | null;
@@ -4558,6 +4878,7 @@ export type Database = {
 					effect_type?: string;
 					higher_levels?: string | null;
 					id?: string;
+					image?: string | null;
 					inscription_difficulty?: number | null;
 					lore?: string | null;
 					martial_penalty?: string | null;
@@ -4786,6 +5107,69 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			compendium_sigils: {
+				Row: {
+					can_inscribe_on: string[] | null;
+					created_at: string;
+					description: string | null;
+					effect_description: string;
+					effect_type: string | null;
+					id: string;
+					image: string | null;
+					inscription_difficulty: number | null;
+					name: string;
+					passive_bonuses: Json | null;
+					rarity: string;
+					requires_level: number | null;
+					rune_category: string;
+					rune_level: number;
+					rune_type: string;
+					source_book: string | null;
+					tags: string[] | null;
+					updated_at: string;
+				};
+				Insert: {
+					can_inscribe_on?: string[] | null;
+					created_at?: string;
+					description?: string | null;
+					effect_description: string;
+					effect_type?: string | null;
+					id?: string;
+					image?: string | null;
+					inscription_difficulty?: number | null;
+					name: string;
+					passive_bonuses?: Json | null;
+					rarity?: string;
+					requires_level?: number | null;
+					rune_category: string;
+					rune_level?: number;
+					rune_type: string;
+					source_book?: string | null;
+					tags?: string[] | null;
+					updated_at?: string;
+				};
+				Update: {
+					can_inscribe_on?: string[] | null;
+					created_at?: string;
+					description?: string | null;
+					effect_description?: string;
+					effect_type?: string | null;
+					id?: string;
+					image?: string | null;
+					inscription_difficulty?: number | null;
+					name?: string;
+					passive_bonuses?: Json | null;
+					rarity?: string;
+					requires_level?: number | null;
+					rune_category?: string;
+					rune_level?: number;
+					rune_type?: string;
+					source_book?: string | null;
+					tags?: string[] | null;
+					updated_at?: string;
+				};
+				Relationships: [];
+			};
 			compendium_skills: {
 				Row: {
 					ability: string;
@@ -4922,6 +5306,8 @@ export type Database = {
 					is_template: boolean;
 					job_id: string | null;
 					license_note: string | null;
+					monarch_a_id: string | null;
+					monarch_b_id: string | null;
 					name: string;
 					path_id: string | null;
 					prerequisites: string | null;
@@ -4948,6 +5334,8 @@ export type Database = {
 					is_template?: boolean;
 					job_id?: string | null;
 					license_note?: string | null;
+					monarch_a_id?: string | null;
+					monarch_b_id?: string | null;
 					name: string;
 					path_id?: string | null;
 					prerequisites?: string | null;
@@ -4974,6 +5362,8 @@ export type Database = {
 					is_template?: boolean;
 					job_id?: string | null;
 					license_note?: string | null;
+					monarch_a_id?: string | null;
+					monarch_b_id?: string | null;
 					name?: string;
 					path_id?: string | null;
 					prerequisites?: string | null;
@@ -4993,6 +5383,20 @@ export type Database = {
 						columns: ["job_id"];
 						isOneToOne: false;
 						referencedRelation: "compendium_jobs";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "compendium_sovereigns_monarch_a_id_fkey";
+						columns: ["monarch_a_id"];
+						isOneToOne: false;
+						referencedRelation: "compendium_monarchs";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "compendium_sovereigns_monarch_b_id_fkey";
+						columns: ["monarch_b_id"];
+						isOneToOne: false;
+						referencedRelation: "compendium_monarchs";
 						referencedColumns: ["id"];
 					},
 					{
@@ -5822,8 +6226,8 @@ export type Database = {
 					is_public: boolean;
 					job_id: string;
 					likes_count: number;
-					regent_a_id: string;
-					regent_b_id: string;
+					monarch_a_id: string;
+					monarch_b_id: string;
 					name: string;
 					path_id: string;
 					power_multiplier: string;
@@ -5842,8 +6246,8 @@ export type Database = {
 					is_public?: boolean;
 					job_id: string;
 					likes_count?: number;
-					regent_a_id: string;
-					regent_b_id: string;
+					monarch_a_id: string;
+					monarch_b_id: string;
 					name: string;
 					path_id: string;
 					power_multiplier: string;
@@ -5862,8 +6266,8 @@ export type Database = {
 					is_public?: boolean;
 					job_id?: string;
 					likes_count?: number;
-					regent_a_id?: string;
-					regent_b_id?: string;
+					monarch_a_id?: string;
+					monarch_b_id?: string;
 					name?: string;
 					path_id?: string;
 					power_multiplier?: string;
@@ -5878,17 +6282,17 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "saved_sovereigns_regent_a_id_fkey";
-						columns: ["regent_a_id"];
+						foreignKeyName: "saved_sovereigns_monarch_a_id_fkey";
+						columns: ["monarch_a_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_regents";
+						referencedRelation: "compendium_monarchs";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "saved_sovereigns_regent_b_id_fkey";
-						columns: ["regent_b_id"];
+						foreignKeyName: "saved_sovereigns_monarch_b_id_fkey";
+						columns: ["monarch_b_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_regents";
+						referencedRelation: "compendium_monarchs";
 						referencedColumns: ["id"];
 					},
 					{
@@ -6678,12 +7082,13 @@ export type Database = {
 					initiative: number | null;
 					job: string | null;
 					level: number | null;
-					regent_overlays: string[] | null;
+					monarch_overlays: string[] | null;
 					name: string | null;
 					notes: string | null;
 					path: string | null;
 					portrait_url: string | null;
 					proficiency_bonus: number | null;
+					regent_overlays: string[] | null;
 					saving_throw_proficiencies:
 						| Database["public"]["Enums"]["ability_score"][]
 						| null;
@@ -7113,7 +7518,7 @@ export type Database = {
 					tags: string[];
 				}[];
 			};
-			search_compendium_regents: {
+			search_compendium_monarchs: {
 				Args: { p_limit?: number; p_offset?: number; p_query: string };
 				Returns: {
 					created_at: string;
@@ -7215,6 +7620,19 @@ export type Database = {
 				Returns: string;
 			};
 			sync_compendium_data: { Args: never; Returns: undefined };
+			update_character_xp: {
+				Args: {
+					campaign_id?: string;
+					character_id: string;
+					reason?: string;
+					xp_amount: number;
+				};
+				Returns: {
+					message: string;
+					new_xp_total: number;
+					success: boolean;
+				}[];
+			};
 			update_vtt_audio_settings: {
 				Args: {
 					p_ambient_volume?: number;

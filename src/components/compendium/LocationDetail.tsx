@@ -1,4 +1,5 @@
 import { Gem, MapPin, Skull } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
@@ -73,7 +74,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 			{data.description && (
 				<SystemWindow id="location-details" title="DETAILS">
 					<p className="text-foreground leading-relaxed">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description || ""} />
 					</p>
 				</SystemWindow>
 			)}
@@ -85,7 +86,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 							<li key={encounter} className="flex items-center gap-2">
 								<Skull className="w-4 h-4 text-rose-400" />
 								<span className="text-muted-foreground">
-									{formatRegentVernacular(encounter)}
+									<AutoLinkText text={encounter} />
 								</span>
 							</li>
 						))}
@@ -100,7 +101,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 							<li key={treasure} className="flex items-center gap-2">
 								<Gem className="w-4 h-4 text-amber-400" />
 								<span className="text-muted-foreground">
-									{formatRegentVernacular(treasure)}
+									<AutoLinkText text={treasure} />
 								</span>
 							</li>
 						))}

@@ -1,5 +1,6 @@
 import { Crown, Shield, Sparkles, Swords } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -199,7 +200,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 					</div>
 					{data.description && (
 						<p className="text-muted-foreground leading-relaxed">
-							{formatRegentVernacular(data.description)}
+							<AutoLinkText text={data.description} />
 						</p>
 					)}
 				</div>
@@ -308,7 +309,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 										)}
 									</div>
 									<p className="text-sm text-muted-foreground">
-										{formatRegentVernacular(ability.description)}
+										<AutoLinkText text={ability.description} />
 									</p>
 
 									{payload && (
@@ -349,25 +350,25 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 						{data.lore.origin && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Origin:</span>{" "}
-								{formatRegentVernacular(data.lore.origin)}
+								<AutoLinkText text={data.lore.origin} />
 							</p>
 						)}
 						{data.lore.history && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">History:</span>{" "}
-								{formatRegentVernacular(data.lore.history)}
+								<AutoLinkText text={data.lore.history} />
 							</p>
 						)}
 						{data.lore.curse && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Curse:</span>{" "}
-								{formatRegentVernacular(data.lore.curse)}
+								<AutoLinkText text={data.lore.curse} />
 							</p>
 						)}
 						{data.lore.personality && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Personality:</span>{" "}
-								{formatRegentVernacular(data.lore.personality)}
+								<AutoLinkText text={data.lore.personality} />
 							</p>
 						)}
 					</div>

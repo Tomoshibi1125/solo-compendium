@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Clock, Loader2, Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -306,7 +307,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 										</div>
 										{result.description && (
 											<p className="text-xs text-muted-foreground line-clamp-1">
-												export {formatRegentVernacular(result.description)}
+												<AutoLinkText text={result.description} />
 											</p>
 										)}
 									</button>

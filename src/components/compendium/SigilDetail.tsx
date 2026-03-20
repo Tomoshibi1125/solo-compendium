@@ -1,6 +1,10 @@
 import { AlertCircle, BookOpen, Shield, Sparkles, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { SystemWindow } from "@/components/ui/SystemWindow";
+import { setPendingResolution } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface Sigil {
@@ -48,9 +52,27 @@ const SIGIL_TYPE_COLORS: Record<string, string> = {
 };
 
 export const SigilDetail = ({ data }: SigilDetailProps) => {
+	const navigate = useNavigate();
 	const Icon = SIGIL_TYPE_ICONS[data.rune_type] || Sparkles;
 	const typeColor = SIGIL_TYPE_COLORS[data.rune_type] || "";
 	const displayName = formatRegentVernacular(data.name);
+
+	const handleRoll = () => {
+		const id = crypto.randomUUID();
+		const name = displayName;
+
+		// Sigils usually have a DC for their effect based on inscription difficulty or a fixed value
+		const dc = data.inscription_difficulty || 10;
+		setPendingResolution({
+			version: 1,
+			id,
+			name,
+			source: { type: "rune", entryId: data.id }, // Using rune as a generic source for sigils
+			kind: "save",
+			save: { dc, ability: "Intelligence", roll: "1d20" },
+		});
+		navigate("/dice");
+	};
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -99,7 +121,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 						</h1>
 
 						<p className="text-lg text-muted-foreground leading-relaxed italic border-l-2 border-primary/30 pl-4 mt-4">
-							"{formatRegentVernacular(data.description)}"
+							"<AutoLinkText text={data.description} />"
 						</p>
 
 						<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
@@ -140,9 +162,13 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 									<h4 className="text-foreground font-medium mb-1">
 										Sigil Effect
 									</h4>
-									<p className="text-muted-foreground text-sm m-0">
-										{formatRegentVernacular(data.effect_description)}
+									<p className="text-muted-foreground text-sm m-0 mb-3">
+										<AutoLinkText text={data.effect_description} />
 									</p>
+									<Button size="sm" variant="outline" onClick={handleRoll}>
+										<Zap className="w-4 h-4 mr-2" />
+										Roll Sigil Effect
+									</Button>
 								</div>
 							</div>
 						</div>

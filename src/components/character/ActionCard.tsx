@@ -8,6 +8,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { memo } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SystemWindow } from "@/components/ui/SystemWindow";
@@ -99,7 +100,6 @@ function ActionCardComponent({
 
 	const Icon = type ? TYPE_ICONS[type] || Star : Star;
 	const displayName = formatRegentVernacular(name);
-	const displayDescription = formatRegentVernacular(description);
 	const displayRange = range ? formatRegentVernacular(range) : undefined;
 	const displayRecharge = recharge
 		? formatRegentVernacular(recharge)
@@ -255,7 +255,9 @@ function ActionCardComponent({
 					)}
 				</div>
 
-				<p className="text-sm text-muted-foreground">{displayDescription}</p>
+				<div className="text-sm text-muted-foreground">
+					<AutoLinkText text={description} />
+				</div>
 
 				<div className="flex gap-2 pt-2 border-t border-border/50 flex-wrap">
 					{(payload?.attack || attackBonus !== undefined) && (

@@ -10,6 +10,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { supabase } from "@/integrations/supabase/client";
@@ -203,7 +204,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					</div>
 
 					<p className="text-foreground leading-relaxed">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 
 					<div className="flex flex-wrap gap-2">
@@ -284,7 +285,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					<div className="flex items-start gap-3">
 						<Sparkles className="w-6 h-6 text-violet-400 flex-shrink-0" />
 						<p className="text-foreground leading-relaxed italic">
-							{formatRegentVernacular(data.fusion_description)}
+							<AutoLinkText text={data.fusion_description} />
 						</p>
 					</div>
 				</SystemWindow>
@@ -299,7 +300,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					<div className="flex items-start gap-3">
 						<Shield className="w-5 h-5 text-rose-400 flex-shrink-0" />
 						<p className="text-foreground">
-							{formatRegentVernacular(data.prerequisites)}
+							<AutoLinkText text={data.prerequisites} />
 						</p>
 					</div>
 				</SystemWindow>
@@ -337,7 +338,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{formatRegentVernacular(feature.description)}
+									<AutoLinkText text={feature.description} />
 								</p>
 								{feature.origin_sources &&
 									feature.origin_sources.length > 0 && (
@@ -394,7 +395,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground">
-									{formatRegentVernacular(feature.description)}
+									<AutoLinkText text={feature.description} />
 								</p>
 								{feature.origin_sources &&
 									feature.origin_sources.length > 0 && (

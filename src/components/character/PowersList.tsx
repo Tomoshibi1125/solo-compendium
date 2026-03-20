@@ -25,6 +25,7 @@ import type { Database } from "@/integrations/supabase/types";
 
 export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
 import {
 	getAbilityModifier,
@@ -573,9 +574,9 @@ export function PowersList({
 														)}
 													</div>
 													{displayDescription && (
-														<p className="text-xs text-muted-foreground line-clamp-2">
-															{displayDescription}
-														</p>
+														<div className="text-xs text-muted-foreground line-clamp-3">
+															<AutoLinkText text={power.description || ""} />
+														</div>
 													)}
 													<div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
 														{displayCastingTime && (

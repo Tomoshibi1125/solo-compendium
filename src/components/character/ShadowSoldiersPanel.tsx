@@ -16,6 +16,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -525,9 +526,9 @@ export function ShadowSoldiersPanel({
 													</div>
 												</CardHeader>
 												<CardContent>
-													<p className="text-sm text-muted-foreground mb-4">
-														{formatRegentVernacular(soldier.description)}
-													</p>
+													<div className="text-sm text-muted-foreground mb-4">
+														<AutoLinkText text={soldier.description || ""} />
+													</div>
 
 													<div className="flex gap-4 text-xs font-heading mb-4">
 														<span className="text-gate-a">
@@ -553,7 +554,7 @@ export function ShadowSoldiersPanel({
 																className="text-xs p-2 rounded bg-muted/50"
 															>
 																<span className="font-heading font-semibold text-foreground">
-																	{formatRegentVernacular(ability.name)}
+																	<AutoLinkText text={ability.name} />
 																</span>
 																<Badge
 																	variant="outline"

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { StatBlock, StatSection } from "@/components/compendium/StatBlock";
@@ -465,7 +466,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 					</div>
 					{data.lore && (
 						<p className="text-muted-foreground italic border-l-2 border-shadow-purple/40 pl-4 mt-4 leading-relaxed">
-							{formatRegentVernacular(data.lore)}
+							<AutoLinkText text={data.lore} />
 						</p>
 					)}
 				</div>
@@ -627,7 +628,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									{formatRegentVernacular(trait.name)}
 								</h4>
 								<p className="text-sm text-foreground leading-relaxed">
-									{formatRegentVernacular(trait.description)}
+									<AutoLinkText text={trait.description} />
 								</p>
 							</div>
 						))}
@@ -678,7 +679,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									</Button>
 								</div>
 								<p className="text-sm text-foreground leading-relaxed mb-1">
-									{formatRegentVernacular(action.description)}
+									<AutoLinkText text={action.description} />
 								</p>
 								{action.damage && (
 									<p className="text-sm text-foreground font-medium mt-2">
@@ -722,7 +723,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground leading-relaxed mb-1">
-									{formatRegentVernacular(action.description)}
+									<AutoLinkText text={action.description} />
 								</p>
 								{action.damage && (
 									<p className="text-sm text-foreground font-medium mt-2">
@@ -766,7 +767,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground leading-relaxed mb-1">
-									{formatRegentVernacular(action.description)}
+									<AutoLinkText text={action.description} />
 								</p>
 								{action.damage && (
 									<p className="text-sm text-foreground font-medium mt-2">
@@ -818,7 +819,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground leading-relaxed">
-									{formatRegentVernacular(action.description)}
+									<AutoLinkText text={action.description} />
 								</p>
 							</div>
 						))}
@@ -829,7 +830,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 			{data.description && (
 				<StatBlock title="DESCRIPTION" id="monster-description">
 					<p className="text-foreground leading-relaxed text-base">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 				</StatBlock>
 			)}

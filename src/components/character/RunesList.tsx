@@ -9,6 +9,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useMemo } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SystemWindow } from "@/components/ui/SystemWindow";
@@ -149,11 +150,8 @@ export function RunesList({
 							{unabsorbedRunes.map((rk) => {
 								const Icon = RUNE_TYPE_ICONS[rk.rune.rune_type] || BookOpen;
 								const displayName = formatRegentVernacular(rk.rune.name);
-								const displayDesc = rk.rune.effect_description
-									? formatRegentVernacular(rk.rune.effect_description)
-									: rk.rune.description
-										? formatRegentVernacular(rk.rune.description)
-										: "";
+								const runeDescription =
+									rk.rune.effect_description || rk.rune.description || "";
 								return (
 									<div
 										key={rk.id}
@@ -187,10 +185,10 @@ export function RunesList({
 															Lv.{rk.rune.rune_level}
 														</Badge>
 													</div>
-													{displayDesc && (
-														<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-															{displayDesc}
-														</p>
+													{runeDescription && (
+														<div className="text-xs text-muted-foreground mt-1 line-clamp-3">
+															<AutoLinkText text={runeDescription} />
+														</div>
 													)}
 													{/* Cross-type absorption preview */}
 													{absorptionPreviews[rk.rune_id]?.isCrossType && (
@@ -275,9 +273,9 @@ export function RunesList({
 										</div>
 									</div>
 									{feature.description && (
-										<p className="text-xs text-muted-foreground mt-1">
-											{formatRegentVernacular(feature.description)}
-										</p>
+										<div className="text-xs text-muted-foreground mt-1">
+											<AutoLinkText text={feature.description} />
+										</div>
 									)}
 								</div>
 							))}

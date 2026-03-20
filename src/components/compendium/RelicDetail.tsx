@@ -1,5 +1,6 @@
 import { AlertTriangle, Coins, Gem, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -326,7 +327,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{/* Description */}
 			<SystemWindow title="DESCRIPTION">
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
-					{formatRegentVernacular(data.description)}
+					<AutoLinkText text={data.description} />
 				</p>
 			</SystemWindow>
 
@@ -385,7 +386,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 									</div>
 									{ability.description && (
 										<p className="text-sm text-muted-foreground mt-1">
-											{formatRegentVernacular(ability.description)}
+											<AutoLinkText text={ability.description} />
 										</p>
 									)}
 
@@ -427,19 +428,19 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						{data.lore.origin && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Origin:</span>{" "}
-								{formatRegentVernacular(data.lore.origin)}
+								<AutoLinkText text={data.lore.origin} />
 							</p>
 						)}
 						{data.lore.history && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">History:</span>{" "}
-								{formatRegentVernacular(data.lore.history)}
+								<AutoLinkText text={data.lore.history} />
 							</p>
 						)}
 						{data.lore.currentOwner && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Current Owner:</span>{" "}
-								{formatRegentVernacular(data.lore.currentOwner)}
+								<AutoLinkText text={data.lore.currentOwner} />
 							</p>
 						)}
 						{data.lore.previousOwners &&
@@ -501,7 +502,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							<li key={quirk} className="flex items-start gap-2">
 								<Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
 								<span className="text-muted-foreground">
-									{formatRegentVernacular(quirk)}
+									<AutoLinkText text={quirk} />
 								</span>
 							</li>
 						))}
@@ -515,7 +516,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 					<div className="flex items-start gap-3">
 						<AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
 						<p className="text-foreground">
-							{formatRegentVernacular(data.corruption_risk)}
+							<AutoLinkText text={data.corruption_risk} />
 						</p>
 					</div>
 				</SystemWindow>

@@ -1,4 +1,5 @@
 import { AlertCircle, CheckCircle } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -23,7 +24,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 			<SystemWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<p className="text-foreground">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 
 					{data.tags && data.tags.length > 0 && (
@@ -44,7 +45,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 					<div className="flex items-center gap-3">
 						<AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0" />
 						<p className="text-foreground">
-							{formatRegentVernacular(data.prerequisites)}
+							<AutoLinkText text={data.prerequisites} />
 						</p>
 					</div>
 				</SystemWindow>
@@ -58,7 +59,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 							<li key={benefit} className="flex items-start gap-3">
 								<CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
 								<span className="text-foreground">
-									{formatRegentVernacular(benefit)}
+									<AutoLinkText text={benefit} />
 								</span>
 							</li>
 						))}

@@ -1,5 +1,6 @@
 import { Trash2 } from "lucide-react";
 import { memo } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,9 +53,6 @@ function EquipmentItemComponent({
 	sigilControl,
 }: EquipmentItemProps) {
 	const displayName = formatRegentVernacular(item.name);
-	const displayDescription = item.description
-		? formatRegentVernacular(item.description)
-		: null;
 	const displayRarity = item.rarity
 		? formatRegentVernacular(item.rarity)
 		: null;
@@ -87,10 +85,10 @@ function EquipmentItemComponent({
 							</Badge>
 						)}
 					</div>
-					{displayDescription && (
-						<p className="text-xs text-muted-foreground line-clamp-2">
-							{displayDescription}
-						</p>
+					{item.description && (
+						<div className="text-xs text-muted-foreground line-clamp-3">
+							<AutoLinkText text={item.description} />
+						</div>
 					)}
 					{item.properties && item.properties.length > 0 && (
 						<div className="flex flex-wrap gap-1 mt-1">
@@ -100,7 +98,7 @@ function EquipmentItemComponent({
 									variant="outline"
 									className="text-xs"
 								>
-									{formatRegentVernacular(prop)}
+									<AutoLinkText text={prop} />
 								</Badge>
 							))}
 						</div>

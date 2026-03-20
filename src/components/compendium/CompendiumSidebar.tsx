@@ -32,6 +32,12 @@ interface CompendiumSidebarProps {
 	onToggleBossOnly?: () => void;
 	showMiniBossOnly?: boolean;
 	onToggleMiniBossOnly?: () => void;
+	rarities?: string[];
+	selectedRarities?: string[];
+	onRarityToggle?: (rarity: string) => void;
+	elements?: string[];
+	selectedElements?: string[];
+	onElementToggle?: (element: string) => void;
 }
 
 export function CompendiumSidebar({
@@ -54,11 +60,19 @@ export function CompendiumSidebar({
 	onToggleBossOnly,
 	showMiniBossOnly = false,
 	onToggleMiniBossOnly,
+	rarities = [],
+	selectedRarities = [],
+	onRarityToggle,
+	elements = [],
+	selectedElements = [],
+	onElementToggle,
 }: CompendiumSidebarProps) {
 	const activeFiltersCount =
 		selectedSourceBooks.length +
 		(selectedSchools?.length || 0) +
 		(selectedGateRanks?.length || 0) +
+		(selectedRarities?.length || 0) +
+		(selectedElements?.length || 0) +
 		(showFavoritesOnly ? 1 : 0) +
 		(showBossOnly ? 1 : 0) +
 		(showMiniBossOnly ? 1 : 0);
@@ -245,6 +259,63 @@ export function CompendiumSidebar({
 							</div>
 						)}
 					</div>
+				</SystemWindow>
+			)}
+			{/* Rarities */}
+			{rarities.length > 0 && onRarityToggle && (
+				<SystemWindow title="RARITY" className="p-4">
+					<div className="space-y-2">
+						{rarities.map((rarity) => {
+							const isSelected = selectedRarities?.includes(rarity);
+							return (
+								<div key={rarity} className="flex items-center gap-2">
+									<input
+										type="checkbox"
+										id={`rarity-${rarity}`}
+										checked={isSelected}
+										onChange={() => onRarityToggle(rarity)}
+										className="rounded border-border"
+									/>
+									<label
+										htmlFor={`rarity-${rarity}`}
+										className="text-sm cursor-pointer flex-1 capitalize"
+									>
+										{rarity.replace("_", " ")}
+									</label>
+								</div>
+							);
+						})}
+					</div>
+				</SystemWindow>
+			)}
+
+			{/* Elements */}
+			{elements.length > 0 && onElementToggle && (
+				<SystemWindow title="ELEMENTS" className="p-4">
+					<ScrollArea className="h-[150px]">
+						<div className="space-y-2">
+							{elements.map((element) => {
+								const isSelected = selectedElements?.includes(element);
+								return (
+									<div key={element} className="flex items-center gap-2">
+										<input
+											type="checkbox"
+											id={`element-${element}`}
+											checked={isSelected}
+											onChange={() => onElementToggle(element)}
+											className="rounded border-border"
+										/>
+										<label
+											htmlFor={`element-${element}`}
+											className="text-sm cursor-pointer flex-1 capitalize"
+										>
+											{element}
+										</label>
+									</div>
+								);
+							})}
+						</div>
+					</ScrollArea>
 				</SystemWindow>
 			)}
 

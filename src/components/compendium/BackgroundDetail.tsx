@@ -1,4 +1,5 @@
 import { Coins } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -32,7 +33,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 			<SystemWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<p className="text-foreground">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 					{data.tags && data.tags.length > 0 && (
 						<div className="flex flex-wrap gap-2">
@@ -93,7 +94,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 					<div className="space-y-3">
 						{data.starting_equipment && (
 							<p className="text-foreground">
-								{formatRegentVernacular(data.starting_equipment)}
+								<AutoLinkText text={data.starting_equipment} />
 							</p>
 						)}
 						{data.starting_credits && (
@@ -115,9 +116,11 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 					className="border-primary/50"
 				>
 					<p className="text-foreground">
-						{data.feature_description
-							? formatRegentVernacular(data.feature_description)
-							: ""}
+						{data.feature_description ? (
+							<AutoLinkText text={data.feature_description} />
+						) : (
+							""
+						)}
 					</p>
 				</SystemWindow>
 			)}
@@ -131,7 +134,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								<li key={trait} className="flex items-start gap-2">
 									<span className="text-primary font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
-										{formatRegentVernacular(trait)}
+										<AutoLinkText text={trait} />
 									</span>
 								</li>
 							))}
@@ -146,7 +149,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								<li key={ideal} className="flex items-start gap-2">
 									<span className="text-primary font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
-										{formatRegentVernacular(ideal)}
+										<AutoLinkText text={ideal} />
 									</span>
 								</li>
 							))}
@@ -161,7 +164,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								<li key={bond} className="flex items-start gap-2">
 									<span className="text-primary font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
-										{formatRegentVernacular(bond)}
+										<AutoLinkText text={bond} />
 									</span>
 								</li>
 							))}
@@ -176,7 +179,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								<li key={flaw} className="flex items-start gap-2">
 									<span className="text-red-400 font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
-										{formatRegentVernacular(flaw)}
+										<AutoLinkText text={flaw} />
 									</span>
 								</li>
 							))}

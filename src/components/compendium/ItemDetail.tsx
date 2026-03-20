@@ -8,6 +8,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { Badge } from "@/components/ui/badge";
@@ -430,7 +431,9 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								<p className="font-heading text-foreground">Passive</p>
 								<ul className="list-disc list-inside text-muted-foreground">
 									{data.effects.passive.map((entry) => (
-										<li key={entry}>{formatRegentVernacular(entry)}</li>
+										<li key={entry}>
+											<AutoLinkText text={entry} />
+										</li>
 									))}
 								</ul>
 							</div>
@@ -494,7 +497,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 											)}
 
 											<p className="text-muted-foreground">
-												{formatRegentVernacular(active.description)}
+												<AutoLinkText text={active.description} />
 											</p>
 										</div>
 									);
@@ -503,7 +506,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						)}
 						{data.effect && (
 							<p className="text-muted-foreground">
-								{formatRegentVernacular(data.effect)}
+								<AutoLinkText text={data.effect} />
 							</p>
 						)}
 					</div>
@@ -513,7 +516,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 			{data.description && (
 				<SystemWindow id="item-description" title="DESCRIPTION">
 					<p className="text-foreground leading-relaxed">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description || ""} />
 					</p>
 				</SystemWindow>
 			)}

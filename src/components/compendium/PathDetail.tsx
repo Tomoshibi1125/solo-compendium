@@ -1,5 +1,6 @@
 import { GitBranch, Shield, Star, Swords, Zap } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
@@ -169,11 +170,11 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			<div>
 				<h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
 				<p className="text-muted-foreground leading-relaxed">
-					{formatRegentVernacular(data.description)}
+					<AutoLinkText text={data.description} />
 				</p>
 				{data.flavor_text && (
 					<p className="text-muted-foreground leading-relaxed mt-3 italic">
-						{formatRegentVernacular(data.flavor_text)}
+						<AutoLinkText text={data.flavor_text} />
 					</p>
 				)}
 			</div>
@@ -224,7 +225,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 									</span>
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{formatRegentVernacular(feature.description)}
+									<AutoLinkText text={feature.description} />
 								</p>
 								{(feature.action_type ||
 									feature.recharge ||
@@ -266,7 +267,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 									{formatRegentVernacular(ability.display_name || ability.name)}
 								</h4>
 								<p className="text-sm text-muted-foreground mb-3">
-									{formatRegentVernacular(ability.description)}
+									<AutoLinkText text={ability.description} />
 								</p>
 								<div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
 									{ability.action_type && (

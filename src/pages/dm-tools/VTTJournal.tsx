@@ -1,6 +1,7 @@
 import { ArrowLeft, Edit, FileText, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -584,7 +585,9 @@ const VTTJournal = () => {
 									) : (
 										<div className="prose prose-invert max-w-none">
 											<div className="whitespace-pre-wrap font-mono text-sm text-muted-foreground">
-												{selectedEntry.content || (
+												{selectedEntry.content ? (
+													<AutoLinkText text={selectedEntry.content} />
+												) : (
 													<em className="text-muted-foreground">
 														No content yet.
 													</em>

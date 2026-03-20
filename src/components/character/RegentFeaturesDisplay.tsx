@@ -1,4 +1,5 @@
 import { CheckCircle, Crown, Lock } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -96,9 +97,9 @@ export function RegentFeaturesDisplay({
 						<span className="font-medium">{regentData?.name}</span>
 						<Badge variant="secondary">{regentData?.rank}</Badge>
 					</div>
-					<p className="text-sm text-muted-foreground">
-						{regentData?.description}
-					</p>
+					<div className="text-sm text-muted-foreground">
+						<AutoLinkText text={regentData?.description || ""} />
+					</div>
 				</div>
 
 				{/* Regent Features */}
@@ -124,9 +125,9 @@ export function RegentFeaturesDisplay({
 										Lvl {feature.level}
 									</Badge>
 								</div>
-								<p className="text-sm text-muted-foreground">
-									{feature.description || ""}
-								</p>
+								<div className="text-sm text-muted-foreground">
+									<AutoLinkText text={feature.description || ""} />
+								</div>
 							</div>
 						))}
 						{regentFeatures.length === 0 && (

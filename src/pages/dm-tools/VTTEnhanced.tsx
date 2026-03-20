@@ -1,3 +1,4 @@
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { QuestGenerator } from "@/components/dm-tools/QuestGenerator";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
@@ -126,21 +127,32 @@ function DiceDisplayText({ text }: { text: string }) {
 	let lastIndex = 0;
 	for (const m of text.matchAll(pattern)) {
 		if (m.index > lastIndex) {
-			tokens.push(text.slice(lastIndex, m.index));
+			tokens.push(
+				<AutoLinkText
+					key={`pre-${lastIndex}`}
+					text={text.slice(lastIndex, m.index)}
+				/>,
+			);
 		}
 		if (m[1] !== undefined) {
-			tokens.push(<strong key={m.index}>{m[1]}</strong>);
+			tokens.push(
+				<strong key={`bold-${m.index}`}>
+					<AutoLinkText text={m[1]} />
+				</strong>,
+			);
 		} else if (m[2] !== undefined) {
 			tokens.push(
-				<del key={m.index} className="opacity-40">
-					{m[2]}
+				<del key={`del-${m.index}`} className="opacity-40">
+					<AutoLinkText text={m[2]} />
 				</del>,
 			);
 		}
 		lastIndex = m.index + m[0].length;
 	}
 	if (lastIndex < text.length) {
-		tokens.push(text.slice(lastIndex));
+		tokens.push(
+			<AutoLinkText key={`post-${lastIndex}`} text={text.slice(lastIndex)} />,
+		);
 	}
 	return <>{tokens}</>;
 }

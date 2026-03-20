@@ -11,15 +11,12 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
@@ -32,6 +29,10 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import {
+	getRandomEquipment,
+	getRandomRune,
+} from "@/lib/compendiumAutopopulate";
 import { LocalAIIntegration } from "@/lib/localAIIntegration";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -296,11 +297,29 @@ const QuestGenerator = () => {
 
 	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
 
-	const handleGenerate = () => {
+	const handleGenerate = async () => {
 		clearEnhanced();
 		const rank = selectedRank === "random" ? undefined : selectedRank;
-		const result = generateQuest(rank);
-		setQuest(result);
+		const baseQuest = generateQuest(rank);
+
+		// 100% Automation: Pull real rewards
+		const [realEquip, realRune] = await Promise.all([
+			getRandomEquipment(baseQuest.rank),
+			getRandomRune(),
+		]);
+
+		if (realEquip) {
+			baseQuest.rewards = [realEquip.name, ...baseQuest.rewards.slice(1)];
+		}
+		if (realRune) {
+			baseQuest.rewards = [...baseQuest.rewards, `Rune: ${realRune.name}`];
+		}
+
+		setQuest(baseQuest);
+		toast({
+			title: "Quest Generated",
+			description: "A new quest has been synthesized.",
+		});
 	};
 
 	const handleAIEnhance = async () => {
@@ -329,7 +348,7 @@ Provide ALL of the following sections with full detail:
 7. TIMELINE: Session count estimate, time pressure mechanics, milestone triggers
 8. KEY NPCs: 2-3 NPCs with brief stat blocks (AC/HP/CR) and motivations
 9. READ-ALOUD: Boxed text for quest briefing scene`;
-		await enhance("quest", seed);
+		await (enhance as any)("quest", seed);
 	};
 
 	const handleCopy = () => {
@@ -550,9 +569,9 @@ ${quest.description}
 							</div>
 
 							<div className="pt-2 border-t border-border">
-								<SystemText className="block text-muted-foreground font-heading leading-relaxed mb-4">
-									{quest.description}
-								</SystemText>
+								<div className="block text-muted-foreground font-heading leading-relaxed mb-4">
+									<AutoLinkText text={quest.description} />
+								</div>
 
 								<div className="space-y-3">
 									<div>
@@ -562,7 +581,9 @@ ${quest.description}
 										</h3>
 										<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
 											{quest.objectives.map((objective) => (
-												<li key={`quest-obj-${objective}`}>{objective}</li>
+												<li key={`quest-obj-${objective}`}>
+													<AutoLinkText text={objective} />
+												</li>
 											))}
 										</ul>
 									</div>
@@ -576,7 +597,7 @@ ${quest.description}
 											<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
 												{quest.complications.map((complication) => (
 													<li key={`quest-comp-${complication}`}>
-														{complication}
+														<AutoLinkText text={complication} />
 													</li>
 												))}
 											</ul>
@@ -591,7 +612,9 @@ ${quest.description}
 										</h3>
 										<ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
 											{quest.rewards.map((reward) => (
-												<li key={`quest-reward-${reward}`}>{reward}</li>
+												<li key={`quest-reward-${reward}`}>
+													<AutoLinkText text={reward} />
+												</li>
 											))}
 										</ul>
 									</div>
@@ -607,7 +630,7 @@ ${quest.description}
 										</span>
 									</div>
 									<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-										{enhancedText}
+										<AutoLinkText text={enhancedText || ""} />
 									</div>
 								</div>
 							)}

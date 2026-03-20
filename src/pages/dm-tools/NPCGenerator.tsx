@@ -8,19 +8,20 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
+import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import {
+	getRandomEquipment,
+	getRandomFeat,
+} from "@/lib/compendiumAutopopulate";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 const ASCENDANT_RANKS = ["E", "D", "C", "B", "A", "S"];
@@ -104,6 +105,8 @@ interface GeneratedNPC {
 	secret: string;
 	quirk: string;
 	description: string;
+	equipment: string[];
+	features: string[];
 }
 
 const NAMES = [
@@ -152,6 +155,8 @@ function generateNPC(): GeneratedNPC {
 		secret,
 		quirk,
 		description,
+		equipment: ["Standard Adventuring Gear"],
+		features: ["Commoner Statistics"],
 	};
 }
 
@@ -192,13 +197,27 @@ const NPCGenerator = () => {
 
 	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
 
-	const handleGenerate = () => {
+	const handleGenerate = async () => {
 		clearEnhanced();
-		const newNPC = generateNPC();
-		setNpc(newNPC);
+		const baseNPC = generateNPC();
+
+		// 100% Automation: Pull real equipment and feat
+		const [realEquip, realFeat] = await Promise.all([
+			getRandomEquipment(baseNPC.rank),
+			getRandomFeat(),
+		]);
+
+		if (realEquip) {
+			baseNPC.equipment = [realEquip.name];
+		}
+		if (realFeat) {
+			baseNPC.features = [realFeat.name];
+		}
+
+		setNpc(baseNPC);
 		toast({
 			title: "NPC Generated",
-			description: `Generated ${newNPC.name}.`,
+			description: `Generated ${baseNPC.name}.`,
 		});
 	};
 
@@ -225,7 +244,7 @@ Provide ALL of the following sections with full detail:
 6. PLOT HOOKS: 2-3 quest/story hooks involving this NPC
 7. EQUIPMENT: Notable gear, relics, consumables they carry with stats
 8. DESCRIPTION: Read-aloud boxed text for when players first encounter this NPC`;
-		await enhance("npc", seed);
+		await (enhance as any)("npc", seed);
 	};
 
 	const handleCopy = () => {
@@ -398,24 +417,22 @@ ${npc.description}`;
 										<span className="text-xs font-display text-muted-foreground">
 											DESCRIPTION
 										</span>
-										<SystemText className="block text-sm text-muted-foreground mt-2">
-											{npc.description}
-										</SystemText>
+										<div className="block text-sm text-muted-foreground mt-2">
+											<AutoLinkText text={npc.description} />
+										</div>
 									</div>
 
-									{enhancedText && (
-										<div className="pt-4 border-t border-primary/30">
-											<div className="flex items-center gap-2 mb-2">
-												<Sparkles className="w-4 h-4 text-primary" />
-												<span className="text-xs font-display text-primary">
-													AI-ENHANCED DETAILS
-												</span>
-											</div>
-											<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-												{enhancedText}
-											</div>
+									<div className="pt-4 border-t border-primary/30">
+										<div className="flex items-center gap-2 mb-2">
+											<Sparkles className="w-4 h-4 text-primary" />
+											<span className="text-xs font-display text-primary">
+												AI-ENHANCED DETAILS
+											</span>
 										</div>
-									)}
+										<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+											<AutoLinkText text={enhancedText || ""} />
+										</div>
+									</div>
 
 									<div className="flex gap-2 pt-4 border-t border-border">
 										<Button

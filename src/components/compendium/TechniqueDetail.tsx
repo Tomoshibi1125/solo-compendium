@@ -8,6 +8,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -333,17 +334,17 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 					<div className="space-y-3">
 						{effects.primary && (
 							<p className="text-foreground leading-relaxed">
-								{formatRegentVernacular(effects.primary)}
+								<AutoLinkText text={effects.primary} />
 							</p>
 						)}
 						{effects.secondary && (
 							<p className="text-muted-foreground leading-relaxed">
-								{formatRegentVernacular(effects.secondary)}
+								<AutoLinkText text={effects.secondary} />
 							</p>
 						)}
 						{effects.tertiary && (
 							<p className="text-muted-foreground leading-relaxed">
-								{formatRegentVernacular(effects.tertiary)}
+								<AutoLinkText text={effects.tertiary} />
 							</p>
 						)}
 					</div>
@@ -479,12 +480,12 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 					<div className="space-y-3">
 						{data.description && (
 							<p className="text-foreground leading-relaxed">
-								{formatRegentVernacular(data.description)}
+								<AutoLinkText text={data.description} />
 							</p>
 						)}
 						{data.flavor && (
 							<p className="text-sm text-muted-foreground italic">
-								{formatRegentVernacular(data.flavor)}
+								<AutoLinkText text={data.flavor} />
 							</p>
 						)}
 					</div>

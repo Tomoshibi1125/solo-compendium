@@ -1,4 +1,5 @@
 import { AlertTriangle } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -35,7 +36,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 				<div className="flex items-start gap-3">
 					<AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0" />
 					<p className="text-foreground">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 				</div>
 			</SystemWindow>
@@ -77,7 +78,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 								className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4"
 							>
 								<span className="text-foreground">
-									{formatRegentVernacular(effect)}
+									<AutoLinkText text={effect} />
 								</span>
 							</li>
 						))}
@@ -94,7 +95,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 								className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4"
 							>
 								<span className="text-foreground">
-									{formatRegentVernacular(step)}
+									<AutoLinkText text={step} />
 								</span>
 							</li>
 						))}

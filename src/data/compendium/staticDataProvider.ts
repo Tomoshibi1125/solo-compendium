@@ -153,6 +153,9 @@ export interface StaticCompendiumEntry {
 	xp?: number | null;
 	monster_actions?: Record<string, unknown>[] | null;
 	monster_traits?: Record<string, unknown>[] | null;
+	saving_throw?: Record<string, unknown> | null;
+	attack?: Record<string, unknown> | null;
+	movement?: Record<string, unknown> | null;
 	// Background detail support (static fallback)
 	skill_proficiencies?: string[] | null;
 	tool_proficiencies?: string[] | null;
@@ -161,6 +164,7 @@ export interface StaticCompendiumEntry {
 	starting_credits?: number | null;
 	feature_name?: string | null;
 	feature_description?: string | null;
+	element?: string | null;
 	personality_traits?: string[] | null;
 	ideals?: string[] | null;
 	bonds?: string[] | null;
@@ -1539,6 +1543,10 @@ export const staticDataProvider: StaticDataProvider = {
 				conditions?: string[];
 			} | null;
 			flavor?: string;
+			element?: string;
+			saving_throw?: Record<string, unknown>;
+			attack_roll?: Record<string, unknown>;
+			mechanics?: Record<string, unknown>;
 		}>("powers");
 		const filtered = filterBySearch(powers, search, [
 			"name",
@@ -1559,19 +1567,23 @@ export const staticDataProvider: StaticDataProvider = {
 			school: power.type,
 			title: power.type,
 			theme: power.type,
+			element: power.element || null,
 			prerequisites: power.requirements
 				? JSON.stringify(power.requirements)
 				: null,
 			rarity: power.rarity,
 			level: power.requirements?.level,
 			// Rich fields for detail views
-			activation: power.activation || null,
+			activation: (power.activation as Record<string, unknown>) || null,
 			duration: power.duration || null,
 			range: power.range || null,
-			components: power.components || null,
-			effects: power.effects || null,
-			limitations: power.limitations || null,
+			components: (power.components as Record<string, unknown>) || null,
+			effects: (power.effects as Record<string, unknown>) || null,
+			limitations: (power.limitations as Record<string, unknown>) || null,
 			flavor: power.flavor || null,
+			saving_throw: (power.saving_throw as Record<string, unknown>) || null,
+			attack: (power.attack_roll as Record<string, unknown>) || null,
+			mechanics: (power.mechanics as Record<string, unknown>) || null,
 		}));
 	},
 
@@ -1592,6 +1604,7 @@ export const staticDataProvider: StaticDataProvider = {
 			effects?: Record<string, unknown> | null;
 			mechanics?: Record<string, unknown> | null;
 			limitations?: Record<string, unknown> | null;
+			element?: string | null;
 			flavor?: string | null;
 		}>("techniques");
 		const filtered = filterBySearch(techniques, search, [
@@ -1613,14 +1626,15 @@ export const staticDataProvider: StaticDataProvider = {
 			image_url: technique.image,
 			technique_type: technique.type,
 			style: technique.style,
+			element: technique.element || null,
 			prerequisites: technique.prerequisites || null,
-			activation: technique.activation || null,
-			duration: technique.duration || null,
-			range: technique.range || null,
-			components: technique.components || null,
-			effects: technique.effects || null,
-			mechanics: technique.mechanics || null,
-			limitations: technique.limitations || null,
+			activation: (technique.activation as Record<string, unknown>) || null,
+			duration: (technique.duration as Record<string, unknown>) || null,
+			range: (technique.range as Record<string, unknown>) || null,
+			components: (technique.components as Record<string, unknown>) || null,
+			effects: (technique.effects as Record<string, unknown>) || null,
+			mechanics: (technique.mechanics as Record<string, unknown>) || null,
+			limitations: (technique.limitations as Record<string, unknown>) || null,
 			flavor: technique.flavor,
 			source: technique.source,
 			power_level:
@@ -1639,6 +1653,11 @@ export const staticDataProvider: StaticDataProvider = {
 						? "rare"
 						: "uncommon",
 			level: technique.prerequisites?.level,
+			saving_throw:
+				(technique.mechanics?.saving_throw as Record<string, unknown>) || null,
+			attack: (technique.mechanics?.attack as Record<string, unknown>) || null,
+			movement:
+				(technique.mechanics?.movement as Record<string, unknown>) || null,
 		}));
 	},
 

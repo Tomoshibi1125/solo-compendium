@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { CompendiumSidebar } from "@/components/compendium/CompendiumSidebar";
 import { EmptyState } from "@/components/compendium/EmptyState";
@@ -173,6 +174,7 @@ const Compendium = () => {
 		selectedSourceBooks: [] as string[],
 		selectedSchools: [] as string[],
 		selectedGateRanks: [] as string[],
+		selectedElements: [] as string[],
 		showBossOnly: false,
 		showMiniBossOnly: false,
 		minCR: "" as number | "",
@@ -385,6 +387,7 @@ const Compendium = () => {
 										title: item.title,
 										theme: item.theme,
 									}),
+									element: item.element || null,
 								};
 							}),
 						);
@@ -476,6 +479,10 @@ const Compendium = () => {
 			filters.selectedRarities.length > 0
 				? new Set(filters.selectedRarities)
 				: null;
+		const selectedElementsSet =
+			filters.selectedElements.length > 0
+				? new Set(filters.selectedElements)
+				: null;
 
 		// Filter by favorites
 		if (filters.showFavoritesOnly) {
@@ -512,6 +519,13 @@ const Compendium = () => {
 		if (selectedRaritiesSet) {
 			filtered = filtered.filter(
 				(e) => e.rarity && selectedRaritiesSet.has(e.rarity),
+			);
+		}
+
+		// Filter by elements
+		if (selectedElementsSet) {
+			filtered = filtered.filter(
+				(e) => e.element && selectedElementsSet.has(e.element),
 			);
 		}
 
@@ -697,6 +711,21 @@ const Compendium = () => {
 			});
 		});
 
+		filters.selectedElements.forEach((element) => {
+			chips.push({
+				id: `element-${element}`,
+				label: "Element",
+				value: element,
+				onRemove: () =>
+					setFilters((prev) => ({
+						...prev,
+						selectedElements: prev.selectedElements.filter(
+							(e) => e !== element,
+						),
+					})),
+			});
+		});
+
 		filters.selectedRarities.forEach((rarity) => {
 			chips.push({
 				id: `rarity-${rarity}`,
@@ -743,6 +772,7 @@ const Compendium = () => {
 			selectedSchools: [],
 			selectedGateRanks: [],
 			selectedRarities: [],
+			selectedElements: [],
 			minLevel: "",
 			maxLevel: "",
 			minCR: "",
@@ -779,6 +809,26 @@ const Compendium = () => {
 				? current.filter((r) => r !== rank)
 				: [...current, rank];
 			return { ...prev, selectedGateRanks: next };
+		});
+	};
+
+	const handleRarityToggle = (rarity: string) => {
+		setFilters((prev) => {
+			const current = prev.selectedRarities;
+			const next = current.includes(rarity)
+				? current.filter((r) => r !== rarity)
+				: [...current, rarity];
+			return { ...prev, selectedRarities: next };
+		});
+	};
+
+	const handleElementToggle = (element: string) => {
+		setFilters((prev) => {
+			const current = prev.selectedElements;
+			const next = current.includes(element)
+				? current.filter((e) => e !== element)
+				: [...current, element];
+			return { ...prev, selectedElements: next };
 		});
 	};
 
@@ -875,27 +925,39 @@ const Compendium = () => {
 
 	// Highlight search terms in text (sanitized)
 	const highlightText = (text: string, query: string) => {
+		if (!query.trim()) {
+			return <AutoLinkText text={text} />;
+		}
+
 		const displayText = formatRegentVernacular(text);
 		const displayQuery = formatRegentVernacular(query);
-		if (!displayQuery.trim()) return displayText;
 		const escapedQuery = displayQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 		const parts = displayText.split(new RegExp(`(${escapedQuery})`, "gi"));
-		return parts.map((part, _i) =>
-			part.toLowerCase() === displayQuery.toLowerCase() ? (
+		return parts.map((part, i) => {
+			const uniqueKey = `${part}-${i}`;
+			return part.toLowerCase() === displayQuery.toLowerCase() ? (
 				<mark
-					key={part}
+					key={uniqueKey}
 					className="bg-primary/20 text-primary font-semibold"
 					title={`Search match: ${part}`}
 				>
 					{part}
 				</mark>
 			) : (
-				part
-			),
-		);
+				<AutoLinkText key={uniqueKey} text={part} />
+			);
+		});
 	};
 
-	// Get unique schools from powers
+	// Get unique elements
+	const availableElements = useMemo(() => {
+		const elements = new Set<string>();
+		entries.forEach((e) => {
+			if (e.element) elements.add(e.element);
+		});
+		return Array.from(elements).sort();
+	}, [entries]);
+
 	const availableSchools = useMemo(() => {
 		const schools = new Set<string>();
 		entries.forEach((e) => {
@@ -903,6 +965,14 @@ const Compendium = () => {
 		});
 		return Array.from(schools).sort();
 	}, [entries]);
+
+	const availableRarities = [
+		"common",
+		"uncommon",
+		"rare",
+		"very_rare",
+		"legendary",
+	];
 
 	return (
 		<Layout>
@@ -1062,6 +1132,12 @@ const Compendium = () => {
 								showMiniBossOnly: !prev.showMiniBossOnly,
 							}))
 						}
+						rarities={availableRarities}
+						selectedRarities={filters.selectedRarities}
+						onRarityToggle={handleRarityToggle}
+						elements={availableElements}
+						selectedElements={filters.selectedElements}
+						onElementToggle={handleElementToggle}
 					/>
 
 					{/* Results Grid */}

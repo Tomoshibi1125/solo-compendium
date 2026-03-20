@@ -1,6 +1,7 @@
 import { Heart, Shield, Swords, Wand2, Zap } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
@@ -231,11 +232,11 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				<div className="space-y-4">
 					{data.flavor_text && (
 						<p className="text-muted-foreground italic border-l-2 border-primary/30 pl-4">
-							{formatRegentVernacular(data.flavor_text)}
+							<AutoLinkText text={data.flavor_text} />
 						</p>
 					)}
 					<p className="text-foreground">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 
 					{data.tags && data.tags.length > 0 && (
@@ -619,7 +620,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{formatRegentVernacular(feature.description)}
+									<AutoLinkText text={feature.description} />
 								</p>
 							</div>
 						))}
@@ -672,7 +673,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 												)}
 											</td>
 											<td className="py-2 px-3 text-sm text-muted-foreground">
-												{formatRegentVernacular(cf.description)}
+												<AutoLinkText text={cf.description} />
 											</td>
 										</tr>
 									))}

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -411,7 +412,7 @@ READ-ALOUD DISCOVERY:
 
 							<div className="pt-4 border-t border-border">
 								<SystemText className="block text-muted-foreground font-heading leading-relaxed">
-									{treasure.description}
+									<AutoLinkText text={treasure.description} />
 								</SystemText>
 							</div>
 
@@ -424,7 +425,7 @@ READ-ALOUD DISCOVERY:
 										</span>
 									</div>
 									<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-										{enhancedText}
+										<AutoLinkText text={enhancedText} />
 									</div>
 								</div>
 							)}

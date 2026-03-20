@@ -1,4 +1,5 @@
 import { BookOpen, Zap } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -40,7 +41,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 						</Badge>
 					</div>
 					<p className="text-foreground">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 				</div>
 			</SystemWindow>
@@ -67,7 +68,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 							<li key={example} className="flex items-start gap-3">
 								<BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
 								<span className="text-foreground">
-									{formatRegentVernacular(example)}
+									<AutoLinkText text={example} />
 								</span>
 							</li>
 						))}

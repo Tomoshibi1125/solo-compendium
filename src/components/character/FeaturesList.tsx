@@ -1,5 +1,6 @@
 import { Minus, Plus, Power, PowerOff, Star, Zap } from "lucide-react";
 import { useCallback, useState } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -241,9 +242,9 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 													)}
 												</div>
 												{feature.description && (
-													<p className="text-xs text-muted-foreground line-clamp-2">
-														{formatRegentVernacular(feature.description)}
-													</p>
+													<div className="text-xs text-muted-foreground line-clamp-3">
+														<AutoLinkText text={feature.description} />
+													</div>
 												)}
 												{feature.uses_max !== null && (
 													<div className="flex items-center gap-2 mt-2">

@@ -1,4 +1,5 @@
 import { Coins, Shield, Sword, Weight } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
@@ -75,7 +76,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					</div>
 					{data.description && (
 						<p className="text-muted-foreground leading-relaxed text-base">
-							{formatRegentVernacular(data.description)}
+							<AutoLinkText text={data.description} />
 						</p>
 					)}
 				</div>

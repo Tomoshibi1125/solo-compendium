@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, Heart, Search, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -311,12 +312,9 @@ const Favorites = () => {
 													)}
 												</SystemHeading>
 												{item.description && (
-													<DataStreamText
-														variant="system"
-														className="text-sm text-muted-foreground mb-2"
-													>
-														{formatRegentVernacular(item.description)}
-													</DataStreamText>
+													<p className="text-sm text-muted-foreground mb-2">
+														<AutoLinkText text={item.description} />
+													</p>
 												)}
 												{item.tags && item.tags.length > 0 && (
 													<div className="flex flex-wrap gap-1">

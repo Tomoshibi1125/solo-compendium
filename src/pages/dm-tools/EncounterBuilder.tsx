@@ -41,6 +41,7 @@ import {
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
+import { getRandomMonster } from "@/lib/compendiumAutopopulate";
 import { calculateDifficulty, calculateXP } from "@/lib/encounterMath";
 import { getCRXP } from "@/lib/experience";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
@@ -498,6 +499,39 @@ const EncounterBuilder = () => {
 		toast({
 			title: "Encounter cleared",
 			description: "Encounter builder state cleared.",
+		});
+	};
+
+	const handleRandomize = async () => {
+		const rank = (searchParams.get("rank") as string) || "C";
+		const count = 2 + Math.floor(Math.random() * 3);
+
+		const monsterPromises = Array.from({ length: count }, () =>
+			getRandomMonster(rank),
+		);
+		const results = await Promise.all(monsterPromises);
+
+		const validMonsters = results.filter(Boolean) as Monster[];
+
+		if (validMonsters.length === 0) {
+			toast({
+				title: "Randomization Failed",
+				description: `Could not find any Rank ${rank} monsters.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		const newMonsters: EncounterMonster[] = validMonsters.map((m) => ({
+			id: `${m.id}-${Date.now()}-${Math.random()}`,
+			monster: m,
+			quantity: 1,
+		}));
+
+		setEncounterMonsters((prev) => [...prev, ...newMonsters]);
+		toast({
+			title: "Encounter Optimized",
+			description: `Added ${validMonsters.length} Rank ${rank} entities to the matrix.`,
 		});
 	};
 
@@ -1012,24 +1046,34 @@ const EncounterBuilder = () => {
 										totalXP={totalXP}
 										encounterName={encounterName}
 									/>
-									<Button
-										variant="outline"
-										className="w-full"
-										onClick={sendToInitiativeTracker}
-										disabled={encounterMonsters.length === 0}
-										data-testid="encounter-send-to-tracker"
-									>
-										Send to Initiative Tracker
-									</Button>
-									<Button
-										variant="destructive"
-										className="w-full"
-										onClick={clearEncounter}
-										disabled={encounterMonsters.length === 0}
-										data-testid="encounter-clear"
-									>
-										Clear Encounter
-									</Button>
+									<div className="flex flex-col gap-2">
+										<Button
+											variant="outline"
+											className="w-full btn-umbral"
+											onClick={handleRandomize}
+										>
+											<Sparkles className="w-4 h-4 mr-2" />
+											100% Randomize
+										</Button>
+										<Button
+											variant="outline"
+											className="w-full"
+											onClick={sendToInitiativeTracker}
+											disabled={encounterMonsters.length === 0}
+											data-testid="encounter-send-to-tracker"
+										>
+											Send to Initiative Tracker
+										</Button>
+										<Button
+											variant="destructive"
+											className="w-full"
+											onClick={clearEncounter}
+											disabled={encounterMonsters.length === 0}
+											data-testid="encounter-clear"
+										>
+											Clear Encounter
+										</Button>
+									</div>
 								</div>
 							</div>
 						</SystemWindow>

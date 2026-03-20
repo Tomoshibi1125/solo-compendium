@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { BookOpen, Calendar, Plus, Save, Tag, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -222,9 +223,9 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 										</div>
 
 										{entry.content && (
-											<p className="text-sm text-muted-foreground mt-2 whitespace-pre-wrap">
-												{entry.content}
-											</p>
+											<div className="text-sm text-muted-foreground mt-2 whitespace-pre-wrap">
+												<AutoLinkText text={entry.content} />
+											</div>
 										)}
 
 										{entry.tags && entry.tags.length > 0 && (

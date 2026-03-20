@@ -1,6 +1,7 @@
 import { ArrowLeft, Copy, Loader2, RefreshCw, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import { getRandomMonster } from "@/lib/compendiumAutopopulate";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 const RIFT_RANKS = ["E", "D", "C", "B", "A", "S"];
@@ -165,15 +167,28 @@ const GateGenerator = () => {
 
 	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
 
-	const handleGenerate = () => {
+	const handleGenerate = async () => {
 		clearEnhanced();
 		userInteractedRef.current = true;
-		const newRift = generateRift(selectedRank || undefined);
-		setRift(newRift);
-		void saveNow({ selectedRank, rift: newRift });
+
+		const baseRift = generateRift(selectedRank || undefined);
+
+		// 100% Automation: Pull real boss from compendium
+		const realBoss = await getRandomMonster(selectedRank || baseRift.rank);
+		if (realBoss) {
+			const boss: any = realBoss;
+			baseRift.boss = boss.name;
+			baseRift.description = baseRift.description.replace(
+				/protected by [^.]+/,
+				`protected by ${boss.name}`,
+			);
+		}
+
+		setRift(baseRift);
+		void saveNow({ selectedRank, rift: baseRift });
 		toast({
 			title: "Rift Generated",
-			description: `Generated a ${newRift.rank}-Rank Rift.`,
+			description: `Generated a ${baseRift.rank}-Rank Rift.`,
 		});
 	};
 
@@ -422,24 +437,22 @@ READ-ALOUD ENTRY:
 											<span className="text-xs font-display text-muted-foreground">
 												DESCRIPTION
 											</span>
-											<SystemText className="block text-sm text-muted-foreground mt-2">
-												{rift.description}
-											</SystemText>
+											<div className="block text-sm text-muted-foreground mt-2">
+												<AutoLinkText text={rift.description} />
+											</div>
 										</div>
 
-										{enhancedText && (
-											<div className="pt-4 border-t border-primary/30">
-												<div className="flex items-center gap-2 mb-2">
-													<Sparkles className="w-4 h-4 text-primary" />
-													<span className="text-xs font-display text-primary">
-														AI-ENHANCED DOSSIER
-													</span>
-												</div>
-												<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-													{enhancedText}
-												</div>
+										<div className="pt-4 border-t border-primary/30">
+											<div className="flex items-center gap-2 mb-2">
+												<Sparkles className="w-4 h-4 text-primary" />
+												<span className="text-xs font-display text-primary">
+													AI-ENHANCED DOSSIER
+												</span>
 											</div>
-										)}
+											<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+												<AutoLinkText text={enhancedText || ""} />
+											</div>
+										</div>
 
 										<div className="flex gap-2 pt-4 border-t border-border">
 											<Button

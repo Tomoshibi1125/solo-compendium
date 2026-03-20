@@ -7,9 +7,13 @@ import {
 	Sparkles,
 	Zap,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import type { Database } from "@/integrations/supabase/types";
+import { setPendingResolution } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
@@ -45,6 +49,26 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 	const displayName = formatRegentVernacular(
 		(data as { display_name?: string | null }).display_name || data.name,
 	);
+	const navigate = useNavigate();
+
+	const handleRoll = () => {
+		const id = crypto.randomUUID();
+		const name = displayName;
+
+		if (data.effect_type === "offensive" || data.effect_type === "utility") {
+			// Most runes use a standard DC or a modifier
+			const dc = data.inscription_difficulty || 10;
+			setPendingResolution({
+				version: 1,
+				id,
+				name,
+				source: { type: "rune", entryId: data.id },
+				kind: "save",
+				save: { dc, ability: "Intelligence", roll: "1d20" },
+			});
+			navigate("/dice");
+		}
+	};
 
 	// Format requirements
 	const requirements: string[] = [];
@@ -97,13 +121,13 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 					</div>
 
 					<p className="text-foreground">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description} />
 					</p>
 
 					{data.lore && (
 						<div className="border-l-2 border-primary/30 pl-4">
 							<p className="text-muted-foreground italic">
-								{formatRegentVernacular(data.lore)}
+								<AutoLinkText text={data.lore} />
 							</p>
 						</div>
 					)}
@@ -201,8 +225,14 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 					{data.effect_description && (
 						<div>
 							<p className="text-foreground">
-								{formatRegentVernacular(data.effect_description)}
+								<AutoLinkText text={data.effect_description} />
 							</p>
+							<div className="mt-2">
+								<Button size="sm" variant="outline" onClick={handleRoll}>
+									<Zap className="w-4 h-4 mr-2" />
+									Roll Rune Effect
+								</Button>
+							</div>
 						</div>
 					)}
 
@@ -276,7 +306,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 								At Higher Rune Levels
 							</h4>
 							<p className="text-sm text-muted-foreground">
-								{formatRegentVernacular(data.higher_levels)}
+								<AutoLinkText text={data.higher_levels} />
 							</p>
 						</div>
 					)}
@@ -327,7 +357,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 			{data.discovery_lore && (
 				<SystemWindow title="DISCOVERY">
 					<p className="text-muted-foreground italic">
-						{formatRegentVernacular(data.discovery_lore)}
+						<AutoLinkText text={data.discovery_lore} />
 					</p>
 				</SystemWindow>
 			)}

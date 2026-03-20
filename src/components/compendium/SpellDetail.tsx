@@ -8,6 +8,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { Badge } from "@/components/ui/badge";
@@ -362,17 +363,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					<div className="space-y-3">
 						{effects.primary && (
 							<p className="text-foreground leading-relaxed">
-								{formatRegentVernacular(effects.primary)}
+								<AutoLinkText text={effects.primary} />
 							</p>
 						)}
 						{effects.secondary && (
 							<p className="text-muted-foreground leading-relaxed">
-								{formatRegentVernacular(effects.secondary)}
+								<AutoLinkText text={effects.secondary} />
 							</p>
 						)}
 						{effects.tertiary && (
 							<p className="text-muted-foreground leading-relaxed">
-								{formatRegentVernacular(effects.tertiary)}
+								<AutoLinkText text={effects.tertiary} />
 							</p>
 						)}
 					</div>
@@ -506,7 +507,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{data.effect && (
 				<SystemWindow id="spell-effect" title="EFFECT">
 					<p className="text-foreground leading-relaxed">
-						{formatRegentVernacular(data.effect)}
+						<AutoLinkText text={data.effect || ""} />
 					</p>
 				</SystemWindow>
 			)}
@@ -514,9 +515,9 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{(data.higher_levels || data.atHigherLevels) && (
 				<SystemWindow title="AT HIGHER TIERS">
 					<p className="text-foreground leading-relaxed">
-						{formatRegentVernacular(
-							data.higher_levels || data.atHigherLevels || "",
-						)}
+						<AutoLinkText
+							text={data.higher_levels || data.atHigherLevels || ""}
+						/>
 					</p>
 				</SystemWindow>
 			)}
@@ -524,7 +525,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{data.flavor && (
 				<SystemWindow title="FLAVOR">
 					<p className="text-sm text-muted-foreground italic">
-						{formatRegentVernacular(data.flavor)}
+						<AutoLinkText text={data.flavor || ""} />
 					</p>
 				</SystemWindow>
 			)}
@@ -532,7 +533,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{data.description && (
 				<SystemWindow id="spell-description" title="DESCRIPTION">
 					<p className="text-foreground leading-relaxed">
-						{formatRegentVernacular(data.description)}
+						<AutoLinkText text={data.description || ""} />
 					</p>
 				</SystemWindow>
 			)}

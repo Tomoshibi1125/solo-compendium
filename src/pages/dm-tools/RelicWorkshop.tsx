@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
 	ArrowLeft,
 	Copy,
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,6 +37,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import { supabase } from "@/integrations/supabase/client";
+import { getRandomEquipment } from "@/lib/compendiumAutopopulate";
 import { MONARCH_LABEL } from "@/lib/vernacular";
 
 interface RelicProperty {
@@ -571,9 +575,9 @@ READ-ALOUD DISCOVERY:
 														{prop.name}
 													</span>
 												</div>
-												<SystemText className="block text-sm text-muted-foreground">
-													{prop.description}
-												</SystemText>
+												<div className="block text-sm text-muted-foreground">
+													<AutoLinkText text={prop.description} />
+												</div>
 											</div>
 											<Button
 												variant="ghost"
@@ -632,9 +636,9 @@ READ-ALOUD DISCOVERY:
 										{currentRelic.attunement && " • Requires Attunement"}
 									</div>
 									{currentRelic.description && (
-										<SystemText className="block text-sm text-muted-foreground">
-											{currentRelic.description}
-										</SystemText>
+										<div className="block text-sm text-muted-foreground">
+											<AutoLinkText text={currentRelic.description} />
+										</div>
 									)}
 									{currentRelic.properties.length > 0 && (
 										<div className="space-y-2 pt-2 border-t border-border">
@@ -648,7 +652,7 @@ READ-ALOUD DISCOVERY:
 													</Badge>
 													<span className="font-semibold">{prop.name}:</span>{" "}
 													<span className="text-muted-foreground">
-														{prop.description}
+														<AutoLinkText text={prop.description} />
 													</span>
 												</div>
 											))}
@@ -705,7 +709,7 @@ READ-ALOUD DISCOVERY:
 								</span>
 							</div>
 							<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-								{enhancedText}
+								<AutoLinkText text={enhancedText || ""} />
 							</div>
 						</div>
 					)}

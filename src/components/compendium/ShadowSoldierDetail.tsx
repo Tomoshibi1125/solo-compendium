@@ -1,4 +1,5 @@
 import { Eye, Shield, Sword, Target } from "lucide-react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -73,7 +74,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 			<div id="soldier-description" className="scroll-mt-4">
 				<h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
 				<p className="text-muted-foreground leading-relaxed">
-					{formatRegentVernacular(entry.description)}
+					<AutoLinkText text={entry.description} />
 				</p>
 			</div>
 
