@@ -4,12 +4,12 @@ export const regents: Regent[] = [
 	{
 		id: "umbral_regent",
 		name: "Umbral Regent",
-		title: "Umbral Regent (Monarch of Shadows)",
+		title: "Umbral Regent (Regent of Shadows)",
 		theme: "Umbral and Death",
 		description:
 			"The ultimate umbral manipulation Ascendant class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Ascendant class available to players, granting true Regent-level power over the umbral realm and the ability to command umbral shadows.",
 		rank: "S",
-		image: "/generated/compendium/Regents/umbral-sovereign.webp",
+		image: "/generated/compendium/Regents/umbral-regent.webp",
 		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
@@ -212,7 +212,7 @@ export const regents: Regent[] = [
 				level: 14,
 				name: "Regent Power Resonance",
 				description:
-					"Your abilities resonate with the power of the Monarchs, increasing their effectiveness and reducing cooldowns.",
+					"Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
 				type: "passive",
 			},
 			{
@@ -477,10 +477,10 @@ export const regents: Regent[] = [
 	{
 		id: "radiant_regent",
 		name: "Radiant Regent",
-		title: "Radiant Regent (Monarch of White Flames)",
+		title: "Radiant Regent (Regent of White Flames)",
 		theme: "White Flames and Purification",
 		description:
-			"The ultimate manifestation of purification fire, embodying the power of the Monarch of White Flames. You command sacred flames that incinerate corruption, cleanse the wicked, and illuminate the darkest depths of the multiverse.",
+			"The ultimate manifestation of purification fire, embodying the power of the Regent of White Flames. You command sacred flames that incinerate corruption, cleanse the wicked, and illuminate the darkest depths of the multiverse.",
 		rank: "S",
 		image: "/generated/compendium/Regents/white-flame-Regent.webp",
 		type: "ascendant-class-overlay",
@@ -520,7 +520,7 @@ export const regents: Regent[] = [
 			{
 				name: "Purification Flame",
 				description:
-					"As an action, target a creature or area to purge all diseases, curses, and fiendish influence. Undead take 10d10 radiant damage. This mirrors the Monarch of White Flames' holy domain.",
+					"As an action, target a creature or area to purge all diseases, curses, and fiendish influence. Undead take 10d10 radiant damage. This mirrors the Regent of White Flames' holy domain.",
 				type: "action",
 				frequency: "short-rest",
 				power_level: 2,
@@ -544,7 +544,7 @@ export const regents: Regent[] = [
 			{
 				name: "Flame Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute holy protection. All allies within gain immunity to fire and radiant damage. This mirrors the Monarch's sanctification sovereignty.",
+					"As an action, create a 1-mile radius area of absolute holy protection. All allies within gain immunity to fire and radiant damage. This mirrors the Regent's sanctification sovereignty.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
@@ -859,10 +859,10 @@ export const regents: Regent[] = [
 	{
 		id: "steel_regent",
 		name: "Steel Regent",
-		title: "Steel Regent (Monarch of Iron Body)",
+		title: "Steel Regent (Regent of Iron Body)",
 		theme: "Conceptual Invulnerability & Absolutist Defense",
 		description:
-			"Embodiment of absolute defense and iron-willed sovereignty, wielding the power of the Monarch of Iron Body. You are conceptually invulnerable, an immovable object that disregards the laws of physics. The Ascendant Bureau classifies you as an unkillable entity whose containment is fundamentally impossible.",
+			"Embodiment of absolute defense and iron-willed sovereignty, wielding the power of the Regent of Iron Body. You are conceptually invulnerable, an immovable object that disregards the laws of physics. The Ascendant Bureau classifies you as an unkillable entity whose containment is fundamentally impossible.",
 		rank: "S",
 		image: "/generated/compendium/Regents/steel-flesh-Regent.webp",
 		type: "ascendant-class-overlay",
@@ -886,7 +886,7 @@ export const regents: Regent[] = [
 			{
 				name: "Conceptual Invulnerability",
 				description:
-					"As an action, enter a state of absolute defense for 1 minute. You are immune to ALL damage and your AC becomes 30. This mirrors the Monarch of Iron Body's physics-defying resilience.",
+					"As an action, enter a state of absolute defense for 1 minute. You are immune to ALL damage and your AC becomes 30. This mirrors the Regent of Iron Body's physics-defying resilience.",
 				type: "action",
 				frequency: "long-rest",
 				power_level: 3,
@@ -1248,10 +1248,10 @@ export const regents: Regent[] = [
 	{
 		id: "destruction_regent",
 		name: "Destruction Regent",
-		title: "Destruction Regent (Monarch of Destruction)",
+		title: "Destruction Regent (Regent of Destruction)",
 		theme: "Primordial Destruction and Draconic Apocalypse",
 		description:
-			"Incarnation of primordial destruction, embodying the power of the Monarch of Destruction. You can transform into the dragon of apocalypse, whose breath incinerates reality and presence melts the very asphalt. As the ultimate force of annihilation, you are classified as a Kaiju-class extinction event.",
+			"Incarnation of primordial destruction, embodying the power of the Regent of Destruction. You can transform into the dragon of apocalypse, whose breath incinerates reality and presence melts the very asphalt. As the ultimate force of annihilation, you are classified as a Kaiju-class extinction event.",
 		rank: "S",
 		image: "/generated/compendium/Regents/destruction-Regent.webp",
 		type: "ascendant-class-overlay",
@@ -1260,7 +1260,7 @@ export const regents: Regent[] = [
 			"destruction",
 			"annihilation",
 			"dragon",
-			"antares",
+			"solar-draconic",
 			"apocalypse",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
@@ -1282,7 +1282,7 @@ export const regents: Regent[] = [
 			{
 				name: "Breath of Annihilation",
 				description:
-					"120-ft cone: 12d10 fire damage (AGI save DC 18). On kill, target is erased from reality (no resurrection). Buildings collapse, steel melts, and stone sublimates. This mirrors the Monarch of Destruction's devastating breath.",
+					"120-ft cone: 12d10 fire damage (AGI save DC 18). On kill, target is erased from reality (no resurrection). Buildings collapse, steel melts, and stone sublimates. This mirrors the Regent of Destruction's devastating breath.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 3,
@@ -1658,10 +1658,10 @@ export const regents: Regent[] = [
 	{
 		id: "war_regent",
 		name: "War Regent",
-		title: "War Regent (Monarch of Command)",
+		title: "War Regent (Regent of Command)",
 		theme: "Tactical Battlefield Supremacy & Absolute Command",
 		description:
-			"Embodiment of tactical genius and absolute battlefield authority, wielding the power of the Monarch of Command. You command the vanguard legions with unmatched supremacy, turning every conflict into a masterpiece of war. Your presence governs the flow of battle across dimensions, as you lead the charge of the eternal vanguard.",
+			"Embodiment of tactical genius and absolute battlefield authority, wielding the power of the Regent of Command. You command the vanguard legions with unmatched supremacy, turning every conflict into a masterpiece of war. Your presence governs the flow of battle across dimensions, as you lead the charge of the eternal vanguard.",
 		rank: "S",
 		image: "/generated/compendium/Regents/shadow-command-Regent.webp",
 		type: "ascendant-class-overlay",
@@ -2049,10 +2049,10 @@ export const regents: Regent[] = [
 	{
 		id: "frost_regent",
 		name: "Frost Regent",
-		title: "Frost Regent (Monarch of Frost)",
+		title: "Frost Regent (Regent of Frost)",
 		theme: "Eternal Winter & absolute Zero",
 		description:
-			"Herald of eternal winter and absolute zero, wielding the power of the Monarch of Frost. You command the biting winds, glacial shards, and the crystalline silence of the void. Your presence freezes the very soul of the world, turning landscapes into frozen wastes of pure order. The Ascendant Bureau classifies you as a Climate Catastrophe event, capable of bringing a global ice age.",
+			"Herald of eternal winter and absolute zero, wielding the power of the Regent of Frost. You command the biting winds, glacial shards, and the crystalline silence of the void. Your presence freezes the very soul of the world, turning landscapes into frozen wastes of pure order. The Ascendant Bureau classifies you as a Climate Catastrophe event, capable of bringing a global ice age.",
 		rank: "S",
 		image: "/generated/compendium/Regents/frost-Regent.webp",
 		type: "ascendant-class-overlay",
@@ -2063,7 +2063,7 @@ export const regents: Regent[] = [
 			"winter",
 			"monarch_of_frost",
 			"ice",
-			"legia",
+			"glacio-regency",
 		],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "System Ascendant Canon",
@@ -2079,7 +2079,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Ice Age Protocol",
 				description:
-					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. This mirrors the Monarch of Frost's climate-shattering power.",
+					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. This mirrors the Regent of Frost's climate-shattering power.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2405,10 +2405,10 @@ export const regents: Regent[] = [
 	{
 		id: "beast_regent",
 		name: "Beast Regent",
-		title: "Beast Regent (Monarch of Beasts)",
-		theme: "Primal Evolution & Apex Sovereignty",
+		title: "Beast Regent (Regent of Beasts)",
+		theme: "Primal Evolution & Apex Regentty",
 		description:
-			"Avatar of primordial evolution and sovereign of the wild, wielding the power of the Monarch of Beasts. All creatures recognize you as the ultimate alpha, and your roar can shatter the instincts of any living being. You embody the perfect predatory form, adaptive and unstoppable. The Ascendant Bureau classifies you as an Alpha-class biodiversity threat.",
+			"Avatar of primordial evolution and regent of the wild, wielding the power of the Regent of Beasts. All creatures recognize you as the ultimate alpha, and your roar can shatter the instincts of any living being. You embody the perfect predatory form, adaptive and unstoppable. The Ascendant Bureau classifies you as an Alpha-class biodiversity threat.",
 		rank: "S",
 		image: "/generated/compendium/Regents/beast-regent.webp",
 		type: "ascendant-class-overlay",
@@ -3138,10 +3138,10 @@ export const regents: Regent[] = [
 	{
 		id: "spatial_regent",
 		name: "Spatial Regent",
-		title: "Spatial Regent (Monarch of Space)",
+		title: "Spatial Regent (Regent of Space)",
 		theme: "Cosmic Weaving & Dimensional Void",
 		description:
-			"Sovereign of the void and master of the dimensional weave. You reshape space, time, and distance with absolute authority. Your Cosmic Senses allow you to perceive the very fabric of the multiverse. The Ascendant Bureau classifies you as a Dimensional Sovereignty Threat. You collapse distances, create pocket dimensions, and place anchors that bypass the laws of physics.",
+			"Regent of the void and master of the dimensional weave. You reshape space, time, and distance with absolute authority. Your Cosmic Senses allow you to perceive the very fabric of the multiverse. The Ascendant Bureau classifies you as a Dimensional Regentty Threat. You collapse distances, create pocket dimensions, and place anchors that bypass the laws of physics.",
 		rank: "S",
 		image: "/generated/compendium/Regents/spatial-regent.webp",
 		type: "ascendant-class-overlay",
@@ -3864,10 +3864,10 @@ export const regents: Regent[] = [
 	{
 		id: "blood_regent",
 		name: "Blood Regent",
-		title: "Blood Regent (Monarch of Blood)",
-		theme: "Hemomancy & Sanguine Sovereignty",
+		title: "Blood Regent (Regent of Blood)",
+		theme: "Hemomancy & Sanguine Regentty",
 		description:
-			"Sovereign of life essence and master of hemomancy, wielding the power of the Monarch of Blood. You control the very fluid of life, turning it into a weapon or a restorative force at your whim. Your presence causes the hearts of enemies to falter and the wounds of allies to seal instantly. The Ascendant Bureau classifies you as a Sanguine Catastrophe, capable of draining the life from an entire city.",
+			"Regent of life essence and master of hemomancy, wielding the power of the Regent of Blood. You control the very fluid of life, turning it into a weapon or a restorative force at your whim. Your presence causes the hearts of enemies to falter and the wounds of allies to seal instantly. The Ascendant Bureau classifies you as a Sanguine Catastrophe, capable of draining the life from an entire city.",
 		rank: "S",
 		image: "/generated/compendium/Regents/blood-regent.webp",
 		type: "ascendant-class-overlay",
@@ -4190,7 +4190,7 @@ export const regents: Regent[] = [
 			],
 		},
 		requirements: {
-			quest_completion: "Complete the Sanguine Ritual of the Monarch",
+			quest_completion: "Complete the Sanguine Ritual of the Regent",
 			dm_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -4199,10 +4199,10 @@ export const regents: Regent[] = [
 	{
 		id: "gravity_regent",
 		name: "Gravity Regent",
-		title: "Gravity Regent (Monarch of Weight)",
+		title: "Gravity Regent (Regent of Weight)",
 		theme: "Gravitational Mastery & Fundamental Force",
 		description:
-			"God of attraction and repulsion, wielding the absolute authority of the Monarch of Weight. You command the fundamental force that binds galaxies and collapses stars. Your presence causes the Earth to groan under your footfall, and the air itself thickens as your will fluctuates. The Ascendant Bureau classifies you as a Singularity Event.",
+			"God of attraction and repulsion, wielding the absolute authority of the Regent of Weight. You command the fundamental force that binds galaxies and collapses stars. Your presence causes the Earth to groan under your footfall, and the air itself thickens as your will fluctuates. The Ascendant Bureau classifies you as a Singularity Event.",
 		rank: "S",
 		image: "/generated/compendium/Regents/gravity-regent.webp",
 		type: "ascendant-class-overlay",

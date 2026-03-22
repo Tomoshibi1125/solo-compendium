@@ -2,6 +2,7 @@ import { Dice6, Heart, Minus, Move, Plus, Shield, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { formatModifier } from "@/lib/characterCalculations";
+import { DeathSaveTracker } from "../CharacterSheet/DeathSaveTracker";
 
 interface StatusHeaderProps {
 	hp: { current: number; max: number; temp: number };
@@ -18,6 +19,15 @@ interface StatusHeaderProps {
 		field: "hit_dice_current" | "system_favor_current",
 		delta: number,
 	) => void;
+	deathSaves: {
+		successes: number;
+		failures: number;
+		isStable: boolean;
+		isDead: boolean;
+		onRoll: () => void;
+		onStabilize: () => void;
+	};
+	characterId: string;
 }
 
 export function StatusHeader({
@@ -32,6 +42,8 @@ export function StatusHeader({
 	onHPClick,
 	onACClick,
 	onAdjustResource,
+	deathSaves,
+	characterId,
 }: StatusHeaderProps) {
 	return (
 		<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full">
@@ -192,6 +204,21 @@ export function StatusHeader({
 					<span className="text-[9px] text-primary/40">d{systemFavor.die}</span>
 				</div>
 			</div>
+
+			{hp.current === 0 && (
+				<div className="col-span-2 md:col-span-4 lg:col-span-6 mt-4">
+					<DeathSaveTracker
+						successes={deathSaves.successes}
+						failures={deathSaves.failures}
+						isStable={deathSaves.isStable}
+						isDead={deathSaves.isDead}
+						hpCurrent={hp.current}
+						onRollDeathSave={deathSaves.onRoll}
+						onStabilize={deathSaves.onStabilize}
+						characterId={characterId}
+					/>
+				</div>
+			)}
 		</div>
 	);
 }

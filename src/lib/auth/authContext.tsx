@@ -382,7 +382,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			// Create auth user
 			const redirectTo =
 				typeof window !== "undefined"
-					? `${window.location.origin}/auth/callback`
+					? `${import.meta.env.VITE_PUBLIC_SITE_URL || "https://system-ascendant.vercel.app"}/auth/callback`
 					: undefined;
 			const { data, error } = await supabase.auth.signUp({
 				email,

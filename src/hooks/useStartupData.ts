@@ -18,7 +18,6 @@ export interface CompendiumEntry {
 		| "backgrounds"
 		| "conditions"
 		| "regents"
-		| "regents"
 		| "feats"
 		| "skills"
 		| "equipment"
@@ -30,7 +29,14 @@ export interface CompendiumEntry {
 		| "locations"
 		| "sigils"
 		| "sovereigns";
-	rarity?: string;
+	rarity?:
+		| "common"
+		| "uncommon"
+		| "rare"
+		| "very_rare"
+		| "legendary"
+		| string
+		| null;
 	description: string; // Required in Compendium.tsx
 	level?: number;
 	cr?: string;
@@ -60,6 +66,9 @@ export interface CompendiumEntry {
 	role?: string | null;
 	rank?: string | null;
 	element?: string | null;
+	weight?: number | null;
+	value?: number | null;
+	attunement?: boolean | null;
 }
 
 // ALL categories to preload at startup - comprehensive loading

@@ -19,6 +19,7 @@ import {
 	type ActionResolutionPayload,
 	resolveAttack,
 	resolveDamage,
+	resolveEffect,
 	resolveSave,
 } from "@/lib/actionResolution";
 import { formatModifier } from "@/lib/characterCalculations";
@@ -39,7 +40,9 @@ interface ActionCardProps {
 	range?: string;
 	uses?: { current: number; max: number };
 	recharge?: string;
-	onRoll?: (rollType: "attack" | "damage" | "check" | "save") => void;
+	onRoll?: (
+		rollType: "attack" | "damage" | "check" | "save" | "effect",
+	) => void;
 	inscriptionId?: string;
 	onUse?: () => void;
 	characterId?: string;
@@ -106,7 +109,9 @@ function ActionCardComponent({
 		: undefined;
 	const displayDamage = damage ? formatRegentVernacular(damage) : undefined;
 
-	const handleRoll = (rollType: "attack" | "damage" | "check" | "save") => {
+	const handleRoll = (
+		rollType: "attack" | "damage" | "check" | "save" | "effect",
+	) => {
 		if (onRoll) {
 			onRoll(rollType);
 			return;
@@ -142,6 +147,12 @@ function ActionCardComponent({
 					if (outcome.kind === "damage") {
 						message = `${displayName} Damage: ${outcome.damageTotal}`;
 						formula = payload.damage.roll;
+					}
+				} else if (rollType === "effect" || payload.kind === "effect") {
+					const outcome = resolveEffect(payload);
+					if (outcome.kind === "effect") {
+						message = `${displayName} Activated: ${outcome.name}${outcome.description ? ` - ${outcome.description}` : ""}`;
+						formula = "effect";
 					}
 				}
 
@@ -293,6 +304,17 @@ function ActionCardComponent({
 						>
 							<Zap className="w-4 h-4" />
 							Damage: {displayDamage || damage || "Roll"}
+						</Button>
+					)}
+					{payload?.kind === "effect" && (
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => handleRoll("effect")}
+							className="flex-1 gap-2 border-primary/40 hover:bg-primary/10"
+						>
+							<Zap className="w-4 h-4 text-primary" />
+							Activate
 						</Button>
 					)}
 					{!payload && attackBonus === undefined && !damage && campaignId && (

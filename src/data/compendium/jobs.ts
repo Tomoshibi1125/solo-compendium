@@ -1435,9 +1435,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Entropy Sovereign",
+				name: "Entropy Regent",
 				description:
-					"Your System status updates: [RANK: S — ENTROPY SOVEREIGN]. Decay Field becomes at-will (no concentration). Below half HP, necrotic spells deal +INT mod bonus damage. Death Harvest has no per-round limit. The Ascendant Bureau lists you as a biohazard. Insurance companies won't cover buildings you enter.",
+					"Your System status updates: [RANK: S — ENTROPY REGENT]. Decay Field becomes at-will (no concentration). Below half HP, necrotic spells deal +INT mod bonus damage. Death Harvest has no per-round limit. The Ascendant Bureau lists you as a biohazard. Insurance companies won't cover buildings you enter.",
 			},
 		],
 		abilities: [
@@ -2463,6 +2463,12 @@ export const jobs: Job[] = [
 				level: 1,
 			},
 			{
+				name: "Neural Linkage",
+				description:
+					"Your brain is hardwired for System-tech interface. You gain one additional attunement slot, and you can attune to magic items as a bonus action instead of during a short rest.",
+				level: 1,
+			},
+			{
 				name: "System Write Access",
 				description:
 					"Interface with any System construct or magical device like plugging into a USB port — read functions, bypass security, and rewrite behavior. You've jailbroken gate artifacts that government labs couldn't crack. Advantage on checks to analyze magical technology.",
@@ -2471,7 +2477,7 @@ export const jobs: Job[] = [
 			{
 				name: "Infusion Optimization",
 				description:
-					"Your infused items exceed standard parameters. They grant an additional +1 bonus (stacking with base infusion). +2 at 14th level.",
+					"Your infused items exceed standard parameters. They grant an additional +3 bonus (stacking with base infusion). +6 at 14th level.",
 				level: 6,
 			},
 			{
@@ -2535,6 +2541,12 @@ export const jobs: Job[] = [
 		classFeatures: [
 			{
 				level: 1,
+				name: "Neural Linkage",
+				description:
+					"Your brain is hardwired for System-tech interface. You gain one additional attunement slot, and you can attune to magic items as a bonus action instead of during a short rest.",
+			},
+			{
+				level: 1,
 				name: "System Tinkering",
 				description:
 					"Imbue tiny objects with System-powered properties — enchant your keys to glow, your wallet to play a sound when lost, or a sticky note to display a holographic message. Up to INT mod objects simultaneously.",
@@ -2593,7 +2605,7 @@ export const jobs: Job[] = [
 				level: 10,
 				name: "Overclocked Crafting",
 				description:
-					"Craft magic items in 1/4 time and half cost — your Etsy shop for enchanted gear has a 6-month waitlist. Attune to 4 items. Disassemble a magic item during a long rest to recover its mana core (half value in crafting materials). Recycling, but for magic.",
+					"Craft magic items in 1/4 time and half cost. Attune to 10 items (Total). Disassemble a magic item during a long rest to recover its mana core (half value in crafting materials).",
 			},
 			{
 				level: 11,
@@ -2605,7 +2617,7 @@ export const jobs: Job[] = [
 				level: 14,
 				name: "Universal Compatibility",
 				description:
-					"Your System write-access overrides item restrictions. Ignore class/race/spell/level requirements for magic items. Attune to 5 items.",
+					"Your System write-access overrides item restrictions. Ignore class/race/spell/level requirements for magic items. Attune to 11 items (Total).",
 			},
 			{
 				level: 15,
@@ -2616,7 +2628,7 @@ export const jobs: Job[] = [
 				level: 18,
 				name: "Maximum Attunement",
 				description:
-					"Attune to 6 magic items simultaneously. When you finish a long rest, you can swap one infusion on an already-infused item without ending the original infusion first.",
+					"Attune to 12 magic items simultaneously (Double the standard limit of 6). When you finish a long rest, you can swap one infusion on an already-infused item.",
 			},
 			{
 				level: 20,

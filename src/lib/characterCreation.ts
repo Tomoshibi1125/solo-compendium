@@ -91,7 +91,23 @@ export function _splitCompoundEquipmentEntry(entry: string): string[] {
 	return [trimmed];
 }
 
-export function deriveItemType(item: (typeof staticItems)[number]): string {
+export interface LegacyCharacterItem {
+	item_type?: string;
+	type?: string;
+	armor_class?: string;
+	armor_type?: string;
+	stealth_disadvantage?: boolean;
+	strength_requirement?: string | number;
+	damage?: string;
+	damage_type?: string;
+	weapon_type?: string;
+	simple_properties?: string[];
+	range?: string;
+	effects?: Record<string, unknown>;
+}
+
+export function deriveItemType(rawItem: (typeof staticItems)[number]): string {
+	const item = rawItem as unknown as LegacyCharacterItem;
 	if (item.item_type) return item.item_type;
 	const t = item.type?.toLowerCase() ?? "";
 	if (t === "weapon") return "weapon";
@@ -116,8 +132,9 @@ export function findStaticJobByName(
  * The equipmentModifiers.ts parser reads these strings to apply AC, damage, etc.
  */
 export function buildItemProperties(
-	item: (typeof staticItems)[number],
+	rawItem: (typeof staticItems)[number],
 ): string[] {
+	const item = rawItem as unknown as LegacyCharacterItem;
 	const props: string[] = [];
 
 	// Armor: emit "AC <value>" so the modifier parser picks it up

@@ -891,7 +891,7 @@ export const paths: Path[] = [
 				level: 13,
 			},
 			{
-				name: "Spell Extraction",
+				name: "Spell Reclamation",
 				description:
 					"Reaction when targeted by spell: force INT save. Fail → negate effect on you, steal spell routine for 8 hours. Once/long rest.",
 				level: 17,

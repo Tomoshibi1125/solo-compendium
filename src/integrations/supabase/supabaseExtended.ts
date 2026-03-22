@@ -42,10 +42,6 @@ export interface CharacterExtended extends CharacterRow {
 	prepared_spells?: string[];
 	/** Array of known spell IDs */
 	known_spells?: string[];
-	/** Death save successes counter (managed by useDeathSaves hook) */
-	death_save_successes?: number;
-	/** Death save failures counter (managed by useDeathSaves hook) */
-	death_save_failures?: number;
 	/** Computed attunement slots remaining */
 	attunement_slots?: number;
 	// regent_overlays and regent_overlays already in CharacterRow

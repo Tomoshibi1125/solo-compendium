@@ -9,9 +9,11 @@ import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegrati
 import { cn } from "@/lib/utils";
 
 const CURRENCY_TYPES = [
-	{ id: "gold", name: "Gold", symbol: "GP", color: "text-yellow-400" },
-	{ id: "silver", name: "Silver", symbol: "SP", color: "text-gray-300" },
-	{ id: "copper", name: "Copper", symbol: "CP", color: "text-orange-400" },
+	{ id: "platinum", name: "Platinum", symbol: "PP", color: "text-indigo-400" },
+	{ id: "gold", name: "Gold", symbol: "GP", color: "text-bond-gold" },
+	{ id: "electrum", name: "Electrum", symbol: "EP", color: "text-cyan-400" },
+	{ id: "silver", name: "Silver", symbol: "SP", color: "text-zinc-400" },
+	{ id: "copper", name: "Copper", symbol: "CP", color: "text-amber-600" },
 ];
 
 export function CurrencyManager({ characterId }: { characterId: string }) {

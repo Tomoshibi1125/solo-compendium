@@ -9,6 +9,7 @@ import {
 	Ticker,
 } from "pixi.js";
 import { useEffect, useMemo, useRef } from "react";
+import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { computeVisibilityPolygon, createHexGrid } from "@/lib/vtt";
 
 type TokenBlendMode =
@@ -117,6 +118,7 @@ export function VttPixiStage({
 }: VttPixiStageProps) {
 	const canvasHostRef = useRef<HTMLDivElement | null>(null);
 	const appRef = useRef<Application | null>(null);
+	const { dpr, fx } = usePerformanceProfile();
 
 	const longPressRef = useRef<{
 		tokenId: string;
@@ -178,7 +180,7 @@ export function VttPixiStage({
 				await app.init({
 					backgroundAlpha: 0,
 					antialias: true,
-					resolution: Math.min(window.devicePixelRatio || 1, 2),
+					resolution: Math.min(window.devicePixelRatio || 1, dpr[1]),
 					autoDensity: true,
 					width: Math.max(1, Math.floor(worldSize.w)),
 					height: Math.max(1, Math.floor(worldSize.h)),
@@ -344,7 +346,7 @@ export function VttPixiStage({
 					spawnChance: 1,
 					particlesPerWave: 1,
 					emitterLifetime: -1,
-					maxParticles: 1000,
+					maxParticles: Math.min(1000, fx.particleCount * 30),
 					pos: { x: 0, y: 0 },
 					addAtBack: false,
 					spawnType: "rect",
@@ -387,7 +389,7 @@ export function VttPixiStage({
 					spawnChance: 1,
 					particlesPerWave: 1,
 					emitterLifetime: -1,
-					maxParticles: 500,
+					maxParticles: Math.min(500, fx.particleCount * 20),
 					pos: { x: 0, y: 0 },
 					addAtBack: false,
 					spawnType: "rect",
@@ -430,7 +432,7 @@ export function VttPixiStage({
 					spawnChance: 1,
 					particlesPerWave: 1,
 					emitterLifetime: -1,
-					maxParticles: 300,
+					maxParticles: Math.min(300, fx.particleCount * 12),
 					pos: { x: 0, y: 0 },
 					addAtBack: false,
 					spawnType: "rect",
@@ -472,9 +474,9 @@ export function VttPixiStage({
 					lifetime: { min: 4, max: 8 },
 					frequency: 0.2,
 					spawnChance: 1,
-					particlesPerWave: 2,
+					particlesPerWave: 1,
 					emitterLifetime: -1,
-					maxParticles: 150,
+					maxParticles: Math.min(150, fx.particleCount * 6),
 					pos: { x: 0, y: 0 },
 					addAtBack: false,
 					spawnType: "rect",

@@ -171,7 +171,7 @@ DM: ${userMessage.content}`;
 			</SheetTrigger>
 			<SheetContent
 				side="right"
-				className="w-[400px] sm:w-[540px] flex flex-col p-0 border-l border-primary/20 bg-background/95 backdrop-blur"
+				className="w-[95vw] sm:w-[540px] flex flex-col p-0 border-l border-primary/20 bg-background/95 backdrop-blur"
 			>
 				<SheetHeader className="p-4 border-b border-border bg-muted/30">
 					<SheetTitle className="flex items-center gap-2">

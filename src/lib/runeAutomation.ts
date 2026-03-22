@@ -196,30 +196,30 @@ export async function getAvailableRunesForEquipment(
 	}
 }
 
-/**
- * Apply rune passive bonuses to character stats
- * This is called when calculating final character stats
- */
-export function applyRuneBonuses(
-	baseStats: {
-		ac: number;
-		speed: number;
-		abilities: Record<string, number>;
-		attackBonus: number;
-		damageBonus: string;
-	},
-	activeRunes: Array<{
-		rune: Rune;
-		is_active: boolean;
-	}>,
-): {
+export interface RuneBonusResult {
 	ac: number;
 	speed: number;
 	abilities: Record<string, number>;
 	attackBonus: number;
 	damageBonus: string;
-} {
-	const modifiedStats = { ...baseStats };
+	traits: string[];
+}
+
+/**
+ * Apply rune passive bonuses to character stats
+ * This is called when calculating final character stats
+ */
+export function applyRuneBonuses(
+	baseStats: Omit<RuneBonusResult, "traits"> & { traits?: string[] },
+	activeRunes: Array<{
+		rune: Rune;
+		is_active: boolean;
+	}>,
+): RuneBonusResult {
+	const modifiedStats: RuneBonusResult = {
+		...baseStats,
+		traits: baseStats.traits || [],
+	};
 
 	for (const { rune, is_active } of activeRunes) {
 		if (!is_active || !rune.passive_bonuses) continue;
@@ -263,8 +263,21 @@ export function applyRuneBonuses(
 		}
 
 		if (bonuses.damage_bonus && typeof bonuses.damage_bonus === "string") {
-			// Combine damage bonuses (would need dice parsing for full implementation)
-			modifiedStats.damageBonus = `${modifiedStats.damageBonus ? `${modifiedStats.damageBonus} + ` : ""}${bonuses.damage_bonus}`;
+			modifiedStats.damageBonus = modifiedStats.damageBonus
+				? `${modifiedStats.damageBonus} + ${bonuses.damage_bonus}`
+				: bonuses.damage_bonus;
+		}
+
+		// Traits
+		if (Array.isArray(bonuses.traits)) {
+			bonuses.traits.forEach((trait: unknown) => {
+				if (
+					typeof trait === "string" &&
+					!modifiedStats.traits.includes(trait)
+				) {
+					modifiedStats.traits.push(trait);
+				}
+			});
 		}
 	}
 
@@ -275,20 +288,20 @@ export function applyRuneBonuses(
 // System Ascendant Rune Absorption — cross-type resolution
 // ---------------------------------------------------------------------------
 
-const CASTER_JOBS = [
+const FULL_CASTERS = [
 	"Mage",
 	"Esper",
 	"Herald",
 	"Revenant",
 	"Contractor",
 	"Technomancer",
-	"Holy Knight",
-	"Stalker",
 	"Summoner",
 	"Idol",
 ];
+const HALF_CASTERS = ["Holy Knight", "Stalker"];
 const MARTIAL_JOBS = ["Assassin", "Berserker", "Destroyer", "Striker"];
-// All 14 canonical jobs are categorized above. Summoner and Idol are full casters.
+
+const CASTER_JOBS = [...FULL_CASTERS, ...HALF_CASTERS];
 
 export type RuneAbsorptionResult = {
 	/** True if the character's archetype doesn't match the rune type */
@@ -307,17 +320,6 @@ export type RuneAbsorptionResult = {
 
 /**
  * Determine how a rune's ability should be adapted when absorbed.
- *
- * System Ascendant model: runes are one-time-use skill books.
- *
- * Same-type (martial absorbs martial, caster absorbs caster): ability works
- * as defined by the rune (at-will or its native uses).
- *
- * Cross-type:
- *  - Martial absorbs caster rune → spell becomes a martial technique
- *    (physical manifestation, STR/AGI-flavored, proficiency bonus uses/long rest)
- *  - Caster absorbs martial rune → martial ability becomes a magical construct
- *    (arcane/psychic manifestation, INT/PRE-flavored, proficiency bonus uses/long rest)
  */
 export function resolveRuneAbsorption(
 	runeType: string | null,
@@ -325,11 +327,12 @@ export function resolveRuneAbsorption(
 	characterJob: string | null,
 	characterLevel: number,
 	proficiencyBonus: number,
+	runeRarity: string = "uncommon",
 ): RuneAbsorptionResult {
 	const job = characterJob || "";
-	const isCaster = CASTER_JOBS.includes(job);
+	const isCaster = FULL_CASTERS.includes(job) || HALF_CASTERS.includes(job);
 	const isMartial = MARTIAL_JOBS.includes(job);
-	// Hybrid jobs are never cross-type
+	const isHalfCaster = HALF_CASTERS.includes(job);
 	const isHybrid = !isCaster && !isMartial;
 
 	const runeIsMartial =
@@ -338,36 +341,57 @@ export function resolveRuneAbsorption(
 		runeType === "defensive";
 	const runeIsCaster = runeType === "caster";
 
+	// Determine if adaptation is needed.
 	const isCrossType =
-		!isHybrid && ((isCaster && runeIsMartial) || (isMartial && runeIsCaster));
+		!isHybrid &&
+		!isHalfCaster &&
+		((isCaster && (runeIsMartial || runeType === "martial")) ||
+			(isMartial && (runeIsCaster || runeType === "caster")));
 
 	if (isCrossType) {
-		// Cross-type: limited uses per long rest = proficiency bonus
-		const descriptionPrefix = isMartial
-			? "[Adapted Technique] This spell-like ability has been absorbed and manifests as a physical technique channeled through your body. Uses STR or AGI instead of a spellcasting ability."
-			: "[Arcane Adaptation] This martial ability has been absorbed and manifests as a magical construct shaped by your will. Uses your spellcasting ability modifier.";
+		// Calculate uses based on rarity
+		let rarityBonus = 0;
+		if (runeRarity === "rare") rarityBonus = 1;
+		else if (runeRarity === "very_rare") rarityBonus = 2;
+		else if (runeRarity === "legendary") rarityBonus = 3;
 
-		const actionType = isMartial ? ("action" as const) : ("action" as const);
+		const usesMax = proficiencyBonus + rarityBonus;
+
+		// Job-specific flavor and stat adaptation
+		let descriptionPrefix = "";
+		if (isMartial) {
+			const flavor =
+				job === "Striker" || job === "Assassin"
+					? "channeled through your lightning-fast strikes and focused breath"
+					: "manifested as a raw physical technique channeled through your weapons";
+			descriptionPrefix = `[Adapted Technique] You have adapted this energy into your martial repertoire. It is now ${flavor}. This ability now uses your STR or AGI modifier for checks and saves. (${usesMax} uses per Long Rest)`;
+		} else {
+			descriptionPrefix = `[Arcane Adaptation] You manifest this physical technique through a magical construct, telekinetic force, or aura projection. This ability now uses your spellcasting modifier (INT, WIS, or CHA) instead of a physical stat. (${usesMax} uses per Long Rest)`;
+		}
 
 		return {
 			isCrossType: true,
 			recharge: "long-rest",
-			usesMax: proficiencyBonus,
+			usesMax,
 			adaptationNote: isMartial
-				? `Cross-type: spell adapted as martial technique. ${proficiencyBonus} uses per long rest.`
-				: `Cross-type: martial ability adapted as magical construct. ${proficiencyBonus} uses per long rest.`,
-			actionType,
+				? `Cross-type: Spell adapted as martial technique (${usesMax} uses).`
+				: `Cross-type: Martial ability adapted as magical construct (${usesMax} uses).`,
+			actionType: "action",
 			descriptionPrefix,
 		};
 	}
 
-	// Same-type: use the rune's native cadence
-	const nativeUses = calculateRuneMaxUses(
+	// Natural absorption: use the rune's native cadence
+	const usesModifier = isHalfCaster || isHybrid ? 1 : 0;
+	const nativeUsesBase = calculateRuneMaxUses(
 		runeUsesPerRest,
 		characterLevel,
 		proficiencyBonus,
 	);
-	if (nativeUses === -1) {
+
+	const usesMax = nativeUsesBase === -1 ? null : nativeUsesBase + usesModifier;
+
+	if (usesMax === null) {
 		return {
 			isCrossType: false,
 			recharge: "at-will",
@@ -378,7 +402,6 @@ export function resolveRuneAbsorption(
 		};
 	}
 
-	// Determine recharge from rune data — default to long-rest
 	const recharge: "short-rest" | "long-rest" = runeUsesPerRest
 		?.toLowerCase()
 		.includes("short")
@@ -388,8 +411,8 @@ export function resolveRuneAbsorption(
 	return {
 		isCrossType: false,
 		recharge,
-		usesMax: nativeUses,
-		adaptationNote: `Natural absorption: ${nativeUses} uses per ${recharge}`,
+		usesMax,
+		adaptationNote: `Natural absorption: ${usesMax} uses per ${recharge}`,
 		actionType: "action",
 		descriptionPrefix: "",
 	};

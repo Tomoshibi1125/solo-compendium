@@ -1,4 +1,5 @@
 import type { Database } from "@/integrations/supabase/types";
+import type { RuneBonusResult } from "./runeAutomation";
 
 export type EquipmentRow =
 	Database["public"]["Tables"]["character_equipment"]["Row"];
@@ -19,12 +20,13 @@ export function getSigilSlotBonusForRarity(
 			return 1;
 		case "rare":
 			return 2;
-		case "epic":
+		case "very_rare":
+		case "very rare":
 			return 3;
 		case "legendary":
 			return 4;
-		case "very_rare":
-			return 3;
+		case "artifact":
+			return 5;
 		default:
 			return 0;
 	}
@@ -36,22 +38,8 @@ export function getDefaultSigilSlotsBaseForEquipment(equipment: {
 	name: string;
 	rarity?: string | null | undefined;
 }): number {
-	const itemType = (equipment.item_type || "").toLowerCase();
-	const name = (equipment.name || "").toLowerCase();
-	const props = (
-		Array.isArray(equipment.properties) ? equipment.properties : []
-	).map((p) => String(p).toLowerCase());
-
-	const isShield =
-		itemType === "armor" &&
-		(name.includes("shield") || props.includes("shield"));
-	if (isShield) return 1;
-
-	if (itemType === "weapon") return 1;
-	if (itemType === "armor") return 2;
-	if (itemType === "gear") return 1;
-	if (itemType === "tool") return 0;
-
+	// By default, base slots are 0 to allow rarity-based scaling (0 for common, 1 for uncommon, etc.)
+	// Rare/Exotic base items can override this by having a non-zero sigil_slots_base in the DB.
 	return 0;
 }
 
@@ -146,61 +134,74 @@ export function getEquipmentSigilCategory(equipment: {
 	return "accessory";
 }
 
+/**
+ * Apply passive bonuses from active sigils to character stats.
+ */
 export function applySigilBonuses(
-	baseStats: {
-		ac: number;
-		speed: number;
-		abilities: Record<string, number>;
-		attackBonus: number;
-		damageBonus: string;
-	},
-	activeSigils: Array<{
-		sigil: {
-			passive_bonuses: unknown;
-		};
-		is_active: boolean;
-	}>,
-): {
-	ac: number;
-	speed: number;
-	abilities: Record<string, number>;
-	attackBonus: number;
-	damageBonus: string;
-} {
-	let ac = baseStats.ac;
-	let speed = baseStats.speed;
-	let attackBonus = baseStats.attackBonus;
-	let damageBonus = baseStats.damageBonus;
-	const abilities = { ...baseStats.abilities };
+	initialBonuses: Omit<RuneBonusResult, "traits"> & { traits?: string[] },
+	activeSigils: Array<{ sigil: any; is_active: boolean }>,
+): RuneBonusResult {
+	const totalBonuses: RuneBonusResult = {
+		...initialBonuses,
+		traits: initialBonuses.traits || [],
+	};
 
-	for (const entry of activeSigils) {
-		if (!entry.is_active) continue;
-		const bonuses = entry.sigil.passive_bonuses as unknown;
+	for (const { sigil, is_active } of activeSigils) {
+		if (!is_active || !sigil) continue;
+
+		const bonuses = sigil.passive_bonuses as Record<string, unknown>;
 		if (!bonuses || typeof bonuses !== "object") continue;
-		const b = bonuses as Record<string, unknown>;
 
-		if (typeof b.ac_bonus === "number") ac += b.ac_bonus;
-		if (typeof b.speed_bonus === "number") speed += b.speed_bonus;
-		if (typeof b.attack_bonus === "number") attackBonus += b.attack_bonus;
-
-		if (typeof b.damage_bonus === "number") {
-			const n = b.damage_bonus;
-			damageBonus = n === 0 ? damageBonus : `${n >= 0 ? "+" : ""}${n}`;
-		} else if (typeof b.damage_bonus === "string") {
-			damageBonus = b.damage_bonus;
+		if (bonuses.ac_bonus && typeof bonuses.ac_bonus === "number") {
+			totalBonuses.ac += bonuses.ac_bonus;
 		}
 
-		const abilityScores = b.ability_scores;
-		if (abilityScores && typeof abilityScores === "object") {
-			for (const [k, v] of Object.entries(
-				abilityScores as Record<string, unknown>,
-			)) {
-				if (typeof v !== "number") continue;
-				const key = k.toUpperCase();
-				abilities[key] = (abilities[key] || 0) + v;
+		if (bonuses.speed_bonus && typeof bonuses.speed_bonus === "number") {
+			totalBonuses.speed += bonuses.speed_bonus;
+		}
+
+		if (bonuses.attack_bonus && typeof bonuses.attack_bonus === "number") {
+			totalBonuses.attackBonus += bonuses.attack_bonus;
+		}
+
+		if (bonuses.damage_bonus !== undefined) {
+			if (typeof bonuses.damage_bonus === "number") {
+				// If initial damage bonus is numeric, add. If string, convert to string.
+				const currentDamage = totalBonuses.damageBonus;
+				if (!currentDamage) {
+					totalBonuses.damageBonus =
+						bonuses.damage_bonus > 0
+							? `+${bonuses.damage_bonus}`
+							: `${bonuses.damage_bonus}`;
+				} else if (/^[+-]?\d+$/.test(currentDamage)) {
+					const newVal = parseInt(currentDamage) + bonuses.damage_bonus;
+					totalBonuses.damageBonus = newVal > 0 ? `+${newVal}` : `${newVal}`;
+				} else {
+					totalBonuses.damageBonus = `${currentDamage} + ${bonuses.damage_bonus}`;
+				}
+			} else if (typeof bonuses.damage_bonus === "string") {
+				totalBonuses.damageBonus = totalBonuses.damageBonus
+					? `${totalBonuses.damageBonus} + ${bonuses.damage_bonus}`
+					: bonuses.damage_bonus;
 			}
+		}
+
+		if (bonuses.ability_scores && typeof bonuses.ability_scores === "object") {
+			const scores = bonuses.ability_scores as Record<string, number>;
+			Object.entries(scores).forEach(([ability, value]) => {
+				const current = totalBonuses.abilities[ability] || 0;
+				totalBonuses.abilities[ability] = Math.max(current, value);
+			});
+		}
+
+		if (Array.isArray(bonuses.traits)) {
+			bonuses.traits.forEach((trait: unknown) => {
+				if (typeof trait === "string" && !totalBonuses.traits.includes(trait)) {
+					totalBonuses.traits.push(trait);
+				}
+			});
 		}
 	}
 
-	return { ac, speed, abilities, attackBonus, damageBonus };
+	return totalBonuses;
 }

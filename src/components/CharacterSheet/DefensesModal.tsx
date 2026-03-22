@@ -26,6 +26,8 @@ interface DefensesModalProps {
 	conditionImmunities?: string[];
 	triggerButton?: React.ReactNode;
 	characterId: string;
+	isOpen?: boolean;
+	onOpenChange?: (open: boolean) => void;
 }
 
 export function DefensesModal({
@@ -36,8 +38,12 @@ export function DefensesModal({
 	conditionImmunities = [],
 	triggerButton,
 	characterId,
+	isOpen,
+	onOpenChange,
 }: DefensesModalProps) {
-	const [open, setOpen] = useState(false);
+	const [internalOpen, setInternalOpen] = useState(false);
+	const open = isOpen ?? internalOpen;
+	const setOpen = onOpenChange ?? setInternalOpen;
 	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
 	const playerTools = usePlayerToolsEnhancements();
 

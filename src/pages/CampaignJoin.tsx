@@ -396,8 +396,9 @@ const CampaignJoin = () => {
 					<SystemWindow title="NO ASCENDANTS FOUND" className="mb-6">
 						<div className="space-y-3">
 							<SystemText className="block text-sm text-muted-foreground">
-								You can join now without a linked Ascendant, or create one first
-								and return automatically.
+								You can join now without a linked Ascendant and attach one later
+								from the Campaign Dashboard, or create one now and return
+								automatically.
 							</SystemText>
 							<Button variant="outline" className="w-full" asChild>
 								<Link

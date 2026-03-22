@@ -21,7 +21,7 @@ import { isLocalCharacterId } from "@/lib/guestStore";
 // Types
 // ---------------------------------------------------------------------------
 
-export const MAX_ATTUNEMENT_SLOTS = 3;
+export const MAX_ATTUNEMENT_SLOTS = 6;
 
 export interface AttunableItem {
 	id: string;

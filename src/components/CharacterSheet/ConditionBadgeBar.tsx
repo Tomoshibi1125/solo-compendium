@@ -9,6 +9,10 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CONDITION_EFFECTS } from "@/lib/conditionEffects";
+import {
+	type ConditionEntry,
+	getConditionSummary,
+} from "@/lib/conditionSystem";
 import { cn } from "@/lib/utils";
 
 const ALL_CONDITIONS = Object.keys(CONDITION_EFFECTS);
@@ -31,9 +35,9 @@ const CONDITION_COLORS: Record<string, string> = {
 };
 
 interface ConditionBadgeBarProps {
-	conditions: string[];
-	onAddCondition: (condition: string) => void;
-	onRemoveCondition: (condition: string) => void;
+	conditions: ConditionEntry[];
+	onAddCondition: (conditionName: string) => void;
+	onRemoveCondition: (conditionId: string) => void;
 	exhaustionLevel?: number;
 	onClearExhaustion?: () => void;
 }
@@ -48,7 +52,7 @@ export function ConditionBadgeBar({
 	const [showPicker, setShowPicker] = useState(false);
 
 	const available = ALL_CONDITIONS.filter(
-		(c) => !conditions.map((x) => x.toLowerCase()).includes(c),
+		(c) => !conditions.map((x) => x.conditionName.toLowerCase()).includes(c),
 	);
 
 	return (
@@ -61,23 +65,23 @@ export function ConditionBadgeBar({
 				)}
 				<TooltipProvider>
 					{conditions.map((condition) => {
-						const key = condition.toLowerCase();
+						const key = condition.conditionName.toLowerCase();
 						const info = CONDITION_EFFECTS[key];
 						const color = CONDITION_COLORS[key] ?? "bg-gray-500 text-white";
 
 						return (
-							<Tooltip key={condition}>
+							<Tooltip key={condition.id}>
 								<TooltipTrigger asChild>
 									<Badge
 										className={cn("gap-1 cursor-default select-none", color)}
 									>
 										<AlertTriangle className="h-3 w-3" />
-										{info?.name ?? condition}
+										{info?.name ?? condition.conditionName}
 										<button
 											type="button"
-											onClick={() => onRemoveCondition(condition)}
+											onClick={() => onRemoveCondition(condition.id)}
 											className="ml-0.5 hover:opacity-70"
-											aria-label={`Remove ${condition}`}
+											aria-label={`Remove ${condition.conditionName}`}
 										>
 											<X className="h-3 w-3" />
 										</button>
@@ -85,8 +89,18 @@ export function ConditionBadgeBar({
 								</TooltipTrigger>
 								<TooltipContent side="bottom" className="max-w-xs text-left">
 									<p className="font-semibold mb-1">
-										{info?.name ?? condition}
+										{info?.name ?? condition.conditionName}
 									</p>
+									{condition.sourceName && (
+										<p className="text-[10px] text-muted-foreground mb-1 italic">
+											Source: {condition.sourceName}
+										</p>
+									)}
+									{condition.remainingRounds !== null && (
+										<p className="text-[10px] text-primary/60 mb-1">
+											{condition.remainingRounds} rounds remaining
+										</p>
+									)}
 									<p className="text-xs">
 										{info?.description ?? "Custom condition."}
 									</p>

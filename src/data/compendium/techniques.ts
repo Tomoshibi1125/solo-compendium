@@ -85,8 +85,7 @@ interface Technique {
 	image?: string;
 }
 
-export const techniques: Technique[] = [
-	// OFFENSIVE TECHNIQUES
+export const techniques = [
 	{
 		id: "shadow-strike",
 		name: "Shadow Strike",
@@ -306,8 +305,6 @@ export const techniques: Technique[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/whirlwind-strike.webp",
 	},
-
-	// DEFENSIVE TECHNIQUES
 	{
 		id: "shadow-dodge",
 		name: "Shadow Dodge",
@@ -487,8 +484,6 @@ export const techniques: Technique[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/guardian-stance.webp",
 	},
-
-	// MOBILITY TECHNIQUES
 	{
 		id: "shadow-step",
 		name: "Shadow Step",
@@ -583,7 +578,7 @@ export const techniques: Technique[] = [
 		mechanics: {
 			movement: {
 				type: "climb",
-				distance: 0, // Special movement mode
+				distance: 0,
 			},
 			condition: ["Free action", "Ignores gravity on surfaces"],
 		},
@@ -623,7 +618,7 @@ export const techniques: Technique[] = [
 		mechanics: {
 			movement: {
 				type: "teleport",
-				distance: 0, // Special movement through objects
+				distance: 0,
 			},
 			condition: [
 				"Action activation",
@@ -685,8 +680,6 @@ export const techniques: Technique[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/leap-strike.webp",
 	},
-
-	// UTILITY TECHNIQUES
 	{
 		id: "shadow-bind",
 		name: "Shadow Bind",
@@ -894,8 +887,6 @@ export const techniques: Technique[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/intimidating-presence.webp",
 	},
-
-	// FINISHING TECHNIQUES
 	{
 		id: "shadow-termination",
 		name: "Shadow Termination",
@@ -1148,9 +1139,18 @@ export const techniques: Technique[] = [
 			"A high-altitude lunging strike that impacts like a falling star.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 11, ability: "Strength", score: 15 },
-		activation: { type: "action", cost: "One attack action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 11,
+			ability: "Strength",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+			cost: "One attack action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"Leap up to 30 feet into the air and strike a target. Deals an additional 6d6 fire damage.",
@@ -1164,7 +1164,10 @@ export const techniques: Technique[] = [
 				damage: "fire/bludgeoning",
 			},
 		},
-		limitations: { uses: "Once per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Once per short rest",
+			cooldown: "Short rest",
+		},
 		flavor:
 			"You descend like a vengeful god, leaving a crater where your enemy once stood.",
 		source: "System Ascendant Canon",
@@ -1176,8 +1179,14 @@ export const techniques: Technique[] = [
 		description: "Briefly turn intangible while moving to avoid all obstacles.",
 		type: "mobility",
 		style: "any",
-		prerequisites: { level: 9, ability: "Dexterity", score: 15 },
-		activation: { type: "bonus-action" },
+		prerequisites: {
+			level: 9,
+			ability: "Dexterity",
+			score: 15,
+		},
+		activation: {
+			type: "bonus-action",
+		},
 		effects: {
 			primary:
 				"Until the end of your turn, you can move through creatures and objects as if they were difficult terrain.",
@@ -1185,9 +1194,15 @@ export const techniques: Technique[] = [
 				"You do not provoke opportunity attacks. Adaptive once learned.",
 		},
 		mechanics: {
-			movement: { type: "step", distance: 0 },
+			movement: {
+				type: "step",
+				distance: 0,
+			},
 		},
-		limitations: { uses: "3 times per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "3 times per day",
+			cooldown: "Long rest",
+		},
 		flavor: "For a split second, you become a ghost in the machine.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/phantom-step.webp",
@@ -1204,8 +1219,13 @@ export const techniques: Technique[] = [
 			score: 17,
 			technique: ["Shadow Strike"],
 		},
-		activation: { type: "action", cost: "Full attack action" },
-		range: { type: "melee" },
+		activation: {
+			type: "action",
+			cost: "Full attack action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"Make 10 melee attacks against one target. Each hit deals 1d4 + Dex damage.",
@@ -1213,9 +1233,16 @@ export const techniques: Technique[] = [
 				"Target is bleeding, taking 2d6 damage at start of turns. Adaptive once learned.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Dexterity", damage: "slashing" },
+			attack: {
+				type: "melee",
+				modifier: "Dexterity",
+				damage: "slashing",
+			},
 		},
-		limitations: { uses: "Once per long rest", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per long rest",
+			cooldown: "Long rest",
+		},
 		flavor: "The enemy falls before they even see you draw your blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/thousand-cuts.webp",
@@ -1227,8 +1254,14 @@ export const techniques: Technique[] = [
 			"A perfect parry stance that deflects even magical projectiles.",
 		type: "defensive",
 		style: "shield",
-		prerequisites: { level: 13, ability: "Strength", score: 15 },
-		activation: { type: "reaction" },
+		prerequisites: {
+			level: 13,
+			ability: "Strength",
+			score: 15,
+		},
+		activation: {
+			type: "reaction",
+		},
 		effects: {
 			primary:
 				"When hit by an attack (including spells), reduce the damage to 0.",
@@ -1238,7 +1271,10 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["Invulnerable for 1 trigger"],
 		},
-		limitations: { uses: "Twice per long rest", cooldown: "Long rest" },
+		limitations: {
+			uses: "Twice per long rest",
+			cooldown: "Long rest",
+		},
 		flavor: "Your resolve is harder than any gate steel.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/absolute-defense.webp",
@@ -1250,9 +1286,18 @@ export const techniques: Technique[] = [
 			"Increase the gravity around a target to pin them to the ground.",
 		type: "utility",
 		style: "any",
-		prerequisites: { level: 7, ability: "Constitution", score: 13 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 30 },
+		prerequisites: {
+			level: 7,
+			ability: "Constitution",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"One creature must make a Strength save or be restrained and knocked prone.",
@@ -1266,7 +1311,10 @@ export const techniques: Technique[] = [
 				failure: "Restrained",
 			},
 		},
-		limitations: { uses: "3 times per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "3 times per day",
+			cooldown: "Long rest",
+		},
 		flavor: "The very earth demands their presence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/gravity-bind.webp",
@@ -1278,18 +1326,33 @@ export const techniques: Technique[] = [
 			"A strike so fast it breaks the sound barrier, creating a concussive wave.",
 		type: "offensive",
 		style: "unarmed",
-		prerequisites: { level: 5, ability: "Strength", score: 13 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 15 },
+		prerequisites: {
+			level: 5,
+			ability: "Strength",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 15,
+		},
 		effects: {
 			primary: "Creatures in a 15ft cone take 3d8 thunder damage.",
 			secondary:
 				"Targets must make a Con save or be deafened and pushed 10ft. Adaptive once learned.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "thunder" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "thunder",
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "The air screams as you strike.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/sonic-boom.webp",
@@ -1301,9 +1364,18 @@ export const techniques: Technique[] = [
 			"Enter a trance where every incoming attack is met with a counter.",
 		type: "defensive",
 		style: "weapon",
-		prerequisites: { level: 15, ability: "Dexterity", score: 15 },
-		activation: { type: "bonus-action" },
-		duration: { type: "timed", time: "1 round" },
+		prerequisites: {
+			level: 15,
+			ability: "Dexterity",
+			score: 15,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		duration: {
+			type: "timed",
+			time: "1 round",
+		},
 		effects: {
 			primary:
 				"Gain unlimited reactions for the purpose of making opportunity attacks or parries until your next turn.",
@@ -1312,7 +1384,10 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["unlimited reactions"],
 		},
-		limitations: { uses: "Once per long rest", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per long rest",
+			cooldown: "Long rest",
+		},
 		flavor: "You move between the raindrops of steel.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/infinite-riposte.webp",
@@ -1324,9 +1399,17 @@ export const techniques: Technique[] = [
 			"A vertical spiraling jump that slices everything in its path.",
 		type: "mobility",
 		style: "weapon",
-		prerequisites: { level: 11, ability: "Strength", score: 15 },
-		activation: { type: "action" },
-		range: { type: "self" },
+		prerequisites: {
+			level: 11,
+			ability: "Strength",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"Jump 30ft vertically. All creatures within 5ft of your path take weapon damage.",
@@ -1334,9 +1417,15 @@ export const techniques: Technique[] = [
 				"Safe landing: you take no falling damage this turn. Adaptive once learned.",
 		},
 		mechanics: {
-			movement: { type: "jump", distance: 30 },
+			movement: {
+				type: "jump",
+				distance: 30,
+			},
 		},
-		limitations: { uses: "Twice per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Twice per short rest",
+			cooldown: "Short rest",
+		},
 		flavor: "Like a dragon taking flight, you leave only destruction behind.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/dragon-ascent.webp",
@@ -1347,9 +1436,17 @@ export const techniques: Technique[] = [
 		description: "A precision strike to the target's central nervous system.",
 		type: "utility",
 		style: "unarmed",
-		prerequisites: { level: 7, ability: "Dexterity", score: 13 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 7,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"Target must make a Constitution save or be paralyzed until the end of your next turn.",
@@ -1363,7 +1460,10 @@ export const techniques: Technique[] = [
 				failure: "Paralyzed",
 			},
 		},
-		limitations: { uses: "Once per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Once per short rest",
+			cooldown: "Short rest",
+		},
 		flavor: "You don't need strength to stop a heart.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/nerve-strike.webp",
@@ -1374,18 +1474,34 @@ export const techniques: Technique[] = [
 		description: "Release a flurry of essence-blades from your weapon.",
 		type: "offensive",
 		style: "weapon",
-		prerequisites: { level: 9, ability: "Dexterity", score: 15 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 30 },
+		prerequisites: {
+			level: 9,
+			ability: "Dexterity",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"Creatures in a 30ft radius must make a Dex save or take 5d10 force damage.",
 			secondary: "Adaptive once learned via Rune.",
 		},
 		mechanics: {
-			attack: { type: "ranged", modifier: "Dexterity", damage: "force" },
+			attack: {
+				type: "ranged",
+				modifier: "Dexterity",
+				damage: "force",
+			},
 		},
-		limitations: { uses: "Once per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Once per short rest",
+			cooldown: "Short rest",
+		},
 		flavor: "Your blade becomes a thousand, then zero.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/bladeshim-storm.webp",
@@ -1397,9 +1513,18 @@ export const techniques: Technique[] = [
 			"Root yourself in reality, becoming impossible to move or knock down.",
 		type: "defensive",
 		style: "any",
-		prerequisites: { level: 5, ability: "Constitution", score: 13 },
-		activation: { type: "bonus-action" },
-		duration: { type: "concentration", time: "1 minute" },
+		prerequisites: {
+			level: 5,
+			ability: "Constitution",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		duration: {
+			type: "concentration",
+			time: "1 minute",
+		},
 		effects: {
 			primary: "Gain advantage on all Strength and Constitution saves.",
 			secondary: "Cannot be moved or knocked prone. Adaptive once learned.",
@@ -1407,7 +1532,10 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["advantage on Str/Con saves", "immovable"],
 		},
-		limitations: { uses: "3 times per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "3 times per day",
+			cooldown: "Long rest",
+		},
 		flavor: "The storm rages, but the mountain remains.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/immovable-object.webp",
@@ -1418,18 +1546,29 @@ export const techniques: Technique[] = [
 		description: "Move so quickly you leave afterimages that distract foes.",
 		type: "mobility",
 		style: "any",
-		prerequisites: { level: 3, ability: "Dexterity", score: 13 },
-		activation: { type: "bonus-action" },
+		prerequisites: {
+			level: 3,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
 		effects: {
 			primary:
 				"Until the start of your next turn, attacks against you have disadvantage.",
 			secondary: "You can move an extra 10ft this turn. Adaptive once learned.",
 		},
 		mechanics: {
-			movement: { type: "step", distance: 10 },
+			movement: {
+				type: "step",
+				distance: 10,
+			},
 			condition: ["disadvantage on incoming attacks"],
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "They strike at where you were, never where you are.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/echo-step.webp",
@@ -1441,9 +1580,18 @@ export const techniques: Technique[] = [
 			"Spin your weapon to create a vacuum that pulls enemies closer.",
 		type: "utility",
 		style: "two-handed",
-		prerequisites: { level: 7, ability: "Strength", score: 13 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 20 },
+		prerequisites: {
+			level: 7,
+			ability: "Strength",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 20,
+		},
 		effects: {
 			primary:
 				"Creatures within 20ft must make a Strength save or be pulled adjacent to you.",
@@ -1457,7 +1605,9 @@ export const techniques: Technique[] = [
 				failure: "Pulled",
 			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "You are the eye of the storm.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/vortex-pull.webp",
@@ -1468,17 +1618,28 @@ export const techniques: Technique[] = [
 		description: "Empower your strike by sacrificing your own life force.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 5, ability: "Constitution", score: 13 },
-		activation: { type: "free" },
+		prerequisites: {
+			level: 5,
+			ability: "Constitution",
+			score: 13,
+		},
+		activation: {
+			type: "free",
+		},
 		effects: {
 			primary:
 				"Expend any number of Hit Dice. Add double the total to your next damage roll.",
 			secondary: "Adaptive once learned via Rune.",
 		},
 		mechanics: {
-			attack: { type: "melee", damage: "variable" },
+			attack: {
+				type: "melee",
+				damage: "variable",
+			},
 		},
-		limitations: { uses: "Once per turn" },
+		limitations: {
+			uses: "Once per turn",
+		},
 		flavor: "Victory has a price. You pay it in red.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blood-tithe.webp",
@@ -1489,18 +1650,34 @@ export const techniques: Technique[] = [
 		description: "Strike the ground to create a localized earthquake.",
 		type: "utility",
 		style: "any",
-		prerequisites: { level: 9, ability: "Strength", score: 15 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 20 },
+		prerequisites: {
+			level: 9,
+			ability: "Strength",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 20,
+		},
 		effects: {
 			primary:
 				"Creatures in a 20ft radius must make a Dex save or take 4d8 bludgeoning and be knocked prone.",
 			secondary: "Area becomes difficult terrain. Adaptive once learned.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "bludgeoning" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "bludgeoning",
+			},
 		},
-		limitations: { uses: "3 times per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "3 times per day",
+			cooldown: "Long rest",
+		},
 		flavor: "The earth trembles at your footsteps.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/quaking-stomp.webp",
@@ -1512,9 +1689,18 @@ export const techniques: Technique[] = [
 			"Enter a shifting flow of motion that enhances both offense and defense.",
 		type: "defensive",
 		style: "any",
-		prerequisites: { level: 13, ability: "Dexterity", score: 15 },
-		activation: { type: "bonus-action" },
-		duration: { type: "concentration", time: "1 minute" },
+		prerequisites: {
+			level: 13,
+			ability: "Dexterity",
+			score: 15,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		duration: {
+			type: "concentration",
+			time: "1 minute",
+		},
 		effects: {
 			primary: "Gain +2 AC and your movement speed increases by 20ft.",
 			secondary:
@@ -1522,9 +1708,15 @@ export const techniques: Technique[] = [
 		},
 		mechanics: {
 			condition: ["+2 AC"],
-			movement: { type: "step", distance: 20 },
+			movement: {
+				type: "step",
+				distance: 20,
+			},
 		},
-		limitations: { uses: "Once per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Once per short rest",
+			cooldown: "Short rest",
+		},
 		flavor: "Combat is no longer a struggle; it is a symphony.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blade-dance.webp",
@@ -1535,18 +1727,32 @@ export const techniques: Technique[] = [
 		description: "A horizontal swing that sends enemies flying.",
 		type: "offensive",
 		style: "two-handed",
-		prerequisites: { level: 11, ability: "Strength", score: 15 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 11,
+			ability: "Strength",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary: "Strike one target. If hit, they are pushed 30ft away.",
 			secondary:
 				"If they strike a wall, they take an additional 3d6 bludgeoning damage. Adaptive once learned.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "bludgeoning" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "bludgeoning",
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "Get out of my way.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/grand-slam.webp",
@@ -1558,18 +1764,33 @@ export const techniques: Technique[] = [
 			"A precision thrust that targets the soul as much as the body.",
 		type: "offensive",
 		style: "weapon",
-		prerequisites: { level: 15, ability: "Dexterity", score: 15 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 15,
+			ability: "Dexterity",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary: "Strike a target. Attack ignores all damage resistance.",
 			secondary:
 				"Target loses one unexpended Action or Bonus Action from their next turn. Adaptive once learned.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Dexterity", damage: "piercing" },
+			attack: {
+				type: "melee",
+				modifier: "Dexterity",
+				damage: "piercing",
+			},
 		},
-		limitations: { uses: "Once per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Once per short rest",
+			cooldown: "Short rest",
+		},
 		flavor: "The gap in their defense is exactly as wide as your blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/sky-piercer.webp",
@@ -1581,8 +1802,14 @@ export const techniques: Technique[] = [
 			"Instantly shake off mental control and debuffs through sheer grit.",
 		type: "utility",
 		style: "any",
-		prerequisites: { level: 5, ability: "Constitution", score: 13 },
-		activation: { type: "reaction" },
+		prerequisites: {
+			level: 5,
+			ability: "Constitution",
+			score: 13,
+		},
+		activation: {
+			type: "reaction",
+		},
 		effects: {
 			primary:
 				"End one condition currently affecting you: Charmed, Frightened, or Stunned.",
@@ -1591,7 +1818,10 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["remove mental debuff"],
 		},
-		limitations: { uses: "Once per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Once per short rest",
+			cooldown: "Short rest",
+		},
 		flavor: "The system cannot control what it cannot break.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/unbreakable-will.webp",
@@ -1603,18 +1833,33 @@ export const techniques: Technique[] = [
 			"Channel every remaining bit of energy into one final catastrophic blow.",
 		type: "finishing",
 		style: "any",
-		prerequisites: { level: 20, ability: "Strength", score: 17 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 20,
+			ability: "Strength",
+			score: 17,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary: "Deal 10d10 + Str + Dex + Int damage.",
 			secondary:
 				"You take 2 levels of exhaustion. Adaptive once learned via Rune.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Str/Dex/Int", damage: "untyped" },
+			attack: {
+				type: "melee",
+				modifier: "Str/Dex/Int",
+				damage: "untyped",
+			},
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor: "This is the end of everything.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/final-reckoning.webp",
@@ -1626,8 +1871,14 @@ export const techniques: Technique[] = [
 			"A series of micro-teleports that make your movement unpredictable.",
 		type: "mobility",
 		style: "any",
-		prerequisites: { level: 5, ability: "Dexterity", score: 13 },
-		activation: { type: "free" },
+		prerequisites: {
+			level: 5,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "free",
+		},
 		effects: {
 			primary:
 				"When you move, you can teleport between any 5ft squares of your movement path.",
@@ -1635,9 +1886,14 @@ export const techniques: Technique[] = [
 				"You are immune to opportunity attacks during this movement. Adaptive once learned.",
 		},
 		mechanics: {
-			movement: { type: "teleport", distance: 0 },
+			movement: {
+				type: "teleport",
+				distance: 0,
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor:
 			"You flicker like a dying lightbulb, never staying in one place long enough to be hit.",
 		source: "System Ascendant Canon",
@@ -1649,9 +1905,17 @@ export const techniques: Technique[] = [
 		description: "A cold, calculated strike that finishes off a weakened foe.",
 		type: "finishing",
 		style: "weapon",
-		prerequisites: { level: 9, ability: "Strength", score: 13 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 9,
+			ability: "Strength",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"If the target is below 25% health, they must make a Constitution save or be reduced to 0 HP.",
@@ -1659,7 +1923,11 @@ export const techniques: Technique[] = [
 				"On success, they take 10d10 additional weapon damage. Adaptive once learned.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "lethal" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "lethal",
+			},
 			saving_throw: {
 				ability: "Constitution",
 				dc: "15 + prof",
@@ -1667,56 +1935,12 @@ export const techniques: Technique[] = [
 				failure: "death",
 			},
 		},
-		limitations: { uses: "Once per turn" },
+		limitations: {
+			uses: "Once per turn",
+		},
 		flavor: "It's not cruelty. It's efficiency.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/execute.webp",
-	},
-	{
-		id: "meteor-strike",
-		name: "Meteor Strike",
-		description:
-			"A jumping downward strike that impacts with the force of a falling star.",
-		type: "offensive",
-		style: "two-handed",
-		prerequisites: { level: 11, ability: "Strength", score: 18 },
-		activation: { type: "action" },
-		range: { type: "melee" },
-		effects: {
-			primary: "Deal 8d10 bludgeoning damage and create a 15ft shockwave.",
-			secondary:
-				"All targets in the shockwave must make a Dex save or be knocked prone.",
-		},
-		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "8d10" },
-			movement: { type: "jump", distance: 30 },
-		},
-		limitations: { uses: "Once per short rest" },
-		flavor: "First the jump, then the world-shaking impact.",
-		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/meteor-strike.webp",
-	},
-	{
-		id: "thousand-cuts",
-		name: "Thousand Cuts",
-		description: "A flurry of impossibly fast slashes.",
-		type: "offensive",
-		style: "dual-wielding",
-		prerequisites: { level: 13, ability: "Dexterity", score: 17 },
-		activation: { type: "action" },
-		range: { type: "melee" },
-		effects: {
-			primary:
-				"Make 6 melee attacks against a single target or distributed among targets.",
-			secondary: "Each hit applies a stack of 'Bleeding' (1d4 damage/turn).",
-		},
-		mechanics: {
-			attack: { type: "melee", modifier: "Dexterity", damage: "weapon+bleed" },
-		},
-		limitations: { uses: "Once per long rest" },
-		flavor: "The eye cannot follow the blade's dance.",
-		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/thousand-cuts.webp",
 	},
 	{
 		id: "iron-wall-stance",
@@ -1725,9 +1949,17 @@ export const techniques: Technique[] = [
 			"An absolute defensive posture that negates all frontal attacks.",
 		type: "defensive",
 		style: "shield",
-		prerequisites: { level: 7, ability: "Strength", score: 15 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		prerequisites: {
+			level: 7,
+			ability: "Strength",
+			score: 15,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"You gain total cover from the front. Any melee attacker that hits you takes 2d6 bludgeoning damage from the impact.",
@@ -1736,7 +1968,9 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["Total Cover", "Slowed"],
 		},
-		limitations: { uses: "Concentration" },
+		limitations: {
+			uses: "Concentration",
+		},
 		flavor: "I am the mountain.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/iron-wall.webp",
@@ -1747,18 +1981,33 @@ export const techniques: Technique[] = [
 		description: "Spin with your weapon to strike all nearby enemies.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 5, ability: "Strength", score: 13 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 10 },
+		prerequisites: {
+			level: 5,
+			ability: "Strength",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 10,
+		},
 		effects: {
 			primary:
 				"All creatures within 10ft must make a Dex save or take weapon damage + 2d8.",
 			secondary: "Adaptive DC.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "weapon+2d8" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "weapon+2d8",
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "A circle of steel.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/whirlwind.webp",
@@ -1769,18 +2018,32 @@ export const techniques: Technique[] = [
 		description: "Close your eyes and let your intuition guide the arrow.",
 		type: "offensive",
 		style: "ranged",
-		prerequisites: { level: 9, ability: "Wisdom", score: 15 },
-		activation: { type: "bonus-action" },
-		range: { type: "ranged" },
+		prerequisites: {
+			level: 9,
+			ability: "Wisdom",
+			score: 15,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "ranged",
+		},
 		effects: {
 			primary: "Your next ranged attack ignores cover and has advantage.",
 			secondary:
 				"You can use Wisdom instead of Dexterity for the attack and damage.",
 		},
 		mechanics: {
-			attack: { type: "ranged", modifier: "Wisdom", damage: "weapon" },
+			attack: {
+				type: "ranged",
+				modifier: "Wisdom",
+				damage: "weapon",
+			},
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor: "I do not aim with my eye. I aim with my mind.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/zen-archery.webp",
@@ -1792,9 +2055,17 @@ export const techniques: Technique[] = [
 			"A flashy maneuver designed to strip an enemy of their weapon.",
 		type: "utility",
 		style: "any",
-		prerequisites: { level: 3, ability: "Dexterity", score: 14 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 3,
+			ability: "Dexterity",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"On a hit, the target must make a Strength save or drop one item they are holding.",
@@ -1808,7 +2079,9 @@ export const techniques: Technique[] = [
 				failure: "drops item",
 			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "Now, let's make this a fair fight.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/disarm.webp",
@@ -1819,44 +2092,35 @@ export const techniques: Technique[] = [
 		description: "Strike seven vital pressure points in rapid succession.",
 		type: "offensive",
 		style: "unarmed",
-		prerequisites: { level: 15, ability: "Wisdom", score: 18 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 15,
+			ability: "Wisdom",
+			score: 18,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary: "Target takes 10d6 internal damage and is stunned for 1 minute.",
 			secondary: "If the target dies, they explode in a 10ft radius.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Wisdom", damage: "10d6" },
+			attack: {
+				type: "melee",
+				modifier: "Wisdom",
+				damage: "10d6",
+			},
 			condition: ["Stunned"],
 		},
-		limitations: { uses: "Once per long rest" },
+		limitations: {
+			uses: "Once per long rest",
+		},
 		flavor: "You are already dead.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/seven-star.webp",
-	},
-	{
-		id: "phantom-step",
-		name: "Phantom Step",
-		description: "Move so quickly you leave after-images behind.",
-		type: "mobility",
-		style: "any",
-		prerequisites: { level: 6, ability: "Dexterity", score: 16 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
-		effects: {
-			primary:
-				"Your movement increases by 30ft and you gain the benefits of the 'Blur' spell.",
-			secondary: "You can move through creatures but not objects.",
-		},
-		mechanics: {
-			movement: { type: "step", distance: 30 },
-			condition: ["Blurred"],
-		},
-		limitations: { uses: "Duration: 1 round" },
-		flavor: "Where did he go? Everywhere.",
-		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/phantom-step.webp",
 	},
 	{
 		id: "dragons-tail-sweep",
@@ -1864,18 +2128,33 @@ export const techniques: Technique[] = [
 		description: "A low, powerful kick that clears the area.",
 		type: "offensive",
 		style: "unarmed",
-		prerequisites: { level: 4, ability: "Strength", score: 14 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 5 },
+		prerequisites: {
+			level: 4,
+			ability: "Strength",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 5,
+		},
 		effects: {
 			primary:
 				"All adjacent creatures must make a Dex save or take 3d8 bludgeoning and be knocked prone.",
 			secondary: "Adaptive DC.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Dex/Str", damage: "3d8" },
+			attack: {
+				type: "melee",
+				modifier: "Dex/Str",
+				damage: "3d8",
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "Sweep the leg.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/sweep.webp",
@@ -1886,9 +2165,18 @@ export const techniques: Technique[] = [
 		description: "A shot that travels through multiple enemies and structures.",
 		type: "offensive",
 		style: "ranged",
-		prerequisites: { level: 12, ability: "Dexterity", score: 18 },
-		activation: { type: "action" },
-		range: { type: "ranged", distance: 600 },
+		prerequisites: {
+			level: 12,
+			ability: "Dexterity",
+			score: 18,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "ranged",
+			distance: 600,
+		},
 		effects: {
 			primary:
 				"A 5ft wide line 600ft long. All targets take weapon damage + 5d10 piercing.",
@@ -1896,9 +2184,15 @@ export const techniques: Technique[] = [
 				"Ignores all cover and can penetrate up to 10ft of solid stone.",
 		},
 		mechanics: {
-			attack: { type: "ranged", modifier: "Dexterity", damage: "weapon+5d10" },
+			attack: {
+				type: "ranged",
+				modifier: "Dexterity",
+				damage: "weapon+5d10",
+			},
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor: "Not even a fortress can hide you.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/piercer.webp",
@@ -1909,9 +2203,17 @@ export const techniques: Technique[] = [
 		description: "Reflect a magical or physical projectile back at the sender.",
 		type: "defensive",
 		style: "shield",
-		prerequisites: { level: 8, ability: "Dexterity", score: 15 },
-		activation: { type: "reaction" },
-		range: { type: "self" },
+		prerequisites: {
+			level: 8,
+			ability: "Dexterity",
+			score: 15,
+		},
+		activation: {
+			type: "reaction",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"Reduce damage from a ranged attack to 0. You can then make a ranged attack with the same project back at the attacker.",
@@ -1920,7 +2222,9 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["Damage Negation"],
 		},
-		limitations: { uses: "3 times per short rest" },
+		limitations: {
+			uses: "3 times per short rest",
+		},
 		flavor: "Returned to sender with interest.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/mirror-parry.webp",
@@ -1931,18 +2235,32 @@ export const techniques: Technique[] = [
 		description: "A quick, poisoned strike that numbs the target.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 2, ability: "Dexterity", score: 13 },
-		activation: { type: "bonus-action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 2,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"Target takes 1d6 poison damage and has disadvantage on their next attack.",
 			secondary: "If hidden, the damage increases to 3d6.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Dexterity", damage: "1d6 poison" },
+			attack: {
+				type: "melee",
+				modifier: "Dexterity",
+				damage: "1d6 poison",
+			},
 		},
-		limitations: { uses: "Once per turn" },
+		limitations: {
+			uses: "Once per turn",
+		},
 		flavor: "One small prick is all it takes.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/viper.webp",
@@ -1953,42 +2271,34 @@ export const techniques: Technique[] = [
 		description: "Concentrate all your mass into a single, devastating punch.",
 		type: "offensive",
 		style: "unarmed",
-		prerequisites: { level: 10, ability: "Strength", score: 16 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 10,
+			ability: "Strength",
+			score: 16,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary: "Deal 6d12 bludgeoning damage. Target is knocked back 30ft.",
 			secondary: "Destroys non-magical objects and structures instantly.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "6d12" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "6d12",
+			},
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor: "Concrete is just hard paper to me.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/breaker.webp",
-	},
-	{
-		id: "shadow-bind-technique",
-		name: "Shadow Bind",
-		description: "Staple a target's shadow to the ground with a projectile.",
-		type: "utility",
-		style: "ranged",
-		prerequisites: { level: 6, ability: "Dexterity", score: 15 },
-		activation: { type: "action" },
-		range: { type: "ranged" },
-		effects: {
-			primary:
-				"Target is 'Restrained' until they or someone else uses an action to pull the projectile out.",
-			secondary: "Does not work if there are no shadows visible.",
-		},
-		mechanics: {
-			condition: ["Restrained"],
-		},
-		limitations: { uses: "3 times per day" },
-		flavor: "Stay exactly where you are.",
-		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/bind.webp",
 	},
 	{
 		id: "blade-storm",
@@ -1996,18 +2306,33 @@ export const techniques: Technique[] = [
 		description: "Throw a dozen knives at once in a lethal arc.",
 		type: "offensive",
 		style: "ranged",
-		prerequisites: { level: 11, ability: "Dexterity", score: 17 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 30 },
+		prerequisites: {
+			level: 11,
+			ability: "Dexterity",
+			score: 17,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"All targets in a 30ft cone take 6d4 piercing damage. Dex save for half.",
 			secondary: "Adaptive DC.",
 		},
 		mechanics: {
-			attack: { type: "ranged", modifier: "Dexterity", damage: "6d4" },
+			attack: {
+				type: "ranged",
+				modifier: "Dexterity",
+				damage: "6d4",
+			},
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor: "Rain falls, but steel kills.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blade-storm.webp",
@@ -2018,9 +2343,17 @@ export const techniques: Technique[] = [
 		description: "When an ally is hit, you make a sudden retaliatory strike.",
 		type: "defensive",
 		style: "any",
-		prerequisites: { level: 4, ability: "Strength", score: 14 },
-		activation: { type: "reaction" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 4,
+			ability: "Strength",
+			score: 14,
+		},
+		activation: {
+			type: "reaction",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"If an ally within 5ft is hit, you make a melee attack against the attacker with advantage.",
@@ -2028,9 +2361,15 @@ export const techniques: Technique[] = [
 				"The damage from the attack is reduced by your proficiency bonus.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Str/Dex", damage: "weapon" },
+			attack: {
+				type: "melee",
+				modifier: "Str/Dex",
+				damage: "weapon",
+			},
 		},
-		limitations: { uses: "Once per turn" },
+		limitations: {
+			uses: "Once per turn",
+		},
 		flavor: "Not on my watch.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/rebuke.webp",
@@ -2041,9 +2380,18 @@ export const techniques: Technique[] = [
 		description: "Stomp the ground to create a localized heavy gravity zone.",
 		type: "utility",
 		style: "any",
-		prerequisites: { level: 9, ability: "Strength", score: 16 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 15 },
+		prerequisites: {
+			level: 9,
+			ability: "Strength",
+			score: 16,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 15,
+		},
 		effects: {
 			primary:
 				"15ft radius becomes difficult terrain. Moving through it costs 4x movement.",
@@ -2052,7 +2400,9 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["Difficult Terrain"],
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor: "Weight is a relative concept.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/stomp.webp",
@@ -2063,9 +2413,17 @@ export const techniques: Technique[] = [
 		description: "A heightened state of awareness for sniper shots.",
 		type: "utility",
 		style: "ranged",
-		prerequisites: { level: 5, ability: "Wisdom", score: 14 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		prerequisites: {
+			level: 5,
+			ability: "Wisdom",
+			score: 14,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"You can see clearly up to 2 miles and ignore disadvantage from long range.",
@@ -2074,7 +2432,9 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["Enhanced Sight"],
 		},
-		limitations: { uses: "Short rest" },
+		limitations: {
+			uses: "Short rest",
+		},
 		flavor: "The wind, the light, the heartbeat... everything is clear.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/eagle-eye.webp",
@@ -2085,9 +2445,17 @@ export const techniques: Technique[] = [
 		description: "Tear through the toughest defenses with overwhelming force.",
 		type: "offensive",
 		style: "unarmed",
-		prerequisites: { level: 14, ability: "Strength", score: 20 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 14,
+			ability: "Strength",
+			score: 20,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"Deal 8d8 slashing damage. This attack ignores all resistances and treats immunity as resistance.",
@@ -2095,9 +2463,15 @@ export const techniques: Technique[] = [
 				"The target must make a Con save or have their AC reduced by 4 permanently.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "8d8" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "8d8",
+			},
 		},
-		limitations: { uses: "Once per long rest" },
+		limitations: {
+			uses: "Once per long rest",
+		},
 		flavor: "Nothing stands before the claw.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/rend.webp",
@@ -2108,9 +2482,17 @@ export const techniques: Technique[] = [
 		description: "Start an attack in one timeline, finish it in another.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 16, ability: "Intelligence", score: 15 },
-		activation: { type: "free" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 16,
+			ability: "Intelligence",
+			score: 15,
+		},
+		activation: {
+			type: "free",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"If your attack misses, you can instantly retry it with advantage as a 'temporal correction'.",
@@ -2119,7 +2501,9 @@ export const techniques: Technique[] = [
 		mechanics: {
 			condition: ["Advantage", "Confused"],
 		},
-		limitations: { uses: "Once per turn" },
+		limitations: {
+			uses: "Once per turn",
+		},
 		flavor: "I didn't miss. I just haven't hit you yet.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/feint.webp",
@@ -2130,43 +2514,36 @@ export const techniques: Technique[] = [
 		description: "Drop from a height to crush everyone below.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 8, ability: "Strength", score: 16 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 15 },
+		prerequisites: {
+			level: 8,
+			ability: "Strength",
+			score: 16,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 15,
+		},
 		effects: {
 			primary:
 				"Requires falling at least 20ft. Deal 1d6 per 10ft fallen to all creatures in 15ft radius.",
 			secondary: "You take no falling damage yourself. Adaptive.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "1d6/10ft" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "1d6/10ft",
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "Incoming catastrophe.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/slam.webp",
-	},
-	{
-		id: "sonic-boom-clap",
-		name: "Sonic Boom",
-		description: "Clap your hands together to create a deafening blast.",
-		type: "utility",
-		style: "unarmed",
-		prerequisites: { level: 6, ability: "Strength", score: 15 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 30 },
-		effects: {
-			primary:
-				"All creatures in a 30ft cone take 4d6 thunder damage and are 'Deafened' for 1 minute.",
-			secondary: "Extinguishes all non-magical fires in the area.",
-		},
-		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "4d6 thunder" },
-		},
-		limitations: { uses: "Once per short rest" },
-		flavor: "Silence through noise.",
-		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/sonic-boom.webp",
 	},
 	{
 		id: "ice-path-skate",
@@ -2175,18 +2552,31 @@ export const techniques: Technique[] = [
 			"Create a path of ice under your feet to glide across terrain.",
 		type: "mobility",
 		style: "any",
-		prerequisites: { level: 3, ability: "Dexterity", score: 13 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		prerequisites: {
+			level: 3,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"You gain +20ft movement and can move across water or thin air (max 10ft high).",
 			secondary: "Path melts after 1 round.",
 		},
 		mechanics: {
-			movement: { type: "step", distance: 20 },
+			movement: {
+				type: "step",
+				distance: 20,
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "Walking on air? No, skating on it.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/skate.webp",
@@ -2197,18 +2587,33 @@ export const techniques: Technique[] = [
 		description: "A specialized delivery of poison in a fine mist.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 4, ability: "Dexterity", score: 14 },
-		activation: { type: "action" },
-		range: { type: "area", distance: 15 },
+		prerequisites: {
+			level: 4,
+			ability: "Dexterity",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "area",
+			distance: 15,
+		},
 		effects: {
 			primary:
 				"15ft cone of toxic gas. Targets must make a Con save or be 'Poisoned' for 1 minute.",
 			secondary: "Deals 2d8 poison damage immediately. Adaptive DC.",
 		},
 		mechanics: {
-			attack: { type: "ranged", modifier: "Dexterity", damage: "2d8" },
+			attack: {
+				type: "ranged",
+				modifier: "Dexterity",
+				damage: "2d8",
+			},
 		},
-		limitations: { uses: "3 times per day" },
+		limitations: {
+			uses: "3 times per day",
+		},
 		flavor: "Don't breathe.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/spray.webp",
@@ -2220,9 +2625,17 @@ export const techniques: Technique[] = [
 			"Deliver a hit that causes the target's internal temperature to skyrocket.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 12, ability: "Constitution", score: 17 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 12,
+			ability: "Constitution",
+			score: 17,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"Target takes 6d10 fire damage and has disadvantage on all checks due to intense pain.",
@@ -2230,9 +2643,15 @@ export const techniques: Technique[] = [
 				"Target must make a Con save or take 2d10 fire damage at the start of each turn for 1 minute.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Constitution", damage: "6d10" },
+			attack: {
+				type: "melee",
+				modifier: "Constitution",
+				damage: "6d10",
+			},
 		},
-		limitations: { uses: "Once per day" },
+		limitations: {
+			uses: "Once per day",
+		},
 		flavor: "The fire within is the most dangerous.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blood-boil.webp",
@@ -2243,18 +2662,31 @@ export const techniques: Technique[] = [
 		description: "Move between the gaps in the system's code.",
 		type: "mobility",
 		style: "any",
-		prerequisites: { level: 18, ability: "Wisdom", score: 18 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		prerequisites: {
+			level: 18,
+			ability: "Wisdom",
+			score: 18,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"You can teleport anywhere within 120ft that you have seen before.",
 			secondary: "You can take one other creature with you. Adaptive.",
 		},
 		mechanics: {
-			movement: { type: "teleport", distance: 120 },
+			movement: {
+				type: "teleport",
+				distance: 120,
+			},
 		},
-		limitations: { uses: "3 times per long rest" },
+		limitations: {
+			uses: "3 times per long rest",
+		},
 		flavor: "Why walk when the system can just update your coordinates?",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/celestial-step.webp",
@@ -2265,9 +2697,17 @@ export const techniques: Technique[] = [
 		description: "A strike that exists in infinite variations simultaneously.",
 		type: "finishing",
 		style: "weapon",
-		prerequisites: { level: 20, ability: "Strength", score: 20 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 20,
+			ability: "Strength",
+			score: 20,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"Deal 100 untyped damage. This damage cannot be reduced, reflected, or avoided.",
@@ -2275,9 +2715,15 @@ export const techniques: Technique[] = [
 				"Target is deleted from the current instance (cannot be revived for 24 hours).",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "System", damage: "100" },
+			attack: {
+				type: "melee",
+				modifier: "System",
+				damage: "100",
+			},
 		},
-		limitations: { uses: "Once per week" },
+		limitations: {
+			uses: "Once per week",
+		},
 		flavor: "End of conversation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/infinity-slash.webp",
@@ -2288,18 +2734,32 @@ export const techniques: Technique[] = [
 		description: "A grappling technique that snaps limbs.",
 		type: "utility",
 		style: "unarmed",
-		prerequisites: { level: 5, ability: "Strength", score: 16 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 5,
+			ability: "Strength",
+			score: 16,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary:
 				"If target is grappled, you deal 4d10 damage and reduce their movement by 15ft permanently (until magically healed).",
 			secondary: "Adaptive DC.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Strength", damage: "4d10" },
+			attack: {
+				type: "melee",
+				modifier: "Strength",
+				damage: "4d10",
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "I heard that crack from here.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/bone-breaker.webp",
@@ -2310,17 +2770,31 @@ export const techniques: Technique[] = [
 		description: "A fast kick that creates a blast of wind.",
 		type: "offensive",
 		style: "unarmed",
-		prerequisites: { level: 4, ability: "Dexterity", score: 14 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 4,
+			ability: "Dexterity",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary: "Deal 2d8 bludgeoning damage and push the target 15ft away.",
 			secondary: "Adaptive push distance.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Dexterity", damage: "2d8" },
+			attack: {
+				type: "melee",
+				modifier: "Dexterity",
+				damage: "2d8",
+			},
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "Faster than the storm.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/gale-kick.webp",
@@ -2331,18 +2805,32 @@ export const techniques: Technique[] = [
 		description: "A technique that leaves a mark of the void on an enemy.",
 		type: "offensive",
 		style: "any",
-		prerequisites: { level: 10, ability: "Intelligence", score: 15 },
-		activation: { type: "action" },
-		range: { type: "melee" },
+		prerequisites: {
+			level: 10,
+			ability: "Intelligence",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "melee",
+		},
 		effects: {
 			primary: "Target takes 5d6 void damage and is 'Silenced' for 2 rounds.",
 			secondary: "Target cannot be healed while silenced. Adaptive.",
 		},
 		mechanics: {
-			attack: { type: "melee", modifier: "Int/Dex", damage: "5d6" },
+			attack: {
+				type: "melee",
+				modifier: "Int/Dex",
+				damage: "5d6",
+			},
 			condition: ["Silenced"],
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor: "A touch of nothingness.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/void-touch.webp",

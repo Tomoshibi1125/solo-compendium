@@ -1726,8 +1726,8 @@ export const staticDataProvider: StaticDataProvider = {
 	getShadowSoldiers: async (search?: string) => {
 		const shadowSoldiers = [
 			{
-				id: "tank-soldier",
-				name: "Umbral Tank",
+				id: "bulwark-soldier",
+				name: "Umbral Bulwark",
 				description:
 					"Heavy armored legionnaire specialized in defense and crowd control.",
 				rank: "A",

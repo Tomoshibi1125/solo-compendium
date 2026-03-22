@@ -1,5 +1,6 @@
 import type { RuneCompendiumEntry } from "../runes";
 import { runes_power_powers } from "./power-powers";
+import { runes_skill_skills } from "./skill-runes";
 import { runes_spell_rank_a } from "./spell-rank-a";
 import { runes_spell_rank_b } from "./spell-rank-b";
 import { runes_spell_rank_c } from "./spell-rank-c";
@@ -15,4 +16,5 @@ export const allRunes: RuneCompendiumEntry[] = [
 	...runes_spell_rank_s,
 	...runes_power_powers,
 	...runes_technique_techniques,
+	...runes_skill_skills,
 ];

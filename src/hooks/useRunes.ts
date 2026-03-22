@@ -623,7 +623,7 @@ export function useAbsorbRune() {
 			// Get character
 			const { data: character, error: charError } = await supabase
 				.from("characters")
-				.select("id, job, level")
+				.select("id, job, level, skill_proficiencies, skill_expertise")
 				.eq("id", characterId)
 				.single();
 			if (charError || !character)
@@ -670,6 +670,7 @@ export function useAbsorbRune() {
 				character.job,
 				character.level,
 				profBonus,
+				rune.rarity,
 			);
 
 			// Build adapted description: cross-type absorptions prepend adaptation context
@@ -697,6 +698,43 @@ export function useAbsorbRune() {
 				.insert(featurePayload);
 			if (insertError) throw insertError;
 
+			// Handle Skill Grants
+			const passiveBonuses = rune.passive_bonuses as Record<string, any>;
+			if (passiveBonuses) {
+				let updateChar = false;
+				const newProficiencies = [...(character.skill_proficiencies || [])];
+				const newExpertise = [...(character.skill_expertise || [])];
+
+				if (Array.isArray(passiveBonuses.skill_proficiencies)) {
+					passiveBonuses.skill_proficiencies.forEach((skill: string) => {
+						if (!newProficiencies.includes(skill)) {
+							newProficiencies.push(skill);
+							updateChar = true;
+						}
+					});
+				}
+
+				if (Array.isArray(passiveBonuses.skill_expertise)) {
+					passiveBonuses.skill_expertise.forEach((skill: string) => {
+						if (!newExpertise.includes(skill)) {
+							newExpertise.push(skill);
+							updateChar = true;
+						}
+					});
+				}
+
+				if (updateChar) {
+					const { error: skillError } = await supabase
+						.from("characters")
+						.update({
+							skill_proficiencies: newProficiencies,
+							skill_expertise: newExpertise,
+						})
+						.eq("id", characterId);
+					if (skillError) throw skillError;
+				}
+			}
+
 			// Mark rune as absorbed in knowledge (mastery_level 5 = absorbed)
 			await supabase.from("character_rune_knowledge").upsert(
 				{
@@ -722,6 +760,9 @@ export function useAbsorbRune() {
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["character-features", variables.characterId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["character", variables.characterId],
 			});
 		},
 	});

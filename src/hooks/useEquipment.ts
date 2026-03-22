@@ -430,9 +430,9 @@ export const useEquipment = (characterId: string) => {
 		},
 	});
 
-	// Check attunement limit (max 3)
+	// Check attunement limit (base max 6 for SA)
 	const attunedCount = equipment.filter((e) => e.is_attuned).length;
-	const canAttune = attunedCount < 3;
+	const canAttune = attunedCount < 6;
 
 	return {
 		equipment,

@@ -1,5 +1,6 @@
+import { useDrag } from "@use-gesture/react";
 import { Sun, Zap } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
 import { ShortRestDialog } from "@/components/CharacterSheet/ShortRestDialog";
@@ -10,6 +11,11 @@ import type { DerivedStats } from "@/hooks/useCharacterDerivedStats";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import type { CharacterResources } from "@/lib/characterResources";
 import { calculateTotalTempHP } from "@/lib/characterResources";
+import {
+	type ConditionEntry,
+	migrateLegacyConditions,
+} from "@/lib/conditionSystem";
+import { getXPProgress, type LevelingType } from "@/lib/experience";
 import type { AbilityScore } from "@/types/system-rules";
 import { AbilityScoreStrip } from "./AbilityScoreStrip";
 import { ProficiencySidebar } from "./ProficiencySidebar";
@@ -24,6 +30,7 @@ interface CharacterSheetV2Props {
 		path?: string;
 		background?: string;
 	};
+	levelingType?: LevelingType;
 	isReadOnly?: boolean;
 	actions: ReactNode;
 	powers: ReactNode;
@@ -48,12 +55,32 @@ interface CharacterSheetV2Props {
 	) => void;
 	onExhaustionChange: (delta: number) => void;
 	onAddCondition: (condition: string) => void;
-	onRemoveCondition: (condition: string) => void;
+	onRemoveCondition: (conditionId: string) => void;
 	concentration: {
 		isConcentrating: boolean;
 		effectName?: string;
 		remainingRounds?: number;
 		onDrop: () => void;
+	};
+	deathSaves: {
+		successes: number;
+		failures: number;
+		isStable: boolean;
+		isDead: boolean;
+		onRoll: () => void;
+		onStabilize: () => void;
+	};
+	senses: {
+		darkvision: number;
+		blindsight: number;
+		tremorsense: number;
+		truesight: number;
+	};
+	defenses: {
+		resistances: string[];
+		immunities: string[];
+		vulnerabilities: string[];
+		conditionImmunities: string[];
 	};
 }
 
@@ -62,6 +89,7 @@ export function CharacterSheetV2({
 	stats,
 	characterResources,
 	displayNames,
+	levelingType: propLevelingType,
 	isReadOnly,
 	actions,
 	powers,
@@ -85,12 +113,48 @@ export function CharacterSheetV2({
 	onAddCondition,
 	onRemoveCondition,
 	concentration,
+	deathSaves,
+	senses,
+	defenses,
 }: CharacterSheetV2Props) {
 	const [activeTab, setActiveTab] = useState("actions");
+	const [activeMobileTab, setActiveMobileTab] = useState("actions");
+
+	const mobileTabs = ["actions", "powers", "inventory", "features", "stats"];
+	const bindMobileGestures = useDrag(
+		({ swipe: [swipeX] }) => {
+			if (swipeX !== 0) {
+				const currentIndex = mobileTabs.indexOf(activeMobileTab);
+				if (swipeX < 0 && currentIndex < mobileTabs.length - 1) {
+					// Swiped left, go next
+					setActiveMobileTab(mobileTabs[currentIndex + 1]);
+				} else if (swipeX > 0 && currentIndex > 0) {
+					// Swiped right, go prev
+					setActiveMobileTab(mobileTabs[currentIndex - 1]);
+				}
+			}
+		},
+		{ axis: "x", filterTaps: true, pointerContext: true },
+	);
 
 	// ───────────────────────────────────────────────────────────────────────────
 	// UI Header & Actions (Unified from CharacterSheet.tsx)
 	// ───────────────────────────────────────────────────────────────────────────
+
+	const characterState = (character.gemini_state as Record<string, unknown>) || {};
+	const levelingType: LevelingType =
+		propLevelingType || (characterState.leveling_type as LevelingType) || "xp";
+	const xpProgress = getXPProgress(character.experience || 0);
+
+	const characterConditions = useMemo(() => {
+		const structured = characterState.conditions as
+			| ConditionEntry[]
+			| undefined;
+		if (structured && Array.isArray(structured) && structured.length > 0) {
+			return structured;
+		}
+		return migrateLegacyConditions(character.conditions || []);
+	}, [character.conditions, characterState.conditions]);
 
 	const characterHeader = (
 		<div className="relative overflow-hidden bg-obsidian-charcoal/40 border border-primary/20 backdrop-blur-md rounded-[2px] p-1 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
@@ -107,7 +171,7 @@ export function CharacterSheetV2({
 								/>
 							) : (
 								<div className="w-full h-full flex items-center justify-center bg-primary/5">
-									<span className="text-4xl font-display text-primary/20">
+									<span className="text-4xl font-display font-bold text-primary/20 tracking-tighter">
 										{character.name[0]}
 									</span>
 								</div>
@@ -174,23 +238,28 @@ export function CharacterSheetV2({
 					<div className="flex items-center justify-between mb-2">
 						<div className="flex items-center gap-3">
 							<span className="text-xs font-mono text-primary/50 uppercase tracking-widest">
-								PROGRESS_LEVEL
+								{levelingType === "xp" ? "PROGRESS_LEVEL" : "MILESTONE_LEVEL"}
 							</span>
 							<span className="text-2xl font-display font-bold text-white leading-none">
 								{character.level}
 							</span>
 						</div>
-						<span className="text-[10px] font-mono text-primary/40 tracking-[0.2em]">
-							{character.experience || 0} / 1000 XP
-						</span>
+						{levelingType === "xp" && (
+							<span className="text-[10px] font-mono text-primary/40 tracking-[0.2em] uppercase">
+								{character.experience || 0} /{" "}
+								{xpProgress.current + xpProgress.next} XP
+							</span>
+						)}
 					</div>
 					<div className="relative h-1.5 w-full bg-black border border-primary/10 overflow-hidden">
 						<Progress
-							value={(Number(character.experience) || 0) % 1000}
-							max={1000}
-							className="h-full bg-primary/40"
+							value={levelingType === "xp" ? xpProgress.percent : 100}
+							max={100}
+							className={`h-full ${levelingType === "xp" ? "bg-primary/40" : "bg-primary/20 opacity-50"}`}
 						/>
-						<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_3s_infinite]" />
+						{levelingType === "xp" && (
+							<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_3s_infinite]" />
+						)}
 					</div>
 				</div>
 
@@ -249,11 +318,11 @@ export function CharacterSheetV2({
 				/>
 			)}
 
-			{((character.conditions && character.conditions.length > 0) ||
+			{((characterConditions && characterConditions.length > 0) ||
 				character.exhaustion_level > 0) &&
 				!isReadOnly && (
 					<ConditionBadgeBar
-						conditions={character.conditions || []}
+						conditions={characterConditions}
 						exhaustionLevel={character.exhaustion_level}
 						onClearExhaustion={() =>
 							onExhaustionChange(-character.exhaustion_level)
@@ -286,6 +355,8 @@ export function CharacterSheetV2({
 						savingThrowProficiences={character.saving_throw_proficiencies || []}
 						onRollSave={onRollSave}
 						onRollSkill={onRollSkill}
+						senses={senses}
+						defenses={defenses}
 					/>
 				</aside>
 
@@ -316,6 +387,8 @@ export function CharacterSheetV2({
 						onHPClick={onHPClick}
 						onACClick={onACClick}
 						onAdjustResource={onResourceAdjust}
+						deathSaves={deathSaves}
+						characterId={character.id}
 					/>
 
 					{/* Interaction Tabs */}
@@ -420,9 +493,15 @@ export function CharacterSheetV2({
 					onHPClick={onHPClick}
 					onACClick={onACClick}
 					onAdjustResource={onResourceAdjust}
+					deathSaves={deathSaves}
+					characterId={character.id}
 				/>
 
-				<Tabs defaultValue="actions" className="w-full">
+				<Tabs
+					value={activeMobileTab}
+					onValueChange={setActiveMobileTab}
+					className="w-full"
+				>
 					<TabsList className="grid w-full grid-cols-5 h-12 bg-obsidian-charcoal/60 border-t border-primary/20 rounded-none sticky top-16 z-20">
 						<TabsTrigger
 							value="actions"
@@ -456,30 +535,33 @@ export function CharacterSheetV2({
 						</TabsTrigger>
 					</TabsList>
 
-					<TabsContent value="actions">{actions}</TabsContent>
-					<TabsContent value="powers">{powers}</TabsContent>
-					<TabsContent value="inventory">{inventory}</TabsContent>
-					<TabsContent value="features">{features}</TabsContent>
-					<TabsContent value="stats" className="space-y-6 pt-4">
-						<AbilityScoreStrip
-							abilities={character.abilities}
-							modifiers={stats.calculatedStats.abilityModifiers}
-							savingThrowProficiencies={
-								character.saving_throw_proficiencies || []
-							}
-							onRoll={onRollAbility}
-						/>
-						<ProficiencySidebar
-							saves={stats.calculatedStats.savingThrows}
-							skills={stats.skills}
-							allSkills={stats.allSkills}
-							savingThrowProficiences={
-								character.saving_throw_proficiencies || []
-							}
-							onRollSave={onRollSave}
-							onRollSkill={onRollSkill}
-						/>
-					</TabsContent>
+					{/* Swipeable Container */}
+					<div {...bindMobileGestures()} className="touch-pan-y min-h-[50vh]">
+						<TabsContent value="actions">{actions}</TabsContent>
+						<TabsContent value="powers">{powers}</TabsContent>
+						<TabsContent value="inventory">{inventory}</TabsContent>
+						<TabsContent value="features">{features}</TabsContent>
+						<TabsContent value="stats" className="space-y-6 pt-4">
+							<AbilityScoreStrip
+								abilities={character.abilities}
+								modifiers={stats.calculatedStats.abilityModifiers}
+								savingThrowProficiencies={
+									character.saving_throw_proficiencies || []
+								}
+								onRoll={onRollAbility}
+							/>
+							<ProficiencySidebar
+								saves={stats.calculatedStats.savingThrows}
+								skills={stats.skills}
+								allSkills={stats.allSkills}
+								savingThrowProficiences={
+									character.saving_throw_proficiencies || []
+								}
+								onRollSave={onRollSave}
+								onRollSkill={onRollSkill}
+							/>
+						</TabsContent>
+					</div>
 				</Tabs>
 			</div>
 		</div>

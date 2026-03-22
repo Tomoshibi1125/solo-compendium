@@ -30,6 +30,7 @@ import { EmptyState } from "@/components/compendium/EmptyState";
 import { FilterChips } from "@/components/compendium/FilterChips";
 import { GeminiProtocolGenerator } from "@/components/compendium/GeminiProtocolGenerator";
 import { SearchHistoryDropdown } from "@/components/compendium/SearchHistoryDropdown";
+import { SendToInventoryDialog } from "@/components/compendium/SendToInventoryDialog";
 import { SkeletonLoader } from "@/components/compendium/SkeletonLoader";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
@@ -59,6 +60,8 @@ import {
 } from "@/components/ui/select";
 import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
 import { useToast } from "@/hooks/use-toast";
+import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
+import { useCharacters } from "@/hooks/useCharacters";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useFilterPersistence } from "@/hooks/useFilterPersistence";
@@ -153,6 +156,12 @@ const Compendium = () => {
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [showGeminiProtocol, setShowGeminiProtocol] = useState(false);
+	const [sendingItem, setSendingItem] = useState<CompendiumEntry | null>(null);
+	const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
+
+	const { data: userCharacters = [] } = useCharacters();
+	const { data: myCampaigns = [] } = useMyCampaigns();
+	const { data: joinedCampaigns = [] } = useJoinedCampaigns();
 	const itemsPerPage = 24;
 
 	const { favorites, toggleFavorite } = useFavorites();
@@ -1290,6 +1299,24 @@ const Compendium = () => {
 												)}
 											/>
 										</button>
+
+										{(entry.type === "items" ||
+											entry.type === "equipment" ||
+											entry.type === "relics") && (
+											<button
+												type="button"
+												onClick={(e) => {
+													e.preventDefault();
+													e.stopPropagation();
+													setSendingItem(entry);
+													setIsSendDialogOpen(true);
+												}}
+												className="absolute top-2 right-10 z-10 p-1.5 rounded-full text-muted-foreground hover:text-solar-glow opacity-0 group-hover:opacity-100 bg-background/80 backdrop-blur-sm transition-all duration-200"
+												aria-label="Send to inventory"
+											>
+												<Package className="w-4 h-4" />
+											</button>
+										)}
 
 										{viewMode === "grid" ? (
 											<>

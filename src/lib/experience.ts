@@ -2,6 +2,8 @@
  * Experience points and leveling calculations
  */
 
+export type LevelingType = "xp" | "milestone";
+
 // XP thresholds for each level
 const XP_THRESHOLDS: Record<number, number> = {
 	1: 0,
@@ -107,6 +109,32 @@ export function getXPToNextLevel(currentXP: number): {
 	return {
 		needed: nextThreshold - currentXP,
 		progress: Math.floor((xpInLevel / xpNeededForLevel) * 100),
+	};
+}
+
+export function getXPProgress(currentXP: number): {
+	current: number;
+	next: number;
+	percent: number;
+} {
+	const currentLevel = getLevelFromXP(currentXP);
+	if (currentLevel >= 20) {
+		return {
+			current: currentXP,
+			next: currentXP,
+			percent: 100,
+		};
+	}
+
+	const currentThreshold = XP_THRESHOLDS[currentLevel];
+	const nextThreshold = XP_THRESHOLDS[currentLevel + 1];
+	const progressInLevel = currentXP - currentThreshold;
+	const totalInLevel = nextThreshold - currentThreshold;
+
+	return {
+		current: progressInLevel,
+		next: totalInLevel,
+		percent: Math.min(100, Math.max(0, (progressInLevel / totalInLevel) * 100)),
 	};
 }
 

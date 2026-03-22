@@ -1,7 +1,12 @@
 import { rollDiceString } from "@/lib/diceRoller";
 import { rollCheck } from "@/lib/rollEngine";
 
-export type ResolutionKind = "attack" | "save" | "healing" | "damage";
+export type ResolutionKind =
+	| "attack"
+	| "save"
+	| "healing"
+	| "damage"
+	| "effect";
 
 export type ActionResolutionPayload = {
 	version: 1;
@@ -38,6 +43,7 @@ export type ActionResolutionPayload = {
 		roll: string;
 	};
 	appliesConditions?: string[];
+	description?: string;
 };
 
 const STORAGE_KEY = "solo-compendium.pending-resolution.v1";
@@ -94,6 +100,11 @@ export type ResolutionOutcome =
 			kind: "damage";
 			damageTotal: number;
 			damageRolls: number[];
+	  }
+	| {
+			kind: "effect";
+			name: string;
+			description?: string;
 	  };
 
 export function resolveAttack(
@@ -285,5 +296,15 @@ export function resolveDamage(
 		kind: "damage",
 		damageTotal: damage.result,
 		damageRolls: damage.rolls,
+	};
+}
+
+export function resolveEffect(
+	payload: ActionResolutionPayload,
+): ResolutionOutcome {
+	return {
+		kind: "effect",
+		name: payload.name,
+		description: payload.description,
 	};
 }

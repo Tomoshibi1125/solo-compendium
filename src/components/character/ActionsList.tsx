@@ -73,6 +73,7 @@ export function ActionsList({
 							}
 							characterId={characterId}
 							campaignId={campaignId}
+							payload={action.payload}
 						/>
 					))}
 					{actions.length === 0 && (
@@ -103,6 +104,7 @@ export function ActionsList({
 								}
 								characterId={characterId}
 								campaignId={campaignId}
+								payload={action.payload}
 							/>
 						))}
 						{list.length === 0 && (

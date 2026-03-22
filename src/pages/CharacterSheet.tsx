@@ -18,6 +18,7 @@ import {
 	useSearchParams,
 } from "react-router-dom";
 import { AttunementSlots } from "@/components/CharacterSheet/AttunementSlots";
+import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
 import {
 	type SpellEntry,
 	SpellPanel,
@@ -35,6 +36,7 @@ import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel"
 import { FeaturesList } from "@/components/character/FeaturesList";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { JournalPanel } from "@/components/character/JournalPanel";
+import { LevelUpWizardModal } from "@/components/character/LevelUpWizardModal";
 import { PortraitUpload } from "@/components/character/PortraitUpload";
 import { PowersList } from "@/components/character/PowersList";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
@@ -78,6 +80,7 @@ import {
 } from "@/hooks/useCharacters";
 import { useCharacterUndoRedo } from "@/hooks/useCharacterUndoRedo";
 import { useConcentration } from "@/hooks/useConcentration";
+import { useDeathSaves } from "@/hooks/useDeathSaves";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
@@ -89,6 +92,7 @@ import { useCharacterSigilInscriptions } from "@/hooks/useSigils";
 import { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { getLevelingMode } from "@/lib/campaignSettings";
 import { getSpellcastingAbility } from "@/lib/characterCalculations";
 import {
 	addTemporaryHP,
@@ -96,6 +100,13 @@ import {
 	type CharacterResources,
 	calculateTotalTempHP,
 } from "@/lib/characterResources";
+import {
+	applyCondition,
+	type ConditionEntry,
+	getActiveConditionNames,
+	migrateLegacyConditions,
+	removeCondition,
+} from "@/lib/conditionSystem";
 import { normalizeCustomModifiers } from "@/lib/customModifiers";
 import { formatRollResult, rollDiceString } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
@@ -247,6 +258,8 @@ const CharacterSheet = () => {
 	const [shareDialogOpen, setShareDialogOpen] = useState(false);
 	const [exportDialogOpen, setExportDialogOpen] = useState(false);
 	const [editDialogOpen, setEditDialogOpen] = useState(false);
+	const [isLevelUpOpen, setIsLevelUpOpen] = useState(false);
+	const [isDefensesOpen, setIsDefensesOpen] = useState(false);
 	const [isEditMode, setIsEditMode] = useState(false);
 	const [hpEditValue, setHpEditValue] = useState("");
 	const [shareLinkCopied, setShareLinkCopied] = useState(false);
@@ -275,6 +288,18 @@ const CharacterSheet = () => {
 			}));
 	}, [equipment]);
 	const slotsRemaining = 3 - attunedItems.length;
+
+	const deathSaves = useDeathSaves(
+		character?.death_save_successes || 0,
+		character?.death_save_failures || 0,
+	);
+
+	// Persist death saves when they change (only if not read-only)
+	useEffect(() => {
+		if (character?.id && !isReadOnly) {
+			deathSaves.persist(character.id);
+		}
+	}, [deathSaves.state, character?.id, isReadOnly]);
 
 	// Enable automatic periodic backups while editing (disabled in read-only mode)
 	useAutoBackup(character ?? null, !isReadOnly);
@@ -1208,6 +1233,9 @@ const CharacterSheet = () => {
 						background: backgroundDisplayName,
 					}}
 					isReadOnly={isReadOnly}
+					levelingType={getLevelingMode(
+						characterCampaign?.settings as Record<string, unknown> | undefined,
+					)}
 					actions={actionsTab}
 					powers={powersTab}
 					inventory={inventoryTab}
@@ -1241,7 +1269,7 @@ const CharacterSheet = () => {
 						})
 					}
 					onHPClick={() => setHpEditOpen(true)}
-					onACClick={() => {}}
+					onACClick={() => setIsDefensesOpen(true)}
 					onShortRest={async (totalRecovered: number, hitDiceSpent: number) => {
 						if (totalRecovered > 0) {
 							const newHP = Math.min(
@@ -1265,36 +1293,66 @@ const CharacterSheet = () => {
 						await handleShortRest();
 					}}
 					onLongRest={handleLongRest}
-					onLevelUp={() => navigate(`/characters/${character.id}/level-up`)}
+					onLevelUp={() => setIsLevelUpOpen(true)}
 					onResourceAdjust={handleResourceAdjust}
 					onExhaustionChange={handleExhaustionChange}
-					onAddCondition={(condition: string) => {
-						const current = character.conditions || [];
-						if (
-							!current.some((c) => c.toLowerCase() === condition.toLowerCase())
-						) {
-							updateCharacter.mutate({
-								id: character.id,
-								data: { conditions: [...current, condition] },
-							});
-							playerTools
-								.trackConditionChange(character.id, condition, "add")
-								.catch(console.error);
-						}
-					}}
-					onRemoveCondition={(condition: string) => {
-						const current = character.conditions || [];
+					onAddCondition={(conditionName: string) => {
+						const characterState = (character.gemini_state as any) || {};
+						const currentStructured =
+							(characterState.conditions as ConditionEntry[]) ||
+							migrateLegacyConditions(character.conditions || []);
+
+						const { conditions: updatedStructured } = applyCondition(
+							currentStructured,
+							conditionName,
+							"manual",
+							"Manual",
+						);
+
 						updateCharacter.mutate({
 							id: character.id,
 							data: {
-								conditions: current.filter(
-									(c) => c.toLowerCase() !== condition.toLowerCase(),
-								),
+								conditions: getActiveConditionNames(updatedStructured),
+								gemini_state: {
+									...characterState,
+									conditions: updatedStructured,
+								},
 							},
 						});
 						playerTools
-							.trackConditionChange(character.id, condition, "remove")
+							.trackConditionChange(character.id, conditionName, "add")
 							.catch(console.error);
+					}}
+					onRemoveCondition={(conditionId: string) => {
+						const characterState = (character.gemini_state as any) || {};
+						const currentStructured =
+							(characterState.conditions as ConditionEntry[]) ||
+							migrateLegacyConditions(character.conditions || []);
+
+						const { conditions: updatedStructured, change } = removeCondition(
+							currentStructured,
+							conditionId,
+						);
+
+						if (change) {
+							updateCharacter.mutate({
+								id: character.id,
+								data: {
+									conditions: getActiveConditionNames(updatedStructured),
+									gemini_state: {
+										...characterState,
+										conditions: updatedStructured,
+									},
+								},
+							});
+							playerTools
+								.trackConditionChange(
+									character.id,
+									change.condition.conditionName,
+									"remove",
+								)
+								.catch(console.error);
+						}
 					}}
 					concentration={{
 						isConcentrating: concentration.state.isConcentrating,
@@ -1312,6 +1370,50 @@ const CharacterSheet = () => {
 							}
 							concentration.drop();
 						},
+					}}
+					deathSaves={{
+						...deathSaves.state,
+						onRoll: () => {
+							const result = deathSaves.rollDeathSave();
+							const scope =
+								campaignId && isCampaignConnected ? "campaign" : "local";
+
+							recordRoll.mutate({
+								dice_formula: "1d20",
+								result: result.roll,
+								rolls: [result.roll],
+								roll_type: "check",
+								context: "Death Saving Throw",
+								modifiers: null,
+								campaign_id: campaignId ?? null,
+								character_id: character.id,
+							});
+
+							if (scope === "campaign") {
+								broadcastDiceRoll("1d20", result.roll, {
+									characterName: character.name,
+									rollType: "check",
+									context: "Death Saving Throw",
+									rolls: [result.roll],
+								});
+							}
+
+							if (result.isNat20) {
+								// Regain 1 HP on Nat 20
+								updateCharacter.mutate({
+									id: character.id,
+									data: { hp_current: 1 },
+								});
+							}
+						},
+						onStabilize: deathSaves.stabilize,
+					}}
+					senses={memoizedStats.senses}
+					defenses={{
+						resistances: memoizedStats.resistances,
+						immunities: memoizedStats.immunities,
+						vulnerabilities: memoizedStats.vulnerabilities,
+						conditionImmunities: memoizedStats.conditionImmunities,
 					}}
 				/>
 
@@ -1442,6 +1544,37 @@ const CharacterSheet = () => {
 					}
 				}}
 			/>
+
+			<LevelUpWizardModal
+				isOpen={isLevelUpOpen}
+				onClose={() => setIsLevelUpOpen(false)}
+				characterId={character.id}
+			/>
+
+			{memoizedStats && (
+				<DefensesModal
+					characterId={character.id}
+					acBreakdown={{
+						total: memoizedStats.acDetail.total,
+						base: memoizedStats.acDetail.base,
+						agiModifier: memoizedStats.acDetail.dexterity, // Mapping our dex to their agiMod
+						agiApplied: memoizedStats.acDetail.dexterity,
+						armorAC: memoizedStats.acDetail.base,
+						shieldBonus: 0,
+						magicalBonus: 0,
+						otherBonuses:
+							memoizedStats.acDetail.bonus + memoizedStats.acDetail.misc,
+						formula: `${memoizedStats.acDetail.label}: ${memoizedStats.acDetail.base} + ${memoizedStats.acDetail.dexterity} (Dex) ${memoizedStats.acDetail.bonus !== 0 ? `+ ${memoizedStats.acDetail.bonus} (Bonus)` : ""}`,
+						warnings: [],
+					}}
+					resistances={memoizedStats.resistances}
+					immunities={memoizedStats.immunities}
+					vulnerabilities={memoizedStats.vulnerabilities}
+					conditionImmunities={memoizedStats.conditionImmunities}
+					isOpen={isDefensesOpen}
+					onOpenChange={setIsDefensesOpen}
+				/>
+			)}
 		</Layout>
 	);
 };

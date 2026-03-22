@@ -19,6 +19,18 @@ interface ProficiencySidebarProps {
 	savingThrowProficiences: AbilityScore[];
 	onRollSave: (ability: AbilityScore) => void;
 	onRollSkill: (skill: string) => void;
+	senses?: {
+		darkvision: number;
+		blindsight: number;
+		tremorsense: number;
+		truesight: number;
+	};
+	defenses?: {
+		resistances: string[];
+		immunities: string[];
+		vulnerabilities: string[];
+		conditionImmunities: string[];
+	};
 }
 
 export function ProficiencySidebar({
@@ -28,6 +40,8 @@ export function ProficiencySidebar({
 	savingThrowProficiences,
 	onRollSave,
 	onRollSkill,
+	senses,
+	defenses,
 }: ProficiencySidebarProps) {
 	return (
 		<div className="flex flex-col gap-6 w-full max-w-[300px]">
@@ -118,6 +132,107 @@ export function ProficiencySidebar({
 					</div>
 				</div>
 			</section>
+
+			{/* Advanced Senses Section */}
+			{senses && Object.values(senses).some((v) => v > 0) && (
+				<section className="space-y-3">
+					<h3 className="text-[10px] font-mono text-primary font-bold uppercase tracking-[0.2em] px-2 mb-2 border-l-2 border-primary">
+						SPECIAL_SENSES
+					</h3>
+					<div className="grid grid-cols-1 gap-1 px-2">
+						{senses.darkvision > 0 && (
+							<div className="flex justify-between text-xs font-mono">
+								<span className="text-muted-foreground">Darkvision</span>
+								<span className="text-white">{senses.darkvision} ft</span>
+							</div>
+						)}
+						{senses.blindsight > 0 && (
+							<div className="flex justify-between text-xs font-mono">
+								<span className="text-muted-foreground">Blindsight</span>
+								<span className="text-white">{senses.blindsight} ft</span>
+							</div>
+						)}
+						{senses.tremorsense > 0 && (
+							<div className="flex justify-between text-xs font-mono">
+								<span className="text-muted-foreground">Tremorsense</span>
+								<span className="text-white">{senses.tremorsense} ft</span>
+							</div>
+						)}
+						{senses.truesight > 0 && (
+							<div className="flex justify-between text-xs font-mono">
+								<span className="text-muted-foreground">Truesight</span>
+								<span className="text-white">{senses.truesight} ft</span>
+							</div>
+						)}
+					</div>
+				</section>
+			)}
+
+			{/* Defenses Section */}
+			{defenses &&
+				(defenses.resistances.length > 0 ||
+					defenses.immunities.length > 0 ||
+					defenses.vulnerabilities.length > 0 ||
+					defenses.conditionImmunities.length > 0) && (
+					<section className="space-y-3">
+						<h3 className="text-[10px] font-mono text-primary font-bold uppercase tracking-[0.2em] px-2 mb-2 border-l-2 border-primary">
+							DEFENSES
+						</h3>
+						<div className="space-y-3 px-2">
+							{defenses.resistances.length > 0 && (
+								<div className="space-y-1">
+									<span className="text-[9px] font-mono text-primary/60 uppercase">
+										Resistances
+									</span>
+									<div className="flex flex-wrap gap-1">
+										{defenses.resistances.map((r) => (
+											<span
+												key={r}
+												className="text-[10px] text-white/90 bg-primary/10 border border-primary/20 px-1.5 py-0.5 rounded-[2px]"
+											>
+												{r}
+											</span>
+										))}
+									</div>
+								</div>
+							)}
+							{defenses.immunities.length > 0 && (
+								<div className="space-y-1">
+									<span className="text-[9px] font-mono text-emerald-400/60 uppercase">
+										Immunities
+									</span>
+									<div className="flex flex-wrap gap-1">
+										{defenses.immunities.map((i) => (
+											<span
+												key={i}
+												className="text-[10px] text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-1.5 py-0.5 rounded-[2px]"
+											>
+												{i}
+											</span>
+										))}
+									</div>
+								</div>
+							)}
+							{defenses.conditionImmunities.length > 0 && (
+								<div className="space-y-1">
+									<span className="text-[9px] font-mono text-blue-400/60 uppercase">
+										Condition Immunities
+									</span>
+									<div className="flex flex-wrap gap-1">
+										{defenses.conditionImmunities.map((c) => (
+											<span
+												key={c}
+												className="text-[10px] text-blue-400 bg-blue-400/10 border border-blue-400/20 px-1.5 py-0.5 rounded-[2px]"
+											>
+												{c}
+											</span>
+										))}
+									</div>
+								</div>
+							)}
+						</div>
+					</section>
+				)}
 
 			{/* Skills Section */}
 			<section className="space-y-3 flex-1 overflow-visible">

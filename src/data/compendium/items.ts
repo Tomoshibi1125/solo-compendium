@@ -22,7 +22,7 @@ export interface Item {
 	sigil_slots_base?: number;
 
 	strength_requirement?: number; // For certain armor/weapons
-	magical_bonus?: number; // +1, +2, +3 for magical items
+	protocol_bonus?: number; // +1, +2, +3 for protocol-enhanced items
 
 	// System Ascendant compatibility (legacy)
 	rarity: "common" | "uncommon" | "rare" | "epic" | "legendary";
@@ -36,7 +36,14 @@ export interface Item {
 		| "ring"
 		| "amulet"
 		| "staff"
-		| "wand";
+		| "wand"
+		| "focus"
+		| "script"
+		| "stim"
+		| "hardware"
+		| "augment"
+		| "rune"
+		| "sigil";
 	image: string;
 
 	// 5e mechanics (System Ascendant themed)
@@ -60,7 +67,7 @@ export interface Item {
 			versatile?: string;
 			finesse?: boolean;
 		};
-		magical?: {
+		protocol_enhanced?: {
 			bonus?: {
 				attack?: number;
 				damage?: number;

@@ -711,6 +711,111 @@ export const useJoinCampaign = () => {
 	});
 };
 
+// Link character to existing membership mutation
+export const useLinkCampaignCharacter = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async ({
+			campaignId,
+			characterId,
+		}: {
+			campaignId: string;
+			characterId: string;
+		}) => {
+			if (isLocalMode()) {
+				const userId = getLocalUserId();
+				const members = loadLocalMembers();
+				const existingMemberIndex = members.findIndex(
+					(member) =>
+						member.campaign_id === campaignId && member.user_id === userId,
+				);
+
+				if (existingMemberIndex === -1) {
+					throw new AppError("Not a member of this campaign", "NOT_FOUND");
+				}
+
+				members[existingMemberIndex] = {
+					...members[existingMemberIndex],
+					character_id: characterId,
+				};
+
+				saveLocalMembers(members);
+				return;
+			}
+
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+
+			if (!user) {
+				if (guestEnabled) {
+					const userId = getLocalUserId();
+					const members = loadLocalMembers();
+					const existingMemberIndex = members.findIndex(
+						(member) =>
+							member.campaign_id === campaignId && member.user_id === userId,
+					);
+
+					if (existingMemberIndex === -1) {
+						throw new AppError("Not a member of this campaign", "NOT_FOUND");
+					}
+
+					members[existingMemberIndex] = {
+						...members[existingMemberIndex],
+						character_id: characterId,
+					};
+
+					saveLocalMembers(members);
+					return;
+				}
+				throw new AppError("Not authenticated", "AUTH_REQUIRED");
+			}
+
+			const attachResult = await supabase.rpc(
+				"add_player_character_to_campaign",
+				{
+					p_campaign_id: campaignId,
+					p_character_id: characterId,
+				},
+			);
+
+			if (attachResult.error) {
+				if (!isMissingAddCharacterRpc(attachResult.error)) {
+					throw attachResult.error as Error;
+				}
+
+				const { error: legacyError } = await supabase
+					.from("campaign_members")
+					.update({ character_id: characterId })
+					.eq("campaign_id", campaignId)
+					.eq("user_id", user.id);
+
+				if (legacyError) throw legacyError;
+			}
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({
+				queryKey: ["campaigns", variables.campaignId, "members"],
+			});
+			toast({
+				title: "Ascendant Linked",
+				description:
+					"You have successfully linked your Ascendant to the campaign.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to link Ascendant",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
 // Leave campaign mutation
 export const useLeaveCampaign = () => {
 	const queryClient = useQueryClient();

@@ -20,12 +20,21 @@ import { CampaignChat } from "@/components/campaign/CampaignChat";
 import { CampaignHandouts } from "@/components/campaign/CampaignHandouts";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
 import { CampaignProtocolControls } from "@/components/campaign/CampaignProtocolControls";
+import { CampaignRegentOversight } from "@/components/campaign/CampaignRegentOversight";
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
 import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPanel";
 import { CampaignSettings } from "@/components/campaign/CampaignSettings";
 import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { RoleBadge } from "@/components/ui/RoleBadge";
 import {
 	DataStreamText,
@@ -33,14 +42,24 @@ import {
 	SystemText,
 } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
 	useCampaign,
 	useCampaignMembers,
 	useCampaignRole,
 	useHasDMAccess,
+	useLinkCampaignCharacter,
 } from "@/hooks/useCampaigns";
+import { useCharacters } from "@/hooks/useCharacters";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
@@ -51,6 +70,10 @@ const CampaignDetail = () => {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const [activeTab, setActiveTab] = useState("overview");
+	const [attachDialogOpen, setAttachDialogOpen] = useState(false);
+	const [selectedCharacterToAttach, setSelectedCharacterToAttach] =
+		useState("");
+
 	const { user, loading } = useAuth();
 	const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 	const isE2E = import.meta.env.VITE_E2E === "true";
@@ -61,6 +84,27 @@ const CampaignDetail = () => {
 	);
 	const { data: hasDMAccess = false } = useHasDMAccess(id || "");
 	const { data: userRole, isLoading: loadingRole } = useCampaignRole(id || "");
+
+	const { data: myCharacters = [] } = useCharacters();
+	const linkCharacter = useLinkCampaignCharacter();
+	const sendMessage = useSendCampaignMessage();
+
+	const handleAttachCharacter = async () => {
+		if (!selectedCharacterToAttach || !id) return;
+		await linkCharacter.mutateAsync({
+			campaignId: id,
+			characterId: selectedCharacterToAttach,
+		});
+		const char = myCharacters.find((c) => c.id === selectedCharacterToAttach);
+		if (char) {
+			await sendMessage.mutateAsync({
+				campaignId: id,
+				content: `**System**: ${char.name} has joined the campaign.`,
+			});
+		}
+		setAttachDialogOpen(false);
+		setSelectedCharacterToAttach("");
+	};
 
 	// Real-time updates for campaign members
 	useEffect(() => {
@@ -250,6 +294,16 @@ const CampaignDetail = () => {
 								<span className="sm:hidden">Settings</span>
 							</TabsTrigger>
 						)}
+						{hasDMAccess && (
+							<TabsTrigger
+								value="oversight"
+								className="gap-2 text-xs sm:text-sm min-h-[44px]"
+							>
+								<Crown className="w-3 h-3 sm:w-4 sm:h-4" />
+								<span className="hidden sm:inline">Regent Oversight</span>
+								<span className="sm:hidden">Oversight</span>
+							</TabsTrigger>
+						)}
 					</TabsList>
 
 					<TabsContent value="vtt">
@@ -378,6 +432,7 @@ const CampaignDetail = () => {
 										{members.map((member) => {
 											// Check if this member is the System (Protocol Warden)
 											const isDM = campaign.dm_id === member.user_id;
+											const isMe = member.user_id === user?.id;
 											return (
 												<div
 													key={member.id}
@@ -400,6 +455,16 @@ const CampaignDetail = () => {
 																		member.characters.job || "Unknown",
 																	)}
 																</SystemText>
+															)}
+															{isMe && !member.characters && (
+																<Button
+																	size="sm"
+																	variant="outline"
+																	className="mt-1 h-7 text-xs"
+																	onClick={() => setAttachDialogOpen(true)}
+																>
+																	Attach Ascendant
+																</Button>
 															)}
 														</div>
 													</div>
@@ -452,8 +517,64 @@ const CampaignDetail = () => {
 							<CampaignProtocolControls campaignId={id || ""} />
 						</TabsContent>
 					)}
+					{hasDMAccess && (
+						<TabsContent value="oversight">
+							<CampaignRegentOversight campaignId={id || ""} />
+						</TabsContent>
+					)}
 				</Tabs>
 			</div>
+
+			<Dialog open={attachDialogOpen} onOpenChange={setAttachDialogOpen}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Attach Ascendant</DialogTitle>
+						<DialogDescription>
+							Select one of your existing Ascendants to permanently link to this
+							campaign.
+						</DialogDescription>
+					</DialogHeader>
+					<div className="py-4">
+						<Select
+							value={selectedCharacterToAttach}
+							onValueChange={setSelectedCharacterToAttach}
+						>
+							<SelectTrigger>
+								<SelectValue placeholder="Select an Ascendant" />
+							</SelectTrigger>
+							<SelectContent>
+								{myCharacters.map((char) => (
+									<SelectItem key={char.id} value={char.id}>
+										{char.name} - Level {char.level}{" "}
+										{formatRegentVernacular(char.job ?? "")}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+					<DialogFooter>
+						<Button
+							variant="outline"
+							onClick={() => setAttachDialogOpen(false)}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={handleAttachCharacter}
+							disabled={!selectedCharacterToAttach || linkCharacter.isPending}
+						>
+							{linkCharacter.isPending ? (
+								<>
+									<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+									Attaching...
+								</>
+							) : (
+								"Attach"
+							)}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 		</Layout>
 	);
 };

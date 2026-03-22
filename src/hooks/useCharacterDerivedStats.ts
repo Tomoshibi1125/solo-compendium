@@ -384,11 +384,23 @@ export function useCharacterDerivedStats(
 			(item.properties || []).forEach((prop) => {
 				const lower = prop.toLowerCase();
 				const flyMatch = lower.match(/fly\s+(\d+)ft/i);
-				if (flyMatch) otherSpeeds.fly = Math.max(otherSpeeds.fly || 0, parseInt(flyMatch[1], 10));
+				if (flyMatch)
+					otherSpeeds.fly = Math.max(
+						otherSpeeds.fly || 0,
+						parseInt(flyMatch[1], 10),
+					);
 				const swimMatch = lower.match(/swim\s+(\d+)ft/i);
-				if (swimMatch) otherSpeeds.swim = Math.max(otherSpeeds.swim || 0, parseInt(swimMatch[1], 10));
+				if (swimMatch)
+					otherSpeeds.swim = Math.max(
+						otherSpeeds.swim || 0,
+						parseInt(swimMatch[1], 10),
+					);
 				const climbMatch = lower.match(/climb\s+(\d+)ft/i);
-				if (climbMatch) otherSpeeds.climb = Math.max(otherSpeeds.climb || 0, parseInt(climbMatch[1], 10));
+				if (climbMatch)
+					otherSpeeds.climb = Math.max(
+						otherSpeeds.climb || 0,
+						parseInt(climbMatch[1], 10),
+					);
 			});
 		});
 
@@ -400,25 +412,30 @@ export function useCharacterDerivedStats(
 		let acLabel = "Unarmored";
 
 		const equippedArmorItems = (equipment || []).filter(
-			(e) => e.is_equipped && (!e.requires_attunement || e.is_attuned)
+			(e) => e.is_equipped && (!e.requires_attunement || e.is_attuned),
 		);
-		
-		const armor = equippedArmorItems.find(e => 
-			(e.properties || []).some(p => ["light", "medium", "heavy"].includes(p.toLowerCase()))
+
+		const armor = equippedArmorItems.find((e) =>
+			(e.properties || []).some((p) =>
+				["light", "medium", "heavy"].includes(p.toLowerCase()),
+			),
 		);
 
 		if (armor) {
-			const props = (armor.properties || []).map(p => p.toLowerCase());
-			const baseMatch = props.find(p => p.startsWith("ac "))?.match(/\d+/);
+			const props = (armor.properties || []).map((p) => p.toLowerCase());
+			const baseMatch = props.find((p) => p.startsWith("ac "))?.match(/\d+/);
 			acBase = baseMatch ? parseInt(baseMatch[0], 10) : 10;
 			acLabel = armor.name;
-			
+
 			const isMedium = props.includes("medium");
 			const isHeavy = props.includes("heavy");
 			acDex = isHeavy ? 0 : isMedium ? Math.min(dexMod, 2) : dexMod;
 		} else {
 			// Unarmored Defense (Monk/Barbarian style) if applicable
-			const unarmoredBase = getUnarmoredDefenseBaseAC(character.job, finalAbilities);
+			const unarmoredBase = getUnarmoredDefenseBaseAC(
+				character.job,
+				finalAbilities,
+			);
 			if (unarmoredBase !== null && unarmoredBase > 10 + dexMod) {
 				acBase = 10;
 				acDex = dexMod;
@@ -432,7 +449,7 @@ export function useCharacterDerivedStats(
 			modifier: 0, // Profile/Base static mod
 			dexterity: acDex,
 			misc: acMisc,
-			bonus: (sigilBonuses.ac + customAcBonus) - (acBase + acDex + acMisc),
+			bonus: sigilBonuses.ac + customAcBonus - (acBase + acDex + acMisc),
 			total: sigilBonuses.ac + customAcBonus,
 			label: acLabel,
 		};

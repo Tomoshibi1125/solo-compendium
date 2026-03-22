@@ -26,7 +26,7 @@ export interface Relic {
 		background?: string;
 	};
 	properties: {
-		magical?: boolean;
+		protocol_enhanced?: boolean;
 		sentient?: boolean;
 		cursed?: boolean;
 		unique?: boolean;
@@ -95,12 +95,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			level: 15,
 			ability: "Dexterity",
 			score: 17,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			sentient: true,
 			unique: true,
 			legendary: true,
@@ -167,12 +166,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "very_rare",
 		attunement: true,
 		requirements: {
-			level: 10,
 			ability: "Strength",
 			score: 15,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			cursed: true,
 		},
 		abilities: [
@@ -226,12 +224,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			level: 12,
 			ability: "Dexterity",
 			score: 16,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [
@@ -282,12 +279,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "very_rare",
 		attunement: true,
 		requirements: {
-			level: 8,
 			ability: "Strength",
 			score: 14,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [
@@ -341,11 +337,10 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "mythic",
 		attunement: true,
 		requirements: {
-			level: 20,
 			class: "Umbral Regent",
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			sentient: true,
 			unique: true,
 			legendary: true,
@@ -404,7 +399,7 @@ export const comprehensiveRelics: Relic[] = [
 				"radiant",
 				"force",
 			],
-			immunity: ["magical"],
+			immunity: ["protocol-enhanced"],
 		},
 		source: "System Ascendant Canon",
 	},
@@ -417,12 +412,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			level: 15,
 			ability: "Constitution",
 			score: 16,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [
@@ -478,12 +472,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			level: 18,
 			ability: "Constitution",
 			score: 17,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [
@@ -534,12 +527,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			level: 12,
 			ability: "Charisma",
 			score: 15,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			sentient: true,
 		},
 		abilities: [
@@ -602,12 +594,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "epic",
 		attunement: true,
 		requirements: {
-			level: 8,
 			ability: "Wisdom",
 			score: 14,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 		},
 		abilities: [
 			{
@@ -631,7 +622,7 @@ export const comprehensiveRelics: Relic[] = [
 			{
 				name: "Shadow Sight",
 				description:
-					"Can see in magical darkness and perceive invisible creatures.",
+					"Can see in protocol-enhanced darkness and perceive invisible creatures.",
 				type: "passive",
 			},
 		],
@@ -661,7 +652,7 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "very_rare",
 		attunement: false,
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [
@@ -716,12 +707,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			level: 16,
 			ability: "Intelligence",
 			score: 18,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			sentient: true,
 			unique: true,
 		},
@@ -785,12 +775,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "epic",
 		attunement: true,
 		requirements: {
-			level: 10,
 			ability: "Wisdom",
 			score: 15,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [
@@ -839,12 +828,11 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "mythic",
 		attunement: true,
 		requirements: {
-			level: 20,
 			ability: "Intelligence",
 			score: 20,
 		},
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 			legendary: true,
 		},
@@ -904,7 +892,7 @@ export const comprehensiveRelics: Relic[] = [
 		type: "consumable",
 		rarity: "rare",
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 		},
 		abilities: [
 			{
@@ -935,7 +923,7 @@ export const comprehensiveRelics: Relic[] = [
 		type: "consumable",
 		rarity: "very_rare",
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 		},
 		abilities: [
 			{
@@ -967,7 +955,7 @@ export const comprehensiveRelics: Relic[] = [
 		type: "consumable",
 		rarity: "legendary",
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 		},
 		abilities: [
 			{
@@ -994,18 +982,18 @@ export const comprehensiveRelics: Relic[] = [
 		id: "shadow-lens",
 		name: "Shadow Lens",
 		description:
-			"A magical lens that can see through shadows and reveal hidden things.",
+			"A protocol-enhanced lens that can see through shadows and reveal hidden things.",
 		type: "tool",
 		rarity: "rare",
 		attunement: false,
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [
 			{
 				name: "Shadow Vision",
-				description: "Can see through shadows and magical darkness.",
+				description: "Can see through shadows and protocol-enhanced darkness.",
 				type: "passive",
 			},
 			{
@@ -1016,7 +1004,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			{
 				name: "Shadow Detection",
-				description: "Can detect shadow creatures and shadow magic.",
+				description: "Can detect shadow creatures and shadow protocol.",
 				type: "passive",
 			},
 		],
@@ -1044,7 +1032,7 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "very_rare",
 		attunement: true,
 		properties: {
-			magical: true,
+			protocol_enhanced: true,
 			unique: true,
 		},
 		abilities: [

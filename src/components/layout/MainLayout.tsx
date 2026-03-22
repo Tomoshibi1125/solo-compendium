@@ -11,7 +11,7 @@ interface MainLayoutProps {
 
 export function MainLayout({ children, className }: MainLayoutProps) {
 	return (
-		<div className="min-h-screen flex flex-col bg-background selection:bg-primary/30">
+		<div className="min-h-dvh flex flex-col bg-background selection:bg-primary/30">
 			{/* Global Top Navigation */}
 			<NavBar />
 

@@ -1,6 +1,6 @@
 import type { CompendiumRune } from "@/types/compendium";
 
-export const runes_technique_techniques: CompendiumRune[] = [
+export const runes_technique_techniques = [
 	{
 		id: "rune-shadow-strike",
 		name: "Rune of Shadow Strike",
@@ -942,46 +942,6 @@ export const runes_technique_techniques: CompendiumRune[] = [
 		image: "/generated/runes/technique-rune.webp",
 	},
 	{
-		id: "rune-meteor-strike",
-		name: "Rune of Meteor Strike",
-		description:
-			"A specialized skill-granting rune that contains the knowledge of Meteor Strike.",
-		effect_description:
-			"Permanently teaches you Meteor Strike. Once learned, this ability can be used once per long rest without expending a resource, or you may expend your own resources if applicable. Adaptive: The DC, attack rolls, and effectiveness of this ability scale with your highest applicable attribute.",
-		rune_type: "martial",
-		rune_category: "offensive",
-		rune_level: 11,
-		rarity: "rare",
-		effect_type: "active",
-		activation_action: "Study Object",
-		uses_per_rest: "Consumable (Permanently Learned)",
-		requires_level: 11,
-		can_inscribe_on: [],
-		inscription_difficulty: 0,
-		tags: ["rune", "technique"],
-		image: "/generated/runes/technique-rune.webp",
-	},
-	{
-		id: "rune-thousand-cuts",
-		name: "Rune of Thousand Cuts",
-		description:
-			"A specialized skill-granting rune that contains the knowledge of Thousand Cuts.",
-		effect_description:
-			"Permanently teaches you Thousand Cuts. Once learned, this ability can be used once per long rest without expending a resource, or you may expend your own resources if applicable. Adaptive: The DC, attack rolls, and effectiveness of this ability scale with your highest applicable attribute.",
-		rune_type: "martial",
-		rune_category: "offensive",
-		rune_level: 13,
-		rarity: "very_rare",
-		effect_type: "active",
-		activation_action: "Study Object",
-		uses_per_rest: "Consumable (Permanently Learned)",
-		requires_level: 13,
-		can_inscribe_on: [],
-		inscription_difficulty: 0,
-		tags: ["rune", "technique"],
-		image: "/generated/runes/technique-rune.webp",
-	},
-	{
 		id: "rune-iron-wall-stance",
 		name: "Rune of Iron Wall Stance",
 		description:
@@ -1082,26 +1042,6 @@ export const runes_technique_techniques: CompendiumRune[] = [
 		image: "/generated/runes/technique-rune.webp",
 	},
 	{
-		id: "rune-phantom-step",
-		name: "Rune of Phantom Step",
-		description:
-			"A specialized skill-granting rune that contains the knowledge of Phantom Step.",
-		effect_description:
-			"Permanently teaches you Phantom Step. Once learned, this ability can be used once per long rest without expending a resource, or you may expend your own resources if applicable. Adaptive: The DC, attack rolls, and effectiveness of this ability scale with your highest applicable attribute.",
-		rune_type: "martial",
-		rune_category: "mobility",
-		rune_level: 6,
-		rarity: "uncommon",
-		effect_type: "active",
-		activation_action: "Study Object",
-		uses_per_rest: "Consumable (Permanently Learned)",
-		requires_level: 6,
-		can_inscribe_on: [],
-		inscription_difficulty: 0,
-		tags: ["rune", "technique"],
-		image: "/generated/runes/technique-rune.webp",
-	},
-	{
 		id: "rune-dragons-tail-sweep",
 		name: "Rune of Dragon",
 		description:
@@ -1196,26 +1136,6 @@ export const runes_technique_techniques: CompendiumRune[] = [
 		activation_action: "Study Object",
 		uses_per_rest: "Consumable (Permanently Learned)",
 		requires_level: 10,
-		can_inscribe_on: [],
-		inscription_difficulty: 0,
-		tags: ["rune", "technique"],
-		image: "/generated/runes/technique-rune.webp",
-	},
-	{
-		id: "rune-shadow-bind-technique",
-		name: "Rune of Shadow Bind",
-		description:
-			"A specialized skill-granting rune that contains the knowledge of Shadow Bind.",
-		effect_description:
-			"Permanently teaches you Shadow Bind. Once learned, this ability can be used once per long rest without expending a resource, or you may expend your own resources if applicable. Adaptive: The DC, attack rolls, and effectiveness of this ability scale with your highest applicable attribute.",
-		rune_type: "martial",
-		rune_category: "utility",
-		rune_level: 6,
-		rarity: "uncommon",
-		effect_type: "active",
-		activation_action: "Study Object",
-		uses_per_rest: "Consumable (Permanently Learned)",
-		requires_level: 6,
 		can_inscribe_on: [],
 		inscription_difficulty: 0,
 		tags: ["rune", "technique"],
@@ -1356,26 +1276,6 @@ export const runes_technique_techniques: CompendiumRune[] = [
 		activation_action: "Study Object",
 		uses_per_rest: "Consumable (Permanently Learned)",
 		requires_level: 8,
-		can_inscribe_on: [],
-		inscription_difficulty: 0,
-		tags: ["rune", "technique"],
-		image: "/generated/runes/technique-rune.webp",
-	},
-	{
-		id: "rune-sonic-boom-clap",
-		name: "Rune of Sonic Boom",
-		description:
-			"A specialized skill-granting rune that contains the knowledge of Sonic Boom.",
-		effect_description:
-			"Permanently teaches you Sonic Boom. Once learned, this ability can be used once per long rest without expending a resource, or you may expend your own resources if applicable. Adaptive: The DC, attack rolls, and effectiveness of this ability scale with your highest applicable attribute.",
-		rune_type: "martial",
-		rune_category: "utility",
-		rune_level: 6,
-		rarity: "uncommon",
-		effect_type: "active",
-		activation_action: "Study Object",
-		uses_per_rest: "Consumable (Permanently Learned)",
-		requires_level: 6,
 		can_inscribe_on: [],
 		inscription_difficulty: 0,
 		tags: ["rune", "technique"],

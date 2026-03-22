@@ -204,3 +204,10 @@ export function getConditionSummary(condition: ConditionEntry): string {
 	}
 	return parts.join(" ");
 }
+/**
+ * Clear conditions on Long Rest
+ * Following existing "Fresh Start" logic — clears all conditions.
+ */
+export function clearConditionsOnLongRest(): ConditionEntry[] {
+	return [];
+}

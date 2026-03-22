@@ -34,51 +34,62 @@ export function CompendiumTooltip({
 			);
 			// Many categories are available, but we'll try to find the specific one
 			// For simplicity in preview, we can use the universal transformation or specific getters
-			let data: Record<string, any> | null = null;
+			interface TooltipPreviewData {
+				id: string;
+				name: string;
+				image?: string | null;
+				image_url?: string | null;
+				rarity?: string | null;
+				level?: number | string | null;
+				rune_level?: number | string | null;
+				description?: string | null;
+				source_book?: string | null;
+			}
+			let data: TooltipPreviewData | null = null;
 			try {
 				switch (type) {
 					case "powers":
 						data =
-							(await staticDataProvider.getPowers("")).find(
+							((await staticDataProvider.getPowers("")).find(
 								(p) => p.id === id,
-							) || null;
+							) as unknown as TooltipPreviewData) || null;
 						break;
 					case "runes":
 						data =
-							(await staticDataProvider.getRunes("")).find(
+							((await staticDataProvider.getRunes("")).find(
 								(p) => p.id === id,
-							) || null;
+							) as unknown as TooltipPreviewData) || null;
 						break;
 					case "sigils":
 						data =
-							(await staticDataProvider.getSigils("")).find(
+							((await staticDataProvider.getSigils("")).find(
 								(p) => p.id === id,
-							) || null;
+							) as unknown as TooltipPreviewData) || null;
 						break;
 					case "monsters":
 						data =
-							(await staticDataProvider.getMonsters("")).find(
+							((await staticDataProvider.getMonsters("")).find(
 								(p) => p.id === id,
-							) || null;
+							) as unknown as TooltipPreviewData) || null;
 						break;
 					case "items":
 					case "equipment":
 						data =
-							(await staticDataProvider.getItems("")).find(
+							((await staticDataProvider.getItems("")).find(
 								(p) => p.id === id,
-							) || null;
+							) as unknown as TooltipPreviewData) || null;
 						break;
 					case "spells":
 						data =
-							(await staticDataProvider.getSpells("")).find(
+							((await staticDataProvider.getSpells("")).find(
 								(p) => p.id === id,
-							) || null;
+							) as unknown as TooltipPreviewData) || null;
 						break;
 					case "techniques":
 						data =
-							(await staticDataProvider.getTechniques("")).find(
+							((await staticDataProvider.getTechniques("")).find(
 								(p) => p.id === id,
-							) || null;
+							) as unknown as TooltipPreviewData) || null;
 						break;
 					default:
 						// Generic fallback if needed
@@ -154,14 +165,14 @@ export function CompendiumTooltip({
 								</div>
 								<p className="text-xs text-muted-foreground line-clamp-3 leading-relaxed border-t border-primary/10 pt-2 italic">
 									<AutoLinkText
-										text={String((entry as any).description || "")}
+										text={String(entry.description || "")}
 									/>
 								</p>
 								<div className="flex items-center justify-between text-[10px] text-primary/60 font-mono pt-1">
 									<span>Click for full data stream</span>
-									{(entry as any).source_book && (
+									{entry.source_book && (
 										<span className="opacity-50">
-											[{(entry as any).source_book}]
+											[{entry.source_book as string}]
 										</span>
 									)}
 								</div>

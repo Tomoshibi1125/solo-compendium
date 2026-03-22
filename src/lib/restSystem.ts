@@ -128,6 +128,9 @@ export async function executeLongRest(
 	if (!character) throw new AppError("Ascendant not found", "NOT_FOUND");
 
 	// Update character
+	const characterState = (character.gemini_state as any) || {};
+	const { clearConditionsOnLongRest } = await import("@/lib/conditionSystem");
+
 	await supabase
 		.from("characters")
 		.update({
@@ -139,7 +142,14 @@ export async function executeLongRest(
 			),
 			system_favor_current: character.system_favor_max,
 			exhaustion_level: Math.max(0, character.exhaustion_level - 1),
-			conditions: [],
+			conditions: [], // Legacy sync
+			gemini_state: {
+				...characterState,
+				conditions: clearConditionsOnLongRest(),
+			},
+			death_save_successes: 0,
+			death_save_failures: 0,
+			stable: false,
 		})
 		.eq("id", characterId);
 
