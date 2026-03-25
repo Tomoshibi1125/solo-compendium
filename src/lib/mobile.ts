@@ -80,6 +80,7 @@ export function applyTouchOptimizations() {
 
 	if (isTouchDevice()) {
 		document.body.classList.add("touch-device");
+		preventDoubleTapZoom();
 	}
 	if (isMobile()) {
 		document.body.classList.add("mobile-device");

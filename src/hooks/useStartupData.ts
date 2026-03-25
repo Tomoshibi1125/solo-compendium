@@ -92,6 +92,7 @@ const STARTUP_CATEGORIES = [
 	"artifacts",
 	"locations",
 	"sigils",
+	"sovereigns",
 ] as const;
 
 type _StartupCategory = (typeof STARTUP_CATEGORIES)[number];
@@ -155,7 +156,7 @@ export const useStartupData = () => {
 							data = await staticDataProvider.getMonsters("");
 							break;
 						case "powers":
-							data = await staticDataProvider.getSpells("");
+							data = await staticDataProvider.getPowers("");
 							break;
 						case "equipment":
 							data = await staticDataProvider.getItems("");
@@ -188,7 +189,9 @@ export const useStartupData = () => {
 							data = await staticDataProvider.getShadowSoldiers("");
 							break;
 						case "items":
-							data = await staticDataProvider.getItems("");
+							// Items are already loaded via the "equipment" case above;
+							// skip to avoid duplicates.
+							data = [];
 							break;
 						case "spells":
 							data = await staticDataProvider.getSpells("");
@@ -201,6 +204,14 @@ export const useStartupData = () => {
 							break;
 						case "locations":
 							data = await staticDataProvider.getLocations("");
+							break;
+						case "sigils":
+							data = await staticDataProvider.getSigils("");
+							break;
+						case "sovereigns":
+							// Sovereigns are AI-generated via Gemini protocol;
+							// no static data — they only exist in Supabase.
+							data = [];
 							break;
 						default:
 							data = [];
@@ -267,8 +278,17 @@ export const useStartupData = () => {
 					totalCounts[category] = accessibleData.length;
 				}
 
+				// Deduplicate by type:id to prevent any duplicate entries
+				const seen = new Set<string>();
+				const deduped = allEntries.filter((entry) => {
+					const key = `${entry.type}:${entry.id}`;
+					if (seen.has(key)) return false;
+					seen.add(key);
+					return true;
+				});
+
 				return {
-					entries: allEntries,
+					entries: deduped,
 					categories: [...STARTUP_CATEGORIES],
 					totalCounts,
 				};
@@ -383,19 +403,45 @@ export const useStartupData = () => {
 								)
 								.limit(STARTUP_LIMIT);
 							break;
+						case "sigils":
+							query = supabase
+								.from("compendium_sigils")
+								.select(
+									"id, name, display_name, description, created_at, tags, source_book, rarity, image_url",
+								)
+								.limit(STARTUP_LIMIT);
+							break;
+						case "sovereigns":
+							query = supabase
+								.from("compendium_sovereigns")
+								.select(
+									"id, name, display_name, description, created_at, tags, source_book, rarity, image_url",
+								)
+								.limit(STARTUP_LIMIT);
+							break;
+						case "spells":
+							query = supabase
+								.from("compendium_spells")
+								.select(
+									"id, name, display_name, description, created_at, tags, source_book, rarity, image_url",
+								)
+								.limit(STARTUP_LIMIT);
+							break;
+						case "techniques":
+							query = supabase
+								.from("compendium_techniques")
+								.select(
+									"id, name, display_name, description, created_at, tags, source_book, rarity, image_url",
+								)
+								.limit(STARTUP_LIMIT);
+							break;
 						default: {
-							// Categories without Supabase tables (items, spells, techniques, artifacts, locations)
+							// Categories without Supabase tables (items, artifacts, locations)
 							// fall back to static data provider
 							let staticFallback: StaticCompendiumEntry[] = [];
 							switch (category) {
 								case "items":
 									staticFallback = await staticDataProvider.getItems("");
-									break;
-								case "spells":
-									staticFallback = await staticDataProvider.getSpells("");
-									break;
-								case "techniques":
-									staticFallback = await staticDataProvider.getTechniques("");
 									break;
 								case "artifacts":
 									staticFallback = await staticDataProvider.getArtifacts("");
@@ -547,8 +593,17 @@ export const useStartupData = () => {
 					);
 				}
 
+				// Deduplicate by type:id to prevent any duplicate entries
+				const seen = new Set<string>();
+				const dedupedEntries = allEntries.filter((entry) => {
+					const key = `${entry.type}:${entry.id}`;
+					if (seen.has(key)) return false;
+					seen.add(key);
+					return true;
+				});
+
 				return {
-					entries: allEntries,
+					entries: dedupedEntries,
 					categories: [...STARTUP_CATEGORIES],
 					totalCounts,
 				};

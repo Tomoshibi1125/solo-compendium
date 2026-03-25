@@ -4,11 +4,7 @@ import { useBackgroundSync } from "@/hooks/useBackgroundSync";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import {
-	getErrorMessage,
-	isNotFoundError,
-	logErrorWithContext,
-} from "@/lib/errorHandling";
+import { isNotFoundError, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	createLocalCharacter,
 	deleteLocalCharacter,
@@ -17,6 +13,7 @@ import {
 	listLocalCharacters,
 	updateLocalCharacter,
 } from "@/lib/guestStore";
+import { log } from "@/lib/logger";
 import { useOptimisticMutation } from "@/lib/optimisticUpdates";
 
 // Note: These functions are defined in system-rules.ts but we'll use the ones from characterCalculations
@@ -237,20 +234,10 @@ export const useCreateCharacter = () => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["characters"] });
-			console.log({
-				// toast replaced fallback
-				title: "Ascendant created",
-				description: "Your Ascendant has been awakened.",
-			});
+			log("Ascendant created successfully");
 		},
 		onError: (error) => {
 			logErrorWithContext(error, "useCreateCharacter");
-			console.log({
-				// toast replaced fallback
-				title: "Failed to create Ascendant",
-				description: getErrorMessage(error),
-				variant: "destructive",
-			});
 		},
 	});
 };
@@ -341,12 +328,6 @@ export const useDeleteCharacter = () => {
 		},
 		onError: (error) => {
 			logErrorWithContext(error, "useDeleteCharacter");
-			console.log({
-				// toast replaced fallback
-				title: "Failed to delete Ascendant",
-				description: getErrorMessage(error),
-				variant: "destructive",
-			});
 		},
 	});
 };
@@ -376,19 +357,10 @@ export const useGenerateShareToken = () => {
 		onSuccess: (_, characterId) => {
 			queryClient.invalidateQueries({ queryKey: ["character", characterId] });
 			queryClient.invalidateQueries({ queryKey: ["characters"] });
-			console.log({
-				// toast replaced fallback
-				title: "Share link generated",
-				description: "Your character can now be shared via the link.",
-			});
+			log("Share link generated");
 		},
 		onError: (error: Error) => {
-			console.log({
-				// toast replaced fallback
-				title: "Failed to generate share link",
-				description: error.message,
-				variant: "destructive",
-			});
+			logErrorWithContext(error, "useGenerateShareToken");
 		},
 	});
 };

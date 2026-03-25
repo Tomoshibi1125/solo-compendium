@@ -2,8 +2,6 @@
 // Generated with full admin privileges
 // System Ascendant themed items with images
 
-import type { Item } from "./items";
-
 export const items = [
 	{
 		id: "item-0001",

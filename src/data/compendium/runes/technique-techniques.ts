@@ -1,5 +1,3 @@
-import type { CompendiumRune } from "@/types/compendium";
-
 export const runes_technique_techniques = [
 	{
 		id: "rune-shadow-strike",

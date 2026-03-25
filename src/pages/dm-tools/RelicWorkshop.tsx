@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import {
 	ArrowLeft,
 	Copy,
@@ -37,8 +36,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import { supabase } from "@/integrations/supabase/client";
-import { getRandomEquipment } from "@/lib/compendiumAutopopulate";
 import { MONARCH_LABEL } from "@/lib/vernacular";
 
 interface RelicProperty {

@@ -141,7 +141,8 @@ export function CharacterSheetV2({
 	// UI Header & Actions (Unified from CharacterSheet.tsx)
 	// ───────────────────────────────────────────────────────────────────────────
 
-	const characterState = (character.gemini_state as Record<string, unknown>) || {};
+	const characterState =
+		(character.gemini_state as Record<string, unknown>) || {};
 	const levelingType: LevelingType =
 		propLevelingType || (characterState.leveling_type as LevelingType) || "xp";
 	const xpProgress = getXPProgress(character.experience || 0);

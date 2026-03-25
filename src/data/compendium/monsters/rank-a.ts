@@ -1,5 +1,3 @@
-import type { CompendiumMonster } from "@/types/compendium";
-
 export const monsters_a = [
 	{
 		id: "monster-0004",

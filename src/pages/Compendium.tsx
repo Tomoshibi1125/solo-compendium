@@ -30,7 +30,6 @@ import { EmptyState } from "@/components/compendium/EmptyState";
 import { FilterChips } from "@/components/compendium/FilterChips";
 import { GeminiProtocolGenerator } from "@/components/compendium/GeminiProtocolGenerator";
 import { SearchHistoryDropdown } from "@/components/compendium/SearchHistoryDropdown";
-import { SendToInventoryDialog } from "@/components/compendium/SendToInventoryDialog";
 import { SkeletonLoader } from "@/components/compendium/SkeletonLoader";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
@@ -156,12 +155,12 @@ const Compendium = () => {
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [showGeminiProtocol, setShowGeminiProtocol] = useState(false);
-	const [sendingItem, setSendingItem] = useState<CompendiumEntry | null>(null);
-	const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
+	const [_sendingItem, setSendingItem] = useState<CompendiumEntry | null>(null);
+	const [_isSendDialogOpen, setIsSendDialogOpen] = useState(false);
 
-	const { data: userCharacters = [] } = useCharacters();
-	const { data: myCampaigns = [] } = useMyCampaigns();
-	const { data: joinedCampaigns = [] } = useJoinedCampaigns();
+	useCharacters();
+	useMyCampaigns();
+	useJoinedCampaigns();
 	const itemsPerPage = 24;
 
 	const { favorites, toggleFavorite } = useFavorites();
@@ -411,8 +410,17 @@ const Compendium = () => {
 				(entry) => entry.source_book,
 			);
 
-			logger.debug("=== TOTAL ENTRIES LOADED ===:", accessibleEntries.length);
-			return accessibleEntries;
+			// Deduplicate by type:id to prevent any duplicate entries
+			const seen = new Set<string>();
+			const dedupedEntries = accessibleEntries.filter((entry) => {
+				const key = `${entry.type}:${entry.id}`;
+				if (seen.has(key)) return false;
+				seen.add(key);
+				return true;
+			});
+
+			logger.debug("=== TOTAL ENTRIES LOADED ===:", dedupedEntries.length);
+			return dedupedEntries;
 		},
 		enabled: true, // Always enable this query since we have both Supabase and static data fallback
 	});

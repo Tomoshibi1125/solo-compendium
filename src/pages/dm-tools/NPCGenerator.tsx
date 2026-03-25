@@ -244,7 +244,7 @@ Provide ALL of the following sections with full detail:
 6. PLOT HOOKS: 2-3 quest/story hooks involving this NPC
 7. EQUIPMENT: Notable gear, relics, consumables they carry with stats
 8. DESCRIPTION: Read-aloud boxed text for when players first encounter this NPC`;
-		await (enhance as any)("npc", seed);
+		await enhance("npc", seed);
 	};
 
 	const handleCopy = () => {

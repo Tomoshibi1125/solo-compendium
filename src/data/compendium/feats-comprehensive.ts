@@ -2,49 +2,6 @@
 // ALL feats for the complete compendium system
 // SA-flavored names and descriptions on 5e mechanical backbone
 
-interface Feat {
-	id: string;
-	name: string;
-	description: string;
-	prerequisites?: {
-		level?: number;
-		ability?: string;
-		score?: number;
-		feats?: string[];
-		class?: string;
-		background?: string;
-		skill?: string;
-		alignment?: string;
-		job?: string;
-		armor_proficiencies?: string[];
-		weapon_proficiencies?: string[];
-		skill_proficiencies?: string[];
-	};
-	benefits: string[];
-	mechanics: {
-		type: "passive" | "active" | "triggered";
-		frequency?:
-			| "at-will"
-			| "short-rest"
-			| "long-rest"
-			| "once-per-day"
-			| "once-per-week"
-			| "once-per-turn"
-			| "when-critical-hit"
-			| "when-creature-dies"
-			| "bonus-action"
-			| "reaction"
-			| "3-per-day";
-		action?: "action" | "bonus-action" | "reaction" | "free";
-		ability?: string;
-		save?: string;
-		dc?: number | "ability-modifier" | "spell-save";
-	};
-	flavor?: string;
-	source: string;
-	image?: string;
-}
-
 export const comprehensiveFeats = [
 	{
 		id: "shadow-attunement",
@@ -1895,29 +1852,7 @@ export const comprehensiveFeats = [
 		flavor: "[LOOT SENSORS: CALIBRATED — OPTIMIZING RESOURCE EXTRACTION]",
 		source: "System Ascendant Canon",
 	},
-	{
-		id: "umbral-binding-expert",
-		name: "Umbral Binding Expert",
-		description:
-			"Your binding technique has been refined — faster, more reliable, capable of binding stronger shadows.",
-		prerequisites: {
-			level: 3,
-			feats: ["shadow-mastery"],
-		},
-		benefits: [
-			"Extract shadows from creatures up to CR 1 higher than your level",
-			"Extracted shadows have +2 to all ability scores",
-			"Can extract and command up to 2 shadows at once",
-			"Binding takes 1 minute instead of 10",
-		],
-		mechanics: {
-			type: "active",
-			frequency: "short-rest",
-			action: "action",
-		},
-		flavor: "[BINDING PROTOCOL: UPGRADED — BINDING EFFICIENCY: +200%]",
-		source: "System Ascendant Canon",
-	},
+
 	{
 		id: "shadow-weapon-mastery",
 		name: "Shadow Weapon Mastery",

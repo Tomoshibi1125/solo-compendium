@@ -176,7 +176,7 @@ const GateGenerator = () => {
 		// 100% Automation: Pull real boss from compendium
 		const realBoss = await getRandomMonster(selectedRank || baseRift.rank);
 		if (realBoss) {
-			const boss: any = realBoss;
+			const boss = realBoss as { name: string };
 			baseRift.boss = boss.name;
 			baseRift.description = baseRift.description.replace(
 				/protected by [^.]+/,

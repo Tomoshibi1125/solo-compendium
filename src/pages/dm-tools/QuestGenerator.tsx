@@ -348,7 +348,7 @@ Provide ALL of the following sections with full detail:
 7. TIMELINE: Session count estimate, time pressure mechanics, milestone triggers
 8. KEY NPCs: 2-3 NPCs with brief stat blocks (AC/HP/CR) and motivations
 9. READ-ALOUD: Boxed text for quest briefing scene`;
-		await (enhance as any)("quest", seed);
+		await enhance("quest", seed);
 	};
 
 	const handleCopy = () => {

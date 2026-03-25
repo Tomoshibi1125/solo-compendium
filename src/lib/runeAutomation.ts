@@ -301,7 +301,7 @@ const FULL_CASTERS = [
 const HALF_CASTERS = ["Holy Knight", "Stalker"];
 const MARTIAL_JOBS = ["Assassin", "Berserker", "Destroyer", "Striker"];
 
-const CASTER_JOBS = [...FULL_CASTERS, ...HALF_CASTERS];
+const _CASTER_JOBS = [...FULL_CASTERS, ...HALF_CASTERS];
 
 export type RuneAbsorptionResult = {
 	/** True if the character's archetype doesn't match the rune type */

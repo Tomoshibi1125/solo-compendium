@@ -93,8 +93,20 @@ export function useOfflineCacheWarmer() {
 			}
 		};
 
-		// Delay cache warming to avoid blocking initial render
-		const timerId = setTimeout(warmCache, 3000);
+		// Delay cache warming until startup-data is successful or failed
+		// to avoid missing data if the network request takes longer than 3 seconds
+		const checkAndWarmCache = () => {
+			const state = queryClient.getQueryState(["startup-data"]);
+			if (state?.status === "success" || state?.status === "error") {
+				warmCache();
+			} else {
+				// Check again in 1s if not settled
+				setTimeout(checkAndWarmCache, 1000);
+			}
+		};
+
+		// Start checking after a small initial delay to let React Query mount
+		const timerId = setTimeout(checkAndWarmCache, 1000);
 		return () => clearTimeout(timerId);
 	}, [queryClient]);
 }

@@ -62,4 +62,45 @@ describe("compendium completeness (static packs)", () => {
 			expect((monster.monster_traits || []).length).toBeGreaterThan(0);
 		}
 	});
+
+	it("no duplicate IDs within any compendium category", async () => {
+		const categories = [
+			{ name: "monsters", loader: () => staticDataProvider.getMonsters("") },
+			{ name: "spells", loader: () => staticDataProvider.getSpells("") },
+			{ name: "jobs", loader: () => staticDataProvider.getJobs("") },
+			{ name: "paths", loader: () => staticDataProvider.getPaths("") },
+			{ name: "powers", loader: () => staticDataProvider.getPowers("") },
+			{
+				name: "techniques",
+				loader: () => staticDataProvider.getTechniques(""),
+			},
+			{ name: "runes", loader: () => staticDataProvider.getRunes("") },
+			{ name: "sigils", loader: () => staticDataProvider.getSigils("") },
+			{
+				name: "backgrounds",
+				loader: () => staticDataProvider.getBackgrounds(""),
+			},
+			{ name: "regents", loader: () => staticDataProvider.getRegents("") },
+			{ name: "feats", loader: () => staticDataProvider.getFeats("") },
+			{ name: "skills", loader: () => staticDataProvider.getSkills("") },
+			{ name: "relics", loader: () => staticDataProvider.getRelics("") },
+			{ name: "items", loader: () => staticDataProvider.getItems("") },
+			{ name: "artifacts", loader: () => staticDataProvider.getArtifacts("") },
+			{ name: "locations", loader: () => staticDataProvider.getLocations("") },
+			{
+				name: "conditions",
+				loader: () => staticDataProvider.getConditions(""),
+			},
+		];
+
+		for (const { name, loader } of categories) {
+			const entries = await loader();
+			const ids = entries.map((e) => e.id);
+			const uniqueIds = new Set(ids);
+			expect(
+				uniqueIds.size,
+				`${name}: found ${ids.length - uniqueIds.size} duplicate IDs`,
+			).toBe(ids.length);
+		}
+	});
 });

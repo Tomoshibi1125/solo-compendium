@@ -699,7 +699,7 @@ export function useAbsorbRune() {
 			if (insertError) throw insertError;
 
 			// Handle Skill Grants
-			const passiveBonuses = rune.passive_bonuses as Record<string, any>;
+			const passiveBonuses = rune.passive_bonuses as Record<string, unknown>;
 			if (passiveBonuses) {
 				let updateChar = false;
 				const newProficiencies = [...(character.skill_proficiencies || [])];

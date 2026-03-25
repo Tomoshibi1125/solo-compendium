@@ -2,26 +2,6 @@ import type { CompendiumRune } from "@/types/compendium";
 
 export const runes_power_powers: CompendiumRune[] = [
 	{
-		id: "rune-shadow-step",
-		name: "Rune of Shadow Step",
-		description:
-			"A specialized skill-granting rune that contains the knowledge of Shadow Step.",
-		effect_description:
-			"Permanently teaches you Shadow Step. Once learned, this ability can be used once per long rest without expending a resource, or you may expend your own resources if applicable. Adaptive: The DC, attack rolls, and effectiveness of this ability scale with your highest applicable attribute.",
-		rune_type: "martial",
-		rune_category: "innate",
-		rune_level: 1,
-		rarity: "common",
-		effect_type: "active",
-		activation_action: "Study Object",
-		uses_per_rest: "Consumable (Permanently Learned)",
-		requires_level: 1,
-		can_inscribe_on: [],
-		inscription_difficulty: 0,
-		tags: ["rune", "power"],
-		image: "/generated/runes/power-rune.webp",
-	},
-	{
 		id: "rune-demonic-aura",
 		name: "Rune of Demonic Aura",
 		description:

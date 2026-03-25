@@ -299,7 +299,7 @@ const CharacterSheet = () => {
 		if (character?.id && !isReadOnly) {
 			deathSaves.persist(character.id);
 		}
-	}, [deathSaves.state, character?.id, isReadOnly]);
+	}, [character?.id, isReadOnly, deathSaves.persist]);
 
 	// Enable automatic periodic backups while editing (disabled in read-only mode)
 	useAutoBackup(character ?? null, !isReadOnly);
@@ -1297,7 +1297,8 @@ const CharacterSheet = () => {
 					onResourceAdjust={handleResourceAdjust}
 					onExhaustionChange={handleExhaustionChange}
 					onAddCondition={(conditionName: string) => {
-						const characterState = (character.gemini_state as any) || {};
+						const characterState =
+							(character.gemini_state as Record<string, unknown>) || {};
 						const currentStructured =
 							(characterState.conditions as ConditionEntry[]) ||
 							migrateLegacyConditions(character.conditions || []);
@@ -1316,7 +1317,7 @@ const CharacterSheet = () => {
 								gemini_state: {
 									...characterState,
 									conditions: updatedStructured,
-								},
+								} as never,
 							},
 						});
 						playerTools
@@ -1324,7 +1325,8 @@ const CharacterSheet = () => {
 							.catch(console.error);
 					}}
 					onRemoveCondition={(conditionId: string) => {
-						const characterState = (character.gemini_state as any) || {};
+						const characterState =
+							(character.gemini_state as Record<string, unknown>) || {};
 						const currentStructured =
 							(characterState.conditions as ConditionEntry[]) ||
 							migrateLegacyConditions(character.conditions || []);
@@ -1342,7 +1344,7 @@ const CharacterSheet = () => {
 									gemini_state: {
 										...characterState,
 										conditions: updatedStructured,
-									},
+									} as never,
 								},
 							});
 							playerTools

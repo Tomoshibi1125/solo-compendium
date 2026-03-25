@@ -9,10 +9,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CONDITION_EFFECTS } from "@/lib/conditionEffects";
-import {
-	type ConditionEntry,
-	getConditionSummary,
-} from "@/lib/conditionSystem";
+import type { ConditionEntry } from "@/lib/conditionSystem";
 import { cn } from "@/lib/utils";
 
 const ALL_CONDITIONS = Object.keys(CONDITION_EFFECTS);

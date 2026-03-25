@@ -299,7 +299,7 @@ export const useCombatActions = (characterId: string) => {
 					description: feat.description || sigilData.effect_description,
 					save: feat.resolution
 						? {
-								dc: parseInt(feat.resolution.match(/\d+/)?.[0] || "10"),
+								dc: parseInt(feat.resolution.match(/\d+/)?.[0] || "10", 10),
 								ability: feat.resolution.toLowerCase().includes("str")
 									? "STR"
 									: feat.resolution.toLowerCase().includes("agi")

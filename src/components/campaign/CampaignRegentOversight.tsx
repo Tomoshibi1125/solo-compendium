@@ -1,4 +1,4 @@
-import { Plus, Trash2, User, UserCheck } from "lucide-react";
+import { Plus, Trash2, User } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -109,7 +109,9 @@ export function CampaignRegentOversight({
 						if (!char) return null;
 
 						const charUnlocks = campaignUnlocks.filter(
-							(u) => (u as unknown as { character_id: string }).character_id === char.id,
+							(u) =>
+								(u as unknown as { character_id: string }).character_id ===
+								char.id,
 						);
 
 						return (
@@ -142,7 +144,7 @@ export function CampaignRegentOversight({
 																<span className="font-semibold text-sm">
 																	{unlock.regent?.name}
 																</span>
-																{unlock.regent && unlock.regent.rank && (
+																{unlock.regent?.rank && (
 																	<Badge
 																		variant="outline"
 																		className="text-[10px]"
@@ -224,8 +226,8 @@ export function CampaignRegentOversight({
 								<SelectContent>
 									{availableRegents.map((regent) => (
 										<SelectItem key={regent.id} value={regent.id}>
-											[{(regent as unknown as { rank?: string }).rank || "NR"}] {regent.name} -{" "}
-											{regent.title}
+											[{(regent as unknown as { rank?: string }).rank || "NR"}]{" "}
+											{regent.name} - {regent.title}
 										</SelectItem>
 									))}
 								</SelectContent>

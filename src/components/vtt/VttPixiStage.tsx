@@ -217,7 +217,7 @@ export function VttPixiStage({
 				appRef.current = null;
 			}
 		};
-	}, [worldSize.h, worldSize.w]);
+	}, [worldSize.h, worldSize.w, dpr[1]]);
 
 	useEffect(() => {
 		const app = appRef.current;
@@ -930,6 +930,7 @@ export function VttPixiStage({
 		onTokenDragStart,
 		updateToken,
 		zoom,
+		fx.particleCount,
 	]);
 
 	// Optimized Zoom Effect: Scale the root container instead of rebuilding the stage

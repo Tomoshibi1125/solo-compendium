@@ -164,9 +164,7 @@ export function CompendiumTooltip({
 									</div>
 								</div>
 								<p className="text-xs text-muted-foreground line-clamp-3 leading-relaxed border-t border-primary/10 pt-2 italic">
-									<AutoLinkText
-										text={String(entry.description || "")}
-									/>
+									<AutoLinkText text={String(entry.description || "")} />
 								</p>
 								<div className="flex items-center justify-between text-[10px] text-primary/60 font-mono pt-1">
 									<span>Click for full data stream</span>

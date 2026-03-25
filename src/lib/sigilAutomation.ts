@@ -32,7 +32,7 @@ export function getSigilSlotBonusForRarity(
 	}
 }
 
-export function getDefaultSigilSlotsBaseForEquipment(equipment: {
+export function getDefaultSigilSlotsBaseForEquipment(_equipment: {
 	item_type: string | null | undefined;
 	properties: unknown;
 	name: string;
@@ -139,7 +139,7 @@ export function getEquipmentSigilCategory(equipment: {
  */
 export function applySigilBonuses(
 	initialBonuses: Omit<RuneBonusResult, "traits"> & { traits?: string[] },
-	activeSigils: Array<{ sigil: any; is_active: boolean }>,
+	activeSigils: Array<{ sigil: Record<string, unknown>; is_active: boolean }>,
 ): RuneBonusResult {
 	const totalBonuses: RuneBonusResult = {
 		...initialBonuses,
@@ -174,7 +174,7 @@ export function applySigilBonuses(
 							? `+${bonuses.damage_bonus}`
 							: `${bonuses.damage_bonus}`;
 				} else if (/^[+-]?\d+$/.test(currentDamage)) {
-					const newVal = parseInt(currentDamage) + bonuses.damage_bonus;
+					const newVal = parseInt(currentDamage, 10) + bonuses.damage_bonus;
 					totalBonuses.damageBonus = newVal > 0 ? `+${newVal}` : `${newVal}`;
 				} else {
 					totalBonuses.damageBonus = `${currentDamage} + ${bonuses.damage_bonus}`;
