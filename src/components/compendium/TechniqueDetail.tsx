@@ -62,6 +62,7 @@ interface TechniqueData {
 		exhaustion?: string;
 	} | null;
 	flavor?: string | null;
+	lore?: string | null;
 	source_book?: string | null;
 	image_url?: string | null;
 	image?: string | null;
@@ -478,15 +479,25 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 			{(data.description || data.flavor) && (
 				<SystemWindow id="technique-description" title="DESCRIPTION">
 					<div className="space-y-3">
+						{data.flavor && (
+							<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+								<AutoLinkText text={data.flavor} />
+							</p>
+						)}
 						{data.description && (
 							<p className="text-foreground leading-relaxed">
 								<AutoLinkText text={data.description} />
 							</p>
 						)}
-						{data.flavor && (
-							<p className="text-sm text-muted-foreground italic">
-								<AutoLinkText text={data.flavor} />
-							</p>
+						{data.lore && (
+							<div className="mt-6 pt-4 border-t border-cyan/10">
+								<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+									Historical Record
+								</h4>
+								<p className="text-sm text-muted-foreground leading-relaxed">
+									<AutoLinkText text={data.lore} />
+								</p>
+							</div>
 						)}
 					</div>
 				</SystemWindow>

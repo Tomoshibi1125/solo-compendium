@@ -82,10 +82,27 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 						</div>
 					</div>
 
+					{data.flavor && (
+						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+							<AutoLinkText text={data.flavor} />
+						</p>
+					)}
+
 					{data.description && (
-						<p className="text-foreground">
+						<p className="text-foreground leading-relaxed">
 							<AutoLinkText text={data.description} />
 						</p>
+					)}
+
+					{data.lore && (
+						<div className="mt-4 pt-4 border-t border-amber-500/20">
+							<h4 className="text-amber-400 font-bold text-[10px] uppercase tracking-wider mb-2">
+								Historical Record
+							</h4>
+							<p className="text-sm text-muted-foreground leading-relaxed">
+								<AutoLinkText text={data.lore} />
+							</p>
+						</div>
 					)}
 
 					<div className="flex flex-wrap gap-2">

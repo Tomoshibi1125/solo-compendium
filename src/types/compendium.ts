@@ -128,6 +128,7 @@ export interface CompendiumSpell {
 	effects?:
 		| {
 				primary?: string;
+				[key: string]: unknown;
 		  }
 		| Record<string, unknown>;
 	mechanics?:
@@ -149,14 +150,17 @@ export interface CompendiumSpell {
 					dice?: string;
 					notes?: string;
 				};
+				[key: string]: unknown;
 		  }
 		| Record<string, unknown>;
 	limitations?:
 		| {
 				mana_cost?: number;
+				[key: string]: unknown;
 		  }
 		| Record<string, unknown>;
 	flavor?: string;
+	lore?: string;
 	higher_levels?: string;
 	savingThrow?:
 		| {
@@ -194,9 +198,13 @@ export interface CompendiumPower {
 	save_ability?: string;
 	damage_roll?: string;
 	damage_type?: string;
+	effects?: Record<string, unknown>;
 	mechanics?: Record<string, unknown>;
+	limitations?: Record<string, unknown>;
 	higher_levels?: string;
 	source_book?: string;
+	flavor?: string;
+	lore?: string;
 	tags?: string[];
 }
 
@@ -213,7 +221,11 @@ export interface CompendiumTechnique {
 	duration?: string;
 	primary_effect?: string;
 	secondary_effect?: string;
+	effects?: Record<string, unknown>;
 	mechanics?: Record<string, unknown>;
+	limitations?: Record<string, unknown>;
+	flavor?: string;
+	lore?: string;
 	source?: string;
 	image?: string;
 }
@@ -266,9 +278,151 @@ export interface CompendiumRelic {
 	rarity?: string;
 	attunement?: boolean;
 	properties?: string[];
+	effects?: Record<string, unknown>;
+	mechanics?: Record<string, unknown>;
+	limitations?: Record<string, unknown>;
 	stats?: Record<string, number>;
 	image?: string;
 	source_book?: string;
+	flavor?: string;
+	lore?: string;
 	generated_reason?: string;
 	theme_tags?: string[];
+}
+
+export interface CompendiumFeat {
+	id: string;
+	name: string;
+	description: string;
+	prerequisites?: Record<string, unknown> | null;
+	benefits?: string[] | null;
+	effects?: Record<string, unknown> | null;
+	mechanics?: Record<string, unknown> | null;
+	limitations?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
+	image?: string | null;
+	source?: string | null;
+	tags?: string[];
+}
+
+export interface CompendiumTattoo {
+	id: string;
+	name: string;
+	description: string;
+	rarity?: "common" | "uncommon" | "rare" | "very_rare" | "legendary" | string;
+	attunement?: boolean;
+	body_part?: string; // e.g. "Arm", "Chest", "Needle"
+	effects?: Record<string, unknown>;
+	mechanics?: Record<string, unknown>;
+	limitations?: Record<string, unknown>;
+	lore?: string;
+	flavor?: string;
+	image?: string;
+	source?: string;
+	tags?: string[];
+}
+
+export interface CompendiumItem {
+	id: string;
+	name: string;
+	description: string;
+	type?: string;
+	rarity?: string;
+	attunement?: boolean | null;
+	properties?: Record<string, unknown> | null;
+	effects?: Record<string, unknown> | null;
+	mechanics?: Record<string, unknown> | null;
+	limitations?: Record<string, unknown> | null;
+	stats?: Record<string, unknown> | null;
+	image?: string;
+	source_book?: string;
+	flavor?: string | null;
+	lore?: string | null;
+	tags?: string[];
+}
+
+export interface CompendiumBackground {
+	id: string;
+	name: string;
+	description: string;
+	skills?: string[];
+	image?: string;
+	rank?: string;
+	skillProficiencies?: string[];
+	toolProficiencies?: string[];
+	languages?: string[];
+	mechanics?: Record<string, unknown> | null;
+	effects?: Record<string, unknown> | null;
+	limitations?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
+	source?: string;
+	tags?: string[];
+}
+
+export interface CompendiumJob {
+	id: string;
+	name: string;
+	description: string;
+	primary_abilities?: string[];
+	mechanics?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
+	source?: string;
+	tags?: string[];
+}
+
+export interface CompendiumPath {
+	id: string;
+	name: string;
+	description: string;
+	job_id?: string;
+	mechanics?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
+	source?: string;
+	tags?: string[];
+}
+
+export interface CompendiumRegent {
+	id: string;
+	name: string;
+	description: string;
+	title?: string;
+	mechanics?: Record<string, unknown> | null;
+	effects?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
+	source?: string;
+	tags?: string[];
+}
+
+export interface CompendiumLocation {
+	id: string;
+	name: string;
+	description: string;
+	type?: string;
+	mechanics?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
+	tags?: string[];
+}
+
+export interface CompendiumCondition {
+	id: string;
+	name: string;
+	description: string;
+	mechanics?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
+}
+
+export interface CompendiumSkill {
+	id: string;
+	name: string;
+	description: string;
+	mechanics?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
 }

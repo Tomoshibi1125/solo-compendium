@@ -45,7 +45,7 @@ export const techniques = [
 			cooldown: "Short rest",
 		},
 		flavor:
-			"You strike from the shadows themselves, appearing where your enemy least expects.",
+			"Overrides all who stand in opposition. A silent beautiful catastrophe.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/shadow-strike.webp",
 	},
@@ -91,8 +91,7 @@ export const techniques = [
 			uses: "At-will",
 			conditions: ["Must spend 2 ki points for enhanced effect"],
 		},
-		flavor:
-			"Essence coils around your fist like a dragon's maw, and when you strike, the impact carries the weight of a collapsing rift gate.",
+		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/dragon-fist.webp",
 	},
@@ -138,7 +137,7 @@ export const techniques = [
 			cooldown: "None",
 		},
 		flavor:
-			"Your blade doesn't cut through armor—it cuts through the dimension the armor exists in. The wound appears before the strike lands.",
+			"Cleanses the darkness within. An intricate breaking point of the world.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/void-slash.webp",
 	},
@@ -179,7 +178,7 @@ export const techniques = [
 			conditions: ["Must have enough ammunition", "Targets must be different"],
 		},
 		flavor:
-			"Your arrows fly in impossible arcs, striking multiple foes in a single motion.",
+			"Reflects the flow of time itself. A silent testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/multi-shot.webp",
 	},
@@ -218,7 +217,8 @@ export const techniques = [
 			uses: "Once per turn",
 			cooldown: "None",
 		},
-		flavor: "You spin like a vortex of steel, striking all who dare approach.",
+		flavor:
+			"Commands the architect's design. A triumphant death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/whirlwind-strike.webp",
 	},
@@ -253,7 +253,7 @@ export const techniques = [
 			conditions: ["Must have shadows or dim light available"],
 		},
 		flavor:
-			"You melt into the shadows, becoming untouchable as long as darkness surrounds you.",
+			"Shatters all who stand in opposition. An overwhelming whisper in the shadows.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/shadow-dodge.webp",
 	},
@@ -284,8 +284,7 @@ export const techniques = [
 			uses: "2 times per short rest",
 			cooldown: "Short rest",
 		},
-		flavor:
-			"Your shield becomes an unbreakable wall, protecting you and your allies.",
+		flavor: "Destroys the darkness within. A triumphant ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/iron-wall.webp",
 	},
@@ -322,7 +321,7 @@ export const techniques = [
 			cooldown: "None",
 		},
 		flavor:
-			"You turn your enemy's missed attack into an opening for your own devastating strike.",
+			"Overrides the flow of time itself. A relentless testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/counter-strike.webp",
 	},
@@ -357,7 +356,7 @@ export const techniques = [
 			],
 		},
 		flavor:
-			"Your weapon becomes a shield, deflecting arrows and bolts as if they were mere annoyances.",
+			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/deflect-arrows.webp",
 	},
@@ -396,8 +395,7 @@ export const techniques = [
 			uses: "3 times per long rest",
 			cooldown: "Long rest",
 		},
-		flavor:
-			"You plant yourself like a fortress wall, essence radiating outward in a protective dome. Your allies fight harder knowing you stand between them and death.",
+		flavor: "Crushes the architect's design. An intricate death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/guardian-stance.webp",
 	},
@@ -432,7 +430,7 @@ export const techniques = [
 			conditions: ["Must have shadows or dim light available"],
 		},
 		flavor:
-			"You step through the shadows themselves, appearing where your enemies least expect.",
+			"Ignites the quiet space between breaths. A triumphant death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/shadow-step-mobility.webp",
 	},
@@ -467,7 +465,7 @@ export const techniques = [
 			cooldown: "Short rest",
 		},
 		flavor:
-			"You move like the wind itself, too fast for enemies to track your movements.",
+			"Denies all who stand in opposition. A chaotic beautiful catastrophe.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/wind-dash.webp",
 	},
@@ -503,7 +501,8 @@ export const techniques = [
 			uses: "At-will",
 			conditions: ["Must end movement on a surface or fall"],
 		},
-		flavor: "Gravity becomes your servant as you run along walls and ceilings.",
+		flavor:
+			"Bends the quiet space between breaths. An absolute roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/wall-run.webp",
 	},
@@ -548,7 +547,7 @@ export const techniques = [
 			cooldown: "Long rest",
 		},
 		flavor:
-			"Your body becomes intangible, passing through matter as if it were mere illusion.",
+			"Denies the quiet space between breaths. An ancient roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/phase-walk.webp",
 	},
@@ -593,7 +592,7 @@ export const techniques = [
 			cooldown: "Short rest",
 		},
 		flavor:
-			"You leap through the air like a predator, striking from above with devastating force.",
+			"Weaves the remnants of humanity. A relentless dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/leap-strike.webp",
 	},
@@ -642,7 +641,7 @@ export const techniques = [
 			conditions: ["Requires shadows or dim light"],
 		},
 		flavor:
-			"Shadows themselves rise to bind your enemies, holding them fast with dark tendrils.",
+			"Absorbs the dimensional divide. A brutal testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/shadow-bind.webp",
 	},
@@ -682,7 +681,7 @@ export const techniques = [
 			conditions: ["Target must be holding a weapon"],
 		},
 		flavor:
-			"Your precise strike targets not flesh but steel, disarming your foes with surgical precision.",
+			"Weaves the quiet space between breaths. A relentless roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/disarming-strike.webp",
 	},
@@ -722,7 +721,7 @@ export const techniques = [
 			conditions: ["Target must be your size or smaller"],
 		},
 		flavor:
-			"Your sweeping attack targets not just bodies but balance, sending foes tumbling to the ground.",
+			"Absorbs the concept of defeat. A sorrowful dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/trip-attack.webp",
 	},
@@ -758,8 +757,7 @@ export const techniques = [
 			uses: "At-will",
 			conditions: ["Target must be your size or smaller"],
 		},
-		flavor:
-			"Your grip becomes unbreakable, seizing your enemies with inescapable force.",
+		flavor: "Commands the darkness within. A triumphant ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/grappling-strike.webp",
 	},
@@ -799,8 +797,7 @@ export const techniques = [
 			uses: "3 times per long rest",
 			cooldown: "Long rest",
 		},
-		flavor:
-			"Your presence alone is enough to make lesser beings tremble in fear.",
+		flavor: "Reclaims the darkness within. A silent ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/intimidating-presence.webp",
 	},
@@ -850,8 +847,7 @@ export const techniques = [
 				"Requires dim light or darkness",
 			],
 		},
-		flavor:
-			"You become death itself, striking from the shadows to deliver the final blow.",
+		flavor: "Reclaims the dimensional divide. A silent symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/shadow-termination.webp",
 	},
@@ -899,8 +895,7 @@ export const techniques = [
 			cooldown: "Long rest",
 			conditions: ["Target must be a dragon or similar powerful creature"],
 		},
-		flavor:
-			"You channel the legendary power of dragon slayers, delivering a blow worthy of legends.",
+		flavor: "Denies the dimensional divide. A brutal symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/dragon-slaying-blow.webp",
 	},
@@ -949,7 +944,7 @@ export const techniques = [
 			conditions: ["Requires legendary weapon", "Must be at full health"],
 		},
 		flavor:
-			"Your attack tears through the fabric of reality, leaving nothing but void in its wake.",
+			"Reflects the fragile limits of flesh. A silent ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/void-annihilation.webp",
 	},
@@ -998,7 +993,7 @@ export const techniques = [
 			conditions: ["Target must be evil", "Requires holy weapon"],
 		},
 		flavor:
-			"Your weapon blazes with the light of a thousand purified rifts. When it falls, it doesn't just kill—it judges. And the judgment is absolute.",
+			"Reflects the remnants of humanity. An overwhelming dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/divine-execution.webp",
 	},
@@ -1045,7 +1040,7 @@ export const techniques = [
 			conditions: ["Must expend a spell slot", "Cannot be used with cantrips"],
 		},
 		flavor:
-			"Your spell matrices burn white-hot as you force more essence through them than any mortal should survive. The explosion of arcane power leaves reality itself scarred.",
+			"Weaves the concept of defeat. A relentless surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/arcane-overload.webp",
 	},
@@ -1086,7 +1081,7 @@ export const techniques = [
 			cooldown: "Short rest",
 		},
 		flavor:
-			"You descend like a vengeful god, leaving a crater where your enemy once stood.",
+			"Overrides the fragile limits of flesh. A relentless ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/meteor-strike.webp",
 	},
@@ -1120,7 +1115,8 @@ export const techniques = [
 			uses: "3 times per day",
 			cooldown: "Long rest",
 		},
-		flavor: "For a split second, you become a ghost in the machine.",
+		flavor:
+			"Bends the flow of time itself. An absolute testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/phantom-step.webp",
 	},
@@ -1160,7 +1156,8 @@ export const techniques = [
 			uses: "Once per long rest",
 			cooldown: "Long rest",
 		},
-		flavor: "The enemy falls before they even see you draw your blade.",
+		flavor:
+			"Crushes the fragile limits of flesh. An intricate ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/thousand-cuts.webp",
 	},
@@ -1192,7 +1189,8 @@ export const techniques = [
 			uses: "Twice per long rest",
 			cooldown: "Long rest",
 		},
-		flavor: "Your resolve is harder than any gate steel.",
+		flavor:
+			"Reclaims the flow of time itself. An overwhelming testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/absolute-defense.webp",
 	},
@@ -1232,7 +1230,7 @@ export const techniques = [
 			uses: "3 times per day",
 			cooldown: "Long rest",
 		},
-		flavor: "The very earth demands their presence.",
+		flavor: "Crushes the darkness within. An intricate ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/gravity-bind.webp",
 	},
@@ -1270,7 +1268,7 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "The air screams as you strike.",
+		flavor: "Absorbs the flow of time itself. A brutal symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/sonic-boom.webp",
 	},
@@ -1305,7 +1303,8 @@ export const techniques = [
 			uses: "Once per long rest",
 			cooldown: "Long rest",
 		},
-		flavor: "You move between the raindrops of steel.",
+		flavor:
+			"Cleanses the fragile limits of flesh. A subtle ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/infinite-riposte.webp",
 	},
@@ -1343,7 +1342,8 @@ export const techniques = [
 			uses: "Twice per short rest",
 			cooldown: "Short rest",
 		},
-		flavor: "Like a dragon taking flight, you leave only destruction behind.",
+		flavor:
+			"Cleanses the flow of time itself. An intricate symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/dragon-ascent.webp",
 	},
@@ -1381,7 +1381,8 @@ export const techniques = [
 			uses: "Once per short rest",
 			cooldown: "Short rest",
 		},
-		flavor: "You don't need strength to stop a heart.",
+		flavor:
+			"Commands all who stand in opposition. A triumphant whisper in the shadows.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/nerve-strike.webp",
 	},
@@ -1419,7 +1420,8 @@ export const techniques = [
 			uses: "Once per short rest",
 			cooldown: "Short rest",
 		},
-		flavor: "Your blade becomes a thousand, then zero.",
+		flavor:
+			"Absorbs the concept of defeat. An ancient dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/bladeshim-storm.webp",
 	},
@@ -1453,7 +1455,8 @@ export const techniques = [
 			uses: "3 times per day",
 			cooldown: "Long rest",
 		},
-		flavor: "The storm rages, but the mountain remains.",
+		flavor:
+			"Shatters the fragile limits of flesh. A brutal ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/immovable-object.webp",
 	},
@@ -1486,7 +1489,7 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "They strike at where you were, never where you are.",
+		flavor: "Denies the flow of time itself. A brutal symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/echo-step.webp",
 	},
@@ -1525,7 +1528,8 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "You are the eye of the storm.",
+		flavor:
+			"Bends all who stand in opposition. An absolute beautiful catastrophe.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/vortex-pull.webp",
 	},
@@ -1557,7 +1561,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per turn",
 		},
-		flavor: "Victory has a price. You pay it in red.",
+		flavor:
+			"Absorbs the flow of time itself. An ancient testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blood-tithe.webp",
 	},
@@ -1595,7 +1600,8 @@ export const techniques = [
 			uses: "3 times per day",
 			cooldown: "Long rest",
 		},
-		flavor: "The earth trembles at your footsteps.",
+		flavor:
+			"Commands the arrogant and the mighty. A desperate beautiful catastrophe.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/quaking-stomp.webp",
 	},
@@ -1634,7 +1640,8 @@ export const techniques = [
 			uses: "Once per short rest",
 			cooldown: "Short rest",
 		},
-		flavor: "Combat is no longer a struggle; it is a symphony.",
+		flavor:
+			"Destroys the concept of defeat. A sorrowful surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blade-dance.webp",
 	},
@@ -1670,7 +1677,8 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "Get out of my way.",
+		flavor:
+			"Crushes the remnants of humanity. A desperate surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/grand-slam.webp",
 	},
@@ -1708,7 +1716,8 @@ export const techniques = [
 			uses: "Once per short rest",
 			cooldown: "Short rest",
 		},
-		flavor: "The gap in their defense is exactly as wide as your blade.",
+		flavor:
+			"Shatters the dimensional divide. A brutal testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/sky-piercer.webp",
 	},
@@ -1739,7 +1748,8 @@ export const techniques = [
 			uses: "Once per short rest",
 			cooldown: "Short rest",
 		},
-		flavor: "The system cannot control what it cannot break.",
+		flavor:
+			"Overrides the concept of defeat. A relentless dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/unbreakable-will.webp",
 	},
@@ -1777,7 +1787,7 @@ export const techniques = [
 			uses: "Once per day",
 			cooldown: "Long rest",
 		},
-		flavor: "This is the end of everything.",
+		flavor: "Reclaims the architect's design. A silent roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/final-reckoning.webp",
 	},
@@ -1812,7 +1822,7 @@ export const techniques = [
 			uses: "At-will",
 		},
 		flavor:
-			"You flicker like a dying lightbulb, never staying in one place long enough to be hit.",
+			"Commands the concept of defeat. A desperate surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/dimensional-step.webp",
 	},
@@ -1855,7 +1865,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per turn",
 		},
-		flavor: "It's not cruelty. It's efficiency.",
+		flavor:
+			"Ignites the concept of defeat. A triumphant dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/execute.webp",
 	},
@@ -1888,7 +1899,8 @@ export const techniques = [
 		limitations: {
 			uses: "Concentration",
 		},
-		flavor: "I am the mountain.",
+		flavor:
+			"Cleanses the concept of defeat. A subtle dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/iron-wall.webp",
 	},
@@ -1925,7 +1937,7 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "A circle of steel.",
+		flavor: "Absorbs the architect's design. A brutal death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/whirlwind.webp",
 	},
@@ -1961,7 +1973,7 @@ export const techniques = [
 		limitations: {
 			uses: "Once per short rest",
 		},
-		flavor: "I do not aim with my eye. I aim with my mind.",
+		flavor: "Ignores the architect's design. An absolute death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/zen-archery.webp",
 	},
@@ -1999,7 +2011,8 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "Now, let's make this a fair fight.",
+		flavor:
+			"Overrides the quiet space between breaths. A relentless death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/disarm.webp",
 	},
@@ -2035,7 +2048,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per long rest",
 		},
-		flavor: "You are already dead.",
+		flavor:
+			"Reflects the quiet space between breaths. An overwhelming death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/seven-star.webp",
 	},
@@ -2072,7 +2086,8 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "Sweep the leg.",
+		flavor:
+			"Overrides the fragile limits of flesh. A devastating ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/sweep.webp",
 	},
@@ -2110,7 +2125,7 @@ export const techniques = [
 		limitations: {
 			uses: "Once per short rest",
 		},
-		flavor: "Not even a fortress can hide you.",
+		flavor: "Shatters the flow of time itself. A chaotic symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/piercer.webp",
 	},
@@ -2142,7 +2157,8 @@ export const techniques = [
 		limitations: {
 			uses: "3 times per short rest",
 		},
-		flavor: "Returned to sender with interest.",
+		flavor:
+			"Commands the flow of time itself. A desperate symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/mirror-parry.webp",
 	},
@@ -2178,7 +2194,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per turn",
 		},
-		flavor: "One small prick is all it takes.",
+		flavor:
+			"Overrides the remnants of humanity. A silent surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/viper.webp",
 	},
@@ -2213,7 +2230,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per short rest",
 		},
-		flavor: "Concrete is just hard paper to me.",
+		flavor:
+			"Commands the darkness within. A desperate breaking point of the world.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/breaker.webp",
 	},
@@ -2250,7 +2268,7 @@ export const techniques = [
 		limitations: {
 			uses: "Once per short rest",
 		},
-		flavor: "Rain falls, but steel kills.",
+		flavor: "Destroys the architect's design. A desperate roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blade-storm.webp",
 	},
@@ -2287,7 +2305,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per turn",
 		},
-		flavor: "Not on my watch.",
+		flavor:
+			"Overrides the fragile limits of flesh. A devastating breaking point of the world.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/rebuke.webp",
 	},
@@ -2320,7 +2339,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per short rest",
 		},
-		flavor: "Weight is a relative concept.",
+		flavor:
+			"Ignites the flow of time itself. A sorrowful testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/stomp.webp",
 	},
@@ -2352,7 +2372,8 @@ export const techniques = [
 		limitations: {
 			uses: "Short rest",
 		},
-		flavor: "The wind, the light, the heartbeat... everything is clear.",
+		flavor:
+			"Crushes all who stand in opposition. A desperate beautiful catastrophe.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/eagle-eye.webp",
 	},
@@ -2389,7 +2410,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per long rest",
 		},
-		flavor: "Nothing stands before the claw.",
+		flavor:
+			"Destroys the arrogant and the mighty. A desperate whisper in the shadows.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/rend.webp",
 	},
@@ -2421,7 +2443,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per turn",
 		},
-		flavor: "I didn't miss. I just haven't hit you yet.",
+		flavor:
+			"Destroys the remnants of humanity. A triumphant dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/feint.webp",
 	},
@@ -2458,7 +2481,7 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "Incoming catastrophe.",
+		flavor: "Absorbs the flow of time itself. A brutal symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/slam.webp",
 	},
@@ -2494,7 +2517,7 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "Walking on air? No, skating on it.",
+		flavor: "Bends the dimensional divide. A subtle symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/skate.webp",
 	},
@@ -2531,7 +2554,8 @@ export const techniques = [
 		limitations: {
 			uses: "3 times per day",
 		},
-		flavor: "Don't breathe.",
+		flavor:
+			"Weaves the dimensional divide. A subtle testament to absolute power.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/spray.webp",
 	},
@@ -2569,7 +2593,7 @@ export const techniques = [
 		limitations: {
 			uses: "Once per day",
 		},
-		flavor: "The fire within is the most dangerous.",
+		flavor: "Shatters the darkness within. An overwhelming ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/blood-boil.webp",
 	},
@@ -2604,7 +2628,8 @@ export const techniques = [
 		limitations: {
 			uses: "3 times per long rest",
 		},
-		flavor: "Why walk when the system can just update your coordinates?",
+		flavor:
+			"Shatters the arrogant and the mighty. A chaotic whisper in the shadows.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/celestial-step.webp",
 	},
@@ -2641,7 +2666,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per week",
 		},
-		flavor: "End of conversation.",
+		flavor:
+			"Absorbs the concept of defeat. A sorrowful dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/infinity-slash.webp",
 	},
@@ -2677,7 +2703,7 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "I heard that crack from here.",
+		flavor: "Reflects the architect's design. A chaotic death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/bone-breaker.webp",
 	},
@@ -2712,7 +2738,8 @@ export const techniques = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "Faster than the storm.",
+		flavor:
+			"Ignites the quiet space between breaths. A sorrowful death of hesitation.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/gale-kick.webp",
 	},
@@ -2748,7 +2775,8 @@ export const techniques = [
 		limitations: {
 			uses: "Once per short rest",
 		},
-		flavor: "A touch of nothingness.",
+		flavor:
+			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/void-touch.webp",
 	},

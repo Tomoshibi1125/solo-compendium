@@ -76,7 +76,7 @@ export default function Login() {
 				if (safeNext) {
 					navigate(safeNext);
 				} else {
-					navigate("/landing");
+					navigate(role === "dm" ? "/dm-tools" : "/player-tools");
 				}
 			}
 		} catch {
@@ -107,7 +107,7 @@ export default function Login() {
 			localStorage.removeItem("pending-auth-next");
 		}
 		setLocalGuestRole(role);
-		navigate("/landing");
+		navigate(role === "dm" ? "/dm-tools" : "/player-tools");
 	};
 
 	return (

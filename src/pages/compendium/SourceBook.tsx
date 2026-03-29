@@ -70,6 +70,23 @@ const SourceBook: React.FC = () => {
 								>
 									<p className="mb-4">{regent.description}</p>
 
+									{regent.flavor && (
+										<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+											"{regent.flavor}"
+										</p>
+									)}
+
+									{regent.lore && (
+										<div className="mb-6 space-y-2">
+											<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider">
+												Historical Record
+											</h4>
+											<p className="text-sm text-muted-foreground leading-relaxed">
+												{regent.lore}
+											</p>
+										</div>
+									)}
+
 									<SourceBookCallout title="REGENT OVERLAY PROTOCOLS">
 										<div className="space-y-4">
 											<div>
@@ -129,11 +146,29 @@ const SourceBook: React.FC = () => {
 
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 							{jobs.map((job) => (
-								<SourceBookCallout key={job.id} title={job.name} type="sidebar">
+								<SourceBookCallout
+									key={job.id}
+									title={job.name}
+									type="sidebar"
+									systemInteraction={
+										(job as any).mechanics?.system_interaction ||
+										(job as any).system_interaction
+									}
+								>
 									<p className="text-xs italic mb-2 text-cyan/70">
 										{job.rank} Rank | {job.primary_abilities?.join(", ")}
 									</p>
+									{job.flavor && (
+										<p className="text-[11px] italic text-amethyst/80 mb-2">
+											"{job.flavor}"
+										</p>
+									)}
 									<p className="text-sm line-clamp-6">{job.description}</p>
+									{job.lore && (
+										<p className="text-[11px] mt-3 pt-3 border-t border-cyan/10 text-muted-foreground">
+											{job.lore}
+										</p>
+									)}
 								</SourceBookCallout>
 							))}
 						</div>
@@ -226,13 +261,27 @@ const SourceBook: React.FC = () => {
 												key={spell.id}
 												title={spell.name}
 												type="sidebar"
+												systemInteraction={
+													(spell as any).mechanics?.system_interaction ||
+													(spell as any).system_interaction
+												}
 											>
 												<p className="text-xs italic mb-2 text-cyan/70">
 													{spell.school || "Void"} | {spell.rank} Rank
 												</p>
+												{spell.flavor && (
+													<p className="text-[10px] italic text-cyan mb-2">
+														"{spell.flavor}"
+													</p>
+												)}
 												<p className="text-sm line-clamp-4">
 													{spell.description}
 												</p>
+												{spell.lore && (
+													<p className="text-[11px] mt-2 text-muted-foreground">
+														{spell.lore}
+													</p>
+												)}
 											</SourceBookCallout>
 										))}
 									</div>
@@ -277,52 +326,26 @@ const SourceBook: React.FC = () => {
 												key={item.id}
 												title={item.name}
 												type="sidebar"
+												systemInteraction={
+													(item as any).mechanics?.system_interaction ||
+													(item as any).system_interaction
+												}
 											>
 												<p className="text-xs italic mb-2 text-amethyst/70">
 													{item.type} | {item.rarity}
 												</p>
+												{item.flavor && (
+													<p className="text-[10px] italic text-cyan mb-2">
+														"{item.flavor}"
+													</p>
+												)}
 												<p className="text-sm line-clamp-4">
 													{item.description}
 												</p>
-												{item.stats && (
-													<div className="mt-2 pt-2 border-t border-cyan/20 text-[10px] grid grid-cols-2">
-														{(
-															item.stats as {
-																attack?: number;
-																defense?: number;
-															}
-														).attack && (
-															<span>
-																ATK: +
-																{
-																	(
-																		item.stats as {
-																			attack?: number;
-																			defense?: number;
-																		}
-																	).attack
-																}
-															</span>
-														)}
-														{(
-															item.stats as {
-																attack?: number;
-																defense?: number;
-															}
-														).defense && (
-															<span>
-																DEF: +
-																{
-																	(
-																		item.stats as {
-																			attack?: number;
-																			defense?: number;
-																		}
-																	).defense
-																}
-															</span>
-														)}
-													</div>
+												{item.lore && (
+													<p className="text-[11px] mt-2 text-muted-foreground">
+														{item.lore}
+													</p>
 												)}
 											</SourceBookCallout>
 										))}
@@ -331,6 +354,10 @@ const SourceBook: React.FC = () => {
 												key={relic.id}
 												title={relic.name}
 												type="sidebar"
+												systemInteraction={
+													(relic as any).mechanics?.system_interaction ||
+													(relic as any).system_interaction
+												}
 											>
 												<p className="text-xs italic mb-2 text-cyan/70">
 													Relic | {relic.type} | {relic.rarity}
@@ -374,16 +401,30 @@ const SourceBook: React.FC = () => {
 									key={feat.id}
 									title={feat.name}
 									type="sidebar"
+									systemInteraction={
+										(feat as any).mechanics?.system_interaction ||
+										(feat as any).system_interaction
+									}
 								>
 									<p className="text-xs italic mb-2 text-cyan/70">
 										Source: {feat.source}
 									</p>
+									{feat.flavor && (
+										<p className="text-[10px] italic text-cyan mb-2">
+											"{feat.flavor}"
+										</p>
+									)}
 									<p className="text-sm mb-2">{feat.description}</p>
 									<ul className="list-disc list-inside text-[11px] space-y-1 text-muted-foreground">
 										{feat.benefits.map((benefit) => (
 											<li key={benefit.substring(0, 20)}>{benefit}</li>
 										))}
 									</ul>
+									{feat.lore && (
+										<p className="text-[11px] mt-2 text-muted-foreground">
+											{feat.lore}
+										</p>
+									)}
 								</SourceBookCallout>
 							))}
 						</div>
@@ -418,9 +459,19 @@ const SourceBook: React.FC = () => {
 											</div>
 										)}
 										<div className="flex-1">
+											{bg.flavor && (
+												<p className="text-[11px] italic text-cyan/80 mb-2">
+													"{bg.flavor}"
+												</p>
+											)}
 											<p className="text-sm mb-4 leading-relaxed italic text-muted-foreground">
 												{bg.description}
 											</p>
+											{bg.lore && (
+												<p className="text-xs text-muted-foreground mb-4">
+													{bg.lore}
+												</p>
+											)}
 											<div className="grid grid-cols-2 gap-4 text-xs">
 												<div>
 													<h4 className="text-cyan font-bold uppercase mb-1">
@@ -476,6 +527,10 @@ const SourceBook: React.FC = () => {
 									key={tech.id}
 									title={tech.name}
 									type="sidebar"
+									systemInteraction={
+										(tech as any).mechanics?.system_interaction ||
+										(tech as any).system_interaction
+									}
 								>
 									<p className="text-[10px] uppercase tracking-widest text-amethyst mb-2">
 										{tech.type} | {tech.style} Protocol
@@ -515,6 +570,11 @@ const SourceBook: React.FC = () => {
 												"{tech.flavor}"
 											</p>
 										)}
+										{tech.lore && (
+											<p className="text-[11px] mt-2 text-muted-foreground border-t border-cyan/10 pt-2">
+												{tech.lore}
+											</p>
+										)}
 									</div>
 								</SourceBookCallout>
 							))}
@@ -543,6 +603,10 @@ const SourceBook: React.FC = () => {
 											key={rune.id}
 											title={rune.name}
 											type="sidebar"
+											systemInteraction={
+												(rune as any).mechanics?.system_interaction ||
+												(rune as any).system_interaction
+											}
 										>
 											<p className="text-[10px] uppercase text-cyan mb-1">
 												Rank {rune.rune_level} {rune.rune_type}
@@ -564,6 +628,10 @@ const SourceBook: React.FC = () => {
 											key={sigil.id}
 											title={sigil.name}
 											type="sidebar"
+											systemInteraction={
+												(sigil as any).mechanics?.system_interaction ||
+												(sigil as any).system_interaction
+											}
 										>
 											<p className="text-[10px] uppercase text-cyan mb-1">
 												Rank {sigil.rune_level} | {sigil.rarity}
@@ -628,9 +696,19 @@ const SourceBook: React.FC = () => {
 									</div>
 									<div className="lg:col-span-2">
 										<SourceBookPage title={loc.name} subtitle={loc.type}>
-											<p className="text-sm leading-relaxed">
+											{loc.flavor && (
+												<p className="text-[11px] italic text-cyan/80 mb-2">
+													"{loc.flavor}"
+												</p>
+											)}
+											<p className="text-sm leading-relaxed mb-4">
 												{loc.description}
 											</p>
+											{loc.lore && (
+												<p className="text-xs text-muted-foreground mt-4">
+													{loc.lore}
+												</p>
+											)}
 										</SourceBookPage>
 									</div>
 								</div>
@@ -708,6 +786,10 @@ const SourceBook: React.FC = () => {
 									key={condition.id}
 									title={condition.name}
 									type="sidebar"
+									systemInteraction={
+										(condition as any).mechanics?.system_interaction ||
+										(condition as any).system_interaction
+									}
 								>
 									<p className="text-[10px] uppercase text-amethyst mb-1">
 										Type: {condition.type}
@@ -729,6 +811,10 @@ const SourceBook: React.FC = () => {
 									key={skill.id}
 									title={skill.name}
 									type="sidebar"
+									systemInteraction={
+										(skill as any).mechanics?.system_interaction ||
+										(skill as any).system_interaction
+									}
 								>
 									<p className="text-[10px] uppercase text-cyan mb-1">
 										Ability: {skill.ability} | {skill.type}

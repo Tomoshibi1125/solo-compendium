@@ -84,6 +84,9 @@ interface ItemData {
 	source_book?: string | null;
 	image_url?: string | null;
 	image?: string | null;
+	flavor?: string | null;
+	lore?: string | null;
+	mechanics?: Record<string, unknown> | null;
 }
 
 type ActiveEffect = NonNullable<
@@ -515,40 +518,34 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 
 			{data.description && (
 				<SystemWindow id="item-description" title="DESCRIPTION">
+					{data.flavor && (
+						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+							<AutoLinkText text={data.flavor} />
+						</p>
+					)}
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
-				</SystemWindow>
-			)}
-
-			{data.stats && (
-				<SystemWindow title="LEGACY STATS">
-					<div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-						{data.stats.attack !== undefined && (
-							<div className="flex items-center gap-2">
-								<Swords className="w-4 h-4 text-rose-400" />
-								<span>Attack: {data.stats.attack}</span>
-							</div>
-						)}
-						{data.stats.defense !== undefined && (
-							<div className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-emerald-400" />
-								<span>Defense: {data.stats.defense}</span>
-							</div>
-						)}
-						{data.stats.health !== undefined && (
-							<div className="flex items-center gap-2">
-								<Heart className="w-4 h-4 text-rose-400" />
-								<span>Health: {data.stats.health}</span>
-							</div>
-						)}
-						{data.stats.mana !== undefined && (
-							<div className="flex items-center gap-2">
-								<Zap className="w-4 h-4 text-blue-400" />
-								<span>Mana: {data.stats.mana}</span>
-							</div>
-						)}
-					</div>
+					{data.lore && (
+						<div className="mt-6 pt-4 border-t border-cyan/10">
+							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+								Historical Record
+							</h4>
+							<p className="text-sm text-muted-foreground leading-relaxed">
+								<AutoLinkText text={data.lore} />
+							</p>
+						</div>
+					)}
+					{data.mechanics && Object.keys(data.mechanics).length > 0 && (
+						<div className="mt-6 pt-4 border-t border-cyan/10">
+							<h4 className="text-cyan font-bold text-[10px] uppercase tracking-wider mb-2">
+								System Diagnostics
+							</h4>
+							<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
+								{JSON.stringify(data.mechanics, null, 2)}
+							</pre>
+						</div>
+					)}
 				</SystemWindow>
 			)}
 		</div>

@@ -103,6 +103,7 @@ async function syncSpells() {
 		mechanics: toJson(s.mechanics),
 		limitations: toJson(s.limitations),
 		flavor: s.flavor ?? null,
+		lore: s.lore ?? null,
 		saving_throw: toJson(s.savingThrow),
 		area: toJson(s.area),
 		source_book: "System Ascendant Canon",
@@ -142,7 +143,11 @@ async function syncPowers() {
 			: null,
 		higher_levels: null,
 		image: p.image ?? null,
-		mechanics: toJson(p.saving_throw ? { saving_throw: p.saving_throw, attack_roll: p.attack_roll } : null),
+		mechanics: toJson(p.saving_throw ? { saving_throw: p.saving_throw, attack_roll: p.attack_roll, ...p.mechanics } : (p.mechanics ?? null)),
+		effects: toJson(p.effects),
+		limitations: toJson(p.limitations),
+		flavor: p.flavor ?? null,
+		lore: p.lore ?? null,
 		source_book: p.source ?? "System Ascendant Canon",
 		tags: [p.type, p.rarity].filter(Boolean),
 		theme_tags: [],
@@ -170,9 +175,12 @@ async function syncTechniques() {
 		duration: t.duration?.time ?? t.duration?.type ?? null,
 		range_desc: t.range?.distance ? `${t.range.distance} ${t.range.type ?? "feet"}` : (t.range?.type ?? null),
 		mechanics: toJson(t.mechanics),
+		effects: toJson(t.effects),
+		limitations: toJson(t.limitations),
 		level_requirement: t.prerequisites?.level ?? null,
 		class_requirement: t.prerequisites?.class ?? null,
 		flavor: t.flavor ?? null,
+		lore: t.lore ?? null,
 		source: t.source ?? "System Ascendant Canon",
 		image: t.image ?? null,
 	}));
@@ -193,7 +201,10 @@ async function syncFeats() {
 		prerequisites: f.prerequisites ? JSON.stringify(f.prerequisites) : null,
 		benefits: f.benefits ?? null,
 		mechanics: toJson(f.mechanics),
+		effects: toJson(f.effects),
+		limitations: toJson(f.limitations),
 		flavor: f.flavor ?? null,
+		lore: f.lore ?? null,
 		image: f.image ?? null,
 		source_book: f.source ?? "System Ascendant Canon",
 		tags: [],
@@ -231,9 +242,14 @@ async function syncRelics() {
 					.filter(([, v]) => v === true)
 					.map(([k]) => k)
 			: null,
-		stats: toJson(r.mechanics),
+		stats: toJson(r.stats || r.mechanics),
+		effects: toJson(r.effects),
+		mechanics: toJson(r.mechanics),
+		limitations: toJson(r.limitations),
 		image: r.image ?? null,
 		source_book: r.source ?? "System Ascendant Canon",
+		flavor: r.flavor ?? null,
+		lore: r.lore ?? null,
 		tags: [r.type, r.rarity].filter(Boolean),
 		theme_tags: [],
 	}));
@@ -290,6 +306,9 @@ async function syncMonsters() {
 		gate_rank: m.gate_rank ?? null,
 		is_boss: m.is_boss ?? false,
 		source_book: m.source_book ?? "System Ascendant Canon",
+		lore: m.lore ?? null,
+		mechanics: toJson(m.mechanics),
+		flavor: m.flavor ?? null,
 		tags: m.tags ?? [],
 		theme_tags: [],
 	}));
@@ -351,6 +370,194 @@ async function syncRunes() {
 }
 
 // ---------------------------------------------------------------------------
+// Sigils
+// ---------------------------------------------------------------------------
+async function syncSigils() {
+	const { sigils } = await import("../src/data/compendium/sigils.js");
+
+	console.log(`Syncing ${sigils.length} sigils...`);
+
+	const rows = sigils.map((s: any) => ({
+		name: s.name,
+		description: s.description ?? "",
+		effect_description: s.effect_description ?? s.description ?? "",
+		rune_type: s.rune_type ?? "utility",
+		rune_category: s.rune_category ?? "general",
+		rune_level: s.rune_level ?? 1,
+		rarity: s.rarity ?? "common",
+		effect_type: s.effect_type ?? "passive",
+		requires_level: s.requires_level ?? null,
+		passive_bonuses: toJson(s.passive_bonuses),
+		active_feature: toJson(s.active_feature),
+		can_inscribe_on: s.can_inscribe_on ?? null,
+		inscription_difficulty: s.inscription_difficulty ?? null,
+		effects: toJson(s.effects),
+		mechanics: toJson(s.mechanics),
+		limitations: toJson(s.limitations),
+		flavor: s.flavor ?? null,
+		lore: s.lore ?? null,
+		image: s.image ?? null,
+		source_book: s.source_book ?? "System Ascendant Canon",
+		tags: s.tags ?? [],
+	}));
+
+	await upsertBatch("compendium_sigils", rows);
+}
+
+// ---------------------------------------------------------------------------
+// Tattoos
+// ---------------------------------------------------------------------------
+async function syncTattoos() {
+	const { tattoos } = await import("../src/data/compendium/tattoos.js");
+
+	console.log(`Syncing ${tattoos.length} tattoos...`);
+
+	const rows = tattoos.map((t: any) => ({
+		name: t.name,
+		description: t.description ?? "",
+		rarity: t.rarity ?? "common",
+		attunement: t.attunement ?? false,
+		body_part: t.body_part ?? null,
+		effects: toJson(t.effects),
+		mechanics: toJson(t.mechanics),
+		limitations: toJson(t.limitations),
+		lore: t.lore ?? null,
+		flavor: t.flavor ?? null,
+		image: t.image ?? null,
+		source: t.source ?? "System Ascendant Canon",
+		tags: t.tags ?? [],
+		theme_tags: [],
+	}));
+
+	await upsertBatch("compendium_tattoos", rows);
+}
+
+// ---------------------------------------------------------------------------
+// Backgrounds
+// ---------------------------------------------------------------------------
+async function syncBackgrounds() {
+	const { allBackgrounds } = await import("../src/data/compendium/backgrounds-index.js");
+	console.log(`Syncing ${allBackgrounds.length} backgrounds...`);
+	const rows = allBackgrounds.map((b: any) => ({
+		name: b.name,
+		description: b.description ?? "",
+		skill_proficiencies: b.skillProficiencies ?? [],
+		tool_proficiencies: b.toolProficiencies ?? [],
+		language_count: Array.isArray(b.languages) ? b.languages.length : 0,
+		starting_equipment: b.equipment ?? [],
+		feature_name: b.features && b.features[0] ? b.features[0].name : null,
+		feature_description: b.features && b.features[0] ? b.features[0].description : null,
+		personality_traits: b.personalityTraits ?? [],
+		ideals: b.ideals ?? [],
+		bonds: b.bonds ?? [],
+		flaws: b.flaws ?? [],
+		source_book: "System Ascendant Canon",
+		mechanics: toJson(b.mechanics),
+		flavor: b.flavor ?? null,
+		lore: b.lore ?? null,
+	}));
+	await upsertBatch("compendium_backgrounds", rows);
+}
+
+// ---------------------------------------------------------------------------
+// Conditions
+// ---------------------------------------------------------------------------
+async function syncConditions() {
+	const { conditions } = await import("../src/data/compendium/conditions.js");
+	console.log(`Syncing ${conditions.length} conditions...`);
+	const rows = conditions.map((c: any) => ({
+		name: c.name,
+		description: c.description ?? "",
+		effects: c.effects ?? [],
+		mechanics: toJson(c.mechanics),
+		flavor: c.flavor ?? null,
+		lore: c.lore ?? null,
+	}));
+	await upsertBatch("compendium_conditions", rows);
+}
+
+// ---------------------------------------------------------------------------
+// Locations
+// ---------------------------------------------------------------------------
+async function syncLocations() {
+	const { locations } = await import("../src/data/compendium/locations.js");
+	console.log(`Syncing ${locations.length} locations...`);
+	const rows = locations.map((loc: any) => ({
+		name: loc.name,
+		description: loc.description ?? "",
+		type: loc.type ?? "Void Anomaly",
+		image: loc.image ?? null,
+		tags: [loc.rank].filter(Boolean),
+		source_book: "System Ascendant Canon",
+		mechanics: toJson(loc.mechanics || { encounters: loc.encounters, treasures: loc.treasures }),
+		flavor: loc.flavor ?? null,
+		lore: loc.lore ?? null,
+	}));
+	await upsertBatch("compendium_locations", rows);
+}
+
+// ---------------------------------------------------------------------------
+// Jobs
+// ---------------------------------------------------------------------------
+async function syncJobs() {
+	const { jobs } = await import("../src/data/compendium/jobs.js");
+	console.log(`Syncing ${jobs.length} jobs...`);
+	const rows = jobs.map((j: any) => ({
+		name: j.name,
+		description: j.description ?? "",
+		primary_abilities: j.primary_abilities ?? [],
+		hit_die: j.hit_die ?? 8,
+		source_book: "System Ascendant Canon",
+		flavor_text: j.flavor ?? null,
+		mechanics: toJson(j.features),
+		flavor: j.flavor ?? null,
+		lore: j.lore ?? null,
+	}));
+	await upsertBatch("compendium_jobs", rows);
+}
+
+// ---------------------------------------------------------------------------
+// Regents
+// ---------------------------------------------------------------------------
+async function syncRegents() {
+	const { regents } = await import("../src/data/compendium/regents.js");
+	console.log(`Syncing ${regents.length} regents...`);
+	const rows = regents.map((r: any) => ({
+		name: r.name,
+		title: r.title ?? "",
+		description: r.description ?? "",
+		theme: r.theme ?? null,
+		damage_type: r.damage_type ?? null,
+		flavor_text: r.flavor ?? null,
+		source_book: "System Ascendant Canon",
+		mechanics: toJson(r.mechanics || r.class_features || r.features),
+		effects: toJson(r.effects),
+		flavor: r.flavor ?? null,
+		lore: r.lore ?? null,
+	}));
+	await upsertBatch("compendium_regents", rows);
+}
+
+// ---------------------------------------------------------------------------
+// Skills
+// ---------------------------------------------------------------------------
+async function syncSkills() {
+	const { comprehensiveSkills } = await import("../src/data/compendium/skills-comprehensive.js");
+	console.log(`Syncing ${comprehensiveSkills.length} skills...`);
+	const rows = comprehensiveSkills.map((s: any) => ({
+		name: s.name,
+		ability: s.ability ?? "INT",
+		description: s.description ?? "",
+		examples: s.examples ?? [],
+		source_book: "System Ascendant Canon",
+		mechanics: toJson(s.benefits),
+		flavor: s.flavor ?? null,
+		lore: s.lore ?? null,
+	}));
+	await upsertBatch("compendium_skills", rows);
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 async function main() {
@@ -364,6 +571,14 @@ async function main() {
 		await syncRelics();
 		await syncMonsters();
 		await syncRunes();
+		await syncSigils();
+		await syncTattoos();
+		await syncBackgrounds();
+		await syncConditions();
+		await syncLocations();
+		await syncJobs();
+		await syncRegents();
+		await syncSkills();
 	} catch (err) {
 		console.error("Fatal error:", err);
 		process.exitCode = 1;

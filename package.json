@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"dev": "vite --host --port 8080",
+		"lint": "npx @biomejs/biome check --write ./src",
 		"build": "node scripts/write-runtime-env.mjs && vite build",
 		"build:vercel": "node scripts/write-runtime-env.mjs && vite build",
 		"preview": "vite preview --host",
@@ -36,7 +37,24 @@
 		"cleanup:validate": "tsx scripts/cleanup/index.ts validate",
 		"cleanup:backup": "tsx scripts/cleanup/index.ts backup",
 		"cleanup:compare": "tsx scripts/cleanup/index.ts compare",
-		"cleanup:analyze": "tsx scripts/cleanup/index.ts analyze"
+		"cleanup:analyze": "tsx scripts/cleanup/index.ts analyze",
+		"script:audit-counts": "tsx scripts/audit-counts.ts",
+		"script:dedupe-arrays": "tsx scripts/dedupe-arrays.ts",
+		"script:download-tokens": "tsx scripts/download-tokens.ts",
+		"script:enrich-items": "node scripts/enrich-items.mjs",
+		"script:enrich-spells": "node scripts/enrich-spells.mjs",
+		"script:enrichCompendium": "node scripts/enrichCompendium.mjs",
+		"script:enrichMassiveArchives": "node scripts/enrichMassiveArchives.mjs",
+		"script:find-duplicates": "tsx scripts/find-duplicates.ts",
+		"script:generate-ai-tokens": "tsx scripts/generate-ai-tokens.ts",
+		"script:generate-ai-unique-content": "tsx scripts/generate-ai-unique-content.ts",
+		"script:generate-algorithmic-uniqueness": "tsx scripts/generate-algorithmic-uniqueness.ts",
+		"script:generate-backgrounds": "tsx scripts/generate-backgrounds.ts",
+		"script:generate-items": "node scripts/generate-items.js",
+		"script:lore-mechanics-engine": "tsx scripts/lore-mechanics-engine.ts",
+		"script:sync-static-to-db": "tsx scripts/sync-static-to-db.ts",
+		"script:updateSourceBook": "node scripts/updateSourceBook.mjs",
+		"script:upgrade-typography": "node scripts/upgrade-typography.cjs"
 	},
 	"dependencies": {
 		"@dimforge/rapier3d": "^0.19.3",
@@ -71,7 +89,6 @@
 		"@supabase/auth-ui-shared": "^0.1.8",
 		"@supabase/supabase-js": "^2.90.1",
 		"@tanstack/react-query": "^5.90.16",
-		"@tanstack/react-virtual": "^3.13.23",
 		"@tsparticles/engine": "^3.9.1",
 		"@tsparticles/react": "^3.0.0",
 		"@tsparticles/slim": "^3.9.1",
@@ -119,6 +136,7 @@
 		"@types/node": "^20.19.37",
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"@vitest/ui": "^4.0.18",
+		"axios": "^1.14.0",
 		"dotenv": "^17.3.1",
 		"jsdom": "^28.0.0",
 		"knip": "^5.85.0",
@@ -139,5 +157,17 @@
 		"@jridgewell/remapping": "npm:@jridgewell/remapping@^2.3.5",
 		"magic-string": "npm:magic-string@^0.30.0",
 		"@adobe/css-tools": "npm:@adobe/css-tools@^4.3.0"
+	},
+	"knip": {
+		"entry": [
+			"src/main.tsx",
+			"src/entry-source-book.tsx",
+			"supabase/functions/*/index.ts",
+			"scripts/**/*.{ts,js,mjs}",
+			"src/index.ts"
+		],
+		"project": [
+			"src/**/*.{ts,tsx}"
+		]
 	}
 }

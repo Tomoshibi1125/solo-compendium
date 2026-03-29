@@ -22,7 +22,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[SHADOW ATTUNEMENT: COMPLETE — DARKNESS RESPONDS TO YOUR WILL]",
+		flavor:
+			"Shatters the architect's design. An overwhelming death of hesitation.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -45,7 +46,7 @@ export const comprehensiveFeats = [
 			frequency: "once-per-turn",
 			action: "free",
 		},
-		flavor: "The kill feeds you. Every death refills your reserves.",
+		flavor: "Denies the darkness within. A brutal breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -69,7 +70,7 @@ export const comprehensiveFeats = [
 			action: "reaction",
 		},
 		flavor:
-			"You exist in one shadow, then another. The space between is irrelevant.",
+			"Destroys the concept of defeat. A desperate surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -93,8 +94,7 @@ export const comprehensiveFeats = [
 			frequency: "when-critical-hit",
 			action: "free",
 		},
-		flavor:
-			"[CRITICAL STRIKE: SHADOW DETONATION — TARGET VISUAL SYSTEMS: OFFLINE]",
+		flavor: "Ignites the darkness within. A sorrowful ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -118,7 +118,8 @@ export const comprehensiveFeats = [
 			save: "Strength",
 			dc: "ability-modifier",
 		},
-		flavor: "[RESONANCE ESTABLISHED — ARMOR PENETRATION: MAXIMIZED]",
+		flavor:
+			"Crushes the arrogant and the mighty. An intricate whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -140,7 +141,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "reaction",
 		},
-		flavor: "[THREAT DETECTED — SHIFTING COORDINATES... SUCCESS]",
+		flavor:
+			"Weaves the remnants of humanity. A relentless surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -158,7 +160,7 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "action",
 		},
-		flavor: "[DIAGNOSTIC COMPLETE — APPLYING BIOLOGICAL PATCH... SUCCESS]",
+		flavor: "Ignores the architect's design. A relentless roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -179,8 +181,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor:
-			"[PREDICTIVE ALGORITHM: ACTIVE — TARGET RESPONSE TIME: INSUFFICIENT]",
+		flavor: "Overrides the architect's design. A relentless roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -201,7 +202,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor:
-			"[PHYSICAL EVOLUTION: PLATING INTEGRATION — DURABILITY: REINFORCED]",
+			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -219,7 +220,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "reaction",
 		},
-		flavor: "One blade, one intent. The System clears the static.",
+		flavor:
+			"Weaves the quiet space between breaths. A relentless roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -244,7 +246,8 @@ export const comprehensiveFeats = [
 			save: "Intelligence",
 			dc: "ability-modifier",
 		},
-		flavor: "[VIRAL PAYLOAD DEPLOYED — SYSTEM INTEGRITY: COMPROMISED]",
+		flavor:
+			"Reclaims the dimensional divide. A devastating symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -266,7 +269,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "free",
 		},
-		flavor: "[AMBIENT MANA DETECTED — HARVESTING... RESERVES REPLENISHED]",
+		flavor:
+			"Cleanses the remnants of humanity. A subtle surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -287,7 +291,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[OLFACTORY SENSORS: OVERCLOCKED — TARGET SCENT: LOCKED]",
+		flavor: "Commands the architect's design. A forbidden roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -310,7 +314,7 @@ export const comprehensiveFeats = [
 			action: "bonus-action",
 		},
 		flavor:
-			"[KINETIC AMPLIFICATION: RIFT-ASSISTED — MASS DISPLACEMENT: AUTHORIZED]",
+			"Absorbs the fragile limits of flesh. A brutal breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -331,7 +335,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[FIELD OF VIEW: 360 DEGREES — BLIND SPOTS: ELIMINATED]",
+		flavor: "Destroys the darkness within. A triumphant ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -352,7 +356,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[GYROSCOPIC STABILIZATION: ONLINE — RECOIL COMPENSATED]",
+		flavor:
+			"Commands all who stand in opposition. A desperate beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -374,7 +379,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "reaction",
 		},
-		flavor: "[THREAT DETECTED — PHASING TO VOID... COMPLETE]",
+		flavor:
+			"Ignites all who stand in opposition. A sorrowful whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -398,7 +404,8 @@ export const comprehensiveFeats = [
 			save: "Charisma",
 			dc: "ability-modifier",
 		},
-		flavor: "[VOICE AUTHORIZATION: REGENT — COMMAND PROTOCOL: ISSUED]",
+		flavor:
+			"Bends the concept of defeat. A subtle dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -416,7 +423,8 @@ export const comprehensiveFeats = [
 			frequency: "once-per-turn",
 			action: "bonus-action",
 		},
-		flavor: "The System converts their essence into your vitality.",
+		flavor:
+			"Shatters all who stand in opposition. A brutal whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -438,7 +446,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[STAMINA STAT: PEAK HUMAN — FATIGUE RECOVERY: OPTIMIZED]",
+		flavor: "Absorbs the darkness within. An ancient ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -460,7 +468,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "bonus-action",
 		},
-		flavor: "[TARGET ANALYSIS: COMPLETE — WEAK POINT IDENTIFIED]",
+		flavor:
+			"Commands the dimensional divide. A desperate testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -481,7 +490,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[COGNITIVE FIREWALL: ACTIVE — UNAUTHORIZED ACCESS: DENIED]",
+		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -503,7 +512,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "reaction",
 		},
-		flavor: "[KINETIC VECTOR: REVERSED — TARGETING ORIGIN POINT]",
+		flavor:
+			"Bends the fragile limits of flesh. An intricate breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -527,7 +537,7 @@ export const comprehensiveFeats = [
 			dc: "spell-save",
 		},
 		flavor:
-			"[ENERGY TRANSFER: INITIATED — HARVESTING AMBIENT MANA... COMPLETE]",
+			"Reclaims all who stand in opposition. A devastating whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -549,7 +559,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "action",
 		},
-		flavor: "[DRONE DEPLOYED — STEALTH MODE: ACTIVE — FEED: STABLE]",
+		flavor:
+			"Shatters the fragile limits of flesh. A chaotic breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -567,7 +578,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "free",
 		},
-		flavor: "[INVENTORY CAPACITY: UPGRADED — ACCESS SPEED: OPTIMIZED]",
+		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -590,7 +601,7 @@ export const comprehensiveFeats = [
 			action: "bonus-action",
 		},
 		flavor:
-			"[LIMITER RELEASE: 100% — PHYSICAL BUFFER: EXCEEDED — PROCEED WITH CAUTION]",
+			"Destroys the arrogant and the mighty. A desperate whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -608,7 +619,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor:
-			"The city is just another dungeon. The dungeon is just another playground.",
+			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -626,7 +637,8 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "reaction",
 		},
-		flavor: "[SHIELD INTEGRITY: 100% — CAPACITOR STATUS: CHARGING]",
+		flavor:
+			"Ignites all who stand in opposition. A triumphant beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -648,7 +660,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "action",
 		},
-		flavor: "[SOCIAL ANALYSIS: COMPLETE — OPTIMAL RESPONSE: CALCULATED]",
+		flavor:
+			"Weaves the remnants of humanity. An absolute dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -665,7 +678,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[SONAR PULSE: ACTIVE — TOPOGRAPHY MAPPED — THREATS: IDENTIFIED]",
+		flavor:
+			"Absorbs all who stand in opposition. A sorrowful whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -686,7 +700,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[GATE STRUCTURE: ANALYZED — STABILITY: MAINTAINED]",
+		flavor:
+			"Cleanses the arrogant and the mighty. An intricate whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -706,7 +721,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "free",
 		},
-		flavor: "[THREAT DETECTED — ADRENALINE: MAXIMIZED — ANNIHILATE.]",
+		flavor:
+			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -723,7 +739,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[SCANNING... DATA RETRIEVED — TARGET CLASSIFICATION: ELITE]",
+		flavor:
+			"Ignores the dimensional divide. A devastating symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -741,7 +758,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "bonus-action",
 		},
-		flavor: "The System bridges the gap between intent and impact.",
+		flavor:
+			"Bends the fragile limits of flesh. An absolute ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -761,7 +779,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[ARMOR INTEGRITY: OPTIMIZED — KINETIC DAMPING: ACTIVE]",
+		flavor: "Weaves the architect's design. An absolute roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -782,7 +800,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "reaction",
 		},
-		flavor: "[SPACE-TIME COORDS: LOCKED — DISTORTION: STABLE]",
+		flavor:
+			"Cleanses the darkness within. A forbidden breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -803,7 +822,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[MANA CORE: EXPANDED — OUTPUT: STABLE]",
+		flavor:
+			"Bends the remnants of humanity. An intricate surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -825,7 +845,8 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "bonus-action",
 		},
-		flavor: "[LEADERSHIP PROTOCOL: ACTIVE — GUILD MORALE: MAXIMIZED]",
+		flavor:
+			"Weaves the remnants of humanity. A subtle dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -848,7 +869,8 @@ export const comprehensiveFeats = [
 			save: "Charisma",
 			dc: "ability-modifier",
 		},
-		flavor: "[VOID EDGE: ACTIVE — REALITY INTEGRITY: FAILING]",
+		flavor:
+			"Ignites the quiet space between breaths. A sorrowful death of hesitation.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -868,7 +890,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[VISUAL DATA: UNFILTERED — TRUTH: REVEALED]",
+		flavor:
+			"Shatters all who stand in opposition. A brutal whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -889,7 +912,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[DEFENSIVE STANCE: LOCKED — PERIMETER: SECURE]",
+		flavor:
+			"Absorbs the flow of time itself. A sorrowful testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -906,7 +930,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[TRANSLATION LAYER: DECRYPTED — ALL LINGUISTIC BARRIERS: REMOVED]",
+		flavor:
+			"Overrides the arrogant and the mighty. A silent whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -930,7 +955,7 @@ export const comprehensiveFeats = [
 			dc: "spell-save",
 		},
 		flavor:
-			"[ENERGY TRANSFER: INITIATED — HARVESTING AMBIENT MANA... COMPLETE]",
+			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -952,7 +977,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "action",
 		},
-		flavor: "[DRONE DEPLOYED — STEALTH MODE: ACTIVE — FEED: STABLE]",
+		flavor:
+			"Commands all who stand in opposition. A forbidden beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -970,7 +996,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "free",
 		},
-		flavor: "[INVENTORY CAPACITY: UPGRADED — ACCESS SPEED: OPTIMIZED]",
+		flavor: "Reclaims the darkness within. A devastating ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -993,7 +1019,7 @@ export const comprehensiveFeats = [
 			action: "bonus-action",
 		},
 		flavor:
-			"[LIMITER RELEASE: 100% — PHYSICAL BUFFER: EXCEEDED — PROCEED WITH CAUTION]",
+			"Reflects the dimensional divide. An overwhelming symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1011,7 +1037,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor:
-			"The city is just another dungeon. The dungeon is just another playground.",
+			"Ignores the quiet space between breaths. A relentless roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1029,7 +1055,7 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "reaction",
 		},
-		flavor: "[SHIELD INTEGRITY: 100% — CAPACITOR STATUS: CHARGING]",
+		flavor: "Absorbs the concept of defeat. An ancient surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1051,7 +1077,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "action",
 		},
-		flavor: "[SOCIAL ANALYSIS: COMPLETE — OPTIMAL RESPONSE: CALCULATED]",
+		flavor:
+			"Weaves all who stand in opposition. A subtle whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1068,7 +1095,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[SONAR PULSE: ACTIVE — TOPOGRAPHY MAPPED — THREATS: IDENTIFIED]",
+		flavor:
+			"Ignores the flow of time itself. A relentless symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1089,7 +1117,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[GATE STRUCTURE: ANALYZED — STABILITY: MAINTAINED]",
+		flavor:
+			"Overrides the fragile limits of flesh. A relentless breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1109,7 +1138,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "free",
 		},
-		flavor: "[THREAT DETECTED — ADRENALINE: MAXIMIZED — ANNIHILATE.]",
+		flavor:
+			"Denies the arrogant and the mighty. A brutal whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1126,7 +1156,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[SCANNING... DATA RETRIEVED — TARGET CLASSIFICATION: ELITE]",
+		flavor:
+			"Bends the remnants of humanity. An absolute surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1144,7 +1175,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "bonus-action",
 		},
-		flavor: "The System bridges the gap between intent and impact.",
+		flavor:
+			"Cleanses the quiet space between breaths. An intricate roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1164,7 +1196,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[ARMOR INTEGRITY: OPTIMIZED — KINETIC DAMPING: ACTIVE]",
+		flavor:
+			"Ignites the flow of time itself. An ancient testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1185,7 +1218,7 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "reaction",
 		},
-		flavor: "[SPACE-TIME COORDS: LOCKED — DISTORTION: STABLE]",
+		flavor: "Weaves the darkness within. An absolute ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1206,7 +1239,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[MANA CORE: EXPANDED — OUTPUT: STABLE]",
+		flavor:
+			"Destroys the dimensional divide. A desperate symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1228,7 +1262,7 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "bonus-action",
 		},
-		flavor: "[LEADERSHIP PROTOCOL: ACTIVE — GUILD MORALE: MAXIMIZED]",
+		flavor: "Cleanses the architect's design. A forbidden roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1251,7 +1285,8 @@ export const comprehensiveFeats = [
 			save: "Charisma",
 			dc: "ability-modifier",
 		},
-		flavor: "[VOID EDGE: ACTIVE — REALITY INTEGRITY: FAILING]",
+		flavor:
+			"Ignites the dimensional divide. A sorrowful testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1271,7 +1306,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[VISUAL DATA: UNFILTERED — TRUTH: REVEALED]",
+		flavor:
+			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1292,7 +1328,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[DEFENSIVE STANCE: LOCKED — PERIMETER: SECURE]",
+		flavor:
+			"Commands the dimensional divide. A triumphant testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1314,7 +1351,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "reaction",
 		},
-		flavor: "[PROJECTILE TRAJECTORY: ANALYZED — COUNTER-FIRE: INITIATED]",
+		flavor:
+			"Crushes the fragile limits of flesh. An intricate breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1336,7 +1374,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "free",
 		},
-		flavor: "[CATALYTIC SURGE: ACTIVE — OUTPUT: PEAK]",
+		flavor:
+			"Overrides the concept of defeat. A relentless surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1356,7 +1395,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[REALITY ANCHOR: DISENGAGED — POSITION: PROBABILISTIC]",
+		flavor:
+			"Ignores all who stand in opposition. A devastating whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1373,7 +1413,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[DATA ARCHIVE: ACCESSED — KNOWLEDGE BASE: EXPANDED]",
+		flavor:
+			"Bends the dimensional divide. An absolute testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1393,7 +1434,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "once-per-turn",
 		},
-		flavor: "[MASS AMPLIFIED — IMPACT FORCE: CATASTROPHIC]",
+		flavor:
+			"Destroys the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1411,7 +1453,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "bonus-action",
 		},
-		flavor: "[NEURAL LATENCY: 0.01ms — RESPONSE TIME: INSTANT]",
+		flavor: "Crushes the darkness within. A forbidden ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1432,7 +1474,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[MANA SIGNATURE: TRACED — FEEDBACK LOOP: INITIATED]",
+		flavor:
+			"Bends all who stand in opposition. An absolute whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1448,7 +1491,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[STRESS TOLERANCE: MAXIMUM — EMOTIONAL BUFFER: STABLE]",
+		flavor:
+			"Bends all who stand in opposition. A subtle beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1472,7 +1516,8 @@ export const comprehensiveFeats = [
 			save: "Intelligence",
 			dc: "ability-modifier",
 		},
-		flavor: "[COGNITIVE UPLINK: ESTABLISHED — PERMISSION: GRANTED]",
+		flavor:
+			"Weaves the darkness within. An absolute breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1493,7 +1538,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "reaction",
 		},
-		flavor: "[THREAT DETECTED — SHIFTING COORDINATES... SUCCESS]",
+		flavor:
+			"Bends the flow of time itself. A subtle testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1512,7 +1558,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[CAPACITOR STATUS: CHARGING — ENERGY DIVERTED TO WEAPONS]",
+		flavor:
+			"Reclaims the remnants of humanity. A silent surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1531,7 +1578,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[TARGET: TERMINATED — EXECUTION: PERFECT]",
+		flavor: "Bends the darkness within. An intricate ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1551,7 +1598,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[BIOLOGICAL HARDENING: 100% — INTEGRITY: UNBREAKABLE]",
+		flavor:
+			"Destroys the quiet space between breaths. A sorrowful roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1567,7 +1615,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[RITUAL PROTOCOL: OPTIMIZED — MANA CONSUMPTION: 0%]",
+		flavor:
+			"Reflects all who stand in opposition. A silent whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1586,7 +1635,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[TOPOGRAPHY: ANALYZED — OPTIMAL ROUTE: PLOTTED]",
+		flavor:
+			"Denies the arrogant and the mighty. A chaotic beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1607,7 +1657,7 @@ export const comprehensiveFeats = [
 			type: "active",
 			frequency: "at-will",
 		},
-		flavor: "[WIND SPEED: 2m/s — GRAVITY: COMPENSATED — FIRE.]",
+		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1627,7 +1677,7 @@ export const comprehensiveFeats = [
 			type: "active",
 			frequency: "once-per-turn",
 		},
-		flavor: "[SPACE-TIME FOLDING: ACTIVE — RANGE: EXTENDED]",
+		flavor: "Ignites the architect's design. A triumphant death of hesitation.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1646,7 +1696,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[TARGET STATUS: EXECUTABLE — INITIATING FINAL PROTOCOL]",
+		flavor:
+			"Ignites the arrogant and the mighty. A triumphant whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1664,7 +1715,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "bonus-action",
 		},
-		flavor: "[UI OPTIMIZATION: COMPLETE — PROCESSING LATENCY: MINIMIZED]",
+		flavor:
+			"Ignites the arrogant and the mighty. An ancient whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1686,7 +1738,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "reaction",
 		},
-		flavor: "[REALITY ANCHOR: ENGAGED — DIMENSIONAL SLIP: PREVENTED]",
+		flavor:
+			"Shatters the remnants of humanity. An overwhelming surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1708,7 +1761,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "reaction",
 		},
-		flavor: "You don't just dodge; you flow around the strike like water.",
+		flavor:
+			"Ignites the darkness within. An ancient breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1725,7 +1779,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[X-RAY SCAN: ACTIVE — OPTIC NERVE: OVERCLOCKED]",
+		flavor:
+			"Commands the quiet space between breaths. A forbidden roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1747,7 +1802,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "bonus-action",
 		},
-		flavor: "[TACTICAL UPLINK: ESTABLISHED — COORDINATING STRIKE]",
+		flavor:
+			"Ignores all who stand in opposition. A devastating whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1771,7 +1827,7 @@ export const comprehensiveFeats = [
 			save: "Strength",
 			dc: "ability-modifier",
 		},
-		flavor: "[MANA PRESSURE: RELEASED — KINETIC WAVE: DEPLOYED]",
+		flavor: "Crushes the dimensional divide. A desperate symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1792,7 +1848,8 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "action",
 		},
-		flavor: "[NANITE ANALOGS: DEPLOYED — SYSTEMIC PURGE: COMPLETE]",
+		flavor:
+			"Destroys all who stand in opposition. A triumphant whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1810,7 +1867,7 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "bonus-action",
 		},
-		flavor: "[LOCALIZED RIFT: STABLE — BYPASSING GEOMETRY]",
+		flavor: "Shatters the darkness within. A chaotic ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1832,7 +1889,7 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "reaction",
 		},
-		flavor: "[SIGNAL JAMMER: ACTIVE — ENEMY PROTOCOLS: DISRUPTED]",
+		flavor: "Weaves the concept of defeat. A subtle surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1849,7 +1906,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[LOOT SENSORS: CALIBRATED — OPTIMIZING RESOURCE EXTRACTION]",
+		flavor:
+			"Shatters the remnants of humanity. A brutal surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 
@@ -1873,7 +1931,8 @@ export const comprehensiveFeats = [
 			frequency: "bonus-action",
 			action: "bonus-action",
 		},
-		flavor: "Your will becomes steel, forged in the darkness of your soul.",
+		flavor:
+			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1896,7 +1955,8 @@ export const comprehensiveFeats = [
 			frequency: "bonus-action",
 			action: "bonus-action",
 		},
-		flavor: "The shadows themselves become your shield against harm.",
+		flavor:
+			"Absorbs all who stand in opposition. A brutal whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1920,8 +1980,7 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "bonus-action",
 		},
-		flavor:
-			"[WARNING: SYSTEM OVERCLOCK — STAT LIMITERS REMOVED — BURNOUT IMMINENT]",
+		flavor: "Shatters the architect's design. A brutal roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1945,7 +2004,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "bonus-action",
 		},
-		flavor: "[THREAT PING: TARGET MARKED — ALL HUNTERS: FOCUS FIRE]",
+		flavor:
+			"Shatters all who stand in opposition. A chaotic whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1967,7 +2027,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[QUEST UPDATE: OBJECTIVE NEARBY — THREAT LEVEL: CAUTION]",
+		flavor:
+			"Destroys the dimensional divide. A sorrowful testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -1991,7 +2052,8 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "free",
 		},
-		flavor: "[KILL COUNT: RISING — COMBAT EFFICIENCY: ESCALATING]",
+		flavor:
+			"Overrides the concept of defeat. A devastating surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2014,7 +2076,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[DAILY QUEST: 100 PUSH-UPS, 100 SIT-UPS, 100 SQUATS, 10KM RUN]",
+		flavor:
+			"Absorbs the fragile limits of flesh. A sorrowful breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2037,7 +2100,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[DIMENSIONAL ANOMALY DETECTED — RANK: B — CAUTION ADVISED]",
+		flavor: "Ignites the architect's design. A sorrowful roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2061,7 +2124,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor:
-			"Other ascendants vomit at the threshold. You just check your gear and walk in.",
+			"Ignores the fragile limits of flesh. A devastating ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2085,7 +2148,7 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "reaction",
 		},
-		flavor: "[BOSS PATTERN DETECTED — DODGE WINDOW: NOW]",
+		flavor: "Crushes the darkness within. A forbidden ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2109,7 +2172,8 @@ export const comprehensiveFeats = [
 			frequency: "short-rest",
 			action: "free",
 		},
-		flavor: "[MANA OVERFLOW — OUTPUT EXCEEDS CAPACITY — VENTING...]",
+		flavor:
+			"Reclaims the arrogant and the mighty. A devastating beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2133,8 +2197,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "free",
 		},
-		flavor:
-			"Every death refills your reserves. The System designed ascendants to be perpetual engines.",
+		flavor: "Cleanses the darkness within. A forbidden ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2160,7 +2223,8 @@ export const comprehensiveFeats = [
 			save: "Constitution",
 			dc: "spell-save",
 		},
-		flavor: "[CIRCUIT BREAKER — MANA NETWORK: DISRUPTED — CASTING: DISABLED]",
+		flavor:
+			"Commands the fragile limits of flesh. A desperate ultimate equalizer.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2182,7 +2246,7 @@ export const comprehensiveFeats = [
 			type: "active",
 			frequency: "at-will",
 		},
-		flavor: "The System measures your output in tons of force per swing.",
+		flavor: "Denies the concept of defeat. A brutal surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2205,7 +2269,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor:
-			"[TARGET LOCKED] — the System draws the line, you pull the trigger.",
+			"Absorbs the fragile limits of flesh. A brutal breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2223,7 +2287,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "Nothing passes without paying the toll.",
+		flavor: "Shatters the architect's design. A chaotic roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2245,7 +2309,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "Left fang, right fang — prey caught between has nowhere to run.",
+		flavor: "Weaves the dimensional divide. A subtle symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2262,7 +2326,7 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "Blades clash around you, but your mana flow never wavers.",
+		flavor: "Reflects the architect's design. A chaotic death of hesitation.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2285,7 +2349,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor:
-			"Nothing enters your zone without the System's permission — and yours.",
+			"Destroys the dimensional divide. A triumphant symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2303,7 +2367,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[VITALITY STAT INCREASED] — lesser blows no longer register.",
+		flavor:
+			"Bends the quiet space between breaths. An intricate roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2321,7 +2386,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "What nearly killed you before now barely registers.",
+		flavor:
+			"Reclaims the concept of defeat. A devastating surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2344,7 +2410,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor:
-			"Other ascendants remove their armor to rest. You barely notice yours.",
+			"Commands the flow of time itself. A desperate symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2367,7 +2433,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[PARTY SYNC: ESTABLISHED — VITALS: SHARING]",
+		flavor:
+			"Destroys the quiet space between breaths. A sorrowful death of hesitation.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2391,7 +2458,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 			action: "free",
 		},
-		flavor: "[CRITICAL HP — LAST STAND: ENGAGED — FIGHT.]",
+		flavor: "Absorbs the dimensional divide. An ancient symphony of violence.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2414,7 +2481,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "action",
 		},
-		flavor: "[EMERGENCY EXTRACTION — EVACUATE NOW]",
+		flavor:
+			"Shatters the flow of time itself. A chaotic testament to absolute power.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2435,7 +2503,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[HP CRITICAL — RESOLVE PROTOCOL: ACTIVATED]",
+		flavor:
+			"Ignites the remnants of humanity. A sorrowful surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2456,7 +2525,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "Dimensional awareness flows through your every movement.",
+		flavor:
+			"Reclaims the remnants of humanity. A silent surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2477,7 +2547,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[ANOMALY: SECOND AWAKENING — DUAL JOB: CONFIRMED]",
+		flavor:
+			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2500,7 +2571,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[GROWTH RATE: ANOMALOUS — POTENTIAL: UNBOUND]",
+		flavor:
+			"Ignites the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2523,7 +2595,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "action",
 		},
-		flavor: "[DOMAIN OF SHADOWS: DEPLOYED — ENEMIES: SUPPRESSED]",
+		flavor:
+			"Destroys all who stand in opposition. A triumphant beautiful catastrophe.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2544,7 +2617,8 @@ export const comprehensiveFeats = [
 			frequency: "long-rest",
 			action: "free",
 		},
-		flavor: "[SYSTEM ACCESS: ADMINISTRATOR — AWAITING COMMAND]",
+		flavor:
+			"Weaves the fragile limits of flesh. A subtle breaking point of the world.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2565,7 +2639,8 @@ export const comprehensiveFeats = [
 			type: "passive",
 			frequency: "at-will",
 		},
-		flavor: "[SPECIES: RECLASSIFIED — TRANSCENDENT — MORTALITY: CONDITIONAL]",
+		flavor:
+			"Ignites the arrogant and the mighty. A sorrowful whisper in the shadows.",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -2590,7 +2665,8 @@ export const comprehensiveFeats = [
 			save: "Wisdom",
 			dc: "ability-modifier",
 		},
-		flavor: "[MANA PRESSURE: REGENT-CLASS — KNEEL.]",
+		flavor:
+			"Destroys the concept of defeat. A desperate surge of lethal intent.",
 		source: "System Ascendant Canon",
 	},
 ];

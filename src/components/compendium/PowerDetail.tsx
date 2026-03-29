@@ -40,6 +40,8 @@ interface PowerData {
 		damage?: string;
 	} | null;
 	mechanics?: Record<string, unknown> | null;
+	flavor?: string | null;
+	lore?: string | null;
 }
 
 const tierColors: Record<number, string> = {
@@ -197,10 +199,34 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 
 			{/* Description */}
 			<SystemWindow title="DESCRIPTION">
+				{data.flavor && (
+					<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+						<AutoLinkText text={data.flavor} />
+					</p>
+				)}
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
 					<AutoLinkText text={data.description} />
 				</p>
+				{data.lore && (
+					<div className="mt-6 pt-4 border-t border-cyan/10">
+						<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+							Historical Record
+						</h4>
+						<p className="text-sm text-muted-foreground leading-relaxed">
+							<AutoLinkText text={data.lore} />
+						</p>
+					</div>
+				)}
 			</SystemWindow>
+
+			{/* Mechanics Raw Output if exists */}
+			{data.mechanics && Object.keys(data.mechanics).length > 0 && (
+				<SystemWindow title="SYSTEM DIAGNOSTICS">
+					<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
+						{JSON.stringify(data.mechanics, null, 2)}
+					</pre>
+				</SystemWindow>
+			)}
 
 			{/* At Higher Levels */}
 			{data.higher_levels && (

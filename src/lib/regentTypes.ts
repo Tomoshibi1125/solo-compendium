@@ -59,6 +59,8 @@ export interface Regent {
 	tags?: string[];
 	created_at?: string;
 	source_book?: string;
+	flavor?: string;
+	lore?: string;
 
 	hit_dice?: string;
 	primary_ability?: string[];

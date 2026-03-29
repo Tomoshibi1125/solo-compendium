@@ -1,6 +1,6 @@
 import { ArrowRight, Shield, Sword, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import EnhancedCard from "@/components/ui/EnhancedCard";
@@ -13,9 +13,20 @@ import {
 	SystemHeading,
 	SystemText,
 } from "@/components/ui/SystemText";
+import { useAuth } from "@/lib/auth/authContext";
 
 const Landing = () => {
 	const [isInitializing, setIsInitializing] = useState(true);
+	const { user } = useAuth();
+	const navigate = useNavigate();
+
+	const handleEnterSystem = () => {
+		if (user) {
+			navigate(user.role === "dm" ? "/dm-tools" : "/player-tools");
+		} else {
+			navigate("/login");
+		}
+	};
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -93,16 +104,15 @@ const Landing = () => {
 							ascendants, explore rifts, and master the shadows.
 						</SystemText>
 						<div className="mt-8 flex flex-col gap-4 sm:flex-row">
-							<Link to="/login">
-								<Button
-									variant="arise"
-									size="lg"
-									className="font-system tracking-widest uppercase font-bold text-base h-12 hover:shadow-[0_0_40px_hsl(var(--arise-violet)/0.8)] shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]"
-								>
-									Enter System
-									<ArrowRight className="ml-2 h-5 w-5" />
-								</Button>
-							</Link>
+							<Button
+								variant="arise"
+								size="lg"
+								className="font-system tracking-widest uppercase font-bold text-base h-12 hover:shadow-[0_0_40px_hsl(var(--arise-violet)/0.8)] shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]"
+								onClick={handleEnterSystem}
+							>
+								Enter System
+								<ArrowRight className="ml-2 h-5 w-5" />
+							</Button>
 							<Link to="/compendium">
 								<Button
 									variant="outline"
@@ -197,9 +207,7 @@ const Landing = () => {
 							description="Complete System Ascendant compendium with monsters, items, spells, and more."
 							icon={<Sword className="h-6 w-6" />}
 							interactive
-							onClick={() => {
-								/* Navigate to compendium */
-							}}
+							onClick={() => navigate("/compendium")}
 							className="hover:scale-[1.03] transition-all duration-300"
 						/>
 						<EnhancedCard
@@ -208,9 +216,7 @@ const Landing = () => {
 							description="Create and manage your ascendants with full character sheets and progression."
 							icon={<Shield className="h-6 w-6" />}
 							interactive
-							onClick={() => {
-								/* Navigate to characters */
-							}}
+							onClick={() => navigate("/characters")}
 							className="hover:scale-[1.03] transition-all duration-300"
 						/>
 						<EnhancedCard
@@ -219,9 +225,7 @@ const Landing = () => {
 							description="Explore dangerous rifts and track your conquests across dimensional zones."
 							icon={<Zap className="h-6 w-6" />}
 							interactive
-							onClick={() => {
-								/* Navigate to campaigns */
-							}}
+							onClick={() => navigate("/campaigns")}
 							className="hover:scale-[1.03] transition-all duration-300"
 						/>
 					</div>

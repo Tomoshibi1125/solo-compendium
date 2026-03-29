@@ -47,7 +47,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 46,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the concept of defeat. A devastating surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -96,7 +96,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 103,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys the darkness within. A desperate breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -145,7 +145,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 30,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims the dimensional divide. An overwhelming symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -193,7 +193,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 12,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the quiet space between breaths. A devastating death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -244,8 +244,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 19,
 		},
-		flavor:
-			"In the post-reset lattice, Shadow Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Cleanses the architect's design. An intricate roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -294,7 +293,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 77,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys all who stand in opposition. A triumphant whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -343,7 +342,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 24,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys the fragile limits of flesh. A desperate ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -391,7 +390,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 89,
 		},
 		flavor:
-			"In the post-reset lattice, Demonic Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Shatters the arrogant and the mighty. A chaotic whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -443,7 +442,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 44,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the darkness within. A desperate breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -491,8 +490,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 75,
 		},
-		flavor:
-			"In the post-reset lattice, Void Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Ignites the architect's design. A triumphant death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -540,8 +538,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 24,
 		},
-		flavor:
-			"In the post-reset lattice, Arcane Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Denies the architect's design. A chaotic roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -589,7 +586,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 21,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the concept of defeat. A forbidden dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -641,7 +638,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 31,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the architect's design. An intricate death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -690,7 +687,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 52,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the quiet space between breaths. A brutal death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -739,7 +736,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 40,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the quiet space between breaths. A forbidden roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -787,7 +784,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 57,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Weaves the dimensional divide. A relentless testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -838,8 +835,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 55,
 		},
-		flavor:
-			"In the post-reset lattice, Shadow Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Cleanses the architect's design. A subtle roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -888,7 +884,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 67,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys all who stand in opposition. A desperate beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -937,7 +933,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 32,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the fragile limits of flesh. A forbidden ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -984,8 +980,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 39,
 		},
-		flavor:
-			"In the post-reset lattice, Demonic Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reclaims the architect's design. A silent roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -1037,7 +1032,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 39,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the darkness within. A devastating breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -1086,7 +1081,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 88,
 		},
 		flavor:
-			"In the post-reset lattice, Void Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the flow of time itself. A relentless testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -1134,8 +1129,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 33,
 		},
-		flavor:
-			"In the post-reset lattice, Arcane Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reflects the flow of time itself. A chaotic symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -1183,7 +1177,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 90,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the remnants of humanity. A forbidden surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -1235,7 +1229,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 49,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reflects the remnants of humanity. A silent dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -1284,7 +1278,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 61,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the quiet space between breaths. A subtle roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -1333,7 +1327,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 44,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the fragile limits of flesh. A devastating ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -1381,7 +1375,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 53,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Shatters the fragile limits of flesh. An overwhelming breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -1433,7 +1427,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 85,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends all who stand in opposition. An intricate beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -1482,7 +1476,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 61,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the flow of time itself. A forbidden symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -1531,7 +1525,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 78,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites the fragile limits of flesh. A sorrowful breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -1579,7 +1573,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 88,
 		},
 		flavor:
-			"In the post-reset lattice, Demonic Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the concept of defeat. A silent dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -1631,7 +1625,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 40,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims the quiet space between breaths. A devastating death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -1680,7 +1674,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 106,
 		},
 		flavor:
-			"In the post-reset lattice, Void Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Denies the remnants of humanity. A chaotic dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -1728,8 +1722,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 16,
 		},
-		flavor:
-			"In the post-reset lattice, Arcane Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reflects the architect's design. A silent death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -1777,7 +1770,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 22,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reflects the darkness within. A chaotic breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -1828,8 +1821,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 89,
 		},
-		flavor:
-			"In the post-reset lattice, Celestial Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reclaims the darkness within. A devastating ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -1878,7 +1870,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 10,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reflects the arrogant and the mighty. An overwhelming beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -1927,7 +1919,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 101,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites the flow of time itself. A triumphant testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -1974,8 +1966,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 32,
 		},
-		flavor:
-			"In the post-reset lattice, Infernal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Cleanses the architect's design. A subtle roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -2026,8 +2017,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 76,
 		},
-		flavor:
-			"In the post-reset lattice, Shadow Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Cleanses the architect's design. A subtle death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -2076,7 +2066,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 79,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys all who stand in opposition. A desperate whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -2125,7 +2115,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 88,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the fragile limits of flesh. A forbidden breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -2172,8 +2162,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 98,
 		},
-		flavor:
-			"In the post-reset lattice, Demonic Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Ignites the architect's design. An ancient roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -2225,7 +2214,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 48,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the flow of time itself. A devastating symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -2274,7 +2263,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 64,
 		},
 		flavor:
-			"In the post-reset lattice, Void Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the dimensional divide. An absolute testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -2323,7 +2312,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 85,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends the arrogant and the mighty. An absolute beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -2371,7 +2360,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 15,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the fragile limits of flesh. A devastating breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -2423,7 +2412,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 51,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Weaves the quiet space between breaths. A relentless death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -2472,7 +2461,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 106,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites all who stand in opposition. A triumphant whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -2521,7 +2510,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 57,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reflects the arrogant and the mighty. A chaotic beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -2569,7 +2558,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 105,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -2621,7 +2610,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 81,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the flow of time itself. A brutal testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -2669,8 +2658,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 48,
 		},
-		flavor:
-			"In the post-reset lattice, Divine Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reclaims the architect's design. A silent roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -2719,7 +2707,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 71,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the concept of defeat. A desperate surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -2766,8 +2754,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 82,
 		},
-		flavor:
-			"In the post-reset lattice, Demonic Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Shatters the architect's design. A brutal roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -2819,7 +2806,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 62,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the concept of defeat. A relentless dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -2868,7 +2855,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 73,
 		},
 		flavor:
-			"In the post-reset lattice, Void Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Shatters the arrogant and the mighty. An overwhelming whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -2917,7 +2904,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 25,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses all who stand in opposition. An intricate beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -2965,7 +2952,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 107,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes all who stand in opposition. An intricate beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -3016,8 +3003,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 96,
 		},
-		flavor:
-			"In the post-reset lattice, Celestial Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Weaves the darkness within. A relentless ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -3066,7 +3052,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 106,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs all who stand in opposition. An ancient beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -3115,7 +3101,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 70,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the flow of time itself. A devastating symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -3163,7 +3149,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 80,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the flow of time itself. An absolute testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -3215,7 +3201,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 30,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the dimensional divide. A relentless testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -3264,7 +3250,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 53,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs all who stand in opposition. A sorrowful beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -3313,7 +3299,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 109,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the arrogant and the mighty. An ancient beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -3361,7 +3347,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 83,
 		},
 		flavor:
-			"In the post-reset lattice, Demonic Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Denies the quiet space between breaths. A chaotic roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -3413,7 +3399,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 54,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends all who stand in opposition. An intricate whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -3462,7 +3448,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 51,
 		},
 		flavor:
-			"In the post-reset lattice, Void Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores all who stand in opposition. A devastating whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -3511,7 +3497,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 26,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the dimensional divide. A brutal testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -3559,7 +3545,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 97,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the concept of defeat. An intricate dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -3611,7 +3597,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 89,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims all who stand in opposition. A silent beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -3660,7 +3646,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 44,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites the fragile limits of flesh. A triumphant ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -3709,7 +3695,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 60,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys the quiet space between breaths. A triumphant roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -3756,8 +3742,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 59,
 		},
-		flavor:
-			"In the post-reset lattice, Infernal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Absorbs the architect's design. An ancient roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -3809,7 +3794,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 67,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the dimensional divide. An intricate testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -3858,7 +3843,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 21,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the fragile limits of flesh. An ancient ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -3907,7 +3892,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 81,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys the darkness within. A sorrowful breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -3954,8 +3939,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 98,
 		},
-		flavor:
-			"In the post-reset lattice, Demonic Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Shatters the concept of defeat. A brutal surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -4007,7 +3991,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 40,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the flow of time itself. A relentless symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -4056,7 +4040,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 18,
 		},
 		flavor:
-			"In the post-reset lattice, Void Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the quiet space between breaths. A brutal death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -4105,7 +4089,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 21,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the flow of time itself. A desperate testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -4152,8 +4136,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 57,
 		},
-		flavor:
-			"In the post-reset lattice, Dark Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Commands the darkness within. A desperate ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -4205,7 +4188,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 28,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands all who stand in opposition. A desperate whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -4254,7 +4237,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 96,
 		},
 		flavor:
-			"In the post-reset lattice, Voltaic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends all who stand in opposition. An absolute beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -4303,7 +4286,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 45,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys all who stand in opposition. A desperate beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -4351,7 +4334,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 12,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends the remnants of humanity. An absolute dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -4403,7 +4386,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 108,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Shatters all who stand in opposition. A brutal whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -4452,7 +4435,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 85,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the arrogant and the mighty. A silent beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -4501,7 +4484,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 66,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys the concept of defeat. A sorrowful surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -4549,7 +4532,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 40,
 		},
 		flavor:
-			"In the post-reset lattice, Demonic Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims the fragile limits of flesh. A silent breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -4601,7 +4584,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 102,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the flow of time itself. A devastating symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -4649,8 +4632,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 42,
 		},
-		flavor:
-			"In the post-reset lattice, Void Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reflects the darkness within. A chaotic ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -4699,7 +4681,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 63,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites the flow of time itself. A triumphant symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -4747,7 +4729,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 44,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the darkness within. A triumphant breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -4798,8 +4780,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 69,
 		},
-		flavor:
-			"In the post-reset lattice, Celestial Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Absorbs the flow of time itself. A brutal symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -4848,7 +4829,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 50,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the arrogant and the mighty. An intricate whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -4897,7 +4878,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 96,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims the quiet space between breaths. An overwhelming roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -4945,7 +4926,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 108,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Weaves the quiet space between breaths. An absolute roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -4997,7 +4978,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 89,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the arrogant and the mighty. A silent beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -5046,7 +5027,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 89,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the arrogant and the mighty. A desperate whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -5095,7 +5076,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 77,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the dimensional divide. A forbidden testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -5143,7 +5124,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 46,
 		},
 		flavor:
-			"In the post-reset lattice, Demonic Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys all who stand in opposition. A sorrowful beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -5195,7 +5176,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 71,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the quiet space between breaths. A forbidden roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -5244,7 +5225,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 56,
 		},
 		flavor:
-			"In the post-reset lattice, Void Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Shatters the fragile limits of flesh. A brutal breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -5293,7 +5274,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 25,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims the darkness within. A devastating breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -5341,7 +5322,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 58,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims the flow of time itself. A devastating symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -5393,7 +5374,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 53,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Weaves the fragile limits of flesh. An absolute ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -5441,8 +5422,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 39,
 		},
-		flavor:
-			"In the post-reset lattice, Thunder Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Destroys the darkness within. A sorrowful ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -5491,7 +5471,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 40,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the arrogant and the mighty. An absolute whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -5539,7 +5519,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 35,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends the fragile limits of flesh. An absolute breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -5591,7 +5571,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 96,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Shatters the flow of time itself. A brutal testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -5640,7 +5620,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 73,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the remnants of humanity. An ancient dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -5689,7 +5669,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 28,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the concept of defeat. A devastating dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -5736,8 +5716,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 80,
 		},
-		flavor:
-			"In the post-reset lattice, Demonic Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Weaves the architect's design. A subtle death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -5789,7 +5768,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 51,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the dimensional divide. A devastating symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -5838,7 +5817,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 92,
 		},
 		flavor:
-			"In the post-reset lattice, Void Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reflects the quiet space between breaths. A chaotic death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -5887,7 +5866,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 55,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites the flow of time itself. A triumphant testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -5934,8 +5913,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 76,
 		},
-		flavor:
-			"In the post-reset lattice, Dark Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Commands the darkness within. A triumphant ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -5987,7 +5965,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 104,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs all who stand in opposition. A sorrowful whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -6036,7 +6014,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 10,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the quiet space between breaths. A desperate roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -6085,7 +6063,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 69,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the quiet space between breaths. A relentless roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -6133,7 +6111,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 39,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Denies the arrogant and the mighty. A chaotic beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -6185,7 +6163,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 20,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends the arrogant and the mighty. A subtle whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -6234,7 +6212,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 32,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites the quiet space between breaths. A sorrowful roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -6283,7 +6261,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 32,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites all who stand in opposition. An ancient whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -6330,8 +6308,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 62,
 		},
-		flavor:
-			"In the post-reset lattice, Demonic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reflects the concept of defeat. A chaotic surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -6382,8 +6359,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 39,
 		},
-		flavor:
-			"In the post-reset lattice, Frozen Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Shatters the darkness within. An overwhelming ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -6432,7 +6408,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 75,
 		},
 		flavor:
-			"In the post-reset lattice, Void Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Destroys the dimensional divide. A sorrowful symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -6481,7 +6457,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 32,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Bends the arrogant and the mighty. An absolute whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -6529,7 +6505,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 109,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the dimensional divide. A devastating testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -6581,7 +6557,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 71,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the dimensional divide. An ancient testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -6630,7 +6606,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 62,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the quiet space between breaths. A forbidden roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -6679,7 +6655,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 109,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reflects the arrogant and the mighty. A chaotic whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -6727,7 +6703,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 15,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the arrogant and the mighty. A forbidden whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -6779,7 +6755,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 85,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Denies the quiet space between breaths. An ancient roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -6828,7 +6804,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 98,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs all who stand in opposition. A brutal beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -6877,7 +6853,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 21,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the quiet space between breaths. A forbidden roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -6925,7 +6901,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 12,
 		},
 		flavor:
-			"In the post-reset lattice, Demonic Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the arrogant and the mighty. A desperate whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -6977,7 +6953,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 71,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Denies the quiet space between breaths. An ancient roar of raw mana.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -7025,8 +7001,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 96,
 		},
-		flavor:
-			"In the post-reset lattice, Void Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Bends the fragile limits of flesh. A subtle ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -7075,7 +7050,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 45,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the flow of time itself. A forbidden symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -7123,7 +7098,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 70,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the flow of time itself. A forbidden symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -7175,7 +7150,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 14,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reflects the flow of time itself. An overwhelming testament to absolute power.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -7224,7 +7199,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 99,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the fragile limits of flesh. An absolute ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -7273,7 +7248,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 29,
 		},
 		flavor:
-			"In the post-reset lattice, Abyssal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the darkness within. A silent breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -7321,7 +7296,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 16,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignites the darkness within. An ancient breaking point of the world.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -7373,7 +7348,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 64,
 		},
 		flavor:
-			"In the post-reset lattice, Shadow Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Denies all who stand in opposition. A chaotic beautiful catastrophe.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -7422,7 +7397,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 73,
 		},
 		flavor:
-			"In the post-reset lattice, Divine Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Reclaims the remnants of humanity. An overwhelming surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -7471,7 +7446,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 82,
 		},
 		flavor:
-			"In the post-reset lattice, Holy Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Overrides the remnants of humanity. A silent dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -7519,7 +7494,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 22,
 		},
 		flavor:
-			"In the post-reset lattice, Demonic Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the quiet space between breaths. A triumphant death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -7571,7 +7546,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 56,
 		},
 		flavor:
-			"In the post-reset lattice, Frozen Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the flow of time itself. An intricate symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -7619,8 +7594,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 59,
 		},
-		flavor:
-			"In the post-reset lattice, Void Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Absorbs the darkness within. A sorrowful ultimate equalizer.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -7669,7 +7643,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 71,
 		},
 		flavor:
-			"In the post-reset lattice, Arcane Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs the remnants of humanity. A brutal dance performed on the edge of a blade.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -7717,7 +7691,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 100,
 		},
 		flavor:
-			"In the post-reset lattice, Dark Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the remnants of humanity. A desperate surge of lethal intent.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -7769,7 +7743,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 77,
 		},
 		flavor:
-			"In the post-reset lattice, Celestial Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Absorbs all who stand in opposition. An ancient whisper in the shadows.",
 		higher_levels:
 			"When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
 		atHigherLevels:
@@ -7818,7 +7792,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 100,
 		},
 		flavor:
-			"In the post-reset lattice, Thunder Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Crushes the quiet space between breaths. A forbidden death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
 		atHigherLevels:
@@ -7866,8 +7840,7 @@ export const spells_s: CompendiumSpell[] = [
 		limitations: {
 			mana_cost: 80,
 		},
-		flavor:
-			"In the post-reset lattice, Abyssal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+		flavor: "Reclaims the dimensional divide. A silent symphony of violence.",
 		higher_levels:
 			"When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
 		atHigherLevels:
@@ -7915,7 +7888,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 35,
 		},
 		flavor:
-			"In the post-reset lattice, Infernal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Ignores the quiet space between breaths. A relentless death of hesitation.",
 		higher_levels:
 			"When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
 		atHigherLevels:
@@ -7967,7 +7940,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 150,
 		},
 		flavor:
-			"In the post-reset lattice, Eternal Shadow Convergence is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Denies the fragile limits of flesh. An ancient breaking point of the world.",
 	},
 	{
 		id: "spell-0802",
@@ -8012,7 +7985,7 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 200,
 		},
 		flavor:
-			"In the post-reset lattice, Void Reality Distortion is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Cleanses the flow of time itself. An intricate symphony of violence.",
 	},
 	{
 		id: "spell-0803",
@@ -8056,6 +8029,6 @@ export const spells_s: CompendiumSpell[] = [
 			mana_cost: 100,
 		},
 		flavor:
-			"In the post-reset lattice, Supreme Abyssal Ascension is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"Commands the fragile limits of flesh. A desperate breaking point of the world.",
 	},
 ];

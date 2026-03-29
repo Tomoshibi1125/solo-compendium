@@ -56,6 +56,7 @@ interface SpellData {
 		exhaustion?: string;
 	} | null;
 	flavor?: string | null;
+	lore?: string | null;
 	higher_levels?: string | null;
 	atHigherLevels?: string | null;
 	source_book?: string | null;
@@ -524,7 +525,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 
 			{data.flavor && (
 				<SystemWindow title="FLAVOR">
-					<p className="text-sm text-muted-foreground italic">
+					<p className="text-sm text-cyan/70 italic bg-cyan/5 border-l-2 border-cyan/30 pl-3 py-1">
 						<AutoLinkText text={data.flavor || ""} />
 					</p>
 				</SystemWindow>
@@ -535,6 +536,16 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
+					{data.lore && (
+						<div className="mt-6 pt-4 border-t border-cyan/10">
+							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+								Historical Record
+							</h4>
+							<p className="text-sm text-muted-foreground leading-relaxed">
+								<AutoLinkText text={data.lore} />
+							</p>
+						</div>
+					)}
 				</SystemWindow>
 			)}
 		</div>

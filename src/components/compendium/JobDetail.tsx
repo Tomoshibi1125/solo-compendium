@@ -20,7 +20,10 @@ interface JobData {
 	name: string;
 	display_name?: string | null;
 	description: string;
+	flavor?: string | null;
 	flavor_text?: string;
+	lore?: string | null;
+	mechanics?: Record<string, unknown> | null;
 	hit_die: number;
 	primary_abilities: string[];
 	secondary_abilities?: string[];
@@ -230,14 +233,36 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				className="border-primary/50"
 			>
 				<div className="space-y-4">
-					{data.flavor_text && (
-						<p className="text-muted-foreground italic border-l-2 border-primary/30 pl-4">
-							<AutoLinkText text={data.flavor_text} />
+					{(data.flavor || data.flavor_text) && (
+						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+							<AutoLinkText
+								text={(data.flavor || data.flavor_text) as string}
+							/>
 						</p>
 					)}
-					<p className="text-foreground">
+					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description} />
 					</p>
+					{data.lore && (
+						<div className="mt-6 pt-4 border-t border-cyan/10">
+							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+								Historical Record
+							</h4>
+							<p className="text-sm text-muted-foreground leading-relaxed">
+								<AutoLinkText text={data.lore} />
+							</p>
+						</div>
+					)}
+					{data.mechanics && Object.keys(data.mechanics).length > 0 && (
+						<div className="mt-6 pt-4 border-t border-cyan/10">
+							<h4 className="text-cyan font-bold text-[10px] uppercase tracking-wider mb-2">
+								Base Concept Mechanics
+							</h4>
+							<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
+								{JSON.stringify(data.mechanics, null, 2)}
+							</pre>
+						</div>
+					)}
 
 					{data.tags && data.tags.length > 0 && (
 						<div className="flex flex-wrap gap-2">

@@ -15,7 +15,7 @@ type DataLoader<T> = () => Promise<T[]>;
 
 const dataLoaders = {
 	monsters: () => import("./monsters").then((module) => module.monsters),
-	items: () => import("./items").then((module) => module.items),
+	items: () => import("./items-index").then((module) => module.allItems),
 	jobs: () => import("./jobs").then((module) => module.jobs),
 	spells: () => import("./spells").then((module) => module.spells),
 	locations: () => import("./locations").then((module) => module.locations),
