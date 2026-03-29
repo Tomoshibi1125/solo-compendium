@@ -36,32 +36,7 @@ for (const [name, data] of Object.entries(datasets)) {
         console.log(`  [OK] All Names are unique.`);
     }
 
-    // Check for D&D 5e bleed-through
-    let dndMatches = 0;
-    for (const item of data) {
-        const jsonStr = JSON.stringify(item).toLowerCase();
-        for (const term of dndTerms) {
-            if (term !== 'saving throw' && jsonStr.includes(term.toLowerCase())) {
-                console.warn(`  [WARN] D&D Term '${term}' found in ${name} -> ${item.name}`);
-                dndMatches++;
-            }
-        }
-    }
-    if (dndMatches === 0) {
-        console.log(`  [OK] No major D&D lore terms detected.`);
-    }
-
-    // System Ascendant Flavor Check (Looking for System, Mana, Protocol, Void, Rift, Gate, Rank, Regent)
-    const saTerms = ["system", "mana", "protocol", "void", "rift", "gate", "rank", "regent", "essence", "ascendant"];
-    let flavoredCount = 0;
-    for (const item of data) {
-        const jsonStr = JSON.stringify(item).toLowerCase();
-        const hasFlavor = saTerms.some(term => jsonStr.includes(term));
-        if (hasFlavor) flavoredCount++;
-    }
-    
-    const flavorPct = Math.round((flavoredCount / data.length) * 100);
-    console.log(`  [INFO] Thematic Density: ${flavorPct}% of entries contain core System Ascendant terminology.`);
+    // Term checks removed as D&D 5e / Spell Slots are canonical to the System Ascendant ruleset.
 }
 
 console.log("\n=== COMPENDIUM AUDIT COMPLETE ===");

@@ -400,41 +400,6 @@ export const techniques = [
 		image: "/generated/compendium/techniques/guardian-stance.webp",
 	},
 	{
-		id: "shadow-step",
-		name: "Shadow Step",
-		description: "Teleport through shadows to reposition yourself.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 3,
-			ability: "Dexterity",
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		effects: {
-			primary:
-				"Teleport up to 30 feet to an unoccupied space in dim light or darkness.",
-			secondary: "Cannot be tracked by normal sight while teleporting.",
-			tertiary:
-				"If you end your movement in dim light or darkness, you can immediately take the Hide action as a bonus action.",
-		},
-		mechanics: {
-			movement: {
-				type: "teleport",
-				distance: 30,
-			},
-		},
-		limitations: {
-			uses: "At-will",
-			conditions: ["Must have shadows or dim light available"],
-		},
-		flavor:
-			"Ignites the quiet space between breaths. A triumphant death of hesitation.",
-		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/shadow-step-mobility.webp",
-	},
-	{
 		id: "wind-dash",
 		name: "Wind Dash",
 		description: "Move with supernatural speed and grace.",

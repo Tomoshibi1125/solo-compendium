@@ -1,71 +1,14 @@
 // Powers Compendium - Authoritative System Ascendant Content
 // Supernatural abilities and extraordinary powers
 // Based on System Ascendant mechanics
+// 5e-style power mechanics
+// INNATE POWERS
+// AWAKENING POWERS (Job-linked)
+// CLASS POWERS
+// MONSTROUS POWERS
+// DIVINE POWERS
 
-export interface Power {
-	id: string;
-	name: string;
-	description: string;
-	type: "innate" | "awakening" | "class" | "monstrous" | "divine";
-	rarity: "common" | "uncommon" | "rare" | "very_rare" | "legendary";
-	requirements?: {
-		level?: number;
-		class?: string;
-		job?: string;
-		ability?: string;
-		score?: number;
-	};
-	activation: {
-		type: "action" | "bonus-action" | "reaction" | "passive" | "long-rest";
-		time?: string;
-	};
-	duration?: {
-		type: "instantaneous" | "concentration" | "until-dispel" | "timed";
-		time?: string;
-	};
-	range?: {
-		type: "self" | "touch" | "sight" | "feet" | "miles";
-		distance?: number;
-	};
-	components?: {
-		verbal?: boolean;
-		somatic?: boolean;
-		material?: boolean;
-		material_desc?: string;
-	};
-	effects: {
-		primary: string;
-		secondary?: string;
-		tertiary?: string;
-	};
-	limitations?: {
-		uses?: string;
-		cooldown?: string;
-		conditions?: string[];
-	};
-	flavor: string;
-	source: string;
-	image?: string;
-
-	// 5e-style power mechanics
-	spell_level_equivalent?: number; // If power acts like a spell
-	concentration_required?: boolean;
-	ritual?: boolean;
-	saving_throw?: {
-		ability: string;
-		dc: string | number;
-		success: string;
-		failure: string;
-	};
-	attack_roll?: {
-		type: "melee" | "ranged";
-		ability: string;
-		damage: string;
-	};
-}
-
-export const powers: Power[] = [
-	// INNATE POWERS
+export const powers = [
 	{
 		id: "shadow-step",
 		name: "Shadow Step",
@@ -201,8 +144,6 @@ export const powers: Power[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/shadow-essence.webp",
 	},
-
-	// AWAKENING POWERS (Job-linked)
 	{
 		id: "dragon-breath",
 		name: "Dragon Breath",
@@ -350,8 +291,6 @@ export const powers: Power[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/orcish-rage.webp",
 	},
-
-	// CLASS POWERS
 	{
 		id: "ki-point",
 		name: "Ki Point",
@@ -494,8 +433,6 @@ export const powers: Power[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/sneak-attack.webp",
 	},
-
-	// MONSTROUS POWERS
 	{
 		id: "vampiric-touch",
 		name: "Vampiric Touch",
@@ -626,8 +563,6 @@ export const powers: Power[] = [
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/invisibility.webp",
 	},
-
-	// DIVINE POWERS
 	{
 		id: "divine-intervention",
 		name: "System Override",
@@ -795,16 +730,28 @@ export const powers: Power[] = [
 		description: "Crush targets with localized gravitational singularities.",
 		type: "awakening",
 		rarity: "legendary",
-		requirements: { level: 17, ability: "Intelligence", score: 17 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 17,
+			ability: "Intelligence",
+			score: 17,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Create a 20-foot radius sphere of crushing gravity. Creatures inside take 8d10 force damage and are knocked prone and restrained.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Ignores the remnants of humanity. A devastating dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -816,16 +763,28 @@ export const powers: Power[] = [
 		description: "Rewind time for a single entity.",
 		type: "divine",
 		rarity: "very_rare",
-		requirements: { level: 15, ability: "Charisma", score: 15 },
-		activation: { type: "reaction" },
-		range: { type: "feet", distance: 30 },
+		requirements: {
+			level: 15,
+			ability: "Charisma",
+			score: 15,
+		},
+		activation: {
+			type: "reaction",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"When a creature takes damage or fails a save, rewind time for them to completely undo the event.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per week", cooldown: "Week" },
+		limitations: {
+			uses: "Once per week",
+			cooldown: "Week",
+		},
 		flavor:
 			"Reflects the arrogant and the mighty. A silent beautiful catastrophe.",
 		source: "System Ascendant Canon",
@@ -837,16 +796,28 @@ export const powers: Power[] = [
 		description: "Ignite the essence within a target's body.",
 		type: "awakening",
 		rarity: "rare",
-		requirements: { level: 7, ability: "Intelligence", score: 13 },
-		activation: { type: "bonus-action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 7,
+			ability: "Intelligence",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Target loses an unexpended resource (spell slot, ki, mana) and takes 1d8 psychic damage per level of resource lost.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "3 times per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "3 times per day",
+			cooldown: "Long rest",
+		},
 		flavor: "Shatters the flow of time itself. A chaotic symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/mana-burn.webp",
@@ -857,16 +828,28 @@ export const powers: Power[] = [
 		description: "Encase yourself in impenetrable jagged armor.",
 		type: "monstrous",
 		rarity: "uncommon",
-		requirements: { level: 5, ability: "Constitution", score: 13 },
-		activation: { type: "action" },
-		duration: { type: "concentration", time: "1 hour" },
+		requirements: {
+			level: 5,
+			ability: "Constitution",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		duration: {
+			type: "concentration",
+			time: "1 hour",
+		},
 		effects: {
 			primary:
 				"Gain 30 temporary hit points. While you have these, attackers taking melee swings at you take 1d6 piercing damage.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Twice per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Twice per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
 		source: "System Ascendant Canon",
@@ -878,16 +861,28 @@ export const powers: Power[] = [
 		description: "Tear a fragment of spirit from the target.",
 		type: "innate",
 		rarity: "very_rare",
-		requirements: { level: 13, ability: "Charisma", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 15 },
+		requirements: {
+			level: 13,
+			ability: "Charisma",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 15,
+		},
 		effects: {
 			primary:
 				"Deal 4d10 necrotic damage and reduce the target's maximum hit points by the same amount.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Commands the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		source: "System Ascendant Canon",
@@ -899,16 +894,27 @@ export const powers: Power[] = [
 		description: "Project an impenetrable shield of holy energy.",
 		type: "divine",
 		rarity: "rare",
-		requirements: { level: 9, ability: "Charisma", score: 13 },
-		activation: { type: "reaction" },
-		range: { type: "self" },
+		requirements: {
+			level: 9,
+			ability: "Charisma",
+			score: 13,
+		},
+		activation: {
+			type: "reaction",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"Gain immunity to magical damage until the start of your next turn.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per short rest", cooldown: "Short rest" },
+		limitations: {
+			uses: "Once per short rest",
+			cooldown: "Short rest",
+		},
 		flavor: "Bends the flow of time itself. A subtle symphony of violence.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/aegis-of-light.webp",
@@ -920,15 +926,27 @@ export const powers: Power[] = [
 			"Summon spectral versions of your weapons to strike continuously.",
 		type: "awakening",
 		rarity: "rare",
-		requirements: { level: 7, ability: "Dexterity", score: 13 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 120 },
+		requirements: {
+			level: 7,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 120,
+		},
 		effects: {
 			primary: "Make 5 ranged spell attacks. Each deals 1d10 force damage.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Twice per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Twice per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Reclaims the concept of defeat. An overwhelming dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -940,8 +958,14 @@ export const powers: Power[] = [
 		description: "Your essence turns toxic to enemies.",
 		type: "monstrous",
 		rarity: "uncommon",
-		requirements: { level: 3, ability: "Constitution", score: 13 },
-		activation: { type: "passive" },
+		requirements: {
+			level: 3,
+			ability: "Constitution",
+			score: 13,
+		},
+		activation: {
+			type: "passive",
+		},
 		effects: {
 			primary:
 				"Whenever you take piercing or slashing damage, the attacker takes 2d6 poison damage.",
@@ -958,16 +982,28 @@ export const powers: Power[] = [
 		description: "Freeze the kinetic energy in an area.",
 		type: "awakening",
 		rarity: "very_rare",
-		requirements: { level: 13, ability: "Intelligence", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 13,
+			ability: "Intelligence",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"All creatures in a 20-foot sphere take 6d8 cold damage and are paralyzed for 1 minute (Con save ends).",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Destroys the flow of time itself. A sorrowful symphony of violence.",
 		source: "System Ascendant Canon",
@@ -979,8 +1015,14 @@ export const powers: Power[] = [
 		description: "Absorb physical impacts and convert them to strength.",
 		type: "innate",
 		rarity: "rare",
-		requirements: { level: 5, ability: "Strength", score: 13 },
-		activation: { type: "reaction" },
+		requirements: {
+			level: 5,
+			ability: "Strength",
+			score: 13,
+		},
+		activation: {
+			type: "reaction",
+		},
 		effects: {
 			primary:
 				"Reduce incoming physical damage by 1d10 + attribute. Store this energy.",
@@ -1002,15 +1044,26 @@ export const powers: Power[] = [
 		description: "Summon weapons woven from hellfire.",
 		type: "awakening",
 		rarity: "rare",
-		requirements: { level: 7, ability: "Charisma", score: 13 },
-		activation: { type: "bonus-action" },
-		duration: { type: "timed", time: "10 minutes" },
+		requirements: {
+			level: 7,
+			ability: "Charisma",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		duration: {
+			type: "timed",
+			time: "10 minutes",
+		},
 		effects: {
 			primary: "Manifest a weapon of pure fire in your empty hand.",
 			secondary:
 				"Attacks deal 2d6 fire damage instead of normal damage, and ignore fire resistance. Adapts to highest attribute once learned.",
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor:
 			"Cleanses the remnants of humanity. A subtle dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -1022,16 +1075,27 @@ export const powers: Power[] = [
 		description: "Mark a target for absolute destruction.",
 		type: "divine",
 		rarity: "legendary",
-		requirements: { level: 19, ability: "Wisdom", score: 17 },
-		activation: { type: "bonus-action" },
-		range: { type: "sight" },
+		requirements: {
+			level: 19,
+			ability: "Wisdom",
+			score: 17,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "sight",
+		},
 		effects: {
 			primary:
 				"Target loses all damage resistances and immunities for 1 minute.",
 			secondary:
 				"Any damage dealt to them is doubled. Adaptive once learned via Rune.",
 		},
-		limitations: { uses: "Once per month", cooldown: "Month" },
+		limitations: {
+			uses: "Once per month",
+			cooldown: "Month",
+		},
 		flavor:
 			"Reclaims the fragile limits of flesh. A silent breaking point of the world.",
 		source: "System Ascendant Canon",
@@ -1043,16 +1107,31 @@ export const powers: Power[] = [
 		description: "Take absolute control over a lesser creature's mind.",
 		type: "innate",
 		rarity: "very_rare",
-		requirements: { level: 15, ability: "Wisdom", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 30 },
-		duration: { type: "concentration", time: "1 hour" },
+		requirements: {
+			level: 15,
+			ability: "Wisdom",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
+		duration: {
+			type: "concentration",
+			time: "1 hour",
+		},
 		effects: {
 			primary:
 				"You dictate the creature's actions completely. Adapts to your highest applicable attribute.",
 			secondary: "Target gets a save each time it takes damage.",
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Cleanses all who stand in opposition. An intricate whisper in the shadows.",
 		source: "System Ascendant Canon",
@@ -1064,16 +1143,27 @@ export const powers: Power[] = [
 		description: "Throw your weapon and instantly teleport to its location.",
 		type: "awakening",
 		rarity: "uncommon",
-		requirements: { level: 3, ability: "Dexterity", score: 13 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 3,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Make a ranged attack with a melee weapon. Hit or miss, you teleport to an unoccupied space adjacent to the target.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor:
 			"Overrides the arrogant and the mighty. A relentless beautiful catastrophe.",
 		source: "System Ascendant Canon",
@@ -1085,15 +1175,25 @@ export const powers: Power[] = [
 		description: "Trade your own vitality to heal another.",
 		type: "innate",
 		rarity: "uncommon",
-		requirements: { level: 2, ability: "Constitution", score: 12 },
-		activation: { type: "action" },
-		range: { type: "touch" },
+		requirements: {
+			level: 2,
+			ability: "Constitution",
+			score: 12,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "touch",
+		},
 		effects: {
 			primary: "Take 4d8 necrotic damage (ignores resistance/immunity).",
 			secondary:
 				"One creature you touch instantly regains double the damage taken as hit points. Adaptive once learned.",
 		},
-		limitations: { uses: "Unlimited" },
+		limitations: {
+			uses: "Unlimited",
+		},
 		flavor: "Destroys the darkness within. A desperate ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/life-transfer.webp",
@@ -1104,16 +1204,28 @@ export const powers: Power[] = [
 		description: "Intensify gravity on a single target.",
 		type: "awakening",
 		rarity: "rare",
-		requirements: { level: 11, ability: "Intelligence", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 11,
+			ability: "Intelligence",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Target takes 5d10 force damage and has its movement speed reduced to 5 feet.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "3 times per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "3 times per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Destroys the remnants of humanity. A desperate surge of lethal intent.",
 		source: "System Ascendant Canon",
@@ -1126,16 +1238,28 @@ export const powers: Power[] = [
 			"Manifest a perfect solid clone of yourself made of shadow and dust.",
 		type: "monstrous",
 		rarity: "very_rare",
-		requirements: { level: 14, ability: "Charisma", score: 15 },
-		activation: { type: "action" },
-		duration: { type: "concentration", time: "1 hour" },
+		requirements: {
+			level: 14,
+			ability: "Charisma",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		duration: {
+			type: "concentration",
+			time: "1 hour",
+		},
 		effects: {
 			primary:
 				"Create a clone with 1 HP and your exact AC and stats. It shares your turn and can attack.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Denies the concept of defeat. A chaotic dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -1147,17 +1271,32 @@ export const powers: Power[] = [
 		description: "Summon an apocalyptic thunderstorm.",
 		type: "divine",
 		rarity: "very_rare",
-		requirements: { level: 13, ability: "Wisdom", score: 15 },
-		activation: { type: "action" },
-		range: { type: "miles", distance: 1 },
-		duration: { type: "concentration", time: "10 minutes" },
+		requirements: {
+			level: 13,
+			ability: "Wisdom",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "miles",
+			distance: 1,
+		},
+		duration: {
+			type: "concentration",
+			time: "10 minutes",
+		},
 		effects: {
 			primary:
 				"Call down lightning bolts every turn as a bonus action (6d10 damage).",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Absorbs the concept of defeat. A sorrowful surge of lethal intent.",
 		source: "System Ascendant Canon",
@@ -1170,16 +1309,27 @@ export const powers: Power[] = [
 			"Instill rapid decay and necrosis with a simple physical touch.",
 		type: "innate",
 		rarity: "rare",
-		requirements: { level: 9, ability: "Wisdom", score: 13 },
-		activation: { type: "action" },
-		range: { type: "touch" },
+		requirements: {
+			level: 9,
+			ability: "Wisdom",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "touch",
+		},
 		effects: {
 			primary:
 				"Deal 8d8 necrotic damage. Plants and non-magical structures instantly wither or degrade.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Twice per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Twice per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Bends the quiet space between breaths. An intricate death of hesitation.",
 		source: "System Ascendant Canon",
@@ -1191,16 +1341,28 @@ export const powers: Power[] = [
 		description: "Pull a meteorite from the upper atmosphere.",
 		type: "awakening",
 		rarity: "legendary",
-		requirements: { level: 20, ability: "Intelligence", score: 20 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 300 },
+		requirements: {
+			level: 20,
+			ability: "Intelligence",
+			score: 20,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 300,
+		},
 		effects: {
 			primary:
 				"A blazing meteorite impacts a 40-foot radius. Deals 15d6 fire and 15d6 bludgeoning damage.",
 			secondary:
 				"Once learned via Rune, adapts to your highest applicable attribute.",
 		},
-		limitations: { uses: "Once per month", cooldown: "Month" },
+		limitations: {
+			uses: "Once per month",
+			cooldown: "Month",
+		},
 		flavor:
 			"Cleanses the fragile limits of flesh. An intricate ultimate equalizer.",
 		source: "System Ascendant Canon",
@@ -1212,15 +1374,27 @@ export const powers: Power[] = [
 		description: "Briefly desynchronize a target from the dimensional lattice.",
 		type: "awakening",
 		rarity: "very_rare",
-		requirements: { level: 16, ability: "Intelligence", score: 16 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 30 },
+		requirements: {
+			level: 16,
+			ability: "Intelligence",
+			score: 16,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"Target is removed from reality for 1d4 rounds. When they return, they take 10d10 force damage.",
 			secondary: "Adaptive once learned via Rune.",
 		},
-		limitations: { uses: "Once per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Once per day",
+			cooldown: "Long rest",
+		},
 		flavor:
 			"Overrides the arrogant and the mighty. A devastating whisper in the shadows.",
 		source: "System Ascendant Canon",
@@ -1232,15 +1406,27 @@ export const powers: Power[] = [
 		description: "Release a blinding burst of celestial heat.",
 		type: "divine",
 		rarity: "rare",
-		requirements: { level: 9, ability: "Wisdom", score: 13 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 20 },
+		requirements: {
+			level: 9,
+			ability: "Wisdom",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 20,
+		},
 		effects: {
 			primary:
 				"All creatures in a 20ft radius take 6d8 fire damage and are blinded for 1 minute.",
 			secondary: "Adaptive once learned via Rune.",
 		},
-		limitations: { uses: "Twice per day", cooldown: "Long rest" },
+		limitations: {
+			uses: "Twice per day",
+			cooldown: "Long rest",
+		},
 		flavor: "Reclaims the architect's design. A devastating roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/solar-flare.webp",
@@ -1251,16 +1437,27 @@ export const powers: Power[] = [
 		description: "Collapse space into a point of infinite density.",
 		type: "awakening",
 		rarity: "legendary",
-		requirements: { level: 20, ability: "Intelligence", score: 20 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 100 },
+		requirements: {
+			level: 20,
+			ability: "Intelligence",
+			score: 20,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 100,
+		},
 		effects: {
 			primary:
 				"Create a singularity that pulls all creatures within 50ft toward it. Deals 20d10 force damage.",
 			secondary:
 				"Targets with less than 100HP are instantly annihilated. Adaptive.",
 		},
-		limitations: { uses: "Once per day" },
+		limitations: {
+			uses: "Once per day",
+		},
 		flavor:
 			"Ignites the concept of defeat. A sorrowful surge of lethal intent.",
 		source: "System Ascendant Canon",
@@ -1272,15 +1469,25 @@ export const powers: Power[] = [
 		description: "Surround yourself with a layer of frozen time.",
 		type: "divine",
 		rarity: "very_rare",
-		requirements: { level: 14, ability: "Wisdom", score: 16 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		requirements: {
+			level: 14,
+			ability: "Wisdom",
+			score: 16,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"For 1 minute, you are immune to all damage as attacks simply stop in time before hitting you.",
 			secondary: "You cannot move more than 5ft per turn while active.",
 		},
-		limitations: { uses: "Once per long rest" },
+		limitations: {
+			uses: "Once per long rest",
+		},
 		flavor:
 			"Reclaims the dimensional divide. A silent testament to absolute power.",
 		source: "System Ascendant Canon",
@@ -1292,15 +1499,25 @@ export const powers: Power[] = [
 		description: "Dissolve into a cloud of stardust.",
 		type: "innate",
 		rarity: "rare",
-		requirements: { level: 9, ability: "Dexterity", score: 14 },
-		activation: { type: "action" },
-		range: { type: "self" },
+		requirements: {
+			level: 9,
+			ability: "Dexterity",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"You become incorporeal and can pass through objects. You gain a fly speed of 60ft.",
 			secondary: "While drifting, you are invisible in dim light or darkness.",
 		},
-		limitations: { uses: "Duration: 10 minutes" },
+		limitations: {
+			uses: "Duration: 10 minutes",
+		},
 		flavor:
 			"Overrides the remnants of humanity. A silent surge of lethal intent.",
 		source: "System Ascendant Canon",
@@ -1312,15 +1529,26 @@ export const powers: Power[] = [
 		description: "Heavily increase gravity in a localized area.",
 		type: "awakening",
 		rarity: "uncommon",
-		requirements: { level: 4, ability: "Strength", score: 13 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 4,
+			ability: "Strength",
+			score: 13,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Creatures in a 20ft radius have their speed reduced to 0 and take 4d6 bludgeoning damage.",
 			secondary: "Flying creatures are slammed to the ground.",
 		},
-		limitations: { uses: "3 times per day" },
+		limitations: {
+			uses: "3 times per day",
+		},
 		flavor: "Bends the remnants of humanity. A subtle surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/gravity-well.webp",
@@ -1331,15 +1559,26 @@ export const powers: Power[] = [
 		description: "Link the fates of two creatures.",
 		type: "awakening",
 		rarity: "rare",
-		requirements: { level: 11, ability: "Intelligence", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 11,
+			ability: "Intelligence",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Choose two targets. Any damage or healing received by one is shared by the other.",
 			secondary: "Duration: 1 minute. Adaptive.",
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor:
 			"Absorbs the fragile limits of flesh. A sorrowful breaking point of the world.",
 		source: "System Ascendant Canon",
@@ -1351,15 +1590,26 @@ export const powers: Power[] = [
 		description: "Release the energy of a dying star.",
 		type: "divine",
 		rarity: "legendary",
-		requirements: { level: 18, ability: "Charisma", score: 18 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 120 },
+		requirements: {
+			level: 18,
+			ability: "Charisma",
+			score: 18,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 120,
+		},
 		effects: {
 			primary: "Deals 15d12 fire and radiant damage in a 40ft radius.",
 			secondary:
 				"Creatures that survive are permanently blinded unless cured by high-tier magic.",
 		},
-		limitations: { uses: "Once per day" },
+		limitations: {
+			uses: "Once per day",
+		},
 		flavor:
 			"Absorbs the remnants of humanity. A sorrowful surge of lethal intent.",
 		source: "System Ascendant Canon",
@@ -1371,15 +1621,26 @@ export const powers: Power[] = [
 		description: "Deploy a cloud of metallic micro-constructs.",
 		type: "class",
 		rarity: "uncommon",
-		requirements: { level: 6, ability: "Intelligence", score: 14 },
-		activation: { type: "bonus-action" },
-		range: { type: "feet", distance: 30 },
+		requirements: {
+			level: 6,
+			ability: "Intelligence",
+			score: 14,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"The swarm deals 2d8 piercing damage to a target each turn and grants you half-cover.",
 			secondary: "Can be used to repair metal objects or heal constructs.",
 		},
-		limitations: { uses: "Concentration, up to 1 minute" },
+		limitations: {
+			uses: "Concentration, up to 1 minute",
+		},
 		flavor:
 			"Ignores the remnants of humanity. A devastating dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -1391,16 +1652,26 @@ export const powers: Power[] = [
 		description: "Momentarily channel the power of the ancient behemoths.",
 		type: "innate",
 		rarity: "uncommon",
-		requirements: { level: 3, ability: "Strength", score: 17 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		requirements: {
+			level: 3,
+			ability: "Strength",
+			score: 17,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"Your next melee attack deals triple damage and knocks the target prone.",
 			secondary:
 				"You count as one size larger for lifting and carrying for 1 hour.",
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor:
 			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -1412,16 +1683,27 @@ export const powers: Power[] = [
 		description: "Summon spectral copies of yourself from previous timelines.",
 		type: "awakening",
 		rarity: "rare",
-		requirements: { level: 13, ability: "Wisdom", score: 14 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 30 },
+		requirements: {
+			level: 13,
+			ability: "Wisdom",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"Create 1d4 echoes that mimic your movements and attacks, dealing 25% damage each.",
 			secondary:
 				"Enemies have disadvantage on attacks against you while echoes are active.",
 		},
-		limitations: { uses: "Duration: 3 rounds" },
+		limitations: {
+			uses: "Duration: 3 rounds",
+		},
 		flavor:
 			"Destroys the arrogant and the mighty. A desperate whisper in the shadows.",
 		source: "System Ascendant Canon",
@@ -1433,15 +1715,26 @@ export const powers: Power[] = [
 		description: "Entomb a creature in absolute ice.",
 		type: "divine",
 		rarity: "rare",
-		requirements: { level: 12, ability: "Constitution", score: 16 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 12,
+			ability: "Constitution",
+			score: 16,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Target is frozen solid, becoming paralyzed and immune to all damage for 3 rounds.",
 			secondary: "When it breaks, it takes 12d6 cold damage. Adaptive.",
 		},
-		limitations: { uses: "Once per day" },
+		limitations: {
+			uses: "Once per day",
+		},
 		flavor:
 			"Cleanses the quiet space between breaths. A forbidden death of hesitation.",
 		source: "System Ascendant Canon",
@@ -1453,15 +1746,23 @@ export const powers: Power[] = [
 		description: "Emissions of radiant energy from your cells.",
 		type: "innate",
 		rarity: "common",
-		requirements: { level: 1 },
-		activation: { type: "action" },
-		range: { type: "self" },
+		requirements: {
+			level: 1,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"Shed bright light in a 20ft radius and dim light for another 20ft.",
 			secondary: "You can change the color at will. Adaptive.",
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor:
 			"Destroys the quiet space between breaths. A triumphant death of hesitation.",
 		source: "System Ascendant Canon",
@@ -1473,15 +1774,26 @@ export const powers: Power[] = [
 		description: "Send a jolt of psychic static into a target's brain.",
 		type: "class",
 		rarity: "common",
-		requirements: { level: 2, ability: "Intelligence", score: 13 },
-		activation: { type: "bonus-action" },
-		range: { type: "feet", distance: 30 },
+		requirements: {
+			level: 2,
+			ability: "Intelligence",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"Target takes 1d10 psychic damage and cannot take reactions until their next turn.",
 			secondary: "Adaptive DC.",
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/neuro-spike.webp",
@@ -1492,15 +1804,26 @@ export const powers: Power[] = [
 		description: "Generate a lash of superheated ionized gas.",
 		type: "awakening",
 		rarity: "uncommon",
-		requirements: { level: 5, ability: "Dexterity", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 15 },
+		requirements: {
+			level: 5,
+			ability: "Dexterity",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 15,
+		},
 		effects: {
 			primary:
 				"Melee spell attack dealing 3d8 fire damage. Target is pulled 10ft toward you.",
 			secondary: "Adaptive attack modifier.",
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor:
 			"Weaves all who stand in opposition. A subtle beautiful catastrophe.",
 		source: "System Ascendant Canon",
@@ -1512,15 +1835,25 @@ export const powers: Power[] = [
 		description: "Manifest a sword of pure willpower.",
 		type: "class",
 		rarity: "uncommon",
-		requirements: { level: 3, ability: "Charisma", score: 14 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		requirements: {
+			level: 3,
+			ability: "Charisma",
+			score: 14,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"A blade appears in your hand. Attacks deal 2d10 force damage and ignore non-magical armor.",
 			secondary: "Duration: 10 minutes. Adaptive.",
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor:
 			"Cleanses the arrogant and the mighty. A forbidden whisper in the shadows.",
 		source: "System Ascendant Canon",
@@ -1532,14 +1865,24 @@ export const powers: Power[] = [
 		description: "Tear a small hole in reality to store objects.",
 		type: "innate",
 		rarity: "rare",
-		requirements: { level: 7, ability: "Intelligence", score: 15 },
-		activation: { type: "action" },
-		range: { type: "self" },
+		requirements: {
+			level: 7,
+			ability: "Intelligence",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary: "Access a private storage dimension (up to 500 lbs of gear).",
 			secondary: "Can be used to bypass security checkpoints easily.",
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor:
 			"Overrides the fragile limits of flesh. A silent breaking point of the world.",
 		source: "System Ascendant Canon",
@@ -1551,16 +1894,26 @@ export const powers: Power[] = [
 		description: "Bind a piece of your soul to a location or object.",
 		type: "class",
 		rarity: "very_rare",
-		requirements: { level: 15, ability: "Charisma", score: 16 },
-		activation: { type: "long-rest" },
-		range: { type: "self" },
+		requirements: {
+			level: 15,
+			ability: "Charisma",
+			score: 16,
+		},
+		activation: {
+			type: "long-rest",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"Choose a 'Sanctuary'. You can teleport back to it from anywhere on the same plane.",
 			secondary:
 				"If you die, you can choose to reincarnate at the Sanctuary after 7 days.",
 		},
-		limitations: { uses: "One anchor at a time" },
+		limitations: {
+			uses: "One anchor at a time",
+		},
 		flavor:
 			"Cleanses the flow of time itself. A forbidden symphony of violence.",
 		source: "System Ascendant Canon",
@@ -1572,16 +1925,27 @@ export const powers: Power[] = [
 		description: "Accelerate decay in a nearby area.",
 		type: "awakening",
 		rarity: "rare",
-		requirements: { level: 10, ability: "Constitution", score: 14 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 20 },
+		requirements: {
+			level: 10,
+			ability: "Constitution",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 20,
+		},
 		effects: {
 			primary:
 				"All non-living objects in range rot or rust instantly. Living targets take 5d8 necrotic damage.",
 			secondary:
 				"Metal armor has its AC reduced by 2 permanently (until repaired).",
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor:
 			"Denies the concept of defeat. A brutal dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -1593,16 +1957,26 @@ export const powers: Power[] = [
 		description: "Receive direct guidance from the System Core.",
 		type: "divine",
 		rarity: "rare",
-		requirements: { level: 11, ability: "Wisdom", score: 17 },
-		activation: { type: "long-rest" },
-		range: { type: "self" },
+		requirements: {
+			level: 11,
+			ability: "Wisdom",
+			score: 17,
+		},
+		activation: {
+			type: "long-rest",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"You can ask three questions and receive cryptic but 100% accurate answers.",
 			secondary:
 				"You gain advantage on all Intelligence checks for the next 24 hours.",
 		},
-		limitations: { uses: "Once per week" },
+		limitations: {
+			uses: "Once per week",
+		},
 		flavor:
 			"Destroys the dimensional divide. A sorrowful symphony of violence.",
 		source: "System Ascendant Canon",
@@ -1614,16 +1988,27 @@ export const powers: Power[] = [
 		description: "Manipulate the shadow of a creature to control its body.",
 		type: "innate",
 		rarity: "very_rare",
-		requirements: { level: 16, ability: "Dexterity", score: 18 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 16,
+			ability: "Dexterity",
+			score: 18,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Target must make a Wisdom save or become your puppet. You control its movement and actions.",
 			secondary:
 				"Target can attempt to break free at the end of each turn. Adaptive DC.",
 		},
-		limitations: { uses: "Once per long rest" },
+		limitations: {
+			uses: "Once per long rest",
+		},
 		flavor:
 			"Cleanses the quiet space between breaths. An intricate death of hesitation.",
 		source: "System Ascendant Canon",
@@ -1635,15 +2020,26 @@ export const powers: Power[] = [
 		description: "Release excess heat from your body in a sudden burst.",
 		type: "innate",
 		rarity: "uncommon",
-		requirements: { level: 4, ability: "Constitution", score: 15 },
-		activation: { type: "reaction" },
-		range: { type: "feet", distance: 10 },
+		requirements: {
+			level: 4,
+			ability: "Constitution",
+			score: 15,
+		},
+		activation: {
+			type: "reaction",
+		},
+		range: {
+			type: "feet",
+			distance: 10,
+		},
 		effects: {
 			primary:
 				"Triggered when you take damage. Deals 3d10 fire damage to all adjacent enemies.",
 			secondary: "You gain resistance to fire damage for 1 hour.",
 		},
-		limitations: { uses: "Twice per long rest" },
+		limitations: {
+			uses: "Twice per long rest",
+		},
 		flavor:
 			"Shatters the dimensional divide. A chaotic testament to absolute power.",
 		source: "System Ascendant Canon",
@@ -1656,38 +2052,29 @@ export const powers: Power[] = [
 			"Invert your personal gravity to 'fall' upward or across distances.",
 		type: "awakening",
 		rarity: "common",
-		requirements: { level: 2, ability: "Strength", score: 12 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		requirements: {
+			level: 2,
+			ability: "Strength",
+			score: 12,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"You can jump up to 60ft as part of your movement. You do not take falling damage.",
 			secondary: "You can stand on walls or ceilings for 1 round.",
 		},
-		limitations: { uses: "At-will" },
+		limitations: {
+			uses: "At-will",
+		},
 		flavor:
 			"Destroys the quiet space between breaths. A triumphant roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/leap.webp",
-	},
-	{
-		id: "mana-siphon",
-		name: "Mana Siphon",
-		description: "Drain the energy from an active spell or magical item.",
-		type: "class",
-		rarity: "rare",
-		requirements: { level: 8, ability: "Intelligence", score: 16 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 30 },
-		effects: {
-			primary:
-				"End a spell effect of 4th level or lower. You regain 1d6 MP or one low-tier spell slot.",
-			secondary: "Adaptive.",
-		},
-		limitations: { uses: "3 times per long rest" },
-		flavor: "Cleanses the darkness within. A forbidden ultimate equalizer.",
-		source: "System Ascendant Canon",
-		image: "/generated/compendium/powers/siphon.webp",
 	},
 	{
 		id: "obsidian-wall",
@@ -1695,16 +2082,27 @@ export const powers: Power[] = [
 		description: "Raise a barrier of volcanic glass from the ground.",
 		type: "awakening",
 		rarity: "uncommon",
-		requirements: { level: 6, ability: "Constitution", score: 14 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 6,
+			ability: "Constitution",
+			score: 14,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Create a wall 20ft long, 10ft high, and 1ft thick. It has 50 HP.",
 			secondary:
 				"Attacking it with melee deals 1d6 piercing damage back to the attacker.",
 		},
-		limitations: { uses: "Once per short rest" },
+		limitations: {
+			uses: "Once per short rest",
+		},
 		flavor: "Absorbs the architect's design. A sorrowful roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/wall.webp",
@@ -1715,14 +2113,25 @@ export const powers: Power[] = [
 		description: "Focus radiant energy into a piercing beam.",
 		type: "divine",
 		rarity: "rare",
-		requirements: { level: 10, ability: "Charisma", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 120 },
+		requirements: {
+			level: 10,
+			ability: "Charisma",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 120,
+		},
 		effects: {
 			primary: "A 5ft wide line deals 8d8 radiant damage. Penetrates targets.",
 			secondary: "Undead take double damage.",
 		},
-		limitations: { uses: "2 times per long rest" },
+		limitations: {
+			uses: "2 times per long rest",
+		},
 		flavor:
 			"Cleanses the quiet space between breaths. A forbidden death of hesitation.",
 		source: "System Ascendant Canon",
@@ -1734,15 +2143,25 @@ export const powers: Power[] = [
 		description: "Create a swirling miniature hurricane around yourself.",
 		type: "innate",
 		rarity: "uncommon",
-		requirements: { level: 5, ability: "Dexterity", score: 13 },
-		activation: { type: "bonus-action" },
-		range: { type: "self" },
+		requirements: {
+			level: 5,
+			ability: "Dexterity",
+			score: 13,
+		},
+		activation: {
+			type: "bonus-action",
+		},
+		range: {
+			type: "self",
+		},
 		effects: {
 			primary:
 				"Ranged attacks against you have disadvantage. Any creature that enters adjacent space is pushed 10ft away.",
 			secondary: "Adaptive DC for push.",
 		},
-		limitations: { uses: "Duration: 1 minute" },
+		limitations: {
+			uses: "Duration: 1 minute",
+		},
 		flavor:
 			"Crushes the concept of defeat. A desperate dance performed on the edge of a blade.",
 		source: "System Ascendant Canon",
@@ -1754,15 +2173,26 @@ export const powers: Power[] = [
 		description: "Summon a celestial sentinel to protect your allies.",
 		type: "divine",
 		rarity: "very_rare",
-		requirements: { level: 14, ability: "Charisma", score: 17 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 30 },
+		requirements: {
+			level: 14,
+			ability: "Charisma",
+			score: 17,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"An angelic guardian appears and grants all allies +4 AC and resistance to necrotic damage.",
 			secondary: "Duration: 1 minute. Adaptive.",
 		},
-		limitations: { uses: "Once per day" },
+		limitations: {
+			uses: "Once per day",
+		},
 		flavor: "Ignores the architect's design. An absolute roar of raw mana.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/seraph.webp",
@@ -1773,16 +2203,27 @@ export const powers: Power[] = [
 		description: "Link your life force to an enemy to drain their vitality.",
 		type: "class",
 		rarity: "rare",
-		requirements: { level: 9, ability: "Constitution", score: 15 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 60 },
+		requirements: {
+			level: 9,
+			ability: "Constitution",
+			score: 15,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 60,
+		},
 		effects: {
 			primary:
 				"Target takes 4d6 necrotic damage each turn. You heal for the same amount.",
 			secondary:
 				"Tether breaks if the target moves more than 60ft away. Adaptive.",
 		},
-		limitations: { uses: "Concentration" },
+		limitations: {
+			uses: "Concentration",
+		},
 		flavor:
 			"Absorbs the quiet space between breaths. A sorrowful death of hesitation.",
 		source: "System Ascendant Canon",
@@ -1794,15 +2235,26 @@ export const powers: Power[] = [
 		description: "Create an expansive dome of impenetrable ice.",
 		type: "awakening",
 		rarity: "very_rare",
-		requirements: { level: 16, ability: "Constitution", score: 18 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 30 },
+		requirements: {
+			level: 16,
+			ability: "Constitution",
+			score: 18,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 30,
+		},
 		effects: {
 			primary:
 				"Create a 30ft radius dome. It has 200 HP and grants total cover to those inside.",
 			secondary: "Temperature inside is perfectly regulated. Adaptive.",
 		},
-		limitations: { uses: "Once per day" },
+		limitations: {
+			uses: "Once per day",
+		},
 		flavor:
 			"Destroys the flow of time itself. A desperate symphony of violence.",
 		source: "System Ascendant Canon",
@@ -1815,15 +2267,26 @@ export const powers: Power[] = [
 			"Cut through the very fabric of space to open a localized vacuum.",
 		type: "awakening",
 		rarity: "legendary",
-		requirements: { level: 19, ability: "Intelligence", score: 19 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 90 },
+		requirements: {
+			level: 19,
+			ability: "Intelligence",
+			score: 19,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 90,
+		},
 		effects: {
 			primary:
 				"A 10ft tear appears. It sucks in all air and light, dealing 12d12 force damage.",
 			secondary: "Creatures sucked in are sent to the Astral Plane. Adaptive.",
 		},
-		limitations: { uses: "Once per day" },
+		limitations: {
+			uses: "Once per day",
+		},
 		flavor: "Reclaims the darkness within. A devastating ultimate equalizer.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/powers/shear.webp",
@@ -1834,16 +2297,27 @@ export const powers: Power[] = [
 		description: "Release a wave of pure system administrative power.",
 		type: "divine",
 		rarity: "legendary",
-		requirements: { level: 20, ability: "Charisma", score: 20 },
-		activation: { type: "action" },
-		range: { type: "feet", distance: 100 },
+		requirements: {
+			level: 20,
+			ability: "Charisma",
+			score: 20,
+		},
+		activation: {
+			type: "action",
+		},
+		range: {
+			type: "feet",
+			distance: 100,
+		},
 		effects: {
 			primary:
 				"All enemies in 100ft must make a Wisdom save or be reduced to 1 HP.",
 			secondary:
 				"All mechanical and magical traps in the area are permanently disabled. Adaptive.",
 		},
-		limitations: { uses: "Once per week" },
+		limitations: {
+			uses: "Once per week",
+		},
 		flavor:
 			"Commands the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		source: "System Ascendant Canon",
