@@ -1,6 +1,23 @@
 -- === Authoritative Global Parity Schema Fixes ===
 -- Objective: Ensure all compendium tables have the 100% parity fields (mechanics, flavor, lore, tags, image_url, display_name)
 -- and create the Artifacts and Equipment tables if they are somehow missing or incomplete.
+-- Also defines essential functions like update_modified_column and exec_sql.
+
+-- 0. Essential Functions
+CREATE OR REPLACE FUNCTION public.update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION public.exec_sql(sql_string text)
+RETURNS void AS $$
+BEGIN
+    EXECUTE sql_string;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- 1. Artifacts (Modern)
 CREATE TABLE IF NOT EXISTS public.compendium_artifacts (
@@ -79,7 +96,14 @@ ALTER TABLE public.compendium_paths ADD COLUMN IF NOT EXISTS lore JSONB DEFAULT 
 ALTER TABLE public.compendium_paths ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}';
 ALTER TABLE public.compendium_paths ADD COLUMN IF NOT EXISTS display_name TEXT;
 
--- 6. All other tables to match Base Fields
+-- 6. Relics (Specialized Fixes)
+ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS weight FLOAT DEFAULT 0;
+ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS source_book TEXT DEFAULT 'System Ascendant Canon';
+ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS lore TEXT;
+ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS image_url TEXT;
+ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS display_name TEXT;
+
+-- 7. All other tables to match Base Fields
 DO $$
 DECLARE
     t text;

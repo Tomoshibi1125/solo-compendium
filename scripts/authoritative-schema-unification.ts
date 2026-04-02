@@ -17,6 +17,15 @@ async function applyAuthoritativeFixes() {
 	console.log("=== Applying Authoritative Global Parity Schema Fixes ===");
 
 	const sql = `
+        -- 0. Essential Functions
+        CREATE OR REPLACE FUNCTION public.update_modified_column()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            NEW.updated_at = now();
+            RETURN NEW;
+        END;
+        $$ language 'plpgsql';
+
         -- 1. Artifacts (New)
         CREATE TABLE IF NOT EXISTS public.compendium_artifacts (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -94,7 +103,14 @@ async function applyAuthoritativeFixes() {
         ALTER TABLE public.compendium_paths ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}';
         ALTER TABLE public.compendium_paths ADD COLUMN IF NOT EXISTS display_name TEXT;
 
-        -- 6. All other tables to match Base Fields
+        -- 6. Relics (Specialized Fixes)
+        ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS weight FLOAT DEFAULT 0;
+        ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS source_book TEXT DEFAULT 'System Ascendant Canon';
+        ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS lore TEXT;
+        ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS image_url TEXT;
+        ALTER TABLE public.compendium_relics ADD COLUMN IF NOT EXISTS display_name TEXT;
+
+        -- 7. All other tables to match Base Fields
         DO $$
         DECLARE
             t text;

@@ -1,6 +1,22 @@
 -- Protocol Warden Terminology Unification Migration
 -- Renames all legacy DM/GM terminology to Warden/System
 
+-- 0. Essential Common Functions
+CREATE OR REPLACE FUNCTION public.update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION public.exec_sql(sql_string text)
+RETURNS void AS $$
+BEGIN
+    EXECUTE sql_string;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
 -- 1. Rename dm_id to warden_id in campaigns table
 ALTER TABLE public.campaigns RENAME COLUMN dm_id TO warden_id;
 
