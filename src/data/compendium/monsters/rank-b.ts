@@ -12,7 +12,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -20,12 +20,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 22,
-			hitPoints: 957,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -49,9 +47,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -62,7 +60,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -75,7 +73,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -97,7 +95,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -105,12 +103,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 24,
-			hitPoints: 900,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -134,9 +130,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -147,7 +143,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -160,7 +156,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -182,7 +178,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -190,12 +186,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 23,
-			hitPoints: 287,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -219,9 +213,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -232,7 +226,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -254,7 +248,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -262,12 +256,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 22,
-			hitPoints: 787,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -291,9 +283,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -304,7 +296,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -326,7 +318,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -334,12 +326,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 13,
-			hitPoints: 768,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -363,9 +353,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -376,7 +366,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -389,7 +379,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -411,7 +401,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -419,12 +409,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 29,
-			hitPoints: 1055,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -448,9 +436,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -461,7 +449,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -483,7 +471,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -491,12 +479,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 22,
-			hitPoints: 700,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -520,9 +506,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -533,7 +519,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -555,7 +541,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -563,12 +549,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 22,
-			hitPoints: 253,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -592,9 +576,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -605,7 +589,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -627,7 +611,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -635,12 +619,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 12,
-			hitPoints: 982,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -664,9 +646,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -677,7 +659,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -699,7 +681,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -707,12 +689,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 11,
-			hitPoints: 777,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -736,9 +716,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -749,7 +729,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -762,7 +742,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -784,7 +764,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -792,12 +772,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 21,
-			hitPoints: 903,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -821,9 +799,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -834,7 +812,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -847,7 +825,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -869,7 +847,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -877,12 +855,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 20,
-			hitPoints: 517,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -906,9 +882,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -919,7 +895,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -932,7 +908,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -954,7 +930,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -962,12 +938,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 11,
-			hitPoints: 576,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -991,9 +965,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1004,7 +978,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1026,7 +1000,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -1034,12 +1008,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 17,
-			hitPoints: 722,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1063,9 +1035,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1076,7 +1048,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1089,7 +1061,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1111,7 +1083,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -1119,12 +1091,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 18,
-			hitPoints: 905,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1148,9 +1118,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1161,7 +1131,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1174,7 +1144,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1196,7 +1166,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -1204,12 +1174,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 16,
-			hitPoints: 194,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1233,9 +1201,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1246,7 +1214,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1259,7 +1227,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1281,7 +1249,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -1289,12 +1257,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 18,
-			hitPoints: 702,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1318,9 +1284,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1331,7 +1297,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1344,7 +1310,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1366,7 +1332,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -1374,12 +1340,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 25,
-			hitPoints: 137,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1403,9 +1367,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1416,7 +1380,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1438,7 +1402,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -1446,12 +1410,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 16,
-			hitPoints: 983,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1475,9 +1437,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1488,7 +1450,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1501,7 +1463,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1523,7 +1485,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -1531,12 +1493,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 28,
-			hitPoints: 622,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1560,9 +1520,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1573,7 +1533,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1595,7 +1555,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -1603,12 +1563,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 12,
-			hitPoints: 406,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1632,9 +1590,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1645,7 +1603,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1658,7 +1616,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1680,7 +1638,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -1688,12 +1646,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 13,
-			hitPoints: 1042,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1717,9 +1673,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1730,7 +1686,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1752,7 +1708,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -1760,12 +1716,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 11,
-			hitPoints: 102,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1789,9 +1743,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1802,7 +1756,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1815,7 +1769,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1837,7 +1791,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -1845,12 +1799,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 20,
-			hitPoints: 1089,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1874,9 +1826,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1887,7 +1839,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1900,7 +1852,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1922,7 +1874,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -1930,12 +1882,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 25,
-			hitPoints: 172,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -1959,9 +1909,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -1972,7 +1922,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -1994,7 +1944,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -2002,12 +1952,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 20,
-			hitPoints: 1045,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2031,9 +1979,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2044,7 +1992,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2057,7 +2005,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2079,7 +2027,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -2087,12 +2035,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 10,
-			hitPoints: 1079,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2116,9 +2062,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2129,7 +2075,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2151,7 +2097,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -2159,12 +2105,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 20,
-			hitPoints: 546,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2188,9 +2132,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2201,7 +2145,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2214,7 +2158,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2236,7 +2180,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -2244,12 +2188,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 17,
-			hitPoints: 1098,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2273,9 +2215,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2286,7 +2228,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2308,7 +2250,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -2316,12 +2258,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 17,
-			hitPoints: 349,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2345,9 +2285,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2358,7 +2298,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2371,7 +2311,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2393,7 +2333,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -2401,12 +2341,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 26,
-			hitPoints: 526,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2430,9 +2368,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2443,7 +2381,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2456,7 +2394,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2478,7 +2416,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -2486,12 +2424,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 26,
-			hitPoints: 405,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2515,9 +2451,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2528,7 +2464,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2541,7 +2477,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2563,7 +2499,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -2571,12 +2507,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 21,
-			hitPoints: 802,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2600,9 +2534,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2613,7 +2547,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2635,7 +2569,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -2643,12 +2577,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 12,
-			hitPoints: 300,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2672,9 +2604,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2685,7 +2617,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2698,7 +2630,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2720,7 +2652,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -2728,12 +2660,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 27,
-			hitPoints: 431,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2757,9 +2687,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2770,7 +2700,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2783,7 +2713,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2805,7 +2735,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -2813,12 +2743,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 10,
-			hitPoints: 669,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2842,9 +2770,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2855,7 +2783,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2868,7 +2796,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2890,7 +2818,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -2898,12 +2826,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 19,
-			hitPoints: 463,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -2927,9 +2853,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -2940,7 +2866,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2953,7 +2879,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -2975,7 +2901,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -2983,12 +2909,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 26,
-			hitPoints: 892,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3012,9 +2936,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3025,7 +2949,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3047,7 +2971,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -3055,12 +2979,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 28,
-			hitPoints: 541,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3084,9 +3006,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3097,7 +3019,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3110,7 +3032,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3132,7 +3054,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -3140,12 +3062,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 17,
-			hitPoints: 757,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3169,9 +3089,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3182,7 +3102,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3195,7 +3115,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3217,7 +3137,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -3225,12 +3145,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 17,
-			hitPoints: 647,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3254,9 +3172,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3267,7 +3185,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3280,7 +3198,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3302,7 +3220,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -3310,12 +3228,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 15,
-			hitPoints: 741,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3339,9 +3255,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3352,7 +3268,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3374,7 +3290,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 16,
@@ -3382,12 +3298,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 11,
-			hitPoints: 517,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3411,9 +3325,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3424,7 +3338,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3437,7 +3351,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3459,7 +3373,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 18,
 				constitution: 16,
@@ -3467,12 +3381,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 19,
-			hitPoints: 771,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3496,9 +3408,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3509,7 +3421,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3522,7 +3434,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3544,7 +3456,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 20,
 				dexterity: 16,
 				constitution: 16,
@@ -3552,12 +3464,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 16,
 			},
-			armorClass: 12,
-			hitPoints: 124,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3581,9 +3491,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 8,
+				attack_bonus: 8,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3594,7 +3504,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3607,7 +3517,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3629,7 +3539,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 18,
 				constitution: 20,
@@ -3637,12 +3547,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 12,
 			},
-			armorClass: 15,
-			hitPoints: 523,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3666,9 +3574,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3679,7 +3587,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3692,7 +3600,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3714,7 +3622,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 22,
 				dexterity: 16,
 				constitution: 22,
@@ -3722,12 +3630,10 @@ export const monsters_b = [
 				wisdom: 12,
 				charisma: 14,
 			},
-			armorClass: 25,
-			hitPoints: 441,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3751,9 +3657,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 9,
+				attack_bonus: 9,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3764,7 +3670,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3777,7 +3683,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3799,7 +3705,7 @@ export const monsters_b = [
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
-			abilityScores: {
+			ability_scores: {
 				strength: 16,
 				dexterity: 16,
 				constitution: 20,
@@ -3807,12 +3713,10 @@ export const monsters_b = [
 				wisdom: 14,
 				charisma: 12,
 			},
-			armorClass: 24,
-			hitPoints: 490,
 			speed: 30,
-			challengeRating: 8,
-			proficiencyBonus: 3,
-			savingThrows: {},
+			challenge_rating: 8,
+			proficiency_bonus: 3,
+			saving_throws: {},
 		},
 		traits: [
 			{
@@ -3836,9 +3740,9 @@ export const monsters_b = [
 				description:
 					"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5d6 necrotic damage.",
 				type: "melee",
-				attackBonus: 6,
+				attack_bonus: 6,
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 5,
 				recharge: "recharge",
 				usage: "at-will",
@@ -3849,7 +3753,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,
@@ -3862,7 +3766,7 @@ export const monsters_b = [
 					"Protocol action. The target must succeed on a DC 14 Constitution saving throw or take 5d6 necrotic damage and suffer a brief impairment (start-of-next-turn).",
 				type: "special",
 				damage: "5d6",
-				damageType: "necrotic",
+				damage_type: "necrotic",
 				range: 60,
 				save: "Constitution",
 				dc: 14,

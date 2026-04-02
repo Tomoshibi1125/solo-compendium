@@ -30,7 +30,7 @@ function baseItem(
 	if (isWeapon && partial.damage) {
 		properties.weapon = {
 			damage: partial.damage,
-			damageType: partial.damage_type || "bludgeoning",
+			damage_type: partial.damage_type || "bludgeoning",
 			range: partial.range
 				? parseInt(partial.range, 10) || undefined
 				: undefined,

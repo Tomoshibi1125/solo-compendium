@@ -1,6 +1,7 @@
 /**
  * Digital Character Sheet Parity Features - Inspiration & Death Saves
  */
+import type { ConditionEntry } from "@/lib/conditionSystem";
 
 export interface CharacterInspiration {
 	inspiration_points: number;
@@ -47,6 +48,9 @@ export interface CharacterResources {
 
 	// Custom resource trackers
 	custom_resources: CustomResource[];
+
+	// Character conditions (migrated to resources for state persistence)
+	conditions: ConditionEntry[];
 }
 
 // Initialize character resources
@@ -63,6 +67,7 @@ export function initializeCharacterResources(): CharacterResources {
 		},
 		temp_hp_sources: [],
 		custom_resources: [],
+		conditions: [],
 	};
 }
 
@@ -70,35 +75,48 @@ const clampNumber = (value: number, min: number, max: number) =>
 	Math.min(max, Math.max(min, value));
 
 export function normalizeCharacterResources(
-	resources: CharacterResources | null | undefined,
+	resources:
+		| Partial<CharacterResources>
+		| Record<string, unknown>
+		| null
+		| undefined,
 ): CharacterResources {
 	const defaults = initializeCharacterResources();
 	if (!resources) return defaults;
 
-	const inspiration = resources.inspiration || defaults.inspiration;
-	const deathSaves = resources.death_saves || defaults.death_saves;
+	const inspiration =
+		(resources.inspiration as Partial<CharacterInspiration>) ||
+		defaults.inspiration;
+	const deathSaves =
+		(resources.death_saves as Partial<DeathSaves>) || defaults.death_saves;
 	const tempSources = Array.isArray(resources.temp_hp_sources)
-		? resources.temp_hp_sources
+		? (resources.temp_hp_sources as CharacterResources["temp_hp_sources"])
 		: [];
+	const conditions =
+		resources &&
+		"conditions" in resources &&
+		Array.isArray(resources.conditions)
+			? (resources.conditions as ConditionEntry[])
+			: [];
 	const customResources = Array.isArray(resources.custom_resources)
 		? resources.custom_resources
-				.filter((resource) => resource && typeof resource.name === "string")
-				.map((resource) => {
-					const max = Number.isFinite(resource.max)
-						? Math.max(0, resource.max)
-						: 0;
-					const current = Number.isFinite(resource.current)
-						? clampNumber(resource.current, 0, max)
+				.filter(
+					(resource: unknown) =>
+						resource && typeof (resource as CustomResource).name === "string",
+				)
+				.map((resource: unknown) => {
+					const r = resource as CustomResource;
+					const max = Number.isFinite(r.max) ? Math.max(0, r.max) : 0;
+					const current = Number.isFinite(r.current)
+						? clampNumber(r.current, 0, max)
 						: max;
 					const dieSize =
-						Number.isFinite(resource.dieSize) &&
-						resource.dieSize &&
-						resource.dieSize > 0
-							? resource.dieSize
+						Number.isFinite(r.dieSize) && r.dieSize && r.dieSize > 0
+							? r.dieSize
 							: undefined;
-					const recharge = resource.recharge || "none";
+					const recharge = r.recharge || "none";
 					return {
-						...resource,
+						...r,
 						max,
 						current,
 						dieSize,
@@ -109,22 +127,26 @@ export function normalizeCharacterResources(
 
 	return {
 		inspiration: {
-			inspiration_points: Number.isFinite(inspiration.inspiration_points)
-				? inspiration.inspiration_points
-				: defaults.inspiration.inspiration_points,
+			inspiration_points:
+				typeof inspiration.inspiration_points === "number"
+					? inspiration.inspiration_points
+					: defaults.inspiration.inspiration_points,
 			inspiration_used: Boolean(inspiration.inspiration_used),
 		},
 		death_saves: {
-			death_save_successes: Number.isFinite(deathSaves.death_save_successes)
-				? deathSaves.death_save_successes
-				: defaults.death_saves.death_save_successes,
-			death_save_failures: Number.isFinite(deathSaves.death_save_failures)
-				? deathSaves.death_save_failures
-				: defaults.death_saves.death_save_failures,
+			death_save_successes:
+				typeof deathSaves.death_save_successes === "number"
+					? deathSaves.death_save_successes
+					: defaults.death_saves.death_save_successes,
+			death_save_failures:
+				typeof deathSaves.death_save_failures === "number"
+					? deathSaves.death_save_failures
+					: defaults.death_saves.death_save_failures,
 			is_stable: Boolean(deathSaves.is_stable),
 		},
 		temp_hp_sources: tempSources,
 		custom_resources: customResources,
+		conditions,
 	};
 }
 

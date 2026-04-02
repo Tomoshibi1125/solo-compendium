@@ -16,7 +16,7 @@ import type {
 	PromptEnhancement,
 } from "./types";
 
-type BatchResult = {
+export type BatchResult = {
 	index: number;
 	success: boolean;
 	data?: AIResponse["data"];

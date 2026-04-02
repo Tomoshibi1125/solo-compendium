@@ -2,7 +2,7 @@ import { Minus, Plus, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
 import {
 	getCasterType,
@@ -32,8 +32,7 @@ export function SpellSlotsDisplay({
 		level,
 	);
 	const updateSlot = useUpdateSpellSlot();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const casterType = getCasterType(job);
 	const castingAbility = getSpellcastingAbility(job);
@@ -70,12 +69,12 @@ export function SpellSlotsDisplay({
 			});
 
 			if (delta < 0) {
-				playerTools
+				ascendantTools
 					.trackCustomFeatureUsage(
 						characterId,
 						`Tier ${spellLevel} Power Slot`,
 						"cast",
-						"5e",
+						"SA",
 					)
 					.catch(console.error);
 			}

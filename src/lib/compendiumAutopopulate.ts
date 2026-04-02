@@ -28,7 +28,7 @@ export const RANK_TO_CR: Record<string, string[]> = {
 };
 
 export async function getRandomMonster(rank?: string) {
-	let query = supabase.from("compendium_monsters").select("id, name, cr");
+	let query = supabase.from("compendium_monsters").select("*");
 
 	if (rank && RANK_TO_CR[rank]) {
 		query = query.in("cr", RANK_TO_CR[rank]);

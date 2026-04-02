@@ -7,17 +7,17 @@
  *
  * Used by:
  *   - PlayerMapView (player's own character)
- *   - VTTEnhanced (DM clicks a token with characterId)
+ *   - VTTEnhanced (PW clicks a token with characterId)
  */
 
 import { Dice6, ExternalLink, Heart, Shield, Swords, Zap } from "lucide-react";
 // VTTCharacterPanel inherently uses `ddbEnhancements.roll` on line 115 and handles proper campaign syncing via `useCharacterSheetEnhancements(characterId)`.
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCharacter } from "@/hooks/useCharacters";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useCharacterSheetEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
 	calculateCharacterStats,
 	getSpellcastingAbility,
@@ -32,10 +32,17 @@ import {
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
-type RollFn = (formula: string, msgType?: "dice" | "gmroll") => void;
+type RollFn = (formula: string, msgType?: "dice" | "wardenroll") => void;
 type ChatFn = (
 	message: string,
-	type?: "chat" | "dice" | "system" | "whisper" | "emote" | "desc" | "gmroll",
+	type?:
+		| "chat"
+		| "dice"
+		| "system"
+		| "whisper"
+		| "emote"
+		| "desc"
+		| "wardenroll",
 ) => void;
 
 interface VTTCharacterPanelProps {
@@ -44,7 +51,7 @@ interface VTTCharacterPanelProps {
 	onRoll: RollFn;
 	/** Callback to send a text message to VTT chat. Typically vttRealtime.sendChatMessage */
 	onChat: ChatFn;
-	/** If true, the panel is read-only (e.g. DM viewing a player's character) */
+	/** If true, the panel is read-only (e.g. Protocol Warden (PW) viewing a player's character) */
 	readOnly?: boolean;
 	/** Compact mode hides some sections */
 	compact?: boolean;
@@ -64,8 +71,8 @@ export function VTTCharacterPanel({
 	campaignId,
 }: VTTCharacterPanelProps) {
 	const { data: character, isLoading } = useCharacter(characterId);
-	const { useCharacterSheetEnhancements } = useGlobalDDBeyondIntegration();
 	const ddbEnhancements = useCharacterSheetEnhancements(characterId);
+	const hpBarRef = useRef<HTMLDivElement>(null);
 
 	// Calculate stats from stored character abilities
 	const calculatedStats = useMemo(() => {
@@ -186,6 +193,16 @@ export function VTTCharacterPanel({
 		[character?.name, onChat, onRoll],
 	);
 
+	const hpCurrent = character?.hp_current ?? 0;
+	const hpMax = character?.hp_max ?? 0;
+	const hpPercent = hpMax > 0 ? (hpCurrent / hpMax) * 100 : 0;
+
+	useEffect(() => {
+		if (hpBarRef.current) {
+			hpBarRef.current.style.width = `${Math.max(0, Math.min(100, hpPercent))}%`;
+		}
+	}, [hpPercent]);
+
 	if (isLoading) {
 		return (
 			<SystemWindow title="CHARACTER" compact>
@@ -206,9 +223,6 @@ export function VTTCharacterPanel({
 		);
 	}
 
-	const hpCurrent = character.hp_current ?? 0;
-	const hpMax = character.hp_max ?? 0;
-	const hpPercent = hpMax > 0 ? (hpCurrent / hpMax) * 100 : 0;
 	const ac = calculatedStats.armorClass;
 	const profBonus = calculatedStats.proficiencyBonus;
 	const initMod = calculatedStats.initiative;
@@ -258,16 +272,15 @@ export function VTTCharacterPanel({
 						{/* HP bar */}
 						<div className="h-1.5 rounded-full bg-black/40 mt-1.5 overflow-hidden">
 							<div
-								className="h-full rounded-full transition-all"
-								style={{
-									width: `${Math.max(0, Math.min(100, hpPercent))}%`,
-									backgroundColor:
-										hpPercent > 50
-											? "#22c55e"
-											: hpPercent > 25
-												? "#eab308"
-												: "#ef4444",
-								}}
+								ref={hpBarRef}
+								className={cn(
+									"h-full rounded-full transition-all",
+									hpPercent > 50
+										? "bg-green-500"
+										: hpPercent > 25
+											? "bg-yellow-500"
+											: "bg-red-500",
+								)}
 							/>
 						</div>
 					</div>

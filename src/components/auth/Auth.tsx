@@ -21,7 +21,7 @@ export function Auth() {
 	const navigate = useNavigate();
 	const [authView, setAuthView] = useState<"sign_up" | "sign_in">("sign_in");
 	const [showRoleSelection, setShowRoleSelection] = useState(false);
-	const [selectedRole, setSelectedRole] = useState<"dm" | "player" | null>(
+	const [selectedRole, setSelectedRole] = useState<"PW" | "player" | null>(
 		null,
 	);
 	const [isSignup, setIsSignup] = useState(false);
@@ -248,7 +248,7 @@ export function Auth() {
 							<RadioGroup
 								value={selectedRole ?? ""}
 								onValueChange={(value) =>
-									setSelectedRole(value as "dm" | "player")
+									setSelectedRole(value as "PW" | "player")
 								}
 								className="space-y-4"
 							>
@@ -282,15 +282,15 @@ export function Auth() {
 								</Label>
 
 								<Label
-									htmlFor="role-dm"
+									htmlFor="role-PW"
 									className={cn(
 										"flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
-										selectedRole === "dm"
+										selectedRole === "PW"
 											? "border-primary bg-primary/10"
 											: "border-border hover:border-primary/50",
 									)}
 								>
-									<RadioGroupItem value="dm" id="role-dm" className="mt-0" />
+									<RadioGroupItem value="PW" id="role-PW" className="mt-0" />
 									<div className="flex items-center gap-3 flex-1">
 										<div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
 											<Crown className="w-5 h-5 text-primary" />

@@ -207,7 +207,9 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							<Button
 								variant="outline"
 								onClick={() =>
-									queueResolutionAndNavigate("/dm-tools/initiative-tracker")
+									queueResolutionAndNavigate(
+										"/warden-protocols/initiative-tracker",
+									)
 								}
 							>
 								Resolve in Initiative

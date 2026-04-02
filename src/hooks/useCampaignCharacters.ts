@@ -69,7 +69,7 @@ export const useCampaignSharedCharacters = (campaignId: string) => {
 				.eq("campaign_id", campaignId);
 
 			if (error) throw error;
-			return (data || []) as unknown as CampaignCharacterShare[];
+			return (data || []) as CampaignCharacterShare[];
 		},
 		enabled: !!campaignId,
 	});
@@ -138,7 +138,7 @@ export const useShareCharacter = () => {
 				.single();
 
 			if (error) throw error;
-			return data as unknown as CampaignCharacterShare;
+			return data as CampaignCharacterShare;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -268,7 +268,7 @@ export const useUpdateSharePermissions = () => {
 				.single();
 
 			if (error) throw error;
-			return data as unknown as CampaignCharacterShare;
+			return data as CampaignCharacterShare;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({

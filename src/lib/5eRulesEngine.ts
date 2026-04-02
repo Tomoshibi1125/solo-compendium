@@ -427,7 +427,7 @@ const SYSTEM_FAVOR_OPTIONS: SystemFavorOption[] = [
 		description:
 			"The System augments your action. Add your System Favor die to one ability check, attack roll, or saving throw.",
 		rulesText:
-			"Before or after rolling a d20 for an ability check, attack roll, or saving throw, roll your System Favor die and add the result to the total. You must decide to use this before the DM declares the outcome.",
+			"Before or after rolling a d20 for an ability check, attack roll, or saving throw, roll your System Favor die and add the result to the total. You must decide to use this before the Protocol Warden (PW) declares the outcome.",
 		minLevel: 1,
 	},
 	// ── Thematic extras ──

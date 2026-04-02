@@ -22,7 +22,7 @@ const Landing = () => {
 
 	const handleEnterSystem = () => {
 		if (user) {
-			navigate(user.role === "dm" ? "/dm-tools" : "/player-tools");
+			navigate(user.role === "warden" ? "/warden-protocols" : "/player-tools");
 		} else {
 			navigate("/login");
 		}
@@ -51,19 +51,8 @@ const Landing = () => {
 							System Integration
 						</SystemHeading>
 						<div className="h-1 w-64 bg-primary/20 rounded-full overflow-hidden border border-primary/40 relative">
-							<div
-								className="absolute top-0 bottom-0 left-0 bg-primary animate-[shimmer_2s_ease-out_forwards] w-full"
-								style={{ transformOrigin: "left", animationName: "progress" }}
-							/>
+							<div className="absolute top-0 bottom-0 left-0 bg-primary sa-progress-bar-animated w-full" />
 						</div>
-						<style>{`
-              @keyframes progress {
-                0% { transform: scaleX(0); }
-                40% { transform: scaleX(0.4); }
-                60% { transform: scaleX(0.4); }
-                100% { transform: scaleX(1); }
-              }
-            `}</style>
 						<p className="mt-4 text-xs font-mono text-center opacity-70 animate-pulse">
 							Synchronizing magical cores...
 						</p>

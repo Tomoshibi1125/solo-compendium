@@ -1,6 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+	type QueryClient,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
+import type { useUpdateCharacter } from "@/hooks/useCharacters";
+import type { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { normalizeCharacterResources } from "@/lib/characterResources";
@@ -23,13 +30,20 @@ const defaultState = createDefaultCharacterSheetState();
 
 function normalizeSheetState(row: SheetStateRow | null): CharacterSheetState {
 	if (!row) return defaultState;
+
+	const resources = normalizeCharacterResources(
+		row.resources as Record<string, unknown> | null,
+	);
+
+	// Safe extraction of UI state from the raw JSON field
+	const rawResources = (row.resources as Record<string, unknown>) || {};
+
 	return {
-		resources: normalizeCharacterResources(
-			row.resources as unknown as CharacterSheetState["resources"],
-		),
+		resources,
 		customModifiers: normalizeCustomModifiers(
-			row.custom_modifiers as unknown as CharacterSheetState["customModifiers"],
+			row.custom_modifiers as Record<string, unknown>[] | null,
 		),
+		ui: (rawResources.ui as CharacterSheetState["ui"]) || defaultState.ui,
 	};
 }
 
@@ -80,6 +94,8 @@ export function useCharacterSheetState(characterId: string) {
 				return {
 					resources: normalizeCharacterResources(local.resources),
 					customModifiers: normalizeCustomModifiers(local.customModifiers),
+					ui:
+						(local as { ui?: CharacterSheetState["ui"] }).ui || defaultState.ui,
 				};
 			}
 
@@ -129,10 +145,8 @@ export function useCharacterSheetState(characterId: string) {
 			const payload: Database["public"]["Tables"]["character_sheet_state"]["Insert"] =
 				{
 					character_id: characterId,
-					resources:
-						state.resources as unknown as Database["public"]["Tables"]["character_sheet_state"]["Insert"]["resources"],
-					custom_modifiers:
-						state.customModifiers as unknown as Database["public"]["Tables"]["character_sheet_state"]["Insert"]["custom_modifiers"],
+					resources: JSON.parse(JSON.stringify(state.resources)),
+					custom_modifiers: JSON.parse(JSON.stringify(state.customModifiers)),
 				};
 
 			const { data, error } = await supabase
@@ -167,23 +181,262 @@ export function useCharacterSheetState(characterId: string) {
 					"character-sheet-state",
 					characterId,
 				]) || defaultState;
+
 			const next: CharacterSheetState = {
 				resources: updates.resources ?? current.resources,
 				customModifiers: updates.customModifiers ?? current.customModifiers,
+				ui: updates.ui ?? current.ui,
 			};
 			return updateSheetState.mutateAsync(next);
 		},
 		[characterId, queryClient, updateSheetState],
 	);
 
+	const setModal = useCallback(
+		(modalId: keyof CharacterSheetState["ui"]["modals"], isOpen: boolean) => {
+			const current = (query.data as CharacterSheetState) || defaultState;
+			const nextUi = {
+				...current.ui,
+				modals: {
+					...current.ui.modals,
+					[modalId]: isOpen,
+				},
+			};
+			void saveSheetState({ ui: nextUi });
+		},
+		[query.data, saveSheetState],
+	);
+
+	const setActiveTab = useCallback(
+		(tab: string) => {
+			const current = (query.data as CharacterSheetState) || defaultState;
+			const nextUi = {
+				...current.ui,
+				activeTab: tab,
+			};
+			void saveSheetState({ ui: nextUi });
+		},
+		[query.data, saveSheetState],
+	);
+
+	const onAddCondition = useCallback(
+		async (
+			id: string,
+			condition: string,
+			updateCharacter: ReturnType<typeof useUpdateCharacter>,
+			ascendantTools: ReturnType<typeof useAscendantTools>,
+		) => {
+			const current = (query.data as CharacterSheetState) || defaultState;
+			const entry = {
+				id: crypto.randomUUID(),
+				conditionName: condition,
+				sourceType: "manual" as const,
+				sourceId: null,
+				sourceName: "Manual",
+				appliedAt: new Date().toISOString(),
+				durationRounds: null,
+				remainingRounds: null,
+				concentrationSpellId: null,
+				isActive: true,
+			};
+
+			const updatedConditions = [
+				...(current.resources.conditions || []),
+				entry,
+			];
+
+			// Update character sheet state (structured data)
+			await saveSheetState({
+				resources: {
+					...current.resources,
+					conditions: updatedConditions,
+				},
+			});
+
+			// Sync names to legacy characters table
+			updateCharacter.mutate({
+				id,
+				data: {
+					conditions: updatedConditions.map((c) => c.conditionName),
+				},
+			});
+
+			ascendantTools
+				.trackConditionChange(id, condition, "add")
+				.catch(console.error);
+		},
+		[query.data, saveSheetState],
+	);
+
+	const onRemoveCondition = useCallback(
+		async (
+			id: string,
+			conditionId: string,
+			updateCharacter: ReturnType<typeof useUpdateCharacter>,
+			ascendantTools: ReturnType<typeof useAscendantTools>,
+		) => {
+			const current = (query.data as CharacterSheetState) || defaultState;
+			const conditions = current.resources.conditions || [];
+			const removed = conditions.find((c) => c.id === conditionId);
+			const updated = conditions.filter((c) => c.id !== conditionId);
+
+			// Update character sheet state (structured data)
+			await saveSheetState({
+				resources: {
+					...current.resources,
+					conditions: updated,
+				},
+			});
+
+			// Sync names to legacy characters table
+			updateCharacter.mutate({
+				id,
+				data: {
+					conditions: updated.map((c) => c.conditionName),
+				},
+			});
+
+			if (removed) {
+				ascendantTools
+					.trackConditionChange(id, removed.conditionName, "remove")
+					.catch(console.error);
+			}
+		},
+		[query.data, saveSheetState],
+	);
+
+	const onExhaustionChange = useCallback(
+		async (
+			id: string,
+			delta: number,
+			currentExhaustion: number,
+			updateCharacter: ReturnType<typeof useUpdateCharacter>,
+			ascendantTools: ReturnType<typeof useAscendantTools>,
+		) => {
+			const newLevel = Math.max(0, Math.min(6, currentExhaustion + delta));
+			updateCharacter.mutate({ id, data: { exhaustion_level: newLevel } });
+			const action = delta > 0 ? "add" : "remove";
+			ascendantTools
+				.trackConditionChange(id, "Exhaustion", action)
+				.catch(console.error);
+		},
+		[],
+	);
+
+	const handleResourceAdjust = useCallback(
+		async (
+			id: string,
+			field: string,
+			delta: number,
+			currentValue: number,
+			maxValue: number,
+			updateCharacter: ReturnType<typeof useUpdateCharacter>,
+			ascendantTools: ReturnType<typeof useAscendantTools>,
+		) => {
+			const nextValue = Math.max(0, Math.min(maxValue, currentValue + delta));
+			updateCharacter.mutate({ id, data: { [field]: nextValue } });
+			if (delta < 0) {
+				const label =
+					field === "hit_dice_current" ? "Hit Dice" : "System Favor";
+				ascendantTools
+					.trackCustomFeatureUsage(id, label, "used", "SA")
+					.catch(console.error);
+			}
+		},
+		[],
+	);
+
+	const handleShortRest = useCallback(
+		async (
+			id: string,
+			queryClient: QueryClient,
+			applyRestResourceUpdates: (type: "short" | "long") => Promise<void>,
+			toast: ReturnType<typeof useToast>["toast"],
+		) => {
+			const { executeShortRest } = await import("@/lib/restSystem");
+			await executeShortRest(id);
+			queryClient.invalidateQueries({ queryKey: ["character", id] });
+			queryClient.invalidateQueries({ queryKey: ["features", id] });
+			await applyRestResourceUpdates("short");
+			toast({
+				title: "Short rest completed",
+				description: "Hit dice restored. Short-rest features recharged.",
+			});
+		},
+		[],
+	);
+
+	const handleLongRest = useCallback(
+		async (
+			id: string,
+			queryClient: QueryClient,
+			applyRestResourceUpdates: (type: "short" | "long") => Promise<void>,
+			ascendantTools: ReturnType<typeof useAscendantTools>,
+			currentHp: number,
+			maxHp: number,
+			exhaustion: number,
+			toast: ReturnType<typeof useToast>["toast"],
+		) => {
+			const { executeLongRest } = await import("@/lib/restSystem");
+			const result = await executeLongRest(id);
+			queryClient.invalidateQueries({ queryKey: ["character", id] });
+			queryClient.invalidateQueries({ queryKey: ["features", id] });
+			await applyRestResourceUpdates("long");
+
+			const hpHealed = maxHp - currentHp;
+			if (hpHealed > 0)
+				ascendantTools
+					.trackHealthChange(id, hpHealed, "healing")
+					.catch(console.error);
+			if (exhaustion > 0)
+				ascendantTools
+					.trackConditionChange(id, "Exhaustion", "remove")
+					.catch(console.error);
+
+			toast({
+				title: "Long rest completed",
+				description:
+					"All resources restored. Features recharged. Exhaustion reduced by 1.",
+			});
+			if (result?.questAssignmentError)
+				toast({
+					title: "Daily quests not assigned",
+					description: result.questAssignmentError,
+					variant: "destructive",
+				});
+		},
+		[],
+	);
+
 	return useMemo(
 		() => ({
-			state: query.data || defaultState,
+			state: (query.data as CharacterSheetState) || defaultState,
 			isLoading: query.isLoading,
 			isSaving: updateSheetState.isPending,
 			saveSheetState,
+			setModal,
+			setActiveTab,
+			onAddCondition,
+			onRemoveCondition,
+			onExhaustionChange,
+			handleResourceAdjust,
+			handleShortRest,
+			handleLongRest,
 		}),
-		[query.data, query.isLoading, updateSheetState.isPending, saveSheetState],
+		[
+			query.data,
+			query.isLoading,
+			updateSheetState.isPending,
+			saveSheetState,
+			setModal,
+			setActiveTab,
+			onAddCondition,
+			onRemoveCondition,
+			onExhaustionChange,
+			handleResourceAdjust,
+			handleShortRest,
+			handleLongRest,
+		],
 	);
 }
 

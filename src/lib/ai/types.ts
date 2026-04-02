@@ -9,7 +9,7 @@ import { z } from "zod";
 export const AIServiceSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	type: z.enum(["gemini-proxy", "pollinations", "ollama", "custom"]),
+	type: z.enum(["gemini-native", "pollinations", "ollama", "custom"]),
 	capabilities: z
 		.array(
 			z.enum([
@@ -22,6 +22,10 @@ export const AIServiceSchema = z.object({
 				"filter-content",
 				"create-variation",
 				"generate-content",
+				"generate-regents",
+				"generate-fusion",
+				"generate-quests",
+				"generate-optimizations",
 			]),
 		)
 		.default([]),
@@ -50,6 +54,10 @@ export const AIRequestSchema = z.object({
 		"filter-content",
 		"create-variation",
 		"generate-content",
+		"generate-regents",
+		"generate-fusion",
+		"generate-quests",
+		"generate-optimizations",
 	]),
 	input: z.any(),
 	context: z.record(z.string(), z.any()).optional(),
@@ -148,6 +156,74 @@ export const PromptEnhancementSchema = z.object({
 
 export type PromptEnhancement = z.infer<typeof PromptEnhancementSchema>;
 
+/** Minimal character shape required by AI integration methods */
+export interface AICharacterInput {
+	name: string;
+	level: number;
+	job: string;
+	abilities: Record<string, number>;
+	equipment?: unknown[];
+}
+
+/** Minimal regent shape required by AI integration methods */
+export interface AIRegentInput {
+	id?: string;
+	name: string;
+	type: string;
+	description: string;
+	abilities: string[];
+	features?: unknown[];
+	spells?: unknown[];
+	requirements: { level: number; statThreshold: number };
+}
+
+/** Minimal quest shape required by AI integration methods */
+export interface AIQuestInput {
+	id: string;
+	name: string;
+	description: string;
+	requirements: { level: number };
+}
+
+/** Optimization suggestion result shape */
+export interface OptimizationSuggestions {
+	statPriorities: string[];
+	equipment: string[];
+	feats: string[];
+	abilities: string[];
+	levelUp: string[];
+}
+
+/** Regent Choice result shape */
+export interface AIRegentChoice {
+	regent: string; // regent id
+	name: string;
+	description: string;
+	compatibility: number;
+	reasoning: string;
+	statAlignment: number;
+}
+
+/** Gemini Fusion result shape */
+export interface AIGeminiFusion {
+	id: string;
+	name: string;
+	description: string;
+	fusionType: "Perfect" | "Good" | "Average";
+	abilities: string[];
+	features: Array<{ name: string; description: string; type: string }>;
+	spells: string[];
+	techniques: string[];
+	traits: Array<{
+		name: string;
+		description: string;
+		type: string;
+		benefits?: string[];
+	}>;
+	statBonuses: Record<string, number>;
+	specialAbilities: string[];
+}
+
 // AI configuration
 export interface AIConfiguration {
 	services: AIService[];
@@ -163,9 +239,9 @@ export interface AIConfiguration {
 // Default AI services configuration
 export const DEFAULT_AI_SERVICES: AIService[] = [
 	{
-		id: "gemini-proxy",
-		name: "Google Gemini 2.0 Flash (Server)",
-		type: "gemini-proxy",
+		id: "gemini-native",
+		name: "Google Gemini 2.0 Flash (Native)",
+		type: "gemini-native",
 		capabilities: [
 			"enhance-prompt",
 			"analyze-image",
@@ -176,8 +252,12 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
 			"filter-content",
 			"create-variation",
 			"generate-content",
+			"generate-regents",
+			"generate-fusion",
+			"generate-quests",
+			"generate-optimizations",
 		],
-		endpoint: "/api/ai",
+		endpoint: "",
 		model: "gemini-2.0-flash",
 		maxTokens: 4096,
 		temperature: 0.8,
@@ -185,41 +265,21 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
 	},
 	{
 		id: "pollinations",
-		name: "Pollinations AI (Free)",
+		name: "Pollinations AI (Legacy)",
 		type: "pollinations",
-		capabilities: [
-			"enhance-prompt",
-			"analyze-image",
-			"analyze-audio",
-			"generate-tags",
-			"detect-mood",
-			"suggest-style",
-			"filter-content",
-			"create-variation",
-			"generate-content",
-		],
+		capabilities: ["generate-content"],
 		endpoint: "https://text.pollinations.ai",
 		model: "openai",
 		fallbackModels: ["mistral"],
 		maxTokens: 2048,
 		temperature: 0.7,
-		enabled: true,
+		enabled: false,
 	},
 	{
 		id: "ollama-fallback",
-		name: "Ollama Local Fallback",
+		name: "Ollama Local Fallback (Legacy)",
 		type: "ollama",
-		capabilities: [
-			"enhance-prompt",
-			"analyze-image",
-			"analyze-audio",
-			"generate-tags",
-			"detect-mood",
-			"suggest-style",
-			"filter-content",
-			"create-variation",
-			"generate-content",
-		],
+		capabilities: ["generate-content"],
 		endpoint: "http://localhost:11434/api/generate",
 		model: "qwen2.5:14b-instruct",
 		fallbackModels: [
@@ -229,7 +289,7 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
 		],
 		maxTokens: 1536,
 		temperature: 0.7,
-		enabled: true,
+		enabled: false,
 	},
 ];
 
@@ -254,7 +314,7 @@ const parseNumberEnv = (value: unknown, fallback: number) => {
 
 export const DEFAULT_AI_CONFIG: AIConfiguration = {
 	services: DEFAULT_AI_SERVICES,
-	defaultService: "gemini-proxy",
+	defaultService: "gemini-native",
 	autoEnhancePrompts: true,
 	autoAnalyzeAudio: true,
 	autoAnalyzeImages: true,

@@ -66,7 +66,7 @@ export function useCompendiumRunes(characterId?: string) {
 
 			// If Supabase returned results, use them
 			if (!error && data && data.length > 0) {
-				const runes = data as Rune[];
+				const runes = data; // Supabase type-safety is sufficient here
 				const campaignId = characterId
 					? await getCharacterCampaignId(characterId)
 					: null;
@@ -93,6 +93,10 @@ export function useCompendiumRunes(characterId?: string) {
 				created_at: r.created_at,
 				tags: r.tags ?? null,
 				image: r.image ?? null,
+				image_url: r.image || null,
+				mechanics: null,
+				flavor: null,
+				generated_reason: null,
 				// Add missing schema fields for full type compliance
 				activation_action: "",
 				activation_cost: "",
@@ -129,8 +133,8 @@ export function useCompendiumRunes(characterId?: string) {
 				uses_per_rest: "",
 				concentration: false,
 				passive_bonuses: null,
-				updated_at: r.created_at,
-			})) as Rune[];
+				updated_at: r.created_at || new Date().toISOString(),
+			}));
 		},
 	});
 }
@@ -168,7 +172,7 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 			}
 			const knowledgeEntries = data.map((rk) => ({
 				...rk,
-				rune: rk.rune as Rune,
+				rune: rk.rune,
 			}));
 
 			const campaignId = await getCharacterCampaignId(characterId);
@@ -225,8 +229,8 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
 			}
 			const inscriptions = data.map((ri) => ({
 				...ri,
-				rune: ri.rune as Rune,
-				equipment: ri.equipment as EquipmentRow,
+				rune: ri.rune,
+				equipment: ri.equipment,
 			}));
 
 			const campaignId = await getCharacterCampaignId(characterId);
@@ -295,7 +299,7 @@ export function useEquipmentRunes(
 			}
 			const equipmentRunes = data.map((ri) => ({
 				...ri,
-				rune: ri.rune as Rune,
+				rune: ri.rune,
 			}));
 
 			const resolvedCharacterId =

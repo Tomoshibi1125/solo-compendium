@@ -1,9 +1,10 @@
 import { Dice1 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useCharacterSheetEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useAuth } from "@/lib/auth/authContext";
 import type { AdvantageState } from "@/lib/rollAdvantage";
+import { cn } from "@/lib/utils";
 
 interface InlineRollButtonProps {
 	characterId: string;
@@ -17,6 +18,7 @@ interface InlineRollButtonProps {
 	disabled?: boolean;
 	size?: "sm" | "lg" | "default" | "icon";
 	variant?: "default" | "outline" | "ghost";
+	className?: string;
 }
 
 export function InlineRollButton({
@@ -30,9 +32,9 @@ export function InlineRollButton({
 	disabled = false,
 	size = "sm",
 	variant = "outline",
+	className,
 }: InlineRollButtonProps) {
 	const { user } = useAuth();
-	const { useCharacterSheetEnhancements } = useGlobalDDBeyondIntegration();
 	const { roll } = useCharacterSheetEnhancements(characterId);
 
 	const handleRoll = async () => {
@@ -74,7 +76,10 @@ export function InlineRollButton({
 			size={size}
 			onClick={handleRoll}
 			disabled={disabled || !user}
-			className="inline-flex items-center gap-1 hover:bg-primary/10 transition-colors"
+			className={cn(
+				"inline-flex items-center gap-1 hover:bg-primary/10 transition-colors",
+				className,
+			)}
 		>
 			{getRollIcon()}
 			<span>{label}</span>

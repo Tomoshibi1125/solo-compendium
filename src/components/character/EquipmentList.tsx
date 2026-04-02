@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useEncumbranceSettings } from "@/hooks/useEncumbranceSettings";
 import { useEquipment } from "@/hooks/useEquipment";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useCharacterSigilInscriptions } from "@/hooks/useSigils";
 import type { Database } from "@/integrations/supabase/types";
 import {
@@ -19,6 +19,8 @@ import {
 } from "@/lib/encumbrance";
 import { getEffectiveSigilSlots } from "@/lib/sigilAutomation";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { DetailData } from "@/types/character";
+import { AttunementSlots } from "../CharacterSheet/AttunementSlots";
 import { AddEquipmentDialog } from "./AddEquipmentDialog";
 import { EncumbranceWidget } from "./EncumbranceWidget";
 import { EquipmentItem } from "./EquipmentItem";
@@ -49,7 +51,13 @@ const ITEM_TYPE_LABELS: Record<string, string> = {
 	currency: "Currency",
 };
 
-export function EquipmentList({ characterId }: { characterId: string }) {
+export function EquipmentList({
+	characterId,
+	onSelectDetail,
+}: {
+	characterId: string;
+	onSelectDetail?: (detail: DetailData) => void;
+}) {
 	const {
 		equipment,
 		removeEquipment,
@@ -66,8 +74,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 	);
 	const { ignoreCurrencyWeight, setIgnoreCurrencyWeight, isLoaded } =
 		useEncumbranceSettings(characterId);
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 	const { data: sigilInscriptions = [] } =
 		useCharacterSigilInscriptions(characterId);
 
@@ -86,11 +93,12 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 				encumbrance.status === "heavy" ||
 				encumbrance.status === "overloaded"
 			) {
-				ddbEnhancements
-					.trackConditionChange(
+				ascendantTools
+					.trackCustomFeatureUsage(
 						characterId,
 						`Encumbered: ${encumbrance.status === "heavy" ? "Heavy Load" : "Overloaded"}`,
 						"add",
+						"SA",
 					)
 					.catch(console.error);
 			} else if (
@@ -98,13 +106,13 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 				prevEncumbranceRef.current === "overloaded"
 			) {
 				// Removing encumbrance condition when it steps down below heavy
-				ddbEnhancements
-					.trackConditionChange(characterId, `Encumbrance`, "remove")
+				ascendantTools
+					.trackConditionChange(characterId, "Encumbrance", "remove")
 					.catch(console.error);
 			}
 			prevEncumbranceRef.current = encumbrance.status;
 		}
-	}, [encumbrance.status, characterId, ddbEnhancements]);
+	}, [encumbrance.status, characterId, ascendantTools]);
 
 	const topLevelEquipment = equipment.filter((item) => !item.container_id);
 	const equipmentByContainer = equipment.reduce(
@@ -187,7 +195,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 				updates: { is_equipped: !item.is_equipped },
 			});
 
-			ddbEnhancements
+			ascendantTools
 				.trackInventoryChange(
 					characterId,
 					item.name,
@@ -225,7 +233,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 				updates: { is_attuned: !item.is_attuned },
 			});
 
-			ddbEnhancements
+			ascendantTools
 				.trackConditionChange(
 					characterId,
 					`Attuned: ${item.name}`,
@@ -253,7 +261,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 		try {
 			await removeEquipment(item.id);
 
-			ddbEnhancements
+			await ascendantTools
 				.trackInventoryChange(characterId, item.name, "remove")
 				.catch(console.error);
 
@@ -294,18 +302,37 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 					</div>
 				)}
 
-				<div className="flex items-center justify-between">
-					<div className="text-sm text-muted-foreground">
-						Attuned: {attunedCount}/3
+				<div className="flex flex-col gap-4">
+					<AttunementSlots
+						attunedItems={equipment
+							.filter((e) => e.is_attuned)
+							.map((e) => ({
+								id: e.id,
+								name: e.name,
+								requiresAttunement: !!e.requires_attunement,
+								isAttuned: true,
+							}))}
+						slotsRemaining={3 - attunedCount}
+						onUnattune={(itemId) => {
+							const item = equipment.find((e) => e.id === itemId);
+							if (item) handleToggleAttuned(item);
+						}}
+						characterId={characterId}
+					/>
+
+					<div className="flex items-center justify-between">
+						<div className="text-sm text-muted-foreground invisible">
+							Attuned: {attunedCount}/3
+						</div>
+						<Button
+							onClick={() => setAddDialogOpen(true)}
+							size="sm"
+							className="gap-2"
+						>
+							<Plus className="w-4 h-4" />
+							Add Equipment
+						</Button>
 					</div>
-					<Button
-						onClick={() => setAddDialogOpen(true)}
-						size="sm"
-						className="gap-2"
-					>
-						<Plus className="w-4 h-4" />
-						Add Equipment
-					</Button>
 				</div>
 
 				{equipment.length === 0 ? (
@@ -362,6 +389,13 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 															)}
 															canAttune={canAttune}
 															nestedItems={equipmentByContainer[item.id] || []}
+															onSelect={() =>
+																onSelectDetail?.({
+																	title: item.name,
+																	description: item.description || "",
+																	payload: item,
+																})
+															}
 															sigilControl={
 																totalSlots > 0 ? (
 																	<div className="mt-2">
@@ -420,6 +454,13 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 														)}
 														canAttune={canAttune}
 														nestedItems={equipmentByContainer[item.id] || []}
+														onSelect={() =>
+															onSelectDetail?.({
+																title: item.name,
+																description: item.description || "",
+																payload: item,
+															})
+														}
 													/>
 												)}
 												itemClassName="mb-2"

@@ -121,7 +121,12 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 			icon: User,
 		},
 		{ id: "dice", name: "Dice Roller", href: "/dice", icon: Dice6 },
-		{ id: "dm-tools", name: "Warden Tools", href: "/dm-tools", icon: Settings },
+		{
+			id: "PW-tools",
+			name: "Warden Tools",
+			href: "/warden-protocols",
+			icon: Settings,
+		},
 	];
 
 	const handleSelect = (href: string) => {

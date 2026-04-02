@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
 interface PlayerToolsPanelProps {
@@ -55,8 +55,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 	className,
 }) => {
 	const { toast } = useToast();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const { trackCustomFeatureUsage } = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const [activeTool, setActiveTool] = useState<string>("actions");
 	const [quickRollValue, setQuickRollValue] = useState("1d20");
@@ -327,12 +326,14 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 										onClick={() => {
 											onTakeAction?.(action.id);
 											if (characterId) {
-												trackCustomFeatureUsage(
-													characterId,
-													action.name,
-													"used",
-													"SA",
-												).catch(console.error);
+												ascendantTools
+													?.trackCustomFeatureUsage(
+														characterId,
+														action.name,
+														"used",
+														"SA",
+													)
+													.catch(console.error);
 											}
 											toast({
 												title: "Action Taken",
@@ -429,12 +430,14 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 										onClick={() => {
 											onCastSpell?.(spell.id);
 											if (characterId) {
-												trackCustomFeatureUsage(
-													characterId,
-													spell.name,
-													"cast",
-													"SA",
-												).catch(console.error);
+												ascendantTools
+													?.trackCustomFeatureUsage(
+														characterId,
+														spell.name,
+														"cast",
+														"SA",
+													)
+													.catch(console.error);
 											}
 											toast({
 												title: "Spell Cast",
@@ -483,12 +486,14 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												if (selectedSpell) {
 													onCastSpell?.(selectedSpell);
 													if (characterId) {
-														trackCustomFeatureUsage(
-															characterId,
-															selectedSpell,
-															"cast",
-															"SA",
-														).catch(console.error);
+														ascendantTools
+															?.trackCustomFeatureUsage(
+																characterId,
+																selectedSpell,
+																"cast",
+																"SA",
+															)
+															.catch(console.error);
 													}
 													toast({
 														title: "Spell Cast",

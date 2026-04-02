@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
 const CURRENCY_TYPES = [
 	{ id: "platinum", name: "Platinum", symbol: "PP", color: "text-indigo-400" },
 	{ id: "gold", name: "Gold", symbol: "GP", color: "text-bond-gold" },
-	{ id: "electrum", name: "Electrum", symbol: "EP", color: "text-cyan-400" },
+	{ id: "electrum", name: "Electrum", symbol: "EP", color: "text-zinc-400" },
 	{ id: "silver", name: "Silver", symbol: "SP", color: "text-zinc-400" },
 	{ id: "copper", name: "Copper", symbol: "CP", color: "text-amber-600" },
 ];
@@ -20,8 +20,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 	const { equipment, updateEquipment, addEquipment } =
 		useEquipment(characterId);
 	const { toast } = useToast();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 	const [editing, setEditing] = useState<string | null>(null);
 	const [editValue, setEditValue] = useState("");
 
@@ -66,7 +65,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 				});
 			}
 
-			ddbEnhancements
+			ascendantTools
 				.trackInventoryChange(
 					characterId,
 					currencyType.name,
@@ -104,7 +103,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 				});
 			}
 
-			ddbEnhancements
+			ascendantTools
 				.trackInventoryChange(
 					characterId,
 					currencyType.name,

@@ -2,8 +2,10 @@ import { GoogleGenAI } from "@google/genai";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
-import { vehicles } from "../src/data/compendium/items-vehicles";
 import { monsters } from "../src/data/compendium/monsters";
+import { allItems as rawItems } from "../src/data/compendium/items-index";
+
+const vehicles = rawItems.filter(x => (x as any).item_type === "vehicle");
 
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
@@ -16,7 +18,7 @@ const ai = new GoogleGenAI({ apiKey });
 const PUBLIC_DIR = path.resolve("public");
 
 // Collect all new entries that need tokens
-const allItems = [
+const entriesToProcess = [
 	...monsters
 		.filter(
 			(x) =>
@@ -24,13 +26,12 @@ const allItems = [
 				x.id.startsWith("mount-") ||
 				x.id.startsWith("pet-"),
 		)
-		.map((x) => ({ name: x.name, img: (x as any).image, desc: x.description })),
+		.map((x) => ({ name: x.name, img: x.image, desc: x.description || "" })),
 	...vehicles
-		.filter((x) => x.item_type === "vehicle")
-		.map((x) => ({ name: x.name, img: (x as any).image, desc: x.description })),
-].filter((x) => x.img);
+		.map((x) => ({ name: x.name, img: (x as any).image || (x as any).image_url, desc: x.description || "" })),
+].filter((x): x is { name: string; img: string; desc: string } => !!x.img);
 
-async function generateToken(item: any) {
+async function generateToken(item: { name: string; img: string; desc: string }) {
 	const fullPath = path.join(PUBLIC_DIR, item.img);
 	if (fs.existsSync(fullPath)) {
 		// Check if it's a real image (>10KB) or a placeholder (<10KB)
@@ -90,11 +91,11 @@ async function generateToken(item: any) {
 }
 
 async function main() {
-	console.log(`Found ${allItems.length} tokens to potentially generate.`);
+	console.log(`Found ${entriesToProcess.length} tokens to potentially generate.`);
 
-	for (let i = 0; i < allItems.length; i++) {
-		console.log(`\n[${i + 1}/${allItems.length}] Processing...`);
-		await generateToken(allItems[i]);
+	for (let i = 0; i < entriesToProcess.length; i++) {
+		console.log(`\n[${i + 1}/${entriesToProcess.length}] Processing...`);
+		await generateToken(entriesToProcess[i]);
 		// 3 second delay between requests to respect rate limits
 		await new Promise((r) => setTimeout(r, 3000));
 	}

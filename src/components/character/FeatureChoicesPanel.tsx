@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import type { FeatureModifier } from "@/hooks/useCharacterFeatures";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import type { AbilityScore } from "@/types/system-rules";
@@ -56,8 +56,7 @@ type ExtendedDatabase = Database & {
 	};
 };
 
-const supabaseExtended =
-	supabase as unknown as SupabaseClient<ExtendedDatabase>;
+const supabaseExtended = supabase as SupabaseClient<ExtendedDatabase>;
 
 type CharacterChoiceRow = {
 	group_id: string;
@@ -103,8 +102,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 	const [selectedOptionByGroupId, setSelectedOptionByGroupId] = useState<
 		Record<string, string>
 	>({});
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const { data: character } = useQuery({
 		queryKey: ["feature-choice-character", characterId],
@@ -150,13 +148,13 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 			let regentNames: string[] = [];
 			if (overlayIds.length > 0) {
 				const { data: regents, error: regentsError } = await supabase
-					.from("compendium_regents" as never)
+					.from("compendium_regents")
 					.select("name")
 					.in("id", overlayIds);
 				if (regentsError) throw regentsError;
-				regentNames = ((regents || []) as unknown as Array<{ name: string }>)
-					.map((r) => r.name)
-					.filter(Boolean);
+				regentNames = (regents || [])
+					.map((r: { name: string | null }) => r.name)
+					.filter((name): name is string => Boolean(name));
 			}
 
 			const eligiblePowerNames = new Set<string>();
@@ -240,8 +238,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 				.select("group_id, option_id")
 				.eq("character_id", characterId);
 
-			const existing = (existingChoices ||
-				[]) as unknown as CharacterChoiceRow[];
+			const existing: CharacterChoiceRow[] = existingChoices || [];
 			const chosenGroupIds = new Set(existing.map((row) => row.group_id));
 
 			const pendingGroups = groupRows.filter((g) => !chosenGroupIds.has(g.id));
@@ -311,22 +308,20 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 				.select("skill_proficiencies, skill_expertise, tool_proficiencies")
 				.eq("id", characterId)
 				.maybeSingle();
+			const charTyped = characterRow as CharacterExtended | null;
 			const skillProficiencies = new Set<string>(
-				Array.isArray((characterRow as CharacterExtended)?.skill_proficiencies)
-					? ((characterRow as CharacterExtended)
-							.skill_proficiencies as unknown as string[]) || []
+				Array.isArray(charTyped?.skill_proficiencies)
+					? (charTyped?.skill_proficiencies as string[]) || []
 					: [],
 			);
 			const skillExpertise = new Set<string>(
-				Array.isArray((characterRow as CharacterExtended)?.skill_expertise)
-					? ((characterRow as CharacterExtended)
-							.skill_expertise as unknown as string[]) || []
+				Array.isArray(charTyped?.skill_expertise)
+					? (charTyped?.skill_expertise as string[]) || []
 					: [],
 			);
 			const toolProficiencies = new Set<string>(
-				Array.isArray((characterRow as CharacterExtended)?.tool_proficiencies)
-					? ((characterRow as CharacterExtended)
-							.tool_proficiencies as unknown as string[]) || []
+				Array.isArray(charTyped?.tool_proficiencies)
+					? (charTyped?.tool_proficiencies as string[]) || []
 					: [],
 			);
 
@@ -395,12 +390,12 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 					}
 				}
 
-				playerTools
+				ascendantTools
 					.trackCustomFeatureUsage(
 						characterId,
 						`Bound Option: ${option.name}`,
 						option.description || "",
-						"5e",
+						"SA",
 					)
 					.catch(console.error);
 
@@ -455,7 +450,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 								: featRow?.description || null;
 
 						const benefits = Array.isArray(featRow?.benefits)
-							? (featRow?.benefits as unknown as string[])
+							? (featRow?.benefits as string[])
 							: [];
 						const benefitsText =
 							benefits.length > 0
@@ -663,15 +658,17 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 							action_type: null,
 							is_active: true,
 							modifiers:
-								featModifiers.length > 0 ? (featModifiers as never) : null,
+								featModifiers.length > 0
+									? (featModifiers as unknown as Json)
+									: null,
 						});
 
 						existingFeatureNames.add(featName);
 					}
 
 					if (grant.type === "ability_increase") {
-						const ability = (grant.ability ?? null) as unknown;
-						const amount = (grant.amount ?? null) as unknown;
+						const ability = grant.ability ?? null;
+						const amount = grant.amount ?? null;
 
 						if (!isAbilityScore(ability)) continue;
 						const numeric =
@@ -700,7 +697,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const next = [...toolProficiencies, toolName].sort();
 						await supabase
 							.from("characters")
-							.update({ tool_proficiencies: next as never })
+							.update({ tool_proficiencies: next })
 							.eq("id", characterId);
 						toolProficiencies.add(toolName);
 					}
@@ -708,19 +705,19 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 					if (grant.type === "technique" && typeof grant.name === "string") {
 						const techName = grant.name;
 						const { data: techRow } = await supabase
-							.from("compendium_techniques" as never)
+							.from("compendium_techniques")
 							.select("id")
 							.eq("name", techName)
 							.maybeSingle();
-						const techId = (techRow as { id?: string } | null)?.id;
+						const techId = techRow?.id;
 						if (!techId) continue;
 
-						await supabase.from("character_techniques" as never).upsert(
+						await supabase.from("character_techniques").upsert(
 							{
 								character_id: characterId,
 								technique_id: techId,
 								source: `Choice: ${group.choice_key}`,
-							} as never,
+							},
 							{ onConflict: "character_id,technique_id" },
 						);
 					}
@@ -735,7 +732,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const next = [...skillProficiencies, skillName].sort();
 						await supabase
 							.from("characters")
-							.update({ skill_proficiencies: next as never })
+							.update({ skill_proficiencies: next })
 							.eq("id", characterId);
 						skillProficiencies.add(skillName);
 					}
@@ -750,7 +747,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const next = [...skillExpertise, skillName].sort();
 						await supabase
 							.from("characters")
-							.update({ skill_expertise: next as never })
+							.update({ skill_expertise: next })
 							.eq("id", characterId);
 						skillExpertise.add(skillName);
 					}

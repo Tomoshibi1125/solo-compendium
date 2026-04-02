@@ -16,21 +16,27 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useFeatures } from "@/hooks/useFeatures";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { DetailData } from "@/types/character";
 
-export function FeaturesList({ characterId }: { characterId: string }) {
+export function FeaturesList({
+	characterId,
+	onSelectDetail,
+}: {
+	characterId: string;
+	onSelectDetail?: (detail: DetailData) => void;
+}) {
 	const { features, updateFeature, reorderFeatures } = useFeatures(characterId);
 	const { toast } = useToast();
 	const [filterSource, setFilterSource] = useState<string>("all");
 	const [filterLevel, setFilterLevel] = useState<string>("all");
 
 	// D&D Beyond Parity Integration
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 	const recordRoll = useRecordRoll();
 	const { data: characterCampaign } = useCampaignByCharacterId(characterId);
 	const campaignId = characterCampaign?.id ?? null;
@@ -92,8 +98,8 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 
 			// Broadcast feature usage for DDB Parity
 			const actionType = delta < 0 ? "spend" : "regain";
-			playerTools
-				.trackCustomFeatureUsage(characterId, feature.name, actionType, "5e")
+			ascendantTools
+				.trackCustomFeatureUsage(characterId, feature.name, actionType, "SA")
 				.catch(console.error);
 
 			if (delta < 0) {
@@ -136,12 +142,12 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 			});
 
 			// Broadcast toggle for DDB parity
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					characterId,
 					feature.name,
 					newActiveState ? "activate" : "deactivate",
-					"5e",
+					"SA",
 				)
 				.catch(console.error);
 		} catch {
@@ -219,9 +225,19 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 										<div className="flex items-start justify-between gap-2">
 											<div className="flex-1">
 												<div className="flex items-center gap-2 mb-1">
-													<span className="font-heading font-semibold">
+													<button
+														type="button"
+														className="font-heading font-semibold text-left hover:text-primary transition-colors cursor-pointer"
+														onClick={() =>
+															onSelectDetail?.({
+																title: formatRegentVernacular(feature.name),
+																description: feature.description || "",
+																payload: feature,
+															})
+														}
+													>
 														{formatRegentVernacular(feature.name)}
-													</span>
+													</button>
 													<Badge variant="outline" className="text-xs">
 														Level {feature.level_acquired}
 													</Badge>

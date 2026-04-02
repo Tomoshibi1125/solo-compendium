@@ -165,7 +165,7 @@ const Admin = () => {
 							</DataStreamText>
 						</div>
 						<div className="flex gap-2">
-							<Link to="/dm-tools/content-audit">
+							<Link to="/warden-protocols/content-audit">
 								<Button
 									variant="outline"
 									className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
@@ -174,7 +174,7 @@ const Admin = () => {
 									Content Audit
 								</Button>
 							</Link>
-							<Link to="/dm-tools/selection-protocols">
+							<Link to="/warden-protocols/selection-protocols">
 								<Button
 									variant="outline"
 									className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
@@ -183,7 +183,7 @@ const Admin = () => {
 									Selection Protocols
 								</Button>
 							</Link>
-							<Link to="/dm-tools/art-generation">
+							<Link to="/warden-protocols/art-generation">
 								<Button
 									variant="outline"
 									className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"

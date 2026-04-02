@@ -1,21 +1,19 @@
-// Jobs Compendium - System Ascendant Canonical 14-Job Roster
-// Unique SA progression 1-20 per job, using SA lore (System, gates, ascendants, runes, ranks)
-// Mechanical backbone (hit dice, spell slot math, ASI levels) kept for engine compatibility
+import type { StaticJob as AuthoritativeStaticJob } from "@/types/character";
 
-export interface Job {
-	id: string;
-	name: string;
+export interface Job extends AuthoritativeStaticJob {
 	type: string;
-	rank: "D" | "C" | "B" | "A" | "S";
+	rank: string;
 	image: string;
 	description: string;
 	hitDie: string;
 	primaryAbility: string;
-	savingThrows: string[];
+	saving_throws: string[];
+	savingThrows?: string[];
 	skillChoices: string[];
 	armorProficiencies: string[];
 	weaponProficiencies: string[];
-	toolProficiencies: string[];
+	tool_proficiencies: string[];
+	toolProficiencies?: string[];
 	awakeningFeatures: { name: string; description: string; level: number }[];
 	jobTraits: {
 		name: string;
@@ -38,8 +36,11 @@ export interface Job {
 	darkvision?: number;
 	specialSenses?: string[];
 	damageResistances?: string[];
+	damage_resistances?: string[];
 	damageImmunities?: string[];
+	damage_immunities?: string[];
 	conditionImmunities?: string[];
+	condition_immunities?: string[];
 	startingEquipment?: string[][];
 	hitPointsAtFirstLevel?: string;
 	hitPointsAtHigherLevels?: string;
@@ -60,8 +61,7 @@ export interface Job {
 		wisdom: number;
 		charisma: number;
 	};
-	primary_abilities: string[];
-	source?: string;
+	hit_dice?: string;
 }
 
 const FULL_CASTER_SLOTS: Record<string, number[]> = {
@@ -101,7 +101,7 @@ export const jobs: Job[] = [
 			"Former soldiers, MMA fighters, construction workers, and athletes whose awakening supercharged their musculature, bone density, and combat instincts. In a world where dimensional gates erupt in city centers and subway tunnels, Destroyers are the first responders — the ones the Ascendant Bureau sends when a gate needs to be cracked open by force. The System feeds them real-time targeting data through an AR-like HUD overlay. Off-duty, they work as guild enforcers, private military contractors, or competitive gate-clearance streamers. Where others study or finesse, Destroyers simply annihilate.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
-		savingThrows: ["Strength", "Vitality"],
+		saving_throws: ["Strength", "Vitality"],
 		skillChoices: [
 			"Acrobatics",
 			"Animal Handling",
@@ -114,7 +114,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["All armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Reinforced Frame",
@@ -165,9 +165,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { strength: 2, constitution: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
-		damageResistances: [
+		damage_resistances: [
 			"bludgeoning from nonmagical attacks (while conscious)",
 		],
 		startingEquipment: [
@@ -282,7 +282,7 @@ export const jobs: Job[] = [
 			"Construction workers, bouncers, street fighters, and adrenaline junkies whose awakening went wrong — their System connection is unstable, flooding their body with raw mana under stress. In a modern world coping with the gate crisis, Berserkers are walking liability insurance nightmares. In Overload State, visible mana veins crawl across their skin and their muscles swell with crystallized energy — terrifying bystanders and going viral on social media. The Ascendant Bureau classifies them as high-risk assets, but no one clears gates faster. Many work solo or in guilds that specialize in controlled demolition of high-rank gates.",
 		hitDie: "1d12",
 		primaryAbility: "Strength",
-		savingThrows: ["Strength", "Vitality"],
+		saving_throws: ["Strength", "Vitality"],
 		skillChoices: [
 			"Animal Handling",
 			"Athletics",
@@ -293,7 +293,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Mana-Dense Physiology",
@@ -350,9 +350,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { strength: 2, constitution: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
-		damageResistances: ["poison"],
+		damage_resistances: ["poison"],
 		startingEquipment: [
 			["Greataxe", "Battleaxe"],
 			["Handaxe"],
@@ -481,7 +481,7 @@ export const jobs: Job[] = [
 		source: "System Ascendant Canon",
 	},
 
-	// 3. ASSASSIN — Dimensional Phase Operative / Shadow Walker
+	// 3. ASSASSIN — Dimensional Phase Operative / Umbral Walker
 	{
 		id: "assassin",
 		name: "Assassin",
@@ -491,7 +491,7 @@ export const jobs: Job[] = [
 			"Former intelligence operatives, cat burglars, hackers, parkour athletes, and special forces operators whose awakening attuned them to the dimensional membrane. In modern society, Assassins are the most in-demand ascendants for covert gate operations — clearing rifts that open in government buildings, corporate servers, and populated areas without causing public panic. They phase through walls, strike from impossible angles, and vanish before security cameras register anything. Many work as freelance contractors for the Ascendant Bureau, private security firms, or intelligence agencies. Some operate in the grey market, using their phase abilities for espionage and corporate extraction.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
-		savingThrows: ["Agility", "Intelligence"],
+		saving_throws: ["Agility", "Intelligence"],
 		skillChoices: [
 			"Acrobatics",
 			"Athletics",
@@ -513,7 +513,7 @@ export const jobs: Job[] = [
 			"Rapiers",
 			"Shortswords",
 		],
-		toolProficiencies: ["Thieves' tools"],
+		tool_proficiencies: ["Thieves' tools"],
 		awakeningFeatures: [
 			{
 				name: "Phase-Shifted Mind",
@@ -522,7 +522,7 @@ export const jobs: Job[] = [
 				level: 1,
 			},
 			{
-				name: "Shadow Phase",
+				name: "Umbral Phase",
 				description:
 					"Step sideways through the dimensional membrane — security cameras capture you vanishing from one spot and appearing 30 ft away in a single frame. Teleport to dim light/darkness. Advantage on next melee attack after phasing. Prof bonus uses per long rest.",
 				level: 3,
@@ -564,9 +564,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { dexterity: 2, intelligence: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common", "Shadow Cant"],
+		languages: ["English", "Umbral Cant"],
 		darkvision: 120,
-		conditionImmunities: ["magical sleep"],
+		condition_immunities: ["magical sleep"],
 		startingEquipment: [
 			["Rapier", "Shortsword"],
 			["Shortbow"],
@@ -595,9 +595,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 1,
-				name: "Shadow Cant",
+				name: "Umbral Cant",
 				description:
-					"A coded language used by ascendants in the shadow trade — encrypted dead drops, dark web forums, burner phone protocols, and anonymous gate intelligence networks. You recognize the signs in any city.",
+					"A coded language used by ascendants in the umbral trade — encrypted dead drops, dark web forums, burner phone protocols, and anonymous gate intelligence networks. You recognize the signs in any city.",
 			},
 			{
 				level: 2,
@@ -607,7 +607,7 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 3,
-				name: "Shadow Discipline",
+				name: "Umbral Discipline",
 				description:
 					"Choose a specialization. Grants features at 3rd, 9th, 13th, and 17th level.",
 			},
@@ -632,7 +632,7 @@ export const jobs: Job[] = [
 			{
 				level: 9,
 				name: "Discipline Feature",
-				description: "Feature from your Shadow Discipline.",
+				description: "Feature from your Umbral Discipline.",
 			},
 			{
 				level: 11,
@@ -643,7 +643,7 @@ export const jobs: Job[] = [
 			{
 				level: 13,
 				name: "Discipline Feature",
-				description: "Feature from your Shadow Discipline.",
+				description: "Feature from your Umbral Discipline.",
 			},
 			{
 				level: 14,
@@ -660,7 +660,7 @@ export const jobs: Job[] = [
 			{
 				level: 17,
 				name: "Discipline Feature",
-				description: "Feature from your Shadow Discipline.",
+				description: "Feature from your Umbral Discipline.",
 			},
 			{
 				level: 18,
@@ -681,7 +681,7 @@ export const jobs: Job[] = [
 			"Phase Shift",
 			"Reflex Burst",
 			"Dimensional Slip",
-			"Shadow Discipline",
+			"Umbral Discipline",
 		],
 		image: "/generated/compendium/jobs/assassin.webp",
 		stats: {
@@ -706,7 +706,7 @@ export const jobs: Job[] = [
 			"Martial artists, dancers, gymnasts, and professional athletes whose awakening rewired their entire nervous system into a mana-conductive network. In a world where gates can open in a crowded shopping mall, Strikers are the ideal rapid-response ascendants — no weapons to carry through security, no equipment to deploy. They process sensory input hundreds of times faster than normal humans and channel kinetic force through their limbs like living railguns. Off-duty, many run dojos, compete in ascendant martial arts leagues broadcast on streaming platforms, or work as celebrity bodyguards. Their body IS the weapon.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
-		savingThrows: ["Strength", "Agility"],
+		saving_throws: ["Strength", "Agility"],
 		skillChoices: [
 			"Acrobatics",
 			"Athletics",
@@ -717,7 +717,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: [],
 		weaponProficiencies: ["Simple weapons", "Shortswords"],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Neural Overclock",
@@ -774,7 +774,7 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { dexterity: 2, wisdom: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
 		startingEquipment: [
 			["Shortsword", "Handaxe"],
@@ -930,7 +930,7 @@ export const jobs: Job[] = [
 			"Programmers, scientists, researchers, and academics whose awakening granted direct read-access to the System's spell matrix — the source code governing magical phenomena. In modern society, Mages are recruited heavily by universities, tech companies, and government research labs. They reverse-engineer magic like software, compile spells from System data into personal digital grimoires (often stored on tablets or custom devices), and optimize casting parameters with mathematical precision. Many publish papers, consult for the Ascendant Bureau's R&D division, or run private arcane-tech startups. The most versatile casters alive, limited only by how many spells they can decode.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
-		savingThrows: ["Intelligence", "Sense"],
+		saving_throws: ["Intelligence", "Sense"],
 		skillChoices: [
 			"Arcana",
 			"History",
@@ -947,7 +947,7 @@ export const jobs: Job[] = [
 			"Quarterstaffs",
 			"Light crossbows",
 		],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Mana-Shielded Cortex",
@@ -998,9 +998,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { intelligence: 2, wisdom: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
-		damageResistances: ["psychic"],
+		damage_resistances: ["psychic"],
 		startingEquipment: [
 			["Quarterstaff", "Dagger"],
 			["Component Pouch", "Arcane Focus"],
@@ -1106,7 +1106,7 @@ export const jobs: Job[] = [
 			"Ordinary people — baristas, students, office workers, teenagers — whose awakening went catastrophically right. Their System connection is raw and unfiltered, mana bleeding from their body like radiation. In modern society, Espers are celebrities and pariahs in equal measure — their uncontrolled power has leveled city blocks and gone viral in disaster footage. The Ascendant Bureau monitors them closely. Some become famous ascendants with massive social media followings; others are quietly contained in government facilities. They reshape reality through sheer willpower, bending spells mid-cast with a thought. Unpredictable, terrifyingly powerful, and classified as high-risk anomalies.",
 		hitDie: "1d6",
 		primaryAbility: "Presence",
-		savingThrows: ["Vitality", "Presence"],
+		saving_throws: ["Vitality", "Presence"],
 		skillChoices: [
 			"Arcana",
 			"Deception",
@@ -1123,7 +1123,7 @@ export const jobs: Job[] = [
 			"Quarterstaffs",
 			"Light crossbows",
 		],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Mana-Saturated Body",
@@ -1174,9 +1174,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { charisma: 2, constitution: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
-		damageResistances: ["force"],
+		damage_resistances: ["force"],
 		startingEquipment: [
 			["Light Crossbow", "Dagger"],
 			["Crossbow Bolts (20)"],
@@ -1287,7 +1287,7 @@ export const jobs: Job[] = [
 			"Ascendants who flatlined inside a gate — their heart stopped, brain activity ceased, the hospital called time of death — and then the System brought them back. EMTs, soldiers, firefighters, even civilians caught in gate breaks. The reconstruction left them permanently tethered to the entropy layer. In modern society, Revenants are deeply unsettling: food spoils near them, plants wilt, and electronics glitch. Many struggle to hold normal jobs or relationships. They find purpose in high-rank gate clearance, where their power to accelerate or reverse decay makes them invaluable. The closer a Revenant is to death, the more powerful they become.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
-		savingThrows: ["Intelligence", "Sense"],
+		saving_throws: ["Intelligence", "Sense"],
 		skillChoices: [
 			"Arcana",
 			"History",
@@ -1304,7 +1304,7 @@ export const jobs: Job[] = [
 			"Quarterstaffs",
 			"Light crossbows",
 		],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Reconstructed Biology",
@@ -1355,10 +1355,10 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { intelligence: 2, constitution: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 120,
-		damageResistances: ["necrotic"],
-		conditionImmunities: ["frightened"],
+		damage_resistances: ["necrotic"],
+		condition_immunities: ["frightened"],
 		startingEquipment: [
 			["Quarterstaff", "Dagger"],
 			["Component Pouch", "Arcane Focus"],
@@ -1470,7 +1470,7 @@ export const jobs: Job[] = [
 			"Veterinarians, park rangers, marine biologists, environmental scientists, and farmers whose awakening bonded them to the alien ecosystems inside gates. In a world where gate biomes are bleeding into Earth's environment — mutant plants in Central Park, gate insects in Tokyo's sewers — Summoners are critical. They're employed by environmental agencies, the Ascendant Bureau's Ecology Division, and wildlife management firms. They shapeshift into gate creatures, command gate environments, and are the only ascendants who can predict boss spawns by reading ecosystem stress. Many advocate for gate conservation, arguing some gate biomes are worth preserving.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
-		savingThrows: ["Intelligence", "Sense"],
+		saving_throws: ["Intelligence", "Sense"],
 		skillChoices: [
 			"Arcana",
 			"Animal Handling",
@@ -1494,7 +1494,7 @@ export const jobs: Job[] = [
 			"Slings",
 			"Spears",
 		],
-		toolProficiencies: ["Herbalism kit"],
+		tool_proficiencies: ["Herbalism kit"],
 		awakeningFeatures: [
 			{
 				name: "Biome Attunement",
@@ -1545,9 +1545,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { wisdom: 2, constitution: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common", "Gate Speak"],
+		languages: ["English", "Gate Speak"],
 		darkvision: 60,
-		damageResistances: ["poison"],
+		damage_resistances: ["poison"],
 		startingEquipment: [
 			["Shield", "Spear"],
 			["Scimitar", "Mace"],
@@ -1666,11 +1666,11 @@ export const jobs: Job[] = [
 			"Doctors, nurses, paramedics, chaplains, and first responders whose awakening installed a direct uplink to the System core. In a world where gate breaks can cause mass casualties in minutes, Heralds are the most valuable ascendants in any raid party — and the most recruited by hospitals, military medical corps, and humanitarian organizations. They channel the System's own restorative and destructive energy, receiving encrypted transmissions that guide their healing and combat. Many run trauma clinics for gate-injured civilians, serve as guild medics, or work with the Red Cross during gate emergencies.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
-		savingThrows: ["Sense", "Presence"],
+		saving_throws: ["Sense", "Presence"],
 		skillChoices: ["History", "Insight", "Medicine", "Persuasion", "Religion"],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons"],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Restoration Protocol",
@@ -1721,9 +1721,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { wisdom: 2, charisma: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
-		damageResistances: ["necrotic", "radiant"],
+		damage_resistances: ["necrotic", "radiant"],
 		startingEquipment: [
 			["Mace", "Warhammer"],
 			["Scale Mail", "Leather Armor", "Chain Mail"],
@@ -1788,7 +1788,7 @@ export const jobs: Job[] = [
 				level: 10,
 				name: "Direct Petition",
 				description:
-					"Once per long rest, petition the System directly. Roll d100 ≤ Herald level for the System to intervene with an effect of the DM's choosing. Your uplink reaches the System core.",
+					"Once per long rest, petition the System directly. Roll d100 ≤ Herald level for the System to intervene with an effect of the PW's choosing. Your uplink reaches the System core.",
 			},
 			{
 				level: 14,
@@ -1838,7 +1838,7 @@ export const jobs: Job[] = [
 			"Lawyers, negotiators, con artists, politicians, and desperate people who cut deals with powerful entities trapped inside gates. In modern society, Contractors are controversial — human rights groups debate whether pacting with gate entities constitutes trafficking, and the Ascendant Bureau regulates contract terms. The entity grants power; the Contractor provides service (often gate-clearance kills that feed the entity). It's a dangerous bargain regulated by modern contract law — literal supernatural NDAs. Many Contractors work as lobbyists, fixers, or high-end consultants, leveraging their patron's influence in both the gate world and boardrooms.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
-		savingThrows: ["Sense", "Presence"],
+		saving_throws: ["Sense", "Presence"],
 		skillChoices: [
 			"Arcana",
 			"Deception",
@@ -1850,7 +1850,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor"],
 		weaponProficiencies: ["Simple weapons"],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Pact-Warded Mind",
@@ -1879,7 +1879,7 @@ export const jobs: Job[] = [
 		],
 		jobTraits: [
 			{
-				name: "Abyssal Sight",
+				name: "Binary Void-Data Sight",
 				description:
 					"Your patron's influence rewired your optic nerves — you see perfectly in total darkness, including inside blacked-out gates where other ascendants need flashlights. Superior darkvision 120 ft.",
 				type: "passive",
@@ -1901,9 +1901,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { charisma: 2, constitution: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 120,
-		damageResistances: ["fire"],
+		damage_resistances: ["fire"],
 		startingEquipment: [
 			["Light Crossbow", "Quarterstaff"],
 			["Crossbow Bolts (20)"],
@@ -2021,7 +2021,7 @@ export const jobs: Job[] = [
 			"Ex-military scouts, wilderness guides, bounty ascendants, private investigators, and survivalists whose awakening specialized them for tracking prey across dimensional boundaries. In a world where gate monsters occasionally escape into cities, Stalkers are employed by police departments, the Ascendant Bureau's Containment Division, and private security firms. They taste mana signatures, follow monster energy trails through urban environments, and adapt to any terrain in seconds. Many work as freelance bounty ascendants tracking escaped gate creatures through subway systems, forests, and abandoned buildings. Half martial, half primal caster, all predator.",
 		hitDie: "1d10",
 		primaryAbility: "Agility",
-		savingThrows: ["Strength", "Agility"],
+		saving_throws: ["Strength", "Agility"],
 		skillChoices: [
 			"Animal Handling",
 			"Athletics",
@@ -2034,7 +2034,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Predator Physiology",
@@ -2092,7 +2092,7 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { dexterity: 2, wisdom: 1 },
 		size: "medium",
 		speed: 35,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
 		specialSenses: ["Keen Hearing and Smell"],
 		startingEquipment: [
@@ -2233,7 +2233,7 @@ export const jobs: Job[] = [
 			"Police officers, firefighters, soldiers, judges, and idealists who swore a binding oath to the System itself — a literal covenant inscribed into their mana pathways. In modern society, Holy Knights are the closest thing to superhero cops. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully — several high-profile cases of fallen Holy Knights have made international news. They channel radiant System energy through weapons, heal allies, and project protective auras. Many stream their gate raids for public morale.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
-		savingThrows: ["Sense", "Presence"],
+		saving_throws: ["Sense", "Presence"],
 		skillChoices: [
 			"Athletics",
 			"Insight",
@@ -2244,7 +2244,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["All armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
-		toolProficiencies: [],
+		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
 				name: "Covenant Bond",
@@ -2295,9 +2295,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { strength: 2, charisma: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common", "Celestial"],
+		languages: ["English", "Ancient Hebrew Strings"],
 		darkvision: 60,
-		damageResistances: ["radiant"],
+		damage_resistances: ["radiant"],
 		startingEquipment: [
 			["Longsword", "Battleaxe"],
 			["Shield"],
@@ -2438,7 +2438,7 @@ export const jobs: Job[] = [
 			"Software engineers, mechanics, electricians, hardware hackers, and makers whose awakening gave them write-access to the System's hardware layer. In modern society, Technomancers are the most commercially valuable ascendants — Silicon Valley and Shenzhen are full of them. They see System blueprints embedded in every magical object and build devices that shouldn't exist: mana-powered turrets, self-repairing gear, drone swarms, and apps that interface with gate energy. Many run startups, work for defense contractors, or sell enchanted tech on the ascendant black market. They keep raid parties equipped and civilization running.",
 		hitDie: "1d8",
 		primaryAbility: "Intelligence",
-		savingThrows: ["Vitality", "Intelligence"],
+		saving_throws: ["Vitality", "Intelligence"],
 		skillChoices: [
 			"Arcana",
 			"History",
@@ -2450,7 +2450,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons"],
-		toolProficiencies: [
+		tool_proficiencies: [
 			"Thieves' tools",
 			"Tinker's tools",
 			"One artisan's tool",
@@ -2512,9 +2512,9 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { intelligence: 2, constitution: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common"],
+		languages: ["English"],
 		darkvision: 60,
-		damageResistances: ["lightning"],
+		damage_resistances: ["lightning"],
 		specialSenses: [
 			"Blueprint Vision (identify magic items by touch, 1 minute)",
 		],
@@ -2668,7 +2668,7 @@ export const jobs: Job[] = [
 			"Musicians, actors, streamers, social media influencers, DJs, motivational speakers, and content creators whose awakening attuned them to the System's harmonic frequencies. In modern society, Idols are the most publicly visible ascendants — they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers. Major labels sign awakened Idols for record deals; gaming companies sponsor their raid streams. They manipulate frequencies through performance, speech, and sheer force of personality — a viral TikTok from an Idol can literally buff viewers through their screens. Every raid party wants one; no one admits they need one.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
-		savingThrows: ["Agility", "Presence"],
+		saving_throws: ["Agility", "Presence"],
 		skillChoices: [
 			"Acrobatics",
 			"Animal Handling",
@@ -2697,7 +2697,7 @@ export const jobs: Job[] = [
 			"Rapiers",
 			"Shortswords",
 		],
-		toolProficiencies: ["Three musical instruments"],
+		tool_proficiencies: ["Three musical instruments"],
 		awakeningFeatures: [
 			{
 				name: "Broad-Spectrum Awakening",
@@ -2754,7 +2754,7 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { charisma: 2, dexterity: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["Common", "One additional language"],
+		languages: ["English", "One additional Earth language"],
 		darkvision: 60,
 		startingEquipment: [
 			["Rapier", "Longsword", "Dagger"],

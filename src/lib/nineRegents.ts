@@ -25,7 +25,7 @@
  * - Striker: Speed, martial arts, combos (DO NOT MAKE: speed regent)
  * - Idol: Performance, inspiration, charm (Radiant is holy fire, NOT charm)
  *
- * Quest-gated, NOT level-gated (DM/Protocol Warden approval required)
+ * Quest-gated, NOT level-gated (PW/Protocol Warden approval required)
  */
 
 import { type RegentPath, RegentType } from "./regentTypes";
@@ -280,7 +280,7 @@ export const NINE_REGENTS: RegentPath[] = [
 			{
 				name: "True Invulnerability",
 				description:
-					'Immune to ALL damage (magical, physical, psychic, force, etc.). Cannot be moved, grappled, knocked prone, or affected by forced movement. Time Stop/Banishment/Maze fail automatically. Only Wish can bypass (DM discretion). Attacks bounce off with "IMMUNE" System message.',
+					'Immune to ALL damage (magical, physical, psychic, force, etc.). Cannot be moved, grappled, knocked prone, or affected by forced movement. Time Stop/Banishment/Maze fail automatically. Only Wish can bypass (PW discretion). Attacks bounce off with "IMMUNE" System message.',
 				type: "absolute",
 			},
 			{
@@ -469,7 +469,7 @@ export const NINE_REGENTS: RegentPath[] = [
 			{
 				name: "Judgment Day",
 				description:
-					"Point at creature (no range limit if you can see). PRE save DC 8+prof+PRE or: 20d10 radiant + stunned 10 minutes. On kill: soul judged (DM decides: paradise/oblivion/hell). UN debates if you have judicial authority.",
+					"Point at creature (no range limit if you can see). PRE save DC 8+prof+PRE or: 20d10 radiant + stunned 10 minutes. On kill: soul judged (PW decides: paradise/oblivion/hell). UN debates if you have judicial authority.",
 				type: "judgment",
 			},
 		],

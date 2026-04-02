@@ -7,17 +7,17 @@ import { supabase } from "@/integrations/supabase/client";
 
 // Test user credentials
 const TEST_USERS = {
-	DM: {
-		email: "dm@test.com",
+	WARDEN: {
+		email: "warden@test.com",
 		password: "test1234",
-		role: "dm",
-		displayName: "Test DM",
+		role: "warden",
+		displayName: "Test Warden",
 	},
-	PLAYER: {
-		email: "player@test.com",
+	ASCENDANT: {
+		email: "ascendant@test.com",
 		password: "test1234",
-		role: "player",
-		displayName: "Test Player",
+		role: "ascendant",
+		displayName: "Test Ascendant",
 	},
 } as const;
 
@@ -26,41 +26,42 @@ const TEST_USERS = {
  */
 export async function createTestUsers() {
 	try {
-		// Create DM user
-		const { data: dmData, error: dmError } = await supabase.auth.signUp({
-			email: TEST_USERS.DM.email,
-			password: TEST_USERS.DM.password,
-			options: {
-				data: {
-					role: TEST_USERS.DM.role,
-					display_name: TEST_USERS.DM.displayName,
-				},
-			},
-		});
-
-		if (dmError) {
-			console.error("DM user creation error:", dmError);
-		}
-
-		// Create Player user
-		const { data: playerData, error: playerError } = await supabase.auth.signUp(
+		// Create Warden user
+		const { data: wardenData, error: wardenError } = await supabase.auth.signUp(
 			{
-				email: TEST_USERS.PLAYER.email,
-				password: TEST_USERS.PLAYER.password,
+				email: TEST_USERS.WARDEN.email,
+				password: TEST_USERS.WARDEN.password,
 				options: {
 					data: {
-						role: TEST_USERS.PLAYER.role,
-						display_name: TEST_USERS.PLAYER.displayName,
+						role: TEST_USERS.WARDEN.role,
+						display_name: TEST_USERS.WARDEN.displayName,
 					},
 				},
 			},
 		);
 
-		if (playerError) {
-			console.error("Player user creation error:", playerError);
+		if (wardenError) {
+			console.error("Warden user creation error:", wardenError);
 		}
 
-		return { dmData, playerData, dmError, playerError };
+		// Create Ascendant user
+		const { data: ascendantData, error: ascendantError } =
+			await supabase.auth.signUp({
+				email: TEST_USERS.ASCENDANT.email,
+				password: TEST_USERS.ASCENDANT.password,
+				options: {
+					data: {
+						role: TEST_USERS.ASCENDANT.role,
+						display_name: TEST_USERS.ASCENDANT.displayName,
+					},
+				},
+			});
+
+		if (ascendantError) {
+			console.error("Ascendant user creation error:", ascendantError);
+		}
+
+		return { wardenData, ascendantData, wardenError, ascendantError };
 	} catch (error) {
 		console.error("Test user creation failed:", error);
 		return { error };
@@ -101,16 +102,16 @@ export async function setupTestAccounts() {
 	// Wait a moment for users to be created
 	await new Promise((resolve) => setTimeout(resolve, 2000));
 
-	// Test DM login
-	const dmLoginResult = await authenticateTestUser("DM");
+	// Test Warden login
+	const wardenLoginResult = await authenticateTestUser("WARDEN");
 
-	// Test Player login
-	const playerLoginResult = await authenticateTestUser("PLAYER");
+	// Test Ascendant login
+	const ascendantLoginResult = await authenticateTestUser("ASCENDANT");
 
 	return {
 		createResult,
-		dmLoginResult,
-		playerLoginResult,
+		wardenLoginResult,
+		ascendantLoginResult,
 	};
 }
 

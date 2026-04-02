@@ -19,7 +19,7 @@ export type TerrainType =
 	| "lava" // extreme damage
 	| "ice" // DEX save or fall prone
 	| "mud" // half speed + STR save
-	| "magical" // DM-defined effect
+	| "magical" // PW-defined effect
 	| "elevated" // height advantage
 	| "pit" // fall hazard
 	| "cover_half" // +2 AC

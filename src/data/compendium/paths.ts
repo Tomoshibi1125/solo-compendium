@@ -1814,13 +1814,13 @@ export const paths: Path[] = [
 			{
 				name: "Cascade Trigger",
 				description:
-					"After casting 1st+ spell, DM can have you roll d20. On 1, roll on Mana Cascade table for a random magical discharge.",
+					"After casting 1st+ spell, Protocol Warden (PW) can have you roll d20. On 1, roll on Mana Cascade table for a random magical discharge.",
 				level: 1,
 			},
 			{
 				name: "Riding the Cascade",
 				description:
-					"Lean into your instability. Gain advantage on one attack/check/save. Before regaining, DM can trigger a Cascade after your next spell (no d20 roll).",
+					"Lean into your instability. Gain advantage on one attack/check/save. Before regaining, Protocol Warden (PW) can trigger a Cascade after your next spell (no d20 roll).",
 				level: 1,
 			},
 			{
@@ -4626,7 +4626,7 @@ export const paths: Path[] = [
 			{
 				name: "Cutting Words",
 				description:
-					"Reaction when a creature within 60 ft makes an attack, ability check, or damage roll: expend a Hype die and subtract it from the roll. After the creature rolls but before the DM declares success/failure.",
+					"Reaction when a creature within 60 ft makes an attack, ability check, or damage roll: expend a Hype die and subtract it from the roll. After the creature rolls but before the Protocol Warden (PW) declares success/failure.",
 				level: 3,
 			},
 			{
@@ -4638,7 +4638,7 @@ export const paths: Path[] = [
 			{
 				name: "Peerless Skill",
 				description:
-					"When you make an ability check, expend one Hype die and add it to the roll. After you roll but before the DM declares success/failure.",
+					"When you make an ability check, expend one Hype die and add it to the roll. After you roll but before the Protocol Warden (PW) declares success/failure.",
 				level: 14,
 			},
 		],

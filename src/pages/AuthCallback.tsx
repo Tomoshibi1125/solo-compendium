@@ -8,8 +8,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import { logger } from "@/lib/logger";
 
-const normalizeRole = (value: string | null): "dm" | "player" | null => {
-	if (value === "dm" || value === "player") return value;
+const normalizeRole = (value: string | null): "PW" | "player" | null => {
+	if (value === "PW" || value === "player") return value;
 	return null;
 };
 
@@ -121,7 +121,7 @@ export default function AuthCallback() {
 					return;
 				}
 
-				navigate(role === "dm" ? "/dm-tools" : "/player-tools");
+				navigate(role === "PW" ? "/warden-protocols" : "/player-tools");
 			} catch (error) {
 				logger.error("Error completing auth callback:", error);
 				navigate(`/login?error=${encodeURIComponent("Authentication failed")}`);

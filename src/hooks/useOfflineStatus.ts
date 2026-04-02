@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { flushSyncQueue } from "@/lib/syncManager";
 
 export function useOfflineStatus() {
 	const [isOnline, setIsOnline] = useState(
@@ -15,9 +16,7 @@ export function useOfflineStatus() {
 
 		const handleOnline = () => {
 			setIsOnline(true);
-			import("@/lib/offlineSyncQueue").then(({ flushOfflineQueue }) => {
-				flushOfflineQueue().catch(console.error);
-			});
+			void flushSyncQueue().catch(console.error);
 		};
 		const handleOffline = () => setIsOnline(false);
 

@@ -1,6 +1,71 @@
 @import "tailwindcss";
 @import "./styles/mobile-responsive.css";
-@config "../tailwind.config.ts";
+
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+@theme {
+	/* ── Fonts ─────────────────────────────────────────────── */
+	--font-display: "Orbitron", monospace;
+	--font-heading: "Rajdhani", sans-serif;
+	--font-body: "Space Grotesk", sans-serif;
+	--font-system: "Share Tech Mono", monospace;
+	--font-arise: "Orbitron", monospace;
+
+	/* ── System Ascendant: Protocol Palette ────────────────── */
+	--color-shadow-blue: hsl(var(--shadow-blue));
+	--color-shadow-purple: hsl(var(--shadow-purple));
+	--color-shadow-deep: hsl(var(--shadow-deep));
+	--color-shadow-dark: hsl(var(--shadow-dark));
+
+	--color-solar-core: hsl(var(--solar-core));
+	--color-solar-glow: hsl(var(--solar-glow));
+
+	--color-gate-red: hsl(var(--gate-red));
+	--color-gate-e: hsl(var(--gate-e));
+	--color-gate-d: hsl(var(--gate-d));
+	--color-gate-c: hsl(var(--gate-c));
+	--color-gate-b: hsl(var(--gate-b));
+	--color-gate-a: hsl(var(--gate-a));
+	--color-gate-s: hsl(var(--gate-s));
+	--color-gate-ss: hsl(var(--gate-ss));
+	--color-gate-national: hsl(var(--gate-national));
+
+	--color-gate-e-glow: hsl(var(--gate-e-glow));
+	--color-gate-d-glow: hsl(var(--gate-d-glow));
+	--color-gate-c-glow: hsl(var(--gate-c-glow));
+	--color-gate-b-glow: hsl(var(--gate-b-glow));
+	--color-gate-a-glow: hsl(var(--gate-a-glow));
+	--color-gate-s-glow: hsl(var(--gate-s-glow));
+	--color-gate-ss-glow: hsl(var(--gate-ss-glow));
+	--color-gate-national-glow: hsl(var(--gate-national-glow));
+
+	--color-hunter-blue: hsl(var(--hunter-blue));
+	--color-mana-cyan: hsl(var(--mana-cyan));
+	--color-arise-violet: hsl(var(--arise-violet));
+	--color-system-green: hsl(var(--system-green));
+	--color-system-glow: hsl(var(--system-glow));
+
+	--color-crimson-knight: hsl(var(--crimson-knight));
+	--color-gilded-reaper: hsl(var(--gilded-reaper));
+	--color-silver-commander: hsl(var(--silver-commander));
+	--color-void-black: hsl(var(--void-black));
+
+	/* ── Animations ────────────────────────────────────────── */
+	--animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+	--animate-shadow-pulse: shadow-pulse 3s ease-in-out infinite;
+	--animate-float: float 6s ease-in-out infinite;
+	--animate-gate-energy-flow: gate-energy-flow 3s ease-in-out infinite;
+	--animate-rift-portal: rift-portal 2s ease-out;
+	--animate-dimensional-pulse: dimensional-pulse 4s ease-in-out infinite;
+	--animate-system-materialize: system-materialize 0.6s
+		cubic-bezier(0.22, 1, 0.36, 1) both;
+	--animate-hologram-flicker: hologram-flicker 4s ease-in-out infinite;
+	--animate-hud-glow-pulse: hud-glow-pulse 3s ease-in-out infinite;
+	--animate-system-boot: system-boot 0.8s ease-out both;
+
+	/* ── Keyframes (defined below as standard CSS) ────────── */
+}
 
 /* ============================================================
    System Ascendant — Amethyst Void Palette v2
@@ -159,12 +224,24 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
 select,
 textarea {
 	background: rgba(0, 0, 0, 0.4);
-	backdrop-filter: blur(12px);
 	border: 1px solid hsl(var(--primary) / 0.3);
 	border-radius: 2px;
 	color: hsl(var(--foreground));
 	box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
 	transition: all 0.2s ease;
+}
+
+@supports (backdrop-filter: blur(12px)) or
+	(-webkit-backdrop-filter: blur(12px)) {
+	input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+			[type="color"]
+		):not([type="file"]),
+	select,
+	textarea {
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
+		background: rgba(0, 0, 0, 0.2);
+	}
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
@@ -240,11 +317,21 @@ h3 {
 }
 
 .hero-bg-image {
-	background-image: image-set(
+	--hero-bg: -webkit-image-set(
 		url("/ui/landing-page-hero.avif") type("image/avif"),
 		url("/ui/landing-page-hero.webp") type("image/webp")
 	);
+	background: var(--color-shadow-dark) var(--hero-bg) center / cover no-repeat;
 	filter: brightness(0.3) saturate(1.2) contrast(1.1);
+}
+
+@supports (background-image: image-set(url("/a") type("image/avif"))) {
+	.hero-bg-image {
+		--hero-bg: image-set(
+			url("/ui/landing-page-hero.avif") type("image/avif"),
+			url("/ui/landing-page-hero.webp") type("image/webp")
+		);
+	}
 }
 
 .ambient-opacity {
@@ -293,6 +380,127 @@ h3 {
 
 .anim-delay-10 {
 	animation-delay: 1s;
+}
+@keyframes scan {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(100vh);
+	}
+}
+
+@keyframes digital-flicker {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	5% {
+		opacity: 0.8;
+		transform: scale(1.01) skew(0.5deg);
+	}
+	10% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	15% {
+		opacity: 0.9;
+		transform: scale(0.99);
+	}
+	20% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes arise-glow {
+	0%,
+	100% {
+		filter: drop-shadow(0 0 5px hsl(var(--primary) / 0.5));
+	}
+	50% {
+		filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.8));
+	}
+}
+
+@keyframes chromatic-aberration {
+	0%,
+	100% {
+		text-shadow:
+			1px 0 0 rgba(255, 0, 0, 0.2),
+			-1px 0 0 rgba(0, 0, 255, 0.2);
+		filter: hue-rotate(0deg);
+	}
+	50% {
+		text-shadow:
+			-1px 0 0 rgba(255, 0, 0, 0.4),
+			1px 0 0 rgba(0, 0, 255, 0.4);
+		filter: hue-rotate(10deg);
+	}
+}
+
+.system-overlay-chromatic {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	z-index: 102;
+	opacity: 0.2;
+}
+
+@supports (backdrop-filter: contrast(1.05)) or
+	(-webkit-backdrop-filter: contrast(1.05)) {
+	.system-overlay-chromatic {
+		-webkit-backdrop-filter: contrast(1.05) saturate(1.1);
+		backdrop-filter: contrast(1.05) saturate(1.1);
+	}
+}
+
+.system-overlay-scanlines {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	z-index: 100;
+	background: linear-gradient(
+		to bottom,
+		transparent 50%,
+		rgba(157, 78, 221, 0.05) 50%
+	);
+	background-size: 100% 4px;
+	opacity: 0.3;
+}
+
+.system-overlay-grain {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	z-index: 101;
+	opacity: 0.03;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.holographic-flicker {
+	animation: digital-flicker 8s linear infinite;
+}
+
+.arise-text {
+	font-family: "JetBrains Mono", monospace;
+	text-transform: uppercase;
+	letter-spacing: 0.3em;
+	background: linear-gradient(to right, #9d4edd, #00d4ff);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: arise-glow 3s ease-in-out infinite;
 }
 
 /* Print Styles - Chronicle of Ascendants */

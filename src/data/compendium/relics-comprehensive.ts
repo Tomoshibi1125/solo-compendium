@@ -31,6 +31,7 @@ export interface Relic {
 		cursed?: boolean;
 		unique?: boolean;
 		legendary?: boolean;
+		legendary_actions?: boolean;
 	};
 	abilities: {
 		name: string;
@@ -102,7 +103,7 @@ export const comprehensiveRelics: Relic[] = [
 			protocol_enhanced: true,
 			sentient: true,
 			unique: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: [
 			{
@@ -343,7 +344,7 @@ export const comprehensiveRelics: Relic[] = [
 			protocol_enhanced: true,
 			sentient: true,
 			unique: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: [
 			{
@@ -834,7 +835,7 @@ export const comprehensiveRelics: Relic[] = [
 		properties: {
 			protocol_enhanced: true,
 			unique: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: [
 			{

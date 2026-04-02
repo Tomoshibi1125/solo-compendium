@@ -17,7 +17,7 @@ export type AmbientSoundShape = "circle" | "rectangle";
 
 export interface AmbientSoundZone {
 	id: string;
-	/** Display name for DM panel */
+	/** Display name for Protocol Warden (PW) panel */
 	label: string;
 	/** Center position in grid coordinates */
 	x: number;

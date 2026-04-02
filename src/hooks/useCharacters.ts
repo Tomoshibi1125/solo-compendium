@@ -27,23 +27,45 @@ export interface CharacterWithAbilities extends Character {
 	abilities: Record<AbilityScore, number>;
 }
 
-type ExtendedDatabase = Database & {
-	public: {
-		Functions: Database["public"]["Functions"] & {
-			get_character_by_share_token: {
-				Args: { p_character_id: string; p_share_token: string };
-				Returns: Character[];
-			};
-			generate_character_share_token_for_character: {
-				Args: { p_character_id: string };
-				Returns: string;
-			};
-		};
+export function mapToCharacterWithAbilities(
+	char: Character,
+): CharacterWithAbilities {
+	return {
+		...char,
+		abilities: {
+			STR: char.str || 10,
+			AGI: char.agi || 10,
+			VIT: char.vit || 10,
+			INT: char.int || 10,
+			SENSE: char.sense || 10,
+			PRE: char.pre || 10,
+		},
+	};
+}
+
+type ExtendedFunctions = {
+	get_character_by_share_token: {
+		Args: { p_character_id: string; p_share_token: string };
+		Returns: Character[];
+	};
+	generate_character_share_token_for_character: {
+		Args: { p_character_id: string };
+		Returns: string;
 	};
 };
 
-const supabaseExtended =
-	supabase as unknown as SupabaseClient<ExtendedDatabase>;
+type OverrideFunctions<T, U> = Omit<T, keyof U> & U;
+
+type ExtendedDatabase = Omit<Database, "public"> & {
+	public: Omit<Database["public"], "Functions"> & {
+		Functions: OverrideFunctions<
+			Database["public"]["Functions"],
+			ExtendedFunctions
+		>;
+	};
+};
+
+const supabaseExtended = supabase as SupabaseClient<ExtendedDatabase>;
 
 // Fetch all characters for current user
 export const useCharacters = () => {
@@ -65,7 +87,7 @@ export const useCharacters = () => {
 				logErrorWithContext(error, "useCharacters");
 				throw error;
 			}
-			return characters || [];
+			return (characters || []).map(mapToCharacterWithAbilities);
 		},
 		retry: false, // Don't retry if not authenticated
 	});

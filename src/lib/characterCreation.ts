@@ -4,10 +4,13 @@
  */
 
 import { backgrounds as staticBackgrounds } from "@/data/compendium/backgrounds";
-import { items as staticItems } from "@/data/compendium/items";
+import {
+	type Item as StaticItem,
+	items as staticItems,
+} from "@/data/compendium/items";
 import { jobs as staticJobs } from "@/data/compendium/jobs";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { calculateFeatureUses } from "@/lib/characterEngine";
 import {
 	addLocalEquipment,
@@ -20,15 +23,19 @@ import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
+import type {
+	Background as DbBackground,
+	Job as DbJob,
+	StaticBackground,
+	StaticJob,
+} from "@/types/character";
+export type { StaticBackground, StaticJob };
+
 import { getProficiencyBonus } from "@/types/system-rules";
 import { getDefaultSigilSlotsBaseForEquipment } from "./sigilAutomation";
 
-export type Job = Database["public"]["Tables"]["compendium_jobs"]["Row"];
-export type Background =
-	Database["public"]["Tables"]["compendium_backgrounds"]["Row"];
-
-export type StaticJob = (typeof staticJobs)[number];
-export type StaticBackground = (typeof staticBackgrounds)[number];
+export type Job = DbJob;
+export type Background = DbBackground;
 
 export function normalizeItemLookupName(value: string): string {
 	return value
@@ -91,23 +98,7 @@ export function _splitCompoundEquipmentEntry(entry: string): string[] {
 	return [trimmed];
 }
 
-export interface LegacyCharacterItem {
-	item_type?: string;
-	type?: string;
-	armor_class?: string;
-	armor_type?: string;
-	stealth_disadvantage?: boolean;
-	strength_requirement?: string | number;
-	damage?: string;
-	damage_type?: string;
-	weapon_type?: string;
-	simple_properties?: string[];
-	range?: string;
-	effects?: Record<string, unknown>;
-}
-
-export function deriveItemType(rawItem: (typeof staticItems)[number]): string {
-	const item = rawItem as unknown as LegacyCharacterItem;
+export function deriveItemType(item: StaticItem): string {
 	if (item.item_type) return item.item_type;
 	const t = item.type?.toLowerCase() ?? "";
 	if (t === "weapon") return "weapon";
@@ -131,10 +122,7 @@ export function findStaticJobByName(
  * Build a properties string array from a static compendium item's mechanical fields.
  * The equipmentModifiers.ts parser reads these strings to apply AC, damage, etc.
  */
-export function buildItemProperties(
-	rawItem: (typeof staticItems)[number],
-): string[] {
-	const item = rawItem as unknown as LegacyCharacterItem;
+export function buildItemProperties(item: StaticItem): string[] {
 	const props: string[] = [];
 
 	// Armor: emit "AC <value>" so the modifier parser picks it up
@@ -164,7 +152,7 @@ export function buildItemProperties(
 	}
 	if (item.range && item.range !== "Melee") props.push(`Range ${item.range}`);
 
-	const passive = (item.effects as Record<string, unknown>)?.passive;
+	const passive = item.effects?.passive;
 	if (Array.isArray(passive)) {
 		for (const line of passive) {
 			if (typeof line === "string" && line.trim().length > 0) {
@@ -200,9 +188,16 @@ export async function autoUpdateFeatureUses(
 	if (!features) return;
 
 	for (const feature of features) {
-		const usesFormula = (feature as Record<string, unknown>).uses_formula as
-			| string
-			| undefined;
+		// Use type-safe property extraction from JSON field
+		const modifiers = feature.modifiers as Array<{
+			type: string;
+			target: string;
+			value: string | number | boolean;
+		}> | null;
+		const usesFormula = modifiers?.find(
+			(m) => m.type === "resource" && m.target === "uses_formula",
+		)?.value as string | undefined;
+
 		if (usesFormula) {
 			const newMax = calculateFeatureUses(
 				usesFormula,
@@ -246,9 +241,14 @@ export function normalizeJobName(jobName: string | null | undefined): string {
 	return (jobName || "").trim().toLowerCase();
 }
 
-export function getSpellProgressionForJob(
-	jobName: string | null | undefined,
-): SpellProgression {
+export type JobReference = StaticJob | DbJob | string | null | undefined;
+
+export function isStaticJob(job: JobReference): job is StaticJob {
+	return !!job && typeof job !== "string" && "awakeningFeatures" in job;
+}
+
+export function getSpellProgressionForJob(job: JobReference): SpellProgression {
+	const jobName = typeof job === "string" ? job : job?.name;
 	const normalized = normalizeJobName(jobName);
 
 	// Full casters
@@ -277,11 +277,11 @@ export function getSpellProgressionForJob(
  * We use this to gate compendium powers (treating `power_level` like spell level).
  */
 export function getMaxPowerLevelForJobAtLevel(
-	jobName: string | null | undefined,
+	job: JobReference,
 	level: number,
 ): number {
 	const clamped = Math.min(Math.max(level, 1), 20);
-	const progression = getSpellProgressionForJob(jobName);
+	const progression = getSpellProgressionForJob(job);
 
 	if (progression === "none") return 0;
 
@@ -376,13 +376,13 @@ export async function updateCharacterFeatureModifiersByName(
 			(f: { name?: string | null; id: string }) => f.name === name,
 		);
 		if (!existing) return;
-		updateLocalFeature(existing.id, { modifiers: modifiers as never });
+		updateLocalFeature(existing.id, { modifiers: (modifiers || null) as Json });
 		return;
 	}
 
 	await supabase
 		.from("character_features")
-		.update({ modifiers: modifiers as never })
+		.update({ modifiers: (modifiers || null) as Json })
 		.eq("character_id", characterId)
 		.eq("name", name);
 }
@@ -843,7 +843,7 @@ export function getJobAwakeningFeatureModifiers(
 				{
 					type: "hp-max",
 					value: level,
-					target: null as unknown as string,
+					target: "hp_max",
 					source: featureName,
 				},
 			];
@@ -1044,7 +1044,7 @@ export function getJobAwakeningFeatureModifiers(
 				{
 					type: "hp-max",
 					value: level,
-					target: null as unknown as string,
+					target: "hp_max",
 					source: featureName,
 				},
 			];
@@ -1442,15 +1442,23 @@ const JOB_ASI_TO_SYSTEM: Record<string, string> = {
  */
 export function getJobASI(
 	jobName: string | null | undefined,
+	level: number,
 ): Record<string, number> {
 	const job = findStaticJobByName(jobName);
 	if (!job || !job.abilityScoreImprovements) return {};
 
-	const result: Record<string, number> = {} as Record<string, number>;
-	for (const [ability, bonus] of Object.entries(job.abilityScoreImprovements)) {
-		const systemAbility = JOB_ASI_TO_SYSTEM[ability.toLowerCase()];
-		if (systemAbility && typeof bonus === "number" && bonus !== 0) {
-			result[systemAbility] = bonus;
+	const result: Record<string, number> = {};
+	const asi = job.abilityScoreImprovements;
+	if (Array.isArray(asi) && asi.includes(level)) {
+		// This handles the case where improvements are gated by level
+		// (Common in path scaling)
+	} else if (asi && !Array.isArray(asi)) {
+		const rawASI = asi as Record<string, number>;
+		for (const [ability, bonus] of Object.entries(rawASI)) {
+			const systemAbility = JOB_ASI_TO_SYSTEM[ability.toLowerCase()];
+			if (systemAbility && typeof bonus === "number" && bonus !== 0) {
+				result[systemAbility] = bonus;
+			}
 		}
 	}
 	return result;
@@ -1664,7 +1672,7 @@ export function getPathFeatureModifiers(
 					{
 						type: "hp-max",
 						value: level,
-						target: null as unknown as string,
+						target: "hp_max",
 						source: featureName,
 					},
 				];
@@ -2410,21 +2418,23 @@ export function getRegentFeatureModifiers(
  */
 export async function addJobAwakeningBenefitsForLevel(
 	characterId: string,
-	jobName: string | null | undefined,
+	job: JobReference, // Standardized
 	level: number,
 ): Promise<void> {
-	const job = findStaticJobByName(jobName);
-	if (!job) return;
-
+	if (!job) {
+		console.warn("Cannot add awakening benefits: job missing");
+		return;
+	}
+	const jobName = typeof job === "string" ? job : job?.name;
 	const existingNames = await getExistingFeatureNames(characterId);
 
 	// Handle scaling awakening features that need to update with character level.
 	if (
-		job.name.trim().toLowerCase() === "berserker" &&
+		jobName.trim().toLowerCase() === "berserker" &&
 		existingNames.has("Mana-Dense Physiology")
 	) {
 		const next = getJobAwakeningFeatureModifiers(
-			job.name,
+			jobName,
 			"Mana-Dense Physiology",
 			level,
 		);
@@ -2435,25 +2445,40 @@ export async function addJobAwakeningBenefitsForLevel(
 		);
 	}
 
-	const awakeningAtLevel = (job.awakeningFeatures || []).filter(
-		(f) => f.level === level,
-	);
-	for (const feature of awakeningAtLevel) {
-		if (existingNames.has(feature.name)) continue;
+	// Direct Job Features from DB first (System Ascendant authoritative)
+	const { data: jobFeatures } = await supabase
+		.from("compendium_job_features")
+		.select("*")
+		.eq("job_id", typeof job !== "string" && job ? job.id : "")
+		.eq("level", level)
+		.eq("is_path_feature", false);
 
-		const modifiers = getJobAwakeningFeatureModifiers(
-			job.name,
-			feature.name,
-			level,
+	// If no DB features, check static Job Awakening (new Zero-Legacy enrichment)
+	if (
+		(!jobFeatures || jobFeatures.length === 0) &&
+		isStaticJob(job) &&
+		job.awakeningFeatures
+	) {
+		const awakeningAtLevel = job.awakeningFeatures.filter(
+			(f) => f.level === level,
 		);
-		await insertCharacterFeature(characterId, {
-			name: feature.name,
-			source: `Job Awakening: ${job.name}`,
-			level_acquired: level,
-			description: feature.description,
-			is_active: true,
-			modifiers: modifiers.length > 0 ? (modifiers as never) : null,
-		});
+		for (const feature of awakeningAtLevel) {
+			if (existingNames.has(feature.name)) continue;
+
+			const modifiers = getJobAwakeningFeatureModifiers(
+				jobName,
+				feature.name,
+				level,
+			);
+			await insertCharacterFeature(characterId, {
+				name: feature.name,
+				source: `Job Awakening: ${jobName}`,
+				level_acquired: level,
+				description: feature.description,
+				is_active: true,
+				modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
+			});
+		}
 	}
 
 	// Path benefits
@@ -2482,7 +2507,7 @@ export async function addJobAwakeningBenefitsForLevel(
 			for (const feature of pathFeaturesAtLevel) {
 				if (existingNames.has(feature.name)) continue;
 				const modifiers = getPathFeatureModifiers(
-					job.name,
+					jobName,
 					pathData.name,
 					feature.name,
 					level,
@@ -2527,26 +2552,26 @@ export async function addJobAwakeningBenefitsForLevel(
 						level_acquired: level,
 						description: feature.description,
 						is_active: true,
-						modifiers: modifiers.length > 0 ? (modifiers as never) : null,
+						modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
 					});
 				}
 			}
 		}
 	}
 
-	if (level === 1) {
+	if (level === 1 && isStaticJob(job)) {
 		for (const trait of job.jobTraits || []) {
 			if (existingNames.has(trait.name)) continue;
 
-			const modifiers = getJobTraitModifiers(job.name, trait.name);
+			const modifiers = getJobTraitModifiers(jobName, trait.name);
 			const isActiveByDefault = trait.type !== "active";
 			await insertCharacterFeature(characterId, {
 				name: trait.name,
-				source: `Job Trait: ${job.name}`,
+				source: `Job Trait: ${jobName}`,
 				level_acquired: 1,
 				description: trait.description,
 				is_active: isActiveByDefault,
-				modifiers: modifiers.length > 0 ? (modifiers as never) : null,
+				modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
 			});
 		}
 	}
@@ -2557,16 +2582,21 @@ export async function addJobAwakeningBenefitsForLevel(
  */
 export async function addLevel1Features(
 	characterId: string,
-	jobId: string,
-	pathId?: string,
+	job: JobReference,
+	background: StaticBackground | null | undefined,
 ): Promise<void> {
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName || !background) {
+		console.warn("Cannot add level 1 features: job or background missing");
+		return;
+	}
 	const campaignId = await getCharacterCampaignId(characterId);
 
 	// Get level 1 job features
 	const { data: jobFeatures } = await supabase
 		.from("compendium_job_features")
 		.select("*")
-		.eq("job_id", jobId)
+		.eq("job_id", typeof job !== "string" && job ? job.id : "")
 		.eq("level", 1)
 		.eq("is_path_feature", false);
 
@@ -2609,17 +2639,8 @@ export async function addLevel1Features(
 		}
 	} else {
 		// Static fallback: if DB had no features, use static classFeatures
-		const { data: jobRow } = await supabase
-			.from("compendium_jobs")
-			.select("name")
-			.eq("id", jobId)
-			.maybeSingle();
-
-		const staticJob = findStaticJobByName(jobRow?.name);
-		if (staticJob?.classFeatures) {
-			const level1Features = staticJob.classFeatures.filter(
-				(cf) => cf.level === 1,
-			);
+		if (isStaticJob(job) && job.classFeatures) {
+			const level1Features = job.classFeatures.filter((cf) => cf.level === 1);
 			for (const cf of level1Features) {
 				if (isLocalCharacterId(characterId)) {
 					addLocalFeature(characterId, {
@@ -2650,65 +2671,6 @@ export async function addLevel1Features(
 			}
 		}
 	}
-
-	// Get level 1 path features if path selected
-	if (pathId) {
-		const { data: pathRow } = await supabase
-			.from("compendium_job_paths")
-			.select("path_level")
-			.eq("id", pathId)
-			.maybeSingle();
-
-		if (!pathRow || pathRow.path_level !== 1) {
-			return;
-		}
-
-		const { data: pathFeatures } = await supabase
-			.from("compendium_job_features")
-			.select("*")
-			.eq("path_id", pathId)
-			.eq("level", 1)
-			.eq("is_path_feature", true);
-
-		const accessiblePathFeatures = await filterRowsBySourcebookAccess(
-			pathFeatures || [],
-			(feature) => feature.source_name,
-			{ campaignId },
-		);
-
-		if (accessiblePathFeatures.length > 0) {
-			for (const feature of accessiblePathFeatures) {
-				const usesMax = calculateFeatureUses(feature.uses_formula, 1, 2);
-
-				if (isLocalCharacterId(characterId)) {
-					addLocalFeature(characterId, {
-						name: feature.name,
-						source: "Path: Level 1",
-						level_acquired: 1,
-						description: feature.description,
-						action_type: feature.action_type || null,
-						uses_max: usesMax,
-						uses_current: usesMax,
-						recharge: feature.recharge || null,
-						is_active: true,
-					});
-				} else {
-					await supabase.from("character_features").insert({
-						character_id: characterId,
-						name: feature.name,
-						source: "Path: Level 1",
-						level_acquired: 1,
-						description: feature.description,
-						action_type: feature.action_type || null,
-						uses_max: usesMax,
-						uses_current: usesMax,
-						recharge: feature.recharge || null,
-						is_active: true,
-					});
-				}
-			}
-		}
-	}
 }
 
 /**
@@ -2716,7 +2678,7 @@ export async function addLevel1Features(
  */
 export async function addBackgroundFeatures(
 	characterId: string,
-	background: Background,
+	background: StaticBackground,
 ): Promise<void> {
 	// Add background feature if any
 	if (background.feature_name) {
@@ -2748,54 +2710,90 @@ export async function addBackgroundFeatures(
 /**
  * Add starting equipment from job and background
  */
+function normalizeToStaticItem(
+	entry: (typeof staticItems)[number],
+): StaticItem {
+	return {
+		...entry,
+		rarity: (["common", "uncommon", "rare", "epic", "legendary"].includes(
+			entry.rarity as string,
+		)
+			? entry.rarity
+			: "common") as StaticItem["rarity"],
+	} as StaticItem;
+}
+
+function mapToDbRarity(
+	rarity: string | null | undefined,
+): "common" | "uncommon" | "rare" | "very_rare" | "legendary" | null {
+	if (!rarity) return null;
+	if (rarity === "epic") return "very_rare";
+	const valid = [
+		"common",
+		"uncommon",
+		"rare",
+		"very_rare",
+		"legendary",
+	] as const;
+	type DbRarity = (typeof valid)[number];
+	if ((valid as readonly string[]).includes(rarity)) return rarity as DbRarity;
+	return "common";
+}
+
 export async function addStartingEquipment(
-	characterId: string,
-	job: Job,
-	background?: Background,
-	equipmentChoices?: Record<number, string>,
+	character_id: string,
+	job: JobReference, // Standardized
+	background: StaticBackground | null | undefined,
+	_skill_choices: string[],
+	equipment_choices: Record<number, string>,
 ): Promise<void> {
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName || !background) {
+		console.warn("Cannot add starting equipment: job or background missing");
+		return;
+	}
+	const characterId = character_id;
+	const equipmentChoices = equipment_choices;
 	const campaignId = await getCharacterCampaignId(characterId);
 
 	// Add job starting equipment from static data
-	const staticJob = findStaticJobByName(job.name);
-	if (staticJob?.startingEquipment) {
+	if (isStaticJob(job) && job.startingEquipment) {
 		for (
 			let groupIndex = 0;
-			groupIndex < staticJob.startingEquipment.length;
+			groupIndex < job.startingEquipment.length;
 			groupIndex++
 		) {
-			const equipmentGroup = staticJob.startingEquipment[groupIndex];
+			const equipmentGroup = job.startingEquipment[groupIndex];
 			// Use player's choice if provided, otherwise default to first option
 			const itemName = equipmentChoices?.[groupIndex] ?? equipmentGroup[0];
 			if (!itemName) continue;
 
 			// Look up item in static compendium for proper metadata
 			const compendiumItem = findStaticItemByName(itemName);
-			const itemType = compendiumItem ? deriveItemType(compendiumItem) : "gear";
+			const normalizedItem = compendiumItem
+				? normalizeToStaticItem(compendiumItem)
+				: null;
+			const itemType = normalizedItem ? deriveItemType(normalizedItem) : "gear";
 			// Auto-equip armor, shields, and weapons so new characters start ready
 			const shouldAutoEquip = ["armor", "shield", "weapon"].includes(itemType);
-			const equipData = compendiumItem
+			const equipData = normalizedItem
 				? {
-						name: compendiumItem.name,
+						name: normalizedItem.name,
 						item_type: itemType,
-						weight: compendiumItem.weight ?? null,
-						description: compendiumItem.description ?? null,
-						properties: buildItemProperties(compendiumItem),
-						rarity:
-							(compendiumItem.rarity as
-								| "common"
-								| "uncommon"
-								| "rare"
-								| "legendary"
-								| "very_rare") ?? null,
+						weight: normalizedItem.weight ?? null,
+						description: normalizedItem.description ?? null,
+						properties: buildItemProperties(normalizedItem),
+						rarity: mapToDbRarity(normalizedItem.rarity),
 						quantity: 1,
 						is_equipped: shouldAutoEquip,
-						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
-							item_type: itemType,
-							properties: buildItemProperties(compendiumItem),
-							name: compendiumItem.name,
-							rarity: compendiumItem.rarity ?? null,
-						}),
+						sigil_slots_base: normalizedItem
+							? getDefaultSigilSlotsBaseForEquipment({
+									item_type: itemType,
+									properties: buildItemProperties(normalizedItem),
+									name: normalizedItem.name,
+									rarity: mapToDbRarity(normalizedItem.rarity),
+								})
+							: 1,
 					}
 				: {
 						name: itemName,
@@ -2817,10 +2815,11 @@ export async function addStartingEquipment(
 	}
 
 	// Add background starting equipment (DB field)
-	if (background?.starting_equipment) {
-		const equipmentItems = background.starting_equipment
-			.split(",")
-			.map((e) => e.trim());
+	if (
+		background?.starting_equipment &&
+		background.starting_equipment.length > 0
+	) {
+		const equipmentItems = background.starting_equipment;
 
 		for (const itemName of equipmentItems) {
 			const { data: equipment } = await supabase
@@ -2864,28 +2863,52 @@ export async function addStartingEquipment(
 							item_type: equipment.equipment_type || "gear",
 							properties: equipment.properties || [],
 							name: equipment.name,
-							rarity: equipment.rarity ?? null,
+							rarity: mapToDbRarity(equipment.rarity),
 						}),
 					});
 				}
 			} else {
-				if (isLocalCharacterId(characterId)) {
-					addLocalEquipment(characterId, {
-						name: itemName,
-						item_type: "gear",
-						quantity: 1,
-						is_equipped: false,
-						sigil_slots_base: 1,
-					});
-				} else {
-					await supabase.from("character_equipment").insert({
-						character_id: characterId,
-						name: itemName,
-						item_type: "gear",
-						quantity: 1,
-						is_equipped: false,
-						sigil_slots_base: 1,
-					});
+				const item = findStaticItemByName(itemName);
+				if (item) {
+					// Use formal normalization for the builder
+					const normalizedItem = normalizeToStaticItem(item);
+					const itemProps = buildItemProperties(normalizedItem);
+					const itemType = deriveItemType(normalizedItem);
+
+					if (isLocalCharacterId(characterId)) {
+						addLocalEquipment(characterId, {
+							name: item.name,
+							item_type: itemType,
+							description: item.description || null,
+							properties: itemProps,
+							weight: item.weight || null,
+							quantity: 1,
+							is_equipped: false,
+							sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+								item_type: itemType,
+								properties: itemProps,
+								name: item.name,
+								rarity: item.rarity,
+							}),
+						});
+					} else {
+						await supabase.from("character_equipment").insert({
+							character_id: characterId,
+							name: item.name,
+							item_type: itemType,
+							description: item.description || null,
+							properties: itemProps,
+							weight: item.weight || null,
+							quantity: 1,
+							is_equipped: false,
+							sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+								item_type: itemType,
+								properties: itemProps,
+								name: item.name,
+								rarity: item.rarity,
+							}),
+						});
+					}
 				}
 			}
 		}
@@ -2897,17 +2920,22 @@ export async function addStartingEquipment(
  */
 export async function addStartingPowers(
 	characterId: string,
-	job: Job,
+	job: JobReference,
 ): Promise<void> {
+	if (!job) {
+		console.warn("Cannot add starting powers: job missing");
+		return;
+	}
+	const jobName = typeof job === "string" ? job : job?.name;
 	const campaignId = await getCharacterCampaignId(characterId);
 
-	const maxPowerLevel = getMaxPowerLevelForJobAtLevel(job.name, 1);
+	const maxPowerLevel = getMaxPowerLevelForJobAtLevel(job, 1);
 
 	// Get powers available to this job at level 1
 	const { data: powers } = await supabase
 		.from("compendium_powers")
 		.select("*")
-		.contains("job_names", [job.name])
+		.contains("job_names", [jobName])
 		.lte("power_level", maxPowerLevel); // 5e-accurate max spell level (includes cantrips at 0)
 
 	const accessiblePowers = await filterRowsBySourcebookAccess(
@@ -2922,7 +2950,7 @@ export async function addStartingPowers(
 				addLocalPower(characterId, {
 					name: power.name,
 					power_level: power.power_level,
-					source: `Job: ${job.name}`,
+					source: `Job: ${jobName}`,
 					casting_time: power.casting_time || null,
 					range: power.range || null,
 					duration: power.duration || null,
@@ -2937,14 +2965,14 @@ export async function addStartingPowers(
 					character_id: characterId,
 					name: power.name,
 					power_level: power.power_level,
-					source: `Job: ${job.name}`,
+					source: `Job: ${jobName}`,
 					casting_time: power.casting_time || null,
 					range: power.range || null,
 					duration: power.duration || null,
 					concentration: power.concentration || false,
 					description: power.description || null,
 					higher_levels: power.higher_levels || null,
-					is_prepared: power.power_level === 0, // Auto-prepare cantrips
+					is_prepared: power.power_level === 0,
 					is_known: true,
 				});
 			}

@@ -41,9 +41,7 @@ export function useOptimisticMutation<
 			}
 
 			// If online, perform the actual remote mutation immediately.
-			return await (mutationFn as unknown as (v: TVariables) => Promise<TData>)(
-				variables,
-			);
+			return await mutationFn(variables, undefined as never);
 		},
 		onMutate: async (variables) => {
 			const resolvedKey = mutationKeyFn(variables);
@@ -62,7 +60,7 @@ export function useOptimisticMutation<
 			// 4. Return context object with the snapshotted value
 			return { previousData, mutationKey: resolvedKey } as TContext;
 		},
-		onError: (err, _newTodo, context) => {
+		onError: (err, _variables, context) => {
 			// If the mutation fails, roll back to the previous value
 			const typedContext = context as
 				| { previousData: unknown; mutationKey: MutationKey }

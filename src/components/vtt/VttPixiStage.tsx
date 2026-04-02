@@ -64,7 +64,7 @@ type VttPixiStageProps = {
 	gridSize: number;
 	zoom: number;
 	showGrid: boolean;
-	isGM: boolean;
+	isWarden: boolean;
 	effectiveVisibleLayers: Record<number, boolean>;
 	activeTokenId: string | null;
 	activeInitiativeTokenId?: string | null;
@@ -99,7 +99,7 @@ export function VttPixiStage({
 	gridSize,
 	zoom,
 	showGrid,
-	isGM,
+	isWarden,
 	effectiveVisibleLayers,
 	activeTokenId,
 	activeInitiativeTokenId,
@@ -547,10 +547,10 @@ export function VttPixiStage({
 			if (!walls || walls.length === 0) return;
 
 			const wg = new Graphics();
-			// Walls are drawn in blueish-grey for DM, mostly invisible for players but we draw them for both right now
+			// Walls are drawn in blueish-grey for PW, mostly invisible for players but we draw them for both right now
 			// so players know why they can't see past it (or we can hide for players). Let's make them subtle for players.
-			const wallColor = isGM ? 0xef4444 : 0x000000;
-			const wallAlpha = isGM ? 0.8 : 0.3;
+			const wallColor = isWarden ? 0xef4444 : 0x000000;
+			const wallAlpha = isWarden ? 0.8 : 0.3;
 
 			wg.stroke({
 				width: 4,
@@ -573,7 +573,7 @@ export function VttPixiStage({
 			if (!scene?.fogOfWar || !scene.fogData) return;
 
 			const fg = new Graphics();
-			fg.alpha = isGM ? 0.5 : 0.85;
+			fg.alpha = isWarden ? 0.5 : 0.85;
 			const step = gridSize * zoom;
 			fg.beginFill(0x000000, 0.8);
 
@@ -590,7 +590,7 @@ export function VttPixiStage({
 			fog.addChild(fg);
 
 			// Line of Sight masking
-			if (!isGM) {
+			if (!isWarden) {
 				// Collect tokens that grant vision (owned tokens or all characters if none selected)
 				const visionSources = activeTokenId
 					? tokens.filter((t) => t.id === activeTokenId)
@@ -709,7 +709,7 @@ export function VttPixiStage({
 
 			const visible = tokens.filter((token) => {
 				if (!effectiveVisibleLayers[token.layer]) return false;
-				return isGM ? true : token.visible;
+				return isWarden ? true : token.visible;
 			});
 
 			for (const token of visible) {
@@ -917,7 +917,7 @@ export function VttPixiStage({
 		activeInitiativeTokenId,
 		effectiveVisibleLayers,
 		gridSize,
-		isGM,
+		isWarden,
 		scene,
 		setActiveTokenId,
 		showGrid,

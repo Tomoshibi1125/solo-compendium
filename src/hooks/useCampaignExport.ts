@@ -15,7 +15,7 @@ const sanitizeBundle = (bundle: Json | null) => {
 	) {
 		const campaign = { ...(sanitized.campaign as Record<string, Json>) };
 		delete campaign.share_code;
-		delete campaign.dm_id;
+		delete campaign.warden_id;
 		sanitized.campaign = campaign;
 	}
 	if (Array.isArray(sanitized.invites)) {

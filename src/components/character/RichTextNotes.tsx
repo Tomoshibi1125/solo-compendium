@@ -2,6 +2,7 @@ import Quill from "quill";
 import { useEffect, useRef } from "react";
 import "quill/dist/quill.snow.css";
 import { sanitizeRichText } from "@/lib/sanitize";
+// usePlayerToolsEnhancements removed as unused here
 import { cn } from "@/lib/utils";
 
 interface RichTextNotesProps {
@@ -48,6 +49,7 @@ export function RichTextNotes({
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const quillRef = useRef<Quill | null>(null);
 	const lastValueRef = useRef<string>("");
+	// playerTools removed as unused here
 
 	useEffect(() => {
 		if (!containerRef.current || quillRef.current) return;

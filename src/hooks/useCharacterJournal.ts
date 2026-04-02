@@ -60,7 +60,7 @@ export const useCharacterJournal = (characterId: string) => {
 				return fallback;
 			}
 
-			const next = (data || []) as unknown as JournalEntry[];
+			const next = (data || []) as JournalEntry[];
 			writeLocalJournalEntries(characterId, next);
 			return next;
 		},
@@ -100,7 +100,7 @@ export const useCreateJournalEntry = () => {
 				return localEntry;
 			}
 
-			const saved = data as unknown as JournalEntry;
+			const saved = data as JournalEntry;
 			const reconcile = localNext.map((row) =>
 				row.id === localEntry.id ? saved : row,
 			);
@@ -161,7 +161,7 @@ export const useUpdateJournalEntry = () => {
 				);
 			}
 
-			const saved = data as unknown as JournalEntry;
+			const saved = data as JournalEntry;
 			const reconcile = localNext.map((row) => (row.id === id ? saved : row));
 			writeLocalJournalEntries(_characterId, reconcile);
 			return saved;

@@ -29,6 +29,16 @@ interface CampaignAnalytics {
 	}>;
 }
 
+interface MemberWithProfile {
+	id: string;
+	user_id: string;
+	joined_at: string;
+	user_profiles: {
+		display_name: string | null;
+		email: string | null;
+	} | null;
+}
+
 export function useCampaignAnalytics() {
 	const { toast } = useToast();
 	const { user } = useAuth();
@@ -104,8 +114,11 @@ export function useCampaignAnalytics() {
 					totalSessions > 0 ? totalPlaytime / totalSessions : 0;
 
 				// Member activity analysis
+				const rawMembers = JSON.parse(
+					JSON.stringify(members),
+				) as MemberWithProfile[];
 				const memberActivity =
-					members?.map((member) => {
+					rawMembers?.map((member) => {
 						const memberSessions =
 							sessions?.filter(
 								(session) => session.created_by === member.user_id,
@@ -113,9 +126,7 @@ export function useCampaignAnalytics() {
 
 						return {
 							member_id: member.id,
-							member_name:
-								(member as { user_profiles?: { display_name?: string } })
-									.user_profiles?.display_name || "Unknown",
+							member_name: member.user_profiles?.display_name || "Unknown",
 							sessions_participated: memberSessions.length,
 							last_active:
 								memberSessions.length > 0
@@ -125,17 +136,20 @@ export function useCampaignAnalytics() {
 					}) || [];
 
 				// Level progression analysis
+				const rawProgressions = JSON.parse(
+					JSON.stringify(characterProgression),
+				) as Array<{
+					character_id: string;
+					user_characters: { character_name: string } | null;
+				}>;
+
 				const levelProgression =
-					(
-						characterProgression as unknown as Record<string, unknown>[] | null
-					)?.map((char) => {
+					rawProgressions?.map((char) => {
 						// This would need to be enhanced with actual level tracking
 						// For now, we'll provide basic structure
 						return {
-							character_id: char.character_id as string,
-							character_name:
-								((char.user_characters as Record<string, unknown> | undefined)
-									?.character_name as string) || "Unknown",
+							character_id: char.character_id,
+							character_name: char.user_characters?.character_name || "Unknown",
 							starting_level: 1,
 							current_level: 1,
 							levels_gained: 0,

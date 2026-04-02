@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Json } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import {
 	deriveCampaignInviteStatus,
@@ -61,30 +61,6 @@ interface CampaignInviteCreateResult {
 		error: string | null;
 	};
 }
-
-const supabaseAny = supabase as unknown as {
-	rpc: (
-		fn: string,
-		args?: Record<string, unknown>,
-	) => Promise<{ data: unknown; error: Error | null }>;
-	from: (table: string) => {
-		select: (columns?: string) => {
-			eq: (
-				column: string,
-				value: string,
-			) => {
-				order: (
-					column: string,
-					opts?: { ascending?: boolean },
-				) => {
-					limit: (
-						count: number,
-					) => Promise<{ data: unknown[] | null; error: Error | null }>;
-				};
-			};
-		};
-	};
-};
 
 interface CampaignInviteAuditLog {
 	id: string;
@@ -212,10 +188,8 @@ export const useCampaignInvites = (campaignId: string) => {
 				.order("created_at", { ascending: false });
 
 			if (error) throw error;
-			const invites = ((data || []) as unknown as CampaignInviteRecord[]).map(
-				normalizeInviteRecord,
-			);
-			return invites;
+			const invites = (data || []) as CampaignInviteRecord[];
+			return invites.map(normalizeInviteRecord);
 		},
 		enabled: !!campaignId,
 	});
@@ -254,21 +228,27 @@ export const useCreateCampaignInvite = () => {
 				}
 			}
 
-			let { data, error } = await supabaseAny.rpc("create_campaign_invite", {
-				p_campaign_id: campaignId,
-				p_role: role,
-				p_expires_at: expiresAt ?? undefined,
-				p_max_uses: maxUses,
-				p_invite_email: normalizedInviteEmail,
-			});
-
-			if (error && shouldFallbackToLegacyInviteRpc(error)) {
-				const legacyResult = await supabaseAny.rpc("create_campaign_invite", {
+			let { data, error } = await supabase.rpc(
+				"create_campaign_invite" as keyof Database["public"]["Functions"],
+				{
 					p_campaign_id: campaignId,
 					p_role: role,
 					p_expires_at: expiresAt ?? undefined,
 					p_max_uses: maxUses,
-				});
+					p_invite_email: normalizedInviteEmail,
+				},
+			);
+
+			if (error && shouldFallbackToLegacyInviteRpc(error)) {
+				const legacyResult = await supabase.rpc(
+					"create_campaign_invite" as keyof Database["public"]["Functions"],
+					{
+						p_campaign_id: campaignId,
+						p_role: role,
+						p_expires_at: expiresAt ?? undefined,
+						p_max_uses: maxUses,
+					},
+				);
 				data = legacyResult.data;
 				error = legacyResult.error;
 			}
@@ -322,8 +302,8 @@ export const useAddPlayerCharacterToCampaign = () => {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
 
-			const { data, error } = await supabaseAny.rpc(
-				"add_player_character_to_campaign",
+			const { data, error } = await supabase.rpc(
+				"add_player_character_to_campaign" as keyof Database["public"]["Functions"],
 				{
 					p_campaign_id: campaignId,
 					p_character_id: characterId,
@@ -360,7 +340,7 @@ export const useCampaignInviteAuditLogs = (campaignId: string) => {
 		queryFn: async (): Promise<CampaignInviteAuditLog[]> => {
 			if (!isSupabaseConfigured || !campaignId) return [];
 
-			const { data, error } = await supabaseAny
+			const { data, error } = await supabase
 				.from("campaign_invite_audit_logs")
 				.select("*")
 				.eq("campaign_id", campaignId)
@@ -400,10 +380,13 @@ export const useDeleteCampaignInvite = () => {
 			if (!isSupabaseConfigured) {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
-			let { data, error } = await supabaseAny.rpc("revoke_campaign_invite", {
-				p_invite_id: inviteId,
-				p_reason: reason ?? undefined,
-			});
+			let { data, error } = await supabase.rpc(
+				"revoke_campaign_invite" as keyof Database["public"]["Functions"],
+				{
+					p_invite_id: inviteId,
+					p_reason: reason ?? undefined,
+				},
+			);
 
 			if (error && shouldFallbackToLegacyRevokeRpc(error)) {
 				const deleteResult = await supabase
@@ -411,7 +394,7 @@ export const useDeleteCampaignInvite = () => {
 					.delete()
 					.eq("id", inviteId);
 				data = deleteResult.error ? null : true;
-				error = deleteResult.error as unknown as Error | null;
+				error = deleteResult.error;
 			}
 
 			if (error) throw error;
@@ -450,8 +433,8 @@ export const useCampaignInviteByToken = (token: string) => {
 		queryFn: async (): Promise<CampaignInviteSummary | null> => {
 			const accessKey = normalizeInviteAccessKey(token);
 			if (!accessKey || !isSupabaseConfigured) return null;
-			const { data, error } = await supabaseAny.rpc(
-				"get_campaign_invite_by_token",
+			const { data, error } = await supabase.rpc(
+				"get_campaign_invite_by_token" as keyof Database["public"]["Functions"],
 				{ p_token: accessKey },
 			);
 			if (error) throw error;
@@ -490,10 +473,13 @@ export const useRedeemCampaignInvite = () => {
 			} = await supabase.auth.getUser();
 			if (!user) throw new AppError("Not authenticated", "AUTH_REQUIRED");
 
-			const { data, error } = await supabaseAny.rpc("redeem_campaign_invite", {
-				p_token: accessKey,
-				p_character_id: characterId ?? undefined,
-			});
+			const { data, error } = await supabase.rpc(
+				"redeem_campaign_invite" as keyof Database["public"]["Functions"],
+				{
+					p_token: accessKey,
+					p_character_id: characterId ?? undefined,
+				},
+			);
 
 			if (error) throw error;
 			return data as string;

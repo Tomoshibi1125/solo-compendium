@@ -56,7 +56,7 @@ import {
 	useCampaign,
 	useCampaignMembers,
 	useCampaignRole,
-	useHasDMAccess,
+	useHasWardenAccess,
 	useLinkCampaignCharacter,
 } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
@@ -82,7 +82,7 @@ const CampaignDetail = () => {
 	const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(
 		id || "",
 	);
-	const { data: hasDMAccess = false } = useHasDMAccess(id || "");
+	const { data: hasWardenAccess = false } = useHasWardenAccess(id || "");
 	const { data: userRole, isLoading: loadingRole } = useCampaignRole(id || "");
 
 	const { data: myCharacters = [] } = useCharacters();
@@ -215,7 +215,7 @@ const CampaignDetail = () => {
 				>
 					<TabsList
 						className={cn(
-							hasDMAccess
+							hasWardenAccess
 								? "grid w-full grid-cols-4 sm:grid-cols-6 lg:grid-cols-8"
 								: "grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-7",
 						)}
@@ -284,7 +284,7 @@ const CampaignDetail = () => {
 							<span className="hidden sm:inline">Characters</span>
 							<span className="sm:hidden">Characters</span>
 						</TabsTrigger>
-						{hasDMAccess && (
+						{hasWardenAccess && (
 							<TabsTrigger
 								value="settings"
 								className="gap-2 text-xs sm:text-sm min-h-[44px]"
@@ -294,7 +294,7 @@ const CampaignDetail = () => {
 								<span className="sm:hidden">Settings</span>
 							</TabsTrigger>
 						)}
-						{hasDMAccess && (
+						{hasWardenAccess && (
 							<TabsTrigger
 								value="oversight"
 								className="gap-2 text-xs sm:text-sm min-h-[44px]"
@@ -371,7 +371,7 @@ const CampaignDetail = () => {
 							{/* Campaign Info */}
 							<SystemWindow title="CAMPAIGN INFO">
 								<div className="space-y-4">
-									{hasDMAccess ? (
+									{hasWardenAccess ? (
 										<>
 											<div className="flex items-center justify-between p-2 bg-muted/50 rounded">
 												<span className="text-xs font-display text-muted-foreground">
@@ -414,8 +414,8 @@ const CampaignDetail = () => {
 								</div>
 							</SystemWindow>
 
-							{/* Live Roll Feed (DM only) */}
-							{hasDMAccess && <CampaignRollFeed campaignId={id || ""} />}
+							{/* Live Roll Feed (PW only) */}
+							{hasWardenAccess && <CampaignRollFeed campaignId={id || ""} />}
 
 							{/* Campaign Members */}
 							<SystemWindow title="MEMBERS">
@@ -431,7 +431,7 @@ const CampaignDetail = () => {
 									<div className="space-y-2">
 										{members.map((member) => {
 											// Check if this member is the System (Protocol Warden)
-											const isDM = campaign.dm_id === member.user_id;
+											const isWarden = campaign.warden_id === member.user_id;
 											const isMe = member.user_id === user?.id;
 											return (
 												<div
@@ -439,8 +439,10 @@ const CampaignDetail = () => {
 													className="flex items-center justify-between p-3 bg-muted/50 rounded"
 												>
 													<div className="flex items-center gap-3">
-														{isDM && <Crown className="w-4 h-4 text-primary" />}
-														{member.role === "co-system" && !isDM && (
+														{isWarden && (
+															<Crown className="w-4 h-4 text-primary" />
+														)}
+														{member.role === "co-warden" && !isWarden && (
 															<Crown className="w-4 h-4 text-accent" />
 														)}
 														<div>
@@ -469,10 +471,10 @@ const CampaignDetail = () => {
 														</div>
 													</div>
 													<span className="text-xs font-display text-muted-foreground">
-														{isDM
+														{isWarden
 															? "System"
-															: member.role === "co-system"
-																? "Co-System"
+															: member.role === "co-warden"
+																? "Co-Warden"
 																: "Ascendant"}
 													</span>
 												</div>
@@ -491,7 +493,7 @@ const CampaignDetail = () => {
 					<TabsContent value="sessions">
 						<CampaignSessionsPanel
 							campaignId={id || ""}
-							canManage={hasDMAccess}
+							canManage={hasWardenAccess}
 						/>
 					</TabsContent>
 
@@ -511,13 +513,13 @@ const CampaignDetail = () => {
 						<CampaignCharacters campaignId={id || ""} />
 					</TabsContent>
 
-					{hasDMAccess && (
+					{hasWardenAccess && (
 						<TabsContent value="settings" className="space-y-6">
 							<CampaignSettings campaignId={id || ""} />
 							<CampaignProtocolControls campaignId={id || ""} />
 						</TabsContent>
 					)}
-					{hasDMAccess && (
+					{hasWardenAccess && (
 						<TabsContent value="oversight">
 							<CampaignRegentOversight campaignId={id || ""} />
 						</TabsContent>

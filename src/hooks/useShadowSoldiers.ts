@@ -32,17 +32,6 @@ export interface ShadowSoldier {
 	shadow_type: string;
 }
 
-interface CharacterShadowSoldier {
-	id: string;
-	character_id: string;
-	soldier_id: string;
-	nickname: string | null;
-	current_hp: number;
-	is_summoned: boolean;
-	bond_level: number;
-	soldier?: ShadowSoldier;
-}
-
 export function useCompendiumShadowSoldiers() {
 	return useQuery({
 		queryKey: ["compendium-shadow-soldiers"],
@@ -53,10 +42,13 @@ export function useCompendiumShadowSoldiers() {
 				.order("rank", { ascending: false });
 
 			if (error) throw error;
-			return data.map((soldier) => ({
+			return (data || []).map((soldier) => ({
 				...soldier,
-				abilities:
-					(soldier.abilities as unknown as ShadowSoldierAbility[]) || [],
+				abilities: Array.isArray(soldier.abilities)
+					? (JSON.parse(
+							JSON.stringify(soldier.abilities),
+						) as ShadowSoldierAbility[])
+					: [],
 			})) as ShadowSoldier[];
 		},
 	});
@@ -77,17 +69,21 @@ export function useCharacterShadowSoldiers(characterId: string | undefined) {
 				.eq("character_id", characterId);
 
 			if (error) throw error;
-			return data.map((css) => ({
-				...css,
-				soldier: css.soldier
-					? {
-							...css.soldier,
-							abilities:
-								(css.soldier.abilities as unknown as ShadowSoldierAbility[]) ||
-								[],
-						}
-					: undefined,
-			})) as CharacterShadowSoldier[];
+			return (data || []).map((css) => {
+				const soldier = css.soldier;
+				const abilities: ShadowSoldierAbility[] =
+					soldier && Array.isArray(soldier.abilities)
+						? (JSON.parse(
+								JSON.stringify(soldier.abilities),
+							) as ShadowSoldierAbility[])
+						: [];
+				return {
+					...css,
+					soldier: soldier
+						? ({ ...soldier, abilities } as ShadowSoldier)
+						: undefined,
+				};
+			});
 		},
 		enabled: !!characterId,
 	});

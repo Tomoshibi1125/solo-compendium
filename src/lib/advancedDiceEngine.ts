@@ -14,7 +14,7 @@ interface DiceRoll {
 	advantage?: "advantage" | "disadvantage" | "normal";
 }
 
-interface RollResult {
+export interface RollResult {
 	formula: string;
 	rolls: number[];
 	modifier: number;
@@ -361,20 +361,29 @@ export function rollPenetrating(
  * Roll dice pool with different dice types
  */
 export function rollDicePool(
-	dice: Array<{ count: number; sides: number }>,
+	diceOrCount: Array<{ count: number; sides: number }> | number,
+	sides?: number,
+	_isCritical?: boolean,
 ): RollResult {
 	const allRolls: number[] = [];
 	const totalModifier = 0;
 	let formula = "";
 
-	dice.forEach((die, index) => {
-		if (index > 0) formula += " + ";
-		formula += `${die.count}d${die.sides}`;
+	if (Array.isArray(diceOrCount)) {
+		diceOrCount.forEach((die, index) => {
+			if (index > 0) formula += " + ";
+			formula += `${die.count}d${die.sides}`;
 
-		for (let i = 0; i < die.count; i++) {
-			allRolls.push(rollDie(die.sides));
+			for (let i = 0; i < die.count; i++) {
+				allRolls.push(rollDie(die.sides));
+			}
+		});
+	} else if (typeof diceOrCount === "number" && sides) {
+		formula = `${diceOrCount}d${sides}`;
+		for (let i = 0; i < diceOrCount; i++) {
+			allRolls.push(rollDie(sides));
 		}
-	});
+	}
 
 	const total = allRolls.reduce((sum, r) => sum + r, 0);
 	const result = total + totalModifier;

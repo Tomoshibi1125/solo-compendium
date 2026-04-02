@@ -111,7 +111,7 @@ export function SovereignOverlayPanel({
 		);
 	}
 
-	const abilities = (sovereign.abilities as unknown as FusionAbility[]) || [];
+	const abilities = sovereign.abilities || [];
 	const capstone = abilities.find((a) => a.is_capstone);
 	const standard = abilities.filter((a) => !a.is_capstone);
 

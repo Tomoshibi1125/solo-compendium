@@ -1,0 +1,58 @@
+/* Dungeon Map Generator Styles - Modular Component Version */
+
+.map-container {
+	cursor: grab;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.map-container:active {
+	cursor: grabbing;
+}
+
+.map-grid {
+	background-size: 20px 20px;
+	background-image:
+		linear-gradient(to right, hsl(var(--primary) / 0.05) 1px, transparent 1px),
+		linear-gradient(to bottom, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+}
+
+.map-cell {
+	transition:
+		background-color 0.15s ease,
+		border-color 0.15s ease;
+}
+
+.map-cell::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	background-color: hsl(var(--primary) / 0.1);
+	transition: opacity 0.15s ease;
+}
+
+.map-cell:hover::after {
+	opacity: 1;
+}
+
+@media print {
+	.lg\:col-span-1 {
+		display: none;
+	}
+	.lg\:col-span-3 {
+		width: 100%;
+	}
+	.map-container {
+		border: none;
+		background: white;
+	}
+	.map-cell {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+}

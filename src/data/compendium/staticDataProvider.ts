@@ -20,11 +20,11 @@ const dataLoaders = {
 	spells: () => import("./spells").then((module) => module.spells),
 	locations: () => import("./locations").then((module) => module.locations),
 	runesCompendium: () =>
-		import("./runes").then((module) => module.systemAscendantRunes),
+		import("./runes/index").then((module) => module.allRunes),
 	systemAscendantRunes: () =>
-		import("./runes").then((module) => module.systemAscendantRunes),
+		import("./runes/index").then((module) => module.allRunes),
 	backgrounds: () =>
-		import("./backgrounds").then((module) => module.backgrounds),
+		import("./backgrounds-index").then((module) => module.allBackgrounds),
 	regents: () => import("./regents").then((module) => module.regents),
 	paths: () => import("./paths").then((module) => module.paths),
 	conditions: () => import("./conditions").then((module) => module.conditions),
@@ -44,6 +44,7 @@ const dataLoaders = {
 	techniques: () => import("./techniques").then((module) => module.techniques),
 	artifacts: () => import("./artifacts").then((module) => module.artifacts),
 	sigils: () => import("./sigils").then((module) => module.sigils),
+	tattoos: () => import("./tattoos").then((module) => module.tattoos),
 } satisfies Record<string, DataLoader<unknown>>;
 
 type DataKey = keyof typeof dataLoaders;
@@ -69,7 +70,6 @@ export interface StaticCompendiumEntry {
 	// Type-specific fields
 	power_level?: number | null;
 	school?: string | null;
-	title?: string | null;
 	theme?: string | null;
 	prerequisites?: string | Record<string, unknown> | null;
 	requirements?: Record<string, unknown> | null;
@@ -82,7 +82,7 @@ export interface StaticCompendiumEntry {
 	cr?: string | null;
 	gate_rank?: string | null;
 	is_boss?: boolean;
-	rarity?: string;
+	rarity?: string | null;
 	level?: number | null;
 	sigil_slots_base?: number | null;
 	item_type?: string | null;
@@ -92,7 +92,7 @@ export interface StaticCompendiumEntry {
 	location_type?: string | null;
 	rank?: string | null;
 	mana_cost?: number | null;
-	damage?: number | null;
+	damage?: string | number | null;
 	healing?: number | null;
 	effect?: string | null;
 	range?: number | Record<string, unknown> | null;
@@ -114,7 +114,7 @@ export interface StaticCompendiumEntry {
 	atHigherLevels?: string | null;
 	properties?: string[] | Record<string, unknown> | null;
 	abilities?: Record<string, unknown> | null;
-	lore?: Record<string, unknown> | null;
+	lore?: string | Record<string, unknown> | null;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
 	charges?: Record<string, unknown> | null;
@@ -143,12 +143,12 @@ export interface StaticCompendiumEntry {
 	sense?: number | null;
 	pre?: number | null;
 	saving_throws?: Record<string, number> | null;
-	skills?: Record<string, number> | null;
+	skills?: Record<string, number> | Record<string, unknown> | null;
 	damage_vulnerabilities?: string[] | null;
 	damage_resistances?: string[] | null;
 	damage_immunities?: string[] | null;
 	condition_immunities?: string[] | null;
-	senses?: Record<string, string> | null;
+	senses?: string[] | Record<string, string> | null;
 	languages?: string[] | null;
 	xp?: number | null;
 	monster_actions?: Record<string, unknown>[] | null;
@@ -230,6 +230,54 @@ export interface StaticCompendiumEntry {
 	job_id?: string | null;
 	job_name?: string | null;
 	path_tier?: number | null;
+	// Sync Parity support
+	spell_level?: number | null;
+	casting_time?: string | null;
+	concentration?: boolean | null;
+	ritual?: boolean | null;
+	effect_type?: string | null;
+	activation_action?: string | null;
+	uses_per_rest?: string | null;
+	requires_level?: number | null;
+	requires_job?: Record<string, unknown> | null;
+	caster_penalty?: string | null;
+	martial_penalty?: string | null;
+	passive_bonuses?: Record<string, unknown> | null;
+	effect_description?: string | null;
+	power_type?: string | null;
+	level_requirement?: number | null;
+	activation_type?: string | null;
+	primary_effect?: string | null;
+	secondary_effect?: string | null;
+	body_part?: string | null;
+	shadow_type?: string | null;
+	corruption_risk?: string | null;
+	manifestation_description?: string | null;
+	theme_tags?: string[] | null;
+	type?: string | null;
+	title?: string | null;
+	casting_time_desc?: string | null;
+	range_desc?: string | null;
+	duration_desc?: string | null;
+	hit_points?: number | null;
+	speed?: number | null;
+	sigil_type?: string | null;
+	sigil_rank?: string | null;
+	can_inscribe_on?: string[] | string | null;
+	relic_type?: string | null;
+	value_credits?: number | null;
+	flavor_text?: string | null;
+	unlock_level?: number | null;
+	damage_type?: string | null;
+	attunement_requirements?: string | Record<string, unknown> | null;
+	action_type?: string | null;
+	recharge?: string | null;
+	legendary_cost?: number | null;
+	attack_bonus?: number | null;
+	traits?: Record<string, unknown>[] | null;
+	actions?: Record<string, unknown>[] | null;
+	legendary_actions?: Record<string, unknown>[] | null;
+	special_abilities?: Record<string, unknown>[] | null;
 }
 
 interface StaticDataProvider {
@@ -251,6 +299,7 @@ interface StaticDataProvider {
 	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
 
 // Helper function to filter by search query
@@ -281,6 +330,8 @@ type StaticMonsterSource = {
 	type?: string;
 	rank?: string;
 	image?: string;
+	ac?: number;
+	hp?: number;
 	stats?: Record<string, unknown>;
 	skills?: unknown;
 	damageResistances?: unknown;
@@ -618,31 +669,46 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 			? (monster.stats as Record<string, unknown>)
 			: null;
 	const abilityScores =
-		statsObj?.abilityScores && typeof statsObj.abilityScores === "object"
-			? (statsObj.abilityScores as Record<string, unknown>)
+		(statsObj?.abilityScores || statsObj?.ability_scores) &&
+		typeof (statsObj?.abilityScores || statsObj?.ability_scores) === "object"
+			? ((statsObj?.abilityScores || statsObj?.ability_scores) as Record<
+					string,
+					unknown
+				>)
 			: null;
 
 	const armorClass =
-		typeof statsObj?.armorClass === "number"
-			? (statsObj.armorClass as number)
-			: null;
+		typeof monster.ac === "number"
+			? monster.ac
+			: typeof (statsObj?.armorClass || statsObj?.ac) === "number"
+				? ((statsObj?.armorClass || statsObj?.ac) as number)
+				: null;
 	const hitPoints =
-		typeof statsObj?.hitPoints === "number"
-			? (statsObj.hitPoints as number)
-			: null;
+		typeof monster.hp === "number"
+			? monster.hp
+			: typeof (statsObj?.hitPoints || statsObj?.hp) === "number"
+				? ((statsObj?.hitPoints || statsObj?.hp) as number)
+				: null;
 	const speed =
-		typeof statsObj?.speed === "number" ? (statsObj.speed as number) : null;
+		typeof (statsObj?.speed || statsObj?.movement_speed) === "number"
+			? ((statsObj?.speed || statsObj?.movement_speed) as number)
+			: null;
 	const crNumber =
-		typeof statsObj?.challengeRating === "number"
-			? (statsObj.challengeRating as number)
+		typeof statsObj?.challengeRating === "number" ||
+		typeof statsObj?.cr === "number"
+			? ((statsObj?.challengeRating || statsObj?.cr) as number)
 			: null;
 	const proficiencyBonus =
 		typeof statsObj?.proficiencyBonus === "number"
 			? (statsObj.proficiencyBonus as number)
-			: null;
+			: 2; // Default for Rank D monsters
 	const savingThrows =
-		statsObj?.savingThrows && typeof statsObj.savingThrows === "object"
-			? (statsObj.savingThrows as Record<string, unknown>)
+		(statsObj?.savingThrows || statsObj?.saving_throws) &&
+		typeof (statsObj?.savingThrows || statsObj?.saving_throws) === "object"
+			? ((statsObj?.savingThrows || statsObj?.saving_throws) as Record<
+					string,
+					unknown
+				>)
 			: null;
 
 	const normalizeStringArray = (value: unknown): string[] | null => {
@@ -762,7 +828,7 @@ function deriveItemProperties(
 		return {
 			weapon: {
 				damage: "1d6",
-				damageType: "slashing",
+				damage_type: "slashing",
 				versatile: null,
 				finesse: false,
 			},
@@ -777,7 +843,8 @@ function deriveItemProperties(
 				baseAC: 10 + acBonus,
 				type: acBonus >= 3 ? "heavy" : acBonus >= 2 ? "medium" : "light",
 			},
-			magical: acBonus > 0 ? { bonus: { armorClass: acBonus } } : undefined,
+			magical:
+				acBonus > 0 ? { bonus: { armor_class_migrated: acBonus } } : undefined,
 		};
 	}
 	if (t === "consumable") {
@@ -1624,7 +1691,7 @@ export const staticDataProvider: StaticDataProvider = {
 			) as string[],
 			source_book: technique.source,
 			image_url: technique.image,
-			technique_type: technique.type,
+			type: technique.type,
 			style: technique.style,
 			element: technique.element || null,
 			prerequisites: technique.prerequisites || null,
@@ -1851,6 +1918,32 @@ export const staticDataProvider: StaticDataProvider = {
 				flavor: description || null,
 			};
 		});
+	},
+	getTattoos: async (search?: string) => {
+		const tattoos = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			rarity?: string;
+			image?: string;
+			source?: string;
+			attunement?: boolean | null;
+			body_part?: string | null;
+		}>("tattoos");
+		const filtered = filterBySearch(tattoos, search, ["name", "description"]);
+		return filtered.map((tattoo) => ({
+			id: tattoo.id,
+			name: tattoo.name,
+			display_name: tattoo.name,
+			description: tattoo.description,
+			created_at: new Date().toISOString(),
+			tags: ["tattoo", tattoo.rarity].filter(Boolean) as string[],
+			source_book: tattoo.source || "System Ascendant Canon",
+			image_url: tattoo.image,
+			rarity: tattoo.rarity || "uncommon",
+			attunement: tattoo.attunement,
+			body_part: tattoo.body_part,
+		}));
 	},
 };
 

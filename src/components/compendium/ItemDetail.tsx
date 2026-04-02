@@ -1,12 +1,4 @@
-import {
-	Coins,
-	Heart,
-	Shield,
-	Sparkles,
-	Swords,
-	Weight,
-	Zap,
-} from "lucide-react";
+import { Coins, Shield, Sparkles, Swords, Weight, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
@@ -244,7 +236,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 											if (!payload) return;
 											queueResolutionAndNavigate(
 												payload,
-												"/dm-tools/initiative-tracker",
+												"/warden-protocols/initiative-tracker",
 											);
 										}}
 									>
@@ -490,7 +482,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 															if (!payload) return;
 															queueResolutionAndNavigate(
 																payload,
-																"/dm-tools/initiative-tracker",
+																"/warden-protocols/initiative-tracker",
 															);
 														}}
 													>

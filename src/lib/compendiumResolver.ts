@@ -36,6 +36,7 @@ export const entryTypes = [
 	"artifacts",
 	"locations",
 	"sigils",
+	"tattoos",
 ] as const;
 
 export type EntryType = (typeof entryTypes)[number];
@@ -66,6 +67,7 @@ const supabaseTableMap: Partial<
 	sovereigns: "compendium_sovereigns",
 	"shadow-soldiers": "compendium_shadow_soldiers",
 	sigils: "compendium_sigils" as never,
+	tattoos: "compendium_tattoos" as never,
 };
 
 const legacyIdMap: Partial<Record<EntryType, Record<string, string>>> = {
@@ -93,14 +95,15 @@ export type StaticDataProvider = {
 	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
 };
 
 let staticProviderPromise: Promise<StaticDataProvider> | null = null;
 
-const loadStaticProvider = () => {
+const loadStaticProvider = (): Promise<StaticDataProvider> => {
 	if (!staticProviderPromise) {
 		staticProviderPromise = import("@/data/compendium/staticDataProvider").then(
-			(module) => module.staticDataProvider,
+			(module) => module.staticDataProvider as StaticDataProvider,
 		);
 	}
 	return staticProviderPromise;
@@ -166,6 +169,9 @@ const getStaticEntries = async (
 			break;
 		case "locations":
 			entries = await provider.getLocations(search);
+			break;
+		case "tattoos":
+			entries = await provider.getTattoos(search);
 			break;
 		default:
 			entries = null;
@@ -413,7 +419,16 @@ export async function mergeHomebrewEntries(
 				.neq("user_id", userId); // Don't include user's own content twice
 
 			if (items) {
-				homebrewItems.push(...(items as unknown as typeof homebrewItems));
+				// Use formal interface for homebrew items instead of unknown cast
+				homebrewItems.push(
+					...(items as Array<{
+						id: string;
+						name: string;
+						description: string | null;
+						data: unknown;
+						source_book: string | null;
+					}>),
+				);
 			}
 		}
 

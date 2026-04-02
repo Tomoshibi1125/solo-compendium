@@ -11,8 +11,15 @@ import {
 	Zap,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SystemWindow } from "@/components/ui/SystemWindow";
@@ -24,16 +31,18 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { jobs as staticJobs } from "@/data/compendium/jobs";
+
 import { regents } from "@/data/compendium/regents";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter, useUpdateCharacter } from "@/hooks/useCharacters";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
+import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+
 import { getLevelingMode } from "@/lib/campaignSettings";
 import { autoUpdateFeatureUses } from "@/lib/characterCreation";
 import { calculateFeatureUses } from "@/lib/characterEngine";
@@ -59,13 +68,6 @@ function getExperienceForNextLevel(currentLevel: number): number {
 	return XP_THRESHOLDS[Math.min(currentLevel + 1, 20)] ?? Infinity;
 }
 
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogTitle,
-} from "@/components/ui/dialog";
-
 interface LevelUpWizardModalProps {
 	isOpen: boolean;
 	onClose: () => void;
@@ -85,8 +87,7 @@ export const LevelUpWizardModal = ({
 	const campaignId = characterCampaign?.id ?? null;
 	const levelingMode = getLevelingMode(characterCampaign?.settings);
 	const isMilestone = levelingMode === "milestone";
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 	const updateCharacter = useUpdateCharacter();
 	const initializeSpellSlots = useInitializeSpellSlots();
 	const [newLevel, setNewLevel] = useState(1);
@@ -96,10 +97,11 @@ export const LevelUpWizardModal = ({
 	const [selectedPath, setSelectedPath] = useState<string>("");
 	const [asiChoices, setAsiChoices] = useState<Record<string, number>>({});
 	const [selectedFeats, setSelectedFeats] = useState<string[]>([]);
+	const { data: staticJobs, isLoading: jobsLoading } = useStaticJobs();
 
 	// Calculate available choices at the new level (including job awakening features and traits)
 	const availableChoices = useMemo(() => {
-		if (!character)
+		if (!character || !staticJobs)
 			return {
 				feats: 0,
 				skills: 0,
@@ -135,7 +137,7 @@ export const LevelUpWizardModal = ({
 		};
 
 		return calculateTotalChoices(enhancedJobData, null, [], newLevel);
-	}, [character, newLevel]);
+	}, [character, newLevel, staticJobs]);
 
 	// Level progression logic
 	const currentExperience = character?.experience ?? 0;
@@ -206,7 +208,12 @@ export const LevelUpWizardModal = ({
 	});
 
 	const showPathSelection = needsPathSelection && availablePaths.length > 0;
-	const showASISection = !!character && isASILevel(newLevel, character?.job);
+	const jobObj = useMemo(
+		() => (staticJobs || []).find((j) => j.name === character?.job),
+		[staticJobs, character?.job],
+	);
+	const showASISection =
+		!!character && isASILevel(newLevel, jobObj || character.job);
 	const showFeatSelection = showASISection && availableChoices.feats > 0;
 
 	// Regent progression: show new regent features unlocked at this level
@@ -226,7 +233,13 @@ export const LevelUpWizardModal = ({
 
 	// Fetch features for the new level (DB first, static fallback)
 	const { data: newFeatures = [] } = useQuery({
-		queryKey: ["job-features", character?.job, newLevel, campaignId],
+		queryKey: [
+			"job-features",
+			character?.job,
+			newLevel,
+			campaignId,
+			staticJobs?.length,
+		],
 		queryFn: async () => {
 			if (!character?.job) return [];
 
@@ -285,35 +298,30 @@ export const LevelUpWizardModal = ({
 			}
 
 			// Static fallback: if DB returned nothing, use static classFeatures
-			if (accessibleJobFeatures.length === 0) {
-				try {
-					const { jobs: staticJobs } = await import("@/data/compendium/jobs");
-					const staticJob = staticJobs.find((j) => j.name === character.job);
-					if (staticJob?.classFeatures) {
-						const levelFeatures = staticJob.classFeatures.filter(
-							(cf) => cf.level === newLevel,
-						);
-						return levelFeatures.map((cf, idx) => ({
-							id: `static-${cf.name.toLowerCase().replace(/\s+/g, "-")}-${idx}`,
-							name: cf.name,
-							description: cf.description,
-							level: cf.level,
-							is_path_feature: false,
-							action_type: null,
-							uses_formula: null,
-							prerequisites: null,
-							recharge: null,
-							source_name: null,
-						}));
-					}
-				} catch {
-					// Best-effort static fallback
+			if (accessibleJobFeatures.length === 0 && staticJobs) {
+				const staticJob = staticJobs.find((j) => j.name === character.job);
+				if (staticJob?.classFeatures) {
+					const levelFeatures = staticJob.classFeatures.filter(
+						(cf) => cf.level === newLevel,
+					);
+					return levelFeatures.map((cf, idx) => ({
+						id: `static-${cf.name.toLowerCase().replace(/\s+/g, "-")}-${idx}`,
+						name: cf.name,
+						description: cf.description,
+						level: cf.level,
+						is_path_feature: false,
+						action_type: null,
+						uses_formula: null,
+						prerequisites: null,
+						recharge: null,
+						source_name: null,
+					}));
 				}
 			}
 
 			return accessibleJobFeatures;
 		},
-		enabled: !!character && !!newLevel,
+		enabled: !!character && !!newLevel && !!staticJobs,
 	});
 
 	useEffect(() => {
@@ -322,7 +330,7 @@ export const LevelUpWizardModal = ({
 		}
 	}, [character]);
 
-	if (isLoading || !character) {
+	if (isLoading || jobsLoading || !character || !staticJobs) {
 		return (
 			<Dialog open={isOpen} onOpenChange={onClose}>
 				<DialogContent className="max-w-md bg-background border-arise/20">
@@ -518,7 +526,7 @@ export const LevelUpWizardModal = ({
 			try {
 				await initializeSpellSlots.mutateAsync({
 					characterId: character.id,
-					job: character.job,
+					job: jobObj || character.job,
 					level: newLevel,
 				});
 			} catch (error) {
@@ -604,7 +612,7 @@ export const LevelUpWizardModal = ({
 				);
 				await addJobAwakeningBenefitsForLevel(
 					character.id,
-					character.job,
+					jobObj || character.job,
 					newLevel,
 				);
 			} catch (error) {
@@ -638,7 +646,7 @@ export const LevelUpWizardModal = ({
 					hpIncrease: hpIncrease as number,
 					newFeatures: newFeatures.map((f) => f.name),
 					isPathUnlockLevel: showPathSelection,
-					isASILevel: isASILevel(newLevel, character.job),
+					isASILevel: isASILevel(newLevel, jobObj || character.job),
 				};
 				DomainEventBus.emit(levelUpEvent);
 			} catch {
@@ -650,12 +658,12 @@ export const LevelUpWizardModal = ({
 				description: `${character.name} has grown stronger! Now Level ${newLevel}!`,
 			});
 
-			ddbEnhancements
+			ascendantTools
 				.trackCustomFeatureUsage(
 					character.id,
 					"Level Up",
 					`Reached Level ${newLevel}`,
-					"5e",
+					"SA",
 					{ skipBroadcast: true },
 				)
 				.catch(console.error);

@@ -45,15 +45,18 @@ const normalizeTarget = (value?: string | null) =>
 	value?.trim().toLowerCase() || null;
 
 export function normalizeCustomModifiers(
-	modifiers?: CustomModifier[] | null,
+	modifiers?: Record<string, unknown>[] | Partial<CustomModifier>[] | null,
 ): CustomModifier[] {
-	return (modifiers ?? []).map((modifier) => ({
-		...modifier,
-		target: modifier.target?.trim() || null,
-		condition: modifier.condition?.trim() || null,
-		source: modifier.source?.trim() || "Custom",
-		enabled: modifier.enabled !== false,
-	}));
+	return (modifiers ?? []).map((modifier: unknown) => {
+		const m = modifier as CustomModifier;
+		return {
+			...m,
+			target: m.target?.trim() || null,
+			condition: m.condition?.trim() || null,
+			source: m.source?.trim() || "Custom",
+			enabled: m.enabled !== false,
+		};
+	});
 }
 
 function matchesTarget(

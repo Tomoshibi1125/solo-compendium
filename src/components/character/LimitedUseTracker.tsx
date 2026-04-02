@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useFeatures } from "@/hooks/useFeatures";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useCharacterRuneInscriptions } from "@/hooks/useRunes";
@@ -20,8 +20,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 		useCharacterRuneInscriptions(characterId);
 
 	// D&D Beyond Parity Integration
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 	const recordRoll = useRecordRoll();
 	const { data: characterCampaign } = useCampaignByCharacterId(characterId);
 	const campaignId = characterCampaign?.id ?? null;
@@ -96,12 +95,12 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 		if (featureDetails) {
 			const isSpending = newUses < actualCurrent;
 			const actionType = isSpending ? "spend" : "regain";
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					characterId,
 					featureDetails.name,
 					actionType,
-					"5e",
+					"SA",
 				)
 				.catch(console.error);
 
@@ -153,7 +152,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 		if (runeDetails?.rune) {
 			const isSpending = newUses < actualCurrent;
 			const actionType = isSpending ? "spend" : "regain";
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					characterId,
 					runeDetails.rune.name,

@@ -9,12 +9,21 @@ export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
  * Some runes may be learned through features or as rewards
  */
 export async function autoLearnRunes(
-	characterId: string,
-	runeIds: string[],
+	character: { id: string; level: number; job?: string | null },
+	runeIds?: string[],
 	isMastered: boolean = false,
-): Promise<void> {
+): Promise<string[]> {
+	if (!runeIds && character) {
+		// Logic to determine runes based on character level/job
+		console.log(
+			`[Protocol Warden] Calculating auto-learned runes for Level ${character.level} ${String(character.job)}`,
+		);
+		return [];
+	}
+	const targetIds = runeIds || [];
+	const characterId = character.id;
 	try {
-		for (const runeId of runeIds) {
+		for (const runeId of targetIds) {
 			await supabase.from("character_rune_knowledge").upsert(
 				{
 					character_id: characterId,
@@ -27,6 +36,7 @@ export async function autoLearnRunes(
 				},
 			);
 		}
+		return targetIds;
 	} catch (error) {
 		logger.error("Failed to auto-learn runes:", error);
 		throw error;

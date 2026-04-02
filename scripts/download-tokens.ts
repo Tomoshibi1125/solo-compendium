@@ -2,8 +2,10 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
-import { vehicles } from "../src/data/compendium/items-vehicles";
 import { monsters } from "../src/data/compendium/monsters";
+import { allItems as rawItems } from "../src/data/compendium/items-index";
+
+const vehicles = rawItems.filter(x => (x as any).item_type === "vehicle");
 
 const PUBLIC_DIR = path.resolve(process.cwd(), "public");
 

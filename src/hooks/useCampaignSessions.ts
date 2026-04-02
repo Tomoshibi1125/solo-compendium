@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { enqueueOfflineSync } from "@/lib/offlineSync";
 import { useOptimisticMutation } from "@/lib/optimisticUpdates";
@@ -141,7 +142,7 @@ export const useCampaignSessionLogs = (
 
 			const { data: rows, error } = await query;
 			if (error) throw error;
-			return (rows || []) as unknown as CampaignSessionLogRecord[];
+			return (rows || []) as CampaignSessionLogRecord[];
 		},
 		enabled: !!campaignId,
 	});
@@ -296,7 +297,7 @@ export const useAddCampaignSessionLog = () => {
 				p_log_type: input.logType ?? "session",
 				p_title: input.title,
 				p_content: input.content,
-				p_metadata: (input.metadata as unknown as Record<string, never>) ?? {},
+				p_metadata: JSON.parse(JSON.stringify(input.metadata || {})) as Json,
 				p_is_player_visible: input.isPlayerVisible ?? true,
 			});
 

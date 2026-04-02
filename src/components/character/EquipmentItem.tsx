@@ -38,6 +38,7 @@ interface EquipmentItemProps {
 	onChangeContainer?: (item: Equipment, containerId: string | null) => void;
 	onToggleActive?: (item: Equipment) => void;
 	sigilControl?: React.ReactNode;
+	onSelect?: () => void;
 }
 
 function EquipmentItemComponent({
@@ -51,6 +52,7 @@ function EquipmentItemComponent({
 	onChangeContainer,
 	onToggleActive,
 	sigilControl,
+	onSelect,
 }: EquipmentItemProps) {
 	const displayName = formatRegentVernacular(item.name);
 	const displayRarity = item.rarity
@@ -68,7 +70,13 @@ function EquipmentItemComponent({
 			<div className="flex items-start justify-between gap-2">
 				<div className="flex-1">
 					<div className="flex items-center gap-2 mb-1">
-						<span className="font-heading font-semibold">{displayName}</span>
+						<button
+							type="button"
+							className="font-heading font-semibold text-left hover:text-primary transition-colors cursor-pointer"
+							onClick={onSelect}
+						>
+							{displayName}
+						</button>
 						{displayRarity && (
 							<Badge variant="secondary" className="text-xs">
 								{displayRarity}
@@ -144,6 +152,9 @@ function EquipmentItemComponent({
 									onChangeContainer={onChangeContainer}
 									onToggleActive={onToggleActive}
 									containers={containers?.filter((c) => c.id !== nestedItem.id)}
+									onSelect={
+										() => onSelect?.() // Or handle recursively if needed, but usually just triggers the same detail
+									}
 								/>
 							))}
 						</div>
@@ -221,6 +232,7 @@ export const EquipmentItem = memo(
 			prevProps.item.is_active === nextProps.item.is_active &&
 			prevProps.item.container_id === nextProps.item.container_id &&
 			prevProps.canAttune === nextProps.canAttune &&
+			prevProps.onSelect === nextProps.onSelect &&
 			prevProps.item.properties?.length === nextProps.item.properties?.length &&
 			prevProps.nestedItems?.length === nextProps.nestedItems?.length &&
 			prevProps.containers?.length === nextProps.containers?.length

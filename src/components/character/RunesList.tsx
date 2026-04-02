@@ -16,7 +16,7 @@ import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useFeatures } from "@/hooks/useFeatures";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useAbsorbRune, useCharacterRuneKnowledge } from "@/hooks/useRunes";
 import { resolveRuneAbsorption } from "@/lib/runeAutomation";
@@ -58,9 +58,8 @@ export function RunesList({
 	const absorbRune = useAbsorbRune();
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
-	const { rollInCampaign } = ddbEnhancements;
+	const ascendantTools = useAscendantTools();
+	const { rollInCampaign } = ascendantTools;
 
 	// Split runes into unabsorbed (available to consume) and absorbed (mastery_level 5)
 	const unabsorbedRunes = runeKnowledge.filter(
@@ -124,8 +123,13 @@ export function RunesList({
 				description: successMessage,
 			});
 
-			ddbEnhancements
-				.trackCustomFeatureUsage(characterId, runeName, "absorb", "SA")
+			await ascendantTools
+				.trackCustomFeatureUsage(
+					characterId,
+					"Rune Absorption",
+					`Absorbed ${runeName}`,
+					"SA",
+				)
 				.catch(console.error);
 		} catch (error) {
 			toast({

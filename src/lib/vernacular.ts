@@ -1,7 +1,7 @@
 // Canonical labels for the Regent system
 export const REGENT_LABEL = "Regent";
 export const REGENT_LABEL_PLURAL = "Regents";
-export const MONARCH_LABEL = REGENT_LABEL;
+export const MONARCH_LABEL = "Regent";
 
 export const formatRegentVernacular = (
 	value: string | undefined | null,
@@ -10,12 +10,6 @@ export const formatRegentVernacular = (
 	return String(value)
 		.replace(/\bMONARCHS\b/g, REGENT_LABEL_PLURAL.toUpperCase())
 		.replace(/\bMONARCH\b/g, REGENT_LABEL.toUpperCase())
-		.replace(/\bRegents\b/g, REGENT_LABEL_PLURAL)
-		.replace(/\bRegent\b/g, REGENT_LABEL)
-		.replace(/\bregents\b/g, REGENT_LABEL_PLURAL.toLowerCase())
-		.replace(/\bregent\b/g, REGENT_LABEL.toLowerCase())
-		.replace(/\bREGENTS\b/g, REGENT_LABEL_PLURAL.toUpperCase())
-		.replace(/\bREGENT\b/g, REGENT_LABEL.toUpperCase())
 		.replace(/\bRegents\b/g, REGENT_LABEL_PLURAL)
 		.replace(/\bRegent\b/g, REGENT_LABEL)
 		.replace(/\bregents\b/g, REGENT_LABEL_PLURAL.toLowerCase())

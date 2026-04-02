@@ -15,9 +15,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import { useUpdateCharacter } from "@/hooks/useCharacters";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { aiService } from "@/lib/ai/aiService";
 import { logger } from "@/lib/logger";
+import { PortraitUpload } from "./PortraitUpload";
 
 interface CharacterEditDialogProps {
 	character: CharacterWithAbilities | null;
@@ -38,8 +39,7 @@ export function CharacterEditDialog({
 	const [appearance, setAppearance] = useState("");
 	const [backstory, setBackstory] = useState("");
 	const [notes, setNotes] = useState("");
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	// Update form when character changes
 	useEffect(() => {
@@ -157,12 +157,12 @@ export function CharacterEditDialog({
 				description: "Your changes have been saved.",
 			});
 
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					character.id,
 					"Character Details Updated",
 					"Appearance, backstory, or notes changed",
-					"5e",
+					"SA",
 				)
 				.catch(console.error);
 
@@ -191,6 +191,19 @@ export function CharacterEditDialog({
 				</DialogHeader>
 
 				<div className="space-y-4 py-4">
+					<div>
+						<Label className="mb-2 block">System Portrait</Label>
+						<PortraitUpload
+							characterId={character.id}
+							currentPortraitUrl={character.portrait_url}
+							onUploadComplete={(newUrl) => {
+								if (onStateChange) {
+									onStateChange({ ...character, portrait_url: newUrl });
+								}
+							}}
+						/>
+					</div>
+
 					<div>
 						<Label htmlFor="character-name">Name</Label>
 						<Input

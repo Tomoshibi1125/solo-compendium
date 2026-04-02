@@ -3,7 +3,9 @@
  * Handles AI integrations for audio and art enhancement
  */
 
+import { GoogleGenAI } from "@google/genai";
 import { AppError } from "@/lib/appError";
+import { logger } from "@/lib/logger";
 import type {
 	AIConfiguration,
 	AIRequest,
@@ -20,11 +22,10 @@ import {
 } from "./types";
 import { buildCustomService, loadAIUserSettings } from "./userSettings";
 
-const FREE_AI_FALLBACK_ENDPOINT = "https://text.pollinations.ai";
 const OLLAMA_FALLBACK_ENDPOINT = "http://localhost:11434/api/generate";
 const CUSTOM_AI_FALLBACK_ENDPOINT = "https://api.openai.com/v1";
 const CUSTOM_AI_FALLBACK_MODEL = "gpt-4o-mini";
-const REQUEST_TIMEOUT_MS = 15000;
+const REQUEST_TIMEOUT_MS = 25000;
 const OLLAMA_TAGS_TIMEOUT_MS = 2500;
 const OLLAMA_MODEL_PRIORITY = [
 	"qwen2.5:14b-instruct",
@@ -389,6 +390,43 @@ export class AIServiceManager {
 		return response.data.variation || originalContent;
 	}
 
+	/**
+	 * Specialized: Generate Regent Choices
+	 */
+	async generateRegentChoices(
+		character: Record<string, unknown>,
+		availableRegents: Array<Record<string, unknown>>,
+		highestStat: string,
+	): Promise<unknown[]> {
+		const request: AIRequest = {
+			service: this.config.defaultService,
+			type: "generate-regents",
+			input: { character, availableRegents, highestStat },
+		};
+
+		const response = await this.processRequest(request);
+		if (!response.success) return [];
+		return Array.isArray(response.data) ? response.data : [];
+	}
+
+	/**
+	 * Specialized: Generate Gemini Fusion
+	 */
+	async generateGeminiFusion(
+		character: Record<string, unknown>,
+		regent1: Record<string, unknown>,
+		regent2: Record<string, unknown>,
+	): Promise<unknown> {
+		const request: AIRequest = {
+			service: this.config.defaultService,
+			type: "generate-fusion",
+			input: { character, regent1, regent2 },
+		};
+
+		const response = await this.processRequest(request);
+		return response.success ? response.data : null;
+	}
+
 	// Private methods
 	private normalizeResponse(
 		request: AIRequest,
@@ -542,6 +580,56 @@ export class AIServiceManager {
 				return { variation: safeText || inputText };
 			case "generate-content":
 				return { content: safeText || inputText };
+			case "generate-regents":
+				return [
+					{
+						regent: "fallback-regent",
+						name: "Path of the Unseen",
+						description: "A mysterious path shrouded in uncertainty.",
+						compatibility: 50,
+						reasoning: "Fallback data: AI unavailable.",
+						statAlignment: 0,
+					},
+				];
+			case "generate-fusion":
+				return {
+					id: "fallback-fusion",
+					name: "Sovereign of the Void",
+					description: "A temporary fusion placeholder.",
+					fusionType: "Average",
+					abilities: ["Void Strike"],
+					features: [
+						{
+							name: "Void Veil",
+							description: "Minimal protection",
+							type: "passive",
+						},
+					],
+					spells: [],
+					techniques: [],
+					traits: [],
+					statBonuses: { STR: 1 },
+					specialAbilities: [],
+				};
+			case "generate-quests":
+				return [
+					{
+						quest: "fallback-quest",
+						name: "Scout the Perimeter",
+						difficulty: "Easy",
+						successChance: 100,
+						reasoning: "Fallback data: AI unavailable.",
+						preparation: ["Check gear"],
+					},
+				];
+			case "generate-optimizations":
+				return {
+					statPriorities: ["STR", "VIT"],
+					equipment: ["Basic Gear"],
+					feats: ["Tough"],
+					abilities: ["Strike"],
+					levelUp: ["Balanced approach"],
+				};
 			default:
 				return { output: safeText };
 		}
@@ -721,11 +809,11 @@ export class AIServiceManager {
 		capability: AIRequest["type"],
 	): AIService[] {
 		const scoreService = (service: AIService): number => {
-			if (service.id === "pollinations") return 0;
-			if (service.type === "pollinations") return 1;
-			if (service.type === "ollama") return 2;
-			if (service.type === "custom") return 3;
-			return 4;
+			// Lower score = higher priority
+			if (service.type === "ollama") return 0; // Local fallback first
+			if (service.type === "gemini-native") return 1;
+			if (service.type === "custom") return 2;
+			return 3;
 		};
 
 		return this.config.services
@@ -775,8 +863,8 @@ export class AIServiceManager {
 
 		// Route to appropriate service handler
 		switch (service.type) {
-			case "gemini-proxy":
-				return this.callGeminiProxy(service, request);
+			case "gemini-native":
+				return this.callGeminiNative(service, request);
 			case "pollinations":
 				return this.callPollinations(service, request);
 			case "ollama":
@@ -784,73 +872,62 @@ export class AIServiceManager {
 			case "custom":
 				return this.callOpenAICompatible(service, request);
 			default:
-				return this.callGeminiProxy(service, request);
+				return this.callGeminiNative(service, request);
 		}
 	}
 
-	private async callGeminiProxy(
+	private async callGeminiNative(
 		service: AIService,
 		request: AIRequest,
 	): Promise<AIResponse> {
 		try {
-			const endpoint = service.endpoint || "/api/ai";
-			const systemPrompt = this.getSystemPrompt(request.type);
-			const prompt = this.formatInput(request);
+			const apiKey =
+				service.apiKey ||
+				import.meta.env.VITE_GEMINI_API_KEY ||
+				import.meta.env.VITE_GOOGLE_AI_API_KEY;
 
-			const response = await this.fetchWithTimeout(
-				endpoint,
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
-						prompt,
-						systemPrompt,
-						maxTokens: service.maxTokens,
-					}),
-				},
-				REQUEST_TIMEOUT_MS,
-			);
-
-			const data = await response.json();
-
-			if (!response.ok) {
-				// If the proxy reports service not configured, mark as unavailable
-				if (data?.available === false) {
-					return {
-						success: false,
-						error: data?.error || "Gemini proxy not configured",
-					};
-				}
+			if (!apiKey) {
 				return {
 					success: false,
-					error: data?.error || `Gemini proxy error: ${response.status}`,
+					error: "Gemini API key is missing for native integration",
 				};
 			}
 
-			const text = data?.text || "";
+			const ai = new GoogleGenAI({ apiKey });
+			const systemPrompt = this.getSystemPrompt(request.type);
+			const prompt = this.formatInput(request);
+
+			const result = await ai.models.generateContent({
+				model: service.model || "gemini-2.0-flash",
+				contents: `${systemPrompt}\n\n${prompt}`,
+				config: {
+					temperature: service.temperature,
+					maxOutputTokens: service.maxTokens,
+				},
+			});
+
+			const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
 			if (!text.trim()) {
 				return {
 					success: false,
-					error: "Gemini proxy returned empty response",
+					error: "Gemini Native returned empty response",
 				};
 			}
 
 			return {
 				success: true,
 				data: text,
-				metadata: { model: data?.model || "gemini-2.0-flash" },
-				usage: data?.usage
-					? {
-							promptTokens: data.usage.promptTokens,
-							completionTokens: data.usage.completionTokens,
-							totalTokens: data.usage.totalTokens,
-						}
-					: undefined,
+				metadata: { model: service.model || "gemini-2.0-flash" },
+				usage: {
+					totalTokens: result.usageMetadata?.totalTokenCount,
+				},
 			};
 		} catch (error) {
+			logger.error("Gemini Native error:", error);
 			return {
 				success: false,
-				error: error instanceof Error ? error.message : "Gemini proxy error",
+				error: error instanceof Error ? error.message : "Gemini Native error",
 			};
 		}
 	}
@@ -860,68 +937,76 @@ export class AIServiceManager {
 		request: AIRequest,
 	): Promise<AIResponse> {
 		try {
+			const prompt = this.formatInput(request);
 			const baseUrl = (
-				service.endpoint ||
-				import.meta.env.VITE_FREE_AI_API ||
-				FREE_AI_FALLBACK_ENDPOINT
+				service.endpoint || "https://text.pollinations.ai"
 			).replace(/\/+$/, "");
-			const prompt = `${this.getSystemPrompt(request.type)}\n\n${this.formatInput(request)}`;
+
 			const modelAttempts = this.dedupeStrings([
 				service.model,
 				...(service.fallbackModels || []),
+				"default",
 			]);
-			const attempts: Array<{ model?: string; label: string }> = [
-				...modelAttempts.map((model) => ({ model, label: model })),
-				{ label: "default" },
-			];
+
 			const errors: string[] = [];
 
-			for (const attempt of attempts) {
-				const query = attempt.model
-					? `?model=${encodeURIComponent(attempt.model)}`
-					: "";
-				const url = `${baseUrl}/${encodeURIComponent(prompt)}${query}`;
-				let response: Response;
+			for (const model of modelAttempts) {
 				try {
-					response = await this.fetchWithTimeout(url);
+					const url =
+						model === "default" ? baseUrl : `${baseUrl}?model=${model}`;
+					const response = await this.fetchWithTimeout(
+						url,
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								messages: [
+									{
+										role: "system",
+										content: this.getSystemPrompt(request.type),
+									},
+									{ role: "user", content: prompt },
+								],
+								seed: Math.floor(Math.random() * 1000000),
+								jsonMode: true,
+							}),
+						},
+						REQUEST_TIMEOUT_MS,
+					);
+
+					if (!response.ok) {
+						errors.push(`${model}:${response.status}`);
+						continue;
+					}
+
+					const text = await response.text();
+					if (!text || !text.trim()) {
+						errors.push(`${model}:empty response`);
+						continue;
+					}
+
+					return {
+						success: true,
+						data: text,
+						metadata: { model },
+					};
 				} catch (error) {
 					errors.push(
-						`${attempt.label}:${error instanceof Error ? error.message : "request error"}`,
+						`${model}:${error instanceof Error ? error.message : "request error"}`,
 					);
-					continue;
 				}
-
-				if (!response.ok) {
-					errors.push(`${attempt.label}:${response.status}`);
-					continue;
-				}
-
-				const text = await response.text();
-				if (!text?.trim()) {
-					errors.push(`${attempt.label}:empty response`);
-					continue;
-				}
-
-				return {
-					success: true,
-					data: text,
-					metadata: attempt.model
-						? { model: attempt.model }
-						: { model: "default" },
-				};
 			}
 
 			return {
 				success: false,
-				error:
-					errors.length > 0
-						? `Free AI request failed (${errors.join(", ")})`
-						: "Free AI request failed",
+				error: `Pollinations request failed: ${errors.join(", ")}`,
 			};
 		} catch (error) {
 			return {
 				success: false,
-				error: error instanceof Error ? error.message : "Free AI error",
+				error: error instanceof Error ? error.message : "Pollinations error",
 			};
 		}
 	}
@@ -1147,21 +1232,35 @@ CORE RULES CONTEXT:
 - Uses System Ascendant mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), unique martial and caster powers, hit dice, armor class, saving throws, skill checks.
 - Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Dexterity), VIT (Vitality/Constitution), INT (Intelligence), SENSE (Sense/Wisdom), PRE (Presence/Charisma).
 - Classes are called "Jobs". The 14 canonical jobs are: Destroyer (Fighter), Berserker (Barbarian), Assassin (Rogue), Striker (Monk), Mage (Wizard), Esper (Sorcerer), Revenant (Necromancer), Summoner (Druid), Herald (Cleric), Contractor (Warlock), Stalker (Ranger), Holy Knight (Paladin), Technomancer (Artificer), Idol (Bard).
-- Subclasses are called "Paths". The DM is called "Protocol Warden".
-- Regents (formerly Regents) are quest/DM-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
+- Subclasses are called "Paths". The Protocol Warden (PW) is the system administrator.
+- Regents (formerly Regents) are quest/PW-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
 - Runes follow the System Ascendant model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
 - Shadow Soldiers require the Umbral Regent unlock. System Favor replaces Inspiration.
 - Equipment uses 5e armor rules: light (base + AGI), medium (base + min(AGI,2)), heavy (fixed AC, no AGI). Max 3 attuned items.
 
 Generate polished, player-ready content with clear sections and labels. Use System Ascendant terminology. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
+			"generate-regents": `${jsonInstruction}\nYou are an expert RPG game master AI for System Ascendant. Help a player choose their regent path. Regents are quest/PW-gated power overlays. Analyze the player's character and generate the TOP 3 regent choices. Respond with JSON array of objects: {"regent": "id", "name": "", "description": "", "compatibility": 0-100, "reasoning": "", "statAlignment": 0}`,
+			"generate-fusion": `${jsonInstruction}\nYou are an expert RPG fusion AI. Create a unique sovereign class by combining two regents with the character's base job via the Gemini Protocol. Respond with JSON: {"id": "", "name": "", "description": "", "fusionType": "Perfect", "abilities": [], "features": [{"name": "", "description": "", "type": ""}], "spells": [], "techniques": [], "traits": [{"name": "", "description": "", "type": ""}], "statBonuses": {"STR": 0}, "specialAbilities": []}`,
+			"generate-quests": `${jsonInstruction}\nYou are an expert RPG quest master AI. Recommend the TOP 3 quests for a player based on their level and job. Respond with JSON array: {"quest": "id", "name": "", "difficulty": "Medium", "successChance": 0-100, "reasoning": "", "preparation": []}`,
+			"generate-optimizations": `${jsonInstruction}\nYou are an expert RPG character optimizer AI. Provide suggestions for stat priorities, equipment, feats, and level up choices. Respond with JSON: {"statPriorities": [], "equipment": [], "feats": [], "abilities": [], "levelUp": []}`,
 		};
 
 		return prompts[type] || prompts["enhance-prompt"];
 	}
 
 	private formatInput(request: AIRequest): string {
-		let formatted = `Request: ${request.type}\n`;
-		formatted += `Input: ${typeof request.input === "string" ? request.input : "Non-text input"}\n`;
+		let formatted = `Request Type: ${request.type}\n`;
+
+		if (
+			request.type === "generate-regents" ||
+			request.type === "generate-fusion" ||
+			request.type === "generate-quests" ||
+			request.type === "generate-optimizations"
+		) {
+			formatted += `Data Input: ${JSON.stringify(request.input, null, 2)}\n`;
+		} else {
+			formatted += `Input: ${typeof request.input === "string" ? request.input : "Non-text input"}\n`;
+		}
 
 		if (request.context) {
 			formatted += `Context: ${JSON.stringify(request.context, null, 2)}\n`;

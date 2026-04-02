@@ -65,16 +65,6 @@ const tablesToAudit = [
 
 type AuditedTableName = (typeof tablesToAudit)[number];
 
-type CountQueryResult = { count: number | null };
-type CountQueryBuilder = {
-	select: (
-		columns: string,
-		options?: { count?: "exact"; head?: boolean },
-	) => CountQueryBuilder;
-	not: (column: string, operator: string, value: unknown) => CountQueryBuilder;
-	neq: (column: string, value: unknown) => CountQueryBuilder;
-} & PromiseLike<CountQueryResult>;
-
 const tableCapabilities: Record<
 	AuditedTableName,
 	{
@@ -192,20 +182,18 @@ async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
 	try {
 		const table = tableName;
 		const capabilities = tableCapabilities[tableName];
-		const untypedFrom = (relation: AuditedTableName): CountQueryBuilder =>
-			supabase.from(
-				relation as keyof Database["public"]["Tables"],
-			) as unknown as CountQueryBuilder;
+		const queryRelation = table as "compendium_jobs";
 
 		// Get total count
 		const { count: totalCount } = await supabase
-			.from(table)
+			.from(queryRelation)
 			.select("*", { count: "exact", head: true });
 
 		// Get entries with descriptions
 		const withDescription = capabilities.hasDescription
 			? (
-					await untypedFrom(table)
+					await supabase
+						.from(queryRelation)
 						.select("id", { count: "exact", head: true })
 						.not("description", "is", null)
 						.neq("description", "")
@@ -215,7 +203,8 @@ async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
 		// Get entries with images
 		const withImage = capabilities.hasImageUrl
 			? (
-					await untypedFrom(table)
+					await supabase
+						.from(queryRelation)
 						.select("id", { count: "exact", head: true })
 						.not("image_url", "is", null)
 						.neq("image_url", "")
@@ -225,7 +214,8 @@ async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
 		// Get entries with source_book
 		const withSourceBook = capabilities.hasSourceBook
 			? (
-					await untypedFrom(table)
+					await supabase
+						.from(queryRelation)
 						.select("id", { count: "exact", head: true })
 						.not("source_book", "is", null)
 						.neq("source_book", "")
@@ -235,7 +225,8 @@ async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
 		// Get entries with tags
 		const withTags = capabilities.hasTags
 			? (
-					await untypedFrom(table)
+					await supabase
+						.from(queryRelation)
 						.select("id", { count: "exact", head: true })
 						.not("tags", "is", null)
 				).count
@@ -243,7 +234,7 @@ async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
 
 		// Get sample entries
 		const { data: samples } = await supabase
-			.from(table as keyof Database["public"]["Tables"])
+			.from(queryRelation)
 			.select("id, name")
 			.limit(5);
 
@@ -275,18 +266,7 @@ async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
 			missingImage,
 			missingSourceBook,
 			completeness,
-			sampleEntries: samples
-				? (samples as unknown[]).filter(
-						(item): item is { id: string; name: string } => {
-							if (typeof item !== "object" || item === null) return false;
-							const obj = item as Record<string, unknown>;
-							if (!("id" in obj) || !("name" in obj)) return false;
-							if (typeof obj.id !== "string" || typeof obj.name !== "string")
-								return false;
-							return true;
-						},
-					)
-				: [],
+			sampleEntries: samples || [],
 		};
 	} catch (error) {
 		logErrorWithContext(error, `auditTable:${tableName}`);

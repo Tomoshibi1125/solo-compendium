@@ -1,0 +1,430 @@
+import {
+	ArrowLeft,
+	Music,
+	PlayCircle,
+	Settings,
+	Sparkles,
+	Volume2,
+} from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AIEnhancedAudio } from "@/components/audio/AIEnhancedAudio";
+import { AudioLibrary } from "@/components/audio/AudioLibrary";
+import { AudioPlayer } from "@/components/audio/AudioPlayer";
+import { Layout } from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	DataStreamText,
+	SystemHeading,
+	SystemText,
+} from "@/components/ui/SystemText";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useUserToolState } from "@/hooks/useToolState";
+import { useAudioLibrary, useAudioPlayer } from "@/lib/audio/hooks";
+import type { AudioTrack, Playlist } from "@/lib/audio/types";
+
+export default function AcousticResonanceManager() {
+	const navigate = useNavigate();
+	const { toast } = useToast();
+	const {
+		state: storedState,
+		isLoading,
+		saveNow,
+	} = useUserToolState<{ activeTab: string }>("audio_manager", {
+		initialState: { activeTab: "player" },
+		storageKey: "solo-compendium.PW-tools.audio-manager.v1",
+	});
+
+	const [activeTab, setActiveTab] = useState("player");
+
+	const hydrated = useMemo(
+		() => ({ activeTab: storedState.activeTab ?? "player" }),
+		[storedState.activeTab],
+	);
+	const hydratedRef = useRef(false);
+
+	useEffect(() => {
+		if (isLoading) return;
+		if (hydratedRef.current) return;
+		setActiveTab(hydrated.activeTab);
+		hydratedRef.current = true;
+	}, [hydrated.activeTab, isLoading]);
+
+	const debouncedPayload = useDebounce({ activeTab }, 250);
+
+	useEffect(() => {
+		if (isLoading) return;
+		if (!hydratedRef.current) return;
+		void saveNow(debouncedPayload);
+	}, [debouncedPayload, isLoading, saveNow]);
+
+	const { getTracksByCategory, getTracksByMood } = useAudioLibrary();
+	const {
+		loadTrack,
+		play,
+		loadPlaylist,
+		repeat,
+		shuffle,
+		setRepeat,
+		setShuffle,
+		updateSettings,
+		settings,
+	} = useAudioPlayer();
+
+	const handleTrackSelect = async (track: AudioTrack) => {
+		try {
+			await loadTrack(track);
+			await play();
+		} catch (error) {
+			toast({
+				title: "Playback failed",
+				description:
+					error instanceof Error ? error.message : "Unable to play track.",
+				variant: "destructive",
+			});
+		}
+	};
+
+	const playPlaylist = async (
+		name: string,
+		category: Playlist["category"],
+		list: AudioTrack[],
+	) => {
+		if (list.length === 0) {
+			toast({
+				title: "No tracks available",
+				description: "Upload audio for this playlist first.",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		const now = new Date().toISOString();
+		const playlist: Playlist = {
+			id: `playlist-${category}-${Date.now()}`,
+			name,
+			tracks: list.map((track) => track.id),
+			category,
+			autoPlay: true,
+			shuffle: false,
+			repeat: "all",
+			crossfade: 2,
+			volume: 0.7,
+			createdAt: now,
+			updatedAt: now,
+		};
+
+		loadPlaylist(playlist, list, 0);
+		await play();
+	};
+
+	const playEffect = async (
+		label: string,
+		matcher: (track: AudioTrack) => boolean,
+	) => {
+		const effectTracks = getTracksByCategory("effect").filter(matcher);
+		if (effectTracks.length === 0) {
+			toast({
+				title: "No effects found",
+				description: `Add a sound effect tagged for ${label.toLowerCase()} first.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		await handleTrackSelect(effectTracks[0]);
+	};
+
+	return (
+		<Layout>
+			<div className="container mx-auto p-6 space-y-6">
+				<div className="flex items-center gap-4 mb-6">
+					<Button
+						variant="ghost"
+						onClick={() => navigate("/warden-protocols")}
+						className="mb-4"
+					>
+						<ArrowLeft className="w-4 h-4 mr-2" />
+						Back to Warden Tools
+					</Button>
+					<div className="flex-1">
+						<SystemHeading
+							level={1}
+							variant="gate"
+							dimensional
+							className="text-3xl"
+						>
+							Acoustic Resonance
+						</SystemHeading>
+						<DataStreamText variant="system" speed="slow">
+							Sanctioned auditory records for localized domains
+						</DataStreamText>
+					</div>
+				</div>
+
+				<div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+					<Card>
+						<CardContent className="p-4">
+							<div className="flex items-center gap-2">
+								<Music className="w-5 h-5 text-blue-500" />
+								<div>
+									<div className="text-2xl font-bold">Audio Library</div>
+									<SystemText className="block text-sm text-muted-foreground">
+										Manage your sound collection
+									</SystemText>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardContent className="p-4">
+							<div className="flex items-center gap-2">
+								<PlayCircle className="w-5 h-5 text-green-500" />
+								<div>
+									<div className="text-2xl font-bold">Player</div>
+									<SystemText className="block text-sm text-muted-foreground">
+										Control playback
+									</SystemText>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardContent className="p-4">
+							<div className="flex items-center gap-2">
+								<Volume2 className="w-5 h-5 text-purple-500" />
+								<div>
+									<div className="text-2xl font-bold">Settings</div>
+									<SystemText className="block text-sm text-muted-foreground">
+										Audio preferences
+									</SystemText>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardContent className="p-4">
+							<div className="flex items-center gap-2">
+								<Sparkles className="w-5 h-5 text-orange-500" />
+								<div>
+									<div className="text-2xl font-bold">AI Analysis</div>
+									<SystemText className="block text-sm text-muted-foreground">
+										Tag and categorize audio
+									</SystemText>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
+
+				<Tabs value={activeTab} onValueChange={setActiveTab}>
+					<TabsList className="grid w-full grid-cols-4">
+						<TabsTrigger value="player" className="flex items-center gap-2">
+							<PlayCircle className="w-4 h-4" />
+							Player
+						</TabsTrigger>
+						<TabsTrigger value="library" className="flex items-center gap-2">
+							<Music className="w-4 h-4" />
+							Library
+						</TabsTrigger>
+						<TabsTrigger value="settings" className="flex items-center gap-2">
+							<Settings className="w-4 h-4" />
+							Settings
+						</TabsTrigger>
+						<TabsTrigger value="ai" className="flex items-center gap-2">
+							<Sparkles className="w-4 h-4" />
+							AI
+						</TabsTrigger>
+					</TabsList>
+
+					<TabsContent value="player" className="space-y-4">
+						<AudioPlayer />
+
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<Card>
+								<CardHeader>
+									<CardTitle className="text-lg">Quick Playlists</CardTitle>
+								</CardHeader>
+								<CardContent className="space-y-2">
+									<Button
+										variant="outline"
+										className="w-full justify-start"
+										onClick={() =>
+											playPlaylist(
+												"Combat Music",
+												"combat",
+												getTracksByCategory("combat"),
+											)
+										}
+									>
+										<Music className="w-4 h-4 mr-2" />
+										Combat Music
+									</Button>
+									<Button
+										variant="outline"
+										className="w-full justify-start"
+										onClick={() =>
+											playPlaylist(
+												"Ambient Atmosphere",
+												"custom",
+												getTracksByMood("calm"),
+											)
+										}
+									>
+										<Music className="w-4 h-4 mr-2" />
+										Ambient Atmosphere
+									</Button>
+									<Button
+										variant="outline"
+										className="w-full justify-start"
+										onClick={() =>
+											playPlaylist(
+												"Dungeon Exploration",
+												"exploration",
+												getTracksByCategory("exploration"),
+											)
+										}
+									>
+										<Music className="w-4 h-4 mr-2" />
+										Dungeon Exploration
+									</Button>
+								</CardContent>
+							</Card>
+
+							<Card>
+								<CardHeader>
+									<CardTitle className="text-lg">Sound Effects</CardTitle>
+								</CardHeader>
+								<CardContent className="space-y-2">
+									<Button
+										variant="outline"
+										className="w-full justify-start"
+										onClick={() =>
+											playEffect(
+												"Sword Clashes",
+												(track) =>
+													track.title.toLowerCase().includes("sword") ||
+													track.tags.some((tag) =>
+														tag.toLowerCase().includes("sword"),
+													),
+											)
+										}
+									>
+										<Volume2 className="w-4 h-4 mr-2" />
+										Sword Clashes
+									</Button>
+									<Button
+										variant="outline"
+										className="w-full justify-start"
+										onClick={() =>
+											playEffect(
+												"Magic Spells",
+												(track) =>
+													track.title.toLowerCase().includes("magic") ||
+													track.tags.some((tag) =>
+														tag.toLowerCase().includes("magic"),
+													),
+											)
+										}
+									>
+										<Volume2 className="w-4 h-4 mr-2" />
+										Magic Spells
+									</Button>
+									<Button
+										variant="outline"
+										className="w-full justify-start"
+										onClick={() =>
+											playEffect(
+												"Monster Roars",
+												(track) =>
+													track.title.toLowerCase().includes("monster") ||
+													track.tags.some((tag) =>
+														tag.toLowerCase().includes("monster"),
+													),
+											)
+										}
+									>
+										<Volume2 className="w-4 h-4 mr-2" />
+										Monster Roars
+									</Button>
+								</CardContent>
+							</Card>
+						</div>
+					</TabsContent>
+
+					<TabsContent value="library" className="space-y-4">
+						<AudioLibrary onTrackSelect={handleTrackSelect} />
+					</TabsContent>
+
+					<TabsContent value="settings" className="space-y-4">
+						<Card>
+							<CardHeader>
+								<CardTitle>Audio Settings</CardTitle>
+							</CardHeader>
+							<CardContent className="space-y-4">
+								<div className="flex items-center justify-between">
+									<div>
+										<h4 className="font-medium">Crossfade</h4>
+										<SystemText className="block text-sm text-muted-foreground">
+											Smooth transitions between tracks
+										</SystemText>
+									</div>
+									<Button
+										variant={
+											settings.crossfadeDuration > 0 ? "default" : "outline"
+										}
+										onClick={() =>
+											updateSettings({
+												crossfadeDuration:
+													settings.crossfadeDuration > 0 ? 0 : 2,
+											})
+										}
+									>
+										{settings.crossfadeDuration > 0 ? "Enabled" : "Disabled"}
+									</Button>
+								</div>
+
+								<div className="flex items-center justify-between">
+									<div>
+										<h4 className="font-medium">Loop Playlist</h4>
+										<SystemText className="block text-sm text-muted-foreground">
+											Repeat tracks automatically
+										</SystemText>
+									</div>
+									<Button
+										variant={repeat === "all" ? "default" : "outline"}
+										onClick={() => setRepeat(repeat === "all" ? "none" : "all")}
+									>
+										{repeat === "all" ? "Enabled" : "Disabled"}
+									</Button>
+								</div>
+
+								<div className="flex items-center justify-between">
+									<div>
+										<h4 className="font-medium">Shuffle</h4>
+										<SystemText className="block text-sm text-muted-foreground">
+											Random track order
+										</SystemText>
+									</div>
+									<Button
+										variant={shuffle ? "default" : "outline"}
+										onClick={() => setShuffle(!shuffle)}
+									>
+										{shuffle ? "Enabled" : "Disabled"}
+									</Button>
+								</div>
+							</CardContent>
+						</Card>
+					</TabsContent>
+
+					<TabsContent value="ai" className="space-y-4">
+						<AIEnhancedAudio />
+					</TabsContent>
+				</Tabs>
+			</div>
+		</Layout>
+	);
+}

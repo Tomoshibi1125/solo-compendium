@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import {
@@ -80,8 +80,7 @@ export function AddEquipmentDialog({
 	const [customItemOpen, setCustomItemOpen] = useState(false);
 	const { addEquipment } = useEquipment(characterId);
 	const { toast } = useToast();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const { data: equipment = [], isLoading } = useQuery({
 		queryKey: ["compendium-equipment", characterId, searchQuery],
@@ -229,6 +228,12 @@ export function AddEquipmentDialog({
 			item.equipment_type,
 		);
 		try {
+			await ascendantTools.trackCustomFeatureUsage(
+				characterId,
+				"Equipment",
+				`Added ${item.name}`,
+				"SA",
+			);
 			await addEquipment({
 				character_id: characterId,
 				name: item.name,
@@ -254,7 +259,7 @@ export function AddEquipmentDialog({
 				description: `${displayName} has been added to your inventory.`,
 			});
 
-			ddbEnhancements
+			ascendantTools
 				.trackInventoryChange(characterId, item.name, "add")
 				.catch(console.error);
 

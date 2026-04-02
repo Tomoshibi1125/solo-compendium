@@ -62,7 +62,7 @@ export interface Item {
 	properties?: {
 		weapon?: {
 			damage: string;
-			damageType: string;
+			damage_type: string;
 			range?: number;
 			versatile?: string;
 			finesse?: boolean;

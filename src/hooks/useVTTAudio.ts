@@ -30,38 +30,13 @@ interface VTTAudioSettings {
 	updated_at: string;
 }
 
-const supabaseAny = supabase as unknown as {
-	auth: { getUser: () => Promise<{ data: { user: { id: string } | null } }> };
-	from: (table: string) => {
-		select: (columns: string) => {
-			eq: (
-				col: string,
-				val: string,
-			) => {
-				order: (
-					col: string,
-					opts?: { ascending: boolean },
-				) => Promise<{ data: unknown; error: { message?: string } | null }>;
-				maybeSingle: () => Promise<{
-					data: unknown;
-					error: { message?: string } | null;
-				}>;
-			};
-		};
-	};
-	rpc: (
-		fn: string,
-		args?: unknown,
-	) => Promise<{ data: unknown; error: { message?: string } | null }>;
-};
-
 export const useVTTAudioTracks = (sessionId: string) => {
 	return useQuery({
 		queryKey: ["vtt", "audio", "tracks", sessionId],
 		queryFn: async (): Promise<VTTAudioTrack[]> => {
 			if (!isSupabaseConfigured || !sessionId) return [];
 
-			const { data, error } = await supabaseAny
+			const { data, error } = await supabase
 				.from("vtt_audio_tracks")
 				.select("*")
 				.eq("session_id", sessionId)
@@ -80,7 +55,7 @@ export const useVTTAudioSettings = (sessionId: string) => {
 		queryFn: async (): Promise<VTTAudioSettings | null> => {
 			if (!isSupabaseConfigured || !sessionId) return null;
 
-			const { data, error } = await supabaseAny
+			const { data, error } = await supabase
 				.from("vtt_audio_settings")
 				.select("*")
 				.eq("session_id", sessionId)
@@ -105,13 +80,18 @@ export const useCreateVTTAudioTrack = () => {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
 
-			const { data, error } = await supabaseAny.rpc(
-				"create_vtt_audio_track",
-				track,
-			);
+			const { data, error } = await supabase
+				.from("vtt_audio_tracks")
+				.insert({
+					...track,
+					type: track.type as "music" | "ambient" | "sfx",
+				})
+				.select("id")
+				.single();
+
 			if (error) throw error;
 
-			return { trackId: data as string };
+			return { trackId: data.id };
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -146,10 +126,14 @@ export const useUpdateVTTAudioTrack = () => {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
 
-			const { error } = await supabaseAny.rpc(
-				"update_vtt_audio_track",
-				updates,
-			);
+			const { track_id, ...rest } = updates;
+			const { error } = await supabase
+				.from("vtt_audio_tracks")
+				.update({
+					...rest,
+					type: rest.type as "music" | "ambient" | "sfx" | undefined,
+				})
+				.eq("id", track_id);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
@@ -176,9 +160,10 @@ export const useDeleteVTTAudioTrack = () => {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
 
-			const { error } = await supabaseAny.rpc("delete_vtt_audio_track", {
-				track_id: trackId,
-			});
+			const { error } = await supabase
+				.from("vtt_audio_tracks")
+				.delete()
+				.eq("id", trackId);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
@@ -212,10 +197,11 @@ export const useUpdateVTTAudioSettings = () => {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
 
-			const { error } = await supabaseAny.rpc(
-				"update_vtt_audio_settings",
-				settings,
-			);
+			const { session_id, ...rest } = settings;
+			const { error } = await supabase
+				.from("vtt_audio_settings")
+				.update(rest)
+				.eq("session_id", session_id);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {

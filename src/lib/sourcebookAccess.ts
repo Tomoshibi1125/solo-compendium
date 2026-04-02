@@ -30,7 +30,6 @@ type RpcResponse = {
 	error: RpcError | null;
 };
 
-const supabaseRpc = supabase as unknown as SupabaseRpcClient;
 const ACCESS_CACHE_TTL_MS = 30_000;
 const accessCache = new Map<string, AccessCacheRecord>();
 const UUID_PATTERN =
@@ -89,14 +88,16 @@ const collectSourcebooksFromRpcData = (data: unknown, target: Set<string>) => {
 	}
 };
 
-const fetchAccessibleSourcebooks = (
+const fetchAccessibleSourcebooks = async (
 	userId: string,
 	campaignId: string | null,
-): Promise<RpcResponse> =>
-	supabaseRpc.rpc("get_accessible_sourcebooks", {
-		p_campaign_id: campaignId,
+): Promise<RpcResponse> => {
+	const { data, error } = await supabase.rpc("get_accessible_sourcebooks", {
+		p_campaign_id: campaignId ?? undefined,
 		puser_id: userId,
 	});
+	return { data, error };
+};
 
 export const sourcebookCandidates = (
 	sourceBook: string | null | undefined,

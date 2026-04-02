@@ -1,124 +1,122 @@
-import { useDrag } from "@use-gesture/react";
-import { Sun, Zap } from "lucide-react";
-import { type ReactNode, useMemo, useState } from "react";
+import type { LucideIcon } from "lucide-react";
+import { Copy, Shield, Sun, Swords, Wand2, Zap } from "lucide-react";
+import { useMemo, useState } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
+import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
 import { ShortRestDialog } from "@/components/CharacterSheet/ShortRestDialog";
+import { ActionsList } from "@/components/character/ActionsList";
+import { CharacterBackupPanel } from "@/components/character/CharacterBackupPanel";
+import { CharacterEditDialog } from "@/components/character/CharacterEditDialog";
+import { CharacterExtrasPanel } from "@/components/character/CharacterExtrasPanel";
+import { CurrencyManager } from "@/components/character/CurrencyManager";
+import { EquipmentList } from "@/components/character/EquipmentList";
+import { ExportDialog } from "@/components/character/ExportDialog";
+import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel";
+import { FeaturesList } from "@/components/character/FeaturesList";
+import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
+import { JournalPanel } from "@/components/character/JournalPanel";
+import { LevelUpWizardModal } from "@/components/character/LevelUpWizardModal";
+import { PowersList } from "@/components/character/PowersList";
+import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
+import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
+import { RollHistoryPanel } from "@/components/character/RollHistoryPanel";
+import { RunesList } from "@/components/character/RunesList";
+import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel";
+import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { Layout } from "@/components/layout/Layout";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { SystemText } from "@/components/ui/SystemText";
+import { SystemWindow } from "@/components/ui/SystemWindow";
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+} from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { DerivedStats } from "@/hooks/useCharacterDerivedStats";
-import type { CharacterWithAbilities } from "@/hooks/useCharacters";
-import type { CharacterResources } from "@/lib/characterResources";
+import { useCharacterPageModel } from "@/hooks/useCharacterPageModel";
+import type { Json } from "@/integrations/supabase/types";
+import { getAbilityModifier } from "@/lib/characterCalculations";
 import { calculateTotalTempHP } from "@/lib/characterResources";
 import {
 	type ConditionEntry,
 	migrateLegacyConditions,
 } from "@/lib/conditionSystem";
 import { getXPProgress, type LevelingType } from "@/lib/experience";
+import { QuestLog } from "@/pages/player-tools/QuestLog";
+import type { DetailData } from "@/types/character";
 import type { AbilityScore } from "@/types/system-rules";
 import { AbilityScoreStrip } from "./AbilityScoreStrip";
 import { ProficiencySidebar } from "./ProficiencySidebar";
 import { StatusHeader } from "./StatusHeader";
 
-interface CharacterSheetV2Props {
-	character: CharacterWithAbilities;
-	stats: DerivedStats;
-	characterResources: CharacterResources;
-	displayNames: {
-		job?: string;
-		path?: string;
-		background?: string;
-	};
-	levelingType?: LevelingType;
-	isReadOnly?: boolean;
-	actions: ReactNode;
-	powers: ReactNode;
-	inventory: ReactNode;
-	features: ReactNode;
-	bio: ReactNode;
-	quests: ReactNode;
-	extras: ReactNode;
-	onRollAbility: (ability: AbilityScore) => void;
-	onRollSave: (ability: AbilityScore) => void;
-	onRollSkill: (skill: string) => void;
-	onRollInitiative: () => void;
-	onRollHitDice: () => void;
-	onHPClick: () => void;
-	onACClick: () => void;
-	onShortRest: (totalRecovered: number, hitDiceSpent: number) => void;
-	onLongRest: () => void;
-	onLevelUp: () => void;
-	onResourceAdjust: (
-		field: "hit_dice_current" | "system_favor_current",
-		delta: number,
-	) => void;
-	onExhaustionChange: (delta: number) => void;
-	onAddCondition: (condition: string) => void;
-	onRemoveCondition: (conditionId: string) => void;
-	concentration: {
-		isConcentrating: boolean;
-		effectName?: string;
-		remainingRounds?: number;
-		onDrop: () => void;
-	};
-	deathSaves: {
-		successes: number;
-		failures: number;
-		isStable: boolean;
-		isDead: boolean;
-		onRoll: () => void;
-		onStabilize: () => void;
-	};
-	senses: {
-		darkvision: number;
-		blindsight: number;
-		tremorsense: number;
-		truesight: number;
-	};
-	defenses: {
-		resistances: string[];
-		immunities: string[];
-		vulnerabilities: string[];
-		conditionImmunities: string[];
-	};
-}
+// CharacterSheetV2 is now the single authoritative page component.
 
-export function CharacterSheetV2({
-	character,
-	stats,
-	characterResources,
-	displayNames,
-	levelingType: propLevelingType,
-	isReadOnly,
-	actions,
-	powers,
-	inventory,
-	features,
-	bio,
-	quests,
-	extras,
-	onRollAbility,
-	onRollSave,
-	onRollSkill,
-	onRollInitiative,
-	onRollHitDice,
-	onHPClick,
-	onACClick,
-	onShortRest,
-	onLongRest,
-	onLevelUp,
-	onResourceAdjust,
-	onExhaustionChange,
-	onAddCondition,
-	onRemoveCondition,
-	concentration,
-	deathSaves,
-	senses,
-	defenses,
-}: CharacterSheetV2Props) {
-	const [activeTab, setActiveTab] = useState("actions");
-	const [activeMobileTab, setActiveMobileTab] = useState("actions");
+export default function CharacterSheetV2() {
+	const pm = useCharacterPageModel();
+
+	const {
+		character,
+		memoizedStats,
+		characterResources,
+		displayNames,
+		campaignId,
+		spellCasting,
+		isLoading,
+		isReadOnly,
+		sheetController,
+		handleGenerateShareLink,
+		handleCopyShareLink,
+		shareToken,
+		generateShareTokenPending,
+		updateCharacter,
+
+		activeTab,
+		setActiveTab,
+		navigate,
+		handleShortRest,
+		handleLongRest,
+		rollAndRecord,
+		handleResourceAdjust,
+		ascendantTools,
+		concentration,
+		deathSaves,
+	} = pm;
+
+	const {
+		ui: { modals: persistentModals },
+	} = sheetController.state;
+
+	const [internalMobileTab, setInternalMobileTab] = useState("actions");
+	const activeMobileTab = activeTab || internalMobileTab;
+	const setActiveMobileTab = setActiveTab || setInternalMobileTab;
+
+	// Detail Drawer State
+	const [selectedDetail, setSelectedDetail] = useState<
+		(DetailData & { icon?: LucideIcon; type: string }) | null
+	>(null);
+
+	const onSelectDetail = (
+		detail: DetailData,
+		type: string,
+		icon: LucideIcon,
+	) => {
+		setSelectedDetail({ ...detail, type, icon });
+	};
 
 	const mobileTabs = ["actions", "powers", "inventory", "features", "stats"];
 	const bindMobileGestures = useDrag(
@@ -137,17 +135,17 @@ export function CharacterSheetV2({
 		{ axis: "x", filterTaps: true, pointerContext: true },
 	);
 
-	// ───────────────────────────────────────────────────────────────────────────
-	// UI Header & Actions (Unified from CharacterSheet.tsx)
-	// ───────────────────────────────────────────────────────────────────────────
-
-	const characterState =
-		(character.gemini_state as Record<string, unknown>) || {};
+	const characterState = character
+		? (character.gemini_state as Record<string, unknown>) || {}
+		: {};
 	const levelingType: LevelingType =
-		propLevelingType || (characterState.leveling_type as LevelingType) || "xp";
-	const xpProgress = getXPProgress(character.experience || 0);
+		(characterState.leveling_type as LevelingType) || "xp";
+	const xpProgress = character
+		? getXPProgress(character.experience || 0)
+		: { current: 0, next: 300, percent: 0 };
 
 	const characterConditions = useMemo(() => {
+		if (!character) return [];
 		const structured = characterState.conditions as
 			| ConditionEntry[]
 			| undefined;
@@ -155,7 +153,278 @@ export function CharacterSheetV2({
 			return structured;
 		}
 		return migrateLegacyConditions(character.conditions || []);
-	}, [character.conditions, characterState.conditions]);
+	}, [character, characterState.conditions]);
+
+	if (isLoading) {
+		return (
+			<Layout>
+				<div className="container mx-auto px-4 py-8 max-w-7xl">
+					<div className="space-y-6">
+						<div className="flex items-center justify-between">
+							<Skeleton className="h-8 w-48" />
+							<div className="flex gap-2">
+								<Skeleton className="h-10 w-24" />
+								<Skeleton className="h-10 w-24" />
+							</div>
+						</div>
+						<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+							<div className="lg:col-span-2 space-y-6">
+								<Skeleton className="h-32 w-full" />
+								<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+									{Array.from({ length: 4 }).map((_, i) => (
+										<Skeleton
+											key={`slot-${[...Array(i + 1)].length}`}
+											className="h-24 w-full"
+										/>
+									))}
+								</div>
+								<Skeleton className="h-64 w-full" />
+							</div>
+							<div className="space-y-6">
+								<Skeleton className="h-48 w-full" />
+								<Skeleton className="h-48 w-full" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</Layout>
+		);
+	}
+
+	if (!character) {
+		return (
+			<Layout>
+				<div className="container mx-auto px-4 py-8">
+					<SystemWindow
+						title="ASCENDANT NOT FOUND"
+						className="max-w-lg mx-auto"
+					>
+						<SystemText className="block text-muted-foreground mb-4">
+							The Ascendant you're looking for doesn't exist or you don't have
+							access to it.
+						</SystemText>
+						<Button onClick={() => navigate("/characters")}>
+							Back to Ascendants
+						</Button>
+					</SystemWindow>
+				</div>
+			</Layout>
+		);
+	}
+
+	if (!memoizedStats) return null;
+	const stats = memoizedStats;
+
+	const onRollAbility = (ability: AbilityScore) =>
+		rollAndRecord({
+			title: `${ability} Check`,
+			formula: "1d20",
+			rollType: "ability",
+			context: `${ability} ability check`,
+			modifier: getAbilityModifier(stats.finalAbilities[ability]),
+		});
+
+	const onRollSave = (ability: AbilityScore) =>
+		rollAndRecord({
+			title: `${ability} Save`,
+			formula: "1d20",
+			rollType: "save",
+			context: `${ability} saving throw`,
+			modifier: stats.calculatedStats.savingThrows[ability],
+		});
+
+	const onRollSkill = (skill: string) => {
+		const skillData = stats.allSkills.find((s) => s.name === skill);
+		const modifier = skillData ? (stats.skills[skill]?.modifier ?? 0) : 0;
+		rollAndRecord({
+			title: `${skill} Check`,
+			formula: "1d20",
+			rollType: "skill",
+			context: `${skill} skill check`,
+			modifier,
+		});
+	};
+
+	const onRollInitiative = () =>
+		rollAndRecord({
+			title: "Initiative",
+			formula: "1d20",
+			rollType: "initiative",
+			context: "Initiative roll",
+			modifier: stats.finalInitiative,
+		});
+
+	const onRollHitDice = () =>
+		rollAndRecord({
+			title: "Hit Dice",
+			formula: "1d8",
+			rollType: "hit_dice",
+			context: "Hit Dice roll",
+			modifier: getAbilityModifier(stats.finalAbilities.VIT),
+		});
+
+	const onHPClick = () => {};
+	const onACClick = () => sheetController.setModal("defenses", true);
+	const onShortRest = () => handleShortRest();
+	const onLongRest = () => handleLongRest();
+	const onLevelUp = () => sheetController.setModal("levelUp", true);
+	const onResourceAdjust = (
+		field: "hit_dice_current" | "system_favor_current",
+		delta: number,
+	) => handleResourceAdjust(field, delta);
+
+	const onExhaustionChange = (delta: number) => {
+		const newLevel = Math.max(
+			0,
+			Math.min(6, (character.exhaustion_level || 0) + delta),
+		);
+		updateCharacter.mutate({
+			id: character.id,
+			data: { exhaustion_level: newLevel },
+		});
+		if (delta > 0)
+			ascendantTools
+				.trackConditionChange(character.id, "Exhaustion", "add")
+				.catch(console.error);
+		else
+			ascendantTools
+				.trackConditionChange(character.id, "Exhaustion", "remove")
+				.catch(console.error);
+	};
+
+	const onAddCondition = (condition: string) => {
+		const currentRaw = character.conditions || [];
+		const current = Array.isArray(currentRaw)
+			? (currentRaw as unknown as ConditionEntry[])
+			: migrateLegacyConditions(currentRaw as string[]);
+
+		const entry: ConditionEntry = {
+			id: crypto.randomUUID(),
+			conditionName: condition,
+			sourceType: "manual",
+			sourceId: null,
+			sourceName: "Manual",
+			appliedAt: new Date().toISOString(),
+			durationRounds: null,
+			remainingRounds: null,
+			concentrationSpellId: null,
+			isActive: true,
+		};
+		updateCharacter.mutate({
+			id: character.id,
+			data: {
+				conditions: [...current, entry].map((c) => c.conditionName),
+				gemini_state: {
+					...characterState,
+					conditions: [...current, entry],
+				} as unknown as Json,
+			},
+		});
+		ascendantTools
+			.trackConditionChange(character.id, condition, "add")
+			.catch(console.error);
+	};
+
+	const onRemoveCondition = (conditionId: string) => {
+		const currentRaw = character.conditions || [];
+		const current = Array.isArray(currentRaw)
+			? (currentRaw as unknown as ConditionEntry[])
+			: migrateLegacyConditions(currentRaw as string[]);
+
+		const updated = current.filter((c) => c.id !== conditionId);
+		const removed = current.find((c) => c.id === conditionId);
+		updateCharacter.mutate({
+			id: character.id,
+			data: {
+				conditions: updated.map((c) => c.conditionName),
+				gemini_state: {
+					...characterState,
+					conditions: updated,
+				} as unknown as Json,
+			},
+		});
+		if (removed)
+			ascendantTools
+				.trackConditionChange(character.id, removed.conditionName, "remove")
+				.catch(console.error);
+	};
+
+	// We pass down specific native actions/elements rather than taking them from props!
+	const actions = (
+		<ActionsList
+			characterId={character.id}
+			campaignId={campaignId ?? undefined}
+			onSelectDetail={(detail) => onSelectDetail(detail, "Action", Swords)}
+		/>
+	);
+	const powers = (
+		<PowersList
+			characterId={character.id}
+			spellCasting={spellCasting}
+			campaignId={campaignId ?? undefined}
+			onSelectDetail={(detail) => onSelectDetail(detail, "Power", Wand2)}
+		/>
+	);
+	const inventory = (
+		<div className="space-y-6">
+			<EquipmentList
+				characterId={character.id}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Item", Shield)}
+			/>
+			<CurrencyManager characterId={character.id} />
+		</div>
+	);
+	const features = (
+		<div className="space-y-6">
+			<FeaturesList
+				characterId={character.id}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Feature", Zap)}
+			/>
+			<FeatureChoicesPanel characterId={character.id} />
+			<HomebrewFeatureApplicator characterId={character.id} />
+			<RegentFeaturesDisplay
+				characterId={character.id}
+				characterLevel={character.level || 1}
+			/>
+			<RegentUnlocksPanel characterId={character.id} />
+			<RunesList characterId={character.id} />
+			<ShadowSoldiersPanel
+				characterId={character.id}
+				characterLevel={character.level || 1}
+			/>
+		</div>
+	);
+	const bio = (
+		<>
+			<JournalPanel characterId={character.id} />
+			<CharacterBackupPanel characterId={character.id} />
+			<RollHistoryPanel characterId={character.id} />
+		</>
+	);
+	const quests = <QuestLog characterId={character.id} />;
+	const extras = (
+		<>
+			<CharacterExtrasPanel characterId={character.id} />
+			<SpellSlotsDisplay
+				characterId={character.id}
+				job={character.job}
+				level={character.level}
+				abilities={character.abilities}
+			/>
+		</>
+	);
+
+	const senses = stats.senses;
+	const defenses = {
+		resistances: stats.resistances,
+		immunities: stats.immunities,
+		vulnerabilities: stats.vulnerabilities,
+		conditionImmunities: stats.conditionImmunities,
+	};
+
+	// ───────────────────────────────────────────────────────────────────────────
+	// UI Header & Actions (Unified from CharacterSheet.tsx)
+	// ───────────────────────────────────────────────────────────────────────────
 
 	const characterHeader = (
 		<div className="relative overflow-hidden bg-obsidian-charcoal/40 border border-primary/20 backdrop-blur-md rounded-[2px] p-1 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
@@ -247,14 +516,13 @@ export function CharacterSheetV2({
 						</div>
 						{levelingType === "xp" && (
 							<span className="text-[10px] font-mono text-primary/40 tracking-[0.2em] uppercase">
-								{character.experience || 0} /{" "}
-								{xpProgress.current + xpProgress.next} XP
+								{character.experience || 0} / {xpProgress.next} XP
 							</span>
 						)}
 					</div>
 					<div className="relative h-1.5 w-full bg-black border border-primary/10 overflow-hidden">
 						<Progress
-							value={levelingType === "xp" ? xpProgress.percent : 100}
+							value={levelingType === "xp" ? xpProgress.percent || 0 : 100}
 							max={100}
 							className={`h-full ${levelingType === "xp" ? "bg-primary/40" : "bg-primary/20 opacity-50"}`}
 						/>
@@ -279,7 +547,11 @@ export function CharacterSheetV2({
 						<Button
 							variant="outline"
 							size="sm"
-							onClick={onLongRest}
+							onClick={() => {
+								if (typeof navigator !== "undefined" && navigator.vibrate)
+									navigator.vibrate(10);
+								onLongRest();
+							}}
 							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
 						>
 							<Sun className="w-3 h-3 mr-1.5 text-orange-400" />
@@ -289,7 +561,11 @@ export function CharacterSheetV2({
 							<Button
 								variant="default"
 								size="sm"
-								onClick={onLevelUp}
+								onClick={() => {
+									if (typeof navigator !== "undefined" && navigator.vibrate)
+										navigator.vibrate([10, 30, 10]); // Multi-pulse for importance
+									onLevelUp();
+								}}
 								className="h-8 shadow-[0_0_15px_rgba(var(--primary),0.3)] uppercase font-mono text-[10px] tracking-widest"
 							>
 								<Zap className="w-3 h-3 mr-1.5" />
@@ -305,65 +581,181 @@ export function CharacterSheetV2({
 	);
 
 	return (
-		<div className="flex flex-col gap-6 animate-in fade-in duration-500">
-			{/* Unified Header */}
-			{characterHeader}
+		<Layout>
+			<div className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8">
+				{/* Unified Header */}
+				{characterHeader}
 
-			{/* Concentration & Conditions */}
-			{concentration.isConcentrating && (
-				<ConcentrationBanner
-					isConcentrating={concentration.isConcentrating}
-					effectName={concentration.effectName}
-					remainingRounds={concentration.remainingRounds}
-					onDrop={concentration.onDrop}
-				/>
-			)}
-
-			{((characterConditions && characterConditions.length > 0) ||
-				character.exhaustion_level > 0) &&
-				!isReadOnly && (
-					<ConditionBadgeBar
-						conditions={characterConditions}
-						exhaustionLevel={character.exhaustion_level}
-						onClearExhaustion={() =>
-							onExhaustionChange(-character.exhaustion_level)
-						}
-						onAddCondition={onAddCondition}
-						onRemoveCondition={onRemoveCondition}
+				{/* Concentration & Conditions */}
+				{concentration.state.isConcentrating && (
+					<ConcentrationBanner
+						isConcentrating={concentration.state.isConcentrating}
+						effectName={concentration.state.currentEffect?.name}
+						remainingRounds={concentration.state.currentEffect?.remainingRounds}
+						onDrop={concentration.drop}
 					/>
 				)}
 
-			{/* Desktop 3-Column Layout */}
-			<div className="hidden md:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
-				{/* COLUMN 1: Ability Scores (Vertical) */}
-				<aside className="sticky top-16 pt-4 space-y-4">
-					<AbilityScoreStrip
-						abilities={character.abilities}
-						modifiers={stats.calculatedStats.abilityModifiers}
-						savingThrowProficiencies={
-							character.saving_throw_proficiencies || []
-						}
-						onRoll={onRollAbility}
-					/>
-				</aside>
+				{((characterConditions && characterConditions.length > 0) ||
+					character.exhaustion_level > 0) &&
+					!isReadOnly && (
+						<ConditionBadgeBar
+							conditions={characterConditions}
+							exhaustionLevel={character.exhaustion_level}
+							onClearExhaustion={() =>
+								onExhaustionChange(-character.exhaustion_level)
+							}
+							onAddCondition={onAddCondition}
+							onRemoveCondition={onRemoveCondition}
+						/>
+					)}
 
-				{/* COLUMN 2: Proficiencies (Vertical) */}
-				<aside className="sticky top-16 pt-4 space-y-4 h-[calc(100vh-120px)] overflow-y-auto pr-2 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
-					<ProficiencySidebar
-						saves={stats.calculatedStats.savingThrows}
-						skills={stats.skills}
-						allSkills={stats.allSkills}
-						savingThrowProficiences={character.saving_throw_proficiencies || []}
-						onRollSave={onRollSave}
-						onRollSkill={onRollSkill}
-						senses={senses}
-						defenses={defenses}
-					/>
-				</aside>
+				{/* Desktop 3-Column Layout */}
+				<div className="hidden md:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
+					{/* COLUMN 1: Ability Scores (Vertical) */}
+					<aside className="sticky top-16 pt-4 space-y-4">
+						<AbilityScoreStrip
+							abilities={character.abilities}
+							modifiers={stats.calculatedStats.abilityModifiers}
+							savingThrowProficiencies={
+								character.saving_throw_proficiencies || []
+							}
+							onRoll={onRollAbility}
+						/>
+					</aside>
 
-				{/* COLUMN 3: Main Status & Tabs */}
-				<div className="flex-1 space-y-6 pt-4">
-					{/* Top Status Bar (Desktop Only) */}
+					{/* COLUMN 2: Proficiencies (Vertical) */}
+					<aside className="sticky top-16 pt-4 space-y-4 h-[calc(100vh-120px)] overflow-y-auto pr-2 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
+						<ProficiencySidebar
+							saves={stats.calculatedStats.savingThrows}
+							skills={stats.skills}
+							allSkills={stats.allSkills}
+							savingThrowProficiences={
+								character.saving_throw_proficiencies || []
+							}
+							onRollSave={onRollSave}
+							onRollSkill={onRollSkill}
+							senses={senses}
+							defenses={defenses}
+						/>
+					</aside>
+
+					{/* COLUMN 3: Main Status & Tabs */}
+					<div className="flex-1 space-y-6 pt-4">
+						{/* Top Status Bar (Desktop Only) */}
+						<StatusHeader
+							hp={{
+								current: character.hp_current,
+								max: character.hp_max,
+								temp: calculateTotalTempHP(characterResources),
+							}}
+							ac={stats.calculatedStats.armorClass}
+							initiative={stats.finalInitiative}
+							speed={stats.finalSpeed}
+							hitDice={{
+								current: character.hit_dice_current,
+								max: character.hit_dice_max,
+								size: character.hit_dice_size,
+							}}
+							systemFavor={{
+								current: character.system_favor_current,
+								max: character.system_favor_max,
+								die: character.system_favor_die,
+							}}
+							onRollInitiative={onRollInitiative}
+							onRollHitDice={onRollHitDice}
+							onHPClick={onHPClick}
+							onACClick={onACClick}
+							onAdjustResource={onResourceAdjust}
+							deathSaves={{
+								successes: deathSaves.state.successes,
+								failures: deathSaves.state.failures,
+								isStable: deathSaves.state.isStable,
+								isDead: deathSaves.state.isDead,
+								onRoll: deathSaves.rollDeathSave,
+								onStabilize: deathSaves.stabilize,
+							}}
+							characterId={character.id}
+						/>
+
+						{/* Interaction Tabs */}
+						<Tabs
+							value={activeTab}
+							onValueChange={setActiveTab}
+							className="bg-obsidian-charcoal/40 border border-primary/20 rounded-[2px] backdrop-blur-md p-4 min-h-[600px]"
+						>
+							<TabsList className="flex bg-transparent border-b border-primary/10 w-full justify-start gap-6 rounded-none h-12 mb-4 px-2 overflow-x-auto scrollbar-none relative">
+								<TabsTrigger
+									value="actions"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+								>
+									Actions
+								</TabsTrigger>
+								<TabsTrigger
+									value="powers"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+								>
+									Powers
+								</TabsTrigger>
+								<TabsTrigger
+									value="inventory"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+								>
+									Items
+								</TabsTrigger>
+								<TabsTrigger
+									value="features"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+								>
+									Features
+								</TabsTrigger>
+								<TabsTrigger
+									value="bio"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+								>
+									Bio
+								</TabsTrigger>
+								<TabsTrigger
+									value="quests"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+								>
+									Notes
+								</TabsTrigger>
+								<TabsTrigger
+									value="extras"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+								>
+									Extras
+								</TabsTrigger>
+							</TabsList>
+
+							<TabsContent value="actions" className="mt-0 outline-none">
+								{actions}
+							</TabsContent>
+							<TabsContent value="powers" className="mt-0 outline-none">
+								{powers}
+							</TabsContent>
+							<TabsContent value="inventory" className="mt-0 outline-none">
+								{inventory}
+							</TabsContent>
+							<TabsContent value="features" className="mt-0 outline-none">
+								{features}
+							</TabsContent>
+							<TabsContent value="bio" className="mt-0 outline-none">
+								{bio}
+							</TabsContent>
+							<TabsContent value="quests" className="mt-0 outline-none">
+								{quests}
+							</TabsContent>
+							<TabsContent value="extras" className="mt-0 outline-none">
+								{extras}
+							</TabsContent>
+						</Tabs>
+					</div>
+				</div>
+
+				{/* Mobile Layout (Single Column with Bottom HUD managed by MainLayout) */}
+				<div className="md:hidden space-y-6 pb-20">
 					<StatusHeader
 						hp={{
 							current: character.hp_current,
@@ -388,183 +780,222 @@ export function CharacterSheetV2({
 						onHPClick={onHPClick}
 						onACClick={onACClick}
 						onAdjustResource={onResourceAdjust}
-						deathSaves={deathSaves}
+						deathSaves={{
+							successes: deathSaves.state.successes,
+							failures: deathSaves.state.failures,
+							isStable: deathSaves.state.isStable,
+							isDead: deathSaves.state.isDead,
+							onRoll: deathSaves.rollDeathSave,
+							onStabilize: deathSaves.stabilize,
+						}}
 						characterId={character.id}
 					/>
 
-					{/* Interaction Tabs */}
 					<Tabs
-						value={activeTab}
-						onValueChange={setActiveTab}
-						className="bg-obsidian-charcoal/40 border border-primary/20 rounded-[2px] backdrop-blur-md p-4 min-h-[600px]"
+						value={activeMobileTab}
+						onValueChange={setActiveMobileTab}
+						className="w-full"
 					>
-						<TabsList className="flex bg-transparent border-b border-primary/10 w-full justify-start gap-6 rounded-none h-12 mb-4 px-2 overflow-x-auto scrollbar-none">
+						<TabsList className="flex w-full items-center justify-start gap-8 h-14 bg-obsidian-charcoal/80 border-y border-primary/20 rounded-none sticky top-16 z-20 overflow-x-auto scrollbar-none px-4 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
 							<TabsTrigger
 								value="actions"
-								className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
 							>
-								Actions
+								Combat
 							</TabsTrigger>
 							<TabsTrigger
 								value="powers"
-								className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
 							>
-								Powers
+								Spells
 							</TabsTrigger>
 							<TabsTrigger
 								value="inventory"
-								className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
 							>
 								Items
 							</TabsTrigger>
 							<TabsTrigger
 								value="features"
-								className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
 							>
-								Features
+								Feats
 							</TabsTrigger>
 							<TabsTrigger
-								value="bio"
-								className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all"
+								value="stats"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
 							>
-								Description
-							</TabsTrigger>
-							<TabsTrigger
-								value="quests"
-								className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all"
-							>
-								Notes
-							</TabsTrigger>
-							<TabsTrigger
-								value="extras"
-								className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all"
-							>
-								Extras
+								Stats
 							</TabsTrigger>
 						</TabsList>
 
-						<TabsContent value="actions" className="mt-0 outline-none">
-							{actions}
-						</TabsContent>
-						<TabsContent value="powers" className="mt-0 outline-none">
-							{powers}
-						</TabsContent>
-						<TabsContent value="inventory" className="mt-0 outline-none">
-							{inventory}
-						</TabsContent>
-						<TabsContent value="features" className="mt-0 outline-none">
-							{features}
-						</TabsContent>
-						<TabsContent value="bio" className="mt-0 outline-none">
-							{bio}
-						</TabsContent>
-						<TabsContent value="quests" className="mt-0 outline-none">
-							{quests}
-						</TabsContent>
-						<TabsContent value="extras" className="mt-0 outline-none">
-							{extras}
-						</TabsContent>
+						{/* Swipeable Container */}
+						<div {...bindMobileGestures()} className="touch-pan-y min-h-[50vh]">
+							<TabsContent value="actions">{actions}</TabsContent>
+							<TabsContent value="powers">{powers}</TabsContent>
+							<TabsContent value="inventory">{inventory}</TabsContent>
+							<TabsContent value="features">{features}</TabsContent>
+							<TabsContent value="stats" className="space-y-6 pt-4">
+								<AbilityScoreStrip
+									abilities={character.abilities}
+									modifiers={stats.calculatedStats.abilityModifiers}
+									savingThrowProficiencies={
+										character.saving_throw_proficiencies || []
+									}
+									onRoll={onRollAbility}
+								/>
+								<ProficiencySidebar
+									saves={stats.calculatedStats.savingThrows}
+									skills={stats.skills}
+									allSkills={stats.allSkills}
+									savingThrowProficiences={
+										character.saving_throw_proficiencies || []
+									}
+									onRollSave={onRollSave}
+									onRollSkill={onRollSkill}
+								/>
+							</TabsContent>
+						</div>
 					</Tabs>
 				</div>
-			</div>
 
-			{/* Mobile Layout (Single Column with Bottom HUD managed by MainLayout) */}
-			<div className="md:hidden space-y-6 pb-20">
-				<StatusHeader
-					hp={{
-						current: character.hp_current,
-						max: character.hp_max,
-						temp: calculateTotalTempHP(characterResources),
-					}}
-					ac={stats.calculatedStats.armorClass}
-					initiative={stats.finalInitiative}
-					speed={stats.finalSpeed}
-					hitDice={{
-						current: character.hit_dice_current,
-						max: character.hit_dice_max,
-						size: character.hit_dice_size,
-					}}
-					systemFavor={{
-						current: character.system_favor_current,
-						max: character.system_favor_max,
-						die: character.system_favor_die,
-					}}
-					onRollInitiative={onRollInitiative}
-					onRollHitDice={onRollHitDice}
-					onHPClick={onHPClick}
-					onACClick={onACClick}
-					onAdjustResource={onResourceAdjust}
-					deathSaves={deathSaves}
+				{/* MODALS */}
+				<LevelUpWizardModal
+					isOpen={persistentModals.levelUp}
+					onClose={() => sheetController.setModal("levelUp", false)}
 					characterId={character.id}
 				/>
+				<DefensesModal
+					isOpen={persistentModals.defenses}
+					onOpenChange={(open) => sheetController.setModal("defenses", open)}
+					resistances={stats.resistances}
+					immunities={stats.immunities}
+					vulnerabilities={stats.vulnerabilities}
+					conditionImmunities={stats.conditionImmunities}
+					acBreakdown={stats.armorClassDetail}
+					characterId={character.id}
+				/>
+				<ExportDialog
+					open={persistentModals.export}
+					onOpenChange={(open) => sheetController.setModal("export", open)}
+					character={character}
+				/>
+				<CharacterEditDialog
+					open={persistentModals.edit}
+					onOpenChange={(open) => sheetController.setModal("edit", open)}
+					character={character}
+				/>
 
-				<Tabs
-					value={activeMobileTab}
-					onValueChange={setActiveMobileTab}
-					className="w-full"
+				<Dialog
+					open={persistentModals.share}
+					onOpenChange={(open) => sheetController.setModal("share", open)}
 				>
-					<TabsList className="grid w-full grid-cols-5 h-12 bg-obsidian-charcoal/60 border-t border-primary/20 rounded-none sticky top-16 z-20">
-						<TabsTrigger
-							value="actions"
-							className="text-[10px] uppercase font-mono"
-						>
-							Combat
-						</TabsTrigger>
-						<TabsTrigger
-							value="powers"
-							className="text-[10px] uppercase font-mono"
-						>
-							Spells
-						</TabsTrigger>
-						<TabsTrigger
-							value="inventory"
-							className="text-[10px] uppercase font-mono"
-						>
-							Items
-						</TabsTrigger>
-						<TabsTrigger
-							value="features"
-							className="text-[10px] uppercase font-mono"
-						>
-							Feats
-						</TabsTrigger>
-						<TabsTrigger
-							value="stats"
-							className="text-[10px] uppercase font-mono"
-						>
-							Stats
-						</TabsTrigger>
-					</TabsList>
-
-					{/* Swipeable Container */}
-					<div {...bindMobileGestures()} className="touch-pan-y min-h-[50vh]">
-						<TabsContent value="actions">{actions}</TabsContent>
-						<TabsContent value="powers">{powers}</TabsContent>
-						<TabsContent value="inventory">{inventory}</TabsContent>
-						<TabsContent value="features">{features}</TabsContent>
-						<TabsContent value="stats" className="space-y-6 pt-4">
-							<AbilityScoreStrip
-								abilities={character.abilities}
-								modifiers={stats.calculatedStats.abilityModifiers}
-								savingThrowProficiencies={
-									character.saving_throw_proficiencies || []
-								}
-								onRoll={onRollAbility}
-							/>
-							<ProficiencySidebar
-								saves={stats.calculatedStats.savingThrows}
-								skills={stats.skills}
-								allSkills={stats.allSkills}
-								savingThrowProficiences={
-									character.saving_throw_proficiencies || []
-								}
-								onRollSave={onRollSave}
-								onRollSkill={onRollSkill}
-							/>
-						</TabsContent>
-					</div>
-				</Tabs>
+					<DialogContent className="sm:max-w-md bg-obsidian-charcoal/95 border border-primary/20">
+						<DialogHeader>
+							<DialogTitle className="font-display tracking-widest text-bond-gold">
+								Share Ascendant
+							</DialogTitle>
+							<DialogDescription>
+								{shareToken
+									? "Anyone with this link can view this Ascendant."
+									: "Generate a link to share a read-only view."}
+							</DialogDescription>
+						</DialogHeader>
+						<div className="flex items-center space-x-2 mt-4">
+							{shareToken ? (
+								<>
+									<div className="grid flex-1 gap-2">
+										<Input
+											id="link"
+											defaultValue={shareToken}
+											readOnly
+											className="bg-black/50 border-primary/20 font-mono text-xs text-primary/80 truncate font-semibold"
+											onClick={(e) => (e.target as HTMLInputElement).select()}
+										/>
+									</div>
+									<Button
+										type="button"
+										size="icon"
+										onClick={handleCopyShareLink}
+										className="bg-primary/20 hover:bg-primary/30 border border-primary/30"
+									>
+										<Copy className="h-4 w-4" />
+									</Button>
+								</>
+							) : (
+								<Button
+									onClick={handleGenerateShareLink}
+									disabled={generateShareTokenPending}
+									className="w-full bg-primary/20 hover:bg-primary/30 border border-primary/30 text-primary"
+								>
+									Generate Link
+								</Button>
+							)}
+						</div>
+						<DialogFooter className="sm:justify-start">
+							<Button
+								type="button"
+								variant="ghost"
+								onClick={() => sheetController.setModal("share", false)}
+							>
+								Close
+							</Button>
+						</DialogFooter>
+					</DialogContent>
+				</Dialog>
+				{/* Detail Drawer - DDB Style */}
+				<Sheet
+					open={!!selectedDetail}
+					onOpenChange={(open: boolean) => !open && setSelectedDetail(null)}
+				>
+					<SheetContent className="w-full sm:max-w-md bg-obsidian-charcoal/95 backdrop-blur-xl border-l border-primary/20 p-0">
+						{selectedDetail && (
+							<div className="flex flex-col h-full shadow-[inset_0_0_50px_rgba(var(--primary-rgb),0.1)]">
+								<SheetHeader className="p-6 border-b border-primary/10">
+									<div className="flex items-center gap-3">
+										<div className="w-10 h-10 rounded-[2px] bg-primary/10 border border-primary/30 flex items-center justify-center">
+											{selectedDetail.icon ? (
+												(() => {
+													const DetailIcon = selectedDetail.icon;
+													return (
+														<DetailIcon className="w-6 h-6 text-primary" />
+													);
+												})()
+											) : (
+												<Shield className="w-6 h-6 text-primary" />
+											)}
+										</div>
+										<SheetTitle className="font-display font-bold tracking-widest text-xl uppercase text-primary">
+											{selectedDetail.title}
+										</SheetTitle>
+									</div>
+									<Badge
+										variant="outline"
+										className="w-fit mt-2 border-primary/20 text-xs text-primary/60"
+									>
+										{selectedDetail.type}
+									</Badge>
+								</SheetHeader>
+								<div className="flex-1 overflow-y-auto p-6 space-y-6">
+									<div className="text-sm font-system leading-relaxed text-foreground/90 space-y-4">
+										<AutoLinkText text={selectedDetail.description} />
+									</div>
+									{/* Roll Buttons / Actions would go here if provided in payload */}
+								</div>
+								<div className="p-6 border-t border-primary/10 bg-black/20">
+									<Button
+										variant="outline"
+										className="w-full border-primary/30 hover:bg-primary/10"
+										onClick={() => setSelectedDetail(null)}
+									>
+										CLOSE PANEL
+									</Button>
+								</div>
+							</div>
+						)}
+					</SheetContent>
+				</Sheet>
 			</div>
-		</div>
+		</Layout>
 	);
 }

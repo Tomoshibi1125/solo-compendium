@@ -45,7 +45,7 @@ interface DiceRoll {
 	advantage?: "advantage" | "disadvantage" | "normal";
 }
 
-interface RollResult {
+export interface RollResult {
 	formula: string;
 	rolls: number[];
 	modifier: number;

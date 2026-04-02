@@ -9,7 +9,7 @@ interface ProtocolWardenContext {
 
 /**
  * Transforms mechanical logs (e.g., "Rolled 18 to hit, 12 fire damage")
- * into thematic, flavorful narrative descriptions acting as the Protocol Warden (DM).
+ * into thematic, flavorful narrative descriptions acting as the Protocol Warden (PW).
  */
 export async function narrateCombatEvent(
 	mechanicalText: string,

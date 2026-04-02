@@ -1,8 +1,6 @@
 // Magical Tattoos — System Ascendant
 // Dimensional ink, sovereign stigmas, and mana circuit grafts.
 
-import type { CompendiumTattoo } from "../../types/compendium";
-
 export const tattoos = [
 	{
 		id: "tattoo-barrier-common",
@@ -167,7 +165,7 @@ export const tattoos = [
 			attack_bonus: 1,
 			damage_bonus: "1d6 force (when activated)",
 			reach_bonus: 15,
-			activation: "bonus action",
+			activation: { type: "bonus action" },
 			duration: "1 minute",
 			system_interaction:
 				"[Notice: Unregistered variable detected. Immediate caution advised.]",
@@ -196,7 +194,7 @@ export const tattoos = [
 				"If you end your turn inside an object, you take 1d10 force damage and are shunted to the nearest unoccupied space.",
 		},
 		mechanics: {
-			activation: "bonus action",
+			activation: { type: "bonus action" },
 			duration: "Until end of next turn",
 			resistance: "All damage except force",
 			movement: "Through creatures and objects",
@@ -209,7 +207,7 @@ export const tattoos = [
 		},
 		tags: ["defense", "tattoo", "incorporeal", "phase"],
 		source: "System Ascendant Canon",
-		lore: "A manifestation of raw System authority discovered after the Abyssal Influx, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
+		lore: "A manifestation of raw System authority discovered after the Binary Void-Data Influx, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
 		flavor: "Cleanses the darkness within. A subtle ultimate equalizer.",
 	},
 	{
@@ -237,7 +235,7 @@ export const tattoos = [
 		},
 		tags: ["utility", "tattoo", "illusion"],
 		source: "System Ascendant Canon",
-		lore: "Translated from the combat data of an apex-class Awakened who perished in the Abyssal Influx, this power disrupts a Hunter's innate mana perception.",
+		lore: "Translated from the combat data of an apex-class Awakened who perished in the Binary Void-Data Influx, this power disrupts a Hunter's innate mana perception.",
 		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
 	},
 	{
@@ -491,7 +489,7 @@ export const tattoos = [
 		mechanics: {
 			fly_speed: 30,
 			duration: "10 minutes",
-			activation: "bonus action",
+			activation: { type: "bonus action" },
 			system_interaction:
 				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
 		},
@@ -556,7 +554,7 @@ export const tattoos = [
 		},
 		tags: ["offense", "tattoo", "poison"],
 		source: "System Ascendant Canon",
-		lore: "First recorded during the Abyssal Influx, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it overrides basic physics within a 30-foot radius.",
+		lore: "First recorded during the Binary Void-Data Influx, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it overrides basic physics within a 30-foot radius.",
 		flavor:
 			"Commands the remnants of humanity. A triumphant surge of lethal intent.",
 	},
@@ -671,7 +669,7 @@ export const tattoos = [
 		},
 		tags: ["defense", "tattoo", "sovereign", "legendary"],
 		source: "System Ascendant Canon",
-		lore: "Originating from the aftermath of the Abyssal Influx, this technique was pioneered by high-tier Rift beasts. Utilizing it creates a vacuum in ambient mana fields.",
+		lore: "Originating from the aftermath of the Binary Void-Data Influx, this technique was pioneered by high-tier Rift beasts. Utilizing it creates a vacuum in ambient mana fields.",
 		flavor:
 			"Shatters the fragile limits of flesh. A brutal ultimate equalizer.",
 	},

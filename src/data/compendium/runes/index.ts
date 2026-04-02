@@ -1,4 +1,4 @@
-import type { RuneCompendiumEntry } from "../runes";
+import type { CompendiumRune as RuneCompendiumEntry } from "@/types/compendium";
 import { runes_power_powers } from "./power-powers";
 import { runes_skill_skills } from "./skill-runes";
 import { runes_spell_rank_a } from "./spell-rank-a";

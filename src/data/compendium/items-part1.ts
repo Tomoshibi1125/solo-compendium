@@ -17,7 +17,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8 + 2",
-				damageType: "slashing",
+				damage_type: "slashing",
 				versatile: "1d10 + 2",
 				finesse: true,
 			},
@@ -73,9 +73,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -179,7 +177,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -204,9 +202,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -310,7 +306,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -335,9 +331,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -441,7 +435,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -466,9 +460,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -572,7 +564,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -597,9 +589,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -703,7 +693,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -728,9 +718,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -834,7 +822,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -859,9 +847,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -965,7 +951,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -990,9 +976,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1096,7 +1080,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d4",
-				damageType: "piercing",
+				damage_type: "piercing",
 				finesse: true,
 			},
 		},
@@ -1122,9 +1106,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1228,7 +1210,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d4",
-				damageType: "piercing",
+				damage_type: "piercing",
 				finesse: true,
 			},
 		},
@@ -1254,9 +1236,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1360,7 +1340,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d4",
-				damageType: "piercing",
+				damage_type: "piercing",
 				finesse: true,
 			},
 		},
@@ -1386,9 +1366,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1492,7 +1470,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d4",
-				damageType: "piercing",
+				damage_type: "piercing",
 				finesse: true,
 			},
 		},
@@ -1518,9 +1496,7 @@ export const items = [
 		weight: 20,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1624,7 +1600,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -1649,9 +1625,7 @@ export const items = [
 		weight: 6,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1680,7 +1654,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -1705,9 +1679,7 @@ export const items = [
 		weight: 6,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1736,7 +1708,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -1761,9 +1733,7 @@ export const items = [
 		weight: 6,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {
@@ -1792,7 +1762,7 @@ export const items = [
 		properties: {
 			weapon: {
 				damage: "1d8",
-				damageType: "slashing",
+				damage_type: "slashing",
 			},
 		},
 		effects: {
@@ -1817,9 +1787,7 @@ export const items = [
 		weight: 6,
 		properties: {
 			protocol_enhanced: {
-				bonus: {
-					armorClass: 1,
-				},
+				bonus: {},
 			},
 		},
 		effects: {

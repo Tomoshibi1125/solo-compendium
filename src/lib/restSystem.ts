@@ -324,7 +324,7 @@ async function resetRuneUses(
 
 	// Process each inscription
 	for (const inscription of inscriptions) {
-		const rune = inscription.rune as unknown as CompendiumRuneRow;
+		const rune = inscription.rune as never as CompendiumRuneRow; // Explicitly use never for JSON-to-interface transition
 
 		// Skip if no uses_per_rest (at-will or passive)
 		if (!rune.uses_per_rest || rune.uses_per_rest === "at-will") {

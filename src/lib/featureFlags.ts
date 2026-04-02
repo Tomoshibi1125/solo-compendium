@@ -17,16 +17,16 @@ interface FeatureFlags {
 }
 
 const DEFAULT_FLAGS: FeatureFlags = {
-	dailyQuestEnabled: true,
-	artGenerationEnabled: true,
-	aiEnhancementEnabled: true,
-	aiAnalysisEnabled: true,
-	aiTagsEnabled: true,
-	aiMoodDetectionEnabled: true,
-	aiStyleSuggestionsEnabled: true,
-	aiContentFilteringEnabled: true,
-	aiVariationsEnabled: true,
-	aiBatchProcessingEnabled: true,
+	dailyQuestEnabled: false,
+	artGenerationEnabled: false,
+	aiEnhancementEnabled: false,
+	aiAnalysisEnabled: false,
+	aiTagsEnabled: false,
+	aiMoodDetectionEnabled: false,
+	aiStyleSuggestionsEnabled: false,
+	aiContentFilteringEnabled: false,
+	aiVariationsEnabled: false,
+	aiBatchProcessingEnabled: false,
 };
 
 const FLAG_ENV_KEYS: Record<keyof FeatureFlags, string> = {

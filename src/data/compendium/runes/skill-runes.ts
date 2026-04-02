@@ -1,4 +1,4 @@
-import type { RuneCompendiumEntry } from "../runes";
+import type { CompendiumRune as RuneCompendiumEntry } from "@/types/compendium";
 
 export const runes_skill_skills: RuneCompendiumEntry[] = [
 	{

@@ -17,7 +17,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { error as logError } from "@/lib/logger";
 
-export type UserRole = "dm" | "player";
+export type UserRole = "warden" | "ascendant";
 
 interface AuthUser {
 	id: string;
@@ -26,6 +26,7 @@ interface AuthUser {
 	displayName?: string;
 	avatar?: string;
 	createdAt: string;
+	user_metadata?: Record<string, unknown>;
 }
 
 export type AuthResult = {
@@ -54,19 +55,20 @@ interface AuthContextType {
 		updates: Partial<AuthUser>,
 	) => Promise<{ error?: string; success?: boolean }>;
 	hasPermission: (permission: string) => boolean;
-	isDM: () => boolean;
+	isWarden: () => boolean;
 	isPlayer: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const normalizeRole = (value?: string | null): UserRole => {
-	if (value === "dm" || value === "admin") return "dm";
-	if (value === "player") return "player";
+	if (value === "warden" || value === "PW" || value === "admin")
+		return "warden";
+	if (value === "ascendant" || value === "player") return "ascendant";
 	if (value) {
-		logError("Invalid role value encountered, defaulting to player:", value);
+		logError("Invalid role value encountered, defaulting to ascendant:", value);
 	}
-	return "player";
+	return "ascendant";
 };
 
 const buildFallbackUser = (authUser: User): AuthUser => {
@@ -93,9 +95,10 @@ const buildFallbackUser = (authUser: User): AuthUser => {
 		displayName,
 		avatar,
 		createdAt: authUser.created_at ?? new Date().toISOString(),
+		user_metadata: metadata,
 	};
 };
-const toProfileRole = (role: UserRole): "dm" | "player" => role;
+const toProfileRole = (role: UserRole): "warden" | "ascendant" => role;
 
 const isEmailRateLimitError = (error: unknown): boolean => {
 	if (!error || typeof error !== "object") return false;
@@ -172,8 +175,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const [loading, setLoading] = useState(true);
 
 	// Role-based permissions
-	const permissions = {
-		dm: [
+	const permissions: Record<string, string[]> = {
+		warden: [
 			"view:dm_tools",
 			"manage:campaigns",
 			"manage:players",
@@ -184,7 +187,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			"manage:quests",
 			"view:analytics",
 		],
-		player: [
+		ascendant: [
 			"view:player_tools",
 			"view:character_sheet",
 			"view:compendium",
@@ -495,8 +498,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		);
 	};
 
-	const isDM = (): boolean => user?.role === "dm";
-	const isPlayer = (): boolean => user?.role === "player";
+	const isWarden = (): boolean => user?.role === "warden";
+	const isPlayer = (): boolean => user?.role === "ascendant";
 
 	const value: AuthContextType = {
 		user,
@@ -507,7 +510,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		signOut,
 		updateProfile,
 		hasPermission,
-		isDM,
+		isWarden,
 		isPlayer,
 	};
 

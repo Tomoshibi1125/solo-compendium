@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
@@ -32,7 +32,7 @@ const readCachedEquipment = (key: string): EquipmentRow[] | null => {
 		if (typeof window === "undefined") return null;
 		const raw = window.localStorage.getItem(key);
 		if (!raw) return null;
-		const parsed = JSON.parse(raw) as unknown;
+		const parsed: unknown = JSON.parse(raw);
 		return Array.isArray(parsed) ? (parsed as EquipmentRow[]) : null;
 	} catch {
 		return null;
@@ -163,7 +163,7 @@ export const useEquipment = (characterId: string) => {
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(
 					characterId,
-					item as unknown as Omit<EquipmentRowInsert, "character_id">,
+					item as Omit<EquipmentRowInsert, "character_id">,
 				);
 				return null;
 			}

@@ -28,7 +28,7 @@ import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter, useUpdateCharacter } from "@/hooks/useCharacters";
 import { useDailyQuests } from "@/hooks/useDailyQuests";
 import { useEquipment } from "@/hooks/useEquipment";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import type { Json } from "@/integrations/supabase/types";
 import { getLevelingMode } from "@/lib/campaignSettings";
 import type {
@@ -103,8 +103,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
 	const updateCharacter = useUpdateCharacter();
 	const { equipment, addEquipment, updateEquipment } =
 		useEquipment(characterId);
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 	const {
 		templates,
 		config,
@@ -262,7 +261,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
 				});
 
 				if (reward.system_favor) {
-					ddbEnhancements
+					ascendantTools
 						.trackCustomFeatureUsage(
 							characterId,
 							"System Favor",

@@ -4,14 +4,6 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
-const supabaseAny = supabase as unknown as {
-	from: (table: string) => unknown;
-	rpc: (
-		fn: string,
-		args?: Record<string, unknown>,
-	) => Promise<{ data: unknown; error: { message?: string } | null }>;
-};
-
 type _CampaignCombatSession =
 	Database["public"]["Tables"]["campaign_combat_sessions"]["Row"];
 type _CampaignCombatant =
@@ -158,8 +150,8 @@ export function useEncounterRewards() {
 					// Update character XP using RPC function
 					for (const [characterId, xp] of Object.entries(xpDistribution)) {
 						try {
-							const { data, error } = await supabaseAny.rpc(
-								"update_character_xp" as never,
+							const { data, error } = await supabase.rpc(
+								"update_character_xp",
 								{
 									character_id: characterId,
 									xp_amount: xp,

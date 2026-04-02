@@ -51,8 +51,17 @@ export const alpha = (pairs: [number, number][]) => ({
 	list: pairs.map(([value, time]) => ({ value, time })),
 	isStepped: false,
 });
-export const scale = alpha;
-export const speed = alpha;
+
+export const scale = (pairs: [number, number][]) => ({
+	list: pairs.map(([value, time]) => ({ value, time })),
+	isStepped: false,
+});
+
+export const speed = (pairs: [number, number][]) => ({
+	list: pairs.map(([value, time]) => ({ value, time })),
+	isStepped: false,
+});
+
 export const color = (pairs: [string, number][]) => ({
 	list: pairs.map(([value, time]) => ({ value, time })),
 	isStepped: false,

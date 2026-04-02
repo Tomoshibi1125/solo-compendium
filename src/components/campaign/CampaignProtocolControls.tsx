@@ -322,7 +322,7 @@ export function CampaignProtocolControls({
 			});
 			if (sessionId) {
 				navigate(
-					`/dm-tools/initiative-tracker?campaignId=${encodeURIComponent(campaignId)}&sessionId=${encodeURIComponent(sessionId)}`,
+					`/warden-protocols/initiative-tracker?campaignId=${encodeURIComponent(campaignId)}&sessionId=${encodeURIComponent(sessionId)}`,
 				);
 			}
 		} catch {

@@ -2,7 +2,7 @@
  * VTT Asset Manifest
  *
  * Catalogs all available VTT assets (maps, tokens, props, effects, audio)
- * for the DM. Local assets are served from /generated/, while audio streams
+ * for the PW. Local assets are served from /generated/, while audio streams
  * reference free external sources (Tabletop Audio, Freesound).
  *
  * Token SVGs from game-icons.net are CC BY 3.0 (credit: Lorc, Delapouite).
@@ -1049,7 +1049,7 @@ export const ALL_ASSETS: VTTAsset[] = [
 	...MUSIC_ASSETS,
 ];
 
-/** Asset count summary for DM dashboard */
+/** Asset count summary for Protocol Warden (PW) dashboard */
 export function getAssetSummary(): Record<AssetCategory, number> {
 	const summary = {} as Record<AssetCategory, number>;
 	for (const asset of ALL_ASSETS) {

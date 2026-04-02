@@ -4,7 +4,7 @@ export const regents: Regent[] = [
 	{
 		id: "umbral_regent",
 		name: "Umbral Regent",
-		title: "Umbral Regent (Regent of Shadows)",
+		title: "Umbral (Regent of Shadows)",
 		theme: "Umbral and Death",
 		description:
 			"The ultimate umbral manipulation Ascendant class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Ascendant class available to players, granting true Regent-level power over the umbral realm and the ability to command umbral shadows.",
@@ -85,7 +85,7 @@ export const regents: Regent[] = [
 				level: 4,
 				name: "Army of the Damned",
 				description:
-					"Once per long rest, you can raise an army of up to 100 shadow creatures that serve you for 24 hours.",
+					"Once per long rest, you can raise an army of up to 100 umbral creatures that serve you for 24 hours.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -158,7 +158,7 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 11,
-				name: "Shadow Ascendant",
+				name: "Umbral Ascendant",
 				description:
 					"You transcend mortal limitations, gaining the ability to exist in multiple planes simultaneously and command shadows across dimensions.",
 				type: "passive",
@@ -186,9 +186,9 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 13,
-				name: "Shadow Apocalypse",
+				name: "Umbral Apocalypse",
 				description:
-					"Once per day, you can unleash a shadow apocalypse that covers a 10-mile radius in absolute darkness, where only you and your shadow creatures can see.",
+					"Once per day, you can unleash a shadow apocalypse that covers a 10-mile radius in absolute darkness, where only you and your umbral creatures can see.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -217,7 +217,7 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 15,
-				name: "Shadow Reality",
+				name: "Umbral Reality",
 				description:
 					"You can reshape reality itself through shadows, creating alternate dimensions and rewriting physical laws.",
 				type: "action",
@@ -247,7 +247,7 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 17,
-				name: "Shadow Transcendence",
+				name: "Umbral Transcendence",
 				description:
 					"You transcend the concept of shadows, becoming a fundamental force of the universe that cannot be contained or destroyed.",
 				type: "passive",
@@ -276,9 +276,9 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 19,
-				name: "Shadow Omnipotence",
+				name: "Umbral Omnipotence",
 				description:
-					"You achieve true omnipotence within the shadow domain, able to control all shadows across all timelines and realities simultaneously.",
+					"You achieve true omnipotence within the umbral domain, able to control all umbral creatures across all timelines and realities simultaneously.",
 				type: "passive",
 			},
 			{
@@ -297,14 +297,14 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 20,
-				name: "Shadow Supremacy",
+				name: "Umbral Supremacy",
 				description:
 					"You achieve absolute supremacy over all shadows, becoming the source and master of all shadow power in existence.",
 				type: "passive",
 			},
 			{
 				level: 20,
-				name: "Absolute Shadow",
+				name: "Absolute Umbral",
 				description:
 					"You become the embodiment of absolute shadow, a force beyond comprehension that exists outside all laws of reality.",
 				type: "passive",
@@ -339,7 +339,7 @@ export const regents: Regent[] = [
 			],
 			spell_preparation: false,
 			additional_spells: [
-				"Shadow Bolt",
+				"Umbral Bolt",
 				"Void Bolt",
 				"Abyssal Bolt",
 				"Dimensional Lock",
@@ -392,7 +392,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"11": {
-				features_gained: ["Shadow Ascendant", "Dimensional Lord", "Death God"],
+				features_gained: ["Umbral Ascendant", "Dimensional Lord", "Death God"],
 				abilities_improved: [],
 			},
 			"12": {
@@ -400,7 +400,7 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 			"13": {
-				features_gained: ["Shadow Apocalypse", "Void Dominion", "Essence God"],
+				features_gained: ["Umbral Apocalypse", "Void Dominion", "Essence God"],
 				abilities_improved: [],
 			},
 			"14": {
@@ -408,7 +408,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"15": {
-				features_gained: ["Shadow Reality", "Dimensional God", "Death Emperor"],
+				features_gained: ["Umbral Reality", "Dimensional God", "Death Emperor"],
 				abilities_improved: [],
 			},
 			"16": {
@@ -417,7 +417,7 @@ export const regents: Regent[] = [
 			},
 			"17": {
 				features_gained: [
-					"Shadow Transcendence",
+					"Umbral Transcendence",
 					"Void God",
 					"Essence Emperor",
 				],
@@ -429,7 +429,7 @@ export const regents: Regent[] = [
 			},
 			"19": {
 				features_gained: [
-					"Shadow Omnipotence",
+					"Umbral Omnipotence",
 					"Dimensional Emperor",
 					"Death Regent",
 				],
@@ -437,8 +437,8 @@ export const regents: Regent[] = [
 			},
 			"20": {
 				features_gained: [
-					"Shadow Supremacy",
-					"Absolute Shadow",
+					"Umbral Supremacy",
+					"Absolute Umbral",
 					"Ultimate Umbral Power",
 				],
 				abilities_improved: ["Primary Ability +2"],
@@ -451,7 +451,7 @@ export const regents: Regent[] = [
 				wisdom: 13,
 			},
 			quest_completion: "Complete the Umbral Regent Ascension quest series",
-			dm_approval: true,
+			warden_approval: true,
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -466,7 +466,7 @@ export const regents: Regent[] = [
 				"Immune to fear and charm effects",
 				"Can see perfectly in magical and non-magical darkness",
 				"Shadow creatures are automatically friendly toward you",
-				"Can communicate with shadows and shadow creatures",
+				"Can communicate with shadows and umbral creatures",
 			],
 			restrictions: [
 				"Requires Warden verification of quest completion",
@@ -496,7 +496,7 @@ export const regents: Regent[] = [
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Flame Regent Trials quest series",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -878,7 +878,7 @@ export const regents: Regent[] = [
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Steel Regent Ascension trials",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -1274,7 +1274,7 @@ export const regents: Regent[] = [
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Path of Destruction quest series",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -1685,7 +1685,7 @@ export const regents: Regent[] = [
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Command Regent Ascension trials",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -2397,7 +2397,7 @@ export const regents: Regent[] = [
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Frost Gate",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -2734,7 +2734,7 @@ export const regents: Regent[] = [
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Beast Gate",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -2926,11 +2926,11 @@ export const regents: Regent[] = [
 				intelligence: 16,
 			},
 			quest_completion: "Complete the Trial of the Plague Gate",
-			dm_approval: true,
+			warden_approval: true,
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Plague Gate",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -3469,7 +3469,7 @@ export const regents: Regent[] = [
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Spatial Gate",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -3648,11 +3648,11 @@ export const regents: Regent[] = [
 				dexterity: 17,
 			},
 			quest_completion: "Complete the Trial of the Mimic Gate",
-			dm_approval: true,
+			warden_approval: true,
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Mimic Gate",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -4191,7 +4191,7 @@ export const regents: Regent[] = [
 		},
 		requirements: {
 			quest_completion: "Complete the Sanguine Ritual of the Regent",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},
@@ -4537,7 +4537,7 @@ export const regents: Regent[] = [
 		},
 		requirements: {
 			quest_completion: "Complete the Trial of the Star-Crusher",
-			dm_verification: true,
+			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
 		},

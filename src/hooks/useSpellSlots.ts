@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
@@ -6,6 +6,7 @@ import {
 	getCasterType,
 	getSpellSlotsPerLevel,
 } from "@/lib/characterCalculations";
+import type { JobReference } from "@/lib/characterCreation";
 import {
 	getLocalCharacterState,
 	isLocalCharacterId,
@@ -34,7 +35,7 @@ const readCachedSpellSlots = (key: string): SpellSlotData[] | null => {
 		if (typeof window === "undefined") return null;
 		const raw = window.localStorage.getItem(key);
 		if (!raw) return null;
-		const parsed = JSON.parse(raw) as unknown;
+		const parsed: unknown = JSON.parse(raw);
 		return Array.isArray(parsed) ? (parsed as SpellSlotData[]) : null;
 	} catch {
 		return null;
@@ -55,7 +56,7 @@ const writeCachedSpellSlots = (key: string, slots: SpellSlotData[]) => {
  */
 export const useSpellSlots = (
 	characterId: string,
-	job: string | null,
+	job: JobReference,
 	characterLevel: number,
 ) => {
 	return useQuery({
@@ -300,7 +301,7 @@ export const useInitializeSpellSlots = () => {
 			level,
 		}: {
 			characterId: string;
-			job: string | null;
+			job: JobReference;
 			level: number;
 		}) => {
 			if (isLocalCharacterId(characterId)) {

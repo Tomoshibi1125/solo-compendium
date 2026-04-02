@@ -26,6 +26,8 @@ interface SystemWindowProps {
 	compact?: boolean;
 	animated?: boolean;
 	id?: string;
+	headerClassName?: string;
+	onHeaderClick?: () => void;
 }
 
 export function SystemWindow({
@@ -38,6 +40,8 @@ export function SystemWindow({
 	compact = false,
 	animated = true,
 	id,
+	headerClassName,
+	onHeaderClick,
 }: SystemWindowProps) {
 	const variantStyles = {
 		default:
@@ -140,13 +144,27 @@ export function SystemWindow({
 			{title && (
 				<div
 					className={cn(
-						"px-4 py-2 border-b flex items-center gap-2 sw-title-bar",
+						"px-4 py-2 border-b flex items-center gap-2 sw-title-bar w-full text-left",
 						"font-system text-xs tracking-[0.2em] uppercase",
+						headerClassName,
 					)}
 				>
-					{/* Hexagonal status indicator */}
-					<span className="w-2 h-2 rotate-45 animate-pulse flex-shrink-0 sw-status-dot" />
-					<span className="truncate sw-title-text">{title}</span>
+					{onHeaderClick ? (
+						<button
+							type="button"
+							className="flex items-center gap-2 flex-1 text-left hover:text-primary transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-primary h-full -my-2 py-2"
+							onClick={onHeaderClick}
+						>
+							<span className="w-2 h-2 rotate-45 animate-pulse flex-shrink-0 sw-status-dot" />
+							<span className="truncate sw-title-text">{title}</span>
+						</button>
+					) : (
+						<>
+							<span className="w-2 h-2 rotate-45 animate-pulse flex-shrink-0 sw-status-dot" />
+							<span className="truncate sw-title-text flex-1">{title}</span>
+						</>
+					)}
+
 					{actions && (
 						<div className="ml-auto flex items-center gap-2">{actions}</div>
 					)}

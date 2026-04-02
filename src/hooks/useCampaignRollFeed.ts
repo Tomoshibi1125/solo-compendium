@@ -1,22 +1,11 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
-interface CampaignRollEvent {
-	id: string;
-	campaign_id: string;
-	user_id: string;
-	character_id: string | null;
-	character_name: string | null;
-	dice_formula: string;
-	result: number;
-	rolls: number[];
-	roll_type: string | null;
-	context: string | null;
-	modifiers: Record<string, unknown> | null;
-	created_at: string;
-}
+type CampaignRollEvent =
+	Database["public"]["Tables"]["campaign_roll_events"]["Row"];
 
 const LOCAL_ROLL_EVENTS_KEY = "solo-compendium.campaign-roll-events.v1";
 
@@ -56,37 +45,6 @@ export function useCampaignRollFeed(campaignId: string) {
 	const [isConnected, setIsConnected] = useState(false);
 	const { user } = useAuth();
 
-	const untypedSupabase = supabase as unknown as {
-		from: (table: string) => {
-			select: (cols: string) => {
-				eq: (
-					col: string,
-					val: string,
-				) => {
-					order: (
-						col: string,
-						opts: { ascending: boolean },
-					) => {
-						limit: (
-							num: number,
-						) => Promise<{ data: unknown[] | null; error: unknown }>;
-					};
-				};
-			};
-			insert: (data: Record<string, unknown>) => Promise<{ error: unknown }>;
-		};
-		channel: (name: string) => {
-			on: (
-				type: "postgres_changes",
-				opts: { event: string; schema: string; table: string; filter: string },
-				cb: (payload: { new: unknown }) => void,
-			) => {
-				subscribe: (cb: (status: string) => void) => RealtimeChannel;
-			};
-		};
-		removeChannel: (channel: RealtimeChannel) => void;
-	};
-
 	// Load initial events
 	useEffect(() => {
 		if (!campaignId) return;
@@ -97,7 +55,7 @@ export function useCampaignRollFeed(campaignId: string) {
 				return;
 			}
 
-			const { data, error } = await untypedSupabase
+			const { data, error } = await supabase
 				.from("campaign_roll_events")
 				.select("*")
 				.eq("campaign_id", campaignId)
@@ -105,7 +63,7 @@ export function useCampaignRollFeed(campaignId: string) {
 				.limit(50);
 
 			if (!error && data) {
-				setEvents(data as unknown as CampaignRollEvent[]);
+				setEvents(data);
 			} else {
 				setEvents(loadLocalRollEvents(campaignId));
 			}
@@ -121,7 +79,7 @@ export function useCampaignRollFeed(campaignId: string) {
 		let channel: RealtimeChannel | null = null;
 
 		const subscribe = () => {
-			channel = untypedSupabase
+			channel = supabase
 				.channel(`campaign-rolls:${campaignId}`)
 				.on(
 					"postgres_changes",
@@ -131,12 +89,12 @@ export function useCampaignRollFeed(campaignId: string) {
 						table: "campaign_roll_events",
 						filter: `campaign_id=eq.${campaignId}`,
 					},
-					(payload: { new: unknown }) => {
-						const newEvent = payload.new as unknown as CampaignRollEvent;
+					(payload) => {
+						const newEvent = payload.new as CampaignRollEvent;
 						setEvents((prev) => [newEvent, ...prev].slice(0, 50));
 					},
 				)
-				.subscribe((status: string) => {
+				.subscribe((status) => {
 					setIsConnected(status === "SUBSCRIBED");
 				});
 		};
@@ -145,7 +103,7 @@ export function useCampaignRollFeed(campaignId: string) {
 
 		return () => {
 			if (channel) {
-				untypedSupabase.removeChannel(channel);
+				supabase.removeChannel(channel);
 			}
 		};
 	}, [campaignId, user]);
@@ -167,7 +125,7 @@ export function useCampaignRollFeed(campaignId: string) {
 				...event,
 				id: crypto.randomUUID(),
 				created_at: new Date().toISOString(),
-			};
+			} as CampaignRollEvent;
 
 			if (!isSupabaseConfigured || !user) {
 				saveLocalRollEvent(fullEvent);
@@ -175,20 +133,18 @@ export function useCampaignRollFeed(campaignId: string) {
 				return;
 			}
 
-			const { error } = await untypedSupabase
-				.from("campaign_roll_events")
-				.insert({
-					campaign_id: event.campaign_id,
-					user_id: event.user_id,
-					character_id: event.character_id,
-					character_name: event.character_name,
-					dice_formula: event.dice_formula,
-					result: event.result,
-					rolls: event.rolls,
-					roll_type: event.roll_type,
-					context: event.context,
-					modifiers: event.modifiers,
-				});
+			const { error } = await supabase.from("campaign_roll_events").insert({
+				campaign_id: event.campaign_id,
+				user_id: event.user_id,
+				character_id: event.character_id,
+				character_name: event.character_name,
+				dice_formula: event.dice_formula,
+				result: event.result,
+				rolls: event.rolls,
+				roll_type: event.roll_type,
+				context: event.context,
+				modifiers: event.modifiers,
+			});
 
 			if (error) {
 				// Fallback to local

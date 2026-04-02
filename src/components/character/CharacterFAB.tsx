@@ -1,7 +1,7 @@
 import { Dice5, Moon, Plus, PlusCircle, Tent } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 import { AddEquipmentDialog } from "./AddEquipmentDialog";
 
@@ -20,14 +20,13 @@ export function CharacterFAB({
 }: CharacterFABProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [addItemOpen, setAddItemOpen] = useState(false);
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const { rollInCampaign } = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const toggleOpen = () => setIsOpen(!isOpen);
 
 	const handleCustomRoll = () => {
 		// In a full implementation, this might open a dice roller modal
-		rollInCampaign(campaignId || "local", {
+		ascendantTools.rollInCampaign(campaignId || "local", {
 			dice_formula: "1d20",
 			result: Math.floor(Math.random() * 20) + 1,
 			rolls: [Math.floor(Math.random() * 20) + 1],

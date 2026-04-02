@@ -16,26 +16,6 @@ import {
 	getCharacterCampaignId,
 } from "@/lib/sourcebookAccess";
 
-interface StaticSigil {
-	id: string;
-	name: string;
-	description: string;
-	effect_description?: string;
-	rune_type?: string;
-	rune_category?: string;
-	rune_level?: number;
-	rarity?: string;
-	effect_type?: string;
-	requires_level?: number;
-	passive_bonuses?: Json;
-	can_inscribe_on?: string[];
-	inscription_difficulty?: number;
-	image?: string | null;
-	tags?: string[];
-	source_book?: string;
-	created_at: string;
-}
-
 export function useCompendiumSigils(characterId?: string) {
 	return useQuery({
 		queryKey: ["compendium-sigils", characterId ?? "global"],
@@ -50,39 +30,51 @@ export function useCompendiumSigils(characterId?: string) {
 				const campaignId = characterId
 					? await getCharacterCampaignId(characterId)
 					: null;
-				return (await filterRowsBySourcebookAccess(
-					data ?? [],
+				return await filterRowsBySourcebookAccess(
+					data,
 					(row) => row.source_book,
 					{ campaignId },
-				)) as SigilRow[];
+				);
 			}
 
 			const { staticDataProvider } = await import(
 				"@/data/compendium/staticDataProvider"
 			);
-			const staticSigils = (await staticDataProvider.getSigils(
-				"",
-			)) as unknown as StaticSigil[];
-			return staticSigils.map((s) => ({
-				id: s.id,
-				name: s.name,
-				description: s.description,
-				effect_description: s.effect_description ?? s.description,
-				rune_type: s.rune_type ?? "utility",
-				rune_category: s.rune_category ?? "General",
-				rune_level: s.rune_level ?? 1,
-				rarity: s.rarity ?? "common",
-				effect_type: s.effect_type ?? "passive",
-				requires_level: s.requires_level ?? null,
-				passive_bonuses: s.passive_bonuses ?? {},
-				can_inscribe_on: s.can_inscribe_on ?? null,
-				inscription_difficulty: s.inscription_difficulty ?? null,
-				tags: s.tags ?? null,
-				image: s.image ?? null,
-				source_book: s.source_book ?? null,
-				created_at: s.created_at,
-				updated_at: s.created_at,
-			})) as SigilRow[];
+			const staticSigilsRaw = await staticDataProvider.getSigils("");
+			return staticSigilsRaw.map((raw) => {
+				const s = raw as typeof raw & {
+					effect_description?: string | null;
+					rune_type?: string | null;
+					rune_category?: string | null;
+					rune_level?: number | null;
+					rarity?: string | null;
+					effect_type?: string | null;
+					requires_level?: number | null;
+					passive_bonuses?: Json | null;
+					can_inscribe_on?: string[] | null;
+					inscription_difficulty?: number | null;
+				};
+				return {
+					id: s.id,
+					name: s.name,
+					description: s.description,
+					effect_description: s.effect_description ?? s.description,
+					rune_type: s.rune_type ?? "utility",
+					rune_category: s.rune_category ?? "General",
+					rune_level: s.rune_level ?? 1,
+					rarity: s.rarity ?? "common",
+					effect_type: s.effect_type ?? "passive",
+					requires_level: s.requires_level ?? null,
+					passive_bonuses: s.passive_bonuses ?? {},
+					can_inscribe_on: s.can_inscribe_on ?? null,
+					inscription_difficulty: s.inscription_difficulty ?? null,
+					tags: s.tags ?? null,
+					image: s.image ?? null,
+					source_book: s.source_book ?? null,
+					created_at: s.created_at || new Date().toISOString(),
+					updated_at: s.created_at || new Date().toISOString(),
+				};
+			});
 		},
 	});
 }

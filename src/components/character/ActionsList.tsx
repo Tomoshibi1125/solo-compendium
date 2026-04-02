@@ -1,15 +1,43 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCombatActions } from "@/hooks/useCombatActions";
+import { useEquipment } from "@/hooks/useEquipment";
+import type { DetailData } from "@/types/character";
 import { ActionCard } from "./ActionCard";
 
 export function ActionsList({
 	characterId,
 	campaignId,
+	onSelectDetail,
 }: {
 	characterId: string;
 	campaignId?: string;
+	onSelectDetail?: (detail: DetailData) => void;
 }) {
 	const { actions, isLoading } = useCombatActions(characterId);
+	const { updateEquipment } = useEquipment(characterId);
+
+	const handleUseAction = async (actionId: string, equipmentId?: string) => {
+		if (!equipmentId) return;
+
+		const action = actions.find((a) => a.id === actionId);
+		if (
+			!action ||
+			action.resourceCurrent === undefined ||
+			action.resourceCurrent <= 0
+		)
+			return;
+
+		try {
+			await updateEquipment({
+				id: equipmentId,
+				updates: {
+					charges_current: action.resourceCurrent - 1,
+				},
+			});
+		} catch (error) {
+			console.error("Failed to update resource charges:", error);
+		}
+	};
 
 	if (isLoading) {
 		return <div className="p-4 text-center">Loading actions...</div>;
@@ -18,17 +46,19 @@ export function ActionsList({
 	const categorizedActions = {
 		action: actions.filter(
 			(a) =>
-				a.activation.toLowerCase().includes("action") &&
-				!a.activation.toLowerCase().includes("bonus"),
+				(a.activation || "").toLowerCase().includes("action") &&
+				!(a.activation || "").toLowerCase().includes("bonus"),
 		),
-		bonus: actions.filter((a) => a.activation.toLowerCase().includes("bonus")),
+		bonus: actions.filter((a) =>
+			(a.activation || "").toLowerCase().includes("bonus"),
+		),
 		reaction: actions.filter((a) =>
-			a.activation.toLowerCase().includes("reaction"),
+			(a.activation || "").toLowerCase().includes("reaction"),
 		),
 		other: actions.filter(
 			(a) =>
-				!a.activation.toLowerCase().includes("action") &&
-				!a.activation.toLowerCase().includes("reaction"),
+				!(a.activation || "").toLowerCase().includes("action") &&
+				!(a.activation || "").toLowerCase().includes("reaction"),
 		),
 	};
 
@@ -71,9 +101,17 @@ export function ActionsList({
 										}
 									: undefined
 							}
+							onUse={() => handleUseAction(action.id, action.equipmentId)}
 							characterId={characterId}
 							campaignId={campaignId}
 							payload={action.payload}
+							onSelect={() =>
+								onSelectDetail?.({
+									title: action.name,
+									description: action.description || "",
+									payload: action,
+								})
+							}
 						/>
 					))}
 					{actions.length === 0 && (
@@ -102,9 +140,17 @@ export function ActionsList({
 											}
 										: undefined
 								}
+								onUse={() => handleUseAction(action.id, action.equipmentId)}
 								characterId={characterId}
 								campaignId={campaignId}
 								payload={action.payload}
+								onSelect={() =>
+									onSelectDetail?.({
+										title: action.name,
+										description: action.description || "",
+										payload: action,
+									})
+								}
 							/>
 						))}
 						{list.length === 0 && (

@@ -156,7 +156,7 @@ export const useMarketplaceItems = ({
 			const { data, error } = await query;
 			if (error) throw error;
 
-			const items = (data || []) as unknown as MarketplaceItemRecord[];
+			const items = (data || []) as MarketplaceItemRecord[];
 			if (!userId) {
 				return items.map((item) => ({
 					...item,
@@ -252,7 +252,7 @@ export const useSaveMarketplaceItem = () => {
 							requirements: payload.requirements as typeof payload.requirements,
 							compatibility:
 								payload.compatibility as typeof payload.compatibility,
-						} as unknown as Database["public"]["Tables"]["marketplace_items"]["Update"])
+						} as Database["public"]["Tables"]["marketplace_items"]["Update"])
 						.eq("id", input.id)
 						.select("*")
 						.single();
@@ -260,7 +260,7 @@ export const useSaveMarketplaceItem = () => {
 					if (error) throw error;
 					return {
 						queued: false,
-						record: data as unknown as MarketplaceItemRecord,
+						record: data as MarketplaceItemRecord,
 					};
 				}
 
@@ -273,14 +273,14 @@ export const useSaveMarketplaceItem = () => {
 						requirements: payload.requirements as typeof payload.requirements,
 						compatibility:
 							payload.compatibility as typeof payload.compatibility,
-					} as unknown as Database["public"]["Tables"]["marketplace_items"]["Insert"])
+					} as Database["public"]["Tables"]["marketplace_items"]["Insert"])
 					.select("*")
 					.single();
 
 				if (error) throw error;
 				return {
 					queued: false,
-					record: data as unknown as MarketplaceItemRecord,
+					record: data as MarketplaceItemRecord,
 				};
 			} catch (error) {
 				if (!isOfflineError(error)) {

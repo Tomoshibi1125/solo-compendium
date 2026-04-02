@@ -562,7 +562,7 @@ const PlayerTools = () => {
 								<Button
 									variant="outline"
 									className="justify-start"
-									onClick={() => navigate("/dm-tools/vtt")}
+									onClick={() => navigate("/warden-protocols/vtt")}
 								>
 									<MapIcon className="w-4 h-4 mr-2" />
 									VTT Map

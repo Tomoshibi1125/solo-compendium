@@ -20,7 +20,10 @@ import {
 	getSpellsKnownLimit,
 	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
-import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
+import {
+	getMaxPowerLevelForJobAtLevel,
+	type JobReference,
+} from "@/lib/characterCreation";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -160,12 +163,13 @@ export function getFeaturesUnlockedAtLevel(
  */
 export function canAccessPower(
 	characterLevel: number,
-	jobName: string | null | undefined,
+	job: JobReference,
 	power: PowerGateMeta,
 ): LevelGateVerdict {
+	const jobName = typeof job === "string" ? job : job?.name;
 	// Cantrips (level 0) are always accessible if the job is a caster
 	if (power.powerLevel === 0) {
-		const casterType = getCasterType(jobName);
+		const casterType = getCasterType(job);
 		if (casterType === "none") {
 			return {
 				allowed: false,
@@ -178,7 +182,7 @@ export function canAccessPower(
 		};
 	}
 
-	const maxLevel = getMaxPowerLevelForJobAtLevel(jobName, characterLevel);
+	const maxLevel = getMaxPowerLevelForJobAtLevel(job, characterLevel);
 	if (maxLevel <= 0) {
 		return {
 			allowed: false,
@@ -218,12 +222,10 @@ export function canAccessPower(
  */
 export function filterAccessiblePowers(
 	characterLevel: number,
-	jobName: string | null | undefined,
+	job: JobReference,
 	powers: PowerGateMeta[],
 ): PowerGateMeta[] {
-	return powers.filter(
-		(p) => canAccessPower(characterLevel, jobName, p).allowed,
-	);
+	return powers.filter((p) => canAccessPower(characterLevel, job, p).allowed);
 }
 
 // ---------------------------------------------------------------------------
@@ -233,7 +235,8 @@ export function filterAccessiblePowers(
 /**
  * Get ASI/Feat levels for a given job.
  */
-export function getASILevels(jobName: string | null | undefined): number[] {
+export function getASILevels(job: JobReference): number[] {
+	const jobName = typeof job === "string" ? job : job?.name;
 	if (!jobName) return STANDARD_ASI_LEVELS;
 	const normalized = jobName.trim();
 	return JOB_ASI_OVERRIDES[normalized] ?? STANDARD_ASI_LEVELS;
@@ -242,11 +245,8 @@ export function getASILevels(jobName: string | null | undefined): number[] {
 /**
  * Is this level an ASI/Feat opportunity for the given job?
  */
-export function isASILevel(
-	characterLevel: number,
-	jobName: string | null | undefined,
-): boolean {
-	return getASILevels(jobName).includes(characterLevel);
+export function isASILevel(characterLevel: number, job: JobReference): boolean {
+	return getASILevels(job).includes(characterLevel);
 }
 
 /**
@@ -254,9 +254,9 @@ export function isASILevel(
  */
 export function getASICountAtLevel(
 	characterLevel: number,
-	jobName: string | null | undefined,
+	job: JobReference,
 ): number {
-	return getASILevels(jobName).filter((l) => l <= characterLevel).length;
+	return getASILevels(job).filter((l) => l <= characterLevel).length;
 }
 
 // ---------------------------------------------------------------------------
@@ -267,20 +267,20 @@ export function getASICountAtLevel(
  * Get the maximum spell/power level a character can access.
  */
 export function getMaxAccessiblePowerLevel(
-	jobName: string | null | undefined,
+	job: JobReference,
 	characterLevel: number,
 ): number {
-	return getMaxPowerLevelForJobAtLevel(jobName, characterLevel);
+	return getMaxPowerLevelForJobAtLevel(job, characterLevel);
 }
 
 /**
  * Get spell slots available at the given level.
  */
 export function getAvailableSpellSlots(
-	jobName: string | null | undefined,
+	job: JobReference,
 	characterLevel: number,
 ): Record<number, number> {
-	const casterType = getCasterType(jobName);
+	const casterType = getCasterType(job);
 	return getSpellSlotsPerLevel(casterType, characterLevel);
 }
 
@@ -288,31 +288,31 @@ export function getAvailableSpellSlots(
  * Get cantrip limit at the given level.
  */
 export function getCantripLimit(
-	jobName: string | null | undefined,
+	job: JobReference,
 	characterLevel: number,
 ): number | null {
-	return getCantripsKnownLimit(jobName, characterLevel);
+	return getCantripsKnownLimit(job, characterLevel);
 }
 
 /**
  * Get spells-known limit at the given level (for known-casters only).
  */
 export function getSpellsKnown(
-	jobName: string | null | undefined,
+	job: JobReference,
 	characterLevel: number,
 ): number | null {
-	return getSpellsKnownLimit(jobName, characterLevel);
+	return getSpellsKnownLimit(job, characterLevel);
 }
 
 /**
  * Get spells-prepared limit at the given level.
  */
 export function getSpellsPrepared(
-	jobName: string | null | undefined,
+	job: JobReference,
 	characterLevel: number,
 	abilityModifier: number,
 ): number | null {
-	return getSpellsPreparedLimit(jobName, characterLevel, abilityModifier);
+	return getSpellsPreparedLimit(job, characterLevel, abilityModifier);
 }
 
 // ---------------------------------------------------------------------------

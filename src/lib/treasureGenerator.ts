@@ -27,7 +27,11 @@ export const GATE_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
 
 export interface TreasureResult {
 	rank: string;
-	gold: number;
+	hundreds: number; // $100 Bills (Platinum)
+	tens: number; // $10 Bills (Gold)
+	fives: number; // $5 Bills (Electrum)
+	ones: number; // $1 Bills (Silver)
+	dimes: number; // 10¢ Coins (Copper)
 	items: string[];
 	materials: string[];
 	relics: string[];
@@ -37,7 +41,11 @@ export interface TreasureResult {
 export const TREASURE_TABLES: Record<
 	string,
 	{
-		goldRange: [number, number];
+		tenRange: [number, number];
+		hundredChance: number;
+		fiveChance: number;
+		oneChance: number;
+		dimeChance: number;
 		itemChance: number;
 		materialChance: number;
 		relicChance: number;
@@ -47,131 +55,159 @@ export const TREASURE_TABLES: Record<
 	}
 > = {
 	E: {
-		goldRange: [10, 50],
+		tenRange: [10, 50],
+		hundredChance: 0,
+		fiveChance: 0.1,
+		oneChance: 0.4,
+		dimeChance: 0.7,
 		itemChance: 0.3,
 		materialChance: 0.2,
 		relicChance: 0,
 		items: [
-			"Basic Potion",
-			"Low-Grade Mana Crystal",
-			"Rusty Dagger",
-			"Simple Bandage",
-			"Torch",
-			"Rope",
+			"Vitreous Healing Draught",
+			"Low-Grade Mana Sliver",
+			"Ashen Dagger",
+			"Basic Hemostatic Wrap",
+			"Phosphorescent Flare",
+			"Reinforced Binding Cable",
 		],
-		materials: ["Common Monster Core", "Basic Ore", "Weak Mana Fragment"],
+		materials: ["Common Echo-Core", "Raw Obsidian Ore", "Weak Mana Residue"],
 		relics: [],
 	},
 	D: {
-		goldRange: [50, 200],
+		tenRange: [50, 200],
+		hundredChance: 0.05,
+		fiveChance: 0.2,
+		oneChance: 0.5,
+		dimeChance: 0.6,
 		itemChance: 0.5,
 		materialChance: 0.4,
 		relicChance: 0.1,
 		items: [
-			"Healing Potion",
-			"Mana Potion",
-			"Iron Sword",
-			"Leather Armor",
-			"Basic Relic Fragment",
-			"Mana-infused Rope",
+			"Coalesced Vitality Potion",
+			"Scintillating Mana Draught",
+			"Tempered Ferrum Blade",
+			"Laminated Hide Harness",
+			"Flickering Relic-Shard",
+			"Aether-Woven Cable",
 		],
 		materials: [
-			"Monster Core",
-			"Iron Ore",
-			"Mana Crystal Fragment",
-			"Shadow Essence",
+			"Resonant Echo-Core",
+			"Refined Ferrum Ore",
+			"Crystallized Mana Fragment",
+			"Raw Umbral-Thin",
 		],
-		relics: ["Broken Relic Fragment"],
+		relics: ["Fractured Echo-Relic"],
 	},
 	C: {
-		goldRange: [200, 500],
+		tenRange: [200, 500],
+		hundredChance: 0.1,
+		fiveChance: 0.3,
+		oneChance: 0.6,
+		dimeChance: 0.4,
 		itemChance: 0.6,
 		materialChance: 0.5,
 		relicChance: 0.15,
 		items: [
-			"Greater Healing Potion",
-			"Greater Mana Potion",
-			"Steel Weapon",
-			"Chain Armor",
-			"Relic Fragment",
-			"Enchanted Item",
+			"Greater Vitality Catalyst",
+			"Greater Prismatic Mana Phial",
+			"Cold-Forged Steel Arming",
+			"Reinforced Brigandine",
+			"Stable Relic-Shard",
+			"Rift-Touched Trinket",
 		],
 		materials: [
-			"Greater Monster Core",
-			"Steel Ingot",
-			"Refined Mana Crystal",
-			"Shadow Essence (Purified)",
-			"Rift Fragment",
+			"Potent Echo-Core",
+			"Cold-Forged Steel Ingot",
+			"Refined Prismatic Crystal",
+			"Purified Umbral-Thin",
+			"Isolated Rift-Fleck",
 		],
-		relics: ["Fragmented Relic", "Relic Shard"],
+		relics: ["Pristine Echo-Shard", "Dormant Relic-Core"],
 	},
 	B: {
-		goldRange: [500, 1500],
+		tenRange: [500, 1500],
+		hundredChance: 0.2,
+		fiveChance: 0.4,
+		oneChance: 0.5,
+		dimeChance: 0.2,
 		itemChance: 0.7,
 		materialChance: 0.6,
 		relicChance: 0.25,
 		items: [
-			"Superior Healing Potion",
-			"Superior Mana Potion",
-			"Masterwork Weapon",
-			"Plate Armor",
-			"Relic Component",
-			"Rare Enchanted Item",
+			"Sovereign Restoration Serum",
+			"Apex Mana Tincture",
+			"Vanguard's Masterwork Blade",
+			"Aether-Infused Plate",
+			"Resonating Relic-Component",
+			"High-Frequency Arcane Lens",
 		],
 		materials: [
-			"Elite Monster Core",
-			"Mithril Ingot",
-			"Pure Mana Crystal",
-			"Shadow Essence (Crystallized)",
-			"Rift Fragment (Large)",
+			"Elite Echo-Core",
+			"Mithril-Fused Ingot",
+			"Pure Aether-Crystal",
+			"Hyper-Condensed Umbral-Thin",
+			"Stable Rift-Shard",
 		],
-		relics: ["Partial Relic", "Relic Core"],
+		relics: ["Integrated Relic-Matrix", "Pulsing Relic-Heart"],
 	},
 	A: {
-		goldRange: [1500, 5000],
+		tenRange: [1500, 5000],
+		hundredChance: 0.4,
+		fiveChance: 0.5,
+		oneChance: 0.3,
+		dimeChance: 0.1,
 		itemChance: 0.8,
 		materialChance: 0.7,
 		relicChance: 0.4,
 		items: [
-			"Ultimate Healing Potion",
-			"Ultimate Mana Potion",
-			"Legendary Weapon Blueprint",
-			"Legendary Armor Blueprint",
-			"Relic Fragment (Large)",
-			"Epic Enchanted Item",
+			"Architect's Vitality Catalyst",
+			"Architect's Mana Infusion",
+			"Singularity Blade Schematic",
+			"Null-Field Armor Schematic",
+			"Pristine Relic-Assembly",
+			"Umbral Null-Relic",
 		],
 		materials: [
-			"Boss Monster Core",
-			"Adamantite Ingot",
-			"Perfect Mana Crystal",
-			"Shadow Essence (Perfect)",
-			"Rift Fragment (Massive)",
+			"Monarch-Grade Echo-Core",
+			"Adamantine-Fused Ingot",
+			"Perfect Aether-Crystal",
+			"Singularity-Grade Umbral-Thin",
+			"Massive Rift-Core",
 			"Prime Architect's Blessing Fragment",
 		],
-		relics: ["Near-Complete Relic", "Relic Heart"],
+		relics: ["Near-Synchronized Relic", "Radiant Relic-Soul"],
 	},
 	S: {
-		goldRange: [5000, 20000],
+		tenRange: [5000, 20000],
+		hundredChance: 0.8,
+		fiveChance: 0.6,
+		oneChance: 0.4,
+		dimeChance: 0.2,
 		itemChance: 1.0,
 		materialChance: 0.9,
 		relicChance: 0.6,
 		items: [
-			"Divine Healing Elixir",
-			"Divine Mana Elixir",
-			"Artifact Weapon Blueprint",
-			"Artifact Armor Blueprint",
-			"Complete Relic Fragment",
-			"Legendary Enchanted Item",
+			"Ascendant's Divine Elixir",
+			"Monarch's Mana Singularity",
+			"Ethereal Artifact Schematic",
+			"Void-Reaper Armor Schematic",
+			"Omni-Relic Synthesizer",
+			"Sovereign Artifact Cluster",
 		],
 		materials: [
-			"S-Rank Monster Core",
-			"Divine Metal",
-			"Divine Mana Crystal",
-			"Shadow Essence (Divine)",
-			"Rift Core Fragment",
-			"Prime Architect's Blessing",
+			"God-Tier Monarch Core",
+			"Divine Aether-Metal",
+			"Infinite Mana Singularity",
+			"Void-Grade Umbral-Thin",
+			"Rift-Genesis Core",
+			"Prime Architect's Total Blessing",
 		],
-		relics: ["Complete Relic", "Relic Soul", "Umbral Regent Fragment"],
+		relics: [
+			"Sovereign Omni-Relic",
+			"Monarch's Fragmented Soul-Core",
+			"Umbral Regent Protocol",
+		],
 	},
 };
 
@@ -180,7 +216,11 @@ export function generateTreasure(rank: string): TreasureResult {
 	if (!table) {
 		return {
 			rank,
-			gold: 0,
+			hundreds: 0,
+			tens: 0,
+			fives: 0,
+			ones: 0,
+			dimes: 0,
 			items: [],
 			materials: [],
 			relics: [],
@@ -188,10 +228,19 @@ export function generateTreasure(rank: string): TreasureResult {
 		};
 	}
 
-	const gold = Math.floor(
-		Math.random() * (table.goldRange[1] - table.goldRange[0] + 1) +
-			table.goldRange[0],
+	const tens = Math.floor(
+		Math.random() * (table.tenRange[1] - table.tenRange[0] + 1) +
+			table.tenRange[0],
 	);
+
+	const hundreds =
+		Math.random() < table.hundredChance ? Math.floor(Math.random() * 5) + 1 : 0;
+	const fives =
+		Math.random() < table.fiveChance ? Math.floor(Math.random() * 10) + 1 : 0;
+	const ones =
+		Math.random() < table.oneChance ? Math.floor(Math.random() * 20) + 5 : 0;
+	const dimes =
+		Math.random() < table.dimeChance ? Math.floor(Math.random() * 50) + 10 : 0;
 
 	const items: string[] = [];
 	const numItems =
@@ -234,9 +283,17 @@ export function generateTreasure(rank: string): TreasureResult {
 	const displayMaterials = materials.map(formatRegentVernacular);
 	const displayRelics = relics.map(formatRegentVernacular);
 
-	descriptions.push(
-		`Rift Rank ${rank} treasure hoard containing ${gold} gold pieces.`,
-	);
+	let currencyDesc = `Rift Rank ${rank} treasure hoard containing $${tens * 10} USD (in $10 Bills).`;
+	const extras = [];
+	if (hundreds > 0) extras.push(`${hundreds} x $100 Bills`);
+	if (fives > 0) extras.push(`${fives} x $5 Bills`);
+	if (ones > 0) extras.push(`${ones} x $1 Bills`);
+	if (dimes > 0) extras.push(`${dimes} x 10¢ Coins`);
+
+	if (extras.length > 0) {
+		currencyDesc += ` Additional denominations: ${extras.join(", ")}.`;
+	}
+	descriptions.push(currencyDesc);
 
 	if (displayItems.length > 0) {
 		descriptions.push(`Items found: ${displayItems.join(", ")}.`);
@@ -252,13 +309,13 @@ export function generateTreasure(rank: string): TreasureResult {
 		);
 	}
 
-	if (items.length === 0 && materials.length === 0 && relics.length === 0) {
-		descriptions.push("Only gold was found in this hoard.");
-	}
-
 	return {
 		rank,
-		gold,
+		hundreds,
+		tens,
+		fives,
+		ones,
+		dimes,
 		items: displayItems,
 		materials: displayMaterials,
 		relics: displayRelics,

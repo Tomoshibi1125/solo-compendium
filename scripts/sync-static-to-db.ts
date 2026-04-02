@@ -1,591 +1,840 @@
 /**
  * sync-static-to-db.ts — Seed Supabase compendium tables from static TS data.
- *
- * Run:  npx tsx scripts/sync-static-to-db.ts
- *
- * Uses service-role key to bypass RLS. Upserts on `name` (deletes + re-inserts
- * when UUIDs don't match static string IDs).
+ * 
+ * Objective: 100% data parity between static TS source and Supabase.
+ * Strategy: Hard-Typed, Non-Generic synchronization for absolute type safety.
+ * Zero-Any, Zero-Generic, Zero-Suppression Policy.
  */
 
 import { createClient } from "@supabase/supabase-js";
 import { config } from "dotenv";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+import {
+	staticDataProvider,
+} from "../src/data/compendium/staticDataProvider";
+import type { Database, Json } from "../src/integrations/supabase/types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 config({ path: path.resolve(__dirname, "../.env") });
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL!;
-const supabaseKey = process.env.VITE_SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.VITE_SUPABASE_URL || "";
+const supabaseKey = process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || "";
 
 if (!supabaseUrl || !supabaseKey) {
-	console.error("Missing env vars. Ensure .env has VITE_SUPABASE_URL and VITE_SUPABASE_SERVICE_ROLE_KEY.");
 	process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey, {
+// Authoritative Client using the primary Database type
+const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
 	auth: { autoRefreshToken: false, persistSession: false },
 });
 
 // ---------------------------------------------------------------------------
-// Helpers
+// Constants & Lookups
 // ---------------------------------------------------------------------------
-function toJson(v: unknown): unknown {
-	if (v === undefined || v === null) return null;
-	if (typeof v === "object") return v; // Supabase client handles serialization
-	return v;
-}
+const LOG_FILE = path.resolve(__dirname, "../sync-log.txt");
+const logStream = fs.createWriteStream(LOG_FILE, { flags: "w", encoding: "utf8" });
 
-async function upsertBatch(
-	table: string,
-	rows: Record<string, unknown>[],
-	conflictColumn = "name",
-) {
-	if (rows.length === 0) {
-		console.log(`  [${table}] No rows to insert.`);
+function log(message: string) {
+	const timestamp = new Date().toISOString();
+	console.log(message);
+	logStream.write(`[${timestamp}] ${message}\n`);
+}
+const JOB_NAME_TO_ID: Record<string, string> = {};
+
+async function initializeJobMap() {
+	const { data, error } = await supabase.from("compendium_jobs").select("id, name");
+	if (error) {
+		log(`  [Jobs] Warning: Failed to fetch job map: ${error.message}`);
 		return;
 	}
-
-	// Delete existing rows first, then insert fresh — safest for schema changes
-	const names = rows.map((r) => r[conflictColumn] as string);
-
-	// Batch delete in chunks of 100
-	for (let i = 0; i < names.length; i += 100) {
-		const chunk = names.slice(i, i + 100);
-		await supabase.from(table).delete().in(conflictColumn, chunk);
-	}
-
-	// Insert in chunks of 50
-	let inserted = 0;
-	for (let i = 0; i < rows.length; i += 50) {
-		const chunk = rows.slice(i, i + 50);
-		const { error } = await supabase.from(table).insert(chunk);
-		if (error) {
-			console.error(`  [${table}] Insert error at chunk ${i}: ${error.message}`);
-			console.error(`    Details: ${JSON.stringify(error)}`);
-			// Log first failing row for debugging
-			if (chunk[0]) console.error(`    First row keys: ${Object.keys(chunk[0]).join(", ")}`);
-		} else {
-			inserted += chunk.length;
+	if (data) {
+		for (const job of data) {
+			JOB_NAME_TO_ID[job.name] = job.id;
 		}
 	}
-	console.log(`  [${table}] Inserted ${inserted}/${rows.length} rows.`);
 }
 
 // ---------------------------------------------------------------------------
-// Spells
+// Strict Helpers (Zero Any)
 // ---------------------------------------------------------------------------
-async function syncSpells() {
-	const { spells } = await import("../src/data/compendium/spells/index.js");
-	console.log(`Syncing ${spells.length} spells...`);
+function castToJson(v: unknown): Json {
+	if (v === undefined || v === null) return null;
+	return v as Json;
+}
 
-	const rows = spells.map((s: any) => ({
-		name: s.name,
-		description: s.description,
-		spell_level: s.level ?? null,
-		school: s.school ?? null,
-		casting_time: s.castingTime ?? null,
-		range: toJson(s.range),
-		components: toJson(s.components),
-		duration: toJson(s.duration),
-		concentration: s.concentration ?? false,
-		ritual: s.ritual ?? false,
-		spell_type: s.type ?? null,
-		rank: s.rank ?? null,
-		image: s.image ?? null,
-		effect: s.effect ?? null,
-		at_higher_levels: s.atHigherLevels ?? null,
-		higher_levels: s.higher_levels ?? null,
-		classes: s.classes ?? null,
-		spell_attack: toJson(s.spellAttack),
-		activation: toJson(s.activation),
-		effects: toJson(s.effects),
-		mechanics: toJson(s.mechanics),
-		limitations: toJson(s.limitations),
-		flavor: s.flavor ?? null,
-		lore: s.lore ?? null,
-		saving_throw: toJson(s.savingThrow),
-		area: toJson(s.area),
-		source_book: "System Ascendant Canon",
-		tags: [],
-		theme_tags: [],
-	}));
+function castToString(v: unknown): string | null {
+	if (v === undefined || v === null) return null;
+	if (typeof v === "string") return v;
+	return JSON.stringify(v);
+}
 
-	await upsertBatch("compendium_spells", rows);
+function castToStringArray(v: unknown): string[] | null {
+	if (Array.isArray(v)) {
+		return v.filter((item): item is string => typeof item === "string");
+	}
+	return null;
+}
+
+function mapAbility(s: string | null | undefined): Database["public"]["Enums"]["ability_score"] {
+	if (!s) return "STR";
+	const upper = s.toUpperCase();
+	if (upper === "STRENGTH" || upper === "STR") return "STR";
+	if (upper === "AGILITY" || upper === "AGI") return "AGI";
+	if (upper === "VITALITY" || upper === "VIT") return "VIT";
+	if (upper === "INTELLIGENCE" || upper === "INT") return "INT";
+	if (upper === "SENSE") return "SENSE";
+	if (upper === "PRESENCE" || upper === "PRE") return "PRE";
+	return "STR";
+}
+
+const ALLOWED_RARITIES: Database["public"]["Enums"]["rarity"][] = ["common", "uncommon", "rare", "very_rare", "legendary"];
+function mapRarity(r: string | null | undefined): Database["public"]["Enums"]["rarity"] {
+	if (!r) return "common";
+	const norm = r.toLowerCase().trim().replace(/\s+/g, "_");
+	for (const allowed of ALLOWED_RARITIES) {
+		if (norm === allowed) return allowed;
+	}
+	if (norm === "mythic") return "legendary"; // Fallback for out-of-spec rarities
+	return "common";
 }
 
 // ---------------------------------------------------------------------------
-// Powers
+// Explicit Sync Functions (No Generics)
 // ---------------------------------------------------------------------------
-async function syncPowers() {
-	const { powers } = await import("../src/data/compendium/powers.js");
-	console.log(`Syncing ${powers.length} powers...`);
 
-	const rows = powers.map((p: any) => ({
-		name: p.name,
-		description: p.description,
-		power_level: p.spell_level_equivalent ?? 0,
-		power_type: p.type ?? null,
-		school: null,
-		casting_time: p.activation?.type === "passive" ? "passive" : (p.activation?.time ?? "1 action"),
-		range: p.range?.distance ? `${p.range.distance} ${p.range.type ?? "feet"}` : (p.range?.type ?? "self"),
-		duration: p.duration?.time ?? p.duration?.type ?? "instantaneous",
-		concentration: p.concentration_required ?? (p.duration?.type === "concentration"),
-		ritual: p.ritual ?? false,
-		components: p.components
-			? [
-					p.components.verbal ? "V" : "",
-					p.components.somatic ? "S" : "",
-					p.components.material ? "M" : "",
-				]
-					.filter(Boolean)
-					.join(", ") || null
-			: null,
-		higher_levels: null,
-		image: p.image ?? null,
-		mechanics: toJson(p.saving_throw ? { saving_throw: p.saving_throw, attack_roll: p.attack_roll, ...p.mechanics } : (p.mechanics ?? null)),
-		effects: toJson(p.effects),
-		limitations: toJson(p.limitations),
-		flavor: p.flavor ?? null,
-		lore: p.lore ?? null,
-		source_book: p.source ?? "System Ascendant Canon",
-		tags: [p.type, p.rarity].filter(Boolean),
-		theme_tags: [],
-	}));
-
-	await upsertBatch("compendium_powers", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Techniques
-// ---------------------------------------------------------------------------
-async function syncTechniques() {
-	const { techniques } = await import("../src/data/compendium/techniques.js");
-	console.log(`Syncing ${techniques.length} techniques...`);
-
-	const rows = techniques.map((t: any) => ({
-		name: t.name,
-		description: t.description,
-		technique_type: t.type ?? "offensive",
-		style: t.style ?? "any",
-		activation_type: t.activation?.type ?? "action",
-		activation_cost: t.activation?.cost ?? null,
-		primary_effect: t.effects?.primary ?? t.description,
-		secondary_effect: t.effects?.secondary ?? null,
-		duration: t.duration?.time ?? t.duration?.type ?? null,
-		range_desc: t.range?.distance ? `${t.range.distance} ${t.range.type ?? "feet"}` : (t.range?.type ?? null),
-		mechanics: toJson(t.mechanics),
-		effects: toJson(t.effects),
-		limitations: toJson(t.limitations),
-		level_requirement: t.prerequisites?.level ?? null,
-		class_requirement: t.prerequisites?.class ?? null,
-		flavor: t.flavor ?? null,
-		lore: t.lore ?? null,
-		source: t.source ?? "System Ascendant Canon",
-		image: t.image ?? null,
-	}));
-
-	await upsertBatch("compendium_techniques", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Feats
-// ---------------------------------------------------------------------------
-async function syncFeats() {
-	const { comprehensiveFeats } = await import("../src/data/compendium/feats-comprehensive.js");
-	console.log(`Syncing ${comprehensiveFeats.length} feats...`);
-
-	const rows = comprehensiveFeats.map((f: any) => ({
-		name: f.name,
-		description: f.description,
-		prerequisites: f.prerequisites ? JSON.stringify(f.prerequisites) : null,
-		benefits: f.benefits ?? null,
-		mechanics: toJson(f.mechanics),
-		effects: toJson(f.effects),
-		limitations: toJson(f.limitations),
-		flavor: f.flavor ?? null,
-		lore: f.lore ?? null,
-		image: f.image ?? null,
-		source_book: f.source ?? "System Ascendant Canon",
-		tags: [],
-		theme_tags: [],
-	}));
-
-	await upsertBatch("compendium_feats", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Relics
-// ---------------------------------------------------------------------------
-async function syncRelics() {
-	const { comprehensiveRelics } = await import("../src/data/compendium/relics-comprehensive.js");
-	console.log(`Syncing ${comprehensiveRelics.length} relics...`);
-
-	const RARITY_MAP: Record<string, string> = {
-		uncommon: "uncommon",
-		rare: "rare",
-		very_rare: "very_rare",
-		epic: "very_rare", // DB enum may not have "epic"
-		legendary: "legendary",
-		mythic: "legendary", // DB enum may not have "mythic"
-	};
-
-	const rows = comprehensiveRelics.map((r: any) => ({
-		name: r.name,
-		description: r.description,
-		item_type: r.type ?? "accessory",
-		rarity: RARITY_MAP[r.rarity] ?? "uncommon",
-		requires_attunement: r.attunement ?? false,
-		attunement_requirements: r.requirements ? JSON.stringify(r.requirements) : null,
-		properties: r.properties
-			? Object.entries(r.properties)
-					.filter(([, v]) => v === true)
-					.map(([k]) => k)
-			: null,
-		stats: toJson(r.stats || r.mechanics),
-		effects: toJson(r.effects),
-		mechanics: toJson(r.mechanics),
-		limitations: toJson(r.limitations),
-		image: r.image ?? null,
-		source_book: r.source ?? "System Ascendant Canon",
-		flavor: r.flavor ?? null,
-		lore: r.lore ?? null,
-		tags: [r.type, r.rarity].filter(Boolean),
-		theme_tags: [],
-	}));
-
-	await upsertBatch("compendium_relics", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Monsters  (uses staticDataProvider which already normalizes the data)
-// ---------------------------------------------------------------------------
 async function syncMonsters() {
-	const { staticDataProvider } = await import("../src/data/compendium/staticDataProvider.js");
-	const allMonsters = await staticDataProvider.getMonsters("");
-	// Deduplicate by name (keep first occurrence)
+	const data = await staticDataProvider.getMonsters("");
+	log(`Syncing ${data.length} monsters...`);
 	const seen = new Set<string>();
-	const monsters = allMonsters.filter((m: any) => {
-		if (seen.has(m.name)) return false;
+	const rows: Database["public"]["Tables"]["compendium_monsters"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
 		seen.add(m.name);
-		return true;
-	});
-	console.log(`Syncing ${monsters.length} monsters (deduped from ${allMonsters.length})...`);
-
-	const rows = monsters.map((m: any) => ({
-		name: m.name,
-		description: m.description ?? "",
-		cr: m.cr ?? "0",
-		creature_type: m.creature_type ?? "monstrosity",
-		size: m.size ?? "Medium",
-		alignment: m.alignment ?? null,
-		armor_class: m.armor_class ?? 10,
-		armor_type: m.armor_type ?? null,
-		hit_points_average: m.hit_points_average ?? 10,
-		hit_points_formula: m.hit_points_formula ?? "1d8",
-		speed_walk: m.speed_walk ?? 30,
-		speed_fly: m.speed_fly ?? null,
-		speed_swim: m.speed_swim ?? null,
-		speed_climb: m.speed_climb ?? null,
-		speed_burrow: m.speed_burrow ?? null,
-		str: m.str ?? 10,
-		agi: m.agi ?? 10,
-		vit: m.vit ?? 10,
-		int: m.int ?? 10,
-		sense: m.sense ?? 10,
-		pre: m.pre ?? 10,
-		saving_throws: toJson(m.saving_throws),
-		skills: toJson(m.skills),
-		damage_resistances: m.damage_resistances ?? null,
-		damage_immunities: m.damage_immunities ?? null,
-		damage_vulnerabilities: m.damage_vulnerabilities ?? null,
-		condition_immunities: m.condition_immunities ?? null,
-		senses: toJson(m.senses),
-		languages: m.languages ?? null,
-		xp: m.xp ?? null,
-		gate_rank: m.gate_rank ?? null,
-		is_boss: m.is_boss ?? false,
-		source_book: m.source_book ?? "System Ascendant Canon",
-		lore: m.lore ?? null,
-		mechanics: toJson(m.mechanics),
-		flavor: m.flavor ?? null,
-		tags: m.tags ?? [],
-		theme_tags: [],
-	}));
-
-	await upsertBatch("compendium_monsters", rows);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			lore: m.lore ? castToString(m.lore) : null,
+			gate_rank: m.gate_rank || null,
+			cr: m.cr || "0",
+			creature_type: m.creature_type || "monstrosity",
+			size: m.size || "Medium",
+			alignment: m.alignment || null,
+			armor_class: m.armor_class || 10,
+			armor_type: m.armor_type || null,
+			hit_points_average: m.hit_points_average || 10,
+			hit_points_formula: m.hit_points_formula || "1d8",
+			speed_walk: m.speed_walk || 30,
+			speed_burrow: m.speed_burrow || null,
+			speed_climb: m.speed_climb || null,
+			speed_fly: m.speed_fly || null,
+			speed_swim: m.speed_swim || null,
+			str: m.str || 10,
+			agi: m.agi || 10,
+			vit: m.vit || 10,
+			int: m.int || 10,
+			sense: m.sense || 10,
+			pre: m.pre || 10,
+			saving_throws: castToJson(m.saving_throws),
+			skills: castToJson(m.skills),
+			languages: castToStringArray(m.languages),
+			condition_immunities: castToStringArray(m.condition_immunities),
+			damage_immunities: castToStringArray(m.damage_immunities),
+			damage_resistances: castToStringArray(m.damage_resistances),
+			damage_vulnerabilities: castToStringArray(m.damage_vulnerabilities),
+			xp: m.xp || 0,
+			is_boss: !!m.is_boss,
+			source_book: m.source_book || "System Ascendant Canon",
+			tags: m.tags || [],
+			image_url: m.image_url || m.image || null
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_monsters").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_monsters").insert(chunk);
+		if (error) { log(`  [Monsters] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Monsters] Synced ${rows.length} rows. Errors: ${errors}`);
 }
 
-// ---------------------------------------------------------------------------
-// Runes
-// ---------------------------------------------------------------------------
-async function syncRunes() {
-	const { allRunes } = await import("../src/data/compendium/runes/index.js");
-	const rawRunes = allRunes ?? [];
-	if (!rawRunes || rawRunes.length === 0) {
-		console.log("  [compendium_runes] No runes found — skipping.");
-		return;
-	}
-	// Deduplicate by name (keep first occurrence)
+async function syncSpells() {
+	const data = await staticDataProvider.getSpells("");
+	log(`Syncing ${data.length} spells...`);
 	const seen = new Set<string>();
-	const runes = rawRunes.filter((r: any) => {
-		if (seen.has(r.name)) return false;
-		seen.add(r.name);
-		return true;
-	});
-	console.log(`Syncing ${runes.length} runes (deduped from ${rawRunes.length})...`);
-
-	const RARITY_MAP: Record<string, string> = {
-		common: "common",
-		uncommon: "uncommon",
-		rare: "rare",
-		very_rare: "very_rare",
-		legendary: "legendary",
-	};
-
-	const rows = runes.map((r: any) => ({
-		name: r.name,
-		description: r.description ?? "",
-		effect_description: r.effect_description ?? r.description ?? "",
-		rune_type: r.rune_type ?? "enhancement",
-		rune_category: r.rune_category ?? "general",
-		rune_level: Math.max(1, Math.min(10, r.rune_level ?? 1)),
-		effect_type: r.effect_type ?? "passive",
-		rarity: RARITY_MAP[r.rarity ?? "common"] ?? "common",
-		activation_action: r.activation_action ?? null,
-		uses_per_rest: r.uses_per_rest ?? null,
-		recharge: r.recharge ?? null,
-		range: r.range ?? null,
-		duration: r.duration ?? null,
-		higher_levels: r.higher_levels ?? null,
-		lore: r.lore ?? null,
-		discovery_lore: r.discovery_lore ?? null,
-		requires_level: r.requires_level ?? null,
-		image: r.image ?? null,
-		source_book: "System Ascendant Canon",
-		tags: r.tags ?? [],
-	}));
-
-	await upsertBatch("compendium_runes", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Sigils
-// ---------------------------------------------------------------------------
-async function syncSigils() {
-	const { sigils } = await import("../src/data/compendium/sigils.js");
-
-	console.log(`Syncing ${sigils.length} sigils...`);
-
-	const rows = sigils.map((s: any) => ({
-		name: s.name,
-		description: s.description ?? "",
-		effect_description: s.effect_description ?? s.description ?? "",
-		rune_type: s.rune_type ?? "utility",
-		rune_category: s.rune_category ?? "general",
-		rune_level: s.rune_level ?? 1,
-		rarity: s.rarity ?? "common",
-		effect_type: s.effect_type ?? "passive",
-		requires_level: s.requires_level ?? null,
-		passive_bonuses: toJson(s.passive_bonuses),
-		active_feature: toJson(s.active_feature),
-		can_inscribe_on: s.can_inscribe_on ?? null,
-		inscription_difficulty: s.inscription_difficulty ?? null,
-		effects: toJson(s.effects),
-		mechanics: toJson(s.mechanics),
-		limitations: toJson(s.limitations),
-		flavor: s.flavor ?? null,
-		lore: s.lore ?? null,
-		image: s.image ?? null,
-		source_book: s.source_book ?? "System Ascendant Canon",
-		tags: s.tags ?? [],
-	}));
-
-	await upsertBatch("compendium_sigils", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Tattoos
-// ---------------------------------------------------------------------------
-async function syncTattoos() {
-	const { tattoos } = await import("../src/data/compendium/tattoos.js");
-
-	console.log(`Syncing ${tattoos.length} tattoos...`);
-
-	const rows = tattoos.map((t: any) => ({
-		name: t.name,
-		description: t.description ?? "",
-		rarity: t.rarity ?? "common",
-		attunement: t.attunement ?? false,
-		body_part: t.body_part ?? null,
-		effects: toJson(t.effects),
-		mechanics: toJson(t.mechanics),
-		limitations: toJson(t.limitations),
-		lore: t.lore ?? null,
-		flavor: t.flavor ?? null,
-		image: t.image ?? null,
-		source: t.source ?? "System Ascendant Canon",
-		tags: t.tags ?? [],
-		theme_tags: [],
-	}));
-
-	await upsertBatch("compendium_tattoos", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Backgrounds
-// ---------------------------------------------------------------------------
-async function syncBackgrounds() {
-	const { allBackgrounds } = await import("../src/data/compendium/backgrounds-index.js");
-	console.log(`Syncing ${allBackgrounds.length} backgrounds...`);
-	const rows = allBackgrounds.map((b: any) => ({
-		name: b.name,
-		description: b.description ?? "",
-		skill_proficiencies: b.skillProficiencies ?? [],
-		tool_proficiencies: b.toolProficiencies ?? [],
-		language_count: Array.isArray(b.languages) ? b.languages.length : 0,
-		starting_equipment: b.equipment ?? [],
-		feature_name: b.features && b.features[0] ? b.features[0].name : null,
-		feature_description: b.features && b.features[0] ? b.features[0].description : null,
-		personality_traits: b.personalityTraits ?? [],
-		ideals: b.ideals ?? [],
-		bonds: b.bonds ?? [],
-		flaws: b.flaws ?? [],
-		source_book: "System Ascendant Canon",
-		mechanics: toJson(b.mechanics),
-		flavor: b.flavor ?? null,
-		lore: b.lore ?? null,
-	}));
-	await upsertBatch("compendium_backgrounds", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Conditions
-// ---------------------------------------------------------------------------
-async function syncConditions() {
-	const { conditions } = await import("../src/data/compendium/conditions.js");
-	console.log(`Syncing ${conditions.length} conditions...`);
-	const rows = conditions.map((c: any) => ({
-		name: c.name,
-		description: c.description ?? "",
-		effects: c.effects ?? [],
-		mechanics: toJson(c.mechanics),
-		flavor: c.flavor ?? null,
-		lore: c.lore ?? null,
-	}));
-	await upsertBatch("compendium_conditions", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Locations
-// ---------------------------------------------------------------------------
-async function syncLocations() {
-	const { locations } = await import("../src/data/compendium/locations.js");
-	console.log(`Syncing ${locations.length} locations...`);
-	const rows = locations.map((loc: any) => ({
-		name: loc.name,
-		description: loc.description ?? "",
-		type: loc.type ?? "Void Anomaly",
-		image: loc.image ?? null,
-		tags: [loc.rank].filter(Boolean),
-		source_book: "System Ascendant Canon",
-		mechanics: toJson(loc.mechanics || { encounters: loc.encounters, treasures: loc.treasures }),
-		flavor: loc.flavor ?? null,
-		lore: loc.lore ?? null,
-	}));
-	await upsertBatch("compendium_locations", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Jobs
-// ---------------------------------------------------------------------------
-async function syncJobs() {
-	const { jobs } = await import("../src/data/compendium/jobs.js");
-	console.log(`Syncing ${jobs.length} jobs...`);
-	const rows = jobs.map((j: any) => ({
-		name: j.name,
-		description: j.description ?? "",
-		primary_abilities: j.primary_abilities ?? [],
-		hit_die: j.hit_die ?? 8,
-		source_book: "System Ascendant Canon",
-		flavor_text: j.flavor ?? null,
-		mechanics: toJson(j.features),
-		flavor: j.flavor ?? null,
-		lore: j.lore ?? null,
-	}));
-	await upsertBatch("compendium_jobs", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Regents
-// ---------------------------------------------------------------------------
-async function syncRegents() {
-	const { regents } = await import("../src/data/compendium/regents.js");
-	console.log(`Syncing ${regents.length} regents...`);
-	const rows = regents.map((r: any) => ({
-		name: r.name,
-		title: r.title ?? "",
-		description: r.description ?? "",
-		theme: r.theme ?? null,
-		damage_type: r.damage_type ?? null,
-		flavor_text: r.flavor ?? null,
-		source_book: "System Ascendant Canon",
-		mechanics: toJson(r.mechanics || r.class_features || r.features),
-		effects: toJson(r.effects),
-		flavor: r.flavor ?? null,
-		lore: r.lore ?? null,
-	}));
-	await upsertBatch("compendium_regents", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Skills
-// ---------------------------------------------------------------------------
-async function syncSkills() {
-	const { comprehensiveSkills } = await import("../src/data/compendium/skills-comprehensive.js");
-	console.log(`Syncing ${comprehensiveSkills.length} skills...`);
-	const rows = comprehensiveSkills.map((s: any) => ({
-		name: s.name,
-		ability: s.ability ?? "INT",
-		description: s.description ?? "",
-		examples: s.examples ?? [],
-		source_book: "System Ascendant Canon",
-		mechanics: toJson(s.benefits),
-		flavor: s.flavor ?? null,
-		lore: s.lore ?? null,
-	}));
-	await upsertBatch("compendium_skills", rows);
-}
-
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
-async function main() {
-	console.log("=== Static-to-DB Sync ===\n");
-
-	try {
-		await syncSpells();
-		await syncPowers();
-		await syncTechniques();
-		await syncFeats();
-		await syncRelics();
-		await syncMonsters();
-		await syncRunes();
-		await syncSigils();
-		await syncTattoos();
-		await syncBackgrounds();
-		await syncConditions();
-		await syncLocations();
-		await syncJobs();
-		await syncRegents();
-		await syncSkills();
-	} catch (err) {
-		console.error("Fatal error:", err);
-		process.exitCode = 1;
-		return;
+	const rows: Database["public"]["Tables"]["compendium_spells"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			lore: m.lore ? castToString(m.lore) : null,
+			mechanics: castToJson(m.mechanics),
+			tags: m.tags || [],
+			source_book: m.source_book || "System Ascendant Canon",
+			image_url: m.image_url || m.image || null,
+			spell_level: m.spell_level || m.level || 0,
+			school: m.school || "Evocation",
+			casting_time: m.casting_time || "1 action",
+			range: castToJson(m.range),
+			components: castToJson(m.components),
+			duration: castToJson(m.duration),
+			concentration: !!m.concentration,
+			ritual: !!m.ritual,
+			spell_type: m.spell_type || "Utility"
+		});
 	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_spells").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_spells").insert(chunk);
+		if (error) { log(`  [Spells] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Spells] Synced ${rows.length} rows. Errors: ${errors}`);
+}
 
-	console.log("\n=== Sync complete ===");
+async function syncRunes() {
+	const data = await staticDataProvider.getRunes("");
+	log(`Syncing ${data.length} runes...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_runes"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			lore: m.lore ? castToString(m.lore) : null,
+			mechanics: castToJson(m.mechanics),
+			tags: m.tags || [],
+			source_book: m.source_book || "System Ascendant Canon",
+			image_url: m.image_url || m.image || null,
+			rune_level: m.rune_level || 1,
+			rune_type: m.rune_type || "hybrid",
+			rune_category: m.rune_category || m.rune_type || "hybrid",
+			rarity: mapRarity(m.rarity),
+			effect_type: m.effect_type || "passive",
+			activation_action: m.activation_action || null,
+			range: castToString(m.range),
+			duration: castToString(m.duration),
+			concentration: !!m.concentration,
+			uses_per_rest: m.uses_per_rest || null,
+			requires_level: m.requires_level || 1,
+			requires_job: castToStringArray(m.requires_job),
+			caster_penalty: m.caster_penalty || null,
+			martial_penalty: m.martial_penalty || null,
+			passive_bonuses: castToJson(m.passive_bonuses),
+			effect_description: m.effect_description || m.description || ""
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_runes").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_runes").insert(chunk);
+		if (error) { log(`  [Runes] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Runes] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncEquipment() {
+	const data = await staticDataProvider.getItems("");
+	log(`Syncing ${data.length} equipment...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_equipment"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			equipment_type: m.item_type || m.equipment_type || "Gear",
+			rarity: mapRarity(m.rarity),
+			requires_attunement: !!m.attunement,
+			properties: castToStringArray(m.properties),
+			sigil_slots_base: Math.round(Number(m.sigil_slots_base) || 0),
+			cost_credits: Math.round(Number(m.value || m.cost_credits || 0)),
+			weight: Math.round(Number(m.weight || 0)),
+			source_book: m.source_book || "System Ascendant Canon"
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_equipment").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_equipment").insert(chunk);
+		if (error) { log(`  [Equipment] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Equipment] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncJobs() {
+	const data = await staticDataProvider.getJobs("");
+	log(`Syncing ${data.length} jobs...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_jobs"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor_text: m.flavor || m.flavor_text || null,
+			hit_die: m.hit_die || 8,
+			primary_abilities: (m.primary_abilities || []).map(mapAbility),
+			saving_throw_proficiencies: (m.saving_throw_proficiencies || []).map(mapAbility),
+			armor_proficiencies: castToStringArray(m.armor_proficiencies),
+			weapon_proficiencies: castToStringArray(m.weapon_proficiencies),
+			skill_choices: castToStringArray(m.skill_choices),
+			skill_choice_count: m.skill_choice_count || 2,
+			updated_at: new Date().toISOString()
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_jobs").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_jobs").insert(chunk);
+		if (error) { log(`  [Jobs] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Jobs] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncJobPaths() {
+	const data = await staticDataProvider.getPaths("");
+	log(`Syncing ${data.length} job paths...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_job_paths"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		const jobId = JOB_NAME_TO_ID[m.job_name || ""] || JOB_NAME_TO_ID[m.job_id || ""];
+		if (!jobId) {
+			log(`  [JobPaths] Error: Missing Job ID for path ${m.name} (Job: ${m.job_name})`);
+			continue;
+		}
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor_text: m.flavor || m.flavor_text || null,
+			path_level: m.path_level || 1,
+			job_id: jobId
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_job_paths").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_job_paths").insert(chunk);
+		if (error) { log(`  [JobPaths] Error: ${error.message}`); errors++; }
+	}
+	log(`  [JobPaths] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncPowers() {
+	const data = await staticDataProvider.getPowers("");
+	log(`Syncing ${data.length} powers...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_powers"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			lore: m.lore ? castToString(m.lore) : null,
+			image_url: m.image_url || m.image || null,
+			mechanics: castToJson(m.mechanics),
+			power_level: Math.min(9, Math.max(0, Number(m.power_level) || 0)),
+			power_type: m.power_type || m.school || "Generic",
+			casting_time: m.casting_time || "1 action",
+			range: castToString(m.range) || "Self",
+			duration: castToString(m.duration) || "Instantaneous",
+			source_book: m.source_book || "System Ascendant Canon",
+			tags: castToStringArray(m.tags) || []
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_powers").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_powers").insert(chunk);
+		if (error) { log(`  [Powers] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Powers] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncArtifacts() {
+	const data = await staticDataProvider.getArtifacts("");
+	log(`Syncing ${data.length} artifacts...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_artifacts"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			type: m.artifact_type || m.type || "weapon",
+			rarity: m.rarity || "legendary",
+			attunement: !!m.attunement,
+			requirements: castToJson(m.requirements),
+			properties: castToJson(m.properties),
+			abilities: castToJson(m.abilities),
+			lore: castToJson(m.lore),
+			mechanics: castToJson(m.mechanics),
+			tags: castToStringArray(m.tags) || [],
+			source_book: m.source_book || "System Ascendant Canon",
+			image_url: m.image_url || m.image || null
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_artifacts").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_artifacts").insert(chunk);
+		if (error) { log(`  [Artifacts] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Artifacts] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncTattoos() {
+	const data = await staticDataProvider.getTattoos("");
+	log(`Syncing ${data.length} tattoos...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_tattoos"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			rarity: m.rarity || "common",
+			attunement: !!m.attunement,
+			body_part: m.body_part || "Any",
+			effects: castToJson(m.effects),
+			mechanics: castToJson(m.mechanics),
+			limitations: castToJson(m.limitations || {}),
+			lore: m.lore ? castToString(m.lore) : null,
+			flavor: m.flavor || null,
+			image_url: m.image_url || m.image || null,
+			source: m.source || m.source_book || "System Ascendant Canon",
+			tags: castToStringArray(m.tags) || [],
+			theme_tags: castToStringArray(m.theme_tags) || []
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_tattoos").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_tattoos").insert(chunk);
+		if (error) { log(`  [Tattoos] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Tattoos] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncShadowSoldiers() {
+	const data = await staticDataProvider.getShadowSoldiers("");
+	log(`Syncing ${data.length} shadow soldiers...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_shadow_soldiers"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			rank: castToString(m.rank) || "Infantry",
+			title: m.title || "Shadow Soldier",
+			hit_points: m.hit_points || 10,
+			armor_class: m.armor_class || 10,
+			speed: m.speed || 30,
+			str: m.str || 10,
+			agi: m.agi || 10,
+			vit: m.vit || 10,
+			int: m.int || 10,
+			sense: m.sense || 10,
+			pre: m.pre || 10,
+			abilities: castToJson(m.abilities || {})
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_shadow_soldiers").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_shadow_soldiers").insert(chunk);
+		if (error) { log(`  [ShadowSoldiers] Error: ${error.message}`); errors++; }
+	}
+	log(`  [ShadowSoldiers] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncLocations() {
+	const data = await staticDataProvider.getLocations("");
+	log(`Syncing ${data.length} locations...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_locations"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			description: m.description || "",
+			type: m.location_type || m.type || "Wilderness",
+			mechanics: castToJson(m.mechanics),
+			flavor: m.flavor || null,
+			lore: m.lore ? castToString(m.lore) : null,
+			tags: castToStringArray(m.tags) || [],
+			source_book: m.source_book || "System Ascendant Canon",
+			image: m.image || null
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_locations").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_locations").insert(chunk);
+		if (error) { log(`  [Locations] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Locations] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncBackgrounds() {
+	const data = await staticDataProvider.getBackgrounds("");
+	log(`Syncing ${data.length} backgrounds...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_backgrounds"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			skill_proficiencies: castToStringArray(m.skill_proficiencies),
+			tool_proficiencies: castToStringArray(m.tool_proficiencies),
+			language_count: m.language_count || 0,
+			starting_credits: m.starting_credits || 0,
+			feature_name: m.feature_name || null,
+			feature_description: m.feature_description || null,
+			personality_traits: castToStringArray(m.personality_traits),
+			ideals: castToStringArray(m.ideals),
+			bonds: castToStringArray(m.bonds),
+			flaws: castToStringArray(m.flaws),
+			source_book: m.source_book || "System Ascendant Canon"
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	await supabase.from("compendium_backgrounds").delete().in("name", names);
+	const { error } = await supabase.from("compendium_backgrounds").insert(rows);
+	if (error) log(`  [Backgrounds] Error: ${error.message}`);
+	log(`  [Backgrounds] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
+}
+
+async function syncRegents() {
+	const data = await staticDataProvider.getRegents("");
+	log(`Syncing ${data.length} regents...`);
+	const rows: Database["public"]["Tables"]["compendium_regents"]["Insert"][] = data.map(m => ({
+		name: m.name,
+		display_name: m.display_name || m.name,
+		description: m.description || "",
+		title: m.regent_title || m.title || "Regent",
+		corruption_risk: m.regent_corruption_risk || m.corruption_risk || null,
+		manifestation_description: m.regent_manifestation || m.manifestation_description || null,
+		unlock_level: m.level || m.unlock_level || 0,
+		theme: m.regent_theme || m.theme || "Generic",
+		damage_type: m.damage_type || null
+	}));
+	
+	const names = rows.map(r => r.name);
+	await supabase.from("compendium_regents").delete().in("name", names);
+	const { error } = await supabase.from("compendium_regents").insert(rows);
+	log(`  [Regents] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
+}
+
+async function syncConditions() {
+	const data = await staticDataProvider.getConditions("");
+	log(`Syncing ${data.length} conditions...`);
+	const rows: Database["public"]["Tables"]["compendium_conditions"]["Insert"][] = data.map(m => ({
+		name: m.name,
+		display_name: m.display_name || m.name,
+		description: m.description || "",
+		effects: castToStringArray(m.condition_effects) || []
+	}));
+	
+	const names = rows.map(r => r.name);
+	await supabase.from("compendium_conditions").delete().in("name", names);
+	const { error } = await supabase.from("compendium_conditions").insert(rows);
+	log(`  [Conditions] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
+}
+
+async function syncFeats() {
+	const data = await staticDataProvider.getFeats("");
+	log(`Syncing ${data.length} feats...`);
+	const rows: Database["public"]["Tables"]["compendium_feats"]["Insert"][] = data.map(m => ({
+		name: m.name,
+		display_name: m.display_name || m.name,
+		description: m.description || "",
+		flavor: m.flavor || null,
+		benefits: castToStringArray(m.benefits),
+		prerequisites: castToString(m.prerequisites),
+		source_book: m.source_book || "System Ascendant Canon"
+	}));
+	
+	const names = rows.map(r => r.name);
+	await supabase.from("compendium_feats").delete().in("name", names);
+	const { error } = await supabase.from("compendium_feats").insert(rows);
+	if (error) log(`  [Feats] Error: ${error.message}`);
+	log(`  [Feats] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
+}
+
+async function syncSkills() {
+	const data = await staticDataProvider.getSkills("");
+	log(`Syncing ${data.length} skills...`);
+	const rows: Database["public"]["Tables"]["compendium_skills"]["Insert"][] = data.map(m => ({
+		name: m.name,
+		display_name: m.display_name || m.name,
+		description: m.description || "",
+		ability: m.ability || "Strength"
+	}));
+	
+	const names = rows.map(r => r.name);
+	await supabase.from("compendium_skills").delete().in("name", names);
+	const { error } = await supabase.from("compendium_skills").insert(rows);
+	log(`  [Skills] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
+}
+
+async function syncRelics() {
+	const data = await staticDataProvider.getRelics("");
+	log(`Syncing ${data.length} relics...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_relics"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			lore: m.lore ? castToString(m.lore) : null,
+			image_url: m.image_url || m.image || null,
+			mechanics: castToJson(m.mechanics),
+			item_type: m.relic_type || "Generic",
+			rarity: mapRarity(m.rarity),
+			requires_attunement: !!m.attunement,
+			attunement_requirements: castToString(m.attunement_requirements) || null,
+			value_credits: m.value_credits || 0,
+			weight: m.weight || 0,
+			source_book: m.source_book || "System Ascendant Canon"
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	await supabase.from("compendium_relics").delete().in("name", names);
+	const { error } = await supabase.from("compendium_relics").insert(rows);
+	if (error) log(`  [Relics] Error: ${error.message}`);
+	log(`  [Relics] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
+}
+
+async function syncTechniques() {
+	const data = await staticDataProvider.getTechniques("");
+	log(`Syncing ${data.length} techniques...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_techniques"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			lore: m.lore ? castToString(m.lore) : null,
+			image_url: m.image_url || m.image || null,
+			mechanics: castToJson(m.mechanics),
+			technique_type: m.technique_type || "martial",
+			activation_type: m.activation_type || "action",
+			primary_effect: m.primary_effect || m.description || "",
+			secondary_effect: m.secondary_effect || null,
+			source: m.source || m.source_book || "System Ascendant Canon",
+			style: m.style || "None"
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_techniques").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_techniques").insert(chunk);
+		if (error) { log(`  [Techniques] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Techniques] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function syncSigils() {
+	const data = await staticDataProvider.getSigils("");
+	log(`Syncing ${data.length} sigils...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_sigils"]["Insert"][] = [];
+	
+	for (const m of data) {
+		if (seen.has(m.name)) continue;
+		seen.add(m.name);
+		rows.push({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			effect_description: m.effect_description || m.description || "",
+			rarity: mapRarity(m.rarity),
+			rune_type: m.sigil_type || "Utility",
+			rune_category: m.sigil_rank || m.sigil_type || "Basic",
+			rune_level: m.rune_level || 0,
+			can_inscribe_on: castToStringArray(m.can_inscribe_on),
+			flavor: m.flavor || null,
+			lore: m.lore ? String(m.lore) : null,
+			image_url: m.image_url || m.image || null
+		});
+	}
+	
+	const names = rows.map(r => r.name);
+	for (let i = 0; i < names.length; i += 500) {
+		await supabase.from("compendium_sigils").delete().in("name", names.slice(i, i + 500));
+	}
+	
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_sigils").insert(chunk);
+		if (error) { log(`  [Sigils] Error: ${error.message}`); errors++; }
+	}
+	log(`  [Sigils] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
+async function main() {
+	log("--- Starting Authoritative Sync (Zero-Any) ---");
+	try {
+		await syncJobs();
+		await initializeJobMap(); // Populate dynamic map after jobs are synced
+		await syncMonsters();
+		await syncSpells();
+		await syncRunes();
+		await syncEquipment();
+		await syncJobPaths();
+		await syncPowers();
+		await syncArtifacts();
+		await syncTattoos();
+		await syncShadowSoldiers();
+		await syncLocations();
+		await syncBackgrounds();
+		await syncRegents();
+		await syncConditions();
+		await syncFeats();
+		await syncSkills();
+		await syncRelics();
+		await syncTechniques();
+		await syncSigils();
+		log("--- Sync Complete ---");
+	} catch (err: unknown) {
+		const e = err as Error;
+		log(`FATAL ERROR: ${e.message}`);
+		process.exit(1);
+	}
 }
 
 main();

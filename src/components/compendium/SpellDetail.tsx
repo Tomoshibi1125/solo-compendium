@@ -284,7 +284,9 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						<Button
 							variant="outline"
 							onClick={() =>
-								queueResolutionAndNavigate("/dm-tools/initiative-tracker")
+								queueResolutionAndNavigate(
+									"/warden-protocols/initiative-tracker",
+								)
 							}
 						>
 							Resolve in Initiative

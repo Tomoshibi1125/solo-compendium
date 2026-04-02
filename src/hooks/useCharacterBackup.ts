@@ -78,7 +78,9 @@ export function loadLocalBackups(characterId: string): CharacterBackup[] {
 export function restoreFromBackup(
 	backup: CharacterBackup,
 ): CharacterWithAbilities {
-	return backup.backup_data as unknown as CharacterWithAbilities;
+	return JSON.parse(
+		JSON.stringify(backup.backup_data),
+	) as CharacterWithAbilities;
 }
 
 /**

@@ -6,8 +6,8 @@ import { setupTestAccounts } from "@/test/utils/testUsers";
 
 interface TestResults {
 	createResult: unknown;
-	dmLoginResult: unknown;
-	playerLoginResult: unknown;
+	wardenLoginResult: unknown;
+	ascendantLoginResult: unknown;
 }
 
 export default function TestUserSetup() {
@@ -45,9 +45,9 @@ export default function TestUserSetup() {
 						<br />
 						<strong>Test Accounts:</strong>
 						<br />
-						DM: dm@test.com / test1234
+						Warden: warden@test.com / test1234
 						<br />
-						Player: player@test.com / test1234
+						Ascendant: ascendant@test.com / test1234
 					</div>
 
 					<Button
@@ -69,15 +69,15 @@ export default function TestUserSetup() {
 										</pre>
 									</div>
 									<div>
-										<strong>✅ DM Login Test:</strong>
+										<strong>✅ Warden Login Test:</strong>
 										<pre className="text-xs mt-1 p-2 bg-muted rounded">
-											{JSON.stringify(results.dmLoginResult, null, 2)}
+											{JSON.stringify(results.wardenLoginResult, null, 2)}
 										</pre>
 									</div>
 									<div>
-										<strong>✅ Player Login Test:</strong>
+										<strong>✅ Ascendant Login Test:</strong>
 										<pre className="text-xs mt-1 p-2 bg-muted rounded">
-											{JSON.stringify(results.playerLoginResult, null, 2)}
+											{JSON.stringify(results.ascendantLoginResult, null, 2)}
 										</pre>
 									</div>
 								</div>

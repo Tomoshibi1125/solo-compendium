@@ -4,43 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 
-export type VTTToken = Database["public"]["Tables"]["vtt_tokens"]["Row"];
-type _Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
-
-interface VTTAsset {
-	id: string;
-	name: string;
-	type: "token" | "map" | "effect" | "prop";
-	imageUrl: string;
-	thumbnailUrl?: string;
-	campaignId?: string;
-	isCustom?: boolean;
-	uploadedBy?: string;
-	uploadedAt?: string;
-}
-
-export interface VTTScene {
-	id: string;
-	name: string;
-	backgroundImage?: string;
-	tokens: VTTToken[];
-	fogOfWar?: string[][];
-	annotations?: Array<{
-		id: string;
-		type: "text" | "drawing";
-		content: string;
-		position: { x: number; y: number };
-		style?: Record<string, unknown>;
-	}>;
-	settings?: {
-		gridSize: number;
-		showGrid: boolean;
-		snapToGrid: boolean;
-	};
-	campaignId: string;
-	createdAt: string;
-	updatedAt: string;
-}
+import type { VTTAsset, VTTScene } from "@/types/vtt";
 
 export function useVTTManager() {
 	const { toast } = useToast();
@@ -63,16 +27,16 @@ export function useVTTManager() {
 					campaignId,
 					name: sceneData.name || "Untitled Scene",
 					backgroundImage: sceneData.backgroundImage || undefined,
-					tokens: sceneData.tokens || [],
-					fogOfWar: sceneData.fogOfWar || [],
-					annotations: sceneData.annotations || [],
-					settings: sceneData.settings || {
-						gridSize: 50,
-						showGrid: true,
-						snapToGrid: true,
-					},
-					createdAt: new Date().toISOString(),
-					updatedAt: new Date().toISOString(),
+					tokens: (sceneData.tokens || []) as VTTScene["tokens"],
+					fogOfWar: Boolean(sceneData.fogOfWar),
+					width: sceneData.width ?? 20,
+					height: sceneData.height ?? 20,
+					gridSize: sceneData.gridSize ?? 50,
+					gridType: sceneData.gridType ?? "square",
+					drawings: sceneData.drawings ?? [],
+					annotations: sceneData.annotations ?? [],
+					walls: sceneData.walls ?? [],
+					lights: sceneData.lights ?? [],
 				};
 
 				toast({
@@ -94,7 +58,7 @@ export function useVTTManager() {
 	);
 
 	const loadVTTScene = useCallback(
-		async (campaignId: string, sceneId?: string): Promise<VTTScene | null> => {
+		async (_campaignId: string, sceneId?: string): Promise<VTTScene | null> => {
 			if (!isSupabaseConfigured) {
 				return null;
 			}
@@ -107,16 +71,15 @@ export function useVTTManager() {
 					name: "Default Scene",
 					backgroundImage: undefined,
 					tokens: [],
-					fogOfWar: [],
+					fogOfWar: false,
+					width: 20,
+					height: 20,
+					gridSize: 50,
+					gridType: "square",
+					drawings: [],
 					annotations: [],
-					settings: {
-						gridSize: 50,
-						showGrid: true,
-						snapToGrid: true,
-					},
-					campaignId,
-					createdAt: new Date().toISOString(),
-					updatedAt: new Date().toISOString(),
+					walls: [],
+					lights: [],
 				};
 
 				return scene;
@@ -274,17 +237,19 @@ export function useVTTManager() {
 					return [];
 				}
 
-				return data.map((token: VTTToken) => ({
-					id: token.id,
-					name: token.name,
-					type: "token" as const, // Default to token type since type field doesn't exist
-					imageUrl: token.image_url || "",
-					thumbnailUrl: token.image_url || "",
-					campaignId: token.session_id,
-					isCustom: true,
-					uploadedBy: token.created_by,
-					uploadedAt: token.created_at ?? undefined,
-				}));
+				return data.map(
+					(token: Database["public"]["Tables"]["vtt_tokens"]["Row"]) => ({
+						id: token.id,
+						name: token.name,
+						type: "token" as const, // Default to token type since type field doesn't exist
+						imageUrl: token.image_url || "",
+						thumbnailUrl: token.image_url || "",
+						campaignId: token.session_id,
+						isCustom: true,
+						uploadedBy: token.created_by,
+						uploadedAt: token.created_at ?? undefined,
+					}),
+				);
 			} catch (error) {
 				console.error("Error loading VTT assets:", error);
 				return [];
@@ -348,6 +313,45 @@ export function useVTTManager() {
 		[user, toast],
 	);
 
+	const appendToken = useCallback(
+		(
+			scene: VTTScene,
+			token: import("@/types/vtt").VTTTokenInstance,
+		): VTTScene => {
+			return {
+				...scene,
+				tokens: [...scene.tokens, token],
+			};
+		},
+		[],
+	);
+
+	const updateToken = useCallback(
+		(
+			scene: VTTScene,
+			tokenId: string,
+			updates: Partial<import("@/types/vtt").VTTTokenInstance>,
+		): VTTScene => {
+			return {
+				...scene,
+				tokens: scene.tokens.map((t) =>
+					t.id === tokenId ? { ...t, ...updates } : t,
+				),
+			};
+		},
+		[],
+	);
+
+	const removeToken = useCallback(
+		(scene: VTTScene, tokenId: string): VTTScene => {
+			return {
+				...scene,
+				tokens: scene.tokens.filter((t) => t.id !== tokenId),
+			};
+		},
+		[],
+	);
+
 	return {
 		saveVTTScene,
 		loadVTTScene,
@@ -356,5 +360,8 @@ export function useVTTManager() {
 		uploadVTTAsset,
 		getVTTAssets,
 		deleteVTTAsset,
+		appendToken,
+		updateToken,
+		removeToken,
 	};
 }

@@ -153,7 +153,7 @@ export const useCreateCampaignNote = () => {
 				.single();
 
 			if (error) throw error;
-			return data as unknown as CampaignNote;
+			return data as CampaignNote;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({

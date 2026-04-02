@@ -53,7 +53,7 @@ export function useRegentUnlocks(characterId: string) {
 				.order("unlocked_at", { ascending: false });
 
 			if (error) throw error;
-			return data as unknown as RegentUnlock[];
+			return JSON.parse(JSON.stringify(data)) as RegentUnlock[];
 		},
 		enabled: !!characterId,
 	});
@@ -182,7 +182,7 @@ export function useRegentUnlocks(characterId: string) {
 	};
 }
 
-// Hook for DMs to manage regent unlocks for their campaign characters
+// Hook for Protocol Wardens to manage regent unlocks for their campaign characters
 export function useCampaignRegentUnlocks(campaignId: string) {
 	const {
 		data: campaignUnlocks = [],
@@ -264,35 +264,3 @@ export function useAvailableRegents(characterId: string) {
 		error,
 	};
 }
-
-export const useCharacterRegentUnlocks = useRegentUnlocks;
-
-/**
- * @deprecated Use `useRegentUnlocks(characterId).unlockRegent` instead.
- * This standalone stub exists only for backward compatibility with legacy callsites.
- */
-export const useUnlockRegent = () => {
-	return {
-		mutate: (_params: unknown, _options?: unknown) => {
-			console.warn(
-				"[DEPRECATED] useUnlockRegent: use useRegentUnlocks(characterId).unlockRegent instead",
-			);
-		},
-		isPending: false,
-	};
-};
-
-/**
- * @deprecated Use `useRegentUnlocks(characterId).updateUnlock` instead.
- * This standalone stub exists only for backward compatibility with legacy callsites.
- */
-export const useSetPrimaryRegent = () => {
-	return {
-		mutate: (_params: unknown) => {
-			console.warn(
-				"[DEPRECATED] useSetPrimaryRegent: use useRegentUnlocks(characterId).updateUnlock instead",
-			);
-		},
-		isPending: false,
-	};
-};

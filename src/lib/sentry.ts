@@ -30,8 +30,11 @@ export function initSentry() {
 			environment: ENVIRONMENT,
 			release: VERSION,
 
-			// Performance Monitoring
-			integrations: [Sentry.browserTracingIntegration()],
+			// Performance Monitoring + Session Replay
+			integrations: [
+				Sentry.browserTracingIntegration(),
+				Sentry.replayIntegration(),
+			],
 
 			// Attach tracing headers only to allowed targets (avoid CORS issues)
 			tracePropagationTargets: ["localhost", /^https:\/\/.*\.supabase\.co/],

@@ -40,7 +40,7 @@ export interface RegentPath {
 	/** Regent compendium entry ID in regents.ts */
 	compendiumId?: string;
 	requirements: {
-		/** @deprecated Regents are quest/DM-gated — level is advisory only */
+		/** @deprecated Regents are quest/Warden-gated — level is advisory only */
 		level?: number;
 		questCompleted?: string;
 		statThreshold: number;
@@ -105,12 +105,12 @@ export interface Regent {
 		level: number;
 		abilities: Record<string, number>;
 		quest_completion: string;
-		dm_approval: boolean;
+		warden_approval: boolean;
 	};
 
 	requirements?: {
 		quest_completion: string;
-		dm_verification: boolean;
+		warden_verification: boolean;
 		prerequisite_job?: string;
 		power_level: number;
 	};

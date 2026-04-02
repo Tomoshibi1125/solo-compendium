@@ -2,7 +2,7 @@
  * useVTTRealtime — Supabase Realtime channel for multi-user VTT collaboration.
  *
  * Provides broadcast + presence primitives scoped to a campaign+session pair.
- * DM and players share:
+ * Protocol Warden (PW) and players share:
  *   - token moves / updates
  *   - scene switches
  *   - fog changes
@@ -45,8 +45,8 @@ interface VTTChatMessage {
 		| "whisper"
 		| "emote"
 		| "desc"
-		| "gmroll"
-		| "gm_whisper"
+		| "wardenroll"
+		| "warden_whisper"
 		| "roll_whisper";
 	diceFormula?: string;
 	diceResult?: number;
@@ -112,7 +112,7 @@ interface VTTCursorPosition {
 interface VTTPresenceUser {
 	userId: string;
 	userName: string;
-	role: "dm" | "player";
+	role: "warden" | "ascendant";
 	cursor?: VTTCursorPosition;
 	color: string;
 	lastSeen: number;
@@ -140,10 +140,20 @@ interface VTTHandoutShare {
 
 type VTTBroadcastEvent =
 	| { type: "token_move"; payload: VTTTokenMove }
-	| { type: "token_update"; payload: VTTTokenUpdate }
+	| {
+			type: "token_update";
+			payload: {
+				tokenId: string;
+				updates: Partial<import("@/types/vtt").VTTTokenInstance>;
+				updatedBy: string;
+			};
+	  }
 	| {
 			type: "token_add";
-			payload: { token: Record<string, unknown>; addedBy: string };
+			payload: {
+				token: import("@/types/vtt").VTTTokenInstance;
+				addedBy: string;
+			};
 	  }
 	| { type: "token_remove"; payload: { tokenId: string; removedBy: string } }
 	| { type: "scene_change"; payload: VTTSceneChange }
@@ -155,14 +165,18 @@ type VTTBroadcastEvent =
 	| {
 			type: "scene_sync";
 			payload: {
-				scenes: unknown[];
+				scenes: import("@/types/vtt").VTTScene[];
 				currentSceneId: string | null;
 				syncedBy: string;
 			};
 	  }
 	| {
 			type: "drawing_update";
-			payload: { drawings: unknown[]; sceneId: string; updatedBy: string };
+			payload: {
+				drawings: import("@/types/vtt").VTTDrawing[];
+				sceneId: string;
+				updatedBy: string;
+			};
 	  }
 	| { type: "ruler"; payload: VTTRulerSegment }
 	| { type: "ruler_clear"; payload: { userId: string } }
@@ -171,7 +185,7 @@ type VTTBroadcastEvent =
 type PresencePayload = {
 	user_id?: string;
 	user_name?: string;
-	role?: "dm" | "player";
+	role?: "warden" | "ascendant";
 	cursor?: VTTCursorPosition;
 	color?: string;
 };
@@ -424,7 +438,7 @@ function rollDiceFormulaDetailed(rawFormula: string): VTTDiceRollDetailed {
 type ChatCommand =
 	| { type: "chat"; message: string }
 	| { type: "roll"; formula: string }
-	| { type: "gmroll"; formula: string }
+	| { type: "wardenroll"; formula: string }
 	| { type: "whisper"; target: string; message: string }
 	| { type: "emote"; message: string }
 	| { type: "desc"; message: string };
@@ -436,9 +450,10 @@ export function parseChatCommand(input: string): ChatCommand {
 	const rollMatch = trimmed.match(/^\/r(?:oll)?\s+(.+)/i);
 	if (rollMatch) return { type: "roll", formula: rollMatch[1].trim() };
 
-	// /gmroll or /gr
-	const gmRollMatch = trimmed.match(/^\/g(?:m)?r(?:oll)?\s+(.+)/i);
-	if (gmRollMatch) return { type: "gmroll", formula: gmRollMatch[1].trim() };
+	// /wardenroll or /gr
+	const wardenrollMatch = trimmed.match(/^\/g(?:m)?r(?:oll)?\s+(.+)/i);
+	if (wardenrollMatch)
+		return { type: "wardenroll", formula: wardenrollMatch[1].trim() };
 
 	// /w or /whisper
 	const whisperMatch = trimmed.match(/^\/w(?:hisper)?\s+"?([^"]+)"?\s+(.+)/i);
@@ -478,13 +493,13 @@ export interface VTTMacro {
 interface UseVTTRealtimeOptions {
 	campaignId: string;
 	sessionId?: string | null;
-	isDM?: boolean;
+	isWarden?: boolean;
 }
 
 export function useVTTRealtime({
 	campaignId,
 	sessionId,
-	isDM = false,
+	isWarden = false,
 }: UseVTTRealtimeOptions) {
 	const { user } = useAuth();
 	const userId = user?.id || "anonymous";
@@ -555,7 +570,7 @@ export function useVTTRealtime({
 			ch.send({
 				type: "broadcast",
 				event: "vtt",
-				payload: event,
+				payload: JSON.parse(JSON.stringify(event)),
 			});
 		},
 		[isConnected],
@@ -573,7 +588,10 @@ export function useVTTRealtime({
 	);
 
 	const broadcastTokenUpdate = useCallback(
-		(tokenId: string, updates: Record<string, unknown>) => {
+		(
+			tokenId: string,
+			updates: Partial<import("@/types/vtt").VTTTokenInstance>,
+		) => {
 			broadcast({
 				type: "token_update",
 				payload: { tokenId, updates, updatedBy: userId },
@@ -583,7 +601,7 @@ export function useVTTRealtime({
 	);
 
 	const broadcastTokenAdd = useCallback(
-		(token: Record<string, unknown>) => {
+		(token: import("@/types/vtt").VTTTokenInstance) => {
 			broadcast({ type: "token_add", payload: { token, addedBy: userId } });
 		},
 		[broadcast, userId],
@@ -611,7 +629,10 @@ export function useVTTRealtime({
 	);
 
 	const broadcastSceneSync = useCallback(
-		(scenes: unknown[], currentSceneId: string | null) => {
+		(
+			scenes: import("@/types/vtt").VTTScene[],
+			currentSceneId: string | null,
+		) => {
 			broadcast({
 				type: "scene_sync",
 				payload: { scenes, currentSceneId, syncedBy: userId },
@@ -633,7 +654,7 @@ export function useVTTRealtime({
 
 	// Drawings
 	const broadcastDrawingUpdate = useCallback(
-		(drawings: unknown[], sceneId: string) => {
+		(drawings: import("@/types/vtt").VTTDrawing[], sceneId: string) => {
 			broadcast({
 				type: "drawing_update",
 				payload: { drawings, sceneId, updatedBy: userId },
@@ -685,7 +706,7 @@ export function useVTTRealtime({
 	const rollAndBroadcast = useCallback(
 		(
 			formula: string,
-			msgType: "dice" | "gmroll" = "dice",
+			msgType: "dice" | "wardenroll" = "dice",
 		): VTTDiceRollDetailed => {
 			const roll = rollDiceFormulaDetailed(formula);
 			const msg: VTTChatMessage = {
@@ -732,12 +753,12 @@ export function useVTTRealtime({
 			).map((u) => ({
 				id: u.userId,
 				name: u.userName,
-				role: u.role as "gm" | "player",
+				role: u.role as "PW" | "player",
 			}));
 			participants.push({
 				id: userId,
 				name: userName,
-				role: isDM ? "gm" : "player",
+				role: isWarden ? "PW" : "player",
 			});
 
 			const whisperCmd = parseWhisperCommand(input, participants, userId);
@@ -807,8 +828,8 @@ export function useVTTRealtime({
 				case "roll":
 					rollAndBroadcast(cmd.formula, "dice");
 					break;
-				case "gmroll":
-					rollAndBroadcast(cmd.formula, "gmroll");
+				case "wardenroll":
+					rollAndBroadcast(cmd.formula, "wardenroll");
 					break;
 				case "whisper":
 					sendChatMessage(cmd.message, "whisper", cmd.target);
@@ -844,7 +865,7 @@ export function useVTTRealtime({
 			presenceUsers,
 			userId,
 			userName,
-			isDM,
+			isWarden,
 			broadcast,
 		],
 	);
@@ -1008,12 +1029,12 @@ export function useVTTRealtime({
 			ch.track({
 				user_id: userId,
 				user_name: userName,
-				role: isDM ? "dm" : "player",
+				role: isWarden ? "warden" : "player",
 				cursor,
 				color: userColor,
 			});
 		},
-		[isConnected, isDM, userColor, userId, userName],
+		[isConnected, isWarden, userColor, userId, userName],
 	);
 
 	// ------ Channel setup ------
@@ -1035,7 +1056,7 @@ export function useVTTRealtime({
 							const msgPayload = payload.payload as VTTChatMessage;
 							// If it's a whisper, only allow it into state if we're meant to see it.
 							if (
-								["whisper", "gm_whisper", "roll_whisper"].includes(
+								["whisper", "warden_whisper", "roll_whisper"].includes(
 									msgPayload.type,
 								)
 							) {
@@ -1051,7 +1072,7 @@ export function useVTTRealtime({
 									timestamp: new Date(msgPayload.timestamp).toISOString(),
 									type: msgPayload.type as
 										| "whisper"
-										| "gm_whisper"
+										| "warden_whisper"
 										| "roll_whisper",
 								};
 								if (!isMessageVisibleTo(mockWhisper, userId)) {
@@ -1096,11 +1117,11 @@ export function useVTTRealtime({
 							if (!incoming.sharedById) break;
 							const sender = presenceUsers.get(incoming.sharedById);
 							if (!sender) break;
-							// Only accept from DM if a DM is known in presence; otherwise accept from any known user
-							const dmPresent = Array.from(presenceUsers.values()).some(
-								(u) => u.role === "dm",
+							// Only accept from Warden if a Warden is known in presence; otherwise accept from any known user
+							const wardenPresent = Array.from(presenceUsers.values()).some(
+								(u) => u.role === "warden",
 							);
-							if (dmPresent && sender.role !== "dm") break;
+							if (wardenPresent && sender.role !== "warden") break;
 							setSharedHandout(incoming);
 							if (handoutTimeoutRef.current)
 								clearTimeout(handoutTimeoutRef.current);
@@ -1128,7 +1149,7 @@ export function useVTTRealtime({
 						next.set(uid, {
 							userId: uid,
 							userName: presence.user_name || "Anonymous",
-							role: presence.role || "player",
+							role: presence.role || "ascendant",
 							cursor: presence.cursor,
 							color: presence.color || getUserColor(uid),
 							lastSeen: Date.now(),
@@ -1144,7 +1165,7 @@ export function useVTTRealtime({
 					ch.track({
 						user_id: userId,
 						user_name: userName,
-						role: isDM ? "dm" : "player",
+						role: isWarden ? "warden" : "player",
 						color: userColor,
 					});
 				}
@@ -1187,12 +1208,11 @@ export function useVTTRealtime({
 			channelRef.current = null;
 			setIsConnected(false);
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		channelName,
 		campaignId, // External handlers
 		emit,
-		isDM,
+		isWarden,
 		presenceUsers.get,
 		presenceUsers.values,
 		userColor,

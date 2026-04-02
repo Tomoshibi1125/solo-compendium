@@ -1,3 +1,4 @@
+import { supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 
 type CompendiumCacheItem = {
@@ -326,14 +327,12 @@ export class OfflineStorageManager {
 // Background Sync Manager
 export class BackgroundSyncManager {
 	private static instance: BackgroundSyncManager;
-	private storage: OfflineStorageManager;
 	private syncQueue: SyncQueueItem[] = [];
 	private processors = new Map<string, SyncQueueProcessor>();
 	private listeners = new Set<SyncQueueListener>();
 	private isProcessing = false;
 
 	constructor() {
-		this.storage = new OfflineStorageManager();
 		this.loadSyncQueue();
 	}
 
@@ -348,7 +347,7 @@ export class BackgroundSyncManager {
 		try {
 			const stored = localStorage.getItem("syncQueue");
 			if (stored) {
-				const parsed = JSON.parse(stored) as unknown;
+				const parsed = JSON.parse(stored) as Array<Record<string, unknown>>;
 				this.syncQueue = Array.isArray(parsed)
 					? parsed
 							.filter(
@@ -499,31 +498,100 @@ export class BackgroundSyncManager {
 			return;
 		}
 
-		// This would integrate with your actual API
-		logger.debug("Processing sync item:", item);
+		logger.log(
+			`Syncing item ${item.id} (${item.type}:${item.action}) to Supabase...`,
+		);
 
-		// Simulate API call
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		// Remove from offline cache if successful
-		if (item.action === "delete") {
+		try {
+			let result: { error: unknown } | null = null;
 			switch (item.type) {
-				case "compendium":
-					// Would call API to delete, then remove from cache
-					break;
 				case "character": {
-					const characterId =
-						typeof item.data.id === "string" ? item.data.id : null;
-					if (characterId) {
-						await this.storage.getCharacter(characterId).then((character) => {
-							if (character) {
-								// Delete from cache after successful API deletion
-							}
-						});
+					if (item.action === "delete") {
+						result = await supabase
+							.from("characters")
+							.delete()
+							.eq("id", item.data.id as string);
+					} else {
+						result = await supabase
+							.from("characters")
+							.upsert(item.data as never);
 					}
 					break;
 				}
+				case "campaign": {
+					if (item.action === "delete") {
+						result = await supabase
+							.from("campaigns")
+							.delete()
+							.eq("id", item.data.id as string);
+					} else {
+						result = await supabase
+							.from("campaigns")
+							.upsert(item.data as never);
+					}
+					break;
+				}
+				case "campaign_session": {
+					if (item.action === "delete") {
+						result = await supabase
+							.from("active_sessions")
+							.delete()
+							.eq("id", item.data.id as string);
+					} else {
+						result = await supabase
+							.from("active_sessions")
+							.upsert(item.data as never);
+					}
+					break;
+				}
+				case "campaign_combat": {
+					if (item.action === "delete") {
+						result = await supabase
+							.from("campaign_combat_sessions")
+							.delete()
+							.eq("id", item.data.id as string);
+					} else {
+						result = await supabase
+							.from("campaign_combat_sessions")
+							.upsert(item.data as never);
+					}
+					break;
+				}
+				case "diceRoll": {
+					if (item.action === "create") {
+						result = await supabase
+							.from("roll_history")
+							.insert(item.data as never);
+					}
+					break;
+				}
+				case "compendium":
+				case "homebrew": {
+					if (item.action === "delete") {
+						result = await supabase
+							.from("ai_generated_content")
+							.delete()
+							.eq("id", item.data.id as string);
+					} else {
+						result = await supabase
+							.from("ai_generated_content")
+							.upsert(item.data as never);
+					}
+					break;
+				}
+				default:
+					logger.debug("No default Supabase mapping for type:", item.type);
+					return;
 			}
+
+			if (result?.error) {
+				throw result.error;
+			}
+
+			logger.log(`Sync successful for item ${item.id}`);
+		} catch (error) {
+			logger.error(`Sync failed for item ${item.id}:`, error);
+			throw error;
 		}
 	}
 

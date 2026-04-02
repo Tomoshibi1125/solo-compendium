@@ -59,7 +59,7 @@ export const ProtocolBroadcastButton: React.FC<
 		};
 	}, [user]);
 
-	// Only render for authenticated users who are GM of at least one campaign
+	// Only render for authenticated users who are PW of at least one campaign
 	if (!user || (!isLoading && activeCampaigns.length === 0)) {
 		return null;
 	}

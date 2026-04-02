@@ -19,12 +19,12 @@ type CampaignExtra = Database["public"]["Tables"]["campaign_extras"]["Row"];
 
 interface CampaignExtrasPanelProps {
 	campaignId: string;
-	isDM: boolean;
+	isWarden: boolean;
 }
 
 export function CampaignExtrasPanel({
 	campaignId,
-	isDM,
+	isWarden,
 }: CampaignExtrasPanelProps) {
 	const { extras, addExtra, updateExtra, removeExtra, isLoading } =
 		useCampaignExtras(campaignId);
@@ -36,7 +36,7 @@ export function CampaignExtrasPanel({
 	const [draftSpeed, setDraftSpeed] = useState("");
 
 	const handleAdd = async () => {
-		if (!draftName.trim() || !isDM) return;
+		if (!draftName.trim() || !isWarden) return;
 
 		await addExtra({
 			name: draftName.trim(),
@@ -65,7 +65,7 @@ export function CampaignExtrasPanel({
 	return (
 		<div className="space-y-4">
 			{/* Add New Section */}
-			{isDM && (
+			{isWarden && (
 				<SystemWindow title="ADD CAMPAIGN EXTRA" compact variant="alert">
 					<div className="grid grid-cols-2 md:grid-cols-[2fr_120px_60px_60px_70px_auto] gap-2 items-end">
 						<div className="flex flex-col gap-1">
@@ -209,7 +209,7 @@ export function CampaignExtrasPanel({
 										</div>
 
 										{/* Actions */}
-										{isDM && (
+										{isWarden && (
 											<div className="flex items-center gap-2 border-l pl-3 ml-2">
 												<Button
 													variant="ghost"

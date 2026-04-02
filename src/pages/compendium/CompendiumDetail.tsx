@@ -26,6 +26,7 @@ import { SkillDetail } from "@/components/compendium/SkillDetail";
 import { SovereignDetail } from "@/components/compendium/SovereignDetail";
 import { SpellDetail } from "@/components/compendium/SpellDetail";
 import { TableOfContents } from "@/components/compendium/TableOfContents";
+import { TattooDetail } from "@/components/compendium/TattooDetail";
 import { TechniqueDetail } from "@/components/compendium/TechniqueDetail";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -67,6 +68,7 @@ type TechniqueDetailData = Parameters<typeof TechniqueDetail>[0]["data"];
 type ArtifactDetailData = Parameters<typeof ArtifactDetail>[0]["data"];
 type LocationDetailData = Parameters<typeof LocationDetail>[0]["data"];
 type SovereignDetailData = Parameters<typeof SovereignDetail>[0]["data"];
+type TattooDetailData = Parameters<typeof TattooDetail>[0]["data"];
 
 const CompendiumDetail = () => {
 	const { type, id } = useParams<{ type: EntryType; id: string }>();
@@ -264,6 +266,11 @@ const CompendiumDetail = () => {
 				{ id: "sovereign-fusion", title: "Fusion Components", level: 2 },
 				{ id: "sovereign-features", title: "Abilities", level: 2 },
 			);
+		} else if (type === "tattoos") {
+			items.push(
+				{ id: "tattoo-effects", title: "Circuit Effects", level: 2 },
+				{ id: "tattoo-description", title: "System Recognition", level: 2 },
+			);
 		}
 
 		return items;
@@ -315,6 +322,8 @@ const CompendiumDetail = () => {
 				return <LocationDetail data={data as LocationDetailData} />;
 			case "sovereigns":
 				return <SovereignDetail data={data as SovereignDetailData} />;
+			case "tattoos":
+				return <TattooDetail data={data as TattooDetailData} />;
 			default:
 				return (
 					<SystemWindow title="NOT IMPLEMENTED" variant="alert">
@@ -441,6 +450,7 @@ const CompendiumDetail = () => {
 		locations: "Locations",
 		sovereigns: "Sovereigns",
 		"shadow-soldiers": "Umbral Legion",
+		tattoos: "Magical Tattoos",
 	};
 
 	return (

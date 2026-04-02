@@ -37,7 +37,7 @@ import {
 	useDeleteCampaignNote,
 	useUpdateCampaignNote,
 } from "@/hooks/useCampaignNotes";
-import { useHasDMAccess } from "@/hooks/useCampaigns";
+import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useAuth } from "@/lib/auth/authContext";
 import {
 	canEditNote,
@@ -59,7 +59,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 	const [isShared, setIsShared] = useState(false);
 
 	const { data: notes = [], isLoading } = useCampaignNotes(campaignId);
-	const { data: hasDMAccess = false } = useHasDMAccess(campaignId);
+	const { data: hasWardenAccess = false } = useHasWardenAccess(campaignId);
 	const { user } = useAuth();
 	const createNote = useCreateCampaignNote();
 	const updateNote = useUpdateCampaignNote();
@@ -81,7 +81,11 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 	}));
 
 	const userId = user?.id ?? "";
-	const visibleNotes = filterVisibleNotes(securedNotes, userId, hasDMAccess);
+	const visibleNotes = filterVisibleNotes(
+		securedNotes,
+		userId,
+		hasWardenAccess,
+	);
 
 	const handleOpenDialog = (noteId?: string) => {
 		if (noteId) {
@@ -186,7 +190,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 						visibleNotes.map((secured) => {
 							const note = notes.find((n) => n.id === secured.id);
 							if (!note) return null;
-							const userCanEdit = canEditNote(secured, userId, hasDMAccess);
+							const userCanEdit = canEditNote(secured, userId, hasWardenAccess);
 							return (
 								<div
 									key={note.id}
@@ -290,12 +294,12 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 									id="note-shared"
 									checked={isShared}
 									onCheckedChange={setIsShared}
-									disabled={!hasDMAccess}
+									disabled={!hasWardenAccess}
 								/>
 								<Label htmlFor="note-shared" className="cursor-pointer">
-									{hasDMAccess
+									{hasWardenAccess
 										? "Share with campaign members"
-										: "Share with campaign members (DM only)"}
+										: "Share with campaign members (Protocol Warden only)"}
 								</Label>
 							</div>
 						</div>

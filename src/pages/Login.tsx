@@ -24,7 +24,7 @@ export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [displayName, setDisplayName] = useState("");
-	const [role, setRole] = useState<"dm" | "player">("player");
+	const [role, setRole] = useState<"warden" | "ascendant">("ascendant");
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
@@ -76,7 +76,7 @@ export default function Login() {
 				if (safeNext) {
 					navigate(safeNext);
 				} else {
-					navigate(role === "dm" ? "/dm-tools" : "/player-tools");
+					navigate(role === "warden" ? "/warden-protocols" : "/player-tools");
 				}
 			}
 		} catch {
@@ -107,7 +107,7 @@ export default function Login() {
 			localStorage.removeItem("pending-auth-next");
 		}
 		setLocalGuestRole(role);
-		navigate(role === "dm" ? "/dm-tools" : "/player-tools");
+		navigate(role === "warden" ? "/warden-protocols" : "/player-tools");
 	};
 
 	return (
@@ -190,23 +190,23 @@ export default function Login() {
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
 							<button
 								type="button"
-								onClick={() => setRole("player")}
-								aria-label="Select Player role"
+								onClick={() => setRole("ascendant")}
+								aria-label="Select Ascendant role"
 								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
-									role === "player"
+									role === "ascendant"
 										? "bg-primary text-primary-foreground shadow-lg shadow-primary/50 border border-primary/60"
 										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-primary/30"
 								}`}
 							>
 								<Users className="w-4 h-4" />
-								Player
+								Ascendant
 							</button>
 							<button
 								type="button"
-								onClick={() => setRole("dm")}
+								onClick={() => setRole("warden")}
 								aria-label="Select Protocol Warden role"
 								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
-									role === "dm"
+									role === "warden"
 										? "bg-shadow-purple text-white shadow-lg shadow-shadow-purple/50 border border-shadow-purple/60"
 										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-shadow-purple/30"
 								}`}
@@ -342,7 +342,7 @@ export default function Login() {
 									className="w-full border border-primary/30 text-foreground font-heading font-semibold py-3 px-4 rounded-[2px] hover:border-primary/50 hover:bg-primary/10 transition-all duration-200 tracking-wider uppercase sa-btn-glow"
 								>
 									Continue as Guest (
-									{role === "dm" ? "Protocol Warden" : "Player"})
+									{role === "warden" ? "Protocol Warden" : "Ascendant"})
 								</button>
 								<SystemText className="block text-xs text-muted-foreground text-center font-system tracking-wider">
 									Guest mode saves data only in this browser.

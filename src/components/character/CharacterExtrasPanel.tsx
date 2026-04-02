@@ -12,7 +12,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useCharacterExtras } from "@/hooks/useCharacterExtras";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import type { Database } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -30,8 +30,7 @@ export function CharacterExtrasPanel({
 }: CharacterExtrasPanelProps) {
 	const { extras, addExtra, updateExtra, removeExtra, isLoading } =
 		useCharacterExtras(characterId);
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const [draftName, setDraftName] = useState("");
 	const [draftType, setDraftType] = useState("companion");
@@ -79,7 +78,7 @@ export function CharacterExtrasPanel({
 			extra.extra_type === "wildshape"
 				? `Wild Shape: ${extra.name}`
 				: `Summon: ${extra.name}`;
-		ddbEnhancements
+		ascendantTools
 			.trackConditionChange(characterId, conditionName, logAction)
 			.catch(console.error);
 	};

@@ -19,7 +19,7 @@ import {
 	useCharacterFeatures,
 	useRemoveCharacterFeature,
 } from "@/hooks/useCharacterFeatures";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import type { CustomModifierType } from "@/lib/customModifiers";
 
@@ -109,8 +109,7 @@ export function HomebrewFeatureApplicator({
 	const { data: appliedFeatures = [] } = useCharacterFeatures(characterId);
 	const applyFeature = useApplyHomebrewFeature();
 	const removeFeature = useRemoveCharacterFeature();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const filteredItems = homebrewItems.filter(
 		(item) =>
@@ -133,24 +132,24 @@ export function HomebrewFeatureApplicator({
 			description: item.description || "",
 			modifiers,
 		});
-		playerTools
+		ascendantTools
 			.trackCustomFeatureUsage(
 				characterId,
 				`Applied Homebrew: ${item.name}`,
 				item.description || "",
-				"5e",
+				"SA",
 			)
 			.catch(console.error);
 	};
 
 	const handleRemove = async (featureId: string) => {
 		await removeFeature.mutateAsync({ featureId, characterId });
-		playerTools
+		ascendantTools
 			.trackCustomFeatureUsage(
 				characterId,
 				"Removed Homebrew Feature",
 				"Removed custom trait",
-				"5e",
+				"SA",
 			)
 			.catch(console.error);
 	};

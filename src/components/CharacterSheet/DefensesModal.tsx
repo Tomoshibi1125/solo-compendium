@@ -16,7 +16,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import type { ACBreakdown } from "@/hooks/useArmorClass";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 
 interface DefensesModalProps {
 	acBreakdown: ACBreakdown;
@@ -44,13 +44,12 @@ export function DefensesModal({
 	const [internalOpen, setInternalOpen] = useState(false);
 	const open = isOpen ?? internalOpen;
 	const setOpen = onOpenChange ?? setInternalOpen;
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const handleShare = () => {
 		const message = `Shared Defenses: AC ${acBreakdown.total}. ${resistances.length > 0 ? `Resistances: ${resistances.join(", ")}.` : ""} ${immunities.length > 0 ? `Immunities: ${immunities.join(", ")}.` : ""} ${vulnerabilities.length > 0 ? `Vulnerabilities: ${vulnerabilities.join(", ")}.` : ""}`;
 
-		playerTools.rollInCampaign(undefined as never, {
+		ascendantTools.rollInCampaign(undefined as never, {
 			dice_formula: "0",
 			result: acBreakdown.total,
 			rolls: [],

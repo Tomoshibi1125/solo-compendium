@@ -1,19 +1,30 @@
 import { format } from "date-fns";
-import { BookOpen, Calendar, Plus, Save, Tag, Trash2 } from "lucide-react";
+import parse from "html-react-parser";
+import {
+	BookOpen,
+	Calendar,
+	Edit,
+	Plus,
+	Save,
+	Tag,
+	Trash2,
+} from "lucide-react";
 import { useState } from "react";
-import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
+	type JournalEntry,
 	useCharacterJournal,
 	useCreateJournalEntry,
 	useDeleteJournalEntry,
+	useUpdateJournalEntry,
 } from "@/hooks/useCharacterJournal";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { logger } from "@/lib/logger";
+import { sanitizeRichText } from "@/lib/sanitize";
+import { RichTextNotes } from "./RichTextNotes";
 
 interface JournalPanelProps {
 	characterId: string;
@@ -23,13 +34,20 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 	const [hasError, setHasError] = useState(false);
 	const { data: entries = [], isLoading } = useCharacterJournal(characterId);
 	const createEntry = useCreateJournalEntry();
+	const updateEntry = useUpdateJournalEntry();
 	const deleteEntry = useDeleteJournalEntry();
+
 	const [isCreating, setIsCreating] = useState(false);
 	const [newTitle, setNewTitle] = useState("");
 	const [newContent, setNewContent] = useState("");
 	const [newTags, setNewTags] = useState("");
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+
+	const [editingId, setEditingId] = useState<string | null>(null);
+	const [editTitle, setEditTitle] = useState("");
+	const [editContent, setEditContent] = useState("");
+	const [editTags, setEditTags] = useState("");
+
+	const ascendantTools = useAscendantTools();
 
 	if (hasError) {
 		return (
@@ -61,12 +79,12 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 					.filter(Boolean),
 			});
 
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					characterId,
 					"Journal Entry Added",
 					newTitle,
-					"5e",
+					"SA",
 				)
 				.catch(console.error);
 
@@ -80,15 +98,46 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 		}
 	};
 
+	const handleUpdate = async () => {
+		try {
+			if (!editingId || !editTitle.trim()) return;
+
+			await updateEntry.mutateAsync({
+				id: editingId,
+				characterId,
+				title: editTitle,
+				content: editContent || null,
+				tags: editTags
+					.split(",")
+					.map((t) => t.trim())
+					.filter(Boolean),
+			});
+
+			ascendantTools
+				.trackCustomFeatureUsage(
+					characterId,
+					"Journal Entry Edited",
+					editTitle,
+					"SA",
+				)
+				.catch(console.error);
+
+			setEditingId(null);
+		} catch (error) {
+			logger.error("Failed to update journal entry:", error);
+			setHasError(true);
+		}
+	};
+
 	const handleDelete = async (id: string) => {
 		try {
 			await deleteEntry.mutateAsync({ id, characterId });
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					characterId,
 					"Journal Entry Removed",
 					"Deleted an entry",
-					"5e",
+					"SA",
 				)
 				.catch(console.error);
 		} catch (error) {
@@ -96,6 +145,14 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 			setHasError(true);
 		}
 	};
+
+	const startEditing = (entry: JournalEntry) => {
+		setEditingId(entry.id);
+		setEditTitle(entry.title);
+		setEditContent(entry.content || "");
+		setEditTags((entry.tags || []).join(", "));
+	};
+
 	if (isLoading) {
 		return (
 			<div className="space-y-4">
@@ -141,13 +198,14 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 									onChange={(e) => setNewTitle(e.target.value)}
 									className="bg-background/50"
 								/>
-								<Textarea
-									aria-label="Describe your adventures"
-									placeholder="Describe your adventures..."
-									value={newContent}
-									onChange={(e) => setNewContent(e.target.value)}
-									className="bg-background/50 min-h-[100px]"
-								/>
+								<div className="bg-background/50 rounded-md">
+									<RichTextNotes
+										value={newContent}
+										onChange={setNewContent}
+										className="min-h-[150px]"
+										placeholder="Describe your adventures..."
+									/>
+								</div>
 								<Input
 									aria-label="Tags (comma-separated)"
 									placeholder="Tags (comma-separated)"
@@ -197,50 +255,106 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 									className="border-muted/30 bg-background/30 hover:border-primary/30 transition-colors"
 								>
 									<CardContent className="p-4">
-										<div className="flex items-start justify-between gap-2">
-											<div className="flex-1">
-												<h4 className="font-semibold text-foreground">
-													{entry.title}
-												</h4>
-												{entry.session_date && (
-													<p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-														<Calendar className="h-3 w-3" />
-														{format(
-															new Date(entry.session_date),
-															"MMM d, yyyy",
-														)}
-													</p>
-												)}
-											</div>
-											<Button
-												variant="ghost"
-												size="icon"
-												className="h-7 w-7 text-muted-foreground hover:text-destructive"
-												onClick={() => handleDelete(entry.id)}
-											>
-												<Trash2 className="h-3.5 w-3.5" />
-											</Button>
-										</div>
-
-										{entry.content && (
-											<div className="text-sm text-muted-foreground mt-2 whitespace-pre-wrap">
-												<AutoLinkText text={entry.content} />
-											</div>
-										)}
-
-										{entry.tags && entry.tags.length > 0 && (
-											<div className="flex flex-wrap gap-1 mt-2">
-												{entry.tags.map((tag) => (
-													<Badge
-														key={`tag-${tag}`}
-														variant="secondary"
-														className="text-xs bg-primary/10 text-primary"
+										{editingId === entry.id ? (
+											<div className="space-y-3">
+												<Input
+													aria-label="Edit Title"
+													value={editTitle}
+													onChange={(e) => setEditTitle(e.target.value)}
+													className="bg-background/50"
+												/>
+												<div className="bg-background/50 rounded-md">
+													<RichTextNotes
+														value={editContent}
+														onChange={setEditContent}
+														className="min-h-[150px]"
+													/>
+												</div>
+												<Input
+													aria-label="Edit Tags"
+													value={editTags}
+													onChange={(e) => setEditTags(e.target.value)}
+													className="bg-background/50"
+												/>
+												<div className="flex gap-2">
+													<Button
+														size="sm"
+														onClick={handleUpdate}
+														disabled={
+															!editTitle.trim() || updateEntry.isPending
+														}
+														className="bg-arise hover:bg-arise/80"
 													>
-														<Tag className="h-2.5 w-2.5 mr-1" />
-														{tag}
-													</Badge>
-												))}
+														<Save className="h-4 w-4 mr-1" />
+														Update
+													</Button>
+													<Button
+														size="sm"
+														variant="outline"
+														onClick={() => setEditingId(null)}
+													>
+														Cancel
+													</Button>
+												</div>
 											</div>
+										) : (
+											<>
+												<div className="flex items-start justify-between gap-2">
+													<div className="flex-1">
+														<h4 className="font-semibold text-foreground">
+															{entry.title}
+														</h4>
+														{entry.session_date && (
+															<p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+																<Calendar className="h-3 w-3" />
+																{format(
+																	new Date(entry.session_date),
+																	"MMM d, yyyy",
+																)}
+															</p>
+														)}
+													</div>
+													<div className="flex gap-1">
+														<Button
+															variant="ghost"
+															size="icon"
+															className="h-7 w-7 text-muted-foreground hover:text-primary"
+															onClick={() => startEditing(entry)}
+														>
+															<Edit className="h-3.5 w-3.5" />
+														</Button>
+														<Button
+															variant="ghost"
+															size="icon"
+															className="h-7 w-7 text-muted-foreground hover:text-destructive"
+															onClick={() => handleDelete(entry.id)}
+														>
+															<Trash2 className="h-3.5 w-3.5" />
+														</Button>
+													</div>
+												</div>
+
+												{entry.content && (
+													<div className="text-primary/70 leading-relaxed text-sm prose prose-invert prose-bond max-w-none mt-2">
+														{parse(sanitizeRichText(entry.content))}
+													</div>
+												)}
+
+												{entry.tags && entry.tags.length > 0 && (
+													<div className="flex flex-wrap gap-1 mt-2">
+														{entry.tags.map((tag) => (
+															<Badge
+																key={`tag-${tag}`}
+																variant="secondary"
+																className="text-xs bg-primary/10 text-primary"
+															>
+																<Tag className="h-2.5 w-2.5 mr-1" />
+																{tag}
+															</Badge>
+														))}
+													</div>
+												)}
+											</>
 										)}
 									</CardContent>
 								</Card>

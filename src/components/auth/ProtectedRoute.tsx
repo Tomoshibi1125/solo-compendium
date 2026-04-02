@@ -5,7 +5,7 @@ import { useAuth } from "@/lib/auth/authContext";
 
 interface ProtectedRouteProps {
 	children: ReactNode;
-	requireDM?: boolean;
+	requireWarden?: boolean;
 	allowGuest?: boolean;
 }
 
@@ -66,14 +66,14 @@ const AccessDenied = ({
 
 export function ProtectedRoute({
 	children,
-	requireDM = false,
+	requireWarden = false,
 	allowGuest,
 }: ProtectedRouteProps) {
 	const isE2E = import.meta.env.VITE_E2E === "true";
 	const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 	const { user, loading, session } = useAuth();
 	const isAuthenticated = !!user;
-	const isDM = user?.role === "dm";
+	const isWarden = user?.role === "warden";
 	const guestAllowed = allowGuest ?? guestEnabled;
 	const hasStoredSession =
 		typeof window !== "undefined" &&
@@ -85,14 +85,12 @@ export function ProtectedRoute({
 		});
 
 	// E2E mode: Allow access for testing but still enforce role requirements
-	// This enables proper testing of role-based access control
 	if (isE2E) {
-		// In E2E mode, we need to simulate authentication but still enforce DM requirements
-		if (requireDM && !isDM) {
+		if (requireWarden && !isWarden) {
 			return (
 				<AccessDenied
 					title="Access Denied"
-					message="You need DM privileges to access this area. Please login with a DM account."
+					message="You need Protocol Warden privileges to access this area. Please login with a Warden account."
 					icon={Lock}
 				/>
 			);
@@ -102,7 +100,7 @@ export function ProtectedRoute({
 
 	// If Supabase isn't configured, show helpful setup message
 	if (!isSupabaseConfigured) {
-		if (guestAllowed && (!requireDM || isDM)) {
+		if (guestAllowed && (!requireWarden || isWarden)) {
 			return <>{children}</>;
 		}
 		return (
@@ -118,12 +116,10 @@ export function ProtectedRoute({
 		!user &&
 		(loading || (session && !user) || (!isAuthenticated && hasStoredSession));
 
-	// Show enhanced loading state
 	if (shouldHoldForSession) {
 		return <LoadingState message="Authenticating..." />;
 	}
 
-	// Not authenticated - show helpful access denied
 	if (!isAuthenticated) {
 		if (guestAllowed) {
 			return <>{children}</>;
@@ -137,12 +133,11 @@ export function ProtectedRoute({
 		);
 	}
 
-	// Require DM but user is not DM - show role-based access denied
-	if (requireDM && !isDM) {
+	if (requireWarden && !isWarden) {
 		return (
 			<AccessDenied
-				title="DM Access Required"
-				message="This area requires Protocol Warden (DM) privileges. Please login with a DM account to continue."
+				title="Warden Access Required"
+				message="This area requires Protocol Warden privileges. Please login with a Warden account to continue."
 				icon={Shield}
 			/>
 		);

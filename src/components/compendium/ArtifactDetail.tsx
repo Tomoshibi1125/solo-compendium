@@ -329,7 +329,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 												onClick={() =>
 													queueResolutionAndNavigate(
 														payload,
-														"/dm-tools/initiative-tracker",
+														"/warden-protocols/initiative-tracker",
 													)
 												}
 											>

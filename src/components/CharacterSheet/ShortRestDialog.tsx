@@ -10,7 +10,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useHitDiceSpending } from "@/hooks/useHitDiceSpending";
 import { cn } from "@/lib/utils";
 
@@ -67,8 +67,7 @@ export function ShortRestDialog({
 		hpMax,
 	);
 
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const handleOpen = (isOpen: boolean) => {
 		if (isOpen) {
@@ -81,7 +80,7 @@ export function ShortRestDialog({
 		const result = spendHitDie();
 		if (result) {
 			if (characterId && result.hpRecovered > 0) {
-				playerTools
+				ascendantTools
 					.trackHealthChange(characterId, result.hpRecovered, "healing")
 					.catch(console.error);
 			}

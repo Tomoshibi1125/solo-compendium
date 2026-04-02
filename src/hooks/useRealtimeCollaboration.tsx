@@ -24,7 +24,10 @@ export type DiceRollPayload = {
 	details?: Record<string, unknown>;
 };
 
-export type MapUpdatePayload = Record<string, unknown>;
+export type MapUpdatePayload =
+	| import("@/types/vtt").VTTTokenInstance
+	| import("@/types/vtt").VTTScene
+	| Record<string, unknown>;
 export type CombatStatePayload = Record<string, unknown>;
 
 type CollaborationEventBase = {
@@ -42,7 +45,13 @@ type CollaborationEvent =
 			data: CharacterUpdatePayload;
 	  })
 	| (CollaborationEventBase & { type: "dice_roll"; data: DiceRollPayload })
-	| (CollaborationEventBase & { type: "map_update"; data: MapUpdatePayload })
+	| (CollaborationEventBase & {
+			type: "map_update";
+			data:
+				| import("@/types/vtt").VTTTokenInstance
+				| import("@/types/vtt").VTTScene
+				| Record<string, unknown>;
+	  })
 	| (CollaborationEventBase & {
 			type: "combat_state";
 			data: CombatStatePayload;
@@ -65,6 +74,22 @@ export type CombatStateEvent = Extract<
 	CollaborationEvent,
 	{ type: "combat_state" }
 >;
+
+// Validation Guards
+export function isPresencePayload(v: unknown): v is PresencePayload {
+	if (typeof v !== "object" || v === null) return false;
+	const p = v as PresencePayload;
+	return (
+		(p.user_id === undefined || typeof p.user_id === "string") &&
+		(p.user_name === undefined || typeof p.user_name === "string")
+	);
+}
+
+export function isCollaborationEvent(v: unknown): v is CollaborationEvent {
+	if (typeof v !== "object" || v === null) return false;
+	const e = v as CollaborationEvent;
+	return typeof e.type === "string" && typeof e.userId === "string";
+}
 
 export type PresencePayload = {
 	user_id?: string;
@@ -244,13 +269,45 @@ export function useRealtimeCollaboration(campaignId: string) {
 		const newChannel = supabase
 			.channel(`campaign_${campaignId}`)
 			.on("broadcast", { event: "collaboration" }, (payload) => {
-				handleCollaborationEvent(payload.payload as CollaborationEvent);
+				const event = payload.payload;
+				if (isCollaborationEvent(event)) {
+					handleCollaborationEvent(event);
+				}
 			})
 			.on("presence", { event: "join" }, ({ key, newPresences }) => {
-				handleUserJoin(key, newPresences as unknown as PresencePayload[]);
+				const validated: PresencePayload[] = (newPresences || [])
+					.map((p: unknown) => {
+						const data = p as Record<string, unknown>; // Bridge to unknown-access data
+						return {
+							user_id:
+								typeof data.user_id === "string" ? data.user_id : undefined,
+							user_name:
+								typeof data.user_name === "string" ? data.user_name : undefined,
+							cursor: typeof data.cursor === "object" ? data.cursor : undefined,
+							isTyping:
+								typeof data.isTyping === "boolean" ? data.isTyping : false,
+							currentElement:
+								typeof data.currentElement === "string"
+									? data.currentElement
+									: undefined,
+						} as PresencePayload;
+					})
+					.filter(isPresencePayload);
+				handleUserJoin(key, validated);
 			})
 			.on("presence", { event: "leave" }, ({ key, leftPresences }) => {
-				handleUserLeave(key, leftPresences as unknown as PresencePayload[]);
+				const validated: PresencePayload[] = (leftPresences || [])
+					.map((p: unknown) => {
+						const data = p as Record<string, unknown>;
+						return {
+							user_id:
+								typeof data.user_id === "string" ? data.user_id : undefined,
+							user_name:
+								typeof data.user_name === "string" ? data.user_name : undefined,
+						} as PresencePayload;
+					})
+					.filter(isPresencePayload);
+				handleUserLeave(key, validated);
 			})
 			.on("presence", { event: "sync" }, () => {
 				// Handle initial sync
@@ -289,17 +346,19 @@ export function useRealtimeCollaboration(campaignId: string) {
 		(position: { x: number; y: number }) => {
 			if (!channel || !isConnected) return;
 
+			const payload: CollaborationEvent = {
+				type: "cursor_move",
+				userId: currentUserId,
+				userName: currentUserName,
+				data: position,
+				timestamp: Date.now(),
+				campaignId,
+			};
+
 			channel.send({
 				type: "broadcast",
 				event: "collaboration",
-				payload: {
-					type: "cursor_move",
-					userId: currentUserId,
-					userName: currentUserName,
-					data: position,
-					timestamp: Date.now(),
-					campaignId,
-				} as CollaborationEvent,
+				payload,
 			});
 		},
 		[channel, isConnected, campaignId, currentUserId, currentUserName],

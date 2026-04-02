@@ -6,6 +6,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	type ChoiceGrant,
+	type ChoiceSourceData,
 	calculateTotalChoices,
 	getChoiceGrantDetails,
 } from "../choiceCalculations";
@@ -33,14 +34,14 @@ const mockStaticJob = {
 		"Stealth",
 		"Survival",
 	],
-	awakeningFeatures: [
+	awakening_features: [
 		{
 			name: "Broad-Spectrum Awakening",
 			description: "Gain proficiency in two additional skills of your choice.",
 			level: 1,
 		},
 	],
-	jobTraits: [
+	job_traits: [
 		{
 			name: "System Versatility",
 			description: "Add half prof bonus to unproficient checks.",
@@ -85,8 +86,8 @@ describe("Choice Calculations Integration", () => {
 			// Create enhanced job data as CharacterNew does
 			const enhancedJobData = {
 				...mockDbJob,
-				awakeningFeatures: mockStaticJob.awakeningFeatures || [],
-				jobTraits: mockStaticJob.jobTraits || [],
+				awakening_features: mockStaticJob.awakening_features || [],
+				job_traits: mockStaticJob.job_traits || [],
 			};
 
 			const result = calculateTotalChoices(enhancedJobData, null, [], 1);
@@ -102,8 +103,8 @@ describe("Choice Calculations Integration", () => {
 		it("should return only base choices when no awakening features exist", () => {
 			const jobWithoutFeatures = {
 				...mockDbJob,
-				awakeningFeatures: [],
-				jobTraits: [],
+				awakening_features: [],
+				job_traits: [],
 			};
 
 			const result = calculateTotalChoices(jobWithoutFeatures, null, [], 1);
@@ -115,7 +116,7 @@ describe("Choice Calculations Integration", () => {
 		it("should handle jobs with multiple awakening features granting choices", () => {
 			const jobWithMultipleFeatures = {
 				...mockDbJob,
-				awakeningFeatures: [
+				awakening_features: [
 					{
 						name: "Feature 1",
 						description:
@@ -128,7 +129,7 @@ describe("Choice Calculations Integration", () => {
 						level: 1,
 					},
 				],
-				jobTraits: [],
+				job_traits: [],
 			};
 
 			const result = calculateTotalChoices(
@@ -147,8 +148,8 @@ describe("Choice Calculations Integration", () => {
 		it("should return detailed choice grants for UI display", () => {
 			const enhancedJobData = {
 				...mockDbJob,
-				awakeningFeatures: mockStaticJob.awakeningFeatures || [],
-				jobTraits: mockStaticJob.jobTraits || [],
+				awakening_features: mockStaticJob.awakening_features || [],
+				job_traits: mockStaticJob.job_traits || [],
 			};
 
 			const details = getChoiceGrantDetails(enhancedJobData, null, [], 1);
@@ -173,8 +174,8 @@ describe("Choice Calculations Integration", () => {
 		it("should return empty array when no features exist", () => {
 			const jobWithoutFeatures = {
 				...mockDbJob,
-				awakeningFeatures: [],
-				jobTraits: [],
+				awakening_features: [],
+				job_traits: [],
 			};
 
 			const details = getChoiceGrantDetails(jobWithoutFeatures, null, [], 1);
@@ -212,11 +213,11 @@ describe("Choice Calculations Integration", () => {
 				const details = getChoiceGrantDetails(
 					{
 						skill_choice_count: 0,
-						awakeningFeatures: [
+						awakening_features: [
 							{ name: "Test", description: testCase.desc, level: 1 },
 						],
-						jobTraits: [],
-					},
+						job_traits: [],
+					} as ChoiceSourceData,
 					null,
 					[],
 					1,

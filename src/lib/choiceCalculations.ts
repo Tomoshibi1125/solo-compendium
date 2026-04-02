@@ -316,14 +316,14 @@ function parseChoiceGrants(description: string, source: string): ChoiceGrant[] {
 /**
  * Calculate total additional choices from all sources (job, path, regent)
  */
-interface ChoiceSourceData {
+export interface ChoiceSourceData {
 	skill_choice_count?: number;
-	awakeningFeatures?: Array<{
+	awakening_features?: Array<{
 		level: number;
 		description: string;
 		name: string;
 	}>;
-	jobTraits?: Array<{ description: string; name: string }>;
+	job_traits?: Array<{ description: string; name: string }>;
 	features?: Array<{ level: number; description: string; name: string }>;
 	class_features?: Array<{ level: number; description: string; name: string }>;
 	name?: string;
@@ -353,8 +353,8 @@ export function calculateTotalChoices(
 		totals.skills += jobData.skill_choice_count || 0;
 
 		// Job awakening features
-		if (jobData.awakeningFeatures) {
-			for (const feature of jobData.awakeningFeatures) {
+		if (jobData.awakening_features) {
+			for (const feature of jobData.awakening_features) {
 				if (feature.level <= level) {
 					const grants = parseChoiceGrants(
 						feature.description,
@@ -368,8 +368,8 @@ export function calculateTotalChoices(
 		}
 
 		// Job traits
-		if (jobData.jobTraits) {
-			for (const trait of jobData.jobTraits) {
+		if (jobData.job_traits) {
+			for (const trait of jobData.job_traits) {
 				const grants = parseChoiceGrants(
 					trait.description,
 					`Trait: ${trait.name}`,
@@ -430,8 +430,8 @@ export function getChoiceGrantDetails(
 	const allGrants: ChoiceGrant[] = [];
 
 	// Job awakening features
-	if (jobData?.awakeningFeatures) {
-		for (const feature of jobData.awakeningFeatures) {
+	if (jobData?.awakening_features) {
+		for (const feature of jobData.awakening_features) {
 			if (feature.level <= level) {
 				const grants = parseChoiceGrants(
 					feature.description,
@@ -443,8 +443,8 @@ export function getChoiceGrantDetails(
 	}
 
 	// Job traits
-	if (jobData?.jobTraits) {
-		for (const trait of jobData.jobTraits) {
+	if (jobData?.job_traits) {
+		for (const trait of jobData.job_traits) {
 			const grants = parseChoiceGrants(
 				trait.description,
 				`Trait: ${trait.name}`,

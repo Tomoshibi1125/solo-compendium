@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useToast } from "@/hooks/use-toast";
+// import removed as unused here
 import { supabase } from "@/integrations/supabase/client";
 import { compressImage } from "@/lib/imageOptimization";
 
@@ -21,6 +22,7 @@ export function PortraitUpload({
 	);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { toast } = useToast();
+	// playerTools removed as unused here
 
 	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -178,11 +180,13 @@ export function PortraitUpload({
 
 				<div className="flex-1 space-y-2">
 					<input
-						ref={fileInputRef}
 						type="file"
-						accept="image/*"
+						ref={fileInputRef}
 						onChange={handleFileSelect}
+						accept="image/*"
 						className="hidden"
+						title="Upload Portrait"
+						placeholder="No file chosen"
 					/>
 					<div className="flex gap-2">
 						<Button

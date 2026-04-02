@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { WardenChatbot } from "@/components/dm-tools/WardenChatbot";
 import {
 	OfflineStatus,
 	PWAInstallPrompt,
 } from "@/components/pwa/PWAComponents";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { OfflineBanner } from "@/components/ui/OfflineBanner";
+import { WardenChatbot } from "@/components/warden-protocols/WardenChatbot";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
 import { useAccessibility } from "@/hooks/useAccessibility";
 import { usePWA } from "@/hooks/usePWA";
@@ -48,7 +48,12 @@ function useMediaQuery(query: string): boolean {
 function useSAZone(): string {
 	const location = useLocation();
 	const path = location.pathname;
-	if (path.startsWith("/dm-tools") || path.startsWith("/admin")) return "dm";
+	if (
+		path.startsWith("/warden-protocols") ||
+		path.startsWith("/warden-protocols") ||
+		path.startsWith("/admin")
+	)
+		return "warden";
 	if (path.startsWith("/campaigns")) return "campaign";
 	if (path.startsWith("/compendium") || path.startsWith("/favorites"))
 		return "compendium";
@@ -144,7 +149,7 @@ export function Layout({ children, className }: LayoutProps) {
 				syncQueueLength={syncQueueLength}
 			/>
 
-			{saZone === "dm" && <WardenChatbot />}
+			{saZone === "PW" && <WardenChatbot />}
 		</div>
 	);
 }

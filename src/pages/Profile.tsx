@@ -34,15 +34,9 @@ export default function Profile() {
 	// Editable state
 	const [nameInput, setNameInput] = useState(displayName);
 	const [savingName, setSavingName] = useState(false);
+
 	const [avatarPreview, setAvatarPreview] = useState<string | null>(
-		(user as unknown as Record<string, unknown>)?.user_metadata
-			? ((
-					(user as unknown as Record<string, unknown>).user_metadata as Record<
-						string,
-						string
-					>
-				).avatar_url ?? null)
-			: null,
+		user?.avatar ?? null,
 	);
 	const [selectedFontSize, setSelectedFontSize] = useState<string>(
 		() => localStorage.getItem(FONT_SIZE_KEY) || "text-base",

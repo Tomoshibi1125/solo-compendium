@@ -35,8 +35,9 @@ async function run() {
                 }
             }
             totalItems += fileCount;
-        } catch(e) {
-            console.log(`Error parsing ${file.split('\\').pop()}: ${e.message.substring(0,50)}`);
+        } catch(e: unknown) {
+            const err = e instanceof Error ? e : new Error(String(e));
+            console.log(`Error parsing ${file.split('\\').pop()}: ${err.message.substring(0,50)}`);
         }
     }
     console.log(`\nTOTAL ARRAYS FOUND: ${totalItems}`);

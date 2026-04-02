@@ -258,7 +258,7 @@ export default function PlayerToolDetail() {
 					)}
 					{toolId === "character-art" && (
 						<Button
-							onClick={() => navigate("/dm-tools/art-generator")}
+							onClick={() => navigate("/warden-protocols/art-generator")}
 							variant="outline"
 							className="gap-2"
 						>

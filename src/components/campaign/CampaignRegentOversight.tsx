@@ -74,9 +74,9 @@ export function CampaignRegentOversight({
 		) {
 			// Note: useRegentUnlocks(charId).removeUnlock will work because charId is passed
 			// but we need the hook instance for that charId.
-			// For simplicity in this DM view, we can just use the mutation from the hook
+			// For simplicity in this Protocol Warden (PW) view, we can just use the mutation from the hook
 			// if selectedCharId matches, OR we could make a global mutation hook.
-			// For now, let's assume the DM selects the character first.
+			// For now, let's assume the Protocol Warden (PW) selects the character first.
 			setSelectedCharId(charId);
 			setTimeout(() => removeUnlock(unlockId), 0);
 		}
@@ -244,7 +244,7 @@ export function CampaignRegentOversight({
 						</div>
 
 						<div className="space-y-2">
-							<Label>DM Notes (Optional)</Label>
+							<Label>PW Notes (Optional)</Label>
 							<Input
 								placeholder="Internal notes about this unlock..."
 								value={dmNotes}

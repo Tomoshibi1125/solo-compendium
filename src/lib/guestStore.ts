@@ -69,7 +69,7 @@ const STORAGE_KEY = "solo-compendium.guest.v1";
 const USER_KEY = "solo-compendium.guest.user";
 const ROLE_KEY = "solo-compendium.guest.role";
 
-type GuestRole = "dm" | "player";
+type GuestRole = "warden" | "ascendant";
 
 function hasLocalStorage(): boolean {
 	try {
@@ -119,9 +119,9 @@ export function getLocalUserId(): string {
 }
 
 export function getLocalGuestRole(): GuestRole {
-	if (!hasLocalStorage()) return "player";
+	if (!hasLocalStorage()) return "ascendant";
 	const stored = window.localStorage.getItem(ROLE_KEY);
-	return stored === "dm" || stored === "player" ? stored : "player";
+	return stored === "warden" || stored === "ascendant" ? stored : "ascendant";
 }
 
 export function setLocalGuestRole(role: GuestRole): void {
@@ -167,10 +167,15 @@ function saveGuestState(state: GuestStateV1): void {
 	}
 }
 
-export function listLocalCharacters(): CharacterRow[] {
+export function listLocalCharacters(): (CharacterRow & {
+	abilities: Record<AbilityScore, number>;
+})[] {
 	const state = loadGuestState();
 	return Object.values(state.characters)
-		.map((c) => c.character)
+		.map((c) => ({
+			...c.character,
+			abilities: c.abilities,
+		}))
 		.sort((a, b) => b.updated_at.localeCompare(a.updated_at));
 }
 

@@ -407,7 +407,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 												onClick={() =>
 													queueResolutionAndNavigate(
 														payload,
-														"/dm-tools/initiative-tracker",
+														"/warden-protocols/initiative-tracker",
 													)
 												}
 											>

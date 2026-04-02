@@ -6,7 +6,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { MAX_ATTUNEMENT_SLOTS } from "@/hooks/useAttunement";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
 interface AttunedItem {
@@ -29,12 +29,11 @@ export function AttunementSlots({
 	onUnattune,
 	characterId,
 }: AttunementSlotsProps) {
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const handleUnattune = (item: AttunedItem) => {
 		onUnattune(item.id);
-		playerTools
+		ascendantTools
 			.trackInventoryChange(characterId, item.name, "unequip")
 			.catch(console.error);
 	};

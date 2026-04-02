@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import {
@@ -30,7 +30,7 @@ const readCachedRollHistory = (key: string): RollRecord[] | null => {
 		if (typeof window === "undefined") return null;
 		const raw = window.localStorage.getItem(key);
 		if (!raw) return null;
-		const parsed = JSON.parse(raw) as unknown;
+		const parsed: unknown = JSON.parse(raw);
 		return Array.isArray(parsed) ? (parsed as RollRecord[]) : null;
 	} catch {
 		return null;

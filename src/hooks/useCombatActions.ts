@@ -39,8 +39,8 @@ export interface CombatAction {
 	type: CombatActionType;
 	description?: string;
 	activation: string;
-	range: string;
-	target: string;
+	range?: string;
+	target?: string;
 	attackBonus?: number;
 	damageRoll?: string;
 	damageType?: string;
@@ -49,6 +49,8 @@ export interface CombatAction {
 	resourceCost?: string;
 	resourceCurrent?: number;
 	resourceMax?: number;
+	equipmentId?: string;
+	inscriptionId?: string;
 	payload: ActionResolutionPayload;
 	sourceId: string; // The ID of the weapon, power, etc.
 }
@@ -97,6 +99,76 @@ export const useCombatActions = (characterId: string) => {
 		const profBonus = getProficiencyBonus(character.level);
 		const result: CombatAction[] = [];
 
+		// Helper: Check proficiency
+		const isProficient = (item: {
+			name: string;
+			properties?: string[] | null;
+		}) => {
+			const profs = (character.weapon_proficiencies || []).map((p) =>
+				p.toLowerCase(),
+			);
+			const itemProps =
+				(item.properties as string[])?.map((p) => p.toLowerCase()) || [];
+
+			// Name match
+			if (profs.includes(item.name.toLowerCase())) return true;
+
+			// Category match
+			if (
+				itemProps.includes("simple") &&
+				profs.some((p) => p.includes("simple"))
+			)
+				return true;
+			if (
+				itemProps.includes("martial") &&
+				profs.some((p) => p.includes("martial"))
+			)
+				return true;
+
+			return false;
+		};
+
+		// Helper: Parse Range
+		const parseRange = (item: {
+			properties?: string[] | null;
+			description?: string | null;
+		}) => {
+			const props = (item.properties as string[]) || [];
+			const rangeProp = props.find((p) => p.toLowerCase().includes("/"));
+			if (rangeProp) return rangeProp;
+
+			if (props.some((p) => p.toLowerCase().includes("reach"))) return "10 ft";
+
+			const descMatch = item.description?.match(/range (\d+\/\d+)/i);
+			if (descMatch) return descMatch[1];
+
+			return props.some((p) => p.toLowerCase().includes("ranged"))
+				? "80/320"
+				: "5 ft";
+		};
+
+		// Helper: Detect Damage Type
+		const detectDamageType = (item: {
+			name: string;
+			description?: string | null;
+		}) => {
+			const content = `${item.name} ${item.description}`.toLowerCase();
+			if (content.includes("slashing")) return "slashing";
+			if (content.includes("piercing")) return "piercing";
+			if (content.includes("bludgeoning")) return "bludgeoning";
+			if (content.includes("fire")) return "fire";
+			if (content.includes("cold")) return "cold";
+			if (content.includes("lightning")) return "lightning";
+			if (content.includes("force")) return "force";
+			if (content.includes("psychic")) return "psychic";
+			if (content.includes("necrotic")) return "necrotic";
+			if (content.includes("radiant")) return "radiant";
+			if (content.includes("acid")) return "acid";
+			if (content.includes("poison")) return "poison";
+			if (content.includes("thunder")) return "thunder";
+			return "physical";
+		};
+
 		// 1. Weapon Actions
 		const weapons = (equipment || []).filter(
 			(e) =>
@@ -122,15 +194,17 @@ export const useCombatActions = (characterId: string) => {
 			}
 
 			const abiMod = getAbilityModifier(character.abilities[ability]);
-			// TODO: Add weapon proficiency check
-			const attackBonus = abiMod + profBonus;
+			const hasProf = isProficient(w);
+			const attackBonus = abiMod + (hasProf ? profBonus : 0);
 
-			// Basic damage roll parsing (extending characterCalculations logic)
-			// For now, using a simple heuristic or checking description
+			// Basic damage roll parsing
 			const damageMatch = w.description?.match(/(\d+d\d+)/);
 			const damageRoll = damageMatch
 				? `${damageMatch[1]}+${abiMod}`
 				: `1d4+${abiMod}`;
+
+			const damageType = detectDamageType(w);
+			const range = parseRange(w);
 
 			result.push({
 				id: `weapon-${w.id}`,
@@ -138,11 +212,12 @@ export const useCombatActions = (characterId: string) => {
 				type: "weapon",
 				description: w.description || "",
 				activation: "1 action",
-				range: isRanged ? "80/320" : "5 ft", // TODO: Extract from properties
+				range,
 				target: "One creature",
 				attackBonus,
 				damageRoll,
-				damageType: "physical", // TODO: Detect
+				damageType,
+				equipmentId: w.id,
 				payload: {
 					version: 1,
 					id: `weapon-${w.id}`,
@@ -150,7 +225,7 @@ export const useCombatActions = (characterId: string) => {
 					source: { type: "item", entryId: w.id },
 					kind: "attack",
 					attack: { roll: `1d20+${attackBonus}` },
-					damage: { roll: damageRoll, type: "physical" },
+					damage: { roll: damageRoll, type: damageType },
 				},
 				sourceId: w.id,
 			});
@@ -158,7 +233,7 @@ export const useCombatActions = (characterId: string) => {
 
 		// 2. Spell/Power Actions
 		(powers || []).forEach((p) => {
-			const powerData = p.power as CompendiumPower; // Cast to our unified type
+			const powerData = p.power as CompendiumPower;
 			if (!powerData) return;
 
 			const castingAbility = character.job === "Technomancer" ? "INT" : "SENSE";
@@ -166,11 +241,7 @@ export const useCombatActions = (characterId: string) => {
 			const attackBonus = abiMod + profBonus;
 			const saveDC = 8 + abiMod + profBonus;
 
-			// Use actual properties from CompendiumPower
 			const mechanics = (powerData.mechanics as JsonMechanics) || {};
-
-			// Use mechanics here if needed, or remove if unused.
-			// Let's keep it but mark it as used by referencing a field if it exists.
 			const target = powerData.target || (mechanics.target as string) || "";
 
 			result.push({
@@ -212,6 +283,7 @@ export const useCombatActions = (characterId: string) => {
 						: undefined,
 				},
 				sourceId: p.id,
+				equipmentId: p.id,
 			});
 		});
 
@@ -220,13 +292,11 @@ export const useCombatActions = (characterId: string) => {
 			const techData = t.technique as CompendiumTechnique;
 			if (!techData) return;
 
-			// Techniques often use a specific ability or the highest martial ability
 			const strMod = getAbilityModifier(character.abilities.STR);
 			const agiMod = getAbilityModifier(character.abilities.AGI);
 			const abiMod = Math.max(strMod, agiMod);
 			const saveDC = 8 + abiMod + profBonus;
 
-			// Extract mechanics if available
 			const mechanics = (techData.mechanics as JsonMechanics) || {};
 
 			result.push({
@@ -264,12 +334,11 @@ export const useCombatActions = (characterId: string) => {
 			const sigilData = si.sigil;
 			if (!sigilData?.active_feature) return;
 
-			// Check if equipment is equipped/attuned
 			const eq = (equipment || []).find((e) => e.id === si.equipment_id);
 			if (!eq?.is_equipped || (eq.requires_attunement && !eq.is_attuned))
 				return;
 
-			const feat = sigilData.active_feature as unknown as ActiveFeature;
+			const feat = sigilData.active_feature as ActiveFeature;
 			const name = feat.name || sigilData.name;
 			const sourceName = eq.name;
 
@@ -281,10 +350,8 @@ export const useCombatActions = (characterId: string) => {
 				activation: feat.action_type || "1 action",
 				range: feat.range || "Self",
 				target: feat.target || "One creature",
-				resourceCurrent: feat.uses_max
-					? (si.id.length % feat.uses_max) + 1
-					: undefined, // Placeholder for uses if not tracked
-				resourceMax: feat.uses_max,
+				resourceCurrent: eq.charges_current ?? feat.uses_max,
+				resourceMax: eq.charges_max ?? feat.uses_max,
 				payload: {
 					version: 1,
 					id: `sigil-action-${si.id}`,

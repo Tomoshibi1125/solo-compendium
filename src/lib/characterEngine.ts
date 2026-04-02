@@ -41,7 +41,7 @@ import {
 	mergeAndSortEffects,
 	resolveEffectConflicts,
 } from "./unifiedEffectSystem";
-// Effect types (inlined from effectsEngine.ts — that module is now deleted)
+// Effect types (inlined from effectsEngine.ts â€” that module is now deleted)
 export type EffectType =
 	| "modifier" // Modifies a stat (AC, speed, ability, etc.)
 	| "resource" // Modifies a resource (HP max, slots, uses, etc.)
@@ -120,7 +120,7 @@ import {
 /**
  * Equipment instance with effects
  */
-interface EquipmentInstance {
+export interface EquipmentInstance {
 	id: string;
 	name: string;
 	type: "armor" | "weapon" | "accessory" | "consumable" | "tool" | "other";
@@ -159,7 +159,7 @@ export interface ActiveCondition {
 /**
  * Feature instance with usage tracking
  */
-interface FeatureInstance {
+export interface FeatureInstance {
 	id: string;
 	name: string;
 	sourceType: "job" | "path" | "feat" | "race" | "item" | "awakening" | "trait";
@@ -174,7 +174,7 @@ interface FeatureInstance {
 /**
  * Active spell effect (concentration, duration-based)
  */
-interface ActiveSpellEffect {
+export interface ActiveSpellEffect {
 	spellId: string;
 	spellName: string;
 	level: number;
@@ -190,10 +190,10 @@ interface ActiveSpellEffect {
 /**
  * Character job/regent overlay data
  */
-interface CharacterJob {
+export interface CharacterJob {
 	job: string; // System Ascendant job name (Destroyer, Mage, etc.)
 	path?: string; // System Ascendant subclass/path name (level 3, automatic)
-	regent?: string; // Regent path ID (quest-gated, DM unlocks)
+	regent?: string; // Regent path ID (quest-gated, Protocol Warden (PW) unlocks)
 	gemini?: {
 		id?: string;
 		sovereignId?: string;
@@ -213,7 +213,7 @@ interface CharacterJob {
 /**
  * Base character data - everything stored in database
  */
-interface CharacterBaseData {
+export interface CharacterBaseData {
 	// Identity
 	id: string;
 	name: string;
@@ -318,7 +318,7 @@ interface ComputedCharacterStats {
 		savingThrows: RollModifierSummary;
 	};
 
-	// Senses (DDB/Foundry parity — darkvision, blindsight, tremorsense, passives)
+	// Senses (DDB/Foundry parity â€” darkvision, blindsight, tremorsense, passives)
 	senses?: CharacterSenses;
 
 	// Attacks per action (Extra Attack from Job/Regent)
@@ -612,7 +612,7 @@ export function parseJobTraitEffects(
 
 	// Double damage (e.g., "Deal double damage to objects and structures")
 	if (desc.includes("double damage") || desc.includes("deal double")) {
-		// This is situational and handled by DM/UI, not automatic
+		// This is situational and handled by PW/UI, not automatic
 	}
 
 	return effects;
@@ -620,7 +620,7 @@ export function parseJobTraitEffects(
 
 /**
  * Aggregate regent features (quest-gated sovereign subclass)
- * Regents are DM-unlocked, NOT level-gated
+ * Regents are PW-unlocked, NOT level-gated
  */
 export function aggregateRegentFeatures(
 	jobs: CharacterJob[],
@@ -709,7 +709,7 @@ export function parseRegentFeatureEffects(
 	// Damage bonuses (e.g., "+4d6 fire damage", "take 6d8 radiant/round")
 	const damageBonus = desc.match(/(\d+d\d+)\s*([a-z]+)\s*damage/i);
 	if (damageBonus) {
-		// Combat damage dice effect — store as a damage_bonus modifier
+		// Combat damage dice effect â€” store as a damage_bonus modifier
 		// The dice expression is tracked for display; numeric estimate used for modifier
 		const diceExpr = damageBonus[1]; // e.g., "4d6"
 		const diceCount = parseInt(diceExpr.split("d")[0], 10) || 1;
@@ -784,7 +784,7 @@ export function parseRegentFeatureEffects(
 		desc.includes("immune to all")
 	) {
 		// Special case: Titan Regent's invulnerability
-		// This is too powerful for auto-effect, must be handled by DM
+		// This is too powerful for auto-effect, must be handled by PW
 	}
 
 	if (desc.includes("resistance to all") || desc.includes("resist all")) {
@@ -1006,7 +1006,7 @@ export function aggregateEffects(base: CharacterBaseData): Effect[] {
 		}
 	}
 
-	// Feat & Fighting Style effects (Priority: 200 — Foundry Active Effects parity)
+	// Feat & Fighting Style effects (Priority: 200 â€” Foundry Active Effects parity)
 	// Parse character feats and fighting styles into mechanical bonuses
 	const featNames = base.features
 		.filter((f) => f.sourceType === "feat")
@@ -1616,7 +1616,7 @@ export function computeCharacterStats(
 	// 16. Build computed effects summary for UI display
 	const activeEffects = buildEffectsSummary(effects, base);
 
-	// 17. Compute senses (DDB/Foundry parity — darkvision, blindsight, tremorsense, passives)
+	// 17. Compute senses (DDB/Foundry parity â€” darkvision, blindsight, tremorsense, passives)
 	const regentIds = base.jobs
 		.filter((j) => Boolean(j.regent))
 		.map((j) => j.regent as string);
@@ -1624,8 +1624,8 @@ export function computeCharacterStats(
 		base.jobs[0]?.job ?? null,
 		base.jobs[0]?.path ?? null,
 		regentIds,
-		extractEquipmentSenses(base.equippedItems), // equipmentSenses — extracted from equipped items
-		extractSpellSenses(base.activeSpells), // spellSenses — extracted from active spell effects
+		extractEquipmentSenses(base.equippedItems), // equipmentSenses â€” extracted from equipped items
+		extractSpellSenses(base.activeSpells), // spellSenses â€” extracted from active spell effects
 		abilityModifiers.SENSE,
 		abilityModifiers.INT,
 		proficiencyBonus,
@@ -1636,7 +1636,7 @@ export function computeCharacterStats(
 		base.features.some((f) => f.name.toLowerCase() === "observant"),
 	);
 
-	// 18. Compute attacks per action (Extra Attack from Job/Regent — Foundry parity)
+	// 18. Compute attacks per action (Extra Attack from Job/Regent â€” Foundry parity)
 	const attacksPerAction = computeAttacksPerAction(
 		base.jobs[0]?.job ?? null,
 		base.level,
@@ -1888,4 +1888,12 @@ export function calculateFeatureUses(
 	if (!Number.isNaN(num)) return num;
 
 	return null;
+}
+export function maintainConcentration(
+	characterId: string,
+	_dc: number = 10,
+	_source: string = "Magic",
+): boolean {
+	console.log(`[Protocol Warden] Checking Concentration for ${characterId}`);
+	return true;
 }

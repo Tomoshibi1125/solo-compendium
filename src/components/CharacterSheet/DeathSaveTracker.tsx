@@ -6,7 +6,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
 interface DeathSaveTrackerProps {
@@ -31,14 +31,13 @@ export function DeathSaveTracker({
 	lastRollResult,
 	characterId,
 }: DeathSaveTrackerProps & { characterId: string }) {
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	if (hpCurrent > 0) return null;
 
 	const handleStabilize = () => {
 		onStabilize();
-		playerTools
+		ascendantTools
 			.trackConditionChange(characterId, "Stable", "add")
 			.catch(console.error);
 	};

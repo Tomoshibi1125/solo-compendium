@@ -3,10 +3,12 @@
  * Perform operations on multiple items at once
  */
 
+import { jobs as staticJobs } from "@/data/compendium/jobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { error as logError } from "@/lib/logger";
+import type { StaticJob } from "@/types/character";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
 export type CompendiumEquipment =
@@ -203,7 +205,10 @@ export async function bulkLevelUp(
 				const { addJobAwakeningBenefitsForLevel } = await import(
 					"@/lib/characterCreation"
 				);
-				await addJobAwakeningBenefitsForLevel(id, character.job, newLevel);
+				const jobObj = staticJobs.find((j) => j.name === character.job) as
+					| StaticJob
+					| undefined;
+				await addJobAwakeningBenefitsForLevel(id, jobObj, newLevel);
 			} catch {
 				// Best-effort
 			}

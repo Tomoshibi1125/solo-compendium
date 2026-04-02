@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
 	useCampaign,
-	useHasDMAccess,
+	useHasWardenAccess,
 	useUpdateCampaign,
 } from "@/hooks/useCampaigns";
 import type { Json } from "@/integrations/supabase/types";
@@ -34,8 +34,8 @@ interface CampaignSettingsProps {
 export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 	const { toast } = useToast();
 	const { data: campaign } = useCampaign(campaignId);
-	const { data: hasDMAccess, isLoading: loadingAccess } =
-		useHasDMAccess(campaignId);
+	const { data: hasWardenAccess, isLoading: loadingAccess } =
+		useHasWardenAccess(campaignId);
 	const [name, setName] = useState(campaign?.name || "");
 	const [description, setDescription] = useState(campaign?.description || "");
 	const [isActive, setIsActive] = useState(campaign?.is_active ?? true);
@@ -105,7 +105,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 					sendMessage
 						.mutateAsync({
 							campaignId,
-							content: `**System**: The Warden has updated the campaign rules/settings.`,
+							content: `**System**: The Protocol Warden has updated the campaign rules/settings.`,
 						})
 						.catch(console.error);
 				},
@@ -126,7 +126,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 		);
 	}
 
-	if (!hasDMAccess) {
+	if (!hasWardenAccess) {
 		return (
 			<SystemWindow
 				title="CAMPAIGN SETTINGS"

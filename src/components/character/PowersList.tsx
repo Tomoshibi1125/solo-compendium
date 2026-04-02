@@ -1,7 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, Plus, Trash2, Wand2 } from "lucide-react";
 import { useCallback, useState } from "react";
-import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -16,12 +14,12 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import type { useSpellCasting } from "@/hooks/useSpellCasting";
-import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import type { DetailData } from "@/types/character";
 
 export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 
@@ -39,21 +37,26 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 import { AddPowerDialog } from "./AddPowerDialog";
 
 function CompendiumLink({
-	type,
-	id,
 	name,
+	onSelect,
 	className,
 }: {
-	type: string;
-	id: string;
 	name: string;
+	onSelect?: () => void;
 	className?: string;
 }) {
 	const displayName = formatRegentVernacular(name);
 	return (
-		<Link to={`/compendium/${type}/${id}`} className={className}>
+		<button
+			type="button"
+			onClick={onSelect}
+			className={cn(
+				"text-left hover:text-primary transition-colors",
+				className,
+			)}
+		>
 			{displayName}
-		</Link>
+		</button>
 	);
 }
 
@@ -61,10 +64,12 @@ export function PowersList({
 	characterId,
 	spellCasting,
 	campaignId,
+	onSelectDetail,
 }: {
 	characterId: string;
 	spellCasting?: ReturnType<typeof useSpellCasting>;
 	campaignId?: string;
+	onSelectDetail?: (detail: DetailData) => void;
 }) {
 	const {
 		powers: rawPowers,
@@ -83,38 +88,12 @@ export function PowersList({
 	const updateSpellSlot = useUpdateSpellSlot();
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
-	const { rollInCampaign } = ddbEnhancements;
+	const ascendantTools = useAscendantTools();
+	const { rollInCampaign } = ascendantTools;
 
 	const [addDialogOpen, setAddDialogOpen] = useState(false);
 	const [filterLevel, setFilterLevel] = useState<string>("all");
 	const [filterPrepared, setFilterPrepared] = useState<string>("all");
-
-	// Get compendium power IDs for linking (with static fallback)
-	const { data: compendiumPowers = [] } = useQuery({
-		queryKey: ["compendium-powers-lookup"],
-		queryFn: async () => {
-			const { data } = await supabase
-				.from("compendium_powers")
-				.select("id, name");
-			if (data && data.length > 0) return data;
-
-			// Static fallback
-			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
-			);
-			const staticPowers = await staticDataProvider.getPowers("");
-			return staticPowers.map((p: { id: string; name: string }) => ({
-				id: p.id,
-				name: p.name,
-			}));
-		},
-	});
-
-	const getPowerId = (powerName: string) => {
-		return compendiumPowers.find((p) => p.name === powerName)?.id;
-	};
 
 	const filteredPowers = powers.filter((power) => {
 		if (filterLevel !== "all" && power.power_level.toString() !== filterLevel)
@@ -247,7 +226,7 @@ export function PowersList({
 				return;
 			}
 
-			ddbEnhancements
+			ascendantTools
 				.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
 				.catch(console.error);
 
@@ -259,7 +238,7 @@ export function PowersList({
 		}
 
 		if (power.power_level === 0) {
-			ddbEnhancements
+			ascendantTools
 				.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
 				.catch(console.error);
 			toast({
@@ -309,7 +288,7 @@ export function PowersList({
 				character_id: characterId,
 			});
 
-			ddbEnhancements
+			ascendantTools
 				.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
 				.catch(console.error);
 
@@ -540,18 +519,17 @@ export function PowersList({
 											<div className="flex items-start justify-between gap-2">
 												<div className="flex-1">
 													<div className="flex items-center gap-2 mb-1">
-														{getPowerId(power.name) ? (
-															<CompendiumLink
-																type="powers"
-																id={getPowerId(power.name) as unknown as string}
-																name={displayName}
-																className="font-heading font-semibold hover:text-primary"
-															/>
-														) : (
-															<span className="font-heading font-semibold">
-																{displayName}
-															</span>
-														)}
+														<CompendiumLink
+															name={displayName}
+															className="font-heading font-semibold hover:text-primary"
+															onSelect={() =>
+																onSelectDetail?.({
+																	title: displayName,
+																	description: power.description || "",
+																	payload: power,
+																})
+															}
+														/>
 														{power.power_level > 0 && (
 															<Badge variant="secondary" className="text-xs">
 																Level {power.power_level}

@@ -8,13 +8,9 @@ import { NINE_REGENTS } from "./nineRegents";
 export type AbilityScore = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
 export type Job = string;
 
-import {
-	type Feature,
-	type RegentPath,
-	RegentType,
-	type Spell,
-	type Trait,
-} from "./regentTypes";
+import { aiService } from "./ai/aiService";
+import { logger } from "./logger";
+import type { Feature, RegentPath, Spell, Trait } from "./regentTypes";
 
 // Gemini Protocol fusion result
 interface GeminiSovereign {
@@ -50,7 +46,7 @@ interface RegentChoice {
 // 1. On quest unlock, AI presents 3 regent choices
 // 2. Choices are based on character's stats, job, playstyle
 // 3. Player picks ONE regent
-// 4. When DM unlocks second quest, AI presents 3 NEW choices (cannot pick same regent twice)
+// 4. When Protocol Warden (PW) unlocks second quest, AI presents 3 NEW choices (cannot pick same regent twice)
 // 5. Player picks ONE more regent (MAX 2 REGENTS TOTAL)
 // 6. If martial picks caster regent (or vice versa), AI adapts it for compatibility
 // 7. When player has 2 regents, they can fuse via Gemini Protocol
@@ -276,34 +272,97 @@ export class RegentGeminiSystem {
 	private static async aiSelectRegents(
 		character: Character,
 		availableRegents: RegentPath[],
-		jobType: string,
+		_jobType: string,
 	): Promise<RegentChoice[]> {
-		// Simulate AI analysis with comprehensive scoring
-		const choices: RegentChoice[] = [];
+		try {
+			const abilities = RegentGeminiSystem.getCharacterAbilities(character);
+			const highestStat = RegentGeminiSystem.getHighestStat(abilities);
 
+			const response = await aiService.processRequest({
+				service: "gemini-proxy",
+				type: "generate-regents",
+				input: {
+					character: {
+						name: character.name,
+						level: character.level,
+						job: character.job,
+						abilities,
+					},
+					availableRegents: availableRegents.map((r) => ({
+						id: r.id,
+						name: r.name,
+						type: r.type,
+						description: r.description,
+						requirements: r.requirements,
+					})),
+					highestStat,
+				},
+			});
+
+			if (response.success && Array.isArray(response.data)) {
+				const choices: RegentChoice[] = [];
+				for (const aiChoice of response.data) {
+					const regent = availableRegents.find((r) => r.id === aiChoice.regent);
+					if (regent) {
+						choices.push({
+							regent,
+							aiReasoning: aiChoice.reasoning,
+							compatibilityScore: aiChoice.compatibility,
+							adaptationNote: RegentGeminiSystem.generateAdaptationNote(
+								regent,
+								RegentGeminiSystem.getJobType(character.job || ""),
+							),
+						});
+					}
+				}
+				if (choices.length > 0) return choices;
+			}
+		} catch (error) {
+			logger.error(
+				"AI Regent Selection failed, using deterministic fallback",
+				error,
+			);
+		}
+
+		// Fallback to deterministic logic
+		const choices: RegentChoice[] = [];
 		for (const regent of availableRegents) {
-			const score = await RegentGeminiSystem.aiAnalyzeRegentChoice(
+			const score = await RegentGeminiSystem.deterministicAnalyzeRegent(
 				character,
 				regent,
-				jobType,
 			);
-
-			// Check if regent needs adaptation for job type compatibility
-			const adaptationNote = RegentGeminiSystem.generateAdaptationNote(
-				regent,
-				jobType,
-			);
-
 			choices.push({
 				regent,
 				aiReasoning: score.reasoning,
-				adaptationNote,
 				compatibilityScore: score.compatibility,
+				adaptationNote: RegentGeminiSystem.generateAdaptationNote(
+					regent,
+					RegentGeminiSystem.getJobType(character.job || ""),
+				),
 			});
 		}
-
-		// Sort by compatibility score
 		return choices.sort((a, b) => b.compatibilityScore - a.compatibilityScore);
+	}
+
+	private static async deterministicAnalyzeRegent(
+		character: Character,
+		regent: RegentPath,
+	): Promise<{ reasoning: string; compatibility: number }> {
+		const abilities = RegentGeminiSystem.getCharacterAbilities(character);
+		const job = character.job || "Adventurer";
+		const highestStat = RegentGeminiSystem.getHighestStat(abilities);
+
+		const statAlignment =
+			abilities[highestStat] - regent.requirements.statThreshold;
+		const jobCompatibility = RegentGeminiSystem.calculateJobCompatibility(
+			job,
+			regent,
+		);
+
+		const compatibility = 50 + statAlignment * 2 + jobCompatibility / 4;
+		const reasoning = `[Deterministic Fallback] Aligns with your ${highestStat} stat and ${job} job.`;
+
+		return { reasoning, compatibility };
 	}
 
 	/**
@@ -346,45 +405,10 @@ export class RegentGeminiSystem {
 		return undefined; // No adaptation needed
 	}
 
-	// AI analysis for regent compatibility
-	private static async aiAnalyzeRegentChoice(
-		character: Character,
-		regent: RegentPath,
-		_jobType: string,
-	): Promise<{ reasoning: string; alignment: number; compatibility: number }> {
-		const abilities = RegentGeminiSystem.getCharacterAbilities(character);
-		const job = RegentGeminiSystem.getCharacterJob(character);
-		const highestStat = RegentGeminiSystem.getHighestStat(abilities);
-
-		// Simulate AI reasoning process
-		const statAlignment =
-			abilities[highestStat] - regent.requirements.statThreshold;
-		const levelAlignment = character.level - (regent.requirements.level ?? 0);
-		const jobCompatibility = RegentGeminiSystem.calculateJobCompatibility(
-			job,
-			regent,
-		);
-		const playstyleMatch = RegentGeminiSystem.calculatePlaystyleMatch(
-			character,
-			regent,
-		);
-
-		const compatibility =
-			statAlignment * 2 +
-			levelAlignment * 1.5 +
-			jobCompatibility * 2 +
-			playstyleMatch * 1.5;
-
-		const reasoning = `This regent aligns ${statAlignment > 0 ? "perfectly" : "well"} with your ${highestStat} stat (${abilities[highestStat]} vs ${regent.requirements.statThreshold} needed), matches your ${job} class at ${jobCompatibility}% compatibility, and suits your playstyle at ${playstyleMatch}% match.`;
-
-		return {
-			reasoning,
-			alignment: statAlignment,
-			compatibility,
-		};
-	}
-
-	// AI fusion generation
+	/**
+	 * AI fusion generation using Gemini Protocol
+	 * Consolidates all merging logic into a single high-fidelity AI request
+	 */
 	private static async aiGenerateFusion(
 		character: Character,
 		regent1: RegentPath,
@@ -403,297 +427,90 @@ export class RegentGeminiSystem {
 		statBonuses: Partial<Record<AbilityScore, number>>;
 		specialAbilities: string[];
 	}> {
-		// AI generates unique fusion name and abilities
-		const fusionName = await RegentGeminiSystem.aiGenerateFusionName(
-			regent1,
-			regent2,
-			baseJob,
-			basePath,
-		);
-		const fusionAbilities = await RegentGeminiSystem.aiMergeAbilities(
-			regent1,
-			regent2,
-			baseJob,
-			basePath,
-		);
-		const fusionFeatures = await RegentGeminiSystem.aiMergeFeatures(
-			regent1,
-			regent2,
-			baseJob,
-			basePath,
-		);
-		const fusionSpells = await RegentGeminiSystem.aiMergeSpells(
-			regent1,
-			regent2,
-			character,
-			baseJob,
-			basePath,
-		);
-		const fusionTechniques = await RegentGeminiSystem.aiGenerateTechniques(
-			regent1,
-			regent2,
-			baseJob,
-			basePath,
-		);
-		const fusionTraits = await RegentGeminiSystem.aiMergeTraits(
-			regent1,
-			regent2,
-			baseJob,
-			basePath,
-		);
-		const statBonuses = await RegentGeminiSystem.aiCalculateStatBonuses(
-			regent1,
-			regent2,
-		);
-		const specialAbilities =
-			await RegentGeminiSystem.aiGenerateSpecialAbilities(
-				regent1,
-				regent2,
-				character,
-				baseJob,
-				basePath,
+		try {
+			const response = await aiService.processRequest({
+				service: "gemini-proxy",
+				type: "generate-fusion",
+				input: {
+					character: {
+						name: character.name,
+						level: character.level,
+						job: baseJob,
+						path: basePath,
+						abilities: RegentGeminiSystem.getCharacterAbilities(character),
+					},
+					regent1: {
+						name: regent1.name,
+						type: regent1.type,
+						description: regent1.description,
+						abilities: regent1.abilities,
+						features: regent1.features.map((f) => f.name),
+					},
+					regent2: {
+						name: regent2.name,
+						type: regent2.type,
+						description: regent2.description,
+						abilities: regent2.abilities,
+						features: regent2.features.map((f) => f.name),
+					},
+				},
+			});
+
+			if (response.success && response.data) {
+				const d = response.data;
+				return {
+					id:
+						d.id ||
+						`gemini_${baseJob.toLowerCase().replace(/\s+/g, "_")}_${regent1.id}_${regent2.id}`,
+					name: d.name || "Unnamed Sovereign",
+					description: d.description || "Synthesized sovereign entity.",
+					abilities: Array.isArray(d.abilities) ? d.abilities : [],
+					features: Array.isArray(d.features) ? d.features : [],
+					spells: Array.isArray(d.spells) ? d.spells : [],
+					techniques: Array.isArray(d.techniques) ? d.techniques : [],
+					traits: Array.isArray(d.traits) ? d.traits : [],
+					statBonuses: d.statBonuses || {},
+					specialAbilities: Array.isArray(d.specialAbilities)
+						? d.specialAbilities
+						: [],
+				};
+			}
+		} catch (error) {
+			logger.error(
+				"Gemini Fusion generation failed, using deterministic fallback",
+				error,
 			);
-		const basePathLabel = basePath || "Base Path";
+		}
+
+		// Robust Deterministic Fallback
 		const safeJob = baseJob.toLowerCase().replace(/\s+/g, "_");
-
 		return {
-			id: `gemini_${safeJob}_${regent1.id}_${regent2.id}`,
-			name: fusionName,
-			description: `${baseJob} ${basePathLabel} synthesis with ${regent1.name} and ${regent2.name}.`,
-			abilities: fusionAbilities,
-			features: fusionFeatures,
-			spells: fusionSpells,
-			techniques: fusionTechniques,
-			traits: fusionTraits,
-			statBonuses,
-			specialAbilities,
-		};
-	}
-
-	// AI fusion name generation
-	private static async aiGenerateFusionName(
-		regent1: RegentPath,
-		regent2: RegentPath,
-		baseJob: Job,
-		basePath?: string,
-	): Promise<string> {
-		const basePathLabel = basePath || "Base";
-		// Simulate AI creative fusion naming
-		const namePatterns = [
-			`${baseJob} ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Sovereign`,
-			`${basePathLabel} ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Ascendant`,
-			`${regent1.name.split(" ")[0]} ${regent2.name.split(" ").pop()}`,
-			`${regent2.name.split(" ")[0]} ${regent1.name.split(" ").pop()}`,
-			`Fusion ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]}`,
-			`${regent1.name.split(" ")[0]} Master ${regent2.name.split(" ")[0]} Lord`,
-			`Dual ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Sovereign`,
-		];
-
-		// AI would select the most epic-sounding name
-		return namePatterns[Math.floor(Math.random() * namePatterns.length)];
-	}
-
-	// AI ability merging
-	private static async aiMergeAbilities(
-		regent1: RegentPath,
-		regent2: RegentPath,
-		baseJob: Job,
-		basePath?: string,
-	): Promise<string[]> {
-		const basePathLabel = basePath || "Base";
-		const allAbilities = [...regent1.abilities, ...regent2.abilities];
-
-		// AI creates unique fusion abilities
-		const fusionAbilities = [
-			...allAbilities,
-			`${baseJob} ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Art`,
-			`${basePathLabel} Path Resonance`,
-			`${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Fusion`,
-			`Dual ${regent1.name.split(" ")[0]} ${regent2.name.split(" ")[0]} Mastery`,
-			`Sovereign ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Power`,
-		];
-
-		return fusionAbilities;
-	}
-
-	// AI feature merging
-	private static async aiMergeFeatures(
-		regent1: RegentPath,
-		regent2: RegentPath,
-		baseJob: Job,
-		basePath?: string,
-	): Promise<Feature[]> {
-		const basePathLabel = basePath || "Base";
-		const mergedFeatures = [...regent1.features, ...regent2.features];
-
-		// AI creates fusion-specific features
-		const fusionFeature: Feature = {
-			name: `Fusion Mastery: ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]}`,
-			description: `${baseJob} (${basePathLabel}) techniques fused with ${regent1.name} and ${regent2.name} powers`,
-			type: "fusion",
-		};
-
-		return [...mergedFeatures, fusionFeature];
-	}
-
-	// AI spell merging
-	private static async aiMergeSpells(
-		regent1: RegentPath,
-		regent2: RegentPath,
-		_character: Character,
-		baseJob: Job,
-		basePath?: string,
-	): Promise<Spell[]> {
-		const basePathLabel = basePath || "Base";
-		const allSpells = [...regent1.spells, ...regent2.spells];
-
-		// AI creates fusion-specific spells
-		const fusionSpells: Spell[] = [
-			{
-				name: `Fusion ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Strike`,
-				description: `Combined power of both regents tempered through ${baseJob} ${basePathLabel} doctrine`,
-				level: Math.max(
-					regent1.requirements.level ?? 0,
-					regent2.requirements.level ?? 0,
-				),
-				school: "fusion",
-			},
-			{
-				name: `Dual ${regent1.name.split(" ")[0]} ${regent2.name.split(" ")[0]} Aura`,
-				description: `Aura combining both regent powers`,
-				level:
-					Math.max(
-						regent1.requirements.level ?? 0,
-						regent2.requirements.level ?? 0,
-					) + 1,
-				school: "aura",
-			},
-		];
-
-		return [...allSpells, ...fusionSpells];
-	}
-
-	// AI technique generation
-	private static async aiGenerateTechniques(
-		regent1: RegentPath,
-		regent2: RegentPath,
-		baseJob: Job,
-		basePath?: string,
-	): Promise<string[]> {
-		const basePathLabel = basePath || "Base";
-		return [
-			`${baseJob} Fusion Technique: ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]}`,
-			`${basePathLabel} Path Synthesis Stance`,
-			`${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Combination Attack`,
-			`Dual ${regent1.name.split(" ")[0]} Defense`,
-			`${regent2.name.split(" ")[0]}-${regent1.name.split(" ")[0]} Counter`,
-			`Fusion ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Ultimate`,
-		];
-	}
-
-	// AI trait merging
-	private static async aiMergeTraits(
-		regent1: RegentPath,
-		regent2: RegentPath,
-		baseJob: Job,
-		basePath?: string,
-	): Promise<Trait[]> {
-		const basePathLabel = basePath || "Base";
-		const fusionTrait: Trait = {
-			name: `Gemini Fusion: ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]}`,
-			description: `Permanent fusion of ${regent1.name} and ${regent2.name} powers`,
-			type: "fusion",
-			benefits: [
-				`${baseJob} combat doctrine permanently rewritten by Gemini Protocol`,
-				`${basePathLabel} path techniques are integrated into every sovereign action`,
-				`Access to both ${regent1.name} and ${regent2.name} abilities`,
-				`Enhanced power when both regents are active`,
-				`Unique fusion abilities and techniques`,
+			id: `fallback_gemini_${safeJob}_${regent1.id}_${regent2.id}`,
+			name: `${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} ${baseJob} Sovereign`,
+			description: `[Deterministic Fallback] A powerful fusion of ${regent1.name} and ${regent2.name} with ${baseJob} doctrine.`,
+			abilities: [...regent1.abilities, ...regent2.abilities],
+			features: [...regent1.features, ...regent2.features],
+			spells: [...regent1.spells, ...regent2.spells],
+			techniques: [
+				`${baseJob} Fusion: ${regent1.name.split(" ")[0]} Stance`,
+				`Dual Resonance: ${regent2.name.split(" ")[0]} Form`,
 			],
+			traits: [
+				{
+					name: "Gemini Protocol: Sovereign State",
+					description:
+						"The character's base job is perfectly adapted to the unified power of two regents.",
+					type: "fusion",
+					benefits: ["Perfectly adapted job features"],
+				},
+			],
+			statBonuses: { STR: 2, AGI: 2, VIT: 2, INT: 2, SENSE: 2, PRE: 2 },
+			specialAbilities: ["Sovereign Awakening", "Dual Conduit Resonance"],
 		};
-
-		return [fusionTrait];
 	}
 
-	// AI stat bonus calculation
-	private static async aiCalculateStatBonuses(
-		regent1: RegentPath,
-		regent2: RegentPath,
-	): Promise<Partial<Record<AbilityScore, number>>> {
-		const bonuses: Partial<Record<AbilityScore, number>> = {};
+	// Private helper methods (Cleaned up AI Merge Placeholders)
 
-		// AI calculates optimal stat distribution
-		const regent1Type = regent1.type;
-		const regent2Type = regent2.type;
-
-		if (
-			regent1Type === RegentType.STRENGTH_REGENT ||
-			regent2Type === RegentType.STRENGTH_REGENT
-		) {
-			bonuses.STR = 4;
-		}
-		if (
-			regent1Type === RegentType.AGILITY_REGENT ||
-			regent2Type === RegentType.AGILITY_REGENT
-		) {
-			bonuses.AGI = 4;
-		}
-		if (
-			regent1Type === RegentType.VITALITY_REGENT ||
-			regent2Type === RegentType.VITALITY_REGENT
-		) {
-			bonuses.VIT = 4;
-		}
-		if (
-			regent1Type === RegentType.INTELLIGENCE_REGENT ||
-			regent2Type === RegentType.INTELLIGENCE_REGENT
-		) {
-			bonuses.INT = 4;
-		}
-		if (
-			regent1Type === RegentType.SENSE_REGENT ||
-			regent2Type === RegentType.SENSE_REGENT
-		) {
-			bonuses.SENSE = 4;
-		}
-		if (
-			regent1Type === RegentType.PRESENCE_REGENT ||
-			regent2Type === RegentType.PRESENCE_REGENT
-		) {
-			bonuses.PRE = 4;
-		}
-
-		// Fusion bonus
-		bonuses.STR = (bonuses.STR || 0) + 2;
-		bonuses.AGI = (bonuses.AGI || 0) + 2;
-		bonuses.VIT = (bonuses.VIT || 0) + 2;
-		bonuses.INT = (bonuses.INT || 0) + 2;
-		bonuses.SENSE = (bonuses.SENSE || 0) + 2;
-		bonuses.PRE = (bonuses.PRE || 0) + 2;
-
-		return bonuses;
-	}
-
-	// AI special ability generation
-	private static async aiGenerateSpecialAbilities(
-		regent1: RegentPath,
-		regent2: RegentPath,
-		_character: Character,
-		baseJob: Job,
-		basePath?: string,
-	): Promise<string[]> {
-		const basePathLabel = basePath || "Base";
-		return [
-			`${baseJob} Sovereign Awakening: ${basePathLabel} path enhanced by fusion`,
-			`Gemini Fusion: ${regent1.name.split(" ")[0]}-${regent2.name.split(" ")[0]} Awakening`,
-			`Dual Regent Mastery: Perfect control over both regent powers`,
-			`Sovereign Authority: Commands respected by all subjects`,
-			`Fusion Resilience: Resistance to all damage types`,
-			`Ultimate Fusion: Combine both regents into ultimate form`,
-		];
-	}
-
-	// Helper methods for compatibility calculation
 	private static calculateJobCompatibility(
 		job: Job,
 		regent: RegentPath,
@@ -720,15 +537,6 @@ export class RegentGeminiSystem {
 		return compatibleRegents.includes(regent.type) ? 85 : 60;
 	}
 
-	private static calculatePlaystyleMatch(
-		_character: Character,
-		_regent: RegentPath,
-	): number {
-		// AI analyzes character's playstyle preferences
-		// This would integrate with character's actual gameplay data
-		return Math.floor(Math.random() * 30) + 70; // Simulated 70-100% match
-	}
-
 	private static getCharacterJob(character: Character): Job {
 		return character.job || character.class || "Adventurer";
 	}
@@ -740,14 +548,45 @@ export class RegentGeminiSystem {
 	private static getCharacterAbilities(
 		character: Character,
 	): Record<AbilityScore, number> {
-		if (character.abilities) {
-			return character.abilities as unknown as Record<AbilityScore, number>;
-		}
-
-		const charRecord = character as unknown as Record<string, unknown>;
-		const abilityScores = charRecord.abilityScores as
+		// Use a partial record to safely map from character abilities
+		const characterAbilities = character.abilities as
 			| Record<string, number>
 			| undefined;
+
+		if (characterAbilities) {
+			return {
+				STR: characterAbilities.strength ?? characterAbilities.STR ?? 10,
+				AGI:
+					characterAbilities.dexterity ??
+					characterAbilities.AGI ??
+					characterAbilities.agility ??
+					10,
+				VIT:
+					characterAbilities.constitution ??
+					characterAbilities.VIT ??
+					characterAbilities.vitality ??
+					10,
+				INT: characterAbilities.intelligence ?? characterAbilities.INT ?? 10,
+				SENSE:
+					characterAbilities.wisdom ??
+					characterAbilities.SENSE ??
+					characterAbilities.sense ??
+					10,
+				PRE:
+					characterAbilities.charisma ??
+					characterAbilities.PRE ??
+					characterAbilities.presence ??
+					10,
+			};
+		}
+
+		// Fallback for character record with legacy names
+		const abilityScores =
+			"abilityScores" in character &&
+			typeof character.abilityScores === "object" &&
+			character.abilityScores !== null
+				? (character.abilityScores as Record<string, number>)
+				: undefined;
 		return {
 			STR: abilityScores?.strength ?? 10,
 			AGI: abilityScores?.dexterity ?? abilityScores?.agility ?? 10,
@@ -766,12 +605,12 @@ interface RegentQuest {
 	description: string;
 	regentUnlock: string;
 	requirements: {
-		/** @deprecated Regent quests are DM/Warden-gated — level is advisory only */
+		/** @deprecated Regent quests are PW/Warden-gated — level is advisory only */
 		level?: number;
 		prerequisites: string[];
 	};
 	completed: boolean;
-	completedBy: string; // DM/Protocol Warden ID
+	completedBy: string; // PW/Protocol Warden ID
 	completionDate?: Date;
 }
 
@@ -811,6 +650,55 @@ export class RegentQuestManager {
 		// ... more quests for each regent
 	];
 
+	/**
+	 * Generate a dynamic quest trial for a specific character/regent pair
+	 * Uses the unified AI service to create high-fidelity, thematic challenges
+	 */
+	static async generateDynamicQuest(
+		character: Character,
+		regentId: string,
+	): Promise<{ id: string; name: string; description: string }> {
+		const regent = RegentGeminiSystem.REGENT_DATABASE.find(
+			(r) => r.id === regentId,
+		);
+
+		try {
+			const response = await aiService.processRequest({
+				service: "gemini-native",
+				type: "generate-quests",
+				input: {
+					character: {
+						name: character.name,
+						job: character.job,
+						level: character.level,
+					},
+					regent: regent
+						? { name: regent.name, type: regent.type }
+						: { name: "Unknown Regent" },
+				},
+			});
+
+			if (response.success && response.data) {
+				const d = response.data;
+				return {
+					id: `dynamic_${crypto.randomUUID()}`,
+					name: d.name || `Trial of ${regent?.name || "the Unknown"}`,
+					description:
+						d.description || "A mysterious trial awaits your presence.",
+				};
+			}
+		} catch (error) {
+			logger.error("Dynamic quest generation failed, using fallback", error);
+		}
+
+		// Deterministic Fallback
+		return {
+			id: `fallback_${regentId}_${Date.now()}`,
+			name: `Trial of the ${regent?.name.split(" ")[0] || "Unknown"}`,
+			description: `A series of thematic trials designed to test your soul's compatibility with the power of ${regent?.name || "the regent"}.`,
+		};
+	}
+
 	// Check if character has completed required quest
 	static hasCompletedQuest(characterId: string, questId: string): boolean {
 		const quest = RegentQuestManager.QUEST_DATABASE.find(
@@ -819,7 +707,7 @@ export class RegentQuestManager {
 		return Boolean(quest?.completed && quest.completedBy === characterId);
 	}
 
-	// Complete quest (DM/Protocol Warden action)
+	// Complete quest (PW/Protocol Warden action)
 	static completeQuest(questId: string, wardenId: string): void {
 		const quest = RegentQuestManager.QUEST_DATABASE.find(
 			(q) => q.id === questId,

@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import {
 	type ActionResolutionPayload,
@@ -30,6 +30,7 @@ import {
 } from "@/lib/diceRoller";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import { InlineRollButton } from "./InlineRollButton";
 
 interface ActionCardProps {
 	name: string;
@@ -43,12 +44,13 @@ interface ActionCardProps {
 	onRoll?: (
 		rollType: "attack" | "damage" | "check" | "save" | "effect",
 	) => void;
-	inscriptionId?: string;
+
 	onUse?: () => void;
 	characterId?: string;
 	campaignId?: string;
 	className?: string;
 	payload?: ActionResolutionPayload;
+	onSelect?: () => void;
 }
 
 const TYPE_ICONS: Record<string, LucideIcon> = {
@@ -89,17 +91,16 @@ function ActionCardComponent({
 	uses,
 	recharge,
 	onRoll,
-	inscriptionId,
 	onUse,
 	characterId,
 	campaignId,
 	className,
 	payload,
+	onSelect,
 }: ActionCardProps) {
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const { rollInCampaign } = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const Icon = type ? TYPE_ICONS[type] || Star : Star;
 	const displayName = formatRegentVernacular(name);
@@ -178,7 +179,7 @@ function ActionCardComponent({
 					};
 
 					if (campaignId) {
-						rollInCampaign(campaignId, rollPayload);
+						ascendantTools.rollInCampaign(campaignId, rollPayload);
 					}
 					recordRoll.mutate(rollPayload);
 				}
@@ -208,7 +209,7 @@ function ActionCardComponent({
 						campaign_id: campaignId || undefined,
 					};
 					if (campaignId) {
-						rollInCampaign(campaignId, rollPayload);
+						ascendantTools.rollInCampaign(campaignId, rollPayload);
 					}
 					recordRoll.mutate(rollPayload);
 				}
@@ -227,6 +228,10 @@ function ActionCardComponent({
 		<SystemWindow
 			title={displayName.toUpperCase()}
 			className={cn("border-primary/30", className)}
+			headerClassName={
+				onSelect ? "cursor-pointer hover:bg-primary/5 transition-colors" : ""
+			}
+			onHeaderClick={onSelect}
 		>
 			<div className="space-y-3">
 				<div className="flex items-center gap-2 flex-wrap">
@@ -249,7 +254,7 @@ function ActionCardComponent({
 							Uses: {uses.current}/{uses.max}
 						</Badge>
 					)}
-					{inscriptionId && uses && uses.current > 0 && onUse && (
+					{uses && uses.current > 0 && onUse && (
 						<Button
 							variant="outline"
 							size="sm"
@@ -272,17 +277,22 @@ function ActionCardComponent({
 
 				<div className="flex gap-2 pt-2 border-t border-border/50 flex-wrap">
 					{(payload?.attack || attackBonus !== undefined) && (
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => handleRoll("attack")}
-							className="flex-1 gap-2"
-						>
-							<Sword className="w-4 h-4" />
-							{payload?.attack
-								? "Attack"
-								: `Attack: ${formatModifier(attackBonus || 0)}`}
-						</Button>
+						<div className="flex-1">
+							<InlineRollButton
+								characterId={characterId || ""}
+								characterName={displayName}
+								rollType="ability"
+								rollKey="attack"
+								label={
+									payload?.attack
+										? "Attack"
+										: `Attack: ${formatModifier(attackBonus || 0)}`
+								}
+								modifier={attackBonus}
+								campaignId={campaignId}
+								className="w-full"
+							/>
+						</div>
 					)}
 					{payload?.save && (
 						<Button
@@ -346,9 +356,9 @@ export const ActionCard = memo(
 			prevProps.uses?.current === nextProps.uses?.current &&
 			prevProps.uses?.max === nextProps.uses?.max &&
 			prevProps.recharge === nextProps.recharge &&
-			prevProps.inscriptionId === nextProps.inscriptionId &&
 			prevProps.characterId === nextProps.characterId &&
 			prevProps.campaignId === nextProps.campaignId &&
+			prevProps.onSelect === nextProps.onSelect &&
 			JSON.stringify(prevProps.payload) === JSON.stringify(nextProps.payload)
 		);
 	},

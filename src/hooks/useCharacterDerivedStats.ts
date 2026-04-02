@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+
+import { type ACBreakdown, calculateAC } from "@/hooks/useArmorClass";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import type { EquipmentRow } from "@/hooks/useEquipment";
 import type { Rune, RuneInscription } from "@/hooks/useRunes";
@@ -7,6 +9,11 @@ import {
 	type CalculatedStats,
 	calculateCharacterStats,
 } from "@/lib/characterCalculations";
+import {
+	type CharacterBaseData,
+	computeEncumbrance,
+	maintainConcentration,
+} from "@/lib/characterEngine";
 import { getActiveConditionEffects } from "@/lib/conditions";
 import {
 	type CustomModifier,
@@ -83,15 +90,10 @@ export type DerivedStats = {
 	immunities: string[];
 	vulnerabilities: string[];
 	conditionImmunities: string[];
-	acDetail: {
-		base: number;
-		modifier: number;
-		dexterity: number;
-		misc: number;
-		bonus: number;
-		total: number;
-		label: string;
-	};
+	protocolEncumbrance: ReturnType<typeof computeEncumbrance>;
+	protocolEncumbranceDetail: ReturnType<typeof calculateEncumbrance>;
+	protocolConcentration: boolean;
+	armorClassDetail: ACBreakdown;
 };
 
 export function useCharacterDerivedStats(
@@ -404,55 +406,60 @@ export function useCharacterDerivedStats(
 			});
 		});
 
-		// AC Breakdown Calculation
-		const dexMod = getAbilityModifier(finalAbilities.AGI ?? 10);
-		let acBase = 10;
-		let acDex = dexMod;
-		let acMisc = 0;
-		let acLabel = "Unarmored";
-
-		const equippedArmorItems = (equipment || []).filter(
-			(e) => e.is_equipped && (!e.requires_attunement || e.is_attuned),
+		// AC Breakdown Replacement using authoritative calculateAC
+		const armorItem = (equipment || []).find(
+			(e) =>
+				e.is_equipped &&
+				(!e.requires_attunement || e.is_attuned) &&
+				(e.properties || []).some((p) =>
+					["light", "medium", "heavy"].includes(p.toLowerCase()),
+				),
+		);
+		const shieldItem = (equipment || []).find(
+			(e) =>
+				e.is_equipped &&
+				(!e.requires_attunement || e.is_attuned) &&
+				(e.properties || []).some((p) => p.toLowerCase() === "shield"),
 		);
 
-		const armor = equippedArmorItems.find((e) =>
-			(e.properties || []).some((p) =>
-				["light", "medium", "heavy"].includes(p.toLowerCase()),
-			),
+		const armorClassDetail = calculateAC(
+			finalAbilities.AGI,
+			armorItem
+				? {
+						name: armorItem.name,
+						baseAC: parseInt(
+							armorItem.properties
+								?.find((p) => p.toLowerCase().startsWith("ac "))
+								?.match(/\d+/)?.[0] || "10",
+							10,
+						),
+						category:
+							(armorItem.properties
+								?.find((p) =>
+									["light", "medium", "heavy"].includes(p.toLowerCase()),
+								)
+								?.toLowerCase() as "none" | "light" | "medium" | "heavy") ||
+							"none",
+						magicalBonus: armorItem.properties?.some((p) =>
+							p.toLowerCase().includes("magic"),
+						)
+							? 1
+							: 0, // heuristic
+					}
+				: null,
+			shieldItem
+				? {
+						name: shieldItem.name,
+						acBonus: 2, // Standard
+					}
+				: null,
+			customAcBonus +
+				sigilBonuses.ac -
+				(sigilBonuses.ac === baseStats.armorClass
+					? baseStats.armorClass
+					: sigilBonuses.ac), // Re-derive bonuses
+			finalAbilities.STR,
 		);
-
-		if (armor) {
-			const props = (armor.properties || []).map((p) => p.toLowerCase());
-			const baseMatch = props.find((p) => p.startsWith("ac "))?.match(/\d+/);
-			acBase = baseMatch ? parseInt(baseMatch[0], 10) : 10;
-			acLabel = armor.name;
-
-			const isMedium = props.includes("medium");
-			const isHeavy = props.includes("heavy");
-			acDex = isHeavy ? 0 : isMedium ? Math.min(dexMod, 2) : dexMod;
-		} else {
-			// Unarmored Defense (Monk/Barbarian style) if applicable
-			const unarmoredBase = getUnarmoredDefenseBaseAC(
-				character.job,
-				finalAbilities,
-			);
-			if (unarmoredBase !== null && unarmoredBase > 10 + dexMod) {
-				acBase = 10;
-				acDex = dexMod;
-				acMisc = unarmoredBase - 10 - dexMod;
-				acLabel = "Unarmored Defense";
-			}
-		}
-
-		const acDetail = {
-			base: acBase,
-			modifier: 0, // Profile/Base static mod
-			dexterity: acDex,
-			misc: acMisc,
-			bonus: sigilBonuses.ac + customAcBonus - (acBase + acDex + acMisc),
-			total: sigilBonuses.ac + customAcBonus,
-			label: acLabel,
-		};
 
 		const encumbranceMax = Math.max(
 			calculatedStats.encumbrance.carryingCapacity,
@@ -502,6 +509,60 @@ export function useCharacterDerivedStats(
 			return acc;
 		}, {});
 
+		// System Protocol: Absolute Reification and Master Matrix Mapping
+		const protocolData: CharacterBaseData = {
+			id: character.id,
+			name: character.name,
+			level: character.level,
+			jobs: character.job
+				? [{ job: character.job, level: character.level, hitDie: 8 }]
+				: [],
+			abilities: character.abilities,
+			savingThrowProficiencies: (character.saving_throw_proficiencies ||
+				[]) as AbilityScore[],
+			skillProficiencies: character.skill_proficiencies || [],
+			skillExpertise: character.skill_expertise || [],
+			hpCurrent: character.hp_current || 0,
+			hpMax: character.hp_max || 0,
+			hpTemp: character.hp_temp || 0,
+			hitDiceCurrent: character.hit_dice_current || 0,
+			hitDiceMax: character.hit_dice_max || 0,
+			systemFavorCurrent: character.system_favor_current || 0,
+			baseSpeed: character.speed || 30,
+			equippedItems: (equipment || []).map((item) => ({
+				id: item.id,
+				name: item.name,
+				type:
+					(item.item_type as
+						| "armor"
+						| "weapon"
+						| "accessory"
+						| "consumable"
+						| "tool"
+						| "other") || "other",
+				isEquipped: !!item.is_equipped,
+				weight: item.weight || 0,
+			})),
+			activeConditions: [],
+			activeSpells: [],
+			features: [],
+			exhaustionLevel: character.exhaustion_level || 0,
+		};
+
+		const protocolEncumbrance = computeEncumbrance(
+			protocolData.abilities.STR,
+			protocolData.equippedItems,
+		);
+		const protocolEncumbranceDetail = calculateEncumbrance(
+			protocolEncumbrance.currentWeight,
+			protocolEncumbrance.capacity,
+		);
+		const protocolConcentration = maintainConcentration(
+			character.id,
+			10,
+			"Passive Protocol",
+		);
+
 		return {
 			calculatedStats,
 			skills,
@@ -513,20 +574,22 @@ export function useCharacterDerivedStats(
 			equipmentMods,
 			runeBonuses,
 			sigilBonuses,
-			finalSpeed,
+			finalSpeed: calculatedStats.speed,
 			otherSpeeds,
 			finalInitiative,
-			finalTraits: sigilBonuses.traits,
 			initiativeAdvantage,
 			baseStats,
-			// 100% Parity Data
+			finalTraits: sigilBonuses.traits,
 			senses,
 			senseStrings,
 			resistances,
 			immunities,
 			vulnerabilities,
 			conditionImmunities,
-			acDetail,
+			protocolEncumbrance,
+			protocolEncumbranceDetail,
+			protocolConcentration,
+			armorClassDetail,
 		};
-	}, [character, equipment, activeRunes, customModifiers, activeSigils]);
+	}, [character, equipment, activeRunes, activeSigils, customModifiers]);
 }

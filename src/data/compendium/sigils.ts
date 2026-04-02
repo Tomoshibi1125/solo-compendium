@@ -2063,7 +2063,7 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-heartwood-jade",
 		name: "Heartwood Jade",
-		description: "A warm jade bead carved from ancient sylvan wood.",
+		description: "A warm jade bead carved from Finnish-reified boreal wood.",
 		effect_description:
 			"Any healing spell you cast restores an additional 1d6 hit points to the target.",
 		rune_type: "caster",
@@ -2167,7 +2167,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-gem-titans-marrow",
 		name: "Titan's Marrow Specimen",
 		description:
-			"Not a gem, but a petrified drop of marrow from an ancient giant.",
+			"Not a gem, but a petrified drop of marrow from an Old Norse legacy remnant.",
 		effect_description:
 			"You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.",
 		rune_type: "utility",
@@ -2182,8 +2182,8 @@ export const sigils: SigilEntry[] = [
 		image: "/generated/sigils/earth-sigil.webp",
 	},
 	{
-		id: "sigil-gem-abyssal-pearl",
-		name: "Abyssal Pearl",
+		id: "sigil-gem-binary-void-data-pearl",
+		name: "Binary Void-Data Pearl",
 		description: "A pearl harvested from the crushing depths.",
 		effect_description:
 			"You gain a swimming speed of 40 feet and can breathe underwater. You also gain resistance to cold damage.",
@@ -2195,7 +2195,7 @@ export const sigils: SigilEntry[] = [
 		requires_level: 3,
 		can_inscribe_on: ["accessory", "headwear"],
 		inscription_difficulty: 14,
-		tags: ["water", "abyssal", "pearl", "gem"],
+		tags: ["water", "binary_void_data", "pearl", "gem"],
 		image: "/generated/sigils/ice-sigil.webp",
 	},
 	{

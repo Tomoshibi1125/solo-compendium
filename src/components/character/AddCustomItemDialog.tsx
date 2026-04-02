@@ -22,7 +22,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 
 export function AddCustomItemDialog({
 	open,
@@ -35,8 +35,7 @@ export function AddCustomItemDialog({
 }) {
 	const { addEquipment } = useEquipment(characterId);
 	const { toast } = useToast();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
@@ -99,7 +98,7 @@ export function AddCustomItemDialog({
 				description: `${name} added to your inventory.`,
 			});
 
-			ddbEnhancements
+			ascendantTools
 				.trackInventoryChange(characterId, name.trim(), "add")
 				.catch(console.error);
 

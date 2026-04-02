@@ -60,7 +60,7 @@ interface PlacedToken {
 	lightRadius?: number;
 	lightDimRadius?: number;
 	showNameplate?: boolean;
-	barVisibility?: "always" | "owner" | "gm";
+	barVisibility?: "always" | "owner" | "PW";
 }
 
 interface Scene {
@@ -148,7 +148,7 @@ const PlayerMapView = ({
 		return () => window.removeEventListener("resize", check);
 	}, []);
 
-	// Scene state received from DM
+	// Scene state received from PW
 	const [currentScene, setCurrentScene] = useState<Scene | null>(null);
 
 	const { data: combatData } = useCampaignCombatSession(
@@ -161,10 +161,10 @@ const PlayerMapView = ({
 	const vttRealtime = useVTTRealtime({
 		campaignId: effectiveCampaignId,
 		sessionId: effectiveSessionId || undefined,
-		isDM: false,
+		isWarden: false,
 	});
 
-	// Subscribe to campaign_tool_states for scene data from DM
+	// Subscribe to campaign_tool_states for scene data from PW
 	const toolKey = effectiveSessionId
 		? `vtt_scenes:${effectiveSessionId}`
 		: "vtt_scenes";
@@ -228,7 +228,7 @@ const PlayerMapView = ({
 		};
 	}, [effectiveCampaignId, toolKey, user?.id]);
 
-	// Listen for realtime broadcasts from DM
+	// Listen for realtime broadcasts from PW
 	useEffect(() => {
 		if (!effectiveCampaignId) return;
 
@@ -306,7 +306,7 @@ const PlayerMapView = ({
 
 	const gridSize = currentScene?.gridSize ?? 50;
 
-	// Visible tokens (player only sees visible tokens, not DM layer)
+	// Visible tokens (player only sees visible tokens, not Protocol Warden (PW) layer)
 	const visibleTokens = useMemo(() => {
 		if (!currentScene?.tokens) return [];
 		return currentScene.tokens.filter((t) => t.visible && t.layer !== 3);
@@ -422,7 +422,7 @@ const PlayerMapView = ({
 
 		if (currentScene?.drawings) {
 			currentScene.drawings.forEach((drawing) => {
-				if (drawing.layer === "gm") return;
+				if (drawing.layer === "PW") return;
 				const safeId = toSafeClassName(drawing.id);
 
 				if (
@@ -684,7 +684,7 @@ const PlayerMapView = ({
 												currentScene.drawings.length > 0 && (
 													<div className="absolute inset-0 pointer-events-none z-[2]">
 														{currentScene.drawings.map((drawing) => {
-															if (drawing.layer === "gm") return null; // Only player layers
+															if (drawing.layer === "PW") return null; // Only player layers
 
 															if (drawing.type === "freehand") {
 																const gZoom = gridSize * zoom;
@@ -1000,8 +1000,9 @@ const PlayerMapView = ({
 											{visibleTokens.length === 0 &&
 												!currentScene?.backgroundImage && (
 													<div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-														<p className="text-sm">
-															Waiting for DM to set up the map...
+														<p className="text-sm font-mono uppercase tracking-widest animate-pulse">
+															Waiting for Protocol Warden to establish matrix
+															link...
 														</p>
 													</div>
 												)}
@@ -1116,12 +1117,12 @@ const PlayerMapView = ({
 																		whisper
 																	</Badge>
 																)}
-																{msg.type === "gmroll" && (
+																{msg.type === "wardenroll" && (
 																	<Badge
 																		variant="outline"
 																		className="text-[9px] px-1 py-0 border-amber-500/50 text-amber-400"
 																	>
-																		GM
+																		PW
 																	</Badge>
 																)}
 																<span className="text-muted-foreground text-[10px]">
@@ -1137,7 +1138,7 @@ const PlayerMapView = ({
 																		"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
 																	msg.type === "dice" &&
 																		"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
-																	msg.type === "gmroll" &&
+																	msg.type === "wardenroll" &&
 																		"border border-amber-500/40 bg-amber-950/30 text-amber-100",
 																	msg.type === "whisper" &&
 																		"border border-teal-500/30 bg-teal-950/30 italic text-teal-200",

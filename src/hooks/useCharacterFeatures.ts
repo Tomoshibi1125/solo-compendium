@@ -91,7 +91,7 @@ export const useCharacterFeatures = (characterId: string) => {
 				throw error;
 			}
 
-			const next = (data || []) as unknown as CharacterFeature[];
+			const next = (data || []) as CharacterFeature[];
 			if (cacheKey) {
 				writeCachedFeatures(cacheKey, next);
 			}
@@ -172,7 +172,7 @@ export const useApplyHomebrewFeature = () => {
 				.single();
 
 			if (error) throw error;
-			return data as unknown as CharacterFeature;
+			return data as CharacterFeature;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({

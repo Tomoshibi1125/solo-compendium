@@ -1,4 +1,4 @@
-import { items } from '../src/data/compendium/items';
+import { allItems as items } from '../src/data/compendium/items-index';
 import { powers } from '../src/data/compendium/powers';
 import { techniques } from '../src/data/compendium/techniques';
 import { spells } from '../src/data/compendium/spells';

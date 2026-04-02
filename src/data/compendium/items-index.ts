@@ -1,5 +1,4 @@
 import { artifacts as artifactItems } from "./artifacts";
-import { items as mainItems } from "./items";
 import { baseEquipment } from "./items-base-equipment";
 import { items as itemsPart1 } from "./items-part1";
 import { items as itemsPart2 } from "./items-part2";
@@ -12,7 +11,6 @@ import { items as itemsPart8 } from "./items-part8";
 import { items as itemsPart9 } from "./items-part9";
 
 export const allItems = [
-	...mainItems,
 	...itemsPart1,
 	...itemsPart2,
 	...itemsPart3,

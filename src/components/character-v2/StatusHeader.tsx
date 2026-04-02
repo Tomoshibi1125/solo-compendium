@@ -1,8 +1,8 @@
 import { Dice6, Heart, Minus, Move, Plus, Shield, Zap } from "lucide-react";
+import { DeathSaveTracker } from "@/components/CharacterSheet/DeathSaveTracker";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { formatModifier } from "@/lib/characterCalculations";
-import { DeathSaveTracker } from "../CharacterSheet/DeathSaveTracker";
 
 interface StatusHeaderProps {
 	hp: { current: number; max: number; temp: number };

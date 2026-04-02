@@ -4,7 +4,7 @@
    ============================================================
    Zones:
      [data-sa-zone="character"]  — Purple/violet ascendant profile
-     [data-sa-zone="dm"]         — Red/orange warden command center
+     [data-sa-zone="warden"]         — Red/orange warden command center
      [data-sa-zone="campaign"]   — Blue/teal guild alliance hall
      [data-sa-zone="compendium"] — Gold/amber knowledge archive
      [data-sa-zone="player"]     — Cyan/green ascendant toolkit
@@ -28,7 +28,7 @@
 	--sa-accent-secondary-rgb: 0, 212, 255;
 }
 
-[data-sa-zone="dm"] {
+[data-sa-zone="warden"] {
 	--sa-accent: 15 90% 55%;
 	--sa-accent-rgb: 234, 88, 12;
 	--sa-accent-secondary: 0 85% 55%;
@@ -155,9 +155,9 @@
    SA Card — Glassmorphic floating panel
    ============================================================ */
 .sa-card {
-	background: rgba(10, 6, 25, 0.6);
-	backdrop-filter: blur(12px) saturate(1.5);
+	background: rgba(10, 6, 25, 0.75); /* Fallback for no backdrop-filter */
 	-webkit-backdrop-filter: blur(12px) saturate(1.5);
+	backdrop-filter: blur(12px) saturate(1.5);
 	border: 1px solid rgba(var(--sa-accent-rgb), 0.18);
 	border-radius: 0.75rem;
 	position: relative;
@@ -189,7 +189,10 @@
 .sa-card::after {
 	content: "";
 	position: absolute;
-	inset: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	background: linear-gradient(
 		135deg,
 		rgba(var(--sa-accent-secondary-rgb), 0.04) 0%,
@@ -217,9 +220,9 @@
    SA Panel — Zone-aware glassmorphic system window
    ============================================================ */
 .sa-panel {
-	background: rgba(7, 4, 18, 0.72);
-	backdrop-filter: blur(20px) saturate(1.6);
+	background: rgba(7, 4, 18, 0.85); /* Fallback */
 	-webkit-backdrop-filter: blur(20px) saturate(1.6);
+	backdrop-filter: blur(20px) saturate(1.6);
 	border: 1px solid rgba(var(--sa-accent-rgb), 0.14);
 	border-radius: 1rem;
 	box-shadow:
@@ -260,8 +263,8 @@
 		rgba(var(--sa-accent-secondary-rgb), 0.04) 65%,
 		rgba(5, 2, 15, 0.97) 100%
 	);
-	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
 	border: 1px solid rgba(var(--sa-accent-rgb), 0.22);
 	border-radius: 1rem;
 	padding: 1.5rem;
@@ -352,14 +355,14 @@
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	border: 1px solid rgba(var(--sa-accent-rgb), 0.35);
-	background: rgba(var(--sa-accent-rgb), 0.12);
+	background: rgba(var(--sa-accent-rgb), 0.2); /* Fallback */
+	-webkit-backdrop-filter: blur(4px);
+	backdrop-filter: blur(4px);
 	color: rgba(var(--sa-accent-rgb), 1);
 	text-shadow: 0 0 6px rgba(var(--sa-accent-rgb), 0.4);
 	clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
 	border-radius: 0;
-	padding-left: 0.7rem;
 	padding-right: 0.7rem;
-	backdrop-filter: blur(4px);
 }
 
 /* ============================================================
@@ -390,8 +393,8 @@
    SA Tab Bar — System terminal tab strip
    ============================================================ */
 .sa-tabs [role="tablist"] {
-	background: rgba(7, 4, 18, 0.6);
-	border-color: rgba(var(--sa-accent-rgb), 0.12);
+	background: rgba(7, 4, 18, 0.8); /* Fallback */
+	-webkit-backdrop-filter: blur(8px);
 	backdrop-filter: blur(8px);
 }
 
@@ -436,7 +439,10 @@
 .sa-progress::before {
 	content: "";
 	position: absolute;
-	inset: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	background: rgba(var(--sa-accent-secondary-rgb), 0.04);
 }
 
@@ -535,7 +541,10 @@
 .sa-holo-grid::before {
 	content: "";
 	position: absolute;
-	inset: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	background-image:
 		linear-gradient(rgba(var(--sa-accent-rgb), 0.03) 1px, transparent 1px),
 		linear-gradient(
@@ -582,8 +591,7 @@
    Zone-Specific Page Header Overrides
    ============================================================ */
 
-/* DM Tools: Warden Command HUD */
-[data-sa-zone="dm"] .sa-page-header {
+[data-sa-zone="warden"] .sa-page-header {
 	background: linear-gradient(
 		135deg,
 		rgba(20, 5, 5, 0.97) 0%,
@@ -719,9 +727,14 @@
 	.sa-card {
 		background: white;
 		border-color: #ccc;
+		-webkit-backdrop-filter: none;
 		backdrop-filter: none;
 		box-shadow: none;
 		clip-path: none;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 	}
 
 	.sa-page-header::before,
@@ -734,4 +747,24 @@
 	.sa-holo-grid::before {
 		display: none;
 	}
+}
+
+@keyframes sa-progress-bar {
+	0% {
+		transform: scaleX(0);
+	}
+	40% {
+		transform: scaleX(0.4);
+	}
+	60% {
+		transform: scaleX(0.4);
+	}
+	100% {
+		transform: scaleX(1);
+	}
+}
+
+.sa-progress-bar-animated {
+	transform-origin: left;
+	animation: sa-progress-bar 2s ease-out forwards;
 }

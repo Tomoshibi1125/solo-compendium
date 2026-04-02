@@ -6,6 +6,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { getLocalUserId } from "@/lib/guestStore";
+import { enqueueSyncItem } from "@/lib/syncManager";
 
 export interface CampaignMessage {
 	id: string;
@@ -94,7 +95,7 @@ export const useCampaignMessages = (campaignId: string) => {
 				.limit(100);
 
 			if (error) throw error;
-			return (data || []) as unknown as CampaignMessage[];
+			return (data || []) as CampaignMessage[];
 		},
 		enabled: !!campaignId,
 		staleTime: 10000,
@@ -108,7 +109,7 @@ export const useCampaignMessagesRealtime = (
 	onNewMessage: (message: CampaignMessage) => void,
 ) => {
 	const { user, loading } = useAuth();
-	const channelRef = useRef<RealtimeChannel | null>(null);
+	const channelRef = useRef<RealtimeChannel | BroadcastChannel | null>(null);
 	const onNewMessageRef = useRef(onNewMessage);
 
 	useEffect(() => {
@@ -131,7 +132,7 @@ export const useCampaignMessagesRealtime = (
 				channel.onmessage = (event) => {
 					onNewMessageRef.current(event.data as CampaignMessage);
 				};
-				channelRef.current = channel as unknown as RealtimeChannel;
+				channelRef.current = channel;
 				return () => {
 					channel.close();
 					channelRef.current = null;
@@ -170,7 +171,11 @@ export const useCampaignMessagesRealtime = (
 
 		return () => {
 			if (channelRef.current) {
-				supabase.removeChannel(channelRef.current);
+				if ("unsubscribe" in channelRef.current) {
+					supabase.removeChannel(channelRef.current);
+				} else if ("close" in channelRef.current) {
+					channelRef.current.close();
+				}
 				channelRef.current = null;
 			}
 		};
@@ -219,14 +224,18 @@ export const useSendCampaignMessage = () => {
 				saveLocalMessages(campaignId, updated);
 				broadcastLocalMessage(campaignId, next);
 
-				if (isOfflineMode && isSupabaseConfigured) {
-					const { enqueueMessage } = await import("@/lib/offlineSyncQueue");
-					await enqueueMessage({
+				if (isOfflineMode) {
+					await enqueueSyncItem("message", "create", {
 						campaign_id: campaignId,
 						user_id: getLocalUserId(),
 						message_type: messageType,
 						content,
-						metadata,
+						metadata:
+							typeof metadata === "object" &&
+							metadata !== null &&
+							!Array.isArray(metadata)
+								? (metadata as Record<string, unknown>)
+								: {},
 						character_name: characterName || null,
 					});
 				}
@@ -268,7 +277,7 @@ export const useSendCampaignMessage = () => {
 				.single();
 
 			if (error) throw error;
-			return data as unknown as CampaignMessage;
+			return data as CampaignMessage;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({

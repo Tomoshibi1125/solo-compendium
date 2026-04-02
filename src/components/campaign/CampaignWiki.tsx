@@ -35,7 +35,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { useHasDMAccess } from "@/hooks/useCampaigns";
+import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useCampaignWiki, type WikiArticle } from "@/hooks/useCampaignWiki";
 import { cn } from "@/lib/utils";
 
@@ -50,7 +50,7 @@ const CATEGORIES = [
 export function CampaignWiki({ campaignId }: { campaignId: string }) {
 	const { articles, isLoading, addArticle, updateArticle, removeArticle } =
 		useCampaignWiki(campaignId);
-	const { data: hasDMAccess } = useHasDMAccess(campaignId);
+	const { data: hasWardenAccess } = useHasWardenAccess(campaignId);
 
 	const [search, setSearch] = useState("");
 	const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -65,11 +65,11 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 			const matchSearch =
 				article.title.toLowerCase().includes(search.toLowerCase()) ||
 				article.category.toLowerCase().includes(search.toLowerCase());
-			// Players can only see public articles, DM sees all
-			const matchVisibility = hasDMAccess ? true : article.is_public;
+			// Players can only see public articles, Protocol Warden (PW) sees all
+			const matchVisibility = hasWardenAccess ? true : article.is_public;
 			return matchSearch && matchVisibility;
 		});
-	}, [articles, search, hasDMAccess]);
+	}, [articles, search, hasWardenAccess]);
 
 	const groupedArticles = useMemo(() => {
 		const groups: Record<string, WikiArticle[]> = {};
@@ -96,7 +96,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 		const target = articles.find(
 			(a) => a.title.toLowerCase() === title.toLowerCase(),
 		);
-		if (target && (hasDMAccess || target.is_public)) {
+		if (target && (hasWardenAccess || target.is_public)) {
 			setSelectedId(target.id);
 		}
 	};
@@ -138,7 +138,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 							<BookOpen className="w-4 h-4 text-primary" />
 							LORE HUB
 						</h3>
-						{hasDMAccess && (
+						{hasWardenAccess && (
 							<Button
 								size="icon"
 								variant="ghost"
@@ -195,7 +195,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 															<span className="truncate pr-2">
 																{article.title}
 															</span>
-															{!article.is_public && hasDMAccess && (
+															{!article.is_public && hasWardenAccess && (
 																<Lock className="w-3 h-3 text-muted-foreground opacity-50 shrink-0" />
 															)}
 														</button>
@@ -242,7 +242,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 								</span>
 							</div>
 
-							{hasDMAccess && (
+							{hasWardenAccess && (
 								<div className="flex items-center gap-2">
 									<Button
 										size="sm"
@@ -288,7 +288,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 													const exists = articles.some(
 														(a) =>
 															a.title.toLowerCase() === title.toLowerCase() &&
-															(hasDMAccess || a.is_public),
+															(hasWardenAccess || a.is_public),
 													);
 													return (
 														<button
@@ -478,7 +478,7 @@ function WikiEditorDialog({
 								) : (
 									<Lock className="w-3.5 h-3.5 text-amber-400" />
 								)}
-								{isPublic ? "Public Record" : "Restricted File (DM Only)"}
+								{isPublic ? "Public Record" : "Restricted File (Warden Only)"}
 							</Label>
 							<span className="text-[10px] text-muted-foreground">
 								{isPublic

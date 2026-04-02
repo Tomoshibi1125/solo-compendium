@@ -178,8 +178,11 @@ export type CasterType =
 	| "artificer"
 	| "none";
 
-export function getCasterType(job: string | null | undefined): CasterType {
-	if (!job) return "none";
+export function getCasterType(
+	job: string | { name: string } | null | undefined,
+): CasterType {
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName) return "none";
 
 	// Full casters (standard 5e)
 	const fullCasters = ["Wizard", "Cleric", "Druid", "Sorcerer", "Bard"];
@@ -210,7 +213,7 @@ export function getCasterType(job: string | null | undefined): CasterType {
 
 	const pactCasters = ["Warlock"];
 
-	const standardJob = jobMapping[job] || job;
+	const standardJob = jobMapping[jobName] || jobName;
 
 	if (nonCasters.includes(standardJob)) return "none";
 	if (fullCasters.includes(standardJob)) return "full";
@@ -372,9 +375,10 @@ export function getSpellSlotsPerLevel(
 
 // Get spellcasting ability (standard 5e)
 export function getSpellcastingAbility(
-	job: string | null | undefined,
+	job: string | { name: string } | null | undefined,
 ): AbilityScore | null {
-	if (!job) return null;
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName) return null;
 
 	// Map canonical 14 SA jobs to spellcasting abilities
 	const jobAbilityMap: Record<string, AbilityScore> = {
@@ -390,18 +394,19 @@ export function getSpellcastingAbility(
 		Idol: "PRE",
 	};
 
-	return jobAbilityMap[job] || null;
+	return jobAbilityMap[jobName] || null;
 }
 
 // Calculate spells known limit (standard 5e)
 export function getSpellsKnownLimit(
-	job: string | null | undefined,
+	job: string | { name: string } | null | undefined,
 	level: number,
 ): number | null {
-	if (!job) return null;
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName) return null;
 
 	// Known casters have limits
-	if (["Esper", "Contractor", "Idol"].includes(job)) {
+	if (["Esper", "Contractor", "Idol"].includes(jobName)) {
 		return level + 1; // Known casters: level + 1
 	}
 
@@ -411,11 +416,12 @@ export function getSpellsKnownLimit(
 
 // Calculate spells prepared limit (standard 5e)
 export function getSpellsPreparedLimit(
-	job: string | null | undefined,
+	job: string | { name: string } | null | undefined,
 	level: number,
 	abilityModifier: number,
 ): number | null {
-	if (!job) return null;
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName) return null;
 
 	const spellcastingAbility = getSpellcastingAbility(job);
 	if (!spellcastingAbility) return null;
@@ -430,7 +436,7 @@ export function getSpellsPreparedLimit(
 		"Holy Knight",
 		"Summoner",
 	];
-	if (preparedCasters.includes(job)) {
+	if (preparedCasters.includes(jobName)) {
 		return Math.max(1, abilityModifier + level);
 	}
 
@@ -458,11 +464,12 @@ export function getSystemFavorMax(level: number): number {
  * Returns null if the job doesn't learn cantrips
  */
 export function getCantripsKnownLimit(
-	job: string | null | undefined,
+	job: string | { name: string } | null | undefined,
 	level: number,
 ): number | null {
-	if (!job) return null;
-	const j = job.toLowerCase();
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName) return null;
+	const j = jobName.toLowerCase();
 
 	// Full casters: Mage (Wizard), Herald (Cleric), Esper (Sorcerer), Idol (Bard), Summoner (Druid)
 	const fullCasterCantrips: Record<string, number[]> = {

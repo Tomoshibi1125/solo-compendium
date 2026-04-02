@@ -2,7 +2,7 @@ import { Crown, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface RoleBadgeProps {
-	role: "system" | "co-system" | "ascendant" | null;
+	role: "system" | "co-warden" | "ascendant" | null;
 	variant?: "default" | "compact" | "inline";
 	className?: string;
 }
@@ -18,21 +18,21 @@ export function RoleBadge({
 		default: {
 			system:
 				"px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/30 gap-2",
-			"co-system":
+			"co-warden":
 				"px-3 py-1.5 rounded-lg bg-accent/10 border border-accent/30 gap-2",
 			ascendant: "px-3 py-1.5 rounded-lg bg-muted border border-border gap-2",
 		},
 		compact: {
 			system:
 				"px-2 py-0.5 rounded-md bg-primary/10 border border-primary/30 gap-1.5",
-			"co-system":
+			"co-warden":
 				"px-2 py-0.5 rounded-md bg-accent/10 border border-accent/30 gap-1.5",
 			ascendant: "px-2 py-0.5 rounded-md bg-muted border border-border gap-1.5",
 		},
 		inline: {
 			system:
 				"px-2 py-0.5 rounded text-xs bg-primary/10 border border-primary/20 gap-1",
-			"co-system":
+			"co-warden":
 				"px-2 py-0.5 rounded text-xs bg-accent/10 border border-accent/20 gap-1",
 			ascendant:
 				"px-2 py-0.5 rounded text-xs bg-muted/50 border border-border/50 gap-1",
@@ -57,9 +57,9 @@ export function RoleBadge({
 			text: variant === "inline" ? "SYSTEM" : "PROTOCOL WARDEN (SYSTEM)",
 			color: "text-primary",
 		},
-		"co-system": {
+		"co-warden": {
 			icon: Crown,
-			text: "CO-SYSTEM",
+			text: "CO-WARDEN",
 			color: "text-accent",
 		},
 		ascendant: {
@@ -78,7 +78,7 @@ export function RoleBadge({
 		>
 			<Icon className={cn(iconSizes[variant], config.color)} />
 			<span className={cn(textSizes[variant], config.color)}>
-				export {config.text}
+				{config.text}
 			</span>
 		</div>
 	);

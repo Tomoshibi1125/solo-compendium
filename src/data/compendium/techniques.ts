@@ -4,8 +4,8 @@
 
 export const techniques = [
 	{
-		id: "shadow-strike",
-		name: "Shadow Strike",
+		id: "umbral-strike",
+		name: "Umbral Strike",
 		description: "A devastating attack that strikes from unexpected angles.",
 		type: "offensive",
 		style: "weapon",
@@ -47,7 +47,7 @@ export const techniques = [
 		flavor:
 			"Overrides all who stand in opposition. A silent beautiful catastrophe.",
 		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/shadow-strike.webp",
+		image: "/generated/compendium/techniques/umbral-strike.webp",
 	},
 	{
 		id: "dragon-fist",
@@ -223,9 +223,9 @@ export const techniques = [
 		image: "/generated/compendium/techniques/whirlwind-strike.webp",
 	},
 	{
-		id: "shadow-dodge",
-		name: "Shadow Dodge",
-		description: "Phase through shadows to avoid attacks.",
+		id: "umbral-dodge",
+		name: "Umbral Dodge",
+		description: "Phase through umbrals to avoid attacks.",
 		type: "defensive",
 		style: "any",
 		prerequisites: {
@@ -250,12 +250,12 @@ export const techniques = [
 		limitations: {
 			uses: "3 times per short rest",
 			cooldown: "Short rest",
-			conditions: ["Must have shadows or dim light available"],
+			conditions: ["Must have umbrals or dim light available"],
 		},
 		flavor:
-			"Shatters all who stand in opposition. An overwhelming whisper in the shadows.",
+			"Shatters all who stand in opposition. An overwhelming whisper in the umbrals.",
 		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/shadow-dodge.webp",
+		image: "/generated/compendium/techniques/umbral-dodge.webp",
 	},
 	{
 		id: "iron-wall",
@@ -562,9 +562,9 @@ export const techniques = [
 		image: "/generated/compendium/techniques/leap-strike.webp",
 	},
 	{
-		id: "shadow-bind",
-		name: "Shadow Bind",
-		description: "Use shadows to restrain and control enemies.",
+		id: "umbral-bind",
+		name: "Umbral Bind",
+		description: "Use umbrals to restrain and control enemies.",
 		type: "utility",
 		style: "any",
 		prerequisites: {
@@ -585,7 +585,7 @@ export const techniques = [
 		},
 		effects: {
 			primary:
-				"Target must make Charisma saving throw or be restrained by shadow tendrils.",
+				"Target must make Charisma saving throw or be restrained by umbral tendrils.",
 			secondary:
 				"While restrained, target cannot speak or cast spells with verbal components.",
 			tertiary:
@@ -597,18 +597,18 @@ export const techniques = [
 				ability: "Charisma",
 				dc: "8 + proficiency bonus + Charisma modifier",
 				success: "No effect",
-				failure: "Restrained by shadow tendrils",
+				failure: "Restrained by umbral tendrils",
 			},
 		},
 		limitations: {
 			uses: "Once per short rest",
 			cooldown: "Short rest",
-			conditions: ["Requires shadows or dim light"],
+			conditions: ["Requires umbrals or dim light"],
 		},
 		flavor:
 			"Absorbs the dimensional divide. A brutal testament to absolute power.",
 		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/shadow-bind.webp",
+		image: "/generated/compendium/techniques/umbral-bind.webp",
 	},
 	{
 		id: "disarming-strike",
@@ -767,16 +767,16 @@ export const techniques = [
 		image: "/generated/compendium/techniques/intimidating-presence.webp",
 	},
 	{
-		id: "shadow-termination",
-		name: "Shadow Termination",
-		description: "A devastating finishing move that strikes from the shadows.",
+		id: "umbral-termination",
+		name: "Umbral Termination",
+		description: "A devastating finishing move that strikes from the umbrals.",
 		type: "finishing",
 		style: "weapon",
 		prerequisites: {
 			level: 15,
 			ability: "Dexterity",
 			score: 18,
-			technique: ["Shadow Strike"],
+			technique: ["Umbral Strike"],
 		},
 		activation: {
 			type: "action",
@@ -790,7 +790,7 @@ export const techniques = [
 			secondary:
 				"Critical hit deals maximum damage and the target must make Constitution saving throw or die.",
 			tertiary:
-				"If the target dies, you regain hit points equal to your level and can immediately use Shadow Step as a bonus action.",
+				"If the target dies, you regain hit points equal to your level and can immediately use Umbral Step as a bonus action.",
 		},
 		mechanics: {
 			attack: {
@@ -814,7 +814,7 @@ export const techniques = [
 		},
 		flavor: "Reclaims the dimensional divide. A silent symphony of violence.",
 		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/shadow-termination.webp",
+		image: "/generated/compendium/techniques/umbral-termination.webp",
 	},
 	{
 		id: "dragon-slaying-blow",
@@ -1095,7 +1095,7 @@ export const techniques = [
 			level: 17,
 			ability: "Dexterity",
 			score: 17,
-			technique: ["Shadow Strike"],
+			technique: ["Umbral Strike"],
 		},
 		activation: {
 			type: "action",
@@ -1347,7 +1347,7 @@ export const techniques = [
 			cooldown: "Short rest",
 		},
 		flavor:
-			"Commands all who stand in opposition. A triumphant whisper in the shadows.",
+			"Commands all who stand in opposition. A triumphant whisper in the umbrals.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/nerve-strike.webp",
 	},
@@ -2376,7 +2376,7 @@ export const techniques = [
 			uses: "Once per long rest",
 		},
 		flavor:
-			"Destroys the arrogant and the mighty. A desperate whisper in the shadows.",
+			"Destroys the arrogant and the mighty. A desperate whisper in the umbrals.",
 		source: "System Ascendant Canon",
 		image: "/generated/compendium/techniques/rend.webp",
 	},
@@ -2563,8 +2563,8 @@ export const techniques = [
 		image: "/generated/compendium/techniques/blood-boil.webp",
 	},
 	{
-		id: "celestial-step-technique",
-		name: "Celestial Step",
+		id: "ancient-hebrew-strings-step-technique",
+		name: "Ancient Hebrew Strings Step",
 		description: "Move between the gaps in the system's code.",
 		type: "mobility",
 		style: "any",
@@ -2594,9 +2594,9 @@ export const techniques = [
 			uses: "3 times per long rest",
 		},
 		flavor:
-			"Shatters the arrogant and the mighty. A chaotic whisper in the shadows.",
+			"Shatters the arrogant and the mighty. A chaotic whisper in the umbrals.",
 		source: "System Ascendant Canon",
-		image: "/generated/compendium/techniques/celestial-step.webp",
+		image: "/generated/compendium/techniques/ancient-hebrew-strings-step.webp",
 	},
 	{
 		id: "infinity-slash",

@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import type { FusionAbility, GeneratedSovereign } from "@/lib/geminiProtocol";
 
-interface SavedSovereign {
+export interface SavedSovereign {
 	id: string;
 	name: string;
 	title: string;
@@ -16,8 +16,8 @@ interface SavedSovereign {
 	fusion_stability: string;
 	job_id: string;
 	path_id: string;
-	regent_a_id: string;
-	regent_b_id: string;
+	monarch_a_id: string;
+	monarch_b_id: string;
 	abilities: FusionAbility[];
 	created_by: string;
 	created_at: string;
@@ -93,8 +93,18 @@ export function useCharacterSovereign(characterId: string | undefined) {
 				.select("*")
 				.eq("id", char.active_sovereign_id)
 				.maybeSingle();
-			if (error) return null;
-			return data as SavedSovereign | null;
+			if (error || !data) return null;
+			// Use property-safe mapping to ensure SavedSovereign compliance
+			const sovereign = JSON.parse(JSON.stringify(data)) as Record<
+				string,
+				unknown
+			>;
+			return {
+				...sovereign,
+				abilities: Array.isArray(sovereign.abilities)
+					? sovereign.abilities
+					: [],
+			} as SavedSovereign;
 		},
 	});
 }
@@ -131,15 +141,15 @@ export function useSaveSovereign() {
 				fusion_stability: sovereign.fusion_stability,
 				job_id: sovereign.job.id,
 				path_id: sovereign.path.id,
-				regent_a_id: sovereign.regentA.id,
-				regent_b_id: sovereign.regentB.id,
+				monarch_a_id: sovereign.regentA.id,
+				monarch_b_id: sovereign.regentB.id,
 				abilities: JSON.parse(JSON.stringify(sovereign.abilities)),
 				created_by: user.id,
 			};
 
 			const { data, error } = await supabase
 				.from("saved_sovereigns")
-				.insert(insertData as never)
+				.insert(insertData)
 				.select()
 				.single();
 
@@ -149,7 +159,7 @@ export function useSaveSovereign() {
 			if (characterId && data?.id) {
 				await supabase
 					.from("characters")
-					.update({ active_sovereign_id: data.id } as never)
+					.update({ active_sovereign_id: data.id })
 					.eq("id", characterId)
 					.eq("user_id", user.id);
 			}

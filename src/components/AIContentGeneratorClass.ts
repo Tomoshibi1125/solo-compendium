@@ -37,18 +37,18 @@ interface ContentGenerationOptions {
 }
 
 const AI_CONTENT_PROMPTS = {
-	npc: "Generate a detailed System Ascendant NPC with name, appearance, personality, background, motivations, and dialogue examples.",
+	npc: "Generate a detailed System Ascendant NPC (Ascendant or Citizen). Include name, appearance, personality, background, motivations, and dialogue examples. Use System Ascendant terminology: Awakened, Rifts, System, Awakened Council.",
 	encounter:
-		"Create a combat encounter with enemies, environment, tactics, treasure, and story context.",
+		"Create a combat encounter set in a Rift or the Umbral Waste. Include enemies (Monsters/Regents), environment, tactics, treasure (Credits, Mats, Runes), and story context.",
 	location:
-		"Describe a detailed location with atmosphere, features, secrets, and interactive elements.",
+		"Describe a detailed location within the world of System Ascendant (e.g., Neon District, Umbral Forest, Rift Interior). Include atmosphere, features, secrets, and interactive elements.",
 	quest:
-		"Design a quest with objectives, NPCs involved, challenges, rewards, and story hooks.",
+		"Design a Directive (Quest) for Ascendants. Include title, rank (E through S), objectives, NPCs involved, complications, and rewards. Align with Protocol Warden terminology.",
 	dialogue:
-		"Write dialogue between characters with personality, emotion, and plot advancement.",
-	item: "Create a magical or mundane item with description, properties, history, and game mechanics.",
+		"Write dialogue between Ascendants or with the System interface. Include personality, emotion, and plot advancement aligned with the high-stakes setting.",
+	item: "Create a System-grade item (Equipment, Rune, or Relic) with description, properties, history, and game mechanics.",
 	backstory:
-		"Generate a character backstory with formative events, relationships, goals, and secrets.",
+		"Generate a character backstory for an Ascendant. Include their Awakening event, formative events, relationships, goals, and secrets.",
 };
 
 export class AIContentGenerator {
@@ -59,8 +59,9 @@ export class AIContentGenerator {
 		const enhancedPrompt = this.buildEnhancedPrompt(prompt, options);
 
 		try {
+			// Enforce Gemini 2.0 authoritative pipeline
 			const response = await aiService.processRequest({
-				service: aiService.getConfiguration().defaultService,
+				service: "gemini-native",
 				type: "generate-content",
 				input: enhancedPrompt,
 				context: {
@@ -109,24 +110,24 @@ export class AIContentGenerator {
 			options.includeStats &&
 			(options.type === "npc" || options.type === "encounter")
 		) {
-			enhancedPrompt += `\n- Include game statistics (AC, HP, abilities, etc.)`;
+			enhancedPrompt += `\n- Include game statistics (AC, HP, abilities, etc.) aligned with System Ascendant mechanics.`;
 		}
 
 		if (
 			options.includeDialogue &&
 			(options.type === "npc" || options.type === "dialogue")
 		) {
-			enhancedPrompt += `\n- Include sample dialogue`;
+			enhancedPrompt += `\n- Include sample dialogue using the appropriate vernacular.`;
 		}
 
 		if (
 			options.includeDescription &&
 			(options.type === "location" || options.type === "item")
 		) {
-			enhancedPrompt += `\n- Include detailed descriptions`;
+			enhancedPrompt += `\n- Include detailed descriptions and sensory details.`;
 		}
 
-		enhancedPrompt += `\n\nFormat the response clearly with sections and appropriate System Ascendant terminology.`;
+		enhancedPrompt += `\n\nFormat the response clearly with headers and appropriate System Ascendant terminology.`;
 		enhancedPrompt += `\n\nKeep the flavor aligned with System Ascendant: cinematic, high-stakes, and system-driven.`;
 
 		return enhancedPrompt;

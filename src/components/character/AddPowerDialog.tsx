@@ -15,8 +15,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter } from "@/hooks/useCharacters";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
+import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
 import {
@@ -50,8 +51,12 @@ export function AddPowerDialog({
 	const { data: character } = useCharacter(characterId);
 	const { data: characterCampaign } = useCampaignByCharacterId(characterId);
 	const campaignId = characterCampaign?.id ?? null;
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
+	const { data: staticJobs } = useStaticJobs();
+	const jobObj = useMemo(
+		() => staticJobs?.find((j) => j.name === character?.job),
+		[staticJobs, character?.job],
+	);
 
 	const [replaceTarget, setReplaceTarget] = useState<null | {
 		powerToLearn: { name: string; power_level: number };
@@ -60,7 +65,7 @@ export function AddPowerDialog({
 	}>(null);
 
 	const maxPowerLevel = character
-		? getMaxPowerLevelForJobAtLevel(character.job, character.level)
+		? getMaxPowerLevelForJobAtLevel(jobObj || character.job, character.level)
 		: 0;
 
 	const { data: powers = [], isLoading } = useQuery({
@@ -167,7 +172,7 @@ export function AddPowerDialog({
 						const q = trimmedQuery.toLowerCase();
 						return (
 							spell.name.toLowerCase().includes(q) ||
-							spell.description.toLowerCase().includes(q)
+							(spell.description || "").toLowerCase().includes(q)
 						);
 					}
 					return true;
@@ -316,12 +321,12 @@ export function AddPowerDialog({
 				description: `${displayName} has been added to your powers.`,
 			});
 
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					characterId,
 					`Learned: ${displayName}`,
 					"Acquired Power",
-					"5e",
+					"SA",
 				)
 				.catch(console.error);
 
@@ -366,12 +371,12 @@ export function AddPowerDialog({
 				description: `${displayName} has been learned.`,
 			});
 
-			playerTools
+			ascendantTools
 				.trackCustomFeatureUsage(
 					characterId,
 					`Learned: ${displayName}`,
 					"Replaced Power",
-					"5e",
+					"SA",
 				)
 				.catch(console.error);
 

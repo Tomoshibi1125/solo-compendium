@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
@@ -20,8 +20,7 @@ export const useCampaignInventory = (
 ) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const { data: inventory = [], isLoading } = useQuery({
 		queryKey: ["campaign_inventory", campaignId],
@@ -75,7 +74,7 @@ export const useCampaignInventory = (
 			if (characterId) {
 				const qtyStr =
 					data.quantity && data.quantity > 1 ? `(${data.quantity}x) ` : "";
-				playerTools
+				ascendantTools
 					.trackInventoryChange(
 						characterId,
 						`${qtyStr}${data.name} to Party Stash`,
@@ -122,7 +121,7 @@ export const useCampaignInventory = (
 			if (characterId) {
 				const qtyStr =
 					data.quantity && data.quantity > 1 ? `(now ${data.quantity}x) ` : "";
-				playerTools
+				ascendantTools
 					.trackCustomFeatureUsage(
 						characterId,
 						`Party Stash: ${data.name}`,
@@ -160,7 +159,7 @@ export const useCampaignInventory = (
 				queryKey: ["campaign_inventory", campaignId],
 			});
 			if (characterId) {
-				playerTools
+				ascendantTools
 					.trackInventoryChange(
 						characterId,
 						`${data.name} from Party Stash`,

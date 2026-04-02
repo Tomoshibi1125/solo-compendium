@@ -17,12 +17,17 @@ import {
 	SystemText,
 } from "@/components/ui/SystemText";
 import { SystemWindow } from "@/components/ui/SystemWindow";
+import { SystemNotificationOverlay } from "@/components/vtt/SystemNotificationOverlay";
 import {
 	useCampaignCombatSession,
 	useEndCombatSession,
 	useUpdateCombatSession,
 } from "@/hooks/useCampaignCombat";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useWardenToolsEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
+import {
+	type BroadcastPayload,
+	useVTTBroadcast,
+} from "@/hooks/useVTTBroadcast";
 import { cn } from "@/lib/utils";
 
 const CampaignSessionPlay = () => {
@@ -31,14 +36,28 @@ const CampaignSessionPlay = () => {
 		sessionId: string;
 	}>();
 
+	// Resolved IDs
 	const resolvedCampaignId = campaignId ?? "";
 	const resolvedSessionId = sessionId ?? "";
 
-	// Realtime connection for combat list update logic is now covered by useCampaignCombatSession directly!
-
 	// Master integration: encounter rewards, combat tracking, VTT mgmt, analytics (DDB parity)
-	const { useDMToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const _dmTools = useDMToolsEnhancements(resolvedCampaignId || undefined);
+	const wardenTools = useWardenToolsEnhancements();
+
+	// VTT Broadcasting Integration
+	const [activeBroadcasts, setActiveBroadcasts] = useState<BroadcastPayload[]>(
+		[],
+	);
+	const { sendBroadcast: _ } = useVTTBroadcast(
+		resolvedCampaignId,
+		sessionId,
+		(payload) => {
+			setActiveBroadcasts((prev) => [...prev, payload]);
+		},
+	);
+
+	const dismissBroadcast = (id: string) => {
+		setActiveBroadcasts((prev) => prev.filter((b) => b.id !== id));
+	};
 
 	const { data, isLoading, error } = useCampaignCombatSession(
 		resolvedCampaignId,
@@ -208,7 +227,7 @@ const CampaignSessionPlay = () => {
 													<Badge variant="outline">
 														Init {c.initiative ?? 0}
 													</Badge>
-													{_dmTools.isDM && (
+													{wardenTools.isWarden && (
 														<div className="flex items-center gap-1">
 															<Button
 																variant="ghost"
@@ -264,15 +283,15 @@ const CampaignSessionPlay = () => {
 							</div>
 
 							<div className="pt-2 text-xs text-muted-foreground border-t border-border">
-								This view updates live while the DM advances turns in Initiative
-								Tracker.
+								This view updates live while the Protocol Warden advances turns
+								in Initiative Tracker.
 							</div>
 
-							{/* DM Controls */}
-							{_dmTools.isDM && (
+							{/* Warden Controls */}
+							{wardenTools.isWarden && (
 								<div className="mt-6 pt-4 border-t border-border/50 space-y-4">
 									<h3 className="font-heading font-semibold text-lg text-primary">
-										DM Controls
+										Protocol Warden Controls
 									</h3>
 
 									{/* Turn / Combat Actions */}
@@ -307,7 +326,7 @@ const CampaignSessionPlay = () => {
 										</Button>
 									</div>
 
-									{/* Encounter Builder link — replaces old alert() stub */}
+									{/* Encounter Builder link */}
 									<div className="grid grid-cols-2 gap-3">
 										<Button
 											variant="outline"
@@ -315,14 +334,14 @@ const CampaignSessionPlay = () => {
 											asChild
 										>
 											<Link
-												to={`/dm-tools/encounter-builder?campaignId=${resolvedCampaignId}&sessionId=${resolvedSessionId}`}
+												to={`/warden-protocols/encounter-builder?campaignId=${resolvedCampaignId}&sessionId=${resolvedSessionId}`}
 											>
 												<Swords className="w-5 h-5" />
 												<span className="font-heading text-sm">
-													Manage Encounter
+													Manage Engagement
 												</span>
 												<span className="text-[10px] text-muted-foreground">
-													Add/Remove Combatants
+													Add/Remove Entities
 												</span>
 											</Link>
 										</Button>
@@ -331,7 +350,7 @@ const CampaignSessionPlay = () => {
 											variant="outline"
 											className="flex flex-col items-center justify-center h-20 gap-1.5 border-amber-500/20 hover:border-amber-500/50"
 											onClick={() =>
-												_dmTools.awardEncounterRewards(resolvedSessionId)
+												wardenTools.awardEncounterRewards(resolvedSessionId)
 											}
 										>
 											<AlertTriangle className="w-4 h-4 text-amber-500" />
@@ -348,6 +367,10 @@ const CampaignSessionPlay = () => {
 						</div>
 					)}
 				</SystemWindow>
+				<SystemNotificationOverlay
+					notifications={activeBroadcasts}
+					onDismiss={dismissBroadcast}
+				/>
 			</div>
 		</Layout>
 	);

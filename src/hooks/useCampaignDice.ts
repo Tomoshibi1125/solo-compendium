@@ -4,6 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AIServiceManager } from "@/lib/ai/aiService";
 import { useAuth } from "@/lib/auth/authContext";
+import { enqueueSyncItem } from "@/lib/syncManager";
 
 type _Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
 type _CampaignMember = Database["public"]["Tables"]["campaign_members"]["Row"];
@@ -62,15 +63,14 @@ export function useCampaignDice() {
 
 			try {
 				if (isOfflineMode) {
-					const { enqueueRoll } = await import("@/lib/offlineSyncQueue");
-					await enqueueRoll({
+					await enqueueSyncItem("roll", "create", {
 						...rollData,
 						campaign_id: campaignId,
 						user_id: user.id,
 					});
 					toast({
 						title: "Roll Saved Offline",
-						description: `Roll will sync when reconnected`,
+						description: "Roll will sync when reconnected",
 					});
 					return { ...rollData, id: crypto.randomUUID() };
 				}

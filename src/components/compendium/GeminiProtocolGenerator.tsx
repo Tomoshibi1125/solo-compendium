@@ -28,8 +28,8 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
-import { useCharacterRegentUnlocks } from "@/hooks/useRegentUnlocks";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import {
 	useCharacterSovereign,
@@ -68,7 +68,7 @@ export function GeminiProtocolGenerator() {
 	const campaignId = characterCampaign?.id ?? null;
 	const characterId = activeCharacter?.id;
 	const { unlocks: regentUnlocks = [], isLoading: regentUnlocksLoading } =
-		useCharacterRegentUnlocks(characterId || "");
+		useRegentUnlocks(characterId || "");
 	const [selectedJob, setSelectedJob] = useState<string>("");
 	const [selectedPath, setSelectedPath] = useState<string>("");
 	const [selectedRegentA, setSelectedRegentA] = useState<string>("");
@@ -80,8 +80,7 @@ export function GeminiProtocolGenerator() {
 	const { data: existingSovereign } = useCharacterSovereign(characterId);
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const { rollInCampaign } = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	// Fetch all jobs
 	const { data: jobs = [], isLoading: jobsLoading } = useQuery({
@@ -335,7 +334,7 @@ export function GeminiProtocolGenerator() {
 				const contextMsg = `System Ascendant Gemini Protocol: Generated Sovereign [${name} - ${title}]`;
 
 				if (campaignId && characterId) {
-					rollInCampaign(campaignId, {
+					ascendantTools.rollInCampaign(campaignId, {
 						dice_formula: "0",
 						result: 0,
 						rolls: [],
@@ -395,8 +394,8 @@ export function GeminiProtocolGenerator() {
 		campaignId,
 		characterId,
 		existingSovereign,
-		recordRoll.mutate,
-		rollInCampaign,
+		recordRoll,
+		ascendantTools,
 		toast,
 	]);
 

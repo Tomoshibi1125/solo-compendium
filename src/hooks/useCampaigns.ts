@@ -14,7 +14,7 @@ interface Campaign {
 	id: string;
 	name: string;
 	description: string | null;
-	dm_id: string;
+	warden_id: string;
 	share_code: string;
 	is_active: boolean;
 	created_at: string;
@@ -27,7 +27,7 @@ export interface CampaignMember {
 	campaign_id: string;
 	user_id: string;
 	character_id: string | null;
-	role: "ascendant" | "co-system";
+	role: "ascendant" | "warden" | "co-warden";
 	joined_at: string;
 }
 
@@ -105,13 +105,6 @@ const createShareCode = () => {
 const isLocalMode = () => !isSupabaseConfigured;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-const _supabaseAny = supabase as unknown as {
-	rpc: (
-		fn: string,
-		args?: Record<string, unknown>,
-	) => Promise<{ data: unknown; error: { message?: string } | null }>;
-};
-
 const isMissingAddCharacterRpc = (error: unknown): boolean => {
 	if (!error || typeof error !== "object") return false;
 	const message = String(
@@ -132,7 +125,7 @@ export const useMyCampaigns = () => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
 				return loadLocalCampaigns()
-					.filter((campaign) => campaign.dm_id === userId)
+					.filter((campaign) => campaign.warden_id === userId)
 					.sort((a, b) => b.created_at.localeCompare(a.created_at));
 			}
 			const {
@@ -142,7 +135,7 @@ export const useMyCampaigns = () => {
 				if (guestEnabled) {
 					const userId = getLocalUserId();
 					return loadLocalCampaigns()
-						.filter((campaign) => campaign.dm_id === userId)
+						.filter((campaign) => campaign.warden_id === userId)
 						.sort((a, b) => b.created_at.localeCompare(a.created_at));
 				}
 				return [];
@@ -151,7 +144,7 @@ export const useMyCampaigns = () => {
 			const { data, error } = await supabase
 				.from("campaigns")
 				.select("*")
-				.eq("dm_id", user.id)
+				.eq("warden_id", user.id)
 				.order("created_at", { ascending: false });
 
 			if (error) throw error;
@@ -427,7 +420,7 @@ export const useCreateCampaign = () => {
 					id: crypto.randomUUID(),
 					name,
 					description: description || null,
-					dm_id: userId,
+					warden_id: userId,
 					share_code: createShareCode(),
 					is_active: true,
 					created_at: now,
@@ -442,7 +435,7 @@ export const useCreateCampaign = () => {
 					campaign_id: campaign.id,
 					user_id: userId,
 					character_id: null,
-					role: "co-system",
+					role: "warden",
 					joined_at: now,
 				});
 				saveLocalMembers(members);
@@ -460,7 +453,7 @@ export const useCreateCampaign = () => {
 						id: crypto.randomUUID(),
 						name,
 						description: description || null,
-						dm_id: userId,
+						warden_id: userId,
 						share_code: createShareCode(),
 						is_active: true,
 						created_at: now,
@@ -475,7 +468,7 @@ export const useCreateCampaign = () => {
 						campaign_id: campaign.id,
 						user_id: userId,
 						character_id: null,
-						role: "co-system",
+						role: "co-warden",
 						joined_at: now,
 					});
 					saveLocalMembers(members);
@@ -488,7 +481,7 @@ export const useCreateCampaign = () => {
 			const { data, error } = await supabase.rpc("create_campaign_with_code", {
 				p_name: name,
 				p_description: description || "",
-				p_dm_id: user.id,
+				p_warden_id: user.id,
 			});
 
 			if (error) {
@@ -875,14 +868,15 @@ export const useLeaveCampaign = () => {
 };
 
 // Check if current user is the System (Protocol Warden) of a campaign
-export const useIsCampaignDM = (campaignId: string) => {
+export const useIsCampaignWarden = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "is-system"],
 		queryFn: async () => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
 				return loadLocalCampaigns().some(
-					(campaign) => campaign.id === campaignId && campaign.dm_id === userId,
+					(campaign) =>
+						campaign.id === campaignId && campaign.warden_id === userId,
 				);
 			}
 			const {
@@ -894,7 +888,7 @@ export const useIsCampaignDM = (campaignId: string) => {
 					const userId = getLocalUserId();
 					return loadLocalCampaigns().some(
 						(campaign) =>
-							campaign.id === campaignId && campaign.dm_id === userId,
+							campaign.id === campaignId && campaign.warden_id === userId,
 					);
 				}
 				return false;
@@ -903,14 +897,14 @@ export const useIsCampaignDM = (campaignId: string) => {
 
 			const { data: campaign, error } = await supabase
 				.from("campaigns")
-				.select("dm_id")
+				.select("warden_id")
 				.eq("id", campaignId)
 				.single();
 
 			if (error || !campaign) return false;
 			return (
-				(campaign as Database["public"]["Tables"]["campaigns"]["Row"]).dm_id ===
-				user.id
+				(campaign as Database["public"]["Tables"]["campaigns"]["Row"])
+					.warden_id === user.id
 			);
 		},
 		enabled: !!campaignId,
@@ -918,7 +912,7 @@ export const useIsCampaignDM = (campaignId: string) => {
 };
 
 // Check if current user has System access (is System/Protocol Warden or co-System)
-export const useHasDMAccess = (campaignId: string) => {
+export const useHasWardenAccess = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "has-system-access"],
 		queryFn: async () => {
@@ -927,12 +921,12 @@ export const useHasDMAccess = (campaignId: string) => {
 				const campaign = loadLocalCampaigns().find(
 					(entry) => entry.id === campaignId,
 				);
-				if (campaign && campaign.dm_id === userId) return true;
+				if (campaign && campaign.warden_id === userId) return true;
 				const member = loadLocalMembers().find(
 					(entry) =>
 						entry.campaign_id === campaignId && entry.user_id === userId,
 				);
-				return member?.role === "co-system";
+				return member?.role === "co-warden";
 			}
 			const {
 				data: { user },
@@ -943,12 +937,12 @@ export const useHasDMAccess = (campaignId: string) => {
 					const campaign = loadLocalCampaigns().find(
 						(entry) => entry.id === campaignId,
 					);
-					if (campaign && campaign.dm_id === userId) return true;
+					if (campaign && campaign.warden_id === userId) return true;
 					const member = loadLocalMembers().find(
 						(entry) =>
 							entry.campaign_id === campaignId && entry.user_id === userId,
 					);
-					return member?.role === "co-system";
+					return member?.role === "co-warden";
 				}
 				return false;
 			}
@@ -956,15 +950,15 @@ export const useHasDMAccess = (campaignId: string) => {
 			// Check if user is the System (Protocol Warden)
 			const { data: campaign, error: campaignError } = await supabase
 				.from("campaigns")
-				.select("dm_id")
+				.select("warden_id")
 				.eq("id", campaignId)
 				.single();
 
 			if (
 				!campaignError &&
 				campaign &&
-				(campaign as Database["public"]["Tables"]["campaigns"]["Row"]).dm_id ===
-					user.id
+				(campaign as Database["public"]["Tables"]["campaigns"]["Row"])
+					.warden_id === user.id
 			) {
 				return true;
 			}
@@ -981,7 +975,7 @@ export const useHasDMAccess = (campaignId: string) => {
 				!memberError &&
 				member &&
 				(member as Database["public"]["Tables"]["campaign_members"]["Row"])
-					.role === "co-system"
+					.role === "co-warden"
 			) {
 				return true;
 			}
@@ -997,18 +991,18 @@ export const useCampaignRole = (campaignId: string) => {
 	const { user, loading } = useAuth();
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "role"],
-		queryFn: async (): Promise<"system" | "co-system" | "ascendant" | null> => {
+		queryFn: async (): Promise<"system" | "co-warden" | "ascendant" | null> => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
 				const campaign = loadLocalCampaigns().find(
 					(entry) => entry.id === campaignId,
 				);
-				if (campaign && campaign.dm_id === userId) return "system";
+				if (campaign && campaign.warden_id === userId) return "system";
 				const member = loadLocalMembers().find(
 					(entry) =>
 						entry.campaign_id === campaignId && entry.user_id === userId,
 				);
-				if (member?.role === "co-system") return "co-system";
+				if (member?.role === "co-warden") return "co-warden";
 				if (member) return "ascendant";
 				return null;
 			}
@@ -1018,12 +1012,12 @@ export const useCampaignRole = (campaignId: string) => {
 					const campaign = loadLocalCampaigns().find(
 						(entry) => entry.id === campaignId,
 					);
-					if (campaign && campaign.dm_id === userId) return "system";
+					if (campaign && campaign.warden_id === userId) return "system";
 					const member = loadLocalMembers().find(
 						(entry) =>
 							entry.campaign_id === campaignId && entry.user_id === userId,
 					);
-					if (member?.role === "co-system") return "co-system";
+					if (member?.role === "co-warden") return "co-warden";
 					if (member) return "ascendant";
 					return null;
 				}
@@ -1033,15 +1027,15 @@ export const useCampaignRole = (campaignId: string) => {
 			// Check if user is the System (Protocol Warden)
 			const { data: campaign, error: campaignError } = await supabase
 				.from("campaigns")
-				.select("dm_id")
+				.select("warden_id")
 				.eq("id", campaignId)
 				.single();
 
 			if (
 				!campaignError &&
 				campaign &&
-				(campaign as Database["public"]["Tables"]["campaigns"]["Row"]).dm_id ===
-					user.id
+				(campaign as Database["public"]["Tables"]["campaigns"]["Row"])
+					.warden_id === user.id
 			) {
 				return "system";
 			}
@@ -1057,8 +1051,8 @@ export const useCampaignRole = (campaignId: string) => {
 			if (!memberError && member) {
 				return (
 					member as Database["public"]["Tables"]["campaign_members"]["Row"]
-				).role === "co-system"
-					? "co-system"
+				).role === "co-warden"
+					? "co-warden"
 					: "ascendant";
 			}
 
@@ -1069,14 +1063,14 @@ export const useCampaignRole = (campaignId: string) => {
 };
 
 // Check if user is a Warden (System/Protocol Warden) - now uses profiles table
-export const useIsDM = () => {
+export const useIsWarden = () => {
 	return useQuery({
-		queryKey: ["user", "is-dm"],
+		queryKey: ["user", "is-warden"],
 		queryFn: async (): Promise<boolean> => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
 				return loadLocalCampaigns().some(
-					(campaign) => campaign.dm_id === userId,
+					(campaign) => campaign.warden_id === userId,
 				);
 			}
 			const {
@@ -1084,7 +1078,7 @@ export const useIsDM = () => {
 			} = await supabase.auth.getUser();
 			if (!user) {
 				if (guestEnabled) {
-					return getLocalGuestRole() === "dm";
+					return getLocalGuestRole() === "warden";
 				}
 				return false;
 			}
@@ -1098,8 +1092,8 @@ export const useIsDM = () => {
 			if (error || !data) return false;
 			const role = (data as Database["public"]["Tables"]["profiles"]["Row"])
 				.role;
-			const normalizedRole = role === "admin" ? "dm" : role;
-			return normalizedRole === "dm";
+			const normalizedRole = role === "admin" ? "warden" : role;
+			return normalizedRole === "warden";
 		},
 		retry: false,
 	});

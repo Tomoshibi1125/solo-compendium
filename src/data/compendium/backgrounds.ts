@@ -10,7 +10,7 @@ export interface Background {
 	type: string;
 	rank: "D" | "C" | "B" | "A" | "S";
 	// System Ascendant background features
-	skillProficiencies: string[];
+	skill_proficiencies: string[];
 	toolProficiencies?: string[];
 	languages?: string[];
 	equipment: string[];
@@ -41,23 +41,23 @@ export interface Background {
 
 export const backgrounds = [
 	{
-		id: "shadow-realm-exile",
-		name: "Abyssal Realm Exile",
+		id: "umbral-realm-exile",
+		name: "Binary Void-Data Realm Exile",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Stealth", "Perception", "Survival", "Arcana"],
-		toolProficiencies: ["Thieves' Tools"],
-		languages: ["Common", "Abyssal"],
+		skill_proficiencies: ["Stealth", "Perception", "Survival", "Arcana"],
+		tool_proficiencies: ["Thieves' Tools"],
+		languages: ["English", "Binary Void-Data"],
 		equipment: [
 			"A set of dark clothes",
-			"A shadow-infused dagger",
-			"A small pouch containing 10 gp",
+			"A umbral-infused dagger",
+			"A small pouch containing 10 Credits",
 			"A memento from the abyssal realm",
 			"Thieves' tools",
 		],
 		features: [
 			{
-				name: "Shadow Affinity",
+				name: "Umbral Affinity",
 				description:
 					"You have advantage on saving throws against being frightened and can see in dim light within 60 feet as if it were bright light.",
 			},
@@ -73,15 +73,15 @@ export const backgrounds = [
 			},
 		],
 		personalityTraits: [
-			"I am constantly looking over my shoulder, expecting danger from the shadows.",
+			"I am constantly looking over my shoulder, expecting danger from the umbrals.",
 			"I speak in whispers and avoid drawing attention to myself.",
 			"I trust no one completely, having learned betrayal in the abyssal realm.",
-			"I am fascinated by shadows and darkness, finding comfort in them.",
+			"I am fascinated by umbrals and darkness, finding comfort in them.",
 		],
 		ideals: [
 			"Survival. I will do whatever it takes to survive, no matter the cost. (Neutral)",
 			"Freedom. No one should be trapped between worlds as I was. (Chaotic)",
-			"Power. The shadows taught me that only the strong survive. (Evil)",
+			"Power. The umbrals taught me that only the strong survive. (Evil)",
 			"Knowledge. I seek to understand the mysteries of the abyssal realm. (Neutral)",
 		],
 		bonds: [
@@ -93,12 +93,12 @@ export const backgrounds = [
 		flaws: [
 			"I am paranoid and see threats everywhere.",
 			"I have nightmares about the abyssal realm that affect my judgment.",
-			"I trust shadows more than people.",
+			"I trust umbrals more than people.",
 			"I am willing to sacrifice others for my own survival.",
 		],
-		image: "/generated/compendium/backgrounds/shadow-realm-exile.webp",
+		image: "/generated/compendium/backgrounds/umbral-realm-exile.webp",
 		description:
-			"Background as a Abyssal Realm Exile from System Ascendant, with unique experiences and abilities.",
+			"Background as a Binary Void-Data Realm Exile from System Ascendant, with unique experiences and abilities.",
 		dangers: [
 			"Post-Traumatic Stress",
 			"Dimensional Instability",
@@ -106,9 +106,9 @@ export const backgrounds = [
 			"Memory Loss",
 		],
 		abilities: [
-			"Enhanced Shadow Resistance",
+			"Enhanced Umbral Resistance",
 			"Dimensional Awareness",
-			"Shadow Affinity",
+			"Umbral Affinity",
 			"Essence Sensitivity",
 		],
 		source: "System Ascendant Canon",
@@ -118,14 +118,14 @@ export const backgrounds = [
 		name: "Rift Survivor",
 		type: "Background",
 		rank: "S",
-		skillProficiencies: ["Survival", "Perception"],
-		toolProficiencies: ["Herbalism Kit"],
-		languages: ["Common", "Primordial"],
+		skill_proficiencies: ["Survival", "Perception"],
+		tool_proficiencies: ["Herbalism Kit"],
+		languages: ["English", "Proto-Indo-European"],
 		equipment: [
 			"A jagged shard of rift crystal",
 			"A set of tattered but serviceable clothes",
 			"A healer's kit",
-			"A small pouch containing 15 gp",
+			"A small pouch containing 15 Credits",
 			"Herbalism kit",
 		],
 		features: [
@@ -180,15 +180,15 @@ export const backgrounds = [
 		name: "Ascendant Academy Graduate",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Investigation", "Arcana"],
-		toolProficiencies: ["Cartographer's Tools"],
-		languages: ["Common", "Celestial"],
+		skill_proficiencies: ["Investigation", "Arcana"],
+		tool_proficiencies: ["Cartographer's Tools"],
+		languages: ["English", "Ancient Hebrew"],
 		equipment: [
 			"Academy uniform (fine clothes)",
 			"Academy signet ring",
 			"Cartographer's tools",
 			"A textbook on dimensional theory",
-			"A small pouch containing 15 gp",
+			"A small pouch containing 15 Credits",
 		],
 		features: [
 			{
@@ -242,15 +242,15 @@ export const backgrounds = [
 		name: "Guild Master",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Persuasion", "Insight"],
-		toolProficiencies: ["Gaming Set (one of your choice)"],
-		languages: ["Common", "Dwarvish"],
+		skill_proficiencies: ["Persuasion", "Insight"],
+		tool_proficiencies: ["Gaming Set (one of your choice)"],
+		languages: ["English", "Russian"],
 		equipment: [
 			"A guild master's signet ring",
 			"Fine clothes",
 			"A ledger of guild accounts",
 			"A gaming set",
-			"A belt pouch containing 25 gp",
+			"A belt pouch containing 25 Credits",
 		],
 		features: [
 			{
@@ -304,15 +304,15 @@ export const backgrounds = [
 		name: "Dimensional Traveler",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Arcana", "Survival"],
-		toolProficiencies: ["Navigator's Tools"],
-		languages: ["Common", "Deep Speech"],
+		skill_proficiencies: ["Arcana", "Survival"],
+		tool_proficiencies: ["Navigator's Tools"],
+		languages: ["English", "Quantum Resonance"],
 		equipment: [
 			"A set of traveler's clothes",
 			"Navigator's tools",
 			"A fragment of another dimension",
 			"A journal of dimensional coordinates",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -366,15 +366,15 @@ export const backgrounds = [
 		name: "Essence User",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Arcana", "Insight"],
-		toolProficiencies: ["Alchemist's Supplies"],
-		languages: ["Common", "Sylvan"],
+		skill_proficiencies: ["Arcana", "Insight"],
+		tool_proficiencies: ["Alchemist's Supplies"],
+		languages: ["English", "Finnish"],
 		equipment: [
 			"A set of common clothes with essence-stained cuffs",
 			"Alchemist's supplies",
 			"An essence focus crystal",
 			"A vial of concentrated essence (non-magical)",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -428,15 +428,15 @@ export const backgrounds = [
 		name: "Regent's Chosen",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Intimidation", "Arcana"],
-		toolProficiencies: ["Poisoner's Kit"],
-		languages: ["Common", "Infernal"],
+		skill_proficiencies: ["Intimidation", "Arcana"],
+		tool_proficiencies: ["Poisoner's Kit"],
+		languages: ["English", "Sumerian Protocols"],
 		equipment: [
 			"A dark cloak bearing your regent's sigil",
 			"A set of fine clothes",
 			"A poisoner's kit",
 			"A sealed letter of authority from your regent",
-			"A belt pouch containing 20 gp",
+			"A belt pouch containing 20 Credits",
 		],
 		features: [
 			{
@@ -445,9 +445,9 @@ export const backgrounds = [
 					"You bear the invisible mark of a regent—a being of immense dimensional power. You have advantage on Charisma (Intimidation) checks against creatures of lower rank than your regent, and creatures that serve your regent will not attack you unless provoked.",
 			},
 			{
-				name: "Shadow Communion",
+				name: "Umbral Communion",
 				description:
-					"Once per long rest, you can meditate for 10 minutes to receive a cryptic vision or sensation from your regent's domain. The DM determines the nature of the communication.",
+					"Once per long rest, you can meditate for 10 minutes to receive a cryptic vision or sensation from your regent's domain. The Protocol Warden (PW) determines the nature of the communication.",
 			},
 		],
 		personalityTraits: [
@@ -475,30 +475,30 @@ export const backgrounds = [
 			"I look down on the unchosen as lesser beings.",
 		],
 		description:
-			"You have been selected by a regent—one of the immensely powerful dimensional entities that rule vast shadow domains. This connection grants you a fragment of their authority and insight, but it comes with expectations and obligations that weigh heavily on your soul.",
+			"You have been selected by a regent—one of the immensely powerful dimensional entities that rule vast umbral domains. This connection grants you a fragment of their authority and insight, but it comes with expectations and obligations that weigh heavily on your soul.",
 		dangers: [
 			"Regent Control",
 			"Rival Assassination",
-			"Shadow Corruption",
+			"Umbral Corruption",
 			"Obligation Binding",
 		],
 		image: "/generated/compendium/backgrounds/regents-chosen.webp",
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "shadow-soldier",
+		id: "umbral-soldier",
 		name: "Umbral Legionnaire",
 		type: "Background",
 		rank: "D",
-		skillProficiencies: ["Athletics", "Intimidation"],
-		toolProficiencies: ["Smith's Tools"],
-		languages: ["Common"],
+		skill_proficiencies: ["Athletics", "Intimidation"],
+		tool_proficiencies: ["Smith's Tools"],
+		languages: ["English"],
 		equipment: [
 			"A legionnaire's tabard (dark purple and black)",
 			"A set of common clothes",
 			"Smith's tools",
 			"A rank insignia badge",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -507,7 +507,7 @@ export const backgrounds = [
 					"When you are within 5 feet of an ally, you have advantage on saving throws against being frightened. You can use a bonus action to grant an adjacent ally +2 to their AC against the next attack that targets them before your next turn.",
 			},
 			{
-				name: "Shadow March",
+				name: "Umbral March",
 				description:
 					"You can march for up to 12 hours before suffering exhaustion, and you have advantage on Constitution saving throws against forced marches and extreme weather.",
 			},
@@ -542,9 +542,9 @@ export const backgrounds = [
 			"Battle Trauma",
 			"Enemy Vendettas",
 			"Combat Addiction",
-			"Shadow Corruption",
+			"Umbral Corruption",
 		],
-		image: "/generated/compendium/backgrounds/shadow-soldier.webp",
+		image: "/generated/compendium/backgrounds/umbral-soldier.webp",
 		source: "System Ascendant Canon",
 	},
 	{
@@ -552,15 +552,15 @@ export const backgrounds = [
 		name: "Rune Master",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Arcana", "History"],
-		toolProficiencies: ["Calligrapher's Supplies", "Jeweler's Tools"],
-		languages: ["Common", "Giant"],
+		skill_proficiencies: ["Arcana", "History"],
+		tool_proficiencies: ["Calligrapher's Supplies", "Jeweler's Tools"],
+		languages: ["English", "Old Norse"],
 		equipment: [
 			"Calligrapher's supplies",
 			"Jeweler's tools",
 			"A set of scholar's clothes",
 			"A rune reference codex",
-			"A belt pouch containing 15 gp",
+			"A belt pouch containing 15 Credits",
 		],
 		features: [
 			{
@@ -614,15 +614,15 @@ export const backgrounds = [
 		name: "Artifact Keeper",
 		type: "Background",
 		rank: "S",
-		skillProficiencies: ["Arcana", "History"],
-		toolProficiencies: ["Tinker's Tools"],
-		languages: ["Common", "Draconic"],
+		skill_proficiencies: ["Arcana", "History"],
+		tool_proficiencies: ["Tinker's Tools"],
+		languages: ["English", "Latin Archival"],
 		equipment: [
 			"A set of scholar's clothes",
 			"Tinker's tools",
 			"A leather-bound artifact registry",
 			"Protective gloves woven with containment sigils",
-			"A belt pouch containing 15 gp",
+			"A belt pouch containing 15 Credits",
 		],
 		features: [
 			{
@@ -676,15 +676,15 @@ export const backgrounds = [
 		name: "Dragon Slayer",
 		type: "Background",
 		rank: "A",
-		skillProficiencies: ["Athletics", "Nature"],
-		toolProficiencies: ["Leatherworker's Tools"],
-		languages: ["Common", "Draconic"],
+		skill_proficiencies: ["Athletics", "Nature"],
+		tool_proficiencies: ["Leatherworker's Tools"],
+		languages: ["English", "Latin Archival"],
 		equipment: [
 			"A trophy from a slain dragon (scale, tooth, or claw)",
 			"Leatherworker's tools",
 			"A set of traveler's clothes",
 			"A hunting journal with dragon weaknesses annotated",
-			"A belt pouch containing 15 gp",
+			"A belt pouch containing 15 Credits",
 		],
 		features: [
 			{
@@ -728,7 +728,7 @@ export const backgrounds = [
 			"Dragon Vendettas",
 			"Power Attraction",
 			"Slayer Addiction",
-			"Draconic Corruption",
+			"Latin Archival Corruption",
 		],
 		image: "/generated/compendium/backgrounds/dragon-slayer.webp",
 		source: "System Ascendant Canon",
@@ -738,15 +738,15 @@ export const backgrounds = [
 		name: "Demon Slayer",
 		type: "Background",
 		rank: "D",
-		skillProficiencies: ["Religion", "Insight"],
-		toolProficiencies: ["Herbalism Kit"],
-		languages: ["Common", "Abyssal"],
+		skill_proficiencies: ["Religion", "Insight"],
+		tool_proficiencies: ["Herbalism Kit"],
+		languages: ["English", "Binary Void-Data"],
 		equipment: [
 			"A set of dark religious vestments",
 			"A vial of holy water",
 			"A silver holy symbol",
 			"A journal of demon true names (partial)",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -800,15 +800,15 @@ export const backgrounds = [
 		name: "Time Walker",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Arcana", "Perception"],
-		toolProficiencies: ["Tinker's Tools"],
-		languages: ["Common", "Elvish"],
+		skill_proficiencies: ["Arcana", "Perception"],
+		tool_proficiencies: ["Tinker's Tools"],
+		languages: ["English", "Japanese"],
 		equipment: [
 			"A set of fine clothes from an indeterminate era",
 			"Tinker's tools",
 			"A broken pocket watch that occasionally ticks backward",
 			"A journal written in multiple hands—all your own",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -862,15 +862,15 @@ export const backgrounds = [
 		name: "Reality Bender",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Arcana", "Investigation"],
-		toolProficiencies: ["Glassblower's Tools"],
-		languages: ["Common", "Deep Speech"],
+		skill_proficiencies: ["Arcana", "Investigation"],
+		tool_proficiencies: ["Glassblower's Tools"],
+		languages: ["English", "Quantum Resonance"],
 		equipment: [
 			"A set of eccentric clothes that shimmer slightly",
 			"Glassblower's tools",
 			"A lens that shows things differently when looked through",
 			"A notebook of 'corrections' to reality",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -924,15 +924,15 @@ export const backgrounds = [
 		name: "Void Touched",
 		type: "Background",
 		rank: "S",
-		skillProficiencies: ["Arcana", "Stealth"],
-		toolProficiencies: ["Disguise Kit"],
-		languages: ["Common", "Deep Speech"],
+		skill_proficiencies: ["Arcana", "Stealth"],
+		tool_proficiencies: ["Disguise Kit"],
+		languages: ["English", "Quantum Resonance"],
 		equipment: [
 			"A set of dark clothes that seem to absorb light",
 			"A disguise kit",
 			"A shard of crystallized void (non-magical)",
 			"A journal with entries in a language you don't remember learning",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -947,7 +947,7 @@ export const backgrounds = [
 			},
 		],
 		personalityTraits: [
-			"I cast no shadow when I'm not paying attention.",
+			"I cast no umbral when I'm not paying attention.",
 			"I speak softly, as if sound itself is trying to avoid me.",
 			"I am drawn to places of absolute darkness and silence.",
 			"I sometimes forget I exist—I have to remind myself I'm real.",
@@ -986,15 +986,15 @@ export const backgrounds = [
 		name: "Star Born",
 		type: "Background",
 		rank: "S",
-		skillProficiencies: ["Arcana", "Religion"],
-		toolProficiencies: ["Navigator's Tools"],
-		languages: ["Common", "Celestial"],
+		skill_proficiencies: ["Arcana", "Religion"],
+		tool_proficiencies: ["Navigator's Tools"],
+		languages: ["English", "Ancient Hebrew"],
 		equipment: [
 			"A set of fine clothes woven with star-thread",
 			"Navigator's tools",
 			"A star chart that updates itself at night",
 			"A small meteorite fragment that is always warm",
-			"A belt pouch containing 15 gp",
+			"A belt pouch containing 15 Credits",
 		],
 		features: [
 			{
@@ -1003,7 +1003,7 @@ export const backgrounds = [
 					"Once per long rest, you can meditate under an open sky for 10 minutes to gain advantage on one Intelligence check of your choice within the next 24 hours. The knowledge comes as flashes of cosmic understanding.",
 			},
 			{
-				name: "Celestial Resilience",
+				name: "Ancient Hebrew Resilience",
 				description:
 					"You have resistance to radiant damage, and you have advantage on saving throws against effects that would banish you to another plane of existence.",
 			},
@@ -1036,7 +1036,7 @@ export const backgrounds = [
 			"You were born under a cosmic alignment—or perhaps you came from beyond the stars entirely, a fragment of celestial intelligence given mortal form. You possess knowledge and abilities that transcend normal mortal understanding.",
 		dangers: [
 			"Cosmic Attention",
-			"Celestial Obligations",
+			"Ancient Hebrew Obligations",
 			"Humanity Drift",
 			"Star Sickness",
 		],
@@ -1048,15 +1048,15 @@ export const backgrounds = [
 		name: "Ancient Guardian",
 		type: "Background",
 		rank: "S",
-		skillProficiencies: ["History", "Perception"],
-		toolProficiencies: ["Mason's Tools"],
-		languages: ["Common", "Primordial"],
+		skill_proficiencies: ["History", "Perception"],
+		tool_proficiencies: ["Mason's Tools"],
+		languages: ["English", "Proto-Indo-European"],
 		equipment: [
 			"A guardian's medallion (ancient and weathered)",
 			"Mason's tools",
 			"A set of traveler's clothes from a bygone era",
 			"A scroll of protective wards",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -1067,7 +1067,7 @@ export const backgrounds = [
 			{
 				name: "Timeless Lore",
 				description:
-					"You have advantage on Intelligence (History) checks, and when you encounter ancient ruins, artifacts, or inscriptions, the DM may provide you with additional information about their origin and purpose.",
+					"You have advantage on Intelligence (History) checks, and when you encounter ancient ruins, artifacts, or inscriptions, the Protocol Warden (PW) may provide you with additional information about their origin and purpose.",
 			},
 		],
 		personalityTraits: [
@@ -1110,15 +1110,15 @@ export const backgrounds = [
 		name: "Forgotten King",
 		type: "Background",
 		rank: "A",
-		skillProficiencies: ["Persuasion", "History"],
-		toolProficiencies: ["Gaming Set (Chess)"],
-		languages: ["Common", "Elvish"],
+		skill_proficiencies: ["Persuasion", "History"],
+		tool_proficiencies: ["Gaming Set (Chess)"],
+		languages: ["English", "Japanese"],
 		equipment: [
 			"A crown fragment or royal signet ring",
 			"A set of fine clothes (faded but regal)",
 			"A gaming set (chess)",
 			"A partial map of a kingdom that no longer exists",
-			"A belt pouch containing 20 gp",
+			"A belt pouch containing 20 Credits",
 		],
 		features: [
 			{
@@ -1172,15 +1172,15 @@ export const backgrounds = [
 		name: "Champion of Light",
 		type: "Background",
 		rank: "A",
-		skillProficiencies: ["Religion", "Medicine"],
-		toolProficiencies: ["Herbalism Kit"],
-		languages: ["Common", "Celestial"],
+		skill_proficiencies: ["Religion", "Medicine"],
+		tool_proficiencies: ["Herbalism Kit"],
+		languages: ["English", "Ancient Hebrew"],
 		equipment: [
 			"A holy symbol of radiant gold",
 			"A set of fine white vestments",
 			"An herbalism kit",
 			"A vial of blessed water",
-			"A belt pouch containing 15 gp",
+			"A belt pouch containing 15 Credits",
 		],
 		features: [
 			{
@@ -1219,7 +1219,7 @@ export const backgrounds = [
 			"My devotion to the light makes me inflexible in moral gray areas.",
 		],
 		description:
-			"You have been chosen as a champion of radiant power—a beacon against the encroaching darkness of corrupted rifts and shadow entities. Whether anointed by a divine being, awakened through a near-death experience, or simply born with an inner light, you carry a responsibility that transcends personal ambition.",
+			"You have been chosen as a champion of radiant power—a beacon against the encroaching darkness of corrupted rifts and umbral entities. Whether anointed by a divine being, awakened through a near-death experience, or simply born with an inner light, you carry a responsibility that transcends personal ambition.",
 		dangers: [
 			"Dark Retribution",
 			"Hope Burden",
@@ -1234,15 +1234,15 @@ export const backgrounds = [
 		name: "Bringer of Dawn",
 		type: "Background",
 		rank: "D",
-		skillProficiencies: ["Performance", "Persuasion"],
-		toolProficiencies: ["Musical Instrument (one of your choice)"],
-		languages: ["Common"],
+		skill_proficiencies: ["Performance", "Persuasion"],
+		tool_proficiencies: ["Musical Instrument (one of your choice)"],
+		languages: ["English"],
 		equipment: [
 			"A musical instrument of your choice",
 			"A set of traveler's clothes",
 			"A lantern that never fully goes out",
 			"A collection of uplifting stories and songs",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -1281,7 +1281,7 @@ export const backgrounds = [
 			"I am terrified of the dark and what it represents.",
 		],
 		description:
-			"You are a beacon of hope in a world increasingly consumed by shadow and dimensional horror. Whether through song, story, healing, or simply your unwavering presence, you bring light to dark places and courage to the despairing. The System may have given humanity power, but you remind them why that power is worth wielding.",
+			"You are a beacon of hope in a world increasingly consumed by umbral and dimensional horror. Whether through song, story, healing, or simply your unwavering presence, you bring light to dark places and courage to the despairing. The System may have given humanity power, but you remind them why that power is worth wielding.",
 		dangers: [
 			"Isolation",
 			"Information Overload",
@@ -1296,15 +1296,15 @@ export const backgrounds = [
 		name: "Eternal Watcher",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Perception", "Investigation"],
-		toolProficiencies: ["Spyglass"],
-		languages: ["Common", "Elvish"],
+		skill_proficiencies: ["Perception", "Investigation"],
+		tool_proficiencies: ["Spyglass"],
+		languages: ["English", "Japanese"],
 		equipment: [
 			"A set of nondescript clothes",
 			"A spyglass",
 			"A journal of observations spanning decades",
 			"A brass compass that points to dimensional anomalies",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -1358,15 +1358,15 @@ export const backgrounds = [
 		name: "Cosmic Wanderer",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Survival", "Insight"],
-		toolProficiencies: ["Cook's Utensils"],
-		languages: ["Common", "Primordial"],
+		skill_proficiencies: ["Survival", "Insight"],
+		tool_proficiencies: ["Cook's Utensils"],
+		languages: ["English", "Proto-Indo-European"],
 		equipment: [
 			"A set of well-worn traveler's clothes",
 			"Cook's utensils",
 			"A walking staff carved with symbols from many worlds",
 			"A collection of souvenirs from different dimensions",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -1407,7 +1407,7 @@ export const backgrounds = [
 		description:
 			"You travel between worlds and dimensions as a wanderer, seeking knowledge, experience, and the ineffable something that drives you ever onward. Your journeys have given you cosmic perspective, diverse survival skills, and a collection of stories that would fill a library. You've broken bread with beings of pure thought and slept under skies with three moons.",
 		dangers: [
-			"Shadow Corruption",
+			"Umbral Corruption",
 			"Rift Instability",
 			"Regent's Wrath",
 			"Dimensional Sickness",
@@ -1422,15 +1422,15 @@ export const backgrounds = [
 		name: "Viral Streamer",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Performance", "Persuasion"],
-		toolProficiencies: ["Streaming Equipment", "Video Editing Software"],
-		languages: ["Common"],
+		skill_proficiencies: ["Performance", "Persuasion"],
+		tool_proficiencies: ["Streaming Equipment", "Video Editing Software"],
+		languages: ["English"],
 		equipment: [
 			"A high-end streaming laptop",
 			"A ring light and portable camera",
 			"A branded hoodie with your channel logo",
 			"A portable Wi-Fi hotspot",
-			"A belt pouch containing 15 gp",
+			"A belt pouch containing 15 Credits",
 		],
 		features: [
 			{
@@ -1484,15 +1484,15 @@ export const backgrounds = [
 		name: "K-Pop Idol",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Performance", "Acrobatics"],
-		toolProficiencies: ["Musical Instrument (any one)", "Disguise Kit"],
+		skill_proficiencies: ["Performance", "Acrobatics"],
+		tool_proficiencies: ["Musical Instrument (any one)", "Disguise Kit"],
 		languages: ["Common", "Korean"],
 		equipment: [
 			"A designer stage outfit",
 			"A musical instrument of your choice",
 			"A disguise kit",
 			"A signed photo collection from your group",
-			"A belt pouch containing 25 gp",
+			"A belt pouch containing 25 Credits",
 		],
 		features: [
 			{
@@ -1546,15 +1546,15 @@ export const backgrounds = [
 		name: "Movie Star",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Performance", "Deception"],
-		toolProficiencies: ["Disguise Kit", "Vehicles (land)"],
+		skill_proficiencies: ["Performance", "Deception"],
+		tool_proficiencies: ["Disguise Kit", "Vehicles (land)"],
 		languages: ["Common"],
 		equipment: [
 			"A set of luxury clothes",
 			"A disguise kit",
 			"An autographed headshot (your own)",
 			"A pair of designer sunglasses",
-			"A belt pouch containing 30 gp",
+			"A belt pouch containing 30 Credits",
 		],
 		features: [
 			{
@@ -1608,15 +1608,15 @@ export const backgrounds = [
 		name: "Pro Athlete",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Athletics", "Intimidation"],
-		toolProficiencies: ["Sports Equipment (any one)", "Vehicles (land)"],
+		skill_proficiencies: ["Athletics", "Intimidation"],
+		tool_proficiencies: ["Sports Equipment (any one)", "Vehicles (land)"],
 		languages: ["Common"],
 		equipment: [
 			"A set of athletic wear",
 			"Sports equipment of your choice",
 			"A championship medal or trophy replica",
 			"A training journal",
-			"A belt pouch containing 20 gp",
+			"A belt pouch containing 20 Credits",
 		],
 		features: [
 			{
@@ -1670,15 +1670,15 @@ export const backgrounds = [
 		name: "Corporate Executive",
 		type: "Background",
 		rank: "B",
-		skillProficiencies: ["Persuasion", "Insight"],
-		toolProficiencies: ["Forgery Kit"],
-		languages: ["Common", "one additional language"],
+		skill_proficiencies: ["Persuasion", "Insight"],
+		tool_proficiencies: ["Forgery Kit"],
+		languages: ["Common", "one additional Earth language"],
 		equipment: [
 			"A tailored business suit",
 			"A leather briefcase",
 			"A corporate ID badge",
 			"A burner phone",
-			"A belt pouch containing 50 gp",
+			"A belt pouch containing 50 Credits",
 		],
 		features: [
 			{
@@ -1732,15 +1732,15 @@ export const backgrounds = [
 		name: "Underground Hacker",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Investigation", "Stealth"],
-		toolProficiencies: ["Hacking Tools", "Thieves' Tools"],
+		skill_proficiencies: ["Investigation", "Stealth"],
+		tool_proficiencies: ["Hacking Tools", "Thieves' Tools"],
 		languages: ["Common"],
 		equipment: [
 			"A custom-built laptop with encrypted drives",
 			"A set of nondescript clothes",
 			"Hacking tools",
 			"A collection of USB drives with unknown data",
-			"A belt pouch containing 10 gp",
+			"A belt pouch containing 10 Credits",
 		],
 		features: [
 			{
@@ -1770,7 +1770,7 @@ export const backgrounds = [
 			"My hacker collective was targeted by a ascendant guild for exposing their corruption.",
 			"I found something in the Ascendant Association's classified servers that terrified me.",
 			"The System's code structure reminds me of something I've seen before, and I need to find the connection.",
-			"A fellow hacker was forcibly recruited by a shadow organization—I'm going to get them out.",
+			"A fellow hacker was forcibly recruited by a umbral organization—I'm going to get them out.",
 		],
 		flaws: [
 			"I trust machines more than people.",
@@ -1779,7 +1779,7 @@ export const backgrounds = [
 			"I've spent so long online that I have serious difficulty with face-to-face social interaction.",
 		],
 		description:
-			"In the digital shadows, you were a ghost—a phantom who moved through firewalls like they were tissue paper. Governments feared your keystrokes, corporations trembled at your handle. When the System awakened you, you realized that reality itself was just another system to hack. The code that underlies gates, essence, and ascension looks hauntingly familiar to someone who's spent their whole life reading between the lines of code.",
+			"In the digital umbrals, you were a ghost—a phantom who moved through firewalls like they were tissue paper. Governments feared your keystrokes, corporations trembled at your handle. When the System awakened you, you realized that reality itself was just another system to hack. The code that underlies gates, essence, and ascension looks hauntingly familiar to someone who's spent their whole life reading between the lines of code.",
 		dangers: [
 			"Government Surveillance",
 			"Cyberattack Retaliation",
@@ -1794,15 +1794,15 @@ export const backgrounds = [
 		name: "Social Media Influencer",
 		type: "Background",
 		rank: "D",
-		skillProficiencies: ["Persuasion", "Deception"],
-		toolProficiencies: ["Photography Equipment"],
+		skill_proficiencies: ["Persuasion", "Deception"],
+		tool_proficiencies: ["Photography Equipment"],
 		languages: ["Common"],
 		equipment: [
 			"A smartphone with high-end camera",
 			"A portable ring light",
 			"A curated wardrobe of trendy clothes",
 			"Brand partnership contracts",
-			"A belt pouch containing 20 gp",
+			"A belt pouch containing 20 Credits",
 		],
 		features: [
 			{
@@ -1856,15 +1856,15 @@ export const backgrounds = [
 		name: "E-Sports Champion",
 		type: "Background",
 		rank: "C",
-		skillProficiencies: ["Perception", "Investigation"],
-		toolProficiencies: ["Gaming Equipment", "Vehicles (land)"],
+		skill_proficiencies: ["Perception", "Investigation"],
+		tool_proficiencies: ["Gaming Equipment", "Vehicles (land)"],
 		languages: ["Common"],
 		equipment: [
 			"A custom gaming peripheral set",
 			"A team jersey",
 			"A tournament trophy replica",
 			"Energy drinks (1 week supply)",
-			"A belt pouch containing 15 gp",
+			"A belt pouch containing 15 Credits",
 		],
 		features: [
 			{

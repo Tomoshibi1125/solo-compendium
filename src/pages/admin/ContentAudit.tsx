@@ -196,7 +196,7 @@ function Recommendations({ recommendations }: { recommendations: string[] }) {
 	);
 }
 
-export function ContentAudit() {
+function ContentAudit() {
 	const { data: report, isLoading, error } = useContentAudit();
 	const queryClient = useQueryClient();
 

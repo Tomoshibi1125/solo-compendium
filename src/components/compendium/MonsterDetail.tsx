@@ -671,7 +671,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 										onClick={() =>
 											queueMonsterActionResolution(
 												action,
-												"/dm-tools/initiative-tracker",
+												"/warden-protocols/initiative-tracker",
 											)
 										}
 									>

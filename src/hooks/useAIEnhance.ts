@@ -1,5 +1,5 @@
 /**
- * Shared hook for AI-enhanced content generation across all DM tools.
+ * Shared hook for AI-enhanced content generation across all Protocol Warden (PW) tools.
  * Uses Google Gemini 2.0 Flash via the server proxy as primary provider.
  */
 
@@ -28,7 +28,7 @@ export function useAIEnhance() {
 
 			try {
 				const response = await aiService.processRequest({
-					service: aiService.getConfiguration().defaultService,
+					service: "gemini-native",
 					type: "generate-content",
 					input: seedData,
 					context: {

@@ -43,7 +43,9 @@ export const useCampaignGold = (campaignId: string | null) => {
 			// Fallback to default if null or empty
 			if (!data?.party_gold) return DEFAULT_PARTY_GOLD;
 
-			const parsed = data.party_gold as unknown as Partial<PartyGold>;
+			const parsed = JSON.parse(
+				JSON.stringify(data.party_gold || {}),
+			) as Partial<PartyGold>;
 
 			return {
 				gp: parsed.gp || 0,
@@ -62,7 +64,11 @@ export const useCampaignGold = (campaignId: string | null) => {
 
 			const { data, error } = await supabase
 				.from("campaigns")
-				.update({ party_gold: newGold as unknown as number })
+				.update({
+					party_gold: JSON.parse(
+						JSON.stringify(newGold),
+					) as import("@/integrations/supabase/types").Json,
+				})
 				.eq("id", campaignId)
 				.select("party_gold")
 				.single();

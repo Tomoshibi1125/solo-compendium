@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacterImport } from "@/hooks/useCharacterExportImport";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
 	type CharacterExportSchema,
 	validateCharacterImport,
@@ -35,8 +35,7 @@ export function ImportDialog({
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { importCharacterJson } = useCharacterImport();
 	const { toast } = useToast();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const handleFileSelect = async (selectedFile: File) => {
 		setFile(selectedFile);
@@ -70,12 +69,12 @@ export function ImportDialog({
 				throw new Error("Import returned no character.");
 			}
 
-			ddbEnhancements
+			ascendantTools
 				.trackCustomFeatureUsage(
 					character.id,
 					"Character Imported",
 					`Level ${preview.level}`,
-					"5e",
+					"SA",
 					{ skipBroadcast: true },
 				)
 				.catch(console.error);
@@ -124,17 +123,21 @@ export function ImportDialog({
 
 				<div className="space-y-4">
 					{/* File Upload */}
-					<button
-						type="button"
-						className="w-full border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 transition-colors bg-transparent"
-						onClick={() => fileInputRef.current?.click()}
+					<label
+						className="w-full border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 transition-colors bg-transparent focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 block"
+						onKeyDown={(e) => {
+							if (e.key === "Enter" || e.key === " ") {
+								e.preventDefault();
+								fileInputRef.current?.click();
+							}
+						}}
 					>
 						<input
 							ref={fileInputRef}
 							type="file"
 							accept=".json"
 							aria-label="Select character JSON file"
-							className="hidden"
+							className="sr-only"
 							onChange={(e) => {
 								const f = e.target.files?.[0];
 								if (f) handleFileSelect(f);
@@ -153,7 +156,7 @@ export function ImportDialog({
 								</p>
 							</div>
 						)}
-					</button>
+					</label>
 
 					{/* Validation Errors */}
 					{errors.length > 0 && (

@@ -97,7 +97,7 @@ export const useAssignCampaignLoot = () => {
 
 			const { data, error } = await supabase.rpc("assign_campaign_loot", {
 				p_campaign_id: campaignId,
-				p_items: items as unknown as Json,
+				p_items: JSON.parse(JSON.stringify(items)) as Json,
 				p_encounter_id: encounterId ?? undefined,
 				p_session_id: sessionId ?? undefined,
 				p_assigned_to_member_id: assignedToMemberId ?? undefined,

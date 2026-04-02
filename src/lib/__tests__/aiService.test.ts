@@ -52,9 +52,9 @@ describe("AIServiceManager free-first integration", () => {
 		manager.applyUserSettings(freeSettings);
 		const config = manager.getConfiguration();
 
-		expect(config.defaultService).toBe("gemini-proxy");
+		expect(config.defaultService).toBe("gemini-native");
 		expect(config.services.map((service) => service.id)).toEqual(
-			expect.arrayContaining(["gemini-proxy", "ollama-fallback"]),
+			expect.arrayContaining(["gemini-native", "ollama-fallback"]),
 		);
 	});
 
@@ -75,7 +75,7 @@ describe("AIServiceManager free-first integration", () => {
 		expect(ids).toEqual(
 			expect.arrayContaining([
 				"user-custom",
-				"gemini-proxy",
+				"gemini-native",
 				"ollama-fallback",
 			]),
 		);

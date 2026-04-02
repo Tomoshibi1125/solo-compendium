@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
 import { enqueueOfflineSync } from "@/lib/offlineSync";
@@ -202,8 +202,8 @@ export const useSaveHomebrewContent = () => {
 						.from("homebrew_content")
 						.update({
 							...payload,
-							data: payload.data as Record<string, unknown>,
-						} as unknown as Database["public"]["Tables"]["homebrew_content"]["Update"])
+							data: payload.data as Database["public"]["Tables"]["homebrew_content"]["Update"]["data"],
+						})
 						.eq("id", input.id)
 						.select("*")
 						.single();
@@ -219,16 +219,17 @@ export const useSaveHomebrewContent = () => {
 					.from("homebrew_content")
 					.insert({
 						...payload,
+						data: payload.data as Json,
 						user_id: user.id,
 						status: "draft",
-					} as unknown as Database["public"]["Tables"]["homebrew_content"]["Insert"])
+					})
 					.select("*")
 					.single();
 
 				if (error) throw error;
 				return {
 					queued: false,
-					record: data as unknown as HomebrewRecord,
+					record: data as HomebrewRecord,
 				};
 			} catch (error) {
 				if (!isOfflineError(error)) {
@@ -352,7 +353,7 @@ export const usePublishedHomebrew = (
 				.eq("user_id", userId)
 				.eq("status", "published")
 				.in("content_type", types);
-			if (ownData) results.push(...(ownData as unknown as HomebrewRecord[]));
+			if (ownData) results.push(...(ownData as HomebrewRecord[]));
 
 			// Public published (exclude own to avoid duplicates)
 			const { data: publicData } = await supabase
@@ -362,8 +363,7 @@ export const usePublishedHomebrew = (
 				.eq("visibility_scope", "public")
 				.neq("user_id", userId)
 				.in("content_type", types);
-			if (publicData)
-				results.push(...(publicData as unknown as HomebrewRecord[]));
+			if (publicData) results.push(...(publicData as HomebrewRecord[]));
 
 			// Campaign-scoped published
 			if (campaignId) {
@@ -375,7 +375,7 @@ export const usePublishedHomebrew = (
 					.eq("campaign_id", campaignId)
 					.neq("user_id", userId)
 					.in("content_type", types);
-				results.push(...(campaignData as unknown as HomebrewRecord[]));
+				results.push(...(campaignData as HomebrewRecord[]));
 			}
 
 			// Deduplicate by id
@@ -431,7 +431,7 @@ export const useSetHomebrewStatus = () => {
 
 				return {
 					queued: false,
-					record: data as unknown as HomebrewRecord,
+					record: data as HomebrewRecord,
 				};
 			} catch (error) {
 				if (!isOfflineError(error)) {

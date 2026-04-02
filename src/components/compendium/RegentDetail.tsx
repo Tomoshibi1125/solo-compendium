@@ -107,7 +107,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 
 					<div className="flex flex-wrap gap-2">
 						<Badge className="bg-amber-600 text-white border-amber-400">
-							<Crown className="w-3 h-3 mr-1" /> DM VERIFIED ACCESS
+							<Crown className="w-3 h-3 mr-1" /> PW VERIFIED ACCESS
 						</Badge>
 						{data.hit_dice && (
 							<Badge variant="secondary">Hit Die: {data.hit_dice}</Badge>
@@ -127,7 +127,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 					<SystemWindow title="ASCENSION REQUIREMENTS">
 						<div className="space-y-4">
 							<div className="flex items-center gap-2 text-amber-400 font-semibold">
-								<Crown className="w-4 h-4" /> DM MANUAL VERIFICATION REQUIRED
+								<Crown className="w-4 h-4" /> PW MANUAL VERIFICATION REQUIRED
 							</div>
 
 							<div className="space-y-2">
@@ -184,7 +184,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									<div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
 									<span>
 										<strong className="text-foreground">Initial Choice:</strong>{" "}
-										Select 1 of 3 initial options upon first DM verification.
+										Select 1 of 3 initial options upon first PW verification.
 									</span>
 								</li>
 								<li className="flex gap-2">

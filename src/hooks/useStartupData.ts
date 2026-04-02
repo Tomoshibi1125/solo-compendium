@@ -124,7 +124,7 @@ type StartupSupabaseEntry = {
 	rank?: string | null;
 };
 
-const STARTUP_LIMIT = 50; // Load more items per category for comprehensive display
+const STARTUP_LIMIT = 200; // Load comprehensive items per category for full compendium coverage
 
 interface StartupData {
 	entries: CompendiumEntry[];

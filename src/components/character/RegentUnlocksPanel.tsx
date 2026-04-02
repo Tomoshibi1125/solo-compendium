@@ -28,12 +28,8 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
-import {
-	useCharacterRegentUnlocks,
-	useSetPrimaryRegent,
-	useUnlockRegent,
-} from "@/hooks/useRegentUnlocks";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { supabase } from "@/integrations/supabase/client";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
@@ -145,13 +141,15 @@ export function RegentUnlocksPanel({
 	const [dmNotes, setDmNotes] = useState("");
 
 	const { data: character } = useCharacter(characterId);
-	const { unlocks = [] } = useCharacterRegentUnlocks(characterId);
-	const unlockRegent = useUnlockRegent();
-	const setPrimary = useSetPrimaryRegent();
+	const {
+		unlocks = [],
+		unlockRegent,
+		updateUnlock,
+		isUnlocking,
+	} = useRegentUnlocks(characterId);
 
 	const { toast } = useToast();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	// Fetch all regents
 	const { data: allRegents = [] } = useQuery({
@@ -245,19 +243,18 @@ export function RegentUnlocksPanel({
 			? formatRegentVernacular(regent.title || regent.name)
 			: "A Regent";
 
-		unlockRegent.mutate(
+		unlockRegent(
 			{
-				characterId,
 				regentId: selectedRegentId,
 				questName: questName.trim(),
 				dmNotes: dmNotes.trim() || undefined,
 				isPrimary: unlocks.length === 0,
 			},
 			{
-				onSuccess: () => {
+				onSuccess: async () => {
 					const _contextMsg = `Unlocked ${REGENT_LABEL} Overlay: ${regentName}`;
 
-					ddbEnhancements
+					await ascendantTools
 						.trackCustomFeatureUsage(
 							characterId,
 							`${REGENT_LABEL} Unlocked`,
@@ -387,9 +384,9 @@ export function RegentUnlocksPanel({
 													size="sm"
 													variant="ghost"
 													onClick={() =>
-														setPrimary.mutate({
-															characterId,
+														updateUnlock({
 															unlockId: unlock.id,
+															updates: { is_primary: true },
 														})
 													}
 													className="text-xs hover:bg-regent-gold/10"
@@ -554,9 +551,7 @@ export function RegentUnlocksPanel({
 									className="w-full font-display tracking-wider bg-regent-gold hover:bg-regent-gold/80 text-background"
 									onClick={handleUnlock}
 									disabled={
-										!selectedRegentId ||
-										!questName.trim() ||
-										unlockRegent.isPending
+										!selectedRegentId || !questName.trim() || isUnlocking
 									}
 								>
 									<Crown className="h-4 w-4 mr-2" />

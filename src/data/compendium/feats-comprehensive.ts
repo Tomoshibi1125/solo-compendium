@@ -13,11 +13,15 @@ export const comprehensiveFeats = [
 			ability: "Wisdom",
 			score: 13,
 		},
-		benefits: [
-			"Advantage on Dexterity (Stealth) checks in dim light or darkness",
-			"Can use Shadow Step as a bonus action (teleport up to 15 ft between shadows) 2 times per short rest",
-			"Resistance to necrotic damage",
-		],
+		benefits: {
+			basic: [
+				"Advantage on Dexterity (Stealth) checks in dim light or darkness",
+				"Can use Shadow Step as a bonus action (teleport up to 15 ft between shadows) 2 times per short rest",
+				"Resistance to necrotic damage",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -35,12 +39,16 @@ export const comprehensiveFeats = [
 			level: 7,
 			feats: ["shadow-mastery"],
 		},
-		benefits: [
-			"When you reduce a creature to 0 HP, gain temporary HP equal to your Wisdom modifier",
-			"Once per long rest, absorb essence to gain advantage on your next attack roll",
-			"Can store absorbed essence to fuel shadow abilities",
-			"+1 to Constitution saving throws",
-		],
+		benefits: {
+			basic: [
+				"When you reduce a creature to 0 HP, gain temporary HP equal to your Wisdom modifier",
+				"Once per long rest, absorb essence to gain advantage on your next attack roll",
+				"Can store absorbed essence to fuel shadow abilities",
+				"+1 to Constitution saving throws",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "triggered",
 			frequency: "once-per-turn",
@@ -58,12 +66,16 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 15,
 		},
-		benefits: [
-			"When you take the Dodge action, move up to your speed without provoking opportunity attacks",
-			"Once per turn, teleport up to 15 feet to unoccupied space in dim light or darkness",
-			"Advantage on Dexterity saving throws against area effects",
-			"Can use Shadow Step as a reaction when targeted by an attack",
-		],
+		benefits: {
+			basic: [
+				"When you take the Dodge action, move up to your speed without provoking opportunity attacks",
+				"Once per turn, teleport up to 15 feet to unoccupied space in dim light or darkness",
+				"Advantage on Dexterity saving throws against area effects",
+				"Can use Shadow Step as a reaction when targeted by an attack",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "once-per-turn",
@@ -83,12 +95,16 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 17,
 		},
-		benefits: [
-			"Critical hits deal extra necrotic damage equal to your proficiency bonus",
-			"On crit, target must make Con save or be blinded for 1 round",
-			"Shadow-infused weapons count as magical for overcoming resistance",
-			"Can reroll one damage die on critical hits (must use new result)",
-		],
+		benefits: {
+			basic: [
+				"Critical hits deal extra necrotic damage equal to your proficiency bonus",
+				"On crit, target must make Con save or be blinded for 1 round",
+				"Shadow-infused weapons count as magical for overcoming resistance",
+				"Can reroll one damage die on critical hits (must use new result)",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "triggered",
 			frequency: "when-critical-hit",
@@ -106,11 +122,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 13,
 		},
-		benefits: [
-			"Your melee weapon attacks deal extra force damage equal to your proficiency bonus.",
-			"Once per turn, when you hit a creature with a melee attack, you can force it to make a Strength save (DC 8 + prof + Str mod) or be pushed 10 feet.",
-			"You gain proficiency with shortswords and longswords.",
-		],
+		benefits: {
+			basic: [
+				"Your melee weapon attacks deal extra force damage equal to your proficiency bonus.",
+				"Once per turn, when you hit a creature with a melee attack, you can force it to make a Strength save (DC 8 + prof + Str mod) or be pushed 10 feet.",
+				"You gain proficiency with shortswords and longswords.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "once-per-turn",
@@ -131,11 +151,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"When you are targeted by an attack, you can use your reaction to teleport up to 5 feet to an unoccupied space you can see. If this move takes you out of the attack's range, the attack misses.",
-			"You have advantage on Dexterity checks made to initiative combat while in dim light or darkness.",
-			"You can see through magical darkness out to 30 feet.",
-		],
+		benefits: {
+			basic: [
+				"When you are targeted by an attack, you can use your reaction to teleport up to 5 feet to an unoccupied space you can see. If this move takes you out of the attack's range, the attack misses.",
+				"You have advantage on Dexterity checks made to initiative combat while in dim light or darkness.",
+				"You can see through magical darkness out to 30 feet.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -150,11 +174,15 @@ export const comprehensiveFeats = [
 		name: "System Diagnostic Medic",
 		description:
 			"You have unlocked the healer-class diagnostic HUD, allowing you to patch wounds with supernatural efficiency.",
-		benefits: [
-			"When you use a healer's kit to stabilize a dying creature, that creature also regains 1 HP.",
-			"As an action, you can spend one use of a healer's kit to restore 1d6 + 4 + target's maximum Hit Dice HP to a creature.",
-			"You gain proficiency in Medicine and with the herbalism kit.",
-		],
+		benefits: {
+			basic: [
+				"When you use a healer's kit to stabilize a dying creature, that creature also regains 1 HP.",
+				"As an action, you can spend one use of a healer's kit to restore 1d6 + 4 + target's maximum Hit Dice HP to a creature.",
+				"You gain proficiency in Medicine and with the herbalism kit.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -172,11 +200,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"When you make a melee attack against a creature, you don't provoke opportunity attacks from that creature for the rest of the turn.",
-			"Your movement speed increases by 10 feet.",
-			"Difficult terrain doesn't cost you extra movement when you take the Dash action.",
-		],
+		benefits: {
+			basic: [
+				"When you make a melee attack against a creature, you don't provoke opportunity attacks from that creature for the rest of the turn.",
+				"Your movement speed increases by 10 feet.",
+				"Difficult terrain doesn't cost you extra movement when you take the Dash action.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -192,11 +224,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			armor_proficiencies: ["Medium armor"],
 		},
-		benefits: [
-			"Gain proficiency with heavy armor.",
-			"+1 to Constitution score (max 20).",
-			"While wearing heavy armor, reduce non-magical bludgeoning, piercing, and slashing damage by 3.",
-		],
+		benefits: {
+			basic: [
+				"Gain proficiency with heavy armor.",
+				"+1 to Constitution score (max 20).",
+				"While wearing heavy armor, reduce non-magical bludgeoning, piercing, and slashing damage by 3.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -210,11 +246,15 @@ export const comprehensiveFeats = [
 		name: "Neural Duelist Sync",
 		description:
 			"Your neural pathways are perfectly synced for one-on-one combat, making you a master of the single blade.",
-		benefits: [
-			"+1 to AC while wielding a melee weapon in one hand and no other weapons.",
-			"When you use the Ready action to prepare an attack, you gain advantage on that attack.",
-			"Use reaction to parry: gain +prof bonus to AC against one melee attack.",
-		],
+		benefits: {
+			basic: [
+				"+1 to AC while wielding a melee weapon in one hand and no other weapons.",
+				"When you use the Ready action to prepare an attack, you gain advantage on that attack.",
+				"Use reaction to parry: gain +prof bonus to AC against one melee attack.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -233,12 +273,16 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"As an action, target a construct or ongoing magical effect within 60 feet.",
-			"Constructs must make an Intelligence save or be stunned for 1 round.",
-			"Ongoing effects are suppressed for 1 minute (Intelligence check DC 10 + spell level).",
-			"You gain proficiency with Hacking Tools.",
-		],
+		benefits: {
+			basic: [
+				"As an action, target a construct or ongoing magical effect within 60 feet.",
+				"Constructs must make an Intelligence save or be stunned for 1 round.",
+				"Ongoing effects are suppressed for 1 minute (Intelligence check DC 10 + spell level).",
+				"You gain proficiency with Hacking Tools.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -259,11 +303,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"Increase your Intelligence, Wisdom, or Charisma score by 1 (max 20).",
-			"Once per long rest, recover a spent spell slot of level equal to half your level (rounded up, max 5th).",
-			"You learn one additional cantrip of your choice.",
-		],
+		benefits: {
+			basic: [
+				"Increase your Intelligence, Wisdom, or Charisma score by 1 (max 20).",
+				"Once per long rest, recover a spent spell slot of level equal to half your level (rounded up, max 5th).",
+				"You learn one additional cantrip of your choice.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -282,11 +330,15 @@ export const comprehensiveFeats = [
 			ability: "Wisdom",
 			score: 13,
 		},
-		benefits: [
-			"You gain advantage on Wisdom (Perception) and Wisdom (Survival) checks that rely on smell.",
-			"Track creatures through magically obscured areas or between dimensions if the trail is fresh.",
-			"Gain blindsight out to 10 feet.",
-		],
+		benefits: {
+			basic: [
+				"You gain advantage on Wisdom (Perception) and Wisdom (Survival) checks that rely on smell.",
+				"Track creatures through magically obscured areas or between dimensions if the trail is fresh.",
+				"Gain blindsight out to 10 feet.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -303,11 +355,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 13,
 		},
-		benefits: [
-			"When you hit a creature with an unarmed strike or melee weapon, use bonus action to shove them.",
-			"If you successfully shove a creature, they are pushed an additional 10 feet.",
-			"You gain advantage on Athletics checks made to initiate or resist a grapple.",
-		],
+		benefits: {
+			basic: [
+				"When you hit a creature with an unarmed strike or melee weapon, use bonus action to shove them.",
+				"If you successfully shove a creature, they are pushed an additional 10 feet.",
+				"You gain advantage on Athletics checks made to initiate or resist a grapple.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -326,11 +382,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You cannot be surprised while conscious.",
-			"Other creatures don't gain advantage on attack rolls against you as a result of being hidden.",
-			"You can see into the Ethereal Plane out to 60 feet.",
-		],
+		benefits: {
+			basic: [
+				"You cannot be surprised while conscious.",
+				"Other creatures don't gain advantage on attack rolls against you as a result of being hidden.",
+				"You can see into the Ethereal Plane out to 60 feet.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -347,11 +407,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 15,
 		},
-		benefits: [
-			"You ignore the heavy property of weapons.",
-			"When you hit with a heavy weapon, you can reroll 1s and 2s on damage dice (must use new result).",
-			"+1 to Strength score (max 20).",
-		],
+		benefits: {
+			basic: [
+				"You ignore the heavy property of weapons.",
+				"When you hit with a heavy weapon, you can reroll 1s and 2s on damage dice (must use new result).",
+				"+1 to Strength score (max 20).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -369,11 +433,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"When subjected to an effect that allows a Dexterity save for half damage, take no damage on success and half on failure.",
-			"Use reaction to teleport 5 feet when an attack misses you.",
-			"+1 to Dexterity score (max 20).",
-		],
+		benefits: {
+			basic: [
+				"When subjected to an effect that allows a Dexterity save for half damage, take no damage on success and half on failure.",
+				"Use reaction to teleport 5 feet when an attack misses you.",
+				"+1 to Dexterity score (max 20).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -392,11 +460,15 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 13,
 		},
-		benefits: [
-			"You can cast Command at 1st level without expending a spell slot (Charisma save).",
-			"Once per long rest, use an action to inspire up to 5 allies — they gain temp HP equal to your level + Cha mod.",
-			"Advantage on Intimidation checks against creatures of a lower rank.",
-		],
+		benefits: {
+			basic: [
+				"You can cast Command at 1st level without expending a spell slot (Charisma save).",
+				"Once per long rest, use an action to inspire up to 5 allies — they gain temp HP equal to your level + Cha mod.",
+				"Advantage on Intimidation checks against creatures of a lower rank.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -413,11 +485,15 @@ export const comprehensiveFeats = [
 		name: "Mana Leech Fangs",
 		description:
 			"Your awakening allows you to feast on the mana of your enemies through direct contact.",
-		benefits: [
-			"Your unarmed strikes deal 1d4 piercing + Str mod. You regain HP equal to the damage dealt.",
-			"When you hit a creature with a melee attack, use bonus action to drain mana — they lose their lowest spell slot, you regain 1d4 HP.",
-			"Resistance to necrotic damage.",
-		],
+		benefits: {
+			basic: [
+				"Your unarmed strikes deal 1d4 piercing + Str mod. You regain HP equal to the damage dealt.",
+				"When you hit a creature with a melee attack, use bonus action to drain mana — they lose their lowest spell slot, you regain 1d4 HP.",
+				"Resistance to necrotic damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "once-per-turn",
@@ -436,12 +512,16 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 13,
 		},
-		benefits: [
-			"You have advantage on saving throws against exhaustion.",
-			"Short rests take only 10 minutes for you.",
-			"You can go without food or water for 3 days without penalty.",
-			"+1 to Constitution score (max 20).",
-		],
+		benefits: {
+			basic: [
+				"You have advantage on saving throws against exhaustion.",
+				"Short rests take only 10 minutes for you.",
+				"You can go without food or water for 3 days without penalty.",
+				"+1 to Constitution score (max 20).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -458,11 +538,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You can take the Search action as a bonus action.",
-			"As a bonus action, analyze a creature you can see. Your next attack against it has advantage.",
-			"You gain proficiency in Investigation and Perception.",
-		],
+		benefits: {
+			basic: [
+				"You can take the Search action as a bonus action.",
+				"As a bonus action, analyze a creature you can see. Your next attack against it has advantage.",
+				"You gain proficiency in Investigation and Perception.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -481,11 +565,15 @@ export const comprehensiveFeats = [
 			ability: "Wisdom",
 			score: 13,
 		},
-		benefits: [
-			"Advantage on saving throws against being charmed or frightened.",
-			"Immune to effects that read your thoughts or sense emotions.",
-			"Resistance to psychic damage.",
-		],
+		benefits: {
+			basic: [
+				"Advantage on saving throws against being charmed or frightened.",
+				"Immune to effects that read your thoughts or sense emotions.",
+				"Resistance to psychic damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -502,11 +590,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 15,
 		},
-		benefits: [
-			"Use your reaction to reduce damage from a ranged weapon attack by 1d10 + Dex mod + your level.",
-			"If you reduce the damage to 0, you catch the projectile and can make a ranged attack with it as part of the same reaction.",
-			"+1 to Dexterity saving throws.",
-		],
+		benefits: {
+			basic: [
+				"Use your reaction to reduce damage from a ranged weapon attack by 1d10 + Dex mod + your level.",
+				"If you reduce the damage to 0, you catch the projectile and can make a ranged attack with it as part of the same reaction.",
+				"+1 to Dexterity saving throws.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -524,11 +616,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 4,
 		},
-		benefits: [
-			"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Wisdom save.",
-			"On a failure, the creature loses its lowest level spell slot, and you regain a spell slot of that level.",
-			"You gain resistance to force damage.",
-		],
+		benefits: {
+			basic: [
+				"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Wisdom save.",
+				"On a failure, the creature loses its lowest level spell slot, and you regain a spell slot of that level.",
+				"You gain resistance to force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -549,11 +645,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You can cast Find Familiar as a ritual, but the familiar is a tiny, invisible mechanical drone.",
-			"You can see and hear through the drone's senses as long as it is on the same plane of existence.",
-			"As an action, the drone can emit a high-frequency pulse that reveals invisible creatures within 10 feet.",
-		],
+		benefits: {
+			basic: [
+				"You can cast Find Familiar as a ritual, but the familiar is a tiny, invisible mechanical drone.",
+				"You can see and hear through the drone's senses as long as it is on the same plane of existence.",
+				"As an action, the drone can emit a high-frequency pulse that reveals invisible creatures within 10 feet.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -568,11 +668,15 @@ export const comprehensiveFeats = [
 		name: "Dimensional Vault Optimization",
 		description:
 			"Your personal inventory space has been expanded and optimized by the System.",
-		benefits: [
-			"Your carrying capacity is tripled.",
-			"You can retrieve or stow an item from your personal vault as a free action once per turn.",
-			"You can hide one item (up to 10 lbs) in a pocket dimension that cannot be detected by non-System scans.",
-		],
+		benefits: {
+			basic: [
+				"Your carrying capacity is tripled.",
+				"You can retrieve or stow an item from your personal vault as a free action once per turn.",
+				"You can hide one item (up to 10 lbs) in a pocket dimension that cannot be detected by non-System scans.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -590,11 +694,15 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 15,
 		},
-		benefits: [
-			"As a bonus action, you can take an additional action this turn.",
-			"After using this ability, your speed is halved and you cannot take reactions until the end of your next turn.",
-			"Once used, you must complete a long rest before using it again.",
-		],
+		benefits: {
+			basic: [
+				"As a bonus action, you can take an additional action this turn.",
+				"After using this ability, your speed is halved and you cannot take reactions until the end of your next turn.",
+				"Once used, you must complete a long rest before using it again.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -609,11 +717,15 @@ export const comprehensiveFeats = [
 		name: "Urban Parkour Specialist",
 		description:
 			"You move through the city and the dungeon with equal ease, utilizing every surface for mobility.",
-		benefits: [
-			"Climbing does not cost you extra movement.",
-			"You can make a running long jump or running high jump after moving only 5 feet.",
-			"You have advantage on Dexterity (Acrobatics) checks made to navigate difficult terrain.",
-		],
+		benefits: {
+			basic: [
+				"Climbing does not cost you extra movement.",
+				"You can make a running long jump or running high jump after moving only 5 feet.",
+				"You have advantage on Dexterity (Acrobatics) checks made to navigate difficult terrain.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -627,11 +739,15 @@ export const comprehensiveFeats = [
 		name: "Mana Shield Capacitor Link",
 		description:
 			"You have installed a mana-reactive shield generator in your neural network.",
-		benefits: [
-			"When you take damage, you can use your reaction to reduce the damage by an amount equal to your level + Int modifier.",
-			"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
-			"You gain proficiency in Constitution saving throws.",
-		],
+		benefits: {
+			basic: [
+				"When you take damage, you can use your reaction to reduce the damage by an amount equal to your level + Int modifier.",
+				"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
+				"You gain proficiency in Constitution saving throws.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -650,11 +766,15 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 13,
 		},
-		benefits: [
-			"You gain advantage on Charisma (Persuasion) and Charisma (Deception) checks against humanoids.",
-			"The System highlights when someone is lying to you (Insight advantage).",
-			'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
-		],
+		benefits: {
+			basic: [
+				"You gain advantage on Charisma (Persuasion) and Charisma (Deception) checks against humanoids.",
+				"The System highlights when someone is lying to you (Insight advantage).",
+				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -669,11 +789,15 @@ export const comprehensiveFeats = [
 		name: "Sonar Pulse Echo",
 		description:
 			"You emit high-frequency mana pulses that map your surroundings in total darkness.",
-		benefits: [
-			"You gain blindsight out to 30 feet.",
-			"You have advantage on Wisdom (Perception) checks made to detect hidden creatures within 30 feet.",
-			"Creatures cannot gain advantage on attack rolls against you by being hidden.",
-		],
+		benefits: {
+			basic: [
+				"You gain blindsight out to 30 feet.",
+				"You have advantage on Wisdom (Perception) checks made to detect hidden creatures within 30 feet.",
+				"Creatures cannot gain advantage on attack rolls against you by being hidden.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -691,11 +815,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You can spend 10 minutes to stabilize a collapsing gate, delaying its closure by 1 hour.",
-			"You have advantage on checks made to disable magical traps or security systems within a gate.",
-			"Proficiency in Hacking Tools and Tinker's Tools.",
-		],
+		benefits: {
+			basic: [
+				"You can spend 10 minutes to stabilize a collapsing gate, delaying its closure by 1 hour.",
+				"You have advantage on checks made to disable magical traps or security systems within a gate.",
+				"Proficiency in Hacking Tools and Tinker's Tools.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -711,11 +839,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			job: "Berserker",
 		},
-		benefits: [
-			"When you reduce a creature to 0 HP, you can immediately move up to half your speed and make one melee weapon attack as a free action.",
-			"While below half HP, you have advantage on all Strength checks and Strength saving throws.",
-			"Your critical hit range increases by 1 (e.g., 19-20).",
-		],
+		benefits: {
+			basic: [
+				"When you reduce a creature to 0 HP, you can immediately move up to half your speed and make one melee weapon attack as a free action.",
+				"While below half HP, you have advantage on all Strength checks and Strength saving throws.",
+				"Your critical hit range increases by 1 (e.g., 19-20).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -730,11 +862,15 @@ export const comprehensiveFeats = [
 		name: "System Data Analyst",
 		description:
 			"You can read the underlying data of the world, identifying the properties of anything you see.",
-		benefits: [
-			"You can cast Identify and Detect Magic at will, without expending a spell slot or material components.",
-			"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
-			'The System displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
-		],
+		benefits: {
+			basic: [
+				"You can cast Identify and Detect Magic at will, without expending a spell slot or material components.",
+				"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
+				'The System displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -748,11 +884,15 @@ export const comprehensiveFeats = [
 		name: "Phantom Limb Manifestation",
 		description:
 			"You use mana to extend your reach and manipulate objects from a distance.",
-		benefits: [
-			"Your reach for melee attacks and object interaction increases by 5 feet.",
-			"You can cast Mage Hand as a bonus action, and the hand is invisible.",
-			"You have advantage on Sleight of Hand checks made using your Mage Hand.",
-		],
+		benefits: {
+			basic: [
+				"Your reach for melee attacks and object interaction increases by 5 feet.",
+				"You can cast Mage Hand as a bonus action, and the hand is invisible.",
+				"You have advantage on Sleight of Hand checks made using your Mage Hand.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -770,11 +910,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			armor_proficiencies: ["Heavy armor"],
 		},
-		benefits: [
-			"+1 to Strength score (max 20).",
-			"While wearing heavy armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
-			"You can don or doff heavy armor in half the normal time.",
-		],
+		benefits: {
+			basic: [
+				"+1 to Strength score (max 20).",
+				"While wearing heavy armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
+				"You can don or doff heavy armor in half the normal time.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -790,11 +934,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 4,
 		},
-		benefits: [
-			"When you teleport, you can bring one willing creature of your size or smaller with you.",
-			"Your teleportation range increases by 10 feet.",
-			"Once per long rest, use a reaction to teleport up to 30 feet when you would take damage.",
-		],
+		benefits: {
+			basic: [
+				"When you teleport, you can bring one willing creature of your size or smaller with you.",
+				"Your teleportation range increases by 10 feet.",
+				"Once per long rest, use a reaction to teleport up to 30 feet when you would take damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -813,11 +961,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You gain 2 additional 1st-level spell slots.",
-			"When you finish a short rest, you can recover spell slots whose combined level is equal to half your level.",
-			"Your spells deal an additional 1d4 force damage.",
-		],
+		benefits: {
+			basic: [
+				"You gain 2 additional 1st-level spell slots.",
+				"When you finish a short rest, you can recover spell slots whose combined level is equal to half your level.",
+				"Your spells deal an additional 1d4 force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -835,11 +987,15 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 15,
 		},
-		benefits: [
-			"You can coordinate up to 10 allies. Allies who can see and hear you have advantage on saves against fear.",
-			"As a bonus action, grant one ally within 30 feet an additional reaction they can use before the start of your next turn.",
-			"You gain proficiency in Persuasion and Intimidation.",
-		],
+		benefits: {
+			basic: [
+				"You can coordinate up to 10 allies. Allies who can see and hear you have advantage on saves against fear.",
+				"As a bonus action, grant one ally within 30 feet an additional reaction they can use before the start of your next turn.",
+				"You gain proficiency in Persuasion and Intimidation.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -857,11 +1013,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 17,
 		},
-		benefits: [
-			"Your melee weapon attacks ignore resistance to their damage type.",
-			"Once per turn, when you hit a creature, you can force it to make a Charisma save or be banished to a void-space until the start of your next turn.",
-			"Your critical hits deal an additional 1d12 force damage.",
-		],
+		benefits: {
+			basic: [
+				"Your melee weapon attacks ignore resistance to their damage type.",
+				"Once per turn, when you hit a creature, you can force it to make a Charisma save or be banished to a void-space until the start of your next turn.",
+				"Your critical hits deal an additional 1d12 force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -881,11 +1041,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 12,
 		},
-		benefits: [
-			"You gain Truesight out to 30 feet.",
-			"You can see through any magical or non-magical illusion.",
-			"You have advantage on all saving throws against being blinded or dazzled.",
-		],
+		benefits: {
+			basic: [
+				"You gain Truesight out to 30 feet.",
+				"You can see through any magical or non-magical illusion.",
+				"You have advantage on all saving throws against being blinded or dazzled.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -903,11 +1067,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 15,
 		},
-		benefits: [
-			"While you are not moving, you have a +2 bonus to AC.",
-			"Creatures that provoke an opportunity attack from you take an additional 1d10 damage if you hit.",
-			"You are immune to being moved against your will while you are conscious.",
-		],
+		benefits: {
+			basic: [
+				"While you are not moving, you have a +2 bonus to AC.",
+				"Creatures that provoke an opportunity attack from you take an additional 1d10 damage if you hit.",
+				"You are immune to being moved against your will while you are conscious.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -921,11 +1089,15 @@ export const comprehensiveFeats = [
 		name: "System Linguist",
 		description:
 			"You have decrypted the underlying code of the System's translation layer, allowing you to understand any spoken or written language.",
-		benefits: [
-			"You learn three languages of your choice.",
-			"You have advantage on Intelligence (History) checks made to decipher ancient texts or gate-script.",
-			"The System provides real-time subtitles for any language you don't know (passive).",
-		],
+		benefits: {
+			basic: [
+				"You learn three languages of your choice.",
+				"You have advantage on Intelligence (History) checks made to decipher ancient texts or gate-script.",
+				"The System provides real-time subtitles for any language you don't know (passive).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -942,11 +1114,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 4,
 		},
-		benefits: [
-			"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Wisdom save.",
-			"On a failure, the creature loses its lowest level spell slot, and you regain mana points or a spell slot of that level.",
-			"You gain resistance to force damage.",
-		],
+		benefits: {
+			basic: [
+				"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Wisdom save.",
+				"On a failure, the creature loses its lowest level spell slot, and you regain mana points or a spell slot of that level.",
+				"You gain resistance to force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -967,11 +1143,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You can cast Find Familiar as a ritual, but the familiar is a tiny, invisible mechanical drone.",
-			"You can see and hear through the drone's senses as long as it is on the same plane of existence.",
-			"As an action, the drone can emit a high-frequency pulse that reveals invisible creatures within 10 feet.",
-		],
+		benefits: {
+			basic: [
+				"You can cast Find Familiar as a ritual, but the familiar is a tiny, invisible mechanical drone.",
+				"You can see and hear through the drone's senses as long as it is on the same plane of existence.",
+				"As an action, the drone can emit a high-frequency pulse that reveals invisible creatures within 10 feet.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -986,11 +1166,15 @@ export const comprehensiveFeats = [
 		name: "Dimensional Vault Master",
 		description:
 			"Your personal inventory space has been expanded and optimized by the System.",
-		benefits: [
-			"Your carrying capacity is tripled.",
-			"You can retrieve or stow an item from your personal vault as a free action once per turn.",
-			"You can hide one item (up to 10 lbs) in a pocket dimension that cannot be detected by non-System scans.",
-		],
+		benefits: {
+			basic: [
+				"Your carrying capacity is tripled.",
+				"You can retrieve or stow an item from your personal vault as a free action once per turn.",
+				"You can hide one item (up to 10 lbs) in a pocket dimension that cannot be detected by non-System scans.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1008,11 +1192,15 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 15,
 		},
-		benefits: [
-			"As a bonus action, you can take an additional action this turn.",
-			"After using this ability, your speed is halved and you cannot take reactions until the end of your next turn.",
-			"Once used, you must complete a long rest before using it again.",
-		],
+		benefits: {
+			basic: [
+				"As a bonus action, you can take an additional action this turn.",
+				"After using this ability, your speed is halved and you cannot take reactions until the end of your next turn.",
+				"Once used, you must complete a long rest before using it again.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1027,11 +1215,15 @@ export const comprehensiveFeats = [
 		name: "Urban Parkour Expert",
 		description:
 			"You move through the city and the dungeon with equal ease, utilizing every surface for mobility.",
-		benefits: [
-			"Climbing does not cost you extra movement.",
-			"You can make a running long jump or running high jump after moving only 5 feet.",
-			"You have advantage on Dexterity (Acrobatics) checks made to navigate difficult terrain.",
-		],
+		benefits: {
+			basic: [
+				"Climbing does not cost you extra movement.",
+				"You can make a running long jump or running high jump after moving only 5 feet.",
+				"You have advantage on Dexterity (Acrobatics) checks made to navigate difficult terrain.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1045,11 +1237,15 @@ export const comprehensiveFeats = [
 		name: "Mana Shield Capacitor",
 		description:
 			"You have installed a mana-reactive shield generator in your neural network.",
-		benefits: [
-			"When you take damage, you can use your reaction to reduce the damage by an amount equal to your level + Int modifier.",
-			"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
-			"You gain proficiency in Constitution saving throws.",
-		],
+		benefits: {
+			basic: [
+				"When you take damage, you can use your reaction to reduce the damage by an amount equal to your level + Int modifier.",
+				"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
+				"You gain proficiency in Constitution saving throws.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -1067,11 +1263,15 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 13,
 		},
-		benefits: [
-			"You gain advantage on Charisma (Persuasion) and Charisma (Deception) checks against humanoids.",
-			"The System highlights when someone is lying to you (Insight advantage).",
-			'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
-		],
+		benefits: {
+			basic: [
+				"You gain advantage on Charisma (Persuasion) and Charisma (Deception) checks against humanoids.",
+				"The System highlights when someone is lying to you (Insight advantage).",
+				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1086,11 +1286,15 @@ export const comprehensiveFeats = [
 		name: "Echo-Location Sonar",
 		description:
 			"You emit high-frequency mana pulses that map your surroundings in total darkness.",
-		benefits: [
-			"You gain blindsight out to 30 feet.",
-			"You have advantage on Wisdom (Perception) checks made to detect hidden creatures within 30 feet.",
-			"Creatures cannot gain advantage on attack rolls against you by being hidden.",
-		],
+		benefits: {
+			basic: [
+				"You gain blindsight out to 30 feet.",
+				"You have advantage on Wisdom (Perception) checks made to detect hidden creatures within 30 feet.",
+				"Creatures cannot gain advantage on attack rolls against you by being hidden.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1108,11 +1312,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You can spend 10 minutes to stabilize a collapsing gate, delaying its closure by 1 hour.",
-			"You have advantage on checks made to disable magical traps or security systems within a gate.",
-			"Proficiency in Hacking Tools and Tinker's Tools.",
-		],
+		benefits: {
+			basic: [
+				"You can spend 10 minutes to stabilize a collapsing gate, delaying its closure by 1 hour.",
+				"You have advantage on checks made to disable magical traps or security systems within a gate.",
+				"Proficiency in Hacking Tools and Tinker's Tools.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1128,11 +1336,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			job: "Berserker",
 		},
-		benefits: [
-			"When you reduce a creature to 0 HP, you can immediately move up to half your speed and make one melee weapon attack as a free action.",
-			"While below half HP, you have advantage on all Strength checks and Strength saving throws.",
-			"Your critical hit range increases by 1 (e.g., 19-20).",
-		],
+		benefits: {
+			basic: [
+				"When you reduce a creature to 0 HP, you can immediately move up to half your speed and make one melee weapon attack as a free action.",
+				"While below half HP, you have advantage on all Strength checks and Strength saving throws.",
+				"Your critical hit range increases by 1 (e.g., 19-20).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1147,11 +1359,15 @@ export const comprehensiveFeats = [
 		name: "System Analyst",
 		description:
 			"You can read the underlying data of the world, identifying the properties of anything you see.",
-		benefits: [
-			"You can cast Identify and Detect Magic at will, without expending a spell slot or material components.",
-			"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
-			'The System displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
-		],
+		benefits: {
+			basic: [
+				"You can cast Identify and Detect Magic at will, without expending a spell slot or material components.",
+				"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
+				'The System displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1165,11 +1381,15 @@ export const comprehensiveFeats = [
 		name: "Phantom Limb Technique",
 		description:
 			"You use mana to extend your reach and manipulate objects from a distance.",
-		benefits: [
-			"Your reach for melee attacks and object interaction increases by 5 feet.",
-			"You can cast Mage Hand as a bonus action, and the hand is invisible.",
-			"You have advantage on Sleight of Hand checks made using your Mage Hand.",
-		],
+		benefits: {
+			basic: [
+				"Your reach for melee attacks and object interaction increases by 5 feet.",
+				"You can cast Mage Hand as a bonus action, and the hand is invisible.",
+				"You have advantage on Sleight of Hand checks made using your Mage Hand.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -1187,11 +1407,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			armor_proficiencies: ["Heavy armor"],
 		},
-		benefits: [
-			"+1 to Strength score (max 20).",
-			"While wearing heavy armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
-			"You can don or doff heavy armor in half the normal time.",
-		],
+		benefits: {
+			basic: [
+				"+1 to Strength score (max 20).",
+				"While wearing heavy armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
+				"You can don or doff heavy armor in half the normal time.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1208,11 +1432,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 4,
 		},
-		benefits: [
-			"When you teleport, you can bring one willing creature of your size or smaller with you.",
-			"Your teleportation range increases by 10 feet.",
-			"Once per long rest, use a reaction to teleport up to 30 feet when you would take damage.",
-		],
+		benefits: {
+			basic: [
+				"When you teleport, you can bring one willing creature of your size or smaller with you.",
+				"Your teleportation range increases by 10 feet.",
+				"Once per long rest, use a reaction to teleport up to 30 feet when you would take damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1230,11 +1458,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"You gain 2 additional 1st-level spell slots.",
-			"When you finish a short rest, you can recover spell slots whose combined level is equal to half your level.",
-			"Your spells deal an additional 1d4 force damage.",
-		],
+		benefits: {
+			basic: [
+				"You gain 2 additional 1st-level spell slots.",
+				"When you finish a short rest, you can recover spell slots whose combined level is equal to half your level.",
+				"Your spells deal an additional 1d4 force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1252,11 +1484,15 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 15,
 		},
-		benefits: [
-			"You can coordinate up to 10 allies. Allies who can see and hear you have advantage on saves against fear.",
-			"As a bonus action, grant one ally within 30 feet an additional reaction they can use before the start of your next turn.",
-			"You gain proficiency in Persuasion and Intimidation.",
-		],
+		benefits: {
+			basic: [
+				"You can coordinate up to 10 allies. Allies who can see and hear you have advantage on saves against fear.",
+				"As a bonus action, grant one ally within 30 feet an additional reaction they can use before the start of your next turn.",
+				"You gain proficiency in Persuasion and Intimidation.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -1273,11 +1509,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 17,
 		},
-		benefits: [
-			"Your melee weapon attacks ignore resistance to their damage type.",
-			"Once per turn, when you hit a creature, you can force it to make a Charisma save or be banished to a void-space until the start of your next turn.",
-			"Your critical hits deal an additional 1d12 force damage.",
-		],
+		benefits: {
+			basic: [
+				"Your melee weapon attacks ignore resistance to their damage type.",
+				"Once per turn, when you hit a creature, you can force it to make a Charisma save or be banished to a void-space until the start of your next turn.",
+				"Your critical hits deal an additional 1d12 force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -1297,11 +1537,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 12,
 		},
-		benefits: [
-			"You gain Truesight out to 30 feet.",
-			"You can see through any magical or non-magical illusion.",
-			"You have advantage on all saving throws against being blinded or dazzled.",
-		],
+		benefits: {
+			basic: [
+				"You gain Truesight out to 30 feet.",
+				"You can see through any magical or non-magical illusion.",
+				"You have advantage on all saving throws against being blinded or dazzled.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1319,11 +1563,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 15,
 		},
-		benefits: [
-			"While you are not moving, you have a +2 bonus to AC.",
-			"Creatures that provoke an opportunity attack from you take an additional 1d10 damage if you hit.",
-			"You are immune to being moved against your will while you are conscious.",
-		],
+		benefits: {
+			basic: [
+				"While you are not moving, you have a +2 bonus to AC.",
+				"Creatures that provoke an opportunity attack from you take an additional 1d10 damage if you hit.",
+				"You are immune to being moved against your will while you are conscious.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1341,11 +1589,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"When a ranged weapon attack misses you, you can use your reaction to make a ranged weapon attack against the attacker.",
-			"You gain proficiency in Dexterity saving throws.",
-			"You can use your Dexterity modifier instead of Strength for jump distance.",
-		],
+		benefits: {
+			basic: [
+				"When a ranged weapon attack misses you, you can use your reaction to make a ranged weapon attack against the attacker.",
+				"You gain proficiency in Dexterity saving throws.",
+				"You can use your Dexterity modifier instead of Strength for jump distance.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -1364,11 +1616,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"Once per long rest, when you cast a spell that deals damage, you can maximize the damage of one die.",
-			"You can cast Shield once per long rest without expending a spell slot.",
-			"Your mana-infused attacks count as magical for overcoming resistance.",
-		],
+		benefits: {
+			basic: [
+				"Once per long rest, when you cast a spell that deals damage, you can maximize the damage of one die.",
+				"You can cast Shield once per long rest without expending a spell slot.",
+				"Your mana-infused attacks count as magical for overcoming resistance.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1386,11 +1642,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 15,
 		},
-		benefits: [
-			"When you take the Disengage action, you can teleport up to 10 feet to an unoccupied space.",
-			"Attack rolls against you have disadvantage if you have moved at least 20 feet this turn.",
-			"+1 to AC while not wearing heavy armor.",
-		],
+		benefits: {
+			basic: [
+				"When you take the Disengage action, you can teleport up to 10 feet to an unoccupied space.",
+				"Attack rolls against you have disadvantage if you have moved at least 20 feet this turn.",
+				"+1 to AC while not wearing heavy armor.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1404,11 +1664,15 @@ export const comprehensiveFeats = [
 		name: "System Scholar",
 		description:
 			"You have studied the System's lore and mechanics more deeply than most.",
-		benefits: [
-			"You gain proficiency in three skills of your choice.",
-			"You have advantage on Intelligence (Arcana) checks made to identify System protocols or rifts.",
-			"You can cast Detect Magic as a ritual.",
-		],
+		benefits: {
+			basic: [
+				"You gain proficiency in three skills of your choice.",
+				"You have advantage on Intelligence (Arcana) checks made to identify System protocols or rifts.",
+				"You can cast Detect Magic as a ritual.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1425,11 +1689,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 17,
 		},
-		benefits: [
-			"When you score a critical hit with a heavy weapon, the target is knocked prone.",
-			"Once per turn, when you hit with a heavy weapon, you can deal an extra 1d8 force damage.",
-			"You gain proficiency in Athletics.",
-		],
+		benefits: {
+			basic: [
+				"When you score a critical hit with a heavy weapon, the target is knocked prone.",
+				"Once per turn, when you hit with a heavy weapon, you can deal an extra 1d8 force damage.",
+				"You gain proficiency in Athletics.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "once-per-turn",
@@ -1443,11 +1711,15 @@ export const comprehensiveFeats = [
 		name: "Cybernetic Reflex Booster",
 		description:
 			"Your neural link with the System has been overclocked for speed.",
-		benefits: [
-			"+2 to Initiative rolls.",
-			"You can take the Dash or Disengage action as a bonus action.",
-			"You have advantage on Dexterity checks made to initiate combat.",
-		],
+		benefits: {
+			basic: [
+				"+2 to Initiative rolls.",
+				"You can take the Dash or Disengage action as a bonus action.",
+				"You have advantage on Dexterity checks made to initiate combat.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1465,11 +1737,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"When you hit a creature concentrating on a spell, they have disadvantage on the Con save to maintain it.",
-			"Creatures hit by your spells cannot take reactions until the start of your next turn.",
-			"You gain resistance to force damage.",
-		],
+		benefits: {
+			basic: [
+				"When you hit a creature concentrating on a spell, they have disadvantage on the Con save to maintain it.",
+				"Creatures hit by your spells cannot take reactions until the start of your next turn.",
+				"You gain resistance to force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1482,11 +1758,15 @@ export const comprehensiveFeats = [
 		id: "gate-raid-veteran",
 		name: "Gate Raid Veteran",
 		description: "You have seen it all in the rifts. Nothing shakes you.",
-		benefits: [
-			"You are immune to the frightened condition.",
-			"You have advantage on all saving throws made while inside a gate.",
-			"+1 to Wisdom score (max 20).",
-		],
+		benefits: {
+			basic: [
+				"You are immune to the frightened condition.",
+				"You have advantage on all saving throws made while inside a gate.",
+				"+1 to Wisdom score (max 20).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1504,11 +1784,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 15,
 		},
-		benefits: [
-			"You can cast Message at will.",
-			"Once per long rest, you can cast Suggestion without expending a spell slot (Int save).",
-			"You have advantage on checks made to detect if someone is under magical influence.",
-		],
+		benefits: {
+			basic: [
+				"You can cast Message at will.",
+				"Once per long rest, you can cast Suggestion without expending a spell slot (Int save).",
+				"You have advantage on checks made to detect if someone is under magical influence.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1528,11 +1812,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"When you are targeted by an opportunity attack, you can use your reaction to teleport up to 10 feet.",
-			"You can move through the space of hostile creatures regardless of their size.",
-			"+1 to Dexterity score (max 20).",
-		],
+		benefits: {
+			basic: [
+				"When you are targeted by an opportunity attack, you can use your reaction to teleport up to 10 feet.",
+				"You can move through the space of hostile creatures regardless of their size.",
+				"+1 to Dexterity score (max 20).",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -1549,11 +1837,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			armor_proficiencies: ["Medium armor"],
 		},
-		benefits: [
-			"While wearing armor, your AC increases by 1.",
-			"When you take damage, your next melee attack deals an extra 1d6 force damage.",
-			"You gain proficiency in Strength saving throws.",
-		],
+		benefits: {
+			basic: [
+				"While wearing armor, your AC increases by 1.",
+				"When you take damage, your next melee attack deals an extra 1d6 force damage.",
+				"You gain proficiency in Strength saving throws.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1569,11 +1861,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			job: "Assassin",
 		},
-		benefits: [
-			"Your sneak attack damage dice become d8s instead of d6s.",
-			"If you surprise a creature and hit it, the hit is automatically a critical hit.",
-			"You gain a +10 bonus to Stealth checks if you do not move more than half your speed.",
-		],
+		benefits: {
+			basic: [
+				"Your sneak attack damage dice become d8s instead of d6s.",
+				"If you surprise a creature and hit it, the hit is automatically a critical hit.",
+				"You gain a +10 bonus to Stealth checks if you do not move more than half your speed.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1589,11 +1885,15 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 17,
 		},
-		benefits: [
-			"You gain resistance to bludgeoning, piercing, and slashing damage.",
-			"Your HP maximum increases by an additional 1 per level.",
-			"You cannot be knocked prone while you are conscious.",
-		],
+		benefits: {
+			basic: [
+				"You gain resistance to bludgeoning, piercing, and slashing damage.",
+				"Your HP maximum increases by an additional 1 per level.",
+				"You cannot be knocked prone while you are conscious.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1606,11 +1906,15 @@ export const comprehensiveFeats = [
 		id: "mana-weaver-ritualist",
 		name: "Mana Weaver Ritualist",
 		description: "You can weave complex mana-patterns without expending slots.",
-		benefits: [
-			"You can cast any spell you know with the ritual tag as a ritual.",
-			"Ritual casting time is reduced to 1 minute.",
-			"You gain proficiency in two Intelligence or Wisdom based skills.",
-		],
+		benefits: {
+			basic: [
+				"You can cast any spell you know with the ritual tag as a ritual.",
+				"Ritual casting time is reduced to 1 minute.",
+				"You gain proficiency in two Intelligence or Wisdom based skills.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1626,11 +1930,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 8,
 		},
-		benefits: [
-			"You and your party move at double speed through gate environments.",
-			"You cannot become lost in a gate unless by magical means.",
-			"Once per long rest, you can sense the exact location of the boss-room in a gate.",
-		],
+		benefits: {
+			basic: [
+				"You and your party move at double speed through gate environments.",
+				"You cannot become lost in a gate unless by magical means.",
+				"Once per long rest, you can sense the exact location of the boss-room in a gate.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1648,11 +1956,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 15,
 		},
-		benefits: [
-			"Attacking at long range doesn't impose disadvantage.",
-			"Your ranged weapon attacks ignore half and three-quarters cover.",
-			"Before you make an attack with a ranged weapon, you can take a -5 penalty to the attack roll to gain +10 damage.",
-		],
+		benefits: {
+			basic: [
+				"Attacking at long range doesn't impose disadvantage.",
+				"Your ranged weapon attacks ignore half and three-quarters cover.",
+				"Before you make an attack with a ranged weapon, you can take a -5 penalty to the attack roll to gain +10 damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -1668,11 +1980,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 6,
 		},
-		benefits: [
-			"Your reach for melee weapon attacks increases by 10 feet on your turn.",
-			"Once per turn, when you hit a creature with a melee attack, you can teleport to an unoccupied space within 5 feet of it.",
-			"You gain resistance to necrotic damage.",
-		],
+		benefits: {
+			basic: [
+				"Your reach for melee weapon attacks increases by 10 feet on your turn.",
+				"Once per turn, when you hit a creature with a melee attack, you can teleport to an unoccupied space within 5 feet of it.",
+				"You gain resistance to necrotic damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "once-per-turn",
@@ -1687,11 +2003,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 14,
 		},
-		benefits: [
-			"When you reduce a creature to 10 HP or less, it dies instantly.",
-			"You have advantage on attack rolls against creatures below half HP.",
-			"You gain proficiency in Intimidation.",
-		],
+		benefits: {
+			basic: [
+				"When you reduce a creature to 10 HP or less, it dies instantly.",
+				"You have advantage on attack rolls against creatures below half HP.",
+				"You gain proficiency in Intimidation.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1705,11 +2025,15 @@ export const comprehensiveFeats = [
 		name: "Interface Optimization",
 		description:
 			"The System interface has been optimized for your neural architecture, allowing faster data processing.",
-		benefits: [
-			"You can use a bonus action to take the Help action.",
-			"When you take the Help action to aid an ally's attack roll, you can also give them a +1d4 bonus to their damage roll.",
-			"You gain proficiency in one skill of your choice.",
-		],
+		benefits: {
+			basic: [
+				"You can use a bonus action to take the Help action.",
+				"When you take the Help action to aid an ally's attack roll, you can also give them a +1d4 bonus to their damage roll.",
+				"You gain proficiency in one skill of your choice.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1728,11 +2052,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 13,
 		},
-		benefits: [
-			"You have advantage on saving throws against being banished or teleported against your will.",
-			"As a reaction when an ally within 30 feet is forced to teleport, you can force the effect to fail (once per long rest).",
-			"You gain proficiency in the Athletics skill.",
-		],
+		benefits: {
+			basic: [
+				"You have advantage on saving throws against being banished or teleported against your will.",
+				"As a reaction when an ally within 30 feet is forced to teleport, you can force the effect to fail (once per long rest).",
+				"You gain proficiency in the Athletics skill.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1751,11 +2079,15 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"When you are wielding a finesse weapon, you gain a +1 bonus to AC.",
-			"You can use your reaction to impose disadvantage on one melee attack roll made against you.",
-			"Your movement speed increases by 5 feet.",
-		],
+		benefits: {
+			basic: [
+				"When you are wielding a finesse weapon, you gain a +1 bonus to AC.",
+				"You can use your reaction to impose disadvantage on one melee attack roll made against you.",
+				"Your movement speed increases by 5 feet.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -1770,11 +2102,15 @@ export const comprehensiveFeats = [
 		name: "Recon Specialist",
 		description:
 			"Your HUD is tuned for long-range detection and structural analysis.",
-		benefits: [
-			"You gain darkvision out to 120 feet. If you already have darkvision, its range increases by 60 feet.",
-			"You can see through up to 1 foot of stone, 1 inch of common metal, or 3 feet of wood or dirt.",
-			"You have advantage on Perception checks made to detect hidden rifts or traps.",
-		],
+		benefits: {
+			basic: [
+				"You gain darkvision out to 120 feet. If you already have darkvision, its range increases by 60 feet.",
+				"You can see through up to 1 foot of stone, 1 inch of common metal, or 3 feet of wood or dirt.",
+				"You have advantage on Perception checks made to detect hidden rifts or traps.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1792,11 +2128,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"As a bonus action, you can direct an ally to move up to half their speed or make one melee attack.",
-			"Allies under your direction gain a +2 bonus to the directed roll.",
-			"Once per long rest, you can grant the entire party advantage on initiative.",
-		],
+		benefits: {
+			basic: [
+				"As a bonus action, you can direct an ally to move up to half their speed or make one melee attack.",
+				"Allies under your direction gain a +2 bonus to the directed roll.",
+				"Once per long rest, you can grant the entire party advantage on initiative.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1815,11 +2155,15 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 15,
 		},
-		benefits: [
-			"As an action, you can release a mana-burst. Each creature within 10 feet must make a Strength save (DC 8 + prof + Str mod).",
-			"On a failure, a creature takes 2d8 force damage and is pushed 10 feet. On a success, half damage and no push.",
-			"You can use this ability a number of times equal to your proficiency bonus per long rest.",
-		],
+		benefits: {
+			basic: [
+				"As an action, you can release a mana-burst. Each creature within 10 feet must make a Strength save (DC 8 + prof + Str mod).",
+				"On a failure, a creature takes 2d8 force damage and is pushed 10 feet. On a success, half damage and no push.",
+				"You can use this ability a number of times equal to your proficiency bonus per long rest.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1838,11 +2182,15 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			skill_proficiencies: ["Medicine"],
 		},
-		benefits: [
-			"When you use Medicine to stabilize an ally, they regain HP equal to your level.",
-			"You can use an action to remove one condition (poisoned, paralyzed, or stunned) from a creature.",
-			"You gain advantage on saving throws against disease and poison.",
-		],
+		benefits: {
+			basic: [
+				"When you use Medicine to stabilize an ally, they regain HP equal to your level.",
+				"You can use an action to remove one condition (poisoned, paralyzed, or stunned) from a creature.",
+				"You gain advantage on saving throws against disease and poison.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -1857,11 +2205,15 @@ export const comprehensiveFeats = [
 		name: "Void Rifter",
 		description:
 			"You can create tiny, localized rifts to bypass physical obstacles.",
-		benefits: [
-			"You can cast Misty Step once per short rest without expending a spell slot.",
-			"You can reach through solid objects up to 1 inch thick as if they weren't there.",
-			"You gain resistance to force damage.",
-		],
+		benefits: {
+			basic: [
+				"You can cast Misty Step once per short rest without expending a spell slot.",
+				"You can reach through solid objects up to 1 inch thick as if they weren't there.",
+				"You gain resistance to force damage.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -1879,11 +2231,15 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 15,
 		},
-		benefits: [
-			"When a creature you can see within 60 feet uses a recharge ability, you can use your reaction to force them to roll again.",
-			"You can cast Counterspell once per long rest without a spell slot (Intelligence check).",
-			"You have advantage on saving throws against spells.",
-		],
+		benefits: {
+			basic: [
+				"When a creature you can see within 60 feet uses a recharge ability, you can use your reaction to force them to roll again.",
+				"You can cast Counterspell once per long rest without a spell slot (Intelligence check).",
+				"You have advantage on saving throws against spells.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1897,11 +2253,15 @@ export const comprehensiveFeats = [
 		name: "Dimensional Scavenger",
 		description:
 			"You find value in the detritus of the rifts that others overlook.",
-		benefits: [
-			"You have advantage on Investigation checks made to find loot in gate zones.",
-			"You can identify any mana-crystal or rift-related item as a free action.",
-			"You find twice as many consumable items (potions, scrolls) in random loot.",
-		],
+		benefits: {
+			basic: [
+				"You have advantage on Investigation checks made to find loot in gate zones.",
+				"You can identify any mana-crystal or rift-related item as a free action.",
+				"You find twice as many consumable items (potions, scrolls) in random loot.",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -1920,12 +2280,16 @@ export const comprehensiveFeats = [
 			level: 10,
 			feats: ["shadow-mastery"],
 		},
-		benefits: [
-			"Can create shadow weapons as a bonus action (any simple or martial weapon)",
-			"Shadow weapons deal +1d6 necrotic damage",
-			"Can change weapon form as a bonus action",
-			"Can throw shadow weapons — they return to your hand at end of turn",
-		],
+		benefits: {
+			basic: [
+				"Can create shadow weapons as a bonus action (any simple or martial weapon)",
+				"Shadow weapons deal +1d6 necrotic damage",
+				"Can change weapon form as a bonus action",
+				"Can throw shadow weapons — they return to your hand at end of turn",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "bonus-action",
@@ -1944,12 +2308,16 @@ export const comprehensiveFeats = [
 			level: 8,
 			feats: ["shadow-mastery"],
 		},
-		benefits: [
-			"Form shadow armor as a bonus action — provides +2 AC",
-			"Shadow armor grants resistance to non-magical damage",
-			"Shadow armor imposes no Stealth disadvantage",
-			"Can repair shadow armor as a bonus action if damaged",
-		],
+		benefits: {
+			basic: [
+				"Form shadow armor as a bonus action — provides +2 AC",
+				"Shadow armor grants resistance to non-magical damage",
+				"Shadow armor imposes no Stealth disadvantage",
+				"Can repair shadow armor as a bonus action if damaged",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "bonus-action",
@@ -1969,12 +2337,16 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 13,
 		},
-		benefits: [
-			"As a bonus action, enter Overclock for 1 minute: +2 to all ability checks and saving throws",
-			"Speed increases by 10 feet, +1d4 force damage on weapon attacks",
-			"When Overclock ends, gain 1 level of exhaustion",
-			"Duration extends by 1 round per enemy reduced to 0 HP",
-		],
+		benefits: {
+			basic: [
+				"As a bonus action, enter Overclock for 1 minute: +2 to all ability checks and saving throws",
+				"Speed increases by 10 feet, +1d4 force damage on weapon attacks",
+				"When Overclock ends, gain 1 level of exhaustion",
+				"Duration extends by 1 round per enemy reduced to 0 HP",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -1993,12 +2365,16 @@ export const comprehensiveFeats = [
 			ability: "Wisdom",
 			score: 12,
 		},
-		benefits: [
-			"As a bonus action, mark one creature — allies within 60 feet deal +1d4 damage to marked target",
-			"Mark lasts 1 minute or until target drops to 0 HP",
-			"Only one mark at a time; marking new target removes old mark",
-			"When marked target drops to 0 HP, immediately mark another as a free action",
-		],
+		benefits: {
+			basic: [
+				"As a bonus action, mark one creature — allies within 60 feet deal +1d4 damage to marked target",
+				"Mark lasts 1 minute or until target drops to 0 HP",
+				"Only one mark at a time; marking new target removes old mark",
+				"When marked target drops to 0 HP, immediately mark another as a free action",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -2017,12 +2393,16 @@ export const comprehensiveFeats = [
 			ability: "Wisdom",
 			score: 13,
 		},
-		benefits: [
-			"System highlights interactive objects and hidden doors within 30 feet",
-			"Receive threat assessment when entering a new area",
-			"Once per long rest, ask for a hint — DM provides one true clue",
-			"Cannot be surprised while System interface is active",
-		],
+		benefits: {
+			basic: [
+				"System highlights interactive objects and hidden doors within 30 feet",
+				"Receive threat assessment when entering a new area",
+				"Once per long rest, ask for a hint — Protocol Warden (PW) provides one true clue",
+				"Cannot be surprised while System interface is active",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2041,12 +2421,16 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 13,
 		},
-		benefits: [
-			"System maintains a kill counter per combat encounter",
-			"After 2 kills: +1 to attack rolls",
-			"After 4 kills: +1d4 bonus damage on weapon attacks",
-			"After 6 kills: crit range expands by 1. Resets when combat ends or 1 min without a kill",
-		],
+		benefits: {
+			basic: [
+				"System maintains a kill counter per combat encounter",
+				"After 2 kills: +1 to attack rolls",
+				"After 4 kills: +1d4 bonus damage on weapon attacks",
+				"After 6 kills: crit range expands by 1. Resets when combat ends or 1 min without a kill",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "triggered",
 			frequency: "at-will",
@@ -2066,12 +2450,16 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 12,
 		},
-		benefits: [
-			"HP maximum increases by 1 per level (retroactive)",
-			"Recover 1 additional hit die during long rests",
-			"Once per day after a short rest, remove 1 level of exhaustion",
-			"Declare daily quest at dawn for +1 to all saves until next long rest",
-		],
+		benefits: {
+			basic: [
+				"HP maximum increases by 1 per level (retroactive)",
+				"Recover 1 additional hit die during long rests",
+				"Once per day after a short rest, remove 1 level of exhaustion",
+				"Declare daily quest at dawn for +1 to all saves until next long rest",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2090,12 +2478,16 @@ export const comprehensiveFeats = [
 			ability: "Wisdom",
 			score: 12,
 		},
-		benefits: [
-			"Sense gates or rifts within 1 mile",
-			"Determine rank (D-S) by spending 1 minute within 30 feet",
-			"Advantage on saves against forced teleportation",
-			"Detect invisible/ethereal creatures within 15 feet",
-		],
+		benefits: {
+			basic: [
+				"Sense gates or rifts within 1 mile",
+				"Determine rank (D-S) by spending 1 minute within 30 feet",
+				"Advantage on saves against forced teleportation",
+				"Detect invisible/ethereal creatures within 15 feet",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2113,12 +2505,16 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 14,
 		},
-		benefits: [
-			"Immune to gate-entry disorientation and psychic static",
-			"Resistance to one damage type of your choice",
-			"Extreme gate environments impose no disadvantage",
-			"Once per long rest, drop to 1 HP instead of 0 inside a gate",
-		],
+		benefits: {
+			basic: [
+				"Immune to gate-entry disorientation and psychic static",
+				"Resistance to one damage type of your choice",
+				"Extreme gate environments impose no disadvantage",
+				"Once per long rest, drop to 1 HP instead of 0 inside a gate",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2137,12 +2533,16 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"When CR 5+ creature begins a special ability, react to warn allies — +3 to their save",
-			"After 1 round of observation, identify boss's legendary actions and resistances",
-			'Once per long rest, "Pattern Read" a recharge ability — it automatically misses you',
-			"System displays boss HP as a percentage bar",
-		],
+		benefits: {
+			basic: [
+				"When CR 5+ creature begins a special ability, react to warn allies — +3 to their save",
+				"After 1 round of observation, identify boss's legendary actions and resistances",
+				'Once per long rest, "Pattern Read" a recharge ability — it automatically misses you',
+				"System displays boss HP as a percentage bar",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "triggered",
 			frequency: "long-rest",
@@ -2161,12 +2561,16 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 14,
 		},
-		benefits: [
-			"Once per short rest, Mana Overflow a spell: deal maximum damage instead of rolling",
-			"Also increases spell range by 50% and area by 5 feet",
-			"Take 1d8 force damage after as circuits vent",
-			"First spell in combat auto-triggers Overflow if available",
-		],
+		benefits: {
+			basic: [
+				"Once per short rest, Mana Overflow a spell: deal maximum damage instead of rolling",
+				"Also increases spell range by 50% and area by 5 feet",
+				"Take 1d8 force damage after as circuits vent",
+				"First spell in combat auto-triggers Overflow if available",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -2186,12 +2590,16 @@ export const comprehensiveFeats = [
 			ability: "Intelligence",
 			score: 13,
 		},
-		benefits: [
-			"Kill with spell: recover a slot 1 level lower than used (min 1st)",
-			"Kill with weapon: regain 1d6 + Int modifier HP",
-			"Siphoned energy dissipates after 1 hour if unused",
-			"Cannot siphon from constructs or undead",
-		],
+		benefits: {
+			basic: [
+				"Kill with spell: recover a slot 1 level lower than used (min 1st)",
+				"Kill with weapon: regain 1d6 + Int modifier HP",
+				"Siphoned energy dissipates after 1 hour if unused",
+				"Cannot siphon from constructs or undead",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "triggered",
 			frequency: "at-will",
@@ -2210,12 +2618,16 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 14,
 		},
-		benefits: [
-			"As an action, target one creature within 30 feet — Con save vs your spell DC",
-			"On fail, cannot cast spells or use magical abilities until end of your next turn",
-			"If concentrating, that spell ends immediately",
-			"Forces Legendary Resistance expenditure if resisted",
-		],
+		benefits: {
+			basic: [
+				"As an action, target one creature within 30 feet — Con save vs your spell DC",
+				"On fail, cannot cast spells or use magical abilities until end of your next turn",
+				"If concentrating, that spell ends immediately",
+				"Forces Legendary Resistance expenditure if resisted",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
@@ -2236,12 +2648,16 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 13,
 		},
-		benefits: [
-			"On hit with heavy weapon, -5 attack for +10 damage",
-			"On crit with heavy weapon, add one additional damage die",
-			"After reducing to 0 HP, make one bonus action attack",
-			"Proficient with all martial weapons",
-		],
+		benefits: {
+			basic: [
+				"On hit with heavy weapon, -5 attack for +10 damage",
+				"On crit with heavy weapon, add one additional damage die",
+				"After reducing to 0 HP, make one bonus action attack",
+				"Proficient with all martial weapons",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -2258,12 +2674,16 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"Long range doesn't impose disadvantage",
-			"Ranged attacks ignore half and three-quarters cover",
-			"-5 attack for +10 damage on ranged attacks",
-			"+2 to damage with ranged weapons",
-		],
+		benefits: {
+			basic: [
+				"Long range doesn't impose disadvantage",
+				"Ranged attacks ignore half and three-quarters cover",
+				"-5 attack for +10 damage on ranged attacks",
+				"+2 to damage with ranged weapons",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "at-will",
@@ -2277,12 +2697,16 @@ export const comprehensiveFeats = [
 		name: "Iron Vanguard",
 		description:
 			"You anchor your position with mana-reinforced resolve, locking down enemies that try to bypass you.",
-		benefits: [
-			"Opportunity attack hits reduce target speed to 0",
-			"Creatures provoke opportunity attacks even when Disengaging",
-			"When adjacent creature attacks an ally, use reaction to attack it",
-			"Opportunity attacks against you have disadvantage",
-		],
+		benefits: {
+			basic: [
+				"Opportunity attack hits reduce target speed to 0",
+				"Creatures provoke opportunity attacks even when Disengaging",
+				"When adjacent creature attacks an ally, use reaction to attack it",
+				"Opportunity attacks against you have disadvantage",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2299,12 +2723,16 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 15,
 		},
-		benefits: [
-			"Draw or stow two one-handed weapons simultaneously",
-			"Two-weapon fighting works even when weapons aren't light",
-			"+2 AC while wielding two weapons",
-			"Add ability modifier to off-hand damage",
-		],
+		benefits: {
+			basic: [
+				"Draw or stow two one-handed weapons simultaneously",
+				"Two-weapon fighting works even when weapons aren't light",
+				"+2 AC while wielding two weapons",
+				"Add ability modifier to off-hand damage",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2316,12 +2744,16 @@ export const comprehensiveFeats = [
 		id: "battle-channeler",
 		name: "Battle Channeler",
 		description: "Your mana circuits remain stable under combat stress.",
-		benefits: [
-			"Advantage on Con saves to maintain concentration",
-			"Somatic components work with weapons or shields in hands",
-			"Can cast a spell as an opportunity attack",
-			"Spells as reactions don't consume opportunity attack reaction",
-		],
+		benefits: {
+			basic: [
+				"Advantage on Con saves to maintain concentration",
+				"Somatic components work with weapons or shields in hands",
+				"Can cast a spell as an opportunity attack",
+				"Spells as reactions don't consume opportunity attack reaction",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2338,12 +2770,16 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 13,
 		},
-		benefits: [
-			"Bonus action attack with opposite end of polearm (1d4 damage)",
-			"Creatures provoke opportunity attacks when entering your reach",
-			"+1 to damage with polearms",
-			"Can use polearm one-handed",
-		],
+		benefits: {
+			basic: [
+				"Bonus action attack with opposite end of polearm (1d4 damage)",
+				"Creatures provoke opportunity attacks when entering your reach",
+				"+1 to damage with polearms",
+				"Can use polearm one-handed",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2357,12 +2793,16 @@ export const comprehensiveFeats = [
 		name: "Iron Constitution",
 		description:
 			"The System reinforced your cellular structure, increasing your capacity to absorb punishment.",
-		benefits: [
-			"HP maximum increases by 2 per level (retroactive)",
-			"Resistance to non-magical bludgeoning damage",
-			"Withstand extreme conditions without penalty",
-			"Healing effects restore additional HP equal to proficiency bonus",
-		],
+		benefits: {
+			basic: [
+				"HP maximum increases by 2 per level (retroactive)",
+				"Resistance to non-magical bludgeoning damage",
+				"Withstand extreme conditions without penalty",
+				"Healing effects restore additional HP equal to proficiency bonus",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2376,12 +2816,16 @@ export const comprehensiveFeats = [
 		name: "Adaptive Resistance",
 		description:
 			"Repeated threat exposure triggered a System adaptation, hardening your defenses.",
-		benefits: [
-			"Gain proficiency in one saving throw of your choice",
-			"Advantage on the chosen saving throw",
-			"Reroll a failed save of that type once per long rest",
-			"Immunity to minor effects of that type",
-		],
+		benefits: {
+			basic: [
+				"Gain proficiency in one saving throw of your choice",
+				"Advantage on the chosen saving throw",
+				"Reroll a failed save of that type once per long rest",
+				"Immunity to minor effects of that type",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2399,12 +2843,16 @@ export const comprehensiveFeats = [
 			ability: "Strength",
 			score: 15,
 		},
-		benefits: [
-			"Heavy armor doesn't impose Stealth disadvantage",
-			"Reduce non-magical physical damage by 3",
-			"Heavy armor doesn't reduce speed",
-			"Sleep in heavy armor without penalty",
-		],
+		benefits: {
+			basic: [
+				"Heavy armor doesn't impose Stealth disadvantage",
+				"Reduce non-magical physical damage by 3",
+				"Heavy armor doesn't reduce speed",
+				"Sleep in heavy armor without penalty",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2423,12 +2871,16 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 13,
 		},
-		benefits: [
-			"Sync with up to 5 allies during rest — they see each other's HP percentages",
-			"Synced allies can't be surprised within 60 feet of each other",
-			"Once per long rest, when synced ally drops to 0 HP, grant them temp HP equal to your level",
-			"+1 to initiative for synced allies",
-		],
+		benefits: {
+			basic: [
+				"Sync with up to 5 allies during rest — they see each other's HP percentages",
+				"Synced allies can't be surprised within 60 feet of each other",
+				"Once per long rest, when synced ally drops to 0 HP, grant them temp HP equal to your level",
+				"+1 to initiative for synced allies",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2447,12 +2899,16 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 14,
 		},
-		benefits: [
-			"Below 25% HP: +3 attack rolls, +1d8 damage",
-			"AC reduced by 2, must stay adjacent to at least one enemy",
-			"Killing while in Last Stand heals 1d10 + Con modifier",
-			"Ends when HP above 50% or combat ends",
-		],
+		benefits: {
+			basic: [
+				"Below 25% HP: +3 attack rolls, +1d8 damage",
+				"AC reduced by 2, must stay adjacent to at least one enemy",
+				"Killing while in Last Stand heals 1d10 + Con modifier",
+				"Ends when HP above 50% or combat ends",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "triggered",
 			frequency: "at-will",
@@ -2470,12 +2926,16 @@ export const comprehensiveFeats = [
 			ability: "Dexterity",
 			score: 13,
 		},
-		benefits: [
-			"Once per long rest, open exit rift for 1 round — up to 5 allies within 30 feet teleport to safety",
-			"Guaranteed success inside collapsing gates",
-			"Evacuated allies stabilized at 1 HP if at 0",
-			"Does not count as quest failure",
-		],
+		benefits: {
+			basic: [
+				"Once per long rest, open exit rift for 1 round — up to 5 allies within 30 feet teleport to safety",
+				"Guaranteed success inside collapsing gates",
+				"Evacuated allies stabilized at 1 HP if at 0",
+				"Does not count as quest failure",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -2493,12 +2953,16 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			job: "Destroyer",
 		},
-		benefits: [
-			"Advantage on saves against fear and charm",
-			"Reroll failed saving throws once per day",
-			"Gain temporary HP when reduced to 0 HP",
-			"Cannot be reduced below 1 HP by failed death saves",
-		],
+		benefits: {
+			basic: [
+				"Advantage on saves against fear and charm",
+				"Reroll failed saving throws once per day",
+				"Gain temporary HP when reduced to 0 HP",
+				"Cannot be reduced below 1 HP by failed death saves",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2515,12 +2979,16 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			job: "Stalker",
 		},
-		benefits: [
-			"Advantage on Dexterity checks",
-			"Move through difficult terrain without penalty",
-			"Advantage on Perception checks",
-			"Immunity to magical sleep effects",
-		],
+		benefits: {
+			basic: [
+				"Advantage on Dexterity checks",
+				"Move through difficult terrain without penalty",
+				"Advantage on Perception checks",
+				"Immunity to magical sleep effects",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2537,12 +3005,16 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 10,
 		},
-		benefits: [
-			"Choose a second job — gain its level 1 and level 3 features",
-			"Can use abilities from both jobs (standard concentration rules apply)",
-			"System displays both job titles",
-			"Gain one cantrip or at-will ability from second job",
-		],
+		benefits: {
+			basic: [
+				"Choose a second job — gain its level 1 and level 3 features",
+				"Can use abilities from both jobs (standard concentration rules apply)",
+				"System displays both job titles",
+				"Gain one cantrip or at-will ability from second job",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2561,12 +3033,16 @@ export const comprehensiveFeats = [
 			ability: "Constitution",
 			score: 13,
 		},
-		benefits: [
-			"Roll hit die twice on level-up, take higher result",
-			"Every 4 levels, +1 to an ability score (in addition to normal ASI)",
-			"Carry capacity doubles",
-			'System classifies you as "high-growth" — displayed rank treated as one tier higher',
-		],
+		benefits: {
+			basic: [
+				"Roll hit die twice on level-up, take higher result",
+				"Every 4 levels, +1 to an ability score (in addition to normal ASI)",
+				"Carry capacity doubles",
+				'System classifies you as "high-growth" — displayed rank treated as one tier higher',
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2584,12 +3060,16 @@ export const comprehensiveFeats = [
 			level: 15,
 			feats: ["shadow-mastery"],
 		},
-		benefits: [
-			"As an action, 60-foot shadow sphere for 1 minute",
-			"Your shadows inside: +2 attacks, +2 AC, +1d6 necrotic",
-			"Hostiles inside: disadvantage on attacks, halved speed",
-			"Teleport to any point within as a bonus action",
-		],
+		benefits: {
+			basic: [
+				"As an action, 60-foot shadow sphere for 1 minute",
+				"Your shadows inside: +2 attacks, +2 AC, +1d6 necrotic",
+				"Hostiles inside: disadvantage on attacks, halved speed",
+				"Teleport to any point within as a bonus action",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -2606,12 +3086,16 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 18,
 		},
-		benefits: [
-			"Once per long rest, force reroll on any die within 60 feet — choose which result",
-			"Read System status of any visible creature: HP, conditions, buffs, resources",
-			'Once per long rest, System Command: "Heal" (50 HP), "Silence" (no casting 1 round), or "Reveal" (invisible in 120 ft)',
-			"System addresses you as [ADMINISTRATOR]",
-		],
+		benefits: {
+			basic: [
+				"Once per long rest, force reroll on any die within 60 feet — choose which result",
+				"Read System status of any visible creature: HP, conditions, buffs, resources",
+				'Once per long rest, System Command: "Heal" (50 HP), "Silence" (no casting 1 round), or "Reveal" (invisible in 120 ft)',
+				"System addresses you as [ADMINISTRATOR]",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "active",
 			frequency: "long-rest",
@@ -2629,12 +3113,16 @@ export const comprehensiveFeats = [
 		prerequisites: {
 			level: 17,
 		},
-		benefits: [
-			"Ability scores can exceed 20 (max 24)",
-			"No need to eat, drink, sleep, or breathe — 4-hour meditation for long rest",
-			"Immune to disease, poison, and aging",
-			"Once ever: when you would die, return at 1 HP with 4 exhaustion levels instead",
-		],
+		benefits: {
+			basic: [
+				"Ability scores can exceed 20 (max 24)",
+				"No need to eat, drink, sleep, or breathe — 4-hour meditation for long rest",
+				"Immune to disease, poison, and aging",
+				"Once ever: when you would die, return at 1 HP with 4 exhaustion levels instead",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
@@ -2653,12 +3141,16 @@ export const comprehensiveFeats = [
 			ability: "Charisma",
 			score: 18,
 		},
-		benefits: [
-			"Creatures CR ≤ half your level: Wis save or frightened 1 minute",
-			"Frightened creatures cannot attack or target you",
-			"Can suppress aura as a free action",
-			"Fail by 10+: paralyzed 1 round instead",
-		],
+		benefits: {
+			basic: [
+				"Creatures CR ≤ half your level: Wis save or frightened 1 minute",
+				"Frightened creatures cannot attack or target you",
+				"Can suppress aura as a free action",
+				"Fail by 10+: paralyzed 1 round instead",
+			],
+			expert: [],
+			master: [],
+		},
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",

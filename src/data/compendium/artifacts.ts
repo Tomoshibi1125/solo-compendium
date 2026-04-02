@@ -23,6 +23,7 @@ interface Artifact {
 		sentient?: boolean;
 		cursed?: boolean;
 		legendary?: boolean;
+		legendary_actions?: boolean;
 	};
 	abilities: {
 		primary: {
@@ -122,7 +123,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -194,7 +195,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -257,7 +258,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -324,7 +325,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -389,7 +390,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -451,7 +452,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -511,7 +512,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -572,7 +573,7 @@ export const artifacts: Artifact[] = [
 			unique: true,
 			sentient: true,
 			cursed: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -635,7 +636,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -695,7 +696,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -755,7 +756,7 @@ export const artifacts: Artifact[] = [
 		properties: {
 			magical: true,
 			unique: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -815,7 +816,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -875,7 +876,7 @@ export const artifacts: Artifact[] = [
 			unique: true,
 			sentient: true,
 			cursed: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {
@@ -934,7 +935,7 @@ export const artifacts: Artifact[] = [
 			magical: true,
 			unique: true,
 			sentient: true,
-			legendary: true,
+			legendary_actions: true,
 		},
 		abilities: {
 			primary: {

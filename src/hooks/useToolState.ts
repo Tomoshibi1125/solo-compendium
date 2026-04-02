@@ -60,7 +60,7 @@ export const saveUserToolState = async <T>(
 	const payload: Database["public"]["Tables"]["user_tool_states"]["Insert"] = {
 		user_id: userId,
 		tool_key: toolKey,
-		state: state as unknown as Json,
+		state: state as Json,
 	};
 	const { error } = await supabase
 		.from("user_tool_states")
@@ -99,7 +99,7 @@ export const saveCampaignToolState = async <T>(
 		{
 			campaign_id: campaignId,
 			tool_key: toolKey,
-			state: state as unknown as Json,
+			state: state as Json,
 			created_by: userId,
 			updated_by: userId,
 		};

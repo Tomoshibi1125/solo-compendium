@@ -36,6 +36,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	artifacts: "Artifacts",
 	locations: "Locations",
 	sigils: "Sigils",
+	tattoos: "Tattoos",
 };
 
 const PLAYER_TOOL_LABELS: Record<string, string> = {
@@ -128,7 +129,7 @@ const resolveTitle = (pathname: string) => {
 		}
 		return `${BASE_TITLE} - Campaigns`;
 	}
-	if (pathname.startsWith("/dm-tools")) {
+	if (pathname.startsWith("/warden-protocols")) {
 		const segments = pathname.split("/").filter(Boolean);
 		const toolId = segments[1];
 		if (toolId && WARDEN_TOOL_LABELS[toolId]) {

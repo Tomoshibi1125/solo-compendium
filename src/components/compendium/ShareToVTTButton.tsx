@@ -10,10 +10,10 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 
 interface ShareToVTTButtonProps {
-	itemType: "Monster" | "Item" | "Spell";
+	itemType: string;
 	itemName: string;
 }
 
@@ -21,8 +21,7 @@ export function ShareToVTTButton({
 	itemType,
 	itemName,
 }: ShareToVTTButtonProps) {
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const playerTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 	const [campaigns, setCampaigns] = useState<unknown[]>([]);
 	const [loading, setLoading] = useState(false);
 	const { toast } = useToast();
@@ -30,7 +29,7 @@ export function ShareToVTTButton({
 	const loadCampaigns = async () => {
 		setLoading(true);
 		try {
-			const camps = await playerTools.getCampaignsForRolling();
+			const camps = await ascendantTools.getCampaignsForRolling();
 			setCampaigns(camps || []);
 		} catch (e) {
 			console.error("Error fetching campaigns", e);
@@ -41,7 +40,7 @@ export function ShareToVTTButton({
 
 	const handleShare = async (campaignId: string) => {
 		try {
-			await playerTools.rollInCampaign(campaignId, {
+			await ascendantTools.rollInCampaign(campaignId, {
 				character_id: undefined,
 				dice_formula: "Share",
 				result: 0,

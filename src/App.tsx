@@ -39,6 +39,7 @@ import { validateEnv } from "@/lib/envValidation";
 import { useFeatureFlags } from "@/lib/featureFlags";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { warn as logWarn } from "@/lib/logger";
+import { runProficiencyPatch } from "@/lib/maintenance/ProficiencyPatch";
 import { PerformanceProvider } from "@/lib/performanceProfile";
 import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
@@ -76,7 +77,9 @@ const CompendiumDetail = lazy(
 	() => import("./pages/compendium/CompendiumDetail"),
 );
 const Characters = lazy(() => import("./pages/Characters"));
-const CharacterSheet = lazy(() => import("./pages/CharacterSheet"));
+const CharacterSheet = lazy(
+	() => import("./components/character-v2/CharacterSheetV2"),
+);
 const CharacterNew = lazy(() => import("./pages/CharacterNew"));
 const Admin = lazy(() => import("./pages/Admin"));
 const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
@@ -84,36 +87,56 @@ const ArtGeneration = lazy(() => import("./pages/admin/ArtGeneration"));
 const FeatureChoicesAdmin = lazy(
 	() => import("./pages/admin/FeatureChoicesAdmin"),
 );
-const DMTools = lazy(() => import("./pages/DMTools"));
+const WardenProtocols = lazy(() => import("./pages/WardenProtocols"));
 const EncounterBuilder = lazy(
-	() => import("./pages/dm-tools/EncounterBuilder"),
+	() => import("./pages/warden-protocols/EncounterBuilder"),
 );
 const InitiativeTracker = lazy(
-	() => import("./pages/dm-tools/InitiativeTracker"),
+	() => import("./pages/warden-protocols/InitiativeTracker"),
 );
-const RollableTables = lazy(() => import("./pages/dm-tools/RollableTables"));
-const GateGenerator = lazy(() => import("./pages/dm-tools/GateGenerator"));
-const NPCGenerator = lazy(() => import("./pages/dm-tools/NPCGenerator"));
+const RollableTables = lazy(
+	() => import("./pages/warden-protocols/RollableTables"),
+);
+const GateGenerator = lazy(
+	() => import("./pages/warden-protocols/GateGenerator"),
+);
+const NPCGenerator = lazy(
+	() => import("./pages/warden-protocols/NPCGenerator"),
+);
 const TreasureGenerator = lazy(
-	() => import("./pages/dm-tools/TreasureGenerator"),
+	() => import("./pages/warden-protocols/TreasureGenerator"),
 );
-const QuestGenerator = lazy(() => import("./pages/dm-tools/QuestGenerator"));
-const SessionPlanner = lazy(() => import("./pages/dm-tools/SessionPlanner"));
+const DirectiveMatrix = lazy(
+	() => import("./pages/warden-protocols/DirectiveMatrix"),
+);
+const SessionPlanner = lazy(
+	() => import("./pages/warden-protocols/SessionPlanner"),
+);
 const RandomEventGenerator = lazy(
-	() => import("./pages/dm-tools/RandomEventGenerator"),
+	() => import("./pages/warden-protocols/RandomEventGenerator"),
 );
-const RelicWorkshop = lazy(() => import("./pages/dm-tools/RelicWorkshop"));
-const PartyTracker = lazy(() => import("./pages/dm-tools/PartyTracker"));
+const RelicWorkshop = lazy(
+	() => import("./pages/warden-protocols/RelicWorkshop"),
+);
+const PartyTracker = lazy(
+	() => import("./pages/warden-protocols/PartyTracker"),
+);
 const PartyStash = lazy(() => import("./pages/PartyStash"));
 const DungeonMapGenerator = lazy(
-	() => import("./pages/dm-tools/DungeonMapGenerator"),
+	() => import("./pages/warden-protocols/DungeonMapGenerator"),
 );
-const TokenLibrary = lazy(() => import("./pages/dm-tools/TokenLibrary"));
-const ArtGeneratorDM = lazy(() => import("./pages/dm-tools/ArtGenerator"));
-const AudioManagerDM = lazy(() => import("./pages/dm-tools/AudioManager"));
-const VTTMap = lazy(() => import("./pages/dm-tools/VTTMap"));
-const VTTEnhanced = lazy(() => import("./pages/dm-tools/VTTEnhanced"));
-const VTTJournal = lazy(() => import("./pages/dm-tools/VTTJournal"));
+const TokenLibrary = lazy(
+	() => import("./pages/warden-protocols/TokenLibrary"),
+);
+const ArtGeneratorWarden = lazy(
+	() => import("./pages/warden-protocols/ArtGenerator"),
+);
+const AudioManagerWarden = lazy(
+	() => import("./pages/warden-protocols/AudioManager"),
+);
+const VTTMap = lazy(() => import("./pages/warden-protocols/VTTMap"));
+const VTTEnhanced = lazy(() => import("./pages/warden-protocols/VTTEnhanced"));
+const VTTJournal = lazy(() => import("./pages/warden-protocols/VTTJournal"));
 const PlayerMapView = lazy(() => import("./pages/player-tools/PlayerMapView"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Favorites = lazy(() => import("./pages/Favorites"));
@@ -221,6 +244,13 @@ const AppContent = () => {
 			return () => clearTimeout(timeout);
 		}
 	}, [user, isSupported, permission, requestPermission]);
+
+	// Protocol: Automated Data Synchronization (Zero-Legacy)
+	useEffect(() => {
+		if (user) {
+			runProficiencyPatch();
+		}
+	}, [user]);
 
 	return (
 		<MainLayout>
@@ -373,9 +403,9 @@ const AppContent = () => {
 				/>
 
 				<Route
-					path="/dm-tools/system-console"
+					path="/warden-protocols/system-console"
 					element={
-						<ProtectedRoute requireDM allowGuest={false}>
+						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
 								<Admin />
 							</Suspense>
@@ -384,9 +414,9 @@ const AppContent = () => {
 				/>
 
 				<Route
-					path="/dm-tools/selection-protocols"
+					path="/warden-protocols/selection-protocols"
 					element={
-						<ProtectedRoute requireDM allowGuest={false}>
+						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
 								<FeatureChoicesAdmin />
 							</Suspense>
@@ -394,9 +424,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/content-audit"
+					path="/warden-protocols/content-audit"
 					element={
-						<ProtectedRoute requireDM allowGuest={false}>
+						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
 								<ContentAudit />
 							</Suspense>
@@ -404,9 +434,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/art-generation"
+					path="/warden-protocols/art-generation"
 					element={
-						<ProtectedRoute requireDM allowGuest={false}>
+						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
 								<ArtGeneration />
 							</Suspense>
@@ -416,41 +446,41 @@ const AppContent = () => {
 				<Route
 					path="/admin"
 					element={
-						<ProtectedRoute requireDM allowGuest={false}>
-							<Navigate to="/dm-tools/system-console" replace />
+						<ProtectedRoute requireWarden allowGuest={false}>
+							<Navigate to="/warden-protocols/system-console" replace />
 						</ProtectedRoute>
 					}
 				/>
 				<Route
 					path="/admin/art-generation"
 					element={
-						<ProtectedRoute requireDM allowGuest={false}>
-							<Navigate to="/dm-tools/art-generation" replace />
+						<ProtectedRoute requireWarden allowGuest={false}>
+							<Navigate to="/warden-protocols/art-generation" replace />
 						</ProtectedRoute>
 					}
 				/>
 				<Route
 					path="/admin/audit"
 					element={
-						<ProtectedRoute requireDM allowGuest={false}>
-							<Navigate to="/dm-tools/content-audit" replace />
+						<ProtectedRoute requireWarden allowGuest={false}>
+							<Navigate to="/warden-protocols/content-audit" replace />
 						</ProtectedRoute>
 					}
 				/>
 				<Route
-					path="/dm-tools"
+					path="/warden-protocols"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
-								<DMTools />
+								<WardenProtocols />
 							</Suspense>
 						</ProtectedRoute>
 					}
 				/>
 				<Route
-					path="/dm-tools/encounter-builder"
+					path="/warden-protocols/encounter-builder"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<EncounterBuilder />
 							</Suspense>
@@ -458,9 +488,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/initiative-tracker"
+					path="/warden-protocols/initiative-tracker"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<InitiativeTracker />
 							</Suspense>
@@ -468,9 +498,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/rollable-tables"
+					path="/warden-protocols/rollable-tables"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<RollableTables />
 							</Suspense>
@@ -478,9 +508,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/gate-generator"
+					path="/warden-protocols/gate-generator"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<GateGenerator />
 							</Suspense>
@@ -488,9 +518,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/npc-generator"
+					path="/warden-protocols/npc-generator"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<NPCGenerator />
 							</Suspense>
@@ -498,9 +528,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/treasure-generator"
+					path="/warden-protocols/treasure-generator"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<TreasureGenerator />
 							</Suspense>
@@ -508,23 +538,27 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/campaign-manager"
-					element={<Navigate to="/dm-tools" replace />}
+					path="/warden-protocols/quest-generator"
+					element={<Navigate to="/warden-protocols/directive-matrix" replace />}
 				/>
 				<Route
-					path="/dm-tools/quest-generator"
+					path="/warden-protocols/campaign-manager"
+					element={<Navigate to="/warden-protocols" replace />}
+				/>
+				<Route
+					path="/warden-protocols/directive-matrix"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
-								<QuestGenerator />
+								<DirectiveMatrix />
 							</Suspense>
 						</ProtectedRoute>
 					}
 				/>
 				<Route
-					path="/dm-tools/session-planner"
+					path="/warden-protocols/session-planner"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<SessionPlanner />
 							</Suspense>
@@ -532,9 +566,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/random-event-generator"
+					path="/warden-protocols/random-event-generator"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<RandomEventGenerator />
 							</Suspense>
@@ -542,9 +576,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/relic-workshop"
+					path="/warden-protocols/relic-workshop"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<RelicWorkshop />
 							</Suspense>
@@ -552,9 +586,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/party-tracker"
+					path="/warden-protocols/party-tracker"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<PartyTracker />
 							</Suspense>
@@ -570,9 +604,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/dungeon-map-generator"
+					path="/warden-protocols/dungeon-map-generator"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<DungeonMapGenerator />
 							</Suspense>
@@ -580,9 +614,9 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/token-library"
+					path="/warden-protocols/token-library"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<TokenLibrary />
 							</Suspense>
@@ -590,29 +624,29 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/art-generator"
+					path="/warden-protocols/art-generator"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
-								<ArtGeneratorDM />
+								<ArtGeneratorWarden />
 							</Suspense>
 						</ProtectedRoute>
 					}
 				/>
 				<Route
-					path="/dm-tools/audio-manager"
+					path="/warden-protocols/audio-manager"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
-								<AudioManagerDM />
+								<AudioManagerWarden />
 							</Suspense>
 						</ProtectedRoute>
 					}
 				/>
 				<Route
-					path="/dm-tools/vtt-map"
+					path="/warden-protocols/vtt-map"
 					element={
-						<ProtectedRoute requireDM>
+						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<VTTMap />
 							</Suspense>
@@ -620,19 +654,19 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/dm-tools/vtt"
+					path="/warden-protocols/vtt"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route
-					path="/dm-tools/journal"
+					path="/warden-protocols/journal"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route
-					path="/dm-tools/vtt-enhanced"
+					path="/warden-protocols/vtt-enhanced"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route
-					path="/dm-tools/vtt-journal"
+					path="/warden-protocols/vtt-journal"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route

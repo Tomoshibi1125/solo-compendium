@@ -21,7 +21,7 @@ import {
 	useUpdateCombatSession,
 	useUpsertCombatants,
 } from "@/hooks/useCampaignCombat";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
 // ── Types ──────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ interface TrackerEntry {
 interface VTTInitiativePanelProps {
 	campaignId: string;
 	sessionId?: string | null;
-	isGM: boolean;
+	isWarden: boolean;
 	/** Callback to highlight a token when a combatant is selected */
 	onHighlightToken?: (characterId: string) => void;
 }
@@ -86,14 +86,13 @@ const CONDITION_OPTIONS = [
 export function VTTInitiativePanel({
 	campaignId,
 	sessionId,
-	isGM,
+	isWarden,
 	onHighlightToken,
 }: VTTInitiativePanelProps) {
 	const { data } = useCampaignCombatSession(campaignId, sessionId);
 	const updateSession = useUpdateCombatSession();
 	const upsertCombatants = useUpsertCombatants();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbTools = usePlayerToolsEnhancements();
+	const ascendantTools = useAscendantTools();
 
 	const session = data?.session;
 	const combatants = (data?.combatants ?? []).map(rowToEntry);
@@ -140,12 +139,12 @@ export function VTTInitiativePanel({
 		});
 
 		const nextCombatant = sorted[nextIdx];
-		if (nextCombatant) {
-			ddbTools
-				.trackCustomFeatureUsage(
-					nextCombatant.characterId || "monster",
+		if (nextCombatant?.characterId) {
+			ascendantTools
+				?.trackCustomFeatureUsage(
+					nextCombatant.characterId,
 					"Turn Start",
-					`Round ${nextRound} - ${nextCombatant.name}'s Turn`,
+					`Initiative Roll: ${nextCombatant.initiative}`,
 					"SA",
 				)
 				.catch(console.error);
@@ -157,7 +156,7 @@ export function VTTInitiativePanel({
 		round,
 		sorted,
 		updateSession,
-		ddbTools,
+		ascendantTools,
 	]);
 
 	const resetCombat = useCallback(() => {
@@ -330,7 +329,7 @@ export function VTTInitiativePanel({
 								</div>
 							)}
 
-							{isExpanded && isGM && (
+							{isExpanded && isWarden && (
 								<div className="mt-2 pt-2 border-t border-border/50 space-y-2">
 									{/* HP adjustment */}
 									<div className="flex items-center gap-1">
@@ -389,8 +388,8 @@ export function VTTInitiativePanel({
 				)}
 			</div>
 
-			{/* Quick-add form (DM only) */}
-			{isGM && (
+			{/* Quick-add form (PW only) */}
+			{isWarden && (
 				<div className="flex gap-1">
 					<Input
 						value={newName}

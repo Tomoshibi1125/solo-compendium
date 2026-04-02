@@ -33,11 +33,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import type { LibraryToken } from "@/data/tokenLibraryDefaults";
 import { useToast } from "@/hooks/use-toast";
-import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
-import { useCharacterRegentUnlocks } from "@/hooks/useRegentUnlocks";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import {
 	type ShadowSoldier,
+	type ShadowSoldierAbility,
 	useCharacterShadowSoldiers,
 	useCompendiumShadowSoldiers,
 	useExtractShadowSoldier,
@@ -99,17 +100,15 @@ export function ShadowSoldiersPanel({
 	);
 	const { data: mySoldiers = [] } = useCharacterShadowSoldiers(characterId);
 	const { data: allSoldiers = [] } = useCompendiumShadowSoldiers();
-	const { unlocks: regentUnlocks = [] } =
-		useCharacterRegentUnlocks(characterId);
+	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(characterId);
 	const extractSoldier = useExtractShadowSoldier();
 	const toggleSummon = useToggleSummon();
 	const updateHP = useUpdateSoldierHP();
 
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
-	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-	const ddbEnhancements = usePlayerToolsEnhancements();
-	const { rollInCampaign } = ddbEnhancements;
+	const ascendantTools = useAscendantTools();
+	const { rollInCampaign } = ascendantTools;
 
 	const { state: storedTokens, saveNow: saveTokenLibrary } = useUserToolState<
 		LibraryToken[]
@@ -319,7 +318,7 @@ export function ShadowSoldiersPanel({
 													summon: !css.is_summoned,
 												});
 
-												ddbEnhancements
+												ascendantTools
 													.trackCustomFeatureUsage(
 														characterId,
 														css.nickname || soldier.name,
@@ -493,7 +492,22 @@ export function ShadowSoldiersPanel({
 													selectedSoldier?.id === soldier.id &&
 														"border-arise-violet shadow-[0_0_20px_hsl(var(--arise-violet)/0.2)]",
 												)}
-												onClick={() => setSelectedSoldier(soldier)}
+												onClick={() => {
+													const s: ShadowSoldier = {
+														...soldier,
+														abilities: Array.isArray(soldier.abilities)
+															? (soldier.abilities as unknown as ShadowSoldierAbility[])
+															: [],
+														damage_immunities: soldier.damage_immunities || [],
+														condition_immunities:
+															soldier.condition_immunities || [],
+														lore: soldier.lore || null,
+														summon_requirements:
+															soldier.summon_requirements || null,
+														shadow_type: soldier.shadow_type || "shadow",
+													};
+													setSelectedSoldier(s);
+												}}
 											>
 												<CardHeader className="pb-2">
 													<div className="flex items-center justify-between">
@@ -576,7 +590,7 @@ export function ShadowSoldiersPanel({
 																	soldierId: soldier.id,
 																});
 
-																ddbEnhancements
+																ascendantTools
 																	.trackCustomFeatureUsage(
 																		characterId,
 																		soldier.name,
