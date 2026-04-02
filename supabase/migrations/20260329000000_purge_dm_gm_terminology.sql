@@ -22,6 +22,7 @@ ALTER TABLE public.campaign_members ADD CONSTRAINT campaign_members_role_check
   CHECK (role IN ('ascendant', 'warden', 'co-warden', 'system', 'co-system'));
 
 -- 4. Refactor create_campaign_with_code function
+DROP FUNCTION IF EXISTS public.create_campaign_with_code(TEXT, TEXT, UUID);
 CREATE OR REPLACE FUNCTION public.create_campaign_with_code(
   p_name TEXT,
   p_description TEXT,

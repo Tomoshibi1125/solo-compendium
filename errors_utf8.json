@@ -1,0 +1,40 @@
+﻿node.exe : The --json 
+option is 
+unstable/experimental and 
+its output might change 
+between patches/minor 
+releases.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (The  
+   --json opti...minor r   
+ eleases.:String) [], R    
+emoteException
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+{"summary":{"changed":0,"unchanged":577,"matches":0,"duration":540706700,"errors":6,"warnings":0,"infos":0,"skipped":0,"suggestedFixesSkipped":0,"diagnosticsNotPrinted":0,"scannerDuration":12451800},"diagnostics":[{"severity":"error","message":"Formatter would have printed the following content:","category":"format","location":{"path":"src\components\character-engine\AttributesStep.tsx","start":{"line":0,"column":0},"end":{"line":0,"column":0}},"advices":[]},{"severity":"error","message":"The imports and exports are not sorted.","category":"assist/source/organizeImports","location":{"path":"src\components\character-engine\EquipmentStep.tsx","start":{"line":1,"column":1},"end":{"line":1,"column":47}},"advices":[]},{"severity":"error","message":"Formatter would have printed the following content:","category":"format","location":{"path":"src\components\character-engine\EquipmentStep.tsx","start":{"line":0,"column":0},"end":{"line":0,"column":0}},"advices":[]},{"severity":"error","message":"Formatter would have printed the following content:","category":"format","location":{"path":"src\hooks\useCharacterDerivedStats.ts","start":{"line":0,"column":0},"end":{"line":0,"column":0}},"advices":[]},{"severity":"error","message":"Formatter would have printed the following content:","category":"format","location":{"path":"src\pages\CharacterNew.tsx","start":{"line":0,"column":0},"end":{"line":0,"column":0}},"advices":[]},{"severity":"error","message":"Formatter would have printed the following content:","category":"format","location":{"path":"src\pages\CharacterSheet.tsx","start":{"line":0,"column":0},"end":{"line":0,"column":0}},"advices":[]}],"command":"check"}
+check ΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü
+ΓöüΓöüΓöüΓöüΓöüΓöü
+
+  ├ù Some errors were 
+emitted while running 
+checks.
+  
+

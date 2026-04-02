@@ -157,12 +157,23 @@ export default defineConfig(({ mode: _mode }) => {
 			injectRegister: null,
 			registerType: "autoUpdate",
 			workbox: {
-				maximumFileSizeToCacheInBytes: 50 * 1024 * 1024, // Increased to 50MB to account for 3D dice collision models
+				maximumFileSizeToCacheInBytes: 15 * 1024 * 1024, // 15MB precache limit
 				globPatterns: [
-					"**/*.{js,css,html,ico,png,svg,webmanifest,wasm,glb,gltf,mp3,wav}",
+					"**/*.{js,css,html,ico,png,svg,webmanifest}",
 				],
 				globIgnores: ["**/generated/**"],
 				runtimeCaching: [
+					{
+						urlPattern: /\.(?:wasm|glb|gltf|mp3|wav)$/i,
+						handler: "CacheFirst",
+						options: {
+							cacheName: "heavy-assets",
+							expiration: {
+								maxEntries: 30,
+								maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+							},
+						},
+					},
 					{
 						urlPattern: /\/generated\/.*\.(png|jpg|jpeg|webp|svg|json)$/i,
 						handler: "CacheFirst",
@@ -242,17 +253,7 @@ export default defineConfig(({ mode: _mode }) => {
 		}),
 	];
 
-	const diceEntryMatchers = [
-		"/src/components/dice/Dice3DScene",
-		"/src/components/dice/Dice3D",
-		"/src/components/dice/diceGeometry",
-		"/src/lib/dice/audio",
-	];
-
 	const normalizeId = (id: string) => id.replace(/\\/g, "/");
-
-	const isDiceEntry = (id: string) =>
-		diceEntryMatchers.some((needle) => id.includes(needle));
 
 	return {
 		server: {
@@ -270,7 +271,7 @@ export default defineConfig(({ mode: _mode }) => {
 			chunkSizeWarningLimit: 4000,
 			// Optimize for production and mobile
 			minify: "esbuild",
-			sourcemap: false, // Disabled due to Sentry issues
+			sourcemap: "hidden", // Hidden source maps for Sentry — not exposed to browsers
 			// Mobile performance optimizations
 			// Needed for wasm chunks that rely on top-level await.
 			target: "es2022",
@@ -278,9 +279,15 @@ export default defineConfig(({ mode: _mode }) => {
 			// Enable code splitting for better mobile performance
 			rollupOptions: {
 				output: {
-					manualChunks(id, { getModuleInfo }) {
+					manualChunks(id) {
 						// Split vendor chunks for better caching while avoiding circular deps.
 						const normalizedId = normalizeId(id);
+
+						// ── Warden Protocols (Protocols for the Master) ──
+						if (normalizedId.includes("/src/pages/warden-protocols/")) {
+							return "warden-pages";
+						}
+
 						if (
 							normalizedId.includes("/src/components/dice/Dice3DScene") ||
 							normalizedId.includes("/src/components/dice/Dice3D") ||
@@ -314,30 +321,15 @@ export default defineConfig(({ mode: _mode }) => {
 								return "supabase-vendor";
 							if (normalizedId.includes("/node_modules/@dnd-kit/"))
 								return "dnd-vendor";
-							if (
-								normalizedId.includes("/node_modules/react-hook-form/") ||
-								normalizedId.includes("/node_modules/@hookform/")
-							) {
-								return "forms-vendor";
-							}
 							if (normalizedId.includes("/node_modules/zod/"))
 								return "validation-vendor";
-							if (
-								normalizedId.includes("/node_modules/@tiptap/") ||
-								normalizedId.includes("/node_modules/prosemirror-") ||
-								normalizedId.includes("/node_modules/@tiptap/pm/")
-							)
+							if (normalizedId.includes("/node_modules/quill/"))
 								return "editor-vendor";
-							if (normalizedId.includes("/node_modules/@nivo/"))
-								return "charts-vendor";
 							if (
-								normalizedId.includes("/node_modules/date-fns/") ||
-								normalizedId.includes("/node_modules/react-day-picker/")
+								normalizedId.includes("/node_modules/date-fns/")
 							) {
 								return "date-vendor";
 							}
-							if (normalizedId.includes("/node_modules/embla-carousel-react/"))
-								return "carousel-vendor";
 							if (normalizedId.includes("/node_modules/lucide-react/"))
 								return "icons-vendor";
 							if (normalizedId.includes("/node_modules/dompurify/"))
@@ -367,40 +359,14 @@ export default defineConfig(({ mode: _mode }) => {
 								return "pixi-vendor";
 							}
 							if (
-								normalizedId.includes("/node_modules/gsap/") ||
-								normalizedId.includes("/node_modules/lottie-web/") ||
 								normalizedId.includes("/node_modules/howler/")
 							) {
 								return "media-vendor";
 							}
-							if (normalizedId.includes("/node_modules/@react-pdf/"))
-								return "pdf-vendor";
 							if (normalizedId.includes("/node_modules/framer-motion/"))
 								return "motion-vendor";
-							if (normalizedId.includes("/node_modules/@react-spring/"))
-								return "motion-vendor";
 
-							// ── Remaining 3D / niche vendors ──
-							if (
-								normalizedId.includes("/node_modules/@react-three/xr/") ||
-								normalizedId.includes("/node_modules/@pmndrs/xr/")
-							) {
-								return "xr-vendor";
-							}
-							if (
-								normalizedId.includes("/node_modules/@react-three/cannon/") ||
-								normalizedId.includes("/node_modules/cannon-es/")
-							) {
-								return "physics-vendor";
-							}
-							if (normalizedId.includes("/node_modules/three-mesh-bvh/"))
-								return "three-bvh-vendor";
-							if (normalizedId.includes("/node_modules/three.quarks/"))
-								return "three-particles-vendor";
-							if (normalizedId.includes("/node_modules/maath/"))
-								return "three-math-vendor";
-							if (normalizedId.includes("/node_modules/lamina/"))
-								return "three-shaders-vendor";
+							// ── 3D vendors ──
 							if (normalizedId.includes("/node_modules/three/"))
 								return "three-vendor";
 							if (normalizedId.includes("/node_modules/three-stdlib/"))
