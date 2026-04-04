@@ -1001,7 +1001,7 @@ const PlayerMapView = ({
 												!currentScene?.backgroundImage && (
 													<div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
 														<p className="text-sm font-mono uppercase tracking-widest animate-pulse">
-															Waiting for Protocol Warden to establish matrix
+															Waiting for Protocol Warden to establish lattice
 															link...
 														</p>
 													</div>
@@ -1317,7 +1317,7 @@ const PlayerMapView = ({
 																	: "",
 															)}
 														>
-															<span className="font-arise text-lg w-6 text-center">
+															<span className="font-resurge text-lg w-6 text-center">
 																{index + 1}
 															</span>
 															<div className="flex-1 min-w-0">
@@ -1665,7 +1665,7 @@ const PlayerMapView = ({
 						/>
 						<div className="bg-background border-2 border-primary rounded-lg shadow-2xl max-w-lg w-full relative z-10 p-6 pointer-events-auto">
 							<div className="flex items-center justify-between mb-4">
-								<h3 className="font-arise text-lg font-bold gradient-text-shadow">
+								<h3 className="font-resurge text-lg font-bold gradient-text-shadow">
 									{vttRealtime.sharedHandout.title}
 								</h3>
 								<button

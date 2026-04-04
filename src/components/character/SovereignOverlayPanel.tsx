@@ -35,8 +35,8 @@ function AbilityCard({
 			className={cn(
 				"w-full text-left rounded-lg border p-3 transition-colors cursor-pointer",
 				ability.is_capstone
-					? "border-arise-violet/60 bg-arise-violet/8"
-					: "border-border bg-muted/20 hover:border-arise-violet/30",
+					? "border-resurge-violet/60 bg-resurge-violet/8"
+					: "border-border bg-muted/20 hover:border-resurge-violet/30",
 			)}
 			onClick={() => setExpanded(!expanded)}
 		>
@@ -46,7 +46,7 @@ function AbilityCard({
 						{String(index + 1).padStart(2, "0")}
 					</span>
 					{ability.is_capstone && (
-						<Star className="w-3 h-3 text-arise-violet shrink-0" />
+						<Star className="w-3 h-3 text-resurge-violet shrink-0" />
 					)}
 					<p className="text-sm font-semibold truncate">{ability.name}</p>
 				</div>
@@ -101,7 +101,7 @@ export function SovereignOverlayPanel({
 					<Lock className="w-4 h-4 shrink-0" />
 					<p>
 						No Sovereign overlay locked in. Generate one via the{" "}
-						<span className="text-arise-violet font-semibold">
+						<span className="text-resurge-violet font-semibold">
 							Gemini Protocol
 						</span>{" "}
 						once you have unlocked two Regents.
@@ -122,7 +122,7 @@ export function SovereignOverlayPanel({
 				<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
 					<div>
 						<div className="flex items-center gap-2">
-							<Crown className="w-5 h-5 text-arise-violet" />
+							<Crown className="w-5 h-5 text-resurge-violet" />
 							<h3 className="text-lg font-bold">{sovereign.name}</h3>
 						</div>
 						<p className="text-sm text-muted-foreground italic mt-0.5">
@@ -131,7 +131,7 @@ export function SovereignOverlayPanel({
 					</div>
 					<div className="flex flex-wrap gap-1.5">
 						{sovereign.fusion_theme && (
-							<Badge className="bg-arise-violet/20 text-arise-violet border-arise-violet/40 border">
+							<Badge className="bg-resurge-violet/20 text-resurge-violet border-resurge-violet/40 border">
 								{sovereign.fusion_theme}
 							</Badge>
 						)}
@@ -151,8 +151,8 @@ export function SovereignOverlayPanel({
 						<Separator />
 						<div>
 							<div className="flex items-center gap-2 mb-1.5">
-								<Shield className="w-3.5 h-3.5 text-arise-violet" />
-								<p className="text-xs font-semibold text-arise-violet tracking-wider uppercase">
+								<Shield className="w-3.5 h-3.5 text-resurge-violet" />
+								<p className="text-xs font-semibold text-resurge-violet tracking-wider uppercase">
 									Combat Doctrine
 								</p>
 							</div>
@@ -168,8 +168,8 @@ export function SovereignOverlayPanel({
 				{/* Abilities */}
 				<div>
 					<div className="flex items-center gap-2 mb-3">
-						<Zap className="w-3.5 h-3.5 text-arise-violet" />
-						<p className="text-xs font-semibold text-arise-violet tracking-wider uppercase">
+						<Zap className="w-3.5 h-3.5 text-resurge-violet" />
+						<p className="text-xs font-semibold text-resurge-violet tracking-wider uppercase">
 							Fusion Abilities ({abilities.length})
 						</p>
 					</div>

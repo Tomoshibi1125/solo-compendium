@@ -122,7 +122,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 						<div className="space-y-6">
 							<section className="space-y-3">
 								<h3 className="text-xs font-heading font-semibold text-primary uppercase tracking-widest border-b border-primary/10 pb-1">
-									Combat Matrix Initialization
+									Combat Lattice Initialization
 								</h3>
 								<div className="flex justify-between gap-4">
 									<div className="flex-grow p-3 rounded bg-black/40 border border-primary/10 text-center">

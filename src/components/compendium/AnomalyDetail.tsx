@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 
-interface MonsterData {
+interface AnomalyData {
 	id: string;
 	name: string;
 	display_name?: string | null;
@@ -62,11 +62,11 @@ interface MonsterData {
 	is_boss?: boolean;
 	tags?: string[];
 	image_url?: string | null;
-	monster_actions?: Record<string, unknown>[] | null;
-	monster_traits?: Record<string, unknown>[] | null;
+	Anomaly_actions?: Record<string, unknown>[] | null;
+	Anomaly_traits?: Record<string, unknown>[] | null;
 }
 
-interface MonsterAction {
+interface AnomalyAction {
 	id: string;
 	name: string;
 	description: string;
@@ -78,7 +78,7 @@ interface MonsterAction {
 	legendary_cost?: number;
 }
 
-interface MonsterTrait {
+interface AnomalyTrait {
 	id: string;
 	name: string;
 	description: string;
@@ -119,21 +119,21 @@ const getModifier = (score: number) => {
 	return mod >= 0 ? `+${mod}` : `${mod}`;
 };
 
-export const MonsterDetail = ({ data }: { data: MonsterData }) => {
+export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 	const navigate = useNavigate();
-	const [actions, setActions] = useState<MonsterAction[]>([]);
-	const [traits, setTraits] = useState<MonsterTrait[]>([]);
+	const [actions, setActions] = useState<AnomalyAction[]>([]);
+	const [traits, setTraits] = useState<AnomalyTrait[]>([]);
 	const actionHash = useMemo(
-		() => JSON.stringify(data.monster_actions || []),
-		[data.monster_actions],
+		() => JSON.stringify(data.Anomaly_actions || []),
+		[data.Anomaly_actions],
 	);
 	const traitHash = useMemo(
-		() => JSON.stringify(data.monster_traits || []),
-		[data.monster_traits],
+		() => JSON.stringify(data.Anomaly_traits || []),
+		[data.Anomaly_traits],
 	);
 
 	const mapStaticAction = useCallback(
-		(a: Record<string, unknown>, idx: number): MonsterAction => {
+		(a: Record<string, unknown>, idx: number): AnomalyAction => {
 			const name = typeof a.name === "string" ? a.name : `Action ${idx + 1}`;
 			const actionTypeRaw =
 				(typeof a.action_type === "string" ? a.action_type : null) ??
@@ -197,7 +197,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 	);
 
 	const mapStaticTrait = useCallback(
-		(t: Record<string, unknown>, idx: number): MonsterTrait => {
+		(t: Record<string, unknown>, idx: number): AnomalyTrait => {
 			const name = typeof t.name === "string" ? t.name : `Trait ${idx + 1}`;
 			return {
 				id: `${data.id}:static-trait:${idx}`,
@@ -244,13 +244,13 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 			const [actionsRes, traitsRes] = await Promise.all([
 				supabase
-					.from("compendium_monster_actions")
+					.from("compendium_Anomaly_actions")
 					.select("*")
-					.eq("monster_id", data.id),
+					.eq("Anomaly_id", data.id),
 				supabase
-					.from("compendium_monster_traits")
+					.from("compendium_Anomaly_traits")
 					.select("*")
-					.eq("monster_id", data.id),
+					.eq("Anomaly_id", data.id),
 			]);
 
 			const remoteActions = actionsRes.data || [];
@@ -282,7 +282,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 							typeof action.action_type === "string"
 								? action.action_type
 								: "action",
-					})) as MonsterAction[],
+					})) as AnomalyAction[],
 				);
 			} else if (staticActions && staticActions.length > 0) {
 				// Remote not present; fallback to static embedded data.
@@ -330,16 +330,16 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 	const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
 	const displayName = formatRegentVernacular(data.display_name || data.name);
-	const monsterSize = formatRegentVernacular(data.size || "Medium");
-	const monsterType = formatRegentVernacular(data.creature_type || "Unknown");
+	const anomalySize = formatRegentVernacular(data.size || "Medium");
+	const anomalyType = formatRegentVernacular(data.creature_type || "Unknown");
 	const armorClass = data.armor_class ?? 0;
 	const hitPointsAverage = data.hit_points_average ?? 0;
 	const hitPointsFormula = data.hit_points_formula ?? "";
 	const cr = data.cr ?? "—";
 	const isBoss = Boolean(data.is_boss);
 
-	const queueMonsterActionResolution = (
-		action: MonsterAction,
+	const queueAnomalyActionResolution = (
+		action: AnomalyAction,
 		path: string,
 	) => {
 		const id = crypto.randomUUID();
@@ -353,7 +353,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						version: 1,
 						id,
 						name: `${displayName}: ${formatRegentVernacular(action.name)}`,
-						source: { type: "monster_action", entryId: data.id },
+						source: { type: "Anomaly_action", entryId: data.id },
 						kind: "attack",
 						attack: { roll: `1d20+${toHit}` },
 						damage: damageRoll
@@ -364,7 +364,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						version: 1,
 						id,
 						name: `${displayName}: ${formatRegentVernacular(action.name)}`,
-						source: { type: "monster_action", entryId: data.id },
+						source: { type: "Anomaly_action", entryId: data.id },
 						kind: "damage",
 						damage: { roll: damageRoll ?? "1d6", type: action.damage_type },
 					};
@@ -392,20 +392,24 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 			{/* Header */}
 			<SystemWindow
 				title={displayName.toUpperCase()}
-				actions={<ShareToVTTButton itemType="Monster" itemName={displayName} />}
+				actions={<ShareToVTTButton itemType="Anomaly" itemName={displayName} />}
 				variant={
-					isBoss ? "alert" : data.tags?.includes("regent") ? "arise" : "default"
+					isBoss
+						? "alert"
+						: data.tags?.includes("regent")
+							? "resurge"
+							: "default"
 				}
 				className={cn(
 					isBoss && "border-gate-a/50 border-2",
-					data.tags?.includes("regent") && "border-arise-violet/50 border-2",
+					data.tags?.includes("regent") && "border-resurge-violet/50 border-2",
 					gateStyle?.glow,
 				)}
 			>
 				<div className="space-y-3">
 					<div className="flex flex-wrap items-center gap-2">
 						<span className="text-muted-foreground capitalize font-heading">
-							{monsterSize} {monsterType}
+							{anomalySize} {anomalyType}
 							{data.alignment && `, ${formatRegentVernacular(data.alignment)}`}
 						</span>
 						{data.gate_rank && gateStyle && (
@@ -449,7 +453,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 						{data.tags?.includes("regent") && (
 							<Badge
 								variant="outline"
-								className="border-arise-violet/50 text-arise-violet font-heading shadow-[0_0_10px_hsl(var(--arise-violet)/0.4)]"
+								className="border-resurge-violet/50 text-resurge-violet font-heading shadow-[0_0_10px_hsl(var(--resurge-violet)/0.4)]"
 							>
 								<Zap className="h-3 w-3 mr-1" />
 								{MONARCH_LABEL}
@@ -473,7 +477,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 			</SystemWindow>
 
 			{/* Core Stats */}
-			<div className="grid grid-cols-3 md:grid-cols-5 gap-4" id="monster-stats">
+			<div className="grid grid-cols-3 md:grid-cols-5 gap-4" id="anomaly-stats">
 				<SystemWindow title="ARMOR CLASS" compact>
 					<div className="flex items-center gap-2">
 						<Shield className="w-5 h-5 text-blue-400" />
@@ -530,7 +534,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 				title="ABILITY SCORES"
 				copyable
 				copyContent={`${displayName} - Ability Scores: STR ${data.str ?? 10} (${getModifier(data.str ?? 10)}), AGI ${data.agi ?? 10} (${getModifier(data.agi ?? 10)}), VIT ${data.vit ?? 10} (${getModifier(data.vit ?? 10)}), INT ${data.int ?? 10} (${getModifier(data.int ?? 10)}), SENSE ${data.sense ?? 10} (${getModifier(data.sense ?? 10)}), PRE ${data.pre ?? 10} (${getModifier(data.pre ?? 10)})`}
-				id="monster-abilities"
+				id="anomaly-abilities"
 			>
 				<div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
 					{[
@@ -620,7 +624,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 			{/* Traits */}
 			{traits.length > 0 && (
-				<StatBlock title="TRAITS" id="monster-traits">
+				<StatBlock title="TRAITS" id="gateborn-traits">
 					<StatSection title="">
 						{traits.map((trait) => (
 							<div key={trait.id} className="mb-4 last:mb-0">
@@ -638,7 +642,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 			{/* Actions */}
 			{regularActions.length > 0 && (
-				<StatBlock title="ACTIONS" id="monster-actions">
+				<StatBlock title="ACTIONS" id="anomaly-actions">
 					<StatSection title="">
 						{regularActions.map((action) => (
 							<div
@@ -660,7 +664,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 										variant="outline"
 										size="sm"
 										onClick={() =>
-											queueMonsterActionResolution(action, "/dice")
+											queueAnomalyActionResolution(action, "/dice")
 										}
 									>
 										Roll
@@ -669,7 +673,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 										variant="outline"
 										size="sm"
 										onClick={() =>
-											queueMonsterActionResolution(
+											queueAnomalyActionResolution(
 												action,
 												"/warden-protocols/initiative-tracker",
 											)
@@ -705,7 +709,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 			{/* Bonus Actions */}
 			{bonusActions.length > 0 && (
-				<StatBlock title="BONUS ACTIONS" id="monster-bonus-actions">
+				<StatBlock title="BONUS ACTIONS" id="anomaly-bonus-actions">
 					<StatSection title="">
 						{bonusActions.map((action) => (
 							<div
@@ -749,7 +753,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
 			{/* Reactions */}
 			{reactions.length > 0 && (
-				<StatBlock title="REACTIONS" id="monster-reactions">
+				<StatBlock title="REACTIONS" id="anomaly-reactions">
 					<StatSection title="">
 						{reactions.map((action) => (
 							<div
@@ -796,7 +800,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 				<StatBlock
 					title="LEGENDARY ACTIONS"
 					className="border-amber-500/30 border-2"
-					id="monster-legendary"
+					id="anomaly-legendary"
 				>
 					<p className="text-sm text-foreground mb-4 font-medium leading-relaxed">
 						The creature can take 3 legendary actions, choosing from the options
@@ -828,7 +832,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 			)}
 
 			{data.description && (
-				<StatBlock title="DESCRIPTION" id="monster-description">
+				<StatBlock title="DESCRIPTION" id="anomaly-description">
 					<p className="text-foreground leading-relaxed text-base">
 						<AutoLinkText text={data.description} />
 					</p>

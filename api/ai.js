@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 	}
 
 	// Optional auth via bearer token (e.g., Supabase access token) or shared secret
-	const authHeader = req.headers["authorization"] || "";
+	const authHeader = req.headers.authorization || "";
 	const bearer = authHeader.startsWith("Bearer ")
 		? authHeader.slice("Bearer ".length).trim()
 		: null;

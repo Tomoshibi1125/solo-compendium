@@ -41,7 +41,7 @@ export const SovereignAuthorityDisplay = ({
 				name: "REGENT",
 				crown: "👑",
 			},
-			monarch: {
+			eternal: {
 				color: "#dc2626",
 				glow: "#ef4444",
 				name: "MONARCH",
@@ -269,7 +269,7 @@ export const AscensionMeter = ({
 				glow: "#fbbf24",
 				bg: "from-orange-900/20 to-orange-800/20",
 			},
-			monarch: {
+			eternal: {
 				color: "#dc2626",
 				glow: "#ef4444",
 				bg: "from-red-900/20 to-red-800/20",

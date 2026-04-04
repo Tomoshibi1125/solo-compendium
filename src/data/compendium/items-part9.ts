@@ -1,1470 +1,934 @@
-// Items Part 9
-
 export const items = [
 	{
-		id: "sys-exp-item-0601",
-		name: "Plasma Greaves of Blood",
+		id: "item-p9-1",
+		name: "Thunder-Clap Circlet",
 		description:
-			"An anomaly in the System's mana distribution network, crystallized over decades. This defensive gear provides Base AC/Bonus: **None**. Properties: *Increases movement speed by 5ft.*. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0017.webp",
+			"Crackles with residual kinetic energy. This circlet pulses with storm resonance.",
+		rarity: "very_rare",
+		type: "accessory",
+		image: "/generated/compendium/items/item-p9-1.webp",
 		effects: {
 			passive: [
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
 			],
 			active: [
 				{
-					name: "System Protocol Override",
+					name: "Storm Resonance Burst",
 					description:
-						"Expend 25 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
+						"Unleash a wave of thunder energy dealing 4d8 damage in a 15ft cone.",
 					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 6,
-		value: 1031,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Resonance Cascade, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Overrides the fragile limits of flesh. A relentless breaking point of the world.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0602",
-		name: "Nether Pendant of the Phoenix",
-		description:
-			"Refined from the crystallized essence of a fallen Regent of the Void. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "common",
-		type: "amulet",
-		image: "/generated/compendium/items/sys-item-0011.webp",
-		effects: {
-			passive: ["System Buff: Grants immunity to the frightened condition."],
-		},
-		attunement: false,
-		weight: 10,
-		value: 65,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Abyssal Influx, this ability bypasses standard biological limits and leaves temporal scars on reality.",
-		flavor:
-			"Reflects the arrogant and the mighty. A chaotic beautiful catastrophe.",
-		mechanics: {
-			system_interaction:
-				"[Warning: Hazardous subroutine detected. Mana integration successful.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0603",
-		name: "Nether Mail of the Dragon",
-		description:
-			"Forged in the heart of a collapsing C-Rank dimensional rift. This defensive gear provides Base AC/Bonus: **16**. Properties: *Disadvantage on Stealth. Str 13 required.*. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0018.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants resistance to fire damage.",
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-			],
-		},
-		attunement: true,
-		weight: 9,
-		value: 1064,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of high-tier Rift beasts who perished in the Regent Wars, this power taxes the user's Mana circuits heavily.",
-		flavor:
-			"Ignores the arrogant and the mighty. A devastating whisper in the shadows.",
-		mechanics: {
-			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0604",
-		name: "Dread Orb of Annihilation",
-		description:
-			"Forged in the heart of a collapsing C-Rank dimensional rift. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0015.webp",
-		effects: {
-			passive: ["System Buff: Grants resistance to necrotic damage."],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 10 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: false,
-		weight: 10,
-		value: 218,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of Dimensional Scavengers who perished in the Day of Falling Stars, this power leaves temporal scars on reality.",
-		flavor: "Bends the architect's design. An intricate death of hesitation.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0605",
-		name: "Crystal Cloak of the System",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0001.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants resistance to fire damage.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 4,
-		value: 5056,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Azure Gate Collapse, this ability bypasses standard biological limits and disrupts a Hunter's innate mana perception.",
-		flavor: "Commands the architect's design. A triumphant roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0606",
-		name: "Null Ring of the Dragon",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "amulet",
-		image: "/generated/compendium/items/sys-item-0006.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants +2 bonus to attack and damage rolls.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 25 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 6,
-		value: 1003,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Crimson Incursion, this technique was pioneered by the Architect's rogue subroutines. Utilizing it forces agonizing metabolic sacrifice to maintain.",
-		flavor:
-			"Absorbs the concept of defeat. A brutal dance performed on the edge of a blade.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0607",
-		name: "Null Band of the Monarch",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a legendary artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "legendary",
-		type: "ring",
-		image: "/generated/compendium/items/sys-item-0008.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants resistance to fire damage.",
-				"System Buff: Grants +2 bonus to attack and damage rolls.",
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 18 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 9,
-		value: 20011,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Silence of the Oracle, this phenomenon is often linked to the presence of high-tier Rift beasts. Activating it taxes the user's Mana circuits heavily.",
-		flavor: "Reflects the flow of time itself. A silent symphony of violence.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0608",
-		name: "Crystal Tome of the Stars",
-		description:
-			"Developed by top Guild researchers studying concentrated void energy. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a legendary artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "legendary",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0016.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants darkvision out to 60 feet.",
-				"System Buff: Grants darkvision out to 60 feet.",
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
-			],
-		},
-		attunement: true,
-		weight: 5,
-		value: 20028,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Eclipse Protocol, this technique was pioneered by Phantom Class anomalies. Utilizing it leaves a trail of shadowy distortion in physical space.",
-		flavor:
-			"Denies the concept of defeat. A brutal dance performed on the edge of a blade.",
-		mechanics: {
-			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0609",
-		name: "Obsidian Greaves of Time",
-		description:
-			"Developed by top Guild researchers studying concentrated void energy. This defensive gear provides Base AC/Bonus: **None**. Properties: *Increases movement speed by 5ft.*. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0009.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
-				"System Buff: Grants darkvision out to 60 feet.",
-				"System Buff: Grants darkvision out to 60 feet.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 7,
-		value: 5089,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of a Sovereign of the Void who perished in the Mana Awakening, this power causes the user's eyes to glow with unnatural light.",
-		flavor:
-			"Ignores the arrogant and the mighty. An absolute whisper in the shadows.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0610",
-		name: "Echo Sword of the Void",
-		description:
-			"Salvaged by an S-Rank hunter from the depths of the Abyssal gates. This weapon hits with brutal kinetic force dealing **1d8 slashing** damage. Properties: *versatile (1d10)*. As a legendary artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "legendary",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0017.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants immunity to the frightened condition.",
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants resistance to fire damage.",
-				"System Buff: Grants darkvision out to 60 feet.",
-			],
-		},
-		attunement: true,
-		weight: 10,
-		value: 20093,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of Rogue Protocol entities who perished in the Silence of the Oracle, this power leaves a trail of shadowy distortion in physical space.",
-		flavor:
-			"Crushes the remnants of humanity. An intricate surge of lethal intent.",
-		mechanics: {
-			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0611",
-		name: "Blood Crossbow of the System",
-		description:
-			"Forged in the heart of a collapsing C-Rank dimensional rift. This weapon hits with brutal kinetic force dealing **1d10 piercing** damage. Properties: *ammunition (range 100/400), heavy, loading, two-handed*. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0004.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-			],
-		},
-		attunement: false,
-		weight: 7,
-		value: 145,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Abyssal Influx, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
-		flavor:
-			"Bends the remnants of humanity. A subtle dance performed on the edge of a blade.",
-		mechanics: {
-			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0612",
-		name: "Monarch's Gauntlets of Space",
-		description:
-			"Refined from the crystallized essence of a fallen Regent of the Void. This weapon hits with brutal kinetic force dealing **1d4 bludgeoning** damage. Properties: *finesse, unarmed strike focus*. As a legendary artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "legendary",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0012.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants darkvision out to 60 feet.",
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 18 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 5,
-		value: 20034,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Manifestation Event, this ability bypasses standard biological limits and leaves a trail of shadowy distortion in physical space.",
-		flavor:
-			"Cleanses the arrogant and the mighty. A forbidden beautiful catastrophe.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0613",
-		name: "Order Axe of the Monarch",
-		description:
-			"An anomaly in the System's mana distribution network, crystallized over decades. This weapon hits with brutal kinetic force dealing **1d8 slashing** damage. Properties: *versatile (1d10)*. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0012.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants immunity to the frightened condition.",
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants advantage on Initiative rolls.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 10,
-		value: 5034,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Abyssal Influx, this technique was pioneered by Dimensional Scavengers. Utilizing it creates a vacuum in ambient mana fields.",
-		flavor: "Destroys the darkness within. A sorrowful ultimate equalizer.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0614",
-		name: "System Cube of the Monarch",
-		description:
-			"Developed by top Guild researchers studying concentrated void energy. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0009.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-				"System Buff: Grants immunity to the frightened condition.",
-			],
-		},
-		attunement: true,
-		weight: 7,
-		value: 1091,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Silence of the Oracle, this technique was pioneered by the Architect's rogue subroutines. Utilizing it overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0615",
-		name: "Nether Axe of Space",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. This weapon hits with brutal kinetic force dealing **1d8 slashing** damage. Properties: *versatile (1d10)*. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0010.webp",
-		effects: {
-			passive: ["System Buff: Grants resistance to necrotic damage."],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 10 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: false,
-		weight: 9,
-		value: 265,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Eclipse Protocol, this phenomenon is often linked to the presence of a forgotten Regent. Activating it resonates with the hum of raw magical energy.",
-		flavor:
-			"Denies the quiet space between breaths. A chaotic death of hesitation.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0616",
-		name: "Dread Gauntlets of Space",
-		description:
-			"Refined from the crystallized essence of a fallen Regent of the Void. This defensive gear provides Base AC/Bonus: **None**. Properties: *Prevents disarming.*. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0004.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants resistance to necrotic damage.",
-			],
-		},
-		attunement: true,
-		weight: 4,
-		value: 5058,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of Rogue Protocol entities who perished in the Crimson Incursion, this power leaves a trail of shadowy distortion in physical space.",
-		flavor:
-			"Absorbs all who stand in opposition. A sorrowful whisper in the shadows.",
-		mechanics: {
-			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0617",
-		name: "Void Amulet of Eternity",
-		description:
-			"Translated from an ancient Monarch's combat protocol during the First Awakening. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "amulet",
-		image: "/generated/compendium/items/sys-item-0011.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants advantage on Initiative rolls.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 10,
-		value: 5097,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of the Architect's rogue subroutines who perished in the First Void Fracture, this power overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Reclaims the remnants of humanity. A devastating surge of lethal intent.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0618",
-		name: "Obsidian Prism of Blood",
-		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0010.webp",
-		effects: {
-			passive: ["System Buff: Grants +1 bonus to AC."],
-		},
-		attunement: false,
-		weight: 8,
-		value: 226,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Silence of the Oracle, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
-		flavor:
-			"Destroys the quiet space between breaths. A triumphant roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0619",
-		name: "Nether Hammer of the System",
-		description:
-			"Salvaged by an S-Rank hunter from the depths of the Abyssal gates. This weapon hits with brutal kinetic force dealing **2d6 bludgeoning** damage. Properties: *heavy, two-handed*. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0005.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants resistance to fire damage.",
-				"System Buff: Grants darkvision out to 60 feet.",
-				"System Buff: Grants resistance to necrotic damage.",
-			],
-		},
-		attunement: true,
-		weight: 6,
-		value: 5082,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Abyssal Influx, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Ignites the quiet space between breaths. An ancient death of hesitation.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0620",
-		name: "Sovereign Tome of the Monarch",
-		description:
-			"Refined from the crystallized essence of a fallen Regent of the Void. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0008.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
-				"System Buff: Grants resistance to fire damage.",
-				"System Buff: Grants advantage on Initiative rolls.",
-			],
-		},
-		attunement: true,
-		weight: 5,
-		value: 5070,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Abyssal Influx, this ability bypasses standard biological limits and overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Shatters the flow of time itself. A chaotic testament to absolute power.",
-		mechanics: {
-			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0621",
-		name: "Sovereign Cube of Shadows",
-		description:
-			"Forged in the heart of a collapsing C-Rank dimensional rift. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0017.webp",
-		effects: {
-			passive: ["System Buff: Grants +1 bonus to AC."],
-		},
-		attunement: false,
-		weight: 8,
-		value: 246,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Eclipse Protocol, this phenomenon is often linked to the presence of the Architect's rogue subroutines. Activating it disrupts a Hunter's innate mana perception.",
-		flavor:
-			"Crushes the remnants of humanity. A forbidden surge of lethal intent.",
-		mechanics: {
-			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0622",
-		name: "Order Axe of the Abyss",
-		description:
-			"Translated from an ancient Monarch's combat protocol during the First Awakening. This weapon hits with brutal kinetic force dealing **1d8 slashing** damage. Properties: *versatile (1d10)*. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0014.webp",
-		effects: {
-			passive: ["System Buff: Grants resistance to fire damage."],
-		},
-		attunement: true,
-		weight: 1,
-		value: 141,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Resonance Cascade, this technique was pioneered by Phantom Class anomalies. Utilizing it forces agonizing metabolic sacrifice to maintain.",
-		flavor:
-			"Reflects the quiet space between breaths. An overwhelming roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0623",
-		name: "Monarch's Hammer of the System",
-		description:
-			"An anomaly in the System's mana distribution network, crystallized over decades. This weapon hits with brutal kinetic force dealing **2d6 bludgeoning** damage. Properties: *heavy, two-handed*. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0001.webp",
-		effects: {
-			passive: ["System Buff: Grants resistance to fire damage."],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 10 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 6,
-		value: 201,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Regent Wars, this ability bypasses standard biological limits and leaves temporal scars on reality.",
-		flavor:
-			"Weaves the remnants of humanity. A subtle dance performed on the edge of a blade.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0624",
-		name: "Echo Choker of Annihilation",
-		description:
-			"Refined from the crystallized essence of a fallen Regent of the Void. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "ring",
-		image: "/generated/compendium/items/sys-item-0013.webp",
-		effects: {
-			passive: ["System Buff: Grants advantage on Initiative rolls."],
-		},
-		attunement: true,
-		weight: 5,
-		value: 220,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Manifestation Event, this technique was pioneered by high-tier Rift beasts. Utilizing it creates a vacuum in ambient mana fields.",
-		flavor:
-			"Ignores the quiet space between breaths. A devastating roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0625",
-		name: "Crystal Robes of the Demon",
-		description:
-			"Developed by top Guild researchers studying concentrated void energy. This defensive gear provides Base AC/Bonus: **10 + Dex modifier**. Properties: *Unarmored defense. Mana flow increased.*. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "common",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0003.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-			],
-		},
-		attunement: false,
-		weight: 4,
-		value: 56,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of high-tier Rift beasts who perished in the Abyssal Influx, this power leaves temporal scars on reality.",
-		flavor:
-			"Ignores the remnants of humanity. A devastating surge of lethal intent.",
-		mechanics: {
-			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0626",
-		name: "Gate Axe of Time",
-		description:
-			"Forged in the heart of a collapsing C-Rank dimensional rift. This weapon hits with brutal kinetic force dealing **1d8 slashing** damage. Properties: *versatile (1d10)*. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0016.webp",
-		effects: {
-			passive: ["System Buff: Grants immunity to the frightened condition."],
-		},
-		attunement: true,
-		weight: 3,
-		value: 116,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the First Void Fracture, this phenomenon is often linked to the presence of the Architect's rogue subroutines. Activating it causes the user's eyes to glow with unnatural light.",
-		flavor: "Reclaims the architect's design. A silent death of hesitation.",
-		mechanics: {
-			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0627",
-		name: "Abyssal Crossbow of Eternity",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. This weapon hits with brutal kinetic force dealing **1d10 piercing** damage. Properties: *ammunition (range 100/400), heavy, loading, two-handed*. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0011.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-				"System Buff: Grants advantage on Initiative rolls.",
-			],
-		},
-		attunement: false,
-		weight: 5,
-		value: 1027,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the First Void Fracture, this technique was pioneered by a Sovereign of the Void. Utilizing it disrupts a Hunter's innate mana perception.",
-		flavor:
-			"Reclaims the quiet space between breaths. A devastating roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0628",
-		name: "Dread Tome of the Abyss",
-		description:
-			"Developed by top Guild researchers studying concentrated void energy. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0011.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 4,
-		value: 5001,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Resonance Cascade, this technique was pioneered by a Sovereign of the Void. Utilizing it disrupts a Hunter's innate mana perception.",
-		flavor:
-			"Crushes the dimensional divide. A desperate testament to absolute power.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0629",
-		name: "Nexus Whip of the Stars",
-		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This weapon hits with brutal kinetic force dealing **1d4 slashing** damage. Properties: *finesse, reach*. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0017.webp",
-		effects: {
-			passive: ["System Buff: Grants darkvision out to 60 feet."],
-		},
-		attunement: false,
-		weight: 6,
-		value: 61,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Crimson Incursion, this technique was pioneered by an apex-class Awakened. Utilizing it disrupts a Hunter's innate mana perception.",
-		flavor:
-			"Denies all who stand in opposition. A brutal beautiful catastrophe.",
-		mechanics: {
-			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0630",
-		name: "Monarch's Crossbow of the Stars",
-		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This weapon hits with brutal kinetic force dealing **1d10 piercing** damage. Properties: *ammunition (range 100/400), heavy, loading, two-handed*. As a legendary artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "legendary",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0002.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-			],
-		},
-		attunement: true,
-		weight: 6,
-		value: 20030,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Manifestation Event, this ability bypasses standard biological limits and causes the user's eyes to glow with unnatural light.",
-		flavor: "Bends the quiet space between breaths. A subtle roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0631",
-		name: "Aether Mantle of the Phoenix",
-		description:
-			"Translated from an ancient Monarch's combat protocol during the First Awakening. This defensive gear provides Base AC/Bonus: **None**. Properties: *Advantage on saving throws against environmental hazards.*. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0002.webp",
-		effects: {
-			passive: ["System Buff: Grants +1 bonus to AC."],
-		},
-		attunement: true,
-		weight: 8,
-		value: 289,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Regent Wars, this ability bypasses standard biological limits and causes the user's eyes to glow with unnatural light.",
-		flavor: "Denies the architect's design. A chaotic roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0632",
-		name: "Void Buckler of Silence",
-		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This defensive gear provides Base AC/Bonus: **+1**. Properties: *Leaves hand free for somatic components.*. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "common",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0008.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-			],
-		},
-		attunement: true,
-		weight: 1,
-		value: 88,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of an apex-class Awakened who perished in the Crimson Incursion, this power resonates with the hum of raw magical energy.",
-		flavor:
-			"Ignites the darkness within. A sorrowful breaking point of the world.",
-		mechanics: {
-			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0633",
-		name: "Gate Scythe of the Void",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. This weapon hits with brutal kinetic force dealing **2d4 slashing** damage. Properties: *reach, two-handed*. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0001.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants advantage on Initiative rolls.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 25 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 5,
-		value: 1006,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Day of Falling Stars, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it forces agonizing metabolic sacrifice to maintain.",
-		flavor:
-			"Ignites all who stand in opposition. An ancient whisper in the shadows.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0634",
-		name: "Abyssal Shield of the Dragon",
-		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This defensive gear provides Base AC/Bonus: **+2**. Properties: *Requires 1 hand.*. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0001.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants darkvision out to 60 feet.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 25 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: false,
-		weight: 3,
-		value: 1026,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of Dimensional Scavengers who perished in the Azure Gate Collapse, this power taxes the user's Mana circuits heavily.",
-		flavor:
-			"Shatters the fragile limits of flesh. An overwhelming breaking point of the world.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0635",
-		name: "Null Signet of the Monarch",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "ring",
-		image: "/generated/compendium/items/sys-item-0008.webp",
-		effects: {
-			passive: ["System Buff: Grants resistance to necrotic damage."],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 10 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 14 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 4,
-		value: 231,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Crimson Incursion, this ability bypasses standard biological limits and causes the user's eyes to glow with unnatural light.",
-		flavor:
-			"Overrides the fragile limits of flesh. A relentless ultimate equalizer.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0636",
-		name: "Nexus Gauntlets of the Demon",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. This weapon hits with brutal kinetic force dealing **1d4 bludgeoning** damage. Properties: *finesse, unarmed strike focus*. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0001.webp",
-		effects: {
-			passive: ["System Buff: Grants advantage on Initiative rolls."],
-		},
-		attunement: false,
-		weight: 7,
-		value: 257,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Manifestation Event, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
-		flavor:
-			"Commands the dimensional divide. A triumphant testament to absolute power.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0637",
-		name: "Aether Bow of Annihilation",
-		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This weapon hits with brutal kinetic force dealing **1d8 piercing** damage. Properties: *ammunition (range 150/600), heavy, two-handed*. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0002.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
-			],
-		},
-		attunement: true,
-		weight: 5,
-		value: 5077,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of the Architect's rogue subroutines who perished in the Manifestation Event, this power overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Reclaims the flow of time itself. A devastating symphony of violence.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0638",
-		name: "Void Signet of Shadows",
-		description:
-			"An anomaly in the System's mana distribution network, crystallized over decades. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "ring",
-		image: "/generated/compendium/items/sys-item-0005.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-				"System Buff: Grants darkvision out to 60 feet.",
-				"System Buff: Grants advantage on Initiative rolls.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
+					frequency: "once-per-rest",
 				},
 			],
 		},
 		attunement: true,
 		weight: 2,
-		value: 5026,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Silence of the Oracle, this technique was pioneered by the Architect's rogue subroutines. Utilizing it leaves a trail of shadowy distortion in physical space.",
-		flavor: "Bends the architect's design. An intricate roar of raw mana.",
+		value: 4170,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
 		mechanics: {
 			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
 		},
 	},
 	{
-		id: "sys-exp-item-0639",
-		name: "System Cube of Shadows",
+		id: "item-p9-2",
+		name: "Frost-Bound Necklace",
 		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0004.webp",
-		effects: {
-			passive: ["System Buff: Grants +2 bonus to attack and damage rolls."],
-		},
-		attunement: false,
-		weight: 9,
-		value: 277,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the First Void Fracture, this technique was pioneered by Phantom Class anomalies. Utilizing it overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Reflects the quiet space between breaths. An overwhelming roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0640",
-		name: "Plasma Amulet of Space",
-		description:
-			"Translated from an ancient Monarch's combat protocol during the First Awakening. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "ring",
-		image: "/generated/compendium/items/sys-item-0018.webp",
+			"Solid water that never melts. This necklace pulses with glacial resonance.",
+		rarity: "rare",
+		type: "wand",
+		image: "/generated/compendium/items/item-p9-2.webp",
 		effects: {
 			passive: [
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants +2 bonus to attack and damage rolls.",
-				"System Buff: Grants resistance to fire damage.",
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
 			active: [
 				{
-					name: "System Protocol Override",
+					name: "Glacial Resonance Burst",
 					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
+						"Unleash a wave of cold energy dealing 4d8 damage in a 15ft cone.",
 					action: "action",
-					frequency: "once-per-day",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 2,
+		value: 19191,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
+		mechanics: {
+			system_interaction:
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-3",
+		name: "Ice-Veined Shield",
+		description:
+			"Cold enough to freeze the blood in mid-air. This shield pulses with glacial resonance.",
+		rarity: "uncommon",
+		type: "wand",
+		image: "/generated/compendium/items/item-p9-3.webp",
+		effects: {
+			passive: [
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [],
+		},
+		attunement: true,
+		weight: 2,
+		value: 30177,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
+		mechanics: {
+			system_interaction:
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-4",
+		name: "Sunbeam Plate",
+		description:
+			"Found in a solar-synchronized floating gate. This plate pulses with solar resonance.",
+		rarity: "common",
+		type: "accessory",
+		image: "/generated/compendium/items/item-p9-4.webp",
+		effects: {
+			passive: [
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 1,
+		value: 24364,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-5",
+		name: "Light-Bringer Boots",
+		description:
+			"Found in a solar-synchronized floating gate. This boots pulses with solar resonance.",
+		rarity: "common",
+		type: "wand",
+		image: "/generated/compendium/items/item-p9-5.webp",
+		effects: {
+			passive: [
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 2,
+		value: 27088,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-6",
+		name: "Earth-Crusher Greatsword",
+		description:
+			"Heavy enough to level a city block. This greatsword pulses with titanic resonance.",
+		rarity: "very_rare",
+		type: "ring",
+		image: "/generated/compendium/items/item-p9-6.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 1,
+		value: 35186,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-7",
+		name: "Basalt Plate",
+		description:
+			"Heavy enough to level a city block. This plate pulses with titanic resonance.",
+		rarity: "legendary",
+		type: "ring",
+		image: "/generated/compendium/items/item-p9-7.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 5,
+		value: 39856,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-8",
+		name: "Nightfall Boots",
+		description:
+			"Absorbs all ambient light. This boots pulses with void resonance.",
+		rarity: "epic",
+		type: "wand",
+		image: "/generated/compendium/items/item-p9-8.webp",
+		effects: {
+			passive: [
+				"You gain resistance to psychic damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Void Resonance Burst",
+					description:
+						"Unleash a wave of psychic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 4,
+		value: 27500,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Void.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-9",
+		name: "Mountain-Soul Plate",
+		description:
+			"Heavy enough to level a city block. This plate pulses with titanic resonance.",
+		rarity: "common",
+		type: "scroll",
+		image: "/generated/compendium/items/item-p9-9.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 3,
+		value: 44302,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-10",
+		name: "Tempest-Core Rod",
+		description:
+			"Fast as a blink of an eye. This rod pulses with storm resonance.",
+		rarity: "epic",
+		type: "wand",
+		image: "/generated/compendium/items/item-p9-10.webp",
+		effects: {
+			passive: [
+				"You gain resistance to lightning damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of lightning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 4,
+		value: 18213,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-11",
+		name: "Thunder-Clap Plate",
+		description:
+			"Crackles with residual kinetic energy. This plate pulses with storm resonance.",
+		rarity: "common",
+		type: "armor",
+		image: "/generated/compendium/items/item-p9-11.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 2,
+		value: 41284,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-12",
+		name: "Light-Bringer Cloak",
+		description:
+			"Blinds those with unworthy souls. This cloak pulses with solar resonance.",
+		rarity: "epic",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p9-12.webp",
+		effects: {
+			passive: [
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 5,
+		value: 47732,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-13",
+		name: "Dawn-Guard Cloak",
+		description:
+			"Found in a solar-synchronized floating gate. This cloak pulses with solar resonance.",
+		rarity: "rare",
+		type: "armor",
+		image: "/generated/compendium/items/item-p9-13.webp",
+		effects: {
+			passive: [
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 2,
+		value: 15968,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-14",
+		name: "Granite Cloak",
+		description:
+			"Heavy enough to level a city block. This cloak pulses with titanic resonance.",
+		rarity: "legendary",
+		type: "accessory",
+		image: "/generated/compendium/items/item-p9-14.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 1,
+		value: 19122,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-15",
+		name: "Storm-Caller Cloak",
+		description:
+			"Recovered during a Mana-Resonance event. This cloak pulses with storm resonance.",
+		rarity: "epic",
+		type: "consumable",
+		image: "/generated/compendium/items/item-p9-15.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of thunder energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 4,
+		value: 16760,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-16",
+		name: "Reaver Band",
+		description:
+			"Hungers for the life force of its wielder. This band pulses with blood resonance.",
+		rarity: "epic",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p9-16.webp",
+		effects: {
+			passive: [
+				"You gain resistance to slashing damage.",
+				"While using this item, your Strength increases by 1.",
+			],
+			active: [
+				{
+					name: "Blood Resonance Burst",
+					description:
+						"Unleash a wave of slashing energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
 				},
 			],
 		},
 		attunement: true,
 		weight: 3,
-		value: 5000,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Mana Awakening, this phenomenon is often linked to the presence of high-tier Rift beasts. Activating it creates a vacuum in ambient mana fields.",
-		flavor:
-			"Commands the concept of defeat. A triumphant surge of lethal intent.",
+		value: 7018,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Blood.",
 		mechanics: {
 			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
+				"Deals slashing damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
 		},
 	},
 	{
-		id: "sys-exp-item-0641",
-		name: "Crystal Helm of the Void",
+		id: "item-p9-17",
+		name: "Mountain-Soul Greatsword",
 		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This defensive gear provides Base AC/Bonus: **None**. Properties: *Grants resistance to psychic damage.*. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "armor",
-		image: "/generated/compendium/items/sys-item-0013.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-				"System Buff: Grants immunity to the frightened condition.",
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 6,
-		value: 5001,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of a Sovereign of the Void who perished in the Manifestation Event, this power resonates with the hum of raw magical energy.",
-		flavor: "Absorbs the flow of time itself. A brutal symphony of violence.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0642",
-		name: "Luminous Spear of Annihilation",
-		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This weapon hits with brutal kinetic force dealing **1d6 piercing** damage. Properties: *thrown (range 20/60), versatile (1d8)*. As a legendary artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "legendary",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0013.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants immunity to the frightened condition.",
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants darkvision out to 60 feet.",
-			],
-		},
-		attunement: true,
-		weight: 1,
-		value: 20052,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Azure Gate Collapse, this technique was pioneered by the Architect's rogue subroutines. Utilizing it leaves a trail of shadowy distortion in physical space.",
-		flavor:
-			"Shatters the architect's design. An overwhelming roar of raw mana.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0643",
-		name: "Aether Necklace of the Phoenix",
-		description:
-			"Refined from the crystallized essence of a fallen Regent of the Void. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a legendary artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
+			"Heavy enough to level a city block. This greatsword pulses with titanic resonance.",
 		rarity: "legendary",
 		type: "ring",
-		image: "/generated/compendium/items/sys-item-0001.webp",
+		image: "/generated/compendium/items/item-p9-17.webp",
 		effects: {
 			passive: [
-				"System Buff: Grants +1 bonus to AC.",
-				"System Buff: Grants advantage on Initiative rolls.",
-				"System Buff: Grants +2 bonus to attack and damage rolls.",
-				"System Buff: Grants darkvision out to 60 feet.",
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
 			active: [
 				{
-					name: "System Protocol Override",
+					name: "Titanic Resonance Burst",
 					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 18 Protocol check or be stunned until the end of its next turn.",
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
 					action: "action",
-					frequency: "once-per-day",
+					frequency: "once-per-rest",
 				},
 			],
 		},
 		attunement: true,
 		weight: 1,
-		value: 20040,
-		source: "System Ascendant Expansion",
-		lore: "A manifestation of raw System authority discovered after the Abyssal Influx, this ability bypasses standard biological limits and overrides basic physics within a 30-foot radius.",
-		flavor:
-			"Reflects the flow of time itself. A silent testament to absolute power.",
+		value: 6524,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
 		mechanics: {
 			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
 		},
 	},
 	{
-		id: "sys-exp-item-0644",
-		name: "Echo Shield of Blood",
+		id: "item-p9-18",
+		name: "Rift-Walker Vial",
 		description:
-			"A manifestation of pure System authority, designed to bypass mortal limitations. This defensive gear provides Base AC/Bonus: **+2**. Properties: *Requires 1 hand.*. As a common artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
+			"Bypasses the dimensional divide entirely. This vial pulses with aetheric resonance.",
+		rarity: "uncommon",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p9-18.webp",
+		effects: {
+			passive: [
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [],
+		},
+		attunement: true,
+		weight: 5,
+		value: 26853,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-19",
+		name: "Radiant-Steel Cloak",
+		description:
+			"Found in a solar-synchronized floating gate. This cloak pulses with solar resonance.",
+		rarity: "legendary",
+		type: "ring",
+		image: "/generated/compendium/items/item-p9-19.webp",
+		effects: {
+			passive: [
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 5,
+		value: 34032,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-20",
+		name: "Storm-Caller Greatsword",
+		description:
+			"Recovered during a Mana-Resonance event. This greatsword pulses with storm resonance.",
+		rarity: "common",
+		type: "accessory",
+		image: "/generated/compendium/items/item-p9-20.webp",
+		effects: {
+			passive: [
+				"You gain resistance to lightning damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 2,
+		value: 49223,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-21",
+		name: "White-Hot Gauntlets",
+		description:
+			"Forged in the heart of a dying sun. This gauntlets pulses with solar resonance.",
+		rarity: "very_rare",
+		type: "ring",
+		image: "/generated/compendium/items/item-p9-21.webp",
+		effects: {
+			passive: [
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of radiant energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 3,
+		value: 11146,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-22",
+		name: "Mana-Flow Necklace",
+		description:
+			"Discovered in a stable Rift fracture. This necklace pulses with aetheric resonance.",
+		rarity: "uncommon",
+		type: "wand",
+		image: "/generated/compendium/items/item-p9-22.webp",
+		effects: {
+			passive: [
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [],
+		},
+		attunement: true,
+		weight: 4,
+		value: 7755,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-23",
+		name: "Aether-Bound Necklace",
+		description:
+			"A fragment of the original System code. This necklace pulses with aetheric resonance.",
+		rarity: "rare",
+		type: "ring",
+		image: "/generated/compendium/items/item-p9-23.webp",
+		effects: {
+			passive: [
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of psychic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 1,
+		value: 19353,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-24",
+		name: "Flesh-Stitcher Tome",
+		description:
+			"Strengthens with every drop of mana spilled. This tome pulses with blood resonance.",
+		rarity: "rare",
+		type: "ring",
+		image: "/generated/compendium/items/item-p9-24.webp",
+		effects: {
+			passive: [
+				"You gain resistance to slashing damage.",
+				"While using this item, your Strength increases by 1.",
+			],
+			active: [
+				{
+					name: "Blood Resonance Burst",
+					description:
+						"Unleash a wave of slashing energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 2,
+		value: 27279,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Blood.",
+		mechanics: {
+			system_interaction:
+				"Deals slashing damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-25",
+		name: "Radiant-Steel Cowl",
+		description:
+			"Blinds those with unworthy souls. This cowl pulses with solar resonance.",
+		rarity: "rare",
+		type: "armor",
+		image: "/generated/compendium/items/item-p9-25.webp",
+		effects: {
+			passive: [
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 2,
+		value: 17528,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-26",
+		name: "Frost-Bound Tome",
+		description:
+			"Extracted from an S-Rank frost gate. This tome pulses with glacial resonance.",
+		rarity: "common",
+		type: "scroll",
+		image: "/generated/compendium/items/item-p9-26.webp",
+		effects: {
+			passive: [
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 1,
+		value: 33641,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
+		mechanics: {
+			system_interaction:
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-27",
+		name: "Frost-Bound Plate",
+		description:
+			"Cold enough to freeze the blood in mid-air. This plate pulses with glacial resonance.",
 		rarity: "common",
 		type: "armor",
-		image: "/generated/compendium/items/sys-item-0001.webp",
+		image: "/generated/compendium/items/item-p9-27.webp",
 		effects: {
 			passive: [
-				"System Buff: Grants the ability to sense nearby rifts within 1 mile.",
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
+			active: [],
 		},
 		attunement: false,
 		weight: 1,
-		value: 73,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Regent Wars, this phenomenon is often linked to the presence of a forgotten Regent. Activating it disrupts a Hunter's innate mana perception.",
-		flavor:
-			"Overrides the fragile limits of flesh. A relentless breaking point of the world.",
+		value: 46753,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
 		mechanics: {
 			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
 		},
 	},
 	{
-		id: "sys-exp-item-0645",
-		name: "System Cloak of the Angel",
+		id: "item-p9-28",
+		name: "Nightfall Gauntlets",
 		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0006.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-				"System Buff: Grants +2 bonus to attack and damage rolls.",
-				"System Buff: Grants resistance to necrotic damage.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 7,
-		value: 5083,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Eclipse Protocol, this technique was pioneered by Dimensional Scavengers. Utilizing it leaves temporal scars on reality.",
-		flavor:
-			"Ignores the arrogant and the mighty. An absolute beautiful catastrophe.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0646",
-		name: "Blood Spear of Time",
-		description:
-			"Refined from the crystallized essence of a fallen Regent of the Void. This weapon hits with brutal kinetic force dealing **1d6 piercing** damage. Properties: *thrown (range 20/60), versatile (1d8)*. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0007.webp",
-		effects: {
-			passive: ["System Buff: Grants darkvision out to 60 feet."],
-		},
-		attunement: false,
-		weight: 1,
-		value: 261,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the Regent Wars, this phenomenon is often linked to the presence of the Architect's rogue subroutines. Activating it causes the user's eyes to glow with unnatural light.",
-		flavor:
-			"Ignores the remnants of humanity. A relentless surge of lethal intent.",
-		mechanics: {
-			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0647",
-		name: "Ethereal Orb of Annihilation",
-		description:
-			"Forged in the heart of a collapsing C-Rank dimensional rift. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "epic",
-		type: "wondrous",
-		image: "/generated/compendium/items/sys-item-0005.webp",
-		effects: {
-			passive: [
-				"System Buff: Grants resistance to necrotic damage.",
-				"System Buff: Grants resistance to necrotic damage.",
-				"System Buff: Grants darkvision out to 60 feet.",
-			],
-			active: [
-				{
-					name: "System Protocol Override",
-					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
-					action: "action",
-					frequency: "once-per-day",
-				},
-			],
-		},
-		attunement: true,
-		weight: 9,
-		value: 5055,
-		source: "System Ascendant Expansion",
-		lore: "First recorded during the First Void Fracture, this phenomenon is often linked to the presence of a forgotten Regent. Activating it disrupts a Hunter's innate mana perception.",
-		flavor:
-			"Cleanses the darkness within. A forbidden breaking point of the world.",
-		mechanics: {
-			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0648",
-		name: "Aether Helm of the Dragon",
-		description:
-			"A tactical asset optimized for modern urban awakening zones by rogue engineers. This defensive gear provides Base AC/Bonus: **None**. Properties: *Grants resistance to psychic damage.*. As a epic artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
+			"Whispers in the tongue of the Monarchs. This gauntlets pulses with void resonance.",
 		rarity: "epic",
 		type: "armor",
-		image: "/generated/compendium/items/sys-item-0013.webp",
+		image: "/generated/compendium/items/item-p9-28.webp",
 		effects: {
 			passive: [
-				"System Buff: Grants resistance to necrotic damage.",
-				"System Buff: Grants advantage on Protocol checks (saving throws) against illusions.",
-				"System Buff: Grants resistance to necrotic damage.",
+				"You gain resistance to necrotic damage.",
+				"While using this item, your Presence increases by 1.",
 			],
 			active: [
 				{
-					name: "System Protocol Override",
+					name: "Void Resonance Burst",
 					description:
-						"Expend 50 MP to unleash a violent burst of stored dimensional energy. Target must succeed on a DC 16 Protocol check or be stunned until the end of its next turn.",
+						"Unleash a wave of necrotic energy dealing 4d8 damage in a 15ft cone.",
 					action: "action",
-					frequency: "once-per-day",
+					frequency: "once-per-rest",
 				},
 			],
 		},
 		attunement: true,
-		weight: 6,
-		value: 5074,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of the Architect's rogue subroutines who perished in the Regent Wars, this power forces agonizing metabolic sacrifice to maintain.",
-		flavor:
-			"Destroys the quiet space between breaths. A sorrowful death of hesitation.",
+		weight: 1,
+		value: 44768,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Void.",
 		mechanics: {
 			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
+				"Deals necrotic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
 		},
 	},
 	{
-		id: "sys-exp-item-0649",
-		name: "Rift Dagger of the Demon",
+		id: "item-p9-29",
+		name: "Spatial-Shard Gauntlets",
 		description:
-			"Developed by top Guild researchers studying concentrated void energy. This weapon hits with brutal kinetic force dealing **1d4 piercing** damage. Properties: *finesse, light, thrown (range 20/60)*. As a uncommon artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "uncommon",
-		type: "weapon",
-		image: "/generated/compendium/items/sys-item-0020.webp",
-		effects: {
-			passive: ["System Buff: Grants +1 bonus to AC."],
-		},
-		attunement: false,
-		weight: 8,
-		value: 244,
-		source: "System Ascendant Expansion",
-		lore: "Translated from the combat data of the Architect's rogue subroutines who perished in the Regent Wars, this power leaves a trail of shadowy distortion in physical space.",
-		flavor:
-			"Ignores the remnants of humanity. An absolute surge of lethal intent.",
-		mechanics: {
-			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
-		},
-	},
-	{
-		id: "sys-exp-item-0650",
-		name: "Rift Necklace of Annihilation",
-		description:
-			"Translated from an ancient Monarch's combat protocol during the First Awakening. When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. As a rare artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.",
-		rarity: "rare",
-		type: "amulet",
-		image: "/generated/compendium/items/sys-item-0019.webp",
+			"A fragment of the original System code. This gauntlets pulses with aetheric resonance.",
+		rarity: "common",
+		type: "armor",
+		image: "/generated/compendium/items/item-p9-29.webp",
 		effects: {
 			passive: [
-				"System Buff: Grants resistance to fire damage.",
-				"System Buff: Grants +1 bonus to attack and damage rolls.",
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 1,
+		value: 38874,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p9-30",
+		name: "White-Hot Shield",
+		description:
+			"Forged in the heart of a dying sun. This shield pulses with solar resonance.",
+		rarity: "rare",
+		type: "accessory",
+		image: "/generated/compendium/items/item-p9-30.webp",
+		effects: {
+			passive: [
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
 			],
 		},
 		attunement: true,
-		weight: 9,
-		value: 1001,
-		source: "System Ascendant Expansion",
-		lore: "Originating from the aftermath of the Regent Wars, this technique was pioneered by an apex-class Awakened. Utilizing it resonates with the hum of raw magical energy.",
-		flavor:
-			"Denies the arrogant and the mighty. A brutal beautiful catastrophe.",
+		weight: 3,
+		value: 30615,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
 		mechanics: {
 			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
 		},
 	},
 ];

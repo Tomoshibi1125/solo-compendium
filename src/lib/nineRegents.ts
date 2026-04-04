@@ -41,7 +41,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.INTELLIGENCE_REGENT,
 		compendiumId: "umbral-regent-overlay",
 		description:
-			"Ruler of death and the abyssal realm. Command an eternal army extracted from fallen foes. Your System displays [SHADOW REGENT PROTOCOL]. Ascendant Bureau: S-Rank necromancy threat.",
+			"Exarch of death and the abyssal realm. Command an eternal army extracted from fallen foes. Your System displays [SHADOW REGENT PROTOCOL]. Ascendant Bureau: S-Rank necromancy threat.",
 		abilities: [
 			"Shadow Extraction",
 			"Shadow Storage Dimension",
@@ -52,7 +52,7 @@ export const NINE_REGENTS: RegentPath[] = [
 			{
 				name: "Shadow Extraction",
 				description:
-					"Extract shadow from defeated enemy (CR ≤ level) as bonus action. Shadow soldier retains original abilities at 50% power. Max army = 2x level. Permanent until destroyed. System HUD shows army roster with 3D models.",
+					"Extract shadow from defeated enemy (CR ≤ level) as bonus action. Shadow soldier retains original abilities at 50% power. Max army = 2x level. Permanent until destroyed. Aether-sight shows army roster with 3D models.",
 				type: "necromancy",
 			},
 			{
@@ -172,7 +172,7 @@ export const NINE_REGENTS: RegentPath[] = [
 			{
 				name: "Absolute Zero",
 				description:
-					'Touch attack: 10d10 cold + paralyzed (VIT save DC 8+prof+INT). On kill, target becomes diamond-hard ice statue at -273.15°C. Statue cannot be thawed (only Wish works). Forensics find "physics-defying temperature."',
+					'Touch attack: 10d10 cold + paralyzed (VIT save DC 8+prof+INT). On kill, target becomes diamond-hard ice statue at -273.15°C. Statue cannot be thawed (only Wish works). Forensics find "reality-defying temperature."',
 				type: "touch",
 			},
 			{
@@ -348,7 +348,7 @@ export const NINE_REGENTS: RegentPath[] = [
 			{
 				name: "Typhoid Incarnate",
 				description:
-					"Anyone within 60 ft: VIT save DC 8+prof+INT or contract supernatural disease (4d12 necrotic/day, spreads to creatures within 10 ft, cannot be cured except by you or Wish). You see infected via System HUD [INFECTED: filename with countdown].",
+					"Anyone within 60 ft: VIT save DC 8+prof+INT or contract supernatural disease (4d12 necrotic/day, spreads to creatures within 10 ft, cannot be cured except by you or Wish). You see infected via Aether-sight [INFECTED: filename with countdown].",
 				type: "contagion",
 			},
 			{
@@ -382,7 +382,7 @@ export const NINE_REGENTS: RegentPath[] = [
 		type: RegentType.INTELLIGENCE_REGENT,
 		compendiumId: "architect-regent-overlay",
 		description:
-			"Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your System HUD shows universe blueprint. Ascendant Bureau: Dimensional sovereignty threat.",
+			"Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your Aether-sight shows universe blueprint. Ascendant Bureau: Dimensional sovereignty threat.",
 		abilities: [
 			"Reality Blueprint",
 			"Dimensional Genesis",
@@ -399,7 +399,7 @@ export const NINE_REGENTS: RegentPath[] = [
 			{
 				name: "Instant Architecture",
 				description:
-					'Create any structure (up to 300 ft cube) as action (AC 25, 500 HP, permanent). Can include rooms, traps, elevators, ventilation. Building inspectors: "structure appeared overnight, materials unknown, no foundation, physics-defying."',
+					'Create any structure (up to 300 ft cube) as action (AC 25, 500 HP, permanent). Can include rooms, traps, elevators, ventilation. Building inspectors: "structure appeared overnight, materials unknown, no foundation, reality-defying."',
 				type: "construction",
 			},
 			{
@@ -521,7 +521,7 @@ export const NINE_REGENTS: RegentPath[] = [
 			{
 				name: "Reactive Evolution",
 				description:
-					'Instantly adapt to any threat. Damaged by element: gain immunity. Failed save: auto-succeed that save type. Attacked by weapon: gain resistance. Affected by spell: gain spell as stolen power. Biologists: "real-time evolution, impossible speed."',
+					'Instantly adapt to any threat. Damaged by element: gain immunity. Failed save: auto-succeed that save type. Attacked by weapon: gain resistance. Affected by spell: gain spell as stolen power. mana scholars: "real-time evolution, impossible speed."',
 				type: "adaptation",
 			},
 			{

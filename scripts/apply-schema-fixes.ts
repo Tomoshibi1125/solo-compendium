@@ -111,8 +111,13 @@ async function applyFixes() {
 		if (error) {
 			// If exec_sql RPC is not available, we have to use another way or warn
 			console.error(`  Error applying fixes to ${fix.table}:`, error.message);
-			if (error.message.includes("function exec_sql") || error.message.includes("Could not find")) {
-				console.log("  RPC 'exec_sql' not found. Please ensure the 'exec_sql' function is enabled in Supabase SQL Editor:");
+			if (
+				error.message.includes("function exec_sql") ||
+				error.message.includes("Could not find")
+			) {
+				console.log(
+					"  RPC 'exec_sql' not found. Please ensure the 'exec_sql' function is enabled in Supabase SQL Editor:",
+				);
 				console.log(`
           CREATE OR REPLACE FUNCTION exec_sql(sql_string text)
           RETURNS void AS $$

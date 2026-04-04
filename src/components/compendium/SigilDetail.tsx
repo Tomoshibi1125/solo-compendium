@@ -10,6 +10,7 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 interface Sigil {
 	id: string;
 	name: string;
+	display_name?: string;
 	description: string;
 	effect_description: string;
 	rune_type: string;
@@ -24,6 +25,8 @@ interface Sigil {
 	tags?: string[] | null;
 	image?: string | null;
 	source_book?: string | null;
+	flavor?: string;
+	lore?: string;
 }
 
 interface SigilDetailProps {

@@ -10,7 +10,7 @@ export type DiceTheme =
 	| "supreme-deity"
 	| "gate-portal"
 	| "system-interface"
-	| "arise-violet"
+	| "resurge-violet"
 	| "regent-gold";
 
 interface DiceThemeConfig {
@@ -139,7 +139,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		metalness: 0.98,
 		roughness: 0.02,
 		particleColor: "#60a5fa",
-		name: "Prime Architect",
+		name: "The Absolute",
 		accentColor: "#2563eb",
 		trayColor: "#0b1020",
 		bloomFieldOpacity: 0.52,
@@ -171,7 +171,7 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.18,
 		bloomFieldScale: 1.12,
 	},
-	"arise-violet": {
+	"resurge-violet": {
 		baseColor: "#2e1065", // Deep royal purple
 		emissiveColor: "#a855f7", // Ascendant violet
 		glowIntensity: 0.9,

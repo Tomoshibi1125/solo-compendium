@@ -60,6 +60,44 @@ apply_*.mjs
 debug-*.js
 test-pattern*.js
 tmp-*.ps1
+# Audit and purge scripts
+analyze_compendium.js
+global_sanitize.js
+lore_purge.*
+purge_paths.mjs
+replace_*.cjs
+sovereign_fix.js
+update_types.cjs
+audit_zenith.js
+refactor_*.js
+refactor_*.cjs
+# Audit and report artifacts
+*_audit.json
+*_report.json
+*_audit.txt
+*_errors.txt
+*_output.txt
+*_scan.txt
+*.log
+path_lore_map_*.json
+biome_*.txt
+build_*.txt
+typecheck_*.txt
+untracked_*.txt
+ts_errors*.txt
+tsc_*.txt
+knip_*.json
+knip_*.log
+jargon_report.json
+protocol_audit.json
+compendium_audit.json
+*sync.log
+hub_error*.txt
+powers_*.txt
+regent_check.txt
+regents_types.txt
+tattoos_debug.txt
+zero_legacy_audit.txt
 
 # Downloaded Node binary
 node-v*/

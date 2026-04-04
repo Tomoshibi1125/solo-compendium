@@ -1230,7 +1230,7 @@ export class AIServiceManager {
 
 CORE RULES CONTEXT:
 - Uses System Ascendant mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), unique martial and caster powers, hit dice, armor class, saving throws, skill checks.
-- Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Dexterity), VIT (Vitality/Constitution), INT (Intelligence), SENSE (Sense/Wisdom), PRE (Presence/Charisma).
+- Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Agility), VIT (Vitality/Vitality), INT (Intelligence), SENSE (Sense/Sense), PRE (Presence/Presence).
 - Classes are called "Jobs". The 14 canonical jobs are: Destroyer (Fighter), Berserker (Barbarian), Assassin (Rogue), Striker (Monk), Mage (Wizard), Esper (Sorcerer), Revenant (Necromancer), Summoner (Druid), Herald (Cleric), Contractor (Warlock), Stalker (Ranger), Holy Knight (Paladin), Technomancer (Artificer), Idol (Bard).
 - Subclasses are called "Paths". The Protocol Warden (PW) is the system administrator.
 - Regents (formerly Regents) are quest/PW-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).

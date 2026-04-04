@@ -192,7 +192,7 @@ export function CompendiumSidebar({
 				</SystemWindow>
 			)}
 
-			{/* Rift Ranks (for Monsters) */}
+			{/* Rift Ranks (for Anomalies) */}
 			{gateRanks.length > 0 && onGateRankToggle && (
 				<SystemWindow title="RIFT RANKS" className="p-4">
 					<div className="space-y-2">
@@ -220,7 +220,7 @@ export function CompendiumSidebar({
 				</SystemWindow>
 			)}
 
-			{/* Boss Filters (for Monsters) */}
+			{/* Boss Filters (for Anomalies) */}
 			{(onToggleBossOnly || onToggleMiniBossOnly) && (
 				<SystemWindow title="BOSS FILTERS" className="p-4">
 					<div className="space-y-2">

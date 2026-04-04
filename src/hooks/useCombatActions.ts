@@ -372,12 +372,12 @@ export const useCombatActions = (characterId: string) => {
 									: feat.resolution.toLowerCase().includes("agi")
 										? "AGI"
 										: feat.resolution.toLowerCase().includes("con")
-											? "CON"
+											? "VIT"
 											: feat.resolution.toLowerCase().includes("int")
 												? "INT"
 												: feat.resolution.toLowerCase().includes("wis")
-													? "WIS"
-													: "CHA",
+													? "SENSE"
+													: "PRE",
 							}
 						: undefined,
 					damage: feat.damage

@@ -174,20 +174,20 @@ export interface StaticJob {
 		| number[]
 		| {
 				strength?: number;
-				dexterity?: number;
-				constitution?: number;
+				agility?: number;
+				vitality?: number;
 				intelligence?: number;
-				wisdom?: number;
-				charisma?: number;
+				sense?: number;
+				presence?: number;
 		  };
 	size?: "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
 	stats?: {
 		strength: number;
-		dexterity: number;
-		constitution: number;
+		agility: number;
+		vitality: number;
 		intelligence: number;
-		wisdom: number;
-		charisma: number;
+		sense: number;
+		presence: number;
 	};
 	abilities?: string[];
 	subclassLevel?: number;

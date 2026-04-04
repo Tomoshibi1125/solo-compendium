@@ -48,51 +48,101 @@ export function CompendiumTooltip({
 			let data: TooltipPreviewData | null = null;
 			try {
 				switch (type) {
-					case "powers":
-						data =
-							((await staticDataProvider.getPowers("")).find(
-								(p) => p.id === id,
-							) as unknown as TooltipPreviewData) || null;
+					case "powers": {
+						const powers = await staticDataProvider.getPowers("");
+						const p = powers.find((item) => item.id === id);
+						if (p) {
+							data = {
+								id: p.id,
+								name: p.name,
+								description: p.description,
+								level: p.power_level,
+								source_book: p.source,
+							};
+						}
 						break;
-					case "runes":
-						data =
-							((await staticDataProvider.getRunes("")).find(
-								(p) => p.id === id,
-							) as unknown as TooltipPreviewData) || null;
+					}
+					case "runes": {
+						const runes = await staticDataProvider.getRunes("");
+						const r = runes.find((item) => item.id === id);
+						if (r) {
+							data = {
+								id: r.id,
+								name: r.name,
+								description: r.description,
+								rarity: r.rarity,
+								rune_level: r.rune_level,
+							};
+						}
 						break;
-					case "sigils":
-						data =
-							((await staticDataProvider.getSigils("")).find(
-								(p) => p.id === id,
-							) as unknown as TooltipPreviewData) || null;
+					}
+					case "sigils": {
+						const sigils = await staticDataProvider.getSigils("");
+						const s = sigils.find((item) => item.id === id);
+						if (s) {
+							data = {
+								id: s.id,
+								name: s.name,
+								description: s.description,
+								rarity: s.rarity,
+							};
+						}
 						break;
-					case "monsters":
-						data =
-							((await staticDataProvider.getMonsters("")).find(
-								(p) => p.id === id,
-							) as unknown as TooltipPreviewData) || null;
+					}
+					case "anomalies": {
+						const anomalies = await staticDataProvider.getAnomalies("");
+						const m = anomalies.find((item) => item.id === id);
+						if (m) {
+							data = {
+								id: m.id,
+								name: m.name,
+								description: m.description,
+								level: m.level,
+							};
+						}
 						break;
+					}
 					case "items":
-					case "equipment":
-						data =
-							((await staticDataProvider.getItems("")).find(
-								(p) => p.id === id,
-							) as unknown as TooltipPreviewData) || null;
+					case "equipment": {
+						const items = await staticDataProvider.getItems("");
+						const i = items.find((item) => item.id === id);
+						if (i) {
+							data = {
+								id: i.id,
+								name: i.name,
+								description: i.description,
+								rarity: i.rarity,
+							};
+						}
 						break;
-					case "spells":
-						data =
-							((await staticDataProvider.getSpells("")).find(
-								(p) => p.id === id,
-							) as unknown as TooltipPreviewData) || null;
+					}
+					case "spells": {
+						const spells = await staticDataProvider.getSpells("");
+						const s = spells.find((item) => item.id === id);
+						if (s) {
+							data = {
+								id: s.id,
+								name: s.name,
+								description: s.description,
+								level: s.level,
+							};
+						}
 						break;
-					case "techniques":
-						data =
-							((await staticDataProvider.getTechniques("")).find(
-								(p) => p.id === id,
-							) as unknown as TooltipPreviewData) || null;
+					}
+					case "techniques": {
+						const techniques = await staticDataProvider.getTechniques("");
+						const t = techniques.find((item) => item.id === id);
+						if (t) {
+							data = {
+								id: t.id,
+								name: t.name,
+								description: t.description,
+								level: t.level,
+							};
+						}
 						break;
+					}
 					default:
-						// Generic fallback if needed
 						break;
 				}
 			} catch (e) {

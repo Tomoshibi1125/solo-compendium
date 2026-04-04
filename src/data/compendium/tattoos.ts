@@ -12,13 +12,13 @@ export const tattoos = [
 		body_part: "Chest",
 		effects: {
 			primary:
-				"While not wearing armor, your base AC becomes 12 + your Dexterity modifier.",
+				"While not wearing armor, your base AC becomes 12 + your Agility modifier.",
 		},
 		mechanics: {
-			ac_formula: "12 + DEX",
+			ac_formula: "12 + AGI",
 			replaces_armor: true,
 			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
+				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			requires_attunement: true,
@@ -26,7 +26,7 @@ export const tattoos = [
 		},
 		tags: ["defense", "tattoo", "barrier"],
 		source: "System Ascendant Canon",
-		lore: "First recorded during the Resonance Cascade, this phenomenon is often linked to the presence of the Architect's rogue subroutines. Activating it disrupts a Hunter's innate mana perception.",
+		lore: "First recorded during the Resonance Cascade, this phenomenon is often linked to the presence of the Architect's forgotten blueprints. Activating it disrupts a Hunter's innate mana perception.",
 		flavor:
 			"Crushes the flow of time itself. A forbidden symphony of violence.",
 	},
@@ -40,13 +40,13 @@ export const tattoos = [
 		body_part: "Chest",
 		effects: {
 			primary:
-				"While not wearing armor, your base AC becomes 15 + your Dexterity modifier (max 2).",
+				"While not wearing armor, your base AC becomes 15 + your Agility modifier (max 2).",
 		},
 		mechanics: {
-			ac_formula: "15 + DEX (max 2)",
+			ac_formula: "15 + AGI (max 2)",
 			replaces_armor: true,
 			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
+				"[Gate-Lord's Echo: S-Rank resonance detected. Reality parameters shifting.]",
 		},
 		limitations: {
 			requires_attunement: true,
@@ -54,7 +54,7 @@ export const tattoos = [
 		},
 		tags: ["defense", "tattoo", "barrier"],
 		source: "System Ascendant Canon",
-		lore: "First recorded during the Eclipse Protocol, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it leaves a trail of shadowy distortion in physical space.",
+		lore: "First recorded during the Eclipse Convergence, this phenomenon is often linked to the presence of Rogue Regent entities. Activating it leaves a trail of shadowy distortion in physical space.",
 		flavor:
 			"Cleanses the dimensional divide. A forbidden symphony of violence.",
 	},
@@ -73,7 +73,7 @@ export const tattoos = [
 			ac_formula: "18 flat",
 			replaces_armor: true,
 			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
+				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			requires_attunement: true,
@@ -81,7 +81,7 @@ export const tattoos = [
 		},
 		tags: ["defense", "tattoo", "barrier"],
 		source: "System Ascendant Canon",
-		lore: "First recorded during the Azure Gate Collapse, this phenomenon is often linked to the presence of Phantom Class anomalies. Activating it forces agonizing metabolic sacrifice to maintain.",
+		lore: "First recorded during the Azure Gate Collapse, this phenomenon is often linked to the presence of Phantom Tier aberrations. Activating it forces agonizing metabolic sacrifice to maintain.",
 		flavor:
 			"Weaves the quiet space between breaths. A relentless death of hesitation.",
 	},
@@ -105,7 +105,7 @@ export const tattoos = [
 			healing: "Equal to necrotic damage dealt",
 			uses_per_rest: "10 charges, regain 1d6+4 at dawn",
 			system_interaction:
-				"[Warning: Hazardous subroutine detected. Mana integration successful.]",
+				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
 			charges: 10,
@@ -127,7 +127,7 @@ export const tattoos = [
 		body_part: "Arm",
 		effects: {
 			primary:
-				"As an action, you can extend inky tendrils to grapple a creature within 15 feet. The target must succeed on a DC 14 Strength Protocol check or be grappled.",
+				"As an action, you can extend inky tendrils to grapple a creature within 15 feet. The target must succeed on a DC 14 Strength check or be grappled.",
 			secondary:
 				"While grappled, the target takes 3d6 force damage at the start of each of its turns.",
 		},
@@ -137,7 +137,7 @@ export const tattoos = [
 			save_ability: "Strength",
 			damage_per_turn: "3d6 force",
 			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
+				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {
 			conditions: ["Requires concentration", "One target at a time"],
@@ -168,7 +168,7 @@ export const tattoos = [
 			activation: { type: "bonus action" },
 			duration: "1 minute",
 			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
+				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Bonus action feature: once per long rest",
@@ -199,7 +199,7 @@ export const tattoos = [
 			resistance: "All damage except force",
 			movement: "Through creatures and objects",
 			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
+				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			uses_per_rest: "3 charges, regain all at dawn",
@@ -207,7 +207,7 @@ export const tattoos = [
 		},
 		tags: ["defense", "tattoo", "incorporeal", "phase"],
 		source: "System Ascendant Canon",
-		lore: "A manifestation of raw System authority discovered after the Binary Void-Data Influx, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
+		lore: "A manifestation of raw System authority discovered after the Abyssal Rift Incursion, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
 		flavor: "Cleanses the darkness within. A subtle ultimate equalizer.",
 	},
 	{
@@ -228,7 +228,7 @@ export const tattoos = [
 			spells_granted: ["Disguise Self"],
 			spell_uses: "1/long rest",
 			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
+				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Disguise Self: once per long rest",
@@ -255,14 +255,14 @@ export const tattoos = [
 			resistance: "necrotic",
 			death_save: "Drop to 1 HP instead of 0",
 			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
+				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {
 			uses_per_rest: "Death prevention: once per long rest",
 		},
 		tags: ["defense", "tattoo", "healing", "necrotic"],
 		source: "System Ascendant Canon",
-		lore: "Translated from the combat data of a Sovereign of the Void who perished in the Regent Wars, this power resonates with the hum of raw magical energy.",
+		lore: "Translated from the combat data of a Regent of the Void who perished in the Regent Wars, this power resonates with the hum of raw magical energy.",
 		flavor:
 			"Ignores all who stand in opposition. An absolute whisper in the shadows.",
 	},
@@ -284,12 +284,12 @@ export const tattoos = [
 			spells_granted: ["Disguise Self"],
 			spell_uses: "1/long rest",
 			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
+				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {},
 		tags: ["utility", "tattoo", "illusion", "disguise"],
 		source: "System Ascendant Canon",
-		lore: "Translated from the combat data of Phantom Class anomalies who perished in the First Void Fracture, this power leaves a trail of shadowy distortion in physical space.",
+		lore: "Translated from the combat data of Phantom Tier aberrations who perished in the First Void Fracture, this power leaves a trail of shadowy distortion in physical space.",
 		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
 	},
 	{
@@ -310,7 +310,7 @@ export const tattoos = [
 			stealth_advantage: "In dim light or darkness",
 			reaction_invisibility: true,
 			system_interaction:
-				"[Notice: Unregistered variable detected. Immediate caution advised.]",
+				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Invisibility reaction: once per long rest",
@@ -325,7 +325,7 @@ export const tattoos = [
 		id: "tattoo-spellwrought-shield",
 		name: "Spellwrought Tattoo: Shield",
 		description:
-			"A compact defensive glyph inked into the wrist that contains a single-use essence matrix. When danger is imminent, the glyph shatters and casts the stored protocol automatically.",
+			"A compact defensive glyph inked into the wrist that contains a single-use essence lattice. When danger is imminent, the glyph shatters and casts the stored protocol automatically.",
 		rarity: "uncommon",
 		attunement: false,
 		body_part: "Wrist",
@@ -338,7 +338,7 @@ export const tattoos = [
 			spell_uses: "1 (tattoo consumed)",
 			ac_bonus: 5,
 			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
+				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			consumable: true,
@@ -351,7 +351,7 @@ export const tattoos = [
 	},
 	{
 		id: "tattoo-spellwrought-fireball",
-		name: "Spellwrought Tattoo: Incineration Protocol",
+		name: "Spellwrought Tattoo: Incineration Decree",
 		description:
 			"A volatile fire glyph compressed into a small circle on the palm. Slamming the palm forward activates the protocol once, detonating a sphere of compressed thermal energy before the ink crumbles away.",
 		rarity: "rare",
@@ -359,24 +359,24 @@ export const tattoos = [
 		body_part: "Palm",
 		effects: {
 			primary:
-				"Once, cast Fireball at 3rd level (8d6 fire damage, DC 15 Dexterity Protocol check for half). The tattoo then vanishes.",
+				"Once, cast Incineration Pillar at 3rd level (8d6 fire damage, DC 15 Agility check for half). The tattoo then vanishes.",
 		},
 		mechanics: {
 			spells_granted: ["Fireball"],
 			spell_level: 3,
 			damage: "8d6 fire",
 			save_dc: 15,
-			save_ability: "Dexterity",
+			save_ability: "Agility",
 			spell_uses: "1 (tattoo consumed)",
 			system_interaction:
-				"[Protocol Warden: Hazardous subroutine isolated. Mana integration successful.]",
+				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			consumable: true,
 		},
 		tags: ["offense", "tattoo", "consumable", "fire"],
 		source: "System Ascendant Canon",
-		lore: "First recorded during the Eclipse Protocol, this phenomenon is often linked to the presence of Phantom Class anomalies. Activating it leaves a trail of shadowy distortion in physical space.",
+		lore: "First recorded during the Eclipse Decree, this phenomenon is often linked to the presence of Phantom Class anomalies. Activating it leaves a trail of shadowy distortion in physical space.",
 		flavor:
 			"Ignites the flow of time itself. A triumphant symphony of violence.",
 	},
@@ -399,7 +399,7 @@ export const tattoos = [
 			reaction_immunity: true,
 			healing: "Half of damage absorbed",
 			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
+				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Immunity reaction: once per long rest",
@@ -429,7 +429,7 @@ export const tattoos = [
 			no_concentration: true,
 			spell_uses: "1/long rest",
 			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
+				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Once per long rest",
@@ -450,7 +450,7 @@ export const tattoos = [
 		body_part: "Forearms",
 		effects: {
 			primary:
-				"As an action, you can clap your hands together to create a thunderous burst. Each creature in a 20-foot radius must make a DC 15 Constitution Protocol check or take 4d8 thunder damage and be deafened for 1 minute.",
+				"As an action, you can clap your hands together to create a thunderous burst. Each creature in a 20-foot radius must make a DC 15 Vitality check or take 4d8 thunder damage and be deafened for 1 minute.",
 			secondary:
 				"On a successful save, creatures take half damage and are not deafened.",
 		},
@@ -458,10 +458,10 @@ export const tattoos = [
 			area: "20-foot radius",
 			damage: "4d8 thunder",
 			save_dc: 15,
-			save_ability: "Constitution",
+			save_ability: "Vitality",
 			condition: "Deafened",
 			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
+				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {
 			uses_per_rest: "3 charges, regain 1d3 at dawn",
@@ -469,7 +469,7 @@ export const tattoos = [
 		},
 		tags: ["offense", "tattoo", "thunder", "aoe"],
 		source: "System Ascendant Canon",
-		lore: "Translated from the combat data of the Architect's rogue subroutines who perished in the Mana Awakening, this power overrides basic physics within a 30-foot radius.",
+		lore: "Translated from the combat data of the Architect's forgotten blueprints who perished in the First Resonance, this power overrides basic physics within a 30-foot radius.",
 		flavor:
 			"Destroys the concept of defeat. A sorrowful surge of lethal intent.",
 	},
@@ -491,7 +491,7 @@ export const tattoos = [
 			duration: "10 minutes",
 			activation: { type: "bonus action" },
 			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
+				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Once per long rest",
@@ -506,7 +506,7 @@ export const tattoos = [
 		id: "tattoo-ironhide",
 		name: "Ironhide Tattoo",
 		description:
-			"Dense geometric blocks of iron-gray ink that harden the skin to supernatural toughness. Popular among Bulwark-class Hunters who prefer to fight without heavy armor inside confined gate corridors.",
+			"Dense geometric blocks of iron-gray ink that harden the skin to supernatural toughness. Popular among Bulwark-class Hunters who prefer to fight without Heavy Carapace Armor inside confined gate corridors.",
 		rarity: "uncommon",
 		attunement: true,
 		body_part: "Torso",
@@ -517,14 +517,14 @@ export const tattoos = [
 		mechanics: {
 			resistance: "BPS (nonmagical)",
 			system_interaction:
-				"[Warning: Hazardous subroutine detected. Mana integration successful.]",
+				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
-			conditions: ["Does not stack with heavy armor"],
+			conditions: ["Does not stack with Heavy Carapace Armor"],
 		},
 		tags: ["defense", "tattoo", "physical resistance"],
 		source: "System Ascendant Canon",
-		lore: "Translated from the combat data of Rogue Protocol entities who perished in the Manifestation Event, this power forces agonizing metabolic sacrifice to maintain.",
+		lore: "Translated from the combat data of Rogue Regent entities who perished in the Regent Manifestation, this power forces agonizing metabolic sacrifice to maintain.",
 		flavor:
 			"Absorbs the darkness within. A sorrowful breaking point of the world.",
 	},
@@ -539,22 +539,22 @@ export const tattoos = [
 		effects: {
 			primary: "Your melee weapon attacks deal an extra 1d6 poison damage.",
 			secondary:
-				"Once per short rest, a creature hit must make a DC 14 Constitution Protocol check or be poisoned for 1 minute.",
+				"Once per short rest, a creature hit must make a DC 14 Vitality Decree check or be poisoned for 1 minute.",
 		},
 		mechanics: {
 			damage_bonus: "1d6 poison",
 			save_dc: 14,
-			save_ability: "Constitution",
+			save_ability: "Vitality",
 			condition: "Poisoned",
 			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
+				"[Gate-Lord's Echo: S-Rank resonance detected. Reality parameters shifting.]",
 		},
 		limitations: {
 			uses_per_rest: "Poison condition: once per short rest",
 		},
 		tags: ["offense", "tattoo", "poison"],
 		source: "System Ascendant Canon",
-		lore: "First recorded during the Binary Void-Data Influx, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it overrides basic physics within a 30-foot radius.",
+		lore: "First recorded during the Abyssal Rift Incursion, this phenomenon is often linked to the presence of Rogue Regent entities. Activating it overrides basic physics within a 30-foot radius.",
 		flavor:
 			"Commands the remnants of humanity. A triumphant surge of lethal intent.",
 	},
@@ -575,12 +575,12 @@ export const tattoos = [
 			immunity: "Forced teleportation/banishment",
 			saving_throw_advantage: "Planar displacement effects",
 			system_interaction:
-				"[Fatal Error: S-Rank protocol detected. Combat parameters updated.]",
+				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {},
 		tags: ["defense", "tattoo", "dimensional", "anchor"],
 		source: "System Ascendant Canon",
-		lore: "Originating from the aftermath of the Eclipse Protocol, this technique was pioneered by Dimensional Scavengers. Utilizing it creates a vacuum in ambient mana fields.",
+		lore: "Originating from the aftermath of the Eclipse Convergence, this technique was pioneered by Dimensional Scavengers. Utilizing it creates a vacuum in ambient mana fields.",
 		flavor:
 			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
 	},
@@ -603,7 +603,7 @@ export const tattoos = [
 			damage_bonus: 4,
 			immunities: ["Charmed", "Frightened"],
 			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
+				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			conditions: [
@@ -634,7 +634,7 @@ export const tattoos = [
 			bonus_spell_slots: 2,
 			max_slot_level: 3,
 			system_interaction:
-				"[Warning: Hazardous subroutine detected. Mana integration successful.]",
+				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
 			recharge: "Dawn only",
@@ -647,9 +647,9 @@ export const tattoos = [
 	},
 	{
 		id: "tattoo-sovereign-brand",
-		name: "Sovereign's Brand",
+		name: "Regent's Brand",
 		description:
-			"An intricate crown-shaped mark that appears only on those who have been recognized by a Sovereign entity. The brand cannot be replicated by any known inscription method—it simply manifests on the skin of the chosen.",
+			"An intricate crown-shaped mark that appears only on those who have been recognized by a Regent entity. The brand cannot be replicated by any known inscription method—it simply manifests on the skin of the chosen.",
 		rarity: "legendary",
 		attunement: true,
 		body_part: "Forehead",
@@ -662,14 +662,14 @@ export const tattoos = [
 			proficiency: "All saving throws",
 			reroll: "1 failed save/long rest",
 			system_interaction:
-				"[Warning: Hazardous subroutine detected. Mana integration successful.]",
+				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
 			conditions: ["Cannot be willingly removed", "Visible to other Awakened"],
 		},
 		tags: ["defense", "tattoo", "sovereign", "legendary"],
 		source: "System Ascendant Canon",
-		lore: "Originating from the aftermath of the Binary Void-Data Influx, this technique was pioneered by high-tier Rift beasts. Utilizing it creates a vacuum in ambient mana fields.",
+		lore: "Originating from the aftermath of the Abyssal Rift Incursion, this technique was pioneered by high-tier Rift beasts. Utilizing it creates a vacuum in ambient mana fields.",
 		flavor:
 			"Shatters the fragile limits of flesh. A brutal ultimate equalizer.",
 	},
@@ -691,7 +691,7 @@ export const tattoos = [
 			detection_range: "1 mile",
 			detection_target: "Gates and dimensional disturbances",
 			system_interaction:
-				"[Alert: S-Rank protocol isolated. Combat parameters updated.]",
+				"[Gate-Lord's Echo: S-Rank resonance detected. Reality parameters shifting.]",
 		},
 		limitations: {},
 		tags: ["utility", "tattoo", "navigation", "gate"],
@@ -709,7 +709,7 @@ export const tattoos = [
 		body_part: "Full Back",
 		effects: {
 			primary:
-				"When you die, your body erupts in flame. At the start of your next turn, you return to life with half your maximum hit points. All creatures within 20 feet take 8d6 fire damage (DC 18 Dexterity Protocol check for half).",
+				"When you die, your body erupts in flame. At the start of your next turn, you return to life with half your maximum hit points. All creatures within 20 feet take 8d6 fire damage (DC 18 Agility check for half).",
 			secondary:
 				"The tattoo is consumed upon activation and cannot be re-applied for 30 days.",
 		},
@@ -719,9 +719,9 @@ export const tattoos = [
 			damage: "8d6 fire",
 			area: "20-foot radius",
 			save_dc: 18,
-			save_ability: "Dexterity",
+			save_ability: "Agility",
 			system_interaction:
-				"[Critical Warning: Unregistered variable isolated. Immediate caution advised.]",
+				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			consumable: true,

@@ -8,7 +8,7 @@ const supabaseKey = process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function checkColumns() {
+async function _checkColumns() {
 	const tables = [
 		"compendium_jobs",
 		"compendium_monsters",
@@ -28,7 +28,7 @@ async function checkColumns() {
 		"compendium_skills",
 		"compendium_relics",
 		"compendium_techniques",
-		"compendium_sigils"
+		"compendium_sigils",
 	];
 
 	console.log("Checking columns for all compendium tables...");
@@ -39,12 +39,11 @@ async function checkColumns() {
                 SELECT column_name, data_type 
                 FROM information_schema.columns 
                 WHERE table_name = '${table}' AND table_schema = 'public';
-            `
+            `,
 		});
 
 		if (error) {
 			console.error(`Error checking columns for ${table}:`, error.message);
-			continue;
 		}
 
 		// Since exec_sql (void) doesn't return data, we need a different approach or just assume we need to add them.

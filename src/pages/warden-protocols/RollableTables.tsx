@@ -20,7 +20,7 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 const GATE_COMPLICATIONS = [
 	"Mana surge causes random power effects",
 	"Rift structure shifts, changing layout",
-	"Monster reinforcements arrive",
+	"Anomaly reinforcements arrive",
 	"Environmental hazard activates (fire, ice, poison)",
 	"Time distortion slows/speeds ascendant team",
 	"Shadow corruption spreads",
@@ -29,7 +29,7 @@ const GATE_COMPLICATIONS = [
 	"Mana depletion reduces power effectiveness",
 	"Illusionary duplicates confuse ascendants",
 	"Rift rank increases mid-encounter",
-	"Monster evolution triggers",
+	"Anomaly evolution triggers",
 ];
 
 const GATE_REWARDS = [
@@ -39,7 +39,7 @@ const GATE_REWARDS = [
 	"Relic fragment",
 	"System favor bonus",
 	"Experience multiplier",
-	"Unique monster part",
+	"Unique Anomaly part",
 	"Rift completion bonus",
 	"Hidden treasure cache",
 	"Regent blessing",
@@ -56,7 +56,7 @@ const GATE_HAZARDS = [
 	"Gravity distortion",
 	"Time dilation field",
 	"Mana drain zone",
-	"Monster spawning point",
+	"Anomaly spawning point",
 	"Core radiation",
 	"Dimensional rift",
 	"System interference",
@@ -65,7 +65,7 @@ const GATE_HAZARDS = [
 const NPC_MOTIVATIONS = [
 	"Seeking power through Rifts",
 	"Protecting loved ones",
-	"Revenge against monsters",
+	"Revenge against Anomalies",
 	"Researching Rift phenomena",
 	"Building an ascendant organization",
 	"Seeking the Umbral Regent",
@@ -82,13 +82,13 @@ const NPC_SECRETS = [
 	"Working for a Regent",
 	"Has a cursed relic",
 	"Knows about the reset",
-	"Is actually a monster",
+	"Is actually a Anomaly",
 	"Has System favor debt",
 	"Betrayed their Ascendant team",
 	"Seeking forbidden knowledge",
 	"Has a hidden Rift",
 	"Is being hunted",
-	"Knows the Prime Architect personally",
+	"Knows the The Absolute personally",
 	"Has a duplicate identity",
 ];
 
@@ -99,7 +99,7 @@ const GATE_THEMES = [
 	"Construct Forge (construct focus)",
 	"Abyssal Depths (fiend focus)",
 	"Celestial Spire (celestial focus)",
-	"Prime Architect's Domain (shadow focus)",
+	"The Absolute's Domain (shadow focus)",
 	"Necromantic Lab (undead + construct)",
 	"Mana Nexus (elemental + aberration)",
 	"Umbral Regent's Memory",

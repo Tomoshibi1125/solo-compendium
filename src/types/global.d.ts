@@ -1,15 +1,22 @@
-interface Window {
-	posthog?: {
-		capture: (event: string, properties?: Record<string, unknown>) => void;
-		identify: (userId: string, properties?: Record<string, unknown>) => void;
-		reset: () => void;
-	};
-	requestIdleCallback: (
-		callback: (deadline: {
-			didTimeout: boolean;
-			timeRemaining: () => number;
-		}) => void,
-		options?: { timeout: number },
-	) => number;
-	cancelIdleCallback: (handle: number) => void;
+import type { PostHog } from "posthog-js";
+import type { Json } from "@/integrations/supabase/types";
+
+declare global {
+	interface Window {
+		posthog?: PostHog;
+		plausible?: (
+			eventName: string,
+			options?: { props?: Record<string, Json | undefined> },
+		) => void;
+		supabaseConfigured?: boolean;
+		webkitAudioContext?: typeof AudioContext;
+		requestIdleCallback: (
+			callback: (deadline: {
+				didTimeout: boolean;
+				timeRemaining: () => number;
+			}) => void,
+			options?: { timeout: number },
+		) => number;
+		cancelIdleCallback: (handle: number) => void;
+	}
 }

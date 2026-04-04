@@ -3,12 +3,6 @@
  * Handles automatic feature/equipment/power addition from compendium
  */
 
-import { backgrounds as staticBackgrounds } from "@/data/compendium/backgrounds";
-import {
-	type Item as StaticItem,
-	items as staticItems,
-} from "@/data/compendium/items";
-import { jobs as staticJobs } from "@/data/compendium/jobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { calculateFeatureUses } from "@/lib/characterEngine";
@@ -17,7 +11,15 @@ import {
 	addLocalFeature,
 	addLocalPower,
 	isLocalCharacterId,
+	listLocalFeatures,
+	updateLocalFeature,
 } from "@/lib/guestStore";
+import {
+	getStaticBackgrounds,
+	getStaticItems,
+	getStaticJobs,
+	getStaticPaths,
+} from "@/lib/ProtocolDataManager";
 import {
 	filterRowsBySourcebookAccess,
 	getCharacterCampaignId,
@@ -29,6 +31,11 @@ import type {
 	StaticBackground,
 	StaticJob,
 } from "@/types/character";
+import type {
+	CompendiumBackground,
+	CompendiumJob as CompendiumJobType,
+	CompendiumItem as StaticItem,
+} from "@/types/compendium";
 export type { StaticBackground, StaticJob };
 
 import { getProficiencyBonus } from "@/types/system-rules";
@@ -50,9 +57,8 @@ export function normalizeItemLookupName(value: string): string {
 		.toLowerCase();
 }
 
-export function findStaticItemByName(
-	itemName: string,
-): (typeof staticItems)[number] | null {
+export function findStaticItemByName(itemName: string): StaticItem | null {
+	const staticItems = getStaticItems();
 	const normalized = normalizeItemLookupName(itemName);
 
 	// Exact match first
@@ -73,8 +79,9 @@ export function findStaticItemByName(
 
 export function _findStaticBackgroundByName(
 	backgroundName: string | null | undefined,
-): StaticBackground | null {
+): CompendiumBackground | null {
 	if (!backgroundName) return null;
+	const staticBackgrounds = getStaticBackgrounds();
 	const normalized = backgroundName.trim().toLowerCase();
 	return (
 		staticBackgrounds.find((b) => b.name.trim().toLowerCase() === normalized) ??
@@ -110,8 +117,9 @@ export function deriveItemType(item: StaticItem): string {
 
 export function findStaticJobByName(
 	jobName: string | null | undefined,
-): StaticJob | null {
+): CompendiumJobType | null {
 	if (!jobName) return null;
+	const staticJobs = getStaticJobs();
 	const normalized = jobName.trim().toLowerCase();
 	return (
 		staticJobs.find((j) => j.name.trim().toLowerCase() === normalized) ?? null
@@ -131,7 +139,7 @@ export function buildItemProperties(item: StaticItem): string[] {
 			props.push("+2 AC");
 		} else {
 			// e.g. "16" from "16", or "14 + Dex modifier (max 2)" → extract leading number
-			const acNum = parseInt(item.armor_class, 10);
+			const acNum = parseInt(String(item.armor_class), 10);
 			if (!Number.isNaN(acNum) && acNum > 10) {
 				props.push(`AC ${acNum}`);
 			}
@@ -318,7 +326,6 @@ export async function getExistingFeatureNames(
 	characterId: string,
 ): Promise<Set<string>> {
 	if (isLocalCharacterId(characterId)) {
-		const { listLocalFeatures } = await import("@/lib/guestStore");
 		return new Set(listLocalFeatures(characterId).map((f) => f.name));
 	}
 
@@ -348,10 +355,9 @@ export async function insertCharacterFeature(
 			uses_current: payload.uses_current ?? null,
 			recharge: payload.recharge ?? null,
 			is_active: payload.is_active ?? true,
-			modifiers: ((payload as Record<string, unknown>).modifiers ??
+			modifiers: (payload.modifiers ??
 				null) as Database["public"]["Tables"]["character_features"]["Row"]["modifiers"],
-			homebrew_id:
-				((payload as Record<string, unknown>).homebrew_id as string) ?? null,
+			homebrew_id: (payload.homebrew_id as string) ?? null,
 		});
 		return;
 	}
@@ -368,9 +374,6 @@ export async function updateCharacterFeatureModifiersByName(
 	modifiers: FeatureModifier[] | null,
 ): Promise<void> {
 	if (isLocalCharacterId(characterId)) {
-		const { listLocalFeatures, updateLocalFeature } = await import(
-			"@/lib/guestStore"
-		);
 		const local = listLocalFeatures(characterId);
 		const existing = local.find(
 			(f: { name?: string | null; id: string }) => f.name === name,
@@ -515,7 +518,7 @@ export function getJobTraitModifiers(
 				},
 			];
 		}
-		if (trait === "spell resistance matrix") {
+		if (trait === "spell resistance lattice") {
 			return [
 				{ type: "resistance", value: 0, target: "psychic", source: traitName },
 			];
@@ -1429,11 +1432,11 @@ export function getJobAwakeningFeatureModifiers(
  */
 const JOB_ASI_TO_SYSTEM: Record<string, string> = {
 	strength: "STR",
-	dexterity: "AGI",
-	constitution: "VIT",
+	agility: "AGI",
+	vitality: "VIT",
 	intelligence: "INT",
-	wisdom: "SENSE",
-	charisma: "PRE",
+	sense: "SENSE",
+	presence: "PRE",
 };
 
 /**
@@ -1526,7 +1529,7 @@ export function getPathFeatureModifiers(
 				];
 		}
 		if (path === "path of the spell breaker") {
-			if (feature === "matrix combat casting")
+			if (feature === "lattice combat flow")
 				return [
 					{
 						type: "caster_level",
@@ -1771,7 +1774,7 @@ export function getPathFeatureModifiers(
 
 	// 13. TECHNOMANCER PATHS
 	if (job === "technomancer") {
-		if (path === "alchemist" || path === "path of the bio-engineer") {
+		if (path === "alchemist" || path === "path of the bio-architect") {
 			if (feature === "experimental elixir")
 				return [
 					{
@@ -2498,11 +2501,11 @@ export async function addJobAwakeningBenefitsForLevel(
 			return;
 		}
 
-		const { paths: staticPaths } = await import("@/data/compendium/paths");
+		const staticPaths = getStaticPaths();
 		const pathData = staticPaths.find((p) => p.name === character.path);
 		if (pathData) {
-			const pathFeaturesAtLevel = (pathData.features || []).filter(
-				(f) => f.level === level,
+			const pathFeaturesAtLevel = (pathData.features ?? []).filter(
+				(f: { level: number }) => f.level === level,
 			);
 			for (const feature of pathFeaturesAtLevel) {
 				if (existingNames.has(feature.name)) continue;
@@ -2710,9 +2713,7 @@ export async function addBackgroundFeatures(
 /**
  * Add starting equipment from job and background
  */
-function normalizeToStaticItem(
-	entry: (typeof staticItems)[number],
-): StaticItem {
+function normalizeToStaticItem(entry: StaticItem): StaticItem {
 	return {
 		...entry,
 		rarity: (["common", "uncommon", "rare", "epic", "legendary"].includes(
@@ -2780,7 +2781,10 @@ export async function addStartingEquipment(
 				? {
 						name: normalizedItem.name,
 						item_type: itemType,
-						weight: normalizedItem.weight ?? null,
+						weight:
+							typeof normalizedItem.weight === "string"
+								? parseFloat(normalizedItem.weight) || 0
+								: (normalizedItem.weight ?? null),
 						description: normalizedItem.description ?? null,
 						properties: buildItemProperties(normalizedItem),
 						rarity: mapToDbRarity(normalizedItem.rarity),
@@ -2881,7 +2885,10 @@ export async function addStartingEquipment(
 							item_type: itemType,
 							description: item.description || null,
 							properties: itemProps,
-							weight: item.weight || null,
+							weight:
+								typeof item.weight === "string"
+									? parseFloat(item.weight) || 0
+									: item.weight || null,
 							quantity: 1,
 							is_equipped: false,
 							sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
@@ -2898,7 +2905,10 @@ export async function addStartingEquipment(
 							item_type: itemType,
 							description: item.description || null,
 							properties: itemProps,
-							weight: item.weight || null,
+							weight:
+								typeof item.weight === "string"
+									? parseFloat(item.weight) || 0
+									: item.weight || null,
 							quantity: 1,
 							is_equipped: false,
 							sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({

@@ -13,13 +13,13 @@ import { DMPage } from "../pages/DMPage";
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
-const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
+const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
 test.describe("Comprehensive DM Complete Test", () => {
 	let context: BrowserContext;
 	let page: Page;
 	let authPage: AuthPage;
-	let dmPage: DMPage;
+	let _dmPage: DMPage;
 
 	test.beforeAll(async ({ browser }) => {
 		context = await browser.newContext({
@@ -29,7 +29,7 @@ test.describe("Comprehensive DM Complete Test", () => {
 		});
 		page = await context.newPage();
 		authPage = new AuthPage(page);
-		dmPage = new DMPage(page);
+		_dmPage = new DMPage(page);
 	});
 
 	test.afterAll(async () => {
@@ -169,7 +169,7 @@ test.describe("Comprehensive DM Complete Test", () => {
 					}
 					break;
 				}
-			} catch (error) {}
+			} catch (_error) {}
 		}
 
 		if (navigationFound) {
@@ -611,9 +611,9 @@ test.describe("Comprehensive DM Complete Test", () => {
 
 					if (colorRgb && bgRgb) {
 						const contrast =
-							Math.abs(parseInt(colorRgb[0]) - parseInt(bgRgb[0])) +
-							Math.abs(parseInt(colorRgb[1]) - parseInt(bgRgb[1])) +
-							Math.abs(parseInt(colorRgb[2]) - parseInt(bgRgb[2]));
+							Math.abs(parseInt(colorRgb[0], 10) - parseInt(bgRgb[0], 10)) +
+							Math.abs(parseInt(colorRgb[1], 10) - parseInt(bgRgb[1], 10)) +
+							Math.abs(parseInt(colorRgb[2], 10) - parseInt(bgRgb[2], 10));
 
 						if (contrast < 100) {
 							issues++;
@@ -951,7 +951,7 @@ async function testPageInteractions(
 					await page.waitForTimeout(500);
 				}
 			}
-		} catch (buttonError) {
+		} catch (_buttonError) {
 			// Continue testing other buttons
 		}
 	}
@@ -981,7 +981,7 @@ async function testPageInteractions(
 			}
 
 			await page.waitForTimeout(200);
-		} catch (inputError) {
+		} catch (_inputError) {
 			// Continue testing other inputs
 		}
 	}
@@ -1051,7 +1051,7 @@ async function testAccessibilityFeatures(
 				.nth(i)
 				.evaluate((el) => document.activeElement === el);
 			console.log(`      Element ${i} focusable: ${isFocused}`);
-		} catch (focusError) {
+		} catch (_focusError) {
 			// Continue testing
 		}
 	}

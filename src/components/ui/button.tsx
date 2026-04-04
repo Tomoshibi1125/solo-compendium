@@ -23,8 +23,8 @@ const buttonVariants = cva(
 				// Sovereign power variants
 				regent:
 					"bg-regent-gold text-white hover:bg-regent-gold/90 hover:shadow-[0_0_25px_hsl(var(--regent-gold)/0.5),0_0_50px_hsl(var(--shadow-purple)/0.3)] hover:-translate-y-1 regent-seal",
-				arise:
-					"bg-arise-violet text-white hover:bg-arise-violet/90 hover:shadow-[0_0_30px_hsl(var(--arise-violet)/0.6),0_0_60px_hsl(var(--shadow-purple)/0.4)] hover:-translate-y-1 arise",
+				resurge:
+					"bg-resurge-violet text-white hover:bg-resurge-violet/90 hover:shadow-[0_0_30px_hsl(var(--resurge-violet)/0.6),0_0_60px_hsl(var(--shadow-purple)/0.4)] hover:-translate-y-1 resurge",
 				// Gate-tier variants
 				"gate-e":
 					"bg-gate-e text-white hover:bg-gate-e/90 hover:shadow-[0_0_20px_hsl(var(--gate-e-glow)/0.5)] hover:-translate-y-0.5 gate-energy-flow",

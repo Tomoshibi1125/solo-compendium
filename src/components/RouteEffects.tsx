@@ -21,7 +21,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	powers: "Powers",
 	runes: "Runes",
 	relics: "Relics",
-	monsters: "Monsters",
+	anomalies: "Anomalies",
 	backgrounds: "Backgrounds",
 	conditions: "Conditions",
 	regents: REGENT_LABEL_PLURAL,
@@ -37,6 +37,8 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	locations: "Locations",
 	sigils: "Sigils",
 	tattoos: "Tattoos",
+	deities: "Eternals",
+	npcs: "NPCs",
 };
 
 const PLAYER_TOOL_LABELS: Record<string, string> = {

@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 const envFilePath = path.resolve(process.cwd(), ".env.local");
 const outputPath = path.resolve(process.cwd(), "public", "runtime-env.js");

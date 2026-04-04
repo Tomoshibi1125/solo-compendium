@@ -35,7 +35,6 @@ export const DynamicStyle = forwardRef<HTMLElement | null, DynamicStyleProps>(
 		// Expose internal ref to parent
 		useImperativeHandle(ref, () => internalRef.current as HTMLElement);
 
-		// Apply dynamic styles directly to the DOM to avoid React's inline style tracking
 		useLayoutEffect(() => {
 			if (!internalRef.current || !vars) return;
 
@@ -44,14 +43,8 @@ export const DynamicStyle = forwardRef<HTMLElement | null, DynamicStyleProps>(
 				if (value === undefined) {
 					element.style.removeProperty(key);
 				} else {
-					// Use setProperty for CSS variables, direct assignment for standard properties
-					if (key.startsWith("--")) {
-						element.style.setProperty(key, String(value));
-					} else {
-						// Cast to any to handle arbitrary style properties
-						(element.style as unknown as Record<string, string>)[key] =
-							String(value);
-					}
+					// Use setProperty for and-all style properties and CSS variables
+					element.style.setProperty(key, String(value));
 				}
 			}
 		}, [vars]);

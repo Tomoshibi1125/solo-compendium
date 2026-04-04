@@ -229,10 +229,10 @@ describe("Event payload contracts", () => {
 			type: "encounter:create",
 			encounterId: "enc1",
 			encounterName: "Goblin Ambush",
-			monsterCount: 4,
+			AnomalyCount: 4,
 			totalXP: 400,
 			difficulty: "Medium",
 		};
-		expect(event.monsterCount).toBe(4);
+		expect(event.AnomalyCount).toBe(4);
 	});
 });

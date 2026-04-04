@@ -50,7 +50,7 @@ const tablesToAudit = [
 	"compendium_powers",
 	"compendium_relics",
 	"compendium_equipment",
-	"compendium_monsters",
+	"compendium_Anomalies",
 	"compendium_backgrounds",
 	"compendium_conditions",
 	"compendium_feats",
@@ -110,7 +110,7 @@ const tableCapabilities: Record<
 		hasSourceBook: true,
 		hasTags: true,
 	},
-	compendium_monsters: {
+	compendium_Anomalies: {
 		hasDescription: true,
 		hasImageUrl: true,
 		hasSourceBook: true,

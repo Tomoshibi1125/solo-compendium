@@ -114,7 +114,7 @@ const THEME_ICONS: Partial<Record<DiceTheme, LucideIcon>> = {
 	"supreme-deity": ZapIcon,
 	"gate-portal": Flame,
 	"system-interface": Sparkles,
-	"arise-violet": Gem,
+	"resurge-violet": Gem,
 	"regent-gold": Crown,
 };
 
@@ -138,7 +138,10 @@ const THEME_SWATCH_CLASSES: Partial<
 	"supreme-deity": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
 	"gate-portal": { icon: "text-red-400", bar: "bg-red-400/40" },
 	"system-interface": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
-	"arise-violet": { icon: "text-arise-violet", bar: "bg-arise-violet/40" },
+	"resurge-violet": {
+		icon: "text-resurge-violet",
+		bar: "bg-resurge-violet/40",
+	},
 	"regent-gold": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 };
 
@@ -575,7 +578,7 @@ const DiceRoller = () => {
 								<Zap className="w-8 h-8 text-shadow-blue animate-pulse" />
 							</SystemHeading>
 							<DataStreamText variant="system" speed="slow">
-								Roll dice with the System's guidance — may the Prime Architect's
+								Roll dice with the System's guidance — may the The Absolute's
 								favor be with you
 							</DataStreamText>
 						</div>
@@ -686,7 +689,7 @@ const DiceRoller = () => {
 						{show3D && dice3D.length > 0 && (
 							<SystemWindow
 								title={`SYSTEM DICE CHAMBER - ${DICE_THEMES[diceTheme].name.toUpperCase()}`}
-								variant="arise"
+								variant="resurge"
 								className="overflow-hidden"
 							>
 								<Suspense
@@ -919,19 +922,19 @@ const DiceRoller = () => {
 						{lastRoll && (
 							<SystemWindow
 								title="SYSTEM RESULT"
-								variant="arise"
-								className="animate-arise relative overflow-hidden"
+								variant="resurge"
+								className="animate-resurge relative overflow-hidden"
 							>
 								{/* System Ascendant background effects */}
 								<div className="absolute inset-0 pointer-events-none">
 									<div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-radial from-shadow-blue/20 via-shadow-purple/10 to-transparent rounded-full blur-3xl animate-pulse" />
-									<div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-radial from-arise-violet/15 to-transparent rounded-full blur-2xl animate-pulse" />
+									<div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-radial from-resurge-violet/15 to-transparent rounded-full blur-2xl animate-pulse" />
 								</div>
 
 								<div className="text-center py-6 relative z-10">
 									<div className="relative inline-block">
-										<div className="absolute inset-0 bg-gradient-to-r from-shadow-blue/30 via-shadow-purple/30 to-arise-violet/30 blur-2xl rounded-full animate-pulse" />
-										<div className="text-7xl font-arise font-black gradient-text-regent text-glow-gold mb-3 drop-shadow-lg relative">
+										<div className="absolute inset-0 bg-gradient-to-r from-shadow-blue/30 via-shadow-purple/30 to-resurge-violet/30 blur-2xl rounded-full animate-pulse" />
+										<div className="text-7xl font-resurge font-black gradient-text-regent text-glow-gold mb-3 drop-shadow-lg relative">
 											{lastRoll.total}
 										</div>
 									</div>
@@ -966,7 +969,7 @@ const DiceRoller = () => {
 									{lastRoll.type && lastRoll.type !== "normal" && (
 										<span
 											className={cn(
-												"inline-block mt-4 px-4 py-2 rounded-lg text-xs font-arise uppercase tracking-widest border",
+												"inline-block mt-4 px-4 py-2 rounded-lg text-xs font-resurge uppercase tracking-widest border",
 												lastRoll.type === "advantage"
 													? "bg-accent/20 text-accent border-accent/40 shadow-[0_0_15px_hsl(var(--accent)/0.4)]"
 													: "bg-gate-a/20 text-gate-a border border-gate-a/40 shadow-[0_0_15px_hsl(var(--gate-a)/0.4)]",

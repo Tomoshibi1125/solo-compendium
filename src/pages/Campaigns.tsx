@@ -115,7 +115,7 @@ const Campaigns = () => {
 					</div>
 					<Button
 						onClick={() => setCreateDialogOpen(true)}
-						className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all min-h-[44px] px-4 sm:px-6"
+						className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all min-h-[44px] px-4 sm:px-6"
 					>
 						<Plus className="w-4 h-4" />
 						<span className="hidden sm:inline">Create Guild</span>
@@ -187,11 +187,11 @@ const Campaigns = () => {
 									<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 relative gap-2">
 										<div className="flex items-center gap-2">
 											<Crown className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-											<h3 className="font-arise text-base sm:text-lg font-semibold tracking-wide group-hover:text-amber-400 transition-colors leading-tight">
+											<h3 className="font-resurge text-base sm:text-lg font-semibold tracking-wide group-hover:text-amber-400 transition-colors leading-tight">
 												{campaign.name.toUpperCase()}
 											</h3>
 										</div>
-										<span className="text-xs font-arise text-amber-400 bg-amber-500/10 px-2 py-1 rounded whitespace-nowrap">
+										<span className="text-xs font-resurge text-amber-400 bg-amber-500/10 px-2 py-1 rounded whitespace-nowrap">
 											GUILD MASTER
 										</span>
 									</div>
@@ -245,14 +245,14 @@ const Campaigns = () => {
 						variant="gate"
 						className="mb-4 flex items-center gap-2"
 					>
-						<Users className="w-5 h-5 text-arise" />
+						<Users className="w-5 h-5 text-resurge" />
 						Guilds I've Joined
 					</SystemHeading>
 					{loadingJoined ? (
 						<div className="flex flex-col items-center justify-center py-12 gap-4">
 							<div className="relative">
-								<div className="w-12 h-12 border-4 border-arise/20 rounded-full" />
-								<div className="absolute inset-0 w-12 h-12 border-4 border-t-arise rounded-full animate-spin" />
+								<div className="w-12 h-12 border-4 border-resurge/20 rounded-full" />
+								<div className="absolute inset-0 w-12 h-12 border-4 border-t-resurge rounded-full animate-spin" />
 							</div>
 							<SystemText className="block text-muted-foreground font-heading animate-pulse">
 								Searching guilds...
@@ -260,13 +260,13 @@ const Campaigns = () => {
 						</div>
 					) : joinedCampaigns.length === 0 ? (
 						<SystemWindow title="NO JOINED GUILDS" className="text-center py-8">
-							<Shield className="w-12 h-12 mx-auto text-arise/50 mb-4" />
+							<Shield className="w-12 h-12 mx-auto text-resurge/50 mb-4" />
 							<SystemText className="block text-muted-foreground mb-4">
 								You haven't joined any guilds yet. Ask your Guild Master for a
 								share code or link.
 							</SystemText>
 							<Link to="/campaigns/join">
-								<Button className="bg-gradient-to-r from-arise to-shadow-purple min-h-[44px]">
+								<Button className="bg-gradient-to-r from-resurge to-shadow-purple min-h-[44px]">
 									<UserPlus className="w-4 h-4 mr-2" />
 									<span className="hidden sm:inline">Join Guild</span>
 									<span className="sm:hidden">Join</span>
@@ -280,17 +280,17 @@ const Campaigns = () => {
 									key={campaign.id}
 									className={cn(
 										"rounded-[2px] p-5 transition-all duration-300 group relative overflow-hidden backdrop-blur-md",
-										"border-l-4 border-y border-r border-arise/30 border-l-arise bg-black/60",
-										"hover:border-arise/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--arise)/0.2)] focus:outline-none",
+										"border-l-4 border-y border-r border-resurge/30 border-l-resurge bg-black/60",
+										"hover:border-resurge/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--resurge)/0.2)] focus:outline-none",
 									)}
 								>
 									{/* Background glow */}
-									<div className="absolute -bottom-10 -right-10 w-32 h-32 bg-arise/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+									<div className="absolute -bottom-10 -right-10 w-32 h-32 bg-resurge/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
 
 									<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 relative gap-2">
 										<div className="flex items-center gap-2">
-											<Shield className="w-4 h-4 sm:w-5 sm:h-5 text-arise" />
-											<h3 className="font-arise text-base sm:text-lg font-semibold tracking-wide group-hover:text-arise transition-colors leading-tight">
+											<Shield className="w-4 h-4 sm:w-5 sm:h-5 text-resurge" />
+											<h3 className="font-resurge text-base sm:text-lg font-semibold tracking-wide group-hover:text-resurge transition-colors leading-tight">
 												{campaign.name.toUpperCase()}
 											</h3>
 										</div>
@@ -301,7 +301,7 @@ const Campaigns = () => {
 									</SystemText>
 
 									<div className="space-y-3 relative">
-										<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-arise/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">
+										<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-resurge/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">
 											<span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">
 												YOUR ROLE
 											</span>
@@ -310,7 +310,7 @@ const Campaigns = () => {
 													"font-heading font-semibold px-2 py-1 rounded text-sm",
 													campaign.member_role === "co-system"
 														? "text-amber-400 bg-amber-500/10"
-														: "text-arise bg-arise/10",
+														: "text-resurge bg-resurge/10",
 												)}
 											>
 												{campaign.member_role === "co-system"
@@ -322,7 +322,7 @@ const Campaigns = () => {
 											<Link to={`/campaigns/${campaign.id}`} className="flex-1">
 												<Button
 													size="sm"
-													className="w-full gap-2 bg-gradient-to-r from-arise to-shadow-purple min-h-[36px]"
+													className="w-full gap-2 bg-gradient-to-r from-resurge to-shadow-purple min-h-[36px]"
 												>
 													<ExternalLink className="w-3 h-3" />
 													<span className="hidden sm:inline">Open</span>
@@ -349,10 +349,10 @@ const Campaigns = () => {
 
 				{/* Create Campaign Dialog */}
 				<Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-					<DialogContent className="border-arise/30 bg-background/95 backdrop-blur-xl w-[calc(100%-2rem)] max-w-md">
+					<DialogContent className="border-resurge/30 bg-background/95 backdrop-blur-xl w-[calc(100%-2rem)] max-w-md">
 						<DialogHeader>
-							<DialogTitle className="font-arise text-xl flex items-center gap-2 tracking-wide">
-								<Sparkles className="w-5 h-5 text-arise" />
+							<DialogTitle className="font-resurge text-xl flex items-center gap-2 tracking-wide">
+								<Sparkles className="w-5 h-5 text-resurge" />
 								CREATE NEW GUILD
 							</DialogTitle>
 							<DialogDescription>
@@ -370,7 +370,7 @@ const Campaigns = () => {
 									value={campaignName}
 									onChange={(e) => setCampaignName(e.target.value)}
 									placeholder="The Shadow Legion"
-									className="mt-1 border-arise/30 focus:border-arise/50"
+									className="mt-1 border-resurge/30 focus:border-resurge/50"
 								/>
 							</div>
 							<div>
@@ -382,7 +382,7 @@ const Campaigns = () => {
 									value={campaignDescription}
 									onChange={(e) => setCampaignDescription(e.target.value)}
 									placeholder="A guild dedicated to clearing the highest rank rifts..."
-									className="mt-1 border-arise/30 focus:border-arise/50"
+									className="mt-1 border-resurge/30 focus:border-resurge/50"
 									rows={3}
 								/>
 							</div>
@@ -398,7 +398,7 @@ const Campaigns = () => {
 							<Button
 								onClick={handleCreateCampaign}
 								disabled={createCampaign.isPending}
-								className="font-heading bg-gradient-to-r from-arise to-shadow-purple"
+								className="font-heading bg-gradient-to-r from-resurge to-shadow-purple"
 							>
 								{createCampaign.isPending ? (
 									<>

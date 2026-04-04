@@ -1,7 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import { monsters as rawMonsters } from "../src/data/compendium/monsters";
+import { anomalies as rawAnomalies } from "../src/data/compendium/anomalies";
 import { spells as rawSpells } from "../src/data/compendium/spells";
+import type {
+	CompendiumAnomaly,
+	CompendiumSpell,
+} from "../src/types/compendium";
 
 type SpellRank = "D" | "C" | "B" | "A" | "S";
 
@@ -18,34 +22,59 @@ type SpellInput = {
 	effect: string;
 	range?: number | { type?: string; value?: number; unit?: string };
 	cooldown: number;
-	[key: string]: unknown;
 };
 
-type LegacyMonster = {
+type RawAnomalyStats = {
+	ability_scores?: {
+		strength?: number;
+		agility?: number;
+		vitality?: number;
+		intelligence?: number;
+		sense?: number;
+		presence?: number;
+	};
+	armor_class?: number;
+	hit_points?: number;
+	challenge_rating?: number;
+	proficiency_bonus?: number;
+	saving_throws?: Record<string, number>;
+	speed?: string | number;
+};
+
+type LegacyAnomaly = {
 	id: string;
 	name: string;
 	type: string;
 	rank: SpellRank;
-	stats?: unknown;
-	traits?: unknown;
-	actions?: unknown;
-	legendary?: unknown;
-	lair?: unknown;
+	stats?: RawAnomalyStats;
+	traits?: CompendiumAnomaly["traits"];
+	actions?: Array<{
+		name: string;
+		description: string;
+		type?: string;
+		attack_bonus?: number;
+		damage?: string;
+		damage_type?: string;
+		range?: number | string;
+		recharge?: string;
+		usage?: string;
+	}>;
+	legendary?: CompendiumAnomaly["legendary_actions"];
+	lair?: CompendiumAnomaly["lair"];
 	image: string;
 	description: string;
 	abilities: string[];
 	weaknesses: string[];
 	hp?: number;
 	ac?: number;
-	skills?: unknown;
-	damageResistances?: unknown;
-	damageImmunities?: unknown;
-	damageVulnerabilities?: unknown;
-	conditionImmunities?: unknown;
-	senses?: unknown;
-	languages?: unknown;
+	skills?: Record<string, string | number>;
+	damageResistances?: string[];
+	damageImmunities?: string[];
+	damageVulnerabilities?: string[];
+	conditionImmunities?: string[];
+	senses?: string;
+	languages?: string;
 	xp?: number;
-	[key: string]: unknown;
 };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -151,7 +180,7 @@ const rankToDice = (rank: SpellRank, kind: "damage" | "healing"): string => {
 	}
 };
 
-const getMonsterBaselineHP = (rank: SpellRank): number => {
+const getAnomalyBaselineHP = (rank: SpellRank): number => {
 	switch (rank) {
 		case "D":
 			return 45;
@@ -166,7 +195,7 @@ const getMonsterBaselineHP = (rank: SpellRank): number => {
 	}
 };
 
-const getMonsterBaselineAC = (rank: SpellRank): number => {
+const getAnomalyBaselineAC = (rank: SpellRank): number => {
 	switch (rank) {
 		case "D":
 			return 12;
@@ -181,8 +210,8 @@ const getMonsterBaselineAC = (rank: SpellRank): number => {
 	}
 };
 
-const inferMonsterScores = (monsterType: string, rank: SpellRank) => {
-	const t = monsterType.toLowerCase();
+const inferAnomalyScores = (anomalyType: string, rank: SpellRank) => {
+	const t = anomalyType.toLowerCase();
 
 	const base = {
 		strength: 12,
@@ -236,8 +265,16 @@ const inferMonsterScores = (monsterType: string, rank: SpellRank) => {
 	};
 };
 
-const ensureSpellStructured = (spell: SpellInput) => {
-	const out: Record<string, unknown> = { ...spell };
+const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
+	const out: CompendiumSpell = {
+		id: spell.id,
+		name: spell.name,
+		description: spell.description,
+		type: spell.type,
+		rank: spell.rank,
+		image: spell.image,
+		effect: spell.effect,
+	};
 
 	const damageType = inferDamageType(spell.name, spell.effect);
 	const dc = rankToSpellSaveDC(spell.rank);
@@ -279,14 +316,17 @@ const ensureSpellStructured = (spell: SpellInput) => {
 		};
 	}
 
-	if (!isRecord(out.effects)) {
-		out.effects = {
-			primary: hasNonEmptyString(spell.effect)
-				? spell.effect
-				: "Channels ascendant force into a defined outcome.",
-		};
-	} else if (!hasNonEmptyString((out.effects as any).primary)) {
-		(out.effects as any).primary = hasNonEmptyString(spell.effect)
+	out.effects = isRecord(out.effects)
+		? out.effects
+		: {
+				primary: hasNonEmptyString(spell.effect)
+					? spell.effect
+					: "Channels ascendant force into a defined outcome.",
+			};
+
+	const currentEffects = out.effects as Record<string, unknown>;
+	if (!hasNonEmptyString(currentEffects.primary)) {
+		currentEffects.primary = hasNonEmptyString(spell.effect)
 			? spell.effect
 			: "Channels ascendant force into a defined outcome.";
 	}
@@ -298,7 +338,7 @@ const ensureSpellStructured = (spell: SpellInput) => {
 	const hasSave = !!(mechanics && isRecord(mechanics.saving_throw));
 	const hasHealing = !!(mechanics && isRecord(mechanics.healing));
 
-	if (!mechanics) {
+	if (!out.mechanics) {
 		out.mechanics = {};
 	}
 
@@ -342,84 +382,71 @@ const ensureSpellStructured = (spell: SpellInput) => {
 	return out;
 };
 
-const ensureMonsterStructured = (monster: LegacyMonster) => {
-	const out: Record<string, unknown> = { ...monster };
-
-	const existingStats = isRecord(out.stats)
-		? (out.stats as Record<string, unknown>)
-		: null;
-	const abilityScores =
-		existingStats && isRecord(existingStats.abilityScores)
-			? (existingStats.abilityScores as Record<string, unknown>)
-			: null;
-
-	const inferredScores = inferMonsterScores(monster.type, monster.rank);
+const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
+	const inferredScores = inferAnomalyScores(anomaly.type, anomaly.rank);
 
 	const armorClass =
-		typeof existingStats?.armorClass === "number"
-			? (existingStats?.armorClass as number)
-			: typeof monster.ac === "number"
-				? monster.ac
-				: getMonsterBaselineAC(monster.rank);
+		typeof anomaly.stats?.armor_class === "number"
+			? (anomaly.stats.armor_class as number)
+			: typeof anomaly.ac === "number"
+				? anomaly.ac
+				: getAnomalyBaselineAC(anomaly.rank);
 
 	const hitPoints =
-		typeof existingStats?.hitPoints === "number"
-			? (existingStats?.hitPoints as number)
-			: typeof monster.hp === "number"
-				? monster.hp
-				: getMonsterBaselineHP(monster.rank);
+		typeof anomaly.stats?.hit_points === "number"
+			? (anomaly.stats.hit_points as number)
+			: typeof anomaly.hp === "number"
+				? anomaly.hp
+				: getAnomalyBaselineHP(anomaly.rank);
 
-	const cr =
-		typeof existingStats?.challengeRating === "number"
-			? (existingStats?.challengeRating as number)
-			: rankToCr(monster.rank);
+	const crValue =
+		typeof anomaly.stats?.challenge_rating === "number"
+			? (anomaly.stats.challenge_rating as number)
+			: rankToCr(anomaly.rank);
 
 	const prof =
-		typeof existingStats?.proficiencyBonus === "number"
-			? (existingStats?.proficiencyBonus as number)
-			: crToProf(cr);
+		typeof anomaly.stats?.proficiency_bonus === "number"
+			? (anomaly.stats.proficiency_bonus as number)
+			: crToProf(crValue);
 
-	out.stats = {
-		abilityScores: {
-			strength:
-				typeof abilityScores?.strength === "number"
-					? (abilityScores.strength as number)
-					: inferredScores.strength,
-			dexterity:
-				typeof abilityScores?.dexterity === "number"
-					? (abilityScores.dexterity as number)
-					: inferredScores.dexterity,
-			constitution:
-				typeof abilityScores?.constitution === "number"
-					? (abilityScores.constitution as number)
-					: inferredScores.constitution,
-			intelligence:
-				typeof abilityScores?.intelligence === "number"
-					? (abilityScores.intelligence as number)
-					: inferredScores.intelligence,
-			wisdom:
-				typeof abilityScores?.wisdom === "number"
-					? (abilityScores.wisdom as number)
-					: inferredScores.wisdom,
-			charisma:
-				typeof abilityScores?.charisma === "number"
-					? (abilityScores.charisma as number)
-					: inferredScores.charisma,
+	const out: CompendiumAnomaly = {
+		id: anomaly.id,
+		name: anomaly.name,
+		type: anomaly.type,
+		rank: anomaly.rank,
+		image: anomaly.image,
+		description: anomaly.description,
+		abilities: anomaly.abilities,
+		weaknesses: anomaly.weaknesses,
+		xp: anomaly.xp,
+		stats: {
+			ability_scores: {
+				strength:
+					anomaly.stats?.ability_scores?.strength ?? inferredScores.strength,
+				agility:
+					anomaly.stats?.ability_scores?.agility ?? inferredScores.dexterity,
+				vitality:
+					anomaly.stats?.ability_scores?.vitality ??
+					inferredScores.constitution,
+				intelligence:
+					anomaly.stats?.ability_scores?.intelligence ??
+					inferredScores.intelligence,
+				sense: anomaly.stats?.ability_scores?.sense ?? inferredScores.wisdom,
+				presence:
+					anomaly.stats?.ability_scores?.presence ?? inferredScores.charisma,
+			},
+			challenge_rating: crValue,
+			proficiency_bonus: prof,
+			saving_throws: anomaly.stats?.saving_throws || {},
 		},
-		armorClass,
-		hitPoints,
-		speed:
-			typeof existingStats?.speed === "number"
-				? (existingStats.speed as number)
-				: 30,
-		challengeRating: cr,
-		proficiencyBonus: prof,
-		savingThrows: isRecord(existingStats?.savingThrows)
-			? (existingStats?.savingThrows as Record<string, unknown>)
-			: {},
+		hp: hitPoints,
+		ac: armorClass,
+		armor_class: armorClass,
+		hit_points: hitPoints,
+		challenge_rating: String(crValue),
 	};
 
-	const traits = Array.isArray(out.traits) ? (out.traits as any[]) : null;
+	const traits = out.traits;
 	if (!traits || traits.length === 0) {
 		out.traits = [
 			{
@@ -430,7 +457,7 @@ const ensureMonsterStructured = (monster: LegacyMonster) => {
 				frequency: "at-will",
 			},
 			{
-				name: `${monster.type} Instinct`,
+				name: `${anomaly.type} Instinct`,
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -439,48 +466,51 @@ const ensureMonsterStructured = (monster: LegacyMonster) => {
 		];
 	}
 
-	const actions = Array.isArray(out.actions) ? (out.actions as any[]) : null;
+	const actions = out.actions;
 	if (!actions || actions.length === 0) {
-		const damageType = inferDamageType(monster.name, monster.description);
-		const baseDice = rankToDice(monster.rank, "damage");
+		const damageType = inferDamageType(anomaly.name, anomaly.description);
+		const baseDice = rankToDice(anomaly.rank, "damage");
 		const bonus = Math.max(
 			0,
 			prof + Math.floor((inferredScores.strength - 10) / 2),
 		);
 
-		const abilityActions = Array.isArray(monster.abilities)
-			? monster.abilities
+		const abilityActions = Array.isArray(anomaly.abilities)
+			? anomaly.abilities
 			: [];
 		const templated = abilityActions.slice(0, 3).map((name, idx) => ({
 			name,
 			description:
 				idx === 0
 					? `Melee Weapon Attack: +${bonus} to hit, reach 5 ft., one target. Hit: ${baseDice} ${damageType} damage.`
-					: `Protocol action. The target must succeed on a DC ${rankToSpellSaveDC(monster.rank)} Constitution saving throw or take ${baseDice} ${damageType} damage and suffer a brief impairment (start-of-next-turn).`,
+					: `Protocol action. The target must succeed on a DC ${rankToSpellSaveDC(anomaly.rank)} Constitution saving throw or take ${baseDice} ${damageType} damage and suffer a brief impairment (start-of-next-turn).`,
 			type: idx === 0 ? "melee" : "special",
-			attackBonus: idx === 0 ? bonus : undefined,
+			attack_bonus: idx === 0 ? bonus : undefined,
 			damage: baseDice,
-			damageType,
+			damage_type: damageType,
 			range: idx === 0 ? 5 : 60,
 			save: idx === 0 ? undefined : "Constitution",
-			dc: idx === 0 ? undefined : rankToSpellSaveDC(monster.rank),
+			dc: idx === 0 ? undefined : rankToSpellSaveDC(anomaly.rank),
 			recharge: idx === 0 ? "recharge" : "short-rest",
 			usage: idx === 0 ? "at-will" : "recharge",
 		}));
 
-		const fallback = {
+		const fallback: NonNullable<CompendiumAnomaly["actions"]>[number] = {
 			name: "Lattice Strike",
 			description: `Melee Weapon Attack: +${bonus} to hit, reach 5 ft., one target. Hit: ${baseDice} ${damageType} damage.`,
 			type: "melee",
-			attackBonus: bonus,
+			attack_bonus: bonus,
 			damage: baseDice,
-			damageType,
+			damage_type: damageType,
 			range: 5,
 			recharge: "recharge",
 			usage: "at-will",
 		};
 
-		out.actions = templated.length > 0 ? templated : [fallback];
+		out.actions =
+			templated.length > 0
+				? (templated as CompendiumAnomaly["actions"])
+				: [fallback];
 	}
 
 	return out;
@@ -523,45 +553,43 @@ async function main() {
 		"compendium",
 		"spells.ts",
 	);
-	const monstersPath = path.join(
+	const anomaliesPath = path.join(
 		projectRoot,
 		"src",
 		"data",
 		"compendium",
-		"monsters.ts",
+		"anomalies.ts",
 	);
 
-	const enrichedSpells = (rawSpells as unknown as SpellInput[]).map(
-		ensureSpellStructured,
-	);
-	const enrichedMonsters = (rawMonsters as LegacyMonster[]).map(
-		ensureMonsterStructured,
+	const enrichedSpells = (rawSpells as SpellInput[]).map(ensureSpellStructured);
+	const enrichedAnomalies = (rawAnomalies as LegacyAnomaly[]).map(
+		ensureAnomalyStructured,
 	);
 
 	if (!write) {
 		process.stdout.write(`Enrichment preview (no files written).\n`);
 		process.stdout.write(`- spells: ${enrichedSpells.length}\n`);
-		process.stdout.write(`- monsters: ${enrichedMonsters.length}\n`);
+		process.stdout.write(`- anomalies: ${enrichedAnomalies.length}\n`);
 		process.stdout.write(`\nRun with --write to apply changes.\n`);
 		return;
 	}
 
 	const spellsText = fs.readFileSync(spellsPath, "utf8");
-	const monstersText = fs.readFileSync(monstersPath, "utf8");
+	const anomaliesText = fs.readFileSync(anomaliesPath, "utf8");
 
 	const spellsUpdated = replaceExportedArray(
 		spellsText,
 		"spells",
 		formatArray(enrichedSpells),
 	);
-	const monstersUpdated = replaceExportedArray(
-		monstersText,
-		"monsters",
-		formatArray(enrichedMonsters),
+	const anomaliesUpdated = replaceExportedArray(
+		anomaliesText,
+		"anomalies",
+		formatArray(enrichedAnomalies),
 	);
 
 	fs.writeFileSync(spellsPath, spellsUpdated, "utf8");
-	fs.writeFileSync(monstersPath, monstersUpdated, "utf8");
+	fs.writeFileSync(anomaliesPath, anomaliesUpdated, "utf8");
 
 	process.stdout.write(`Enrichment applied.\n`);
 }

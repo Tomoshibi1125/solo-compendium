@@ -43,15 +43,15 @@ describe("5e Character Calculations", () => {
 	});
 
 	test("HP calculation", () => {
-		// Level 1, d8 hit die, CON 14 (+2)
+		// Level 1, d8 hit die, VIT 14 (+2)
 		const hp1 = calculateHPMax(1, 8, 2);
 		expect(hp1).toBe(10); // 8 + 2
 
-		// Level 5, d8 hit die, CON 14 (+2)
+		// Level 5, d8 hit die, VIT 14 (+2)
 		const hp5 = calculateHPMax(5, 8, 2);
 		expect(hp5).toBe(38); // 8 + 2 + 4 * (4 + 2 + 1) = 10 + 28 = 38
 
-		// Level 10, d10 hit die, CON 16 (+3)
+		// Level 10, d10 hit die, VIT 16 (+3)
 		const hp10 = calculateHPMax(10, 10, 3);
 		expect(hp10).toBe(94); // 10 + 3 + 9 * (5 + 1 + 3) = 13 + 81 = 94
 	});
@@ -97,7 +97,7 @@ describe("5e Character Calculations", () => {
 	test("Spellcasting ability detection", () => {
 		expect(getSpellcastingAbility("Mage")).toBe("INT");
 		expect(getSpellcastingAbility("Esper")).toBe("PRE");
-		expect(getSpellcastingAbility("Herald")).toBe("SENSE"); // Cleric uses Sense (Wisdom)
+		expect(getSpellcastingAbility("Herald")).toBe("SENSE"); // Cleric uses Sense (Sense)
 		expect(getSpellcastingAbility("Stalker")).toBe("SENSE");
 		expect(getSpellcastingAbility("Summoner")).toBe("SENSE");
 		expect(getSpellcastingAbility("Idol")).toBe("PRE");

@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 
 function getFiles(dir, files = []) {
 	const list = fs.readdirSync(dir);
@@ -29,7 +29,7 @@ for (const file of files) {
 	if (pRegex.test(content)) {
 		content = content.replace(
 			pRegex,
-			(match, prefix, className, suffix, inner) => {
+			(_match, prefix, className, suffix, inner) => {
 				// Retain block behavior of <p> tag
 				const newClassName =
 					className.includes("block") ||
@@ -52,8 +52,7 @@ for (const file of files) {
 
 		if (!hasAnySystemTextImport) {
 			// Prepend to top of file
-			content =
-				'import { SystemText } from "@/components/ui/SystemText";\n' + content;
+			content = `import { SystemText } from "@/components/ui/SystemText";\n${content}`;
 		} else if (!hasSpecificSystemTextImport) {
 			// It has the import from the path, but not the 'SystemText' export.
 			content = content.replace(

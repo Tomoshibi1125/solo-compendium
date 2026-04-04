@@ -111,7 +111,7 @@ const playerTools = [
 	{
 		id: "compendium-viewer",
 		name: "Compendium Viewer",
-		description: "Browse monsters, items, spells, and world information.",
+		description: "Browse Anomalies, items, spells, and world information.",
 		icon: BookOpen,
 		status: "available",
 		color:

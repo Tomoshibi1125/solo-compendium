@@ -8,7 +8,7 @@ import { z } from "zod";
 // Art request types
 export const ArtRequestSchema = z.object({
 	entityType: z.enum([
-		"monster",
+		"Anomaly",
 		"npc",
 		"character",
 		"item",
@@ -98,7 +98,7 @@ export interface GenerationPreset {
 }
 
 const GENERATION_PRESETS: Record<string, GenerationPreset> = {
-	"monster-portrait": {
+	"Anomaly-portrait": {
 		width: 1024,
 		height: 1024,
 		promptTemplate:
@@ -110,7 +110,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		sampler: "dpmpp_2m",
 		scheduler: "karras",
 	},
-	"monster-token": {
+	"Anomaly-token": {
 		width: 512,
 		height: 512,
 		promptTemplate:
@@ -214,7 +214,7 @@ export function getPreset(
 	variant: string,
 ): GenerationPreset {
 	const key = `${entityType}-${variant}`;
-	return GENERATION_PRESETS[key] || GENERATION_PRESETS["monster-portrait"];
+	return GENERATION_PRESETS[key] || GENERATION_PRESETS["Anomaly-portrait"];
 }
 
 export function buildPrompt(

@@ -595,7 +595,7 @@ export type Database = {
 					encounter_id: string;
 					entry_kind: string;
 					id: string;
-					monster_id: string | null;
+					Anomaly_id: string | null;
 					name: string;
 					quantity: number;
 					source: Json;
@@ -607,7 +607,7 @@ export type Database = {
 					encounter_id: string;
 					entry_kind?: string;
 					id?: string;
-					monster_id?: string | null;
+					Anomaly_id?: string | null;
 					name: string;
 					quantity?: number;
 					source?: Json;
@@ -619,7 +619,7 @@ export type Database = {
 					encounter_id?: string;
 					entry_kind?: string;
 					id?: string;
-					monster_id?: string | null;
+					Anomaly_id?: string | null;
 					name?: string;
 					quantity?: number;
 					source?: Json;
@@ -648,10 +648,10 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "campaign_encounter_entries_monster_id_fkey";
-						columns: ["monster_id"];
+						foreignKeyName: "campaign_encounter_entries_Anomaly_id_fkey";
+						columns: ["Anomaly_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monsters";
+						referencedRelation: "compendium_Anomalies";
 						referencedColumns: ["id"];
 					},
 				];
@@ -2078,7 +2078,7 @@ export type Database = {
 					hp_max: number;
 					id: string;
 					is_active: boolean;
-					monster_id: string | null;
+					Anomaly_id: string | null;
 					name: string;
 					notes: string | null;
 					speed: number | null;
@@ -2093,7 +2093,7 @@ export type Database = {
 					hp_max?: number;
 					id?: string;
 					is_active?: boolean;
-					monster_id?: string | null;
+					Anomaly_id?: string | null;
 					name: string;
 					notes?: string | null;
 					speed?: number | null;
@@ -2108,7 +2108,7 @@ export type Database = {
 					hp_max?: number;
 					id?: string;
 					is_active?: boolean;
-					monster_id?: string | null;
+					Anomaly_id?: string | null;
 					name?: string;
 					notes?: string | null;
 					speed?: number | null;
@@ -2130,10 +2130,10 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "character_extras_monster_id_fkey";
-						columns: ["monster_id"];
+						foreignKeyName: "character_extras_Anomaly_id_fkey";
+						columns: ["Anomaly_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monsters";
+						referencedRelation: "compendium_Anomalies";
 						referencedColumns: ["id"];
 					},
 				];
@@ -4395,7 +4395,7 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			compendium_monster_actions: {
+			compendium_Anomaly_actions: {
 				Row: {
 					action_type: string;
 					aliases: string[] | null;
@@ -4407,7 +4407,7 @@ export type Database = {
 					display_name: string | null;
 					id: string;
 					legendary_cost: number | null;
-					monster_id: string;
+					Anomaly_id: string;
 					name: string;
 					recharge: string | null;
 				};
@@ -4422,7 +4422,7 @@ export type Database = {
 					display_name?: string | null;
 					id?: string;
 					legendary_cost?: number | null;
-					monster_id: string;
+					Anomaly_id: string;
 					name: string;
 					recharge?: string | null;
 				};
@@ -4437,28 +4437,28 @@ export type Database = {
 					display_name?: string | null;
 					id?: string;
 					legendary_cost?: number | null;
-					monster_id?: string;
+					Anomaly_id?: string;
 					name?: string;
 					recharge?: string | null;
 				};
 				Relationships: [
 					{
-						foreignKeyName: "compendium_monster_actions_monster_id_fkey";
-						columns: ["monster_id"];
+						foreignKeyName: "compendium_Anomaly_actions_Anomaly_id_fkey";
+						columns: ["Anomaly_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monsters";
+						referencedRelation: "compendium_Anomalies";
 						referencedColumns: ["id"];
 					},
 				];
 			};
-			compendium_monster_traits: {
+			compendium_Anomaly_traits: {
 				Row: {
 					aliases: string[] | null;
 					created_at: string;
 					description: string;
 					display_name: string | null;
 					id: string;
-					monster_id: string;
+					Anomaly_id: string;
 					name: string;
 				};
 				Insert: {
@@ -4467,7 +4467,7 @@ export type Database = {
 					description: string;
 					display_name?: string | null;
 					id?: string;
-					monster_id: string;
+					Anomaly_id: string;
 					name: string;
 				};
 				Update: {
@@ -4476,20 +4476,20 @@ export type Database = {
 					description?: string;
 					display_name?: string | null;
 					id?: string;
-					monster_id?: string;
+					Anomaly_id?: string;
 					name?: string;
 				};
 				Relationships: [
 					{
-						foreignKeyName: "compendium_monster_traits_monster_id_fkey";
-						columns: ["monster_id"];
+						foreignKeyName: "compendium_Anomaly_traits_Anomaly_id_fkey";
+						columns: ["Anomaly_id"];
 						isOneToOne: false;
-						referencedRelation: "compendium_monsters";
+						referencedRelation: "compendium_Anomalies";
 						referencedColumns: ["id"];
 					},
 				];
 			};
-			compendium_monsters: {
+			compendium_Anomalies: {
 				Row: {
 					agi: number;
 					aliases: string[] | null;
@@ -8063,7 +8063,7 @@ export type Database = {
 					title: string;
 				}[];
 			};
-			search_compendium_monsters: {
+			search_compendium_Anomalies: {
 				Args: { p_limit?: number; p_offset?: number; p_query: string };
 				Returns: {
 					cr: string;

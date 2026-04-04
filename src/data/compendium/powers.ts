@@ -59,7 +59,7 @@ export const powers = [
 		},
 		effects: {
 			primary:
-				"Enemies within 10 feet must make Wisdom saving throws or be frightened.",
+				"Enemies within 10 feet must make Sense saving throws or be frightened.",
 			secondary:
 				"Frightened creatures have disadvantage on attack rolls against you.",
 		},
@@ -199,7 +199,7 @@ export const powers = [
 			distance: 30,
 		},
 		effects: {
-			primary: "Target must make Wisdom saving throw or be charmed.",
+			primary: "Target must make Sense saving throw or be charmed.",
 			secondary: "Charmed creature regards you as a trusted friend.",
 		},
 		limitations: {
@@ -367,7 +367,7 @@ export const powers = [
 			primary:
 				"Transform into a beast with challenge rating no higher than your summoner level divided by 3.",
 			secondary:
-				"Gain the beast's statistics except for Intelligence, Wisdom, and Charisma.",
+				"Gain the beast's statistics except for Intelligence, Sense, and Presence.",
 		},
 		limitations: {
 			uses: "2 times per short rest, increases at higher levels",
@@ -501,7 +501,7 @@ export const powers = [
 		},
 		effects: {
 			primary:
-				"Target must make Constitution saving throw or begin turning to stone.",
+				"Target must make Vitality saving throw or begin turning to stone.",
 			secondary: "Petrified creature is restrained and cannot move or speak.",
 		},
 		limitations: {
@@ -693,7 +693,7 @@ export const powers = [
 		id: "arcane-ascension",
 		name: "Arcane Ascension",
 		description:
-			"Transcend the System's imposed limitations on mortal spellcasting, briefly accessing the raw arcane matrix that underlies all dimensional reality.",
+			"Transcend the System's imposed limitations on mortal spellcasting, briefly accessing the raw aetheric lattice that underlies all dimensional reality.",
 		type: "divine",
 		rarity: "legendary",
 		requirements: {
@@ -713,7 +713,7 @@ export const powers = [
 			secondary:
 				"Can cast any spell of 9th level once without expending a spell slot.",
 			tertiary:
-				"Advantage on all Intelligence, Wisdom, and Charisma saving throws.",
+				"Advantage on all Intelligence, Sense, and Presence saving throws.",
 		},
 		limitations: {
 			uses: "Once per day",
@@ -765,7 +765,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 15,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		activation: {
@@ -830,7 +830,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 5,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		activation: {
@@ -863,7 +863,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 13,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		activation: {
@@ -896,7 +896,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 9,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 13,
 		},
 		activation: {
@@ -928,7 +928,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 7,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -960,7 +960,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 3,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		activation: {
@@ -1046,7 +1046,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 7,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 13,
 		},
 		activation: {
@@ -1077,7 +1077,7 @@ export const powers = [
 		rarity: "legendary",
 		requirements: {
 			level: 19,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 17,
 		},
 		activation: {
@@ -1109,7 +1109,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 15,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 15,
 		},
 		activation: {
@@ -1145,7 +1145,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 3,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -1177,7 +1177,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 2,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 12,
 		},
 		activation: {
@@ -1240,7 +1240,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 14,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		activation: {
@@ -1273,7 +1273,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 13,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 15,
 		},
 		activation: {
@@ -1311,7 +1311,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 9,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 13,
 		},
 		activation: {
@@ -1408,7 +1408,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 9,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 13,
 		},
 		activation: {
@@ -1471,7 +1471,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 14,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 16,
 		},
 		activation: {
@@ -1501,7 +1501,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 9,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 14,
 		},
 		activation: {
@@ -1592,7 +1592,7 @@ export const powers = [
 		rarity: "legendary",
 		requirements: {
 			level: 18,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 18,
 		},
 		activation: {
@@ -1680,12 +1680,12 @@ export const powers = [
 	{
 		id: "echoes-of-the-past",
 		name: "Echoes of the Past",
-		description: "Summon spectral copies of yourself from previous timelines.",
+		description: "Summon spectral copies of yourself from prior timelines.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
 			level: 13,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 14,
 		},
 		activation: {
@@ -1717,7 +1717,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 12,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 16,
 		},
 		activation: {
@@ -1806,7 +1806,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 5,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -1837,7 +1837,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 3,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 14,
 		},
 		activation: {
@@ -1896,7 +1896,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 15,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 16,
 		},
 		activation: {
@@ -1927,7 +1927,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 10,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 14,
 		},
 		activation: {
@@ -1959,7 +1959,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 11,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 17,
 		},
 		activation: {
@@ -1990,7 +1990,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 16,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 18,
 		},
 		activation: {
@@ -2002,7 +2002,7 @@ export const powers = [
 		},
 		effects: {
 			primary:
-				"Target must make a Wisdom save or become your puppet. You control its movement and actions.",
+				"Target must make a Sense save or become your puppet. You control its movement and actions.",
 			secondary:
 				"Target can attempt to break free at the end of each turn. Adaptive DC.",
 		},
@@ -2022,7 +2022,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 4,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 15,
 		},
 		activation: {
@@ -2084,7 +2084,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 6,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 14,
 		},
 		activation: {
@@ -2115,7 +2115,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 10,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		activation: {
@@ -2145,7 +2145,7 @@ export const powers = [
 		rarity: "uncommon",
 		requirements: {
 			level: 5,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -2175,7 +2175,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 14,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 17,
 		},
 		activation: {
@@ -2205,7 +2205,7 @@ export const powers = [
 		rarity: "rare",
 		requirements: {
 			level: 9,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 15,
 		},
 		activation: {
@@ -2237,7 +2237,7 @@ export const powers = [
 		rarity: "very_rare",
 		requirements: {
 			level: 16,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 18,
 		},
 		activation: {
@@ -2299,7 +2299,7 @@ export const powers = [
 		rarity: "legendary",
 		requirements: {
 			level: 20,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 20,
 		},
 		activation: {
@@ -2311,7 +2311,7 @@ export const powers = [
 		},
 		effects: {
 			primary:
-				"All enemies in 100ft must make a Wisdom save or be reduced to 1 HP.",
+				"All enemies in 100ft must make a Sense save or be reduced to 1 HP.",
 			secondary:
 				"All mechanical and magical traps in the area are permanently disabled. Adaptive.",
 		},

@@ -376,7 +376,7 @@ export function resolveRuneAbsorption(
 					: "manifested as a raw physical technique channeled through your weapons";
 			descriptionPrefix = `[Adapted Technique] You have adapted this energy into your martial repertoire. It is now ${flavor}. This ability now uses your STR or AGI modifier for checks and saves. (${usesMax} uses per Long Rest)`;
 		} else {
-			descriptionPrefix = `[Arcane Adaptation] You manifest this physical technique through a magical construct, telekinetic force, or aura projection. This ability now uses your spellcasting modifier (INT, WIS, or CHA) instead of a physical stat. (${usesMax} uses per Long Rest)`;
+			descriptionPrefix = `[Arcane Adaptation] You manifest this physical technique through a magical construct, telekinetic force, or aura projection. This ability now uses your spellcasting modifier (INT, SENSE, or PRE) instead of a physical stat. (${usesMax} uses per Long Rest)`;
 		}
 
 		return {

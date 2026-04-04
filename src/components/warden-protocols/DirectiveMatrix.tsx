@@ -9,14 +9,6 @@ import {
 	Wand2,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AIContentGenerator } from "@/components/AIContentGeneratorClass";
-import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { DataStreamText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -34,6 +26,14 @@ import {
 	getRandomRune,
 } from "@/lib/compendiumAutopopulate";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import { AIContentGenerator } from "../AIContentGeneratorClass";
+import { AutoLinkText } from "../compendium/AutoLinkText";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { DataStreamText } from "../ui/SystemText";
+import { SystemWindow } from "../ui/SystemWindow";
 
 // --- Constants ---
 
@@ -97,7 +97,7 @@ const DIRECTIVE_REWARDS = [
 	"Guild recommendation",
 	"Special equipment",
 	"System favor bonus",
-	"Prime Architect blessing",
+	"The Absolute blessing",
 ] as const;
 
 // --- Interfaces ---
@@ -161,7 +161,7 @@ function generateRandomDirective(rank?: string): GeneratedDirective {
 	switch (type) {
 		case "Rift Clearance":
 			objectives.push(
-				"Eliminate all monsters",
+				"Eliminate all Anomalies",
 				"Clear the Rift boss",
 				"Secure the Rift core",
 			);
@@ -213,7 +213,7 @@ function generateRandomDirective(rank?: string): GeneratedDirective {
 
 // --- Component ---
 
-export function DirectiveMatrix() {
+export function DirectiveLattice() {
 	const { toast } = useToast();
 	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
 
@@ -222,7 +222,7 @@ export function DirectiveMatrix() {
 		state: storedState,
 		isLoading,
 		saveNow,
-	} = useUserToolState<DirectiveState>("directive_matrix", {
+	} = useUserToolState<DirectiveState>("directive_Lattice", {
 		initialState: {
 			genMode: "quick",
 			selectedRank: "random",
@@ -235,7 +235,7 @@ export function DirectiveMatrix() {
 				additionalDetails: "",
 			},
 		},
-		storageKey: "solo-compendium.PW-tools.directive-matrix.v1",
+		storageKey: "solo-compendium.PW-tools.directive-Lattice.v1",
 	});
 
 	const [genMode, setGenMode] = useState<"quick" | "deep">("quick");
@@ -433,7 +433,7 @@ Please provide a complete directive structure using System Ascendant terminology
 
 	return (
 		<SystemWindow
-			title="DIRECTIVE MATRIX"
+			title="DIRECTIVE Lattice"
 			className="flex flex-col min-h-[400px]"
 		>
 			<div className="flex-1 overflow-y-auto space-y-4 p-4 scrollbar-thin">
@@ -463,7 +463,7 @@ Please provide a complete directive structure using System Ascendant terminology
 				>
 					{genMode === "quick"
 						? "SYNT_PARAM: FAST_EXPTRAPOLATION_ACTIVE"
-						: "SYNT_PARAM: DEEP_MATRIX_RECURSION_ACTIVE"}
+						: "SYNT_PARAM: DEEP_Lattice_RECURSION_ACTIVE"}
 				</DataStreamText>
 
 				{genMode === "quick" ? (

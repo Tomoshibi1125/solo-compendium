@@ -14,7 +14,7 @@ interface SystemWindowProps {
 		| "quest"
 		| "regent"
 		| "regent"
-		| "arise"
+		| "resurge"
 		| "gate-e"
 		| "gate-d"
 		| "gate-c"
@@ -52,8 +52,8 @@ export function SystemWindow({
 			"border-accent/40 from-accent/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		regent:
 			"border-shadow-purple/50 from-shadow-purple/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
-		arise:
-			"border-arise-violet/50 from-arise-violet/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+		resurge:
+			"border-resurge-violet/50 from-resurge-violet/15 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
 		"gate-e": "border-gate-e/40 from-gate-e/10 via-card/80 to-void-black/90",
 		"gate-d": "border-gate-d/40 from-gate-d/10 via-card/80 to-void-black/90",
 		"gate-c": "border-gate-c/40 from-gate-c/10 via-card/80 to-void-black/90",
@@ -74,7 +74,7 @@ export function SystemWindow({
 		alert: "hsl(var(--destructive))",
 		quest: "hsl(var(--accent))",
 		regent: "hsl(var(--shadow-purple))",
-		arise: "hsl(var(--arise-violet))",
+		resurge: "hsl(var(--resurge-violet))",
 		"gate-e": "hsl(var(--gate-e-glow))",
 		"gate-d": "hsl(var(--gate-d-glow))",
 		"gate-c": "hsl(var(--gate-c-glow))",
@@ -91,7 +91,7 @@ export function SystemWindow({
 		alert: "--destructive",
 		quest: "--accent",
 		regent: "--shadow-purple",
-		arise: "--arise-violet",
+		resurge: "--resurge-violet",
 		"gate-e": "--gate-e-glow",
 		"gate-d": "--gate-d-glow",
 		"gate-c": "--gate-c-glow",
@@ -197,7 +197,7 @@ interface CornerDecorationProps {
 		| "quest"
 		| "regent"
 		| "regent"
-		| "arise"
+		| "resurge"
 		| "gate-e"
 		| "gate-d"
 		| "gate-c"
@@ -222,8 +222,8 @@ function CornerDecoration({ position, variant }: CornerDecorationProps) {
 		quest: "border-accent/40 shadow-[0_0_6px_hsl(var(--accent)/0.5)]",
 		regent:
 			"border-shadow-purple/40 shadow-[0_0_6px_hsl(var(--shadow-purple)/0.5)]",
-		arise:
-			"border-arise-violet/50 shadow-[0_0_8px_hsl(var(--arise-violet)/0.6)]",
+		resurge:
+			"border-resurge-violet/50 shadow-[0_0_8px_hsl(var(--resurge-violet)/0.6)]",
 		"gate-e": "border-gate-e/40 shadow-[0_0_6px_hsl(var(--gate-e-glow)/0.5)]",
 		"gate-d": "border-gate-d/40 shadow-[0_0_6px_hsl(var(--gate-d-glow)/0.5)]",
 		"gate-c": "border-gate-c/40 shadow-[0_0_6px_hsl(var(--gate-c-glow)/0.5)]",

@@ -114,7 +114,7 @@ export const artifacts: Artifact[] = [
 		attunement: true,
 		requirements: {
 			level: 20,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 20,
 			alignment: "Chaotic Neutral",
 			quest: "Must defeat an umbral regent or be chosen by the shadows",
@@ -382,7 +382,7 @@ export const artifacts: Artifact[] = [
 		attunement: true,
 		requirements: {
 			level: 20,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 20,
 			quest: "Must be chosen by the gods",
 		},
@@ -504,7 +504,7 @@ export const artifacts: Artifact[] = [
 		attunement: true,
 		requirements: {
 			level: 20,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 20,
 			quest: "Must understand the nature of reality",
 		},
@@ -564,7 +564,7 @@ export const artifacts: Artifact[] = [
 		attunement: true,
 		requirements: {
 			level: 20,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 20,
 			quest: "Must face death itself",
 		},
@@ -808,7 +808,7 @@ export const artifacts: Artifact[] = [
 		attunement: true,
 		requirements: {
 			level: 20,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 20,
 			quest: "Must accept the burden of destiny",
 		},

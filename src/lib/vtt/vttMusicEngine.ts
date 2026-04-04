@@ -479,10 +479,7 @@ export class VttMusicEngine {
 	private ensureContext(): AudioContext | null {
 		if (typeof window === "undefined") return null;
 		if (!this.context) {
-			const Ctor =
-				window.AudioContext ||
-				(window as unknown as { webkitAudioContext?: typeof AudioContext })
-					.webkitAudioContext;
+			const Ctor = window.AudioContext || window.webkitAudioContext;
 			if (!Ctor) return null;
 			this.context = new Ctor();
 		}

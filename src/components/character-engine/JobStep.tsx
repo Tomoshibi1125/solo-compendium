@@ -134,7 +134,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 									<div className="space-y-3 pt-1">
 										<div className="text-[10px] font-heading font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
 											<span className="h-[1px] flex-grow bg-primary/20"></span>
-											Awakening Matrix (Core Package)
+											Awakening Lattice (Core Package)
 											<span className="h-[1px] flex-grow bg-primary/20"></span>
 										</div>
 
@@ -179,7 +179,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 											{staticJobData.darkvision && (
 												<div className="text-xs text-muted-foreground flex justify-between">
 													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
-														Ocular Matrix:
+														Ocular Lattice:
 													</span>
 													<span>Darkvision {staticJobData.darkvision} FT</span>
 												</div>
@@ -252,7 +252,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 									<div className="space-y-3">
 										<SystemText className="text-[10px] text-muted-foreground">
 											Select an authorized Modern Earth language to append to
-											your neural linguistic matrix.
+											your neural linguistic Lattice.
 										</SystemText>
 										<Select
 											value={selectedLanguages[0] || ""}

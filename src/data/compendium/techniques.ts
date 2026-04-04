@@ -1,6 +1,7 @@
 // Techniques Compendium - Authoritative System Ascendant Content
 // Combat maneuvers and martial techniques
 // Based on System Ascendant mechanics
+// Deduplicated and Lore-Enriched
 
 export const techniques = [
 	{
@@ -11,7 +12,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 5,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -25,17 +26,17 @@ export const techniques = [
 			primary:
 				"Attack with advantage and deal extra damage equal to your proficiency bonus.",
 			secondary:
-				"Target must make Constitution saving throw or be blinded until your next turn.",
+				"Target must make Vitality saving throw or be blinded until your next turn.",
 		},
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "extra piercing",
 			},
 			saving_throw: {
-				ability: "Constitution",
-				dc: "8 + proficiency bonus + Dexterity modifier",
+				ability: "Vitality",
+				dc: "8 + proficiency bonus + Agility modifier",
 				success: "No effect",
 				failure: "Blinded until your next turn",
 			},
@@ -82,7 +83,7 @@ export const techniques = [
 			},
 			saving_throw: {
 				ability: "Strength",
-				dc: "8 + proficiency bonus + Wisdom modifier",
+				dc: "8 + proficiency bonus + Sense modifier",
 				success: "No effect",
 				failure: "Pushed 10 feet and knocked prone",
 			},
@@ -104,7 +105,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 12,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 17,
 		},
 		activation: {
@@ -124,7 +125,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "force",
 			},
 			movement: {
@@ -169,7 +170,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "ranged",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "half",
 			},
 		},
@@ -230,7 +231,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 4,
-			ability: "Dexterity",
+			ability: "Agility",
 		},
 		activation: {
 			type: "reaction",
@@ -296,7 +297,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 8,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -312,7 +313,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "extra",
 			},
 		},
@@ -407,7 +408,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 4,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 14,
 		},
 		activation: {
@@ -479,7 +480,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 12,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 15,
 		},
 		activation: {
@@ -569,7 +570,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 8,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		activation: {
@@ -585,7 +586,7 @@ export const techniques = [
 		},
 		effects: {
 			primary:
-				"Target must make Charisma saving throw or be restrained by umbral tendrils.",
+				"Target must make Presence saving throw or be restrained by umbral tendrils.",
 			secondary:
 				"While restrained, target cannot speak or cast spells with verbal components.",
 			tertiary:
@@ -594,8 +595,8 @@ export const techniques = [
 		mechanics: {
 			condition: ["restrained"],
 			saving_throw: {
-				ability: "Charisma",
-				dc: "8 + proficiency bonus + Charisma modifier",
+				ability: "Presence",
+				dc: "8 + proficiency bonus + Presence modifier",
 				success: "No effect",
 				failure: "Restrained by umbral tendrils",
 			},
@@ -632,11 +633,11 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 			},
 			saving_throw: {
 				ability: "Strength",
-				dc: "8 + proficiency bonus + Dexterity modifier",
+				dc: "8 + proficiency bonus + Agility modifier",
 				success: "Keeps weapon",
 				failure: "Drops weapon",
 			},
@@ -666,7 +667,7 @@ export const techniques = [
 		effects: {
 			primary: "Make a melee attack against a creature.",
 			secondary:
-				"If you hit, the creature must make Dexterity saving throw or be knocked prone.",
+				"If you hit, the creature must make Agility saving throw or be knocked prone.",
 			tertiary: "Prone creatures have disadvantage on their next attack roll.",
 		},
 		mechanics: {
@@ -675,7 +676,7 @@ export const techniques = [
 				modifier: "Strength",
 			},
 			saving_throw: {
-				ability: "Dexterity",
+				ability: "Agility",
 				dc: "8 + proficiency bonus + Strength modifier",
 				success: "No effect",
 				failure: "Knocked prone",
@@ -734,7 +735,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 6,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		activation: {
@@ -746,14 +747,14 @@ export const techniques = [
 		},
 		effects: {
 			primary:
-				"Each creature of your choice within 30 feet must make Wisdom saving throw.",
+				"Each creature of your choice within 30 feet must make Sense saving throw.",
 			secondary: "On a failure, creatures are frightened of you for 1 minute.",
 			tertiary: "Frightened creatures cannot willingly move closer to you.",
 		},
 		mechanics: {
 			saving_throw: {
-				ability: "Wisdom",
-				dc: "8 + proficiency bonus + Charisma modifier",
+				ability: "Sense",
+				dc: "8 + proficiency bonus + Presence modifier",
 				success: "No effect",
 				failure: "Frightened for 1 minute",
 			},
@@ -774,7 +775,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 15,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 18,
 			technique: ["Umbral Strike"],
 		},
@@ -788,18 +789,18 @@ export const techniques = [
 		effects: {
 			primary: "Attack with advantage and automatically score a critical hit.",
 			secondary:
-				"Critical hit deals maximum damage and the target must make Constitution saving throw or die.",
+				"Critical hit deals maximum damage and the target must make Vitality saving throw or die.",
 			tertiary:
 				"If the target dies, you regain hit points equal to your level and can immediately use Umbral Step as a bonus action.",
 		},
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 			},
 			saving_throw: {
-				ability: "Constitution",
-				dc: "8 + proficiency bonus + Dexterity modifier + 10",
+				ability: "Vitality",
+				dc: "8 + proficiency bonus + Agility modifier + 10",
 				success: "Takes maximum damage",
 				failure: "Dies",
 			},
@@ -838,7 +839,7 @@ export const techniques = [
 		effects: {
 			primary: "Attack with advantage and deal triple damage.",
 			secondary:
-				"If the target is a dragon or similar creature, it must make Constitution saving throw or die.",
+				"If the target is a dragon or similar creature, it must make Vitality saving throw or die.",
 			tertiary:
 				"If the target dies, you gain temporary hit points equal to its challenge rating times 10.",
 		},
@@ -849,7 +850,7 @@ export const techniques = [
 				damage: "triple",
 			},
 			saving_throw: {
-				ability: "Constitution",
+				ability: "Vitality",
 				dc: "8 + proficiency bonus + Strength modifier + 15",
 				success: "Takes triple damage",
 				failure: "Dies",
@@ -872,7 +873,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 20,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 20,
 			technique: ["Void Slash"],
 		},
@@ -886,19 +887,19 @@ export const techniques = [
 		effects: {
 			primary: "Attack ignores all defenses and deals maximum damage.",
 			secondary:
-				"Target must make Constitution saving throw with disadvantage or be annihilated.",
+				"Target must make Vitality saving throw with disadvantage or be annihilated.",
 			tertiary:
 				"If the target is annihilated, it cannot be revived by any means short of divine intervention.",
 		},
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "maximum",
 			},
 			saving_throw: {
-				ability: "Constitution",
-				dc: "8 + proficiency bonus + Dexterity modifier + 20",
+				ability: "Vitality",
+				dc: "8 + proficiency bonus + Agility modifier + 20",
 				success: "Takes maximum damage",
 				failure: "Annihilated",
 			},
@@ -935,7 +936,7 @@ export const techniques = [
 		effects: {
 			primary: "Attack with advantage and add 8d8 radiant damage.",
 			secondary:
-				"If the target is an evil creature, it must make Constitution saving throw or die.",
+				"If the target is an evil creature, it must make Vitality saving throw or die.",
 			tertiary:
 				"If the target dies, you and all allies within 30 feet gain temporary hit points equal to your herald level.",
 		},
@@ -946,8 +947,8 @@ export const techniques = [
 				damage: "radiant",
 			},
 			saving_throw: {
-				ability: "Constitution",
-				dc: "8 + proficiency bonus + Charisma modifier + 10",
+				ability: "Vitality",
+				dc: "8 + proficiency bonus + Presence modifier + 10",
 				success: "Takes extra radiant damage",
 				failure: "Dies",
 			},
@@ -966,7 +967,7 @@ export const techniques = [
 		id: "arcane-overload",
 		name: "Arcane Overload",
 		description:
-			"Overload your spell matrices beyond their designed capacity, channeling catastrophic amounts of raw essence through a single devastating attack.",
+			"Overload your spell lattices beyond their designed capacity, channeling catastrophic amounts of raw essence through a single devastating attack.",
 		type: "finishing",
 		style: "any",
 		prerequisites: {
@@ -1058,7 +1059,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 9,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -1093,7 +1094,7 @@ export const techniques = [
 		style: "dual-wielding",
 		prerequisites: {
 			level: 17,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 17,
 			technique: ["Umbral Strike"],
 		},
@@ -1113,7 +1114,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "slashing",
 			},
 		},
@@ -1168,7 +1169,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 7,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		activation: {
@@ -1246,7 +1247,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 15,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -1320,7 +1321,7 @@ export const techniques = [
 		style: "unarmed",
 		prerequisites: {
 			level: 7,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -1331,12 +1332,12 @@ export const techniques = [
 		},
 		effects: {
 			primary:
-				"Target must make a Constitution save or be paralyzed until the end of your next turn.",
+				"Target must make a Vitality save or be paralyzed until the end of your next turn.",
 			secondary: "Adaptive once learned via Rune.",
 		},
 		mechanics: {
 			saving_throw: {
-				ability: "Constitution",
+				ability: "Vitality",
 				dc: "8 + prof + Dex",
 				success: "No effect",
 				failure: "Paralyzed",
@@ -1359,7 +1360,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 9,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -1377,7 +1378,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "ranged",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "force",
 			},
 		},
@@ -1399,7 +1400,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 5,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		activation: {
@@ -1410,7 +1411,7 @@ export const techniques = [
 			time: "1 minute",
 		},
 		effects: {
-			primary: "Gain advantage on all Strength and Constitution saves.",
+			primary: "Gain advantage on all Strength and Vitality saves.",
 			secondary: "Cannot be moved or knocked prone. Adaptive once learned.",
 		},
 		mechanics: {
@@ -1433,7 +1434,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 3,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -1506,7 +1507,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 5,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		activation: {
@@ -1579,7 +1580,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 13,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -1656,7 +1657,7 @@ export const techniques = [
 		style: "weapon",
 		prerequisites: {
 			level: 15,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -1673,7 +1674,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "piercing",
 			},
 		},
@@ -1695,7 +1696,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 5,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		activation: {
@@ -1765,7 +1766,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 5,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -1810,7 +1811,7 @@ export const techniques = [
 		},
 		effects: {
 			primary:
-				"If the target is below 25% health, they must make a Constitution save or be reduced to 0 HP.",
+				"If the target is below 25% health, they must make a Vitality save or be reduced to 0 HP.",
 			secondary:
 				"On success, they take 10d10 additional weapon damage. Adaptive once learned.",
 		},
@@ -1821,7 +1822,7 @@ export const techniques = [
 				damage: "lethal",
 			},
 			saving_throw: {
-				ability: "Constitution",
+				ability: "Vitality",
 				dc: "15 + prof",
 				success: "takes damage",
 				failure: "death",
@@ -1914,7 +1915,7 @@ export const techniques = [
 		style: "ranged",
 		prerequisites: {
 			level: 9,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 15,
 		},
 		activation: {
@@ -1926,12 +1927,12 @@ export const techniques = [
 		effects: {
 			primary: "Your next ranged attack ignores cover and has advantage.",
 			secondary:
-				"You can use Wisdom instead of Dexterity for the attack and damage.",
+				"You can use Sense instead of Agility for the attack and damage.",
 		},
 		mechanics: {
 			attack: {
 				type: "ranged",
-				modifier: "Wisdom",
+				modifier: "Sense",
 				damage: "weapon",
 			},
 		},
@@ -1951,7 +1952,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 3,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 14,
 		},
 		activation: {
@@ -1989,7 +1990,7 @@ export const techniques = [
 		style: "unarmed",
 		prerequisites: {
 			level: 15,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 18,
 		},
 		activation: {
@@ -2005,7 +2006,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Wisdom",
+				modifier: "Sense",
 				damage: "10d6",
 			},
 			condition: ["Stunned"],
@@ -2064,7 +2065,7 @@ export const techniques = [
 		style: "ranged",
 		prerequisites: {
 			level: 12,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 18,
 		},
 		activation: {
@@ -2083,7 +2084,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "ranged",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "weapon+5d10",
 			},
 		},
@@ -2102,7 +2103,7 @@ export const techniques = [
 		style: "shield",
 		prerequisites: {
 			level: 8,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		activation: {
@@ -2135,7 +2136,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 2,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -2152,7 +2153,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "1d6 poison",
 			},
 		},
@@ -2208,7 +2209,7 @@ export const techniques = [
 		style: "ranged",
 		prerequisites: {
 			level: 11,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 17,
 		},
 		activation: {
@@ -2226,7 +2227,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "ranged",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "6d4",
 			},
 		},
@@ -2317,7 +2318,7 @@ export const techniques = [
 		style: "ranged",
 		prerequisites: {
 			level: 5,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 14,
 		},
 		activation: {
@@ -2400,7 +2401,7 @@ export const techniques = [
 		effects: {
 			primary:
 				"If your attack misses, you can instantly retry it with advantage as a 'temporal correction'.",
-			secondary: "Target must make a Wisdom save or be 'Confused' for 1 turn.",
+			secondary: "Target must make a Sense save or be 'Confused' for 1 turn.",
 		},
 		mechanics: {
 			condition: ["Advantage", "Confused"],
@@ -2459,7 +2460,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 3,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		activation: {
@@ -2494,7 +2495,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 4,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 14,
 		},
 		activation: {
@@ -2512,7 +2513,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "ranged",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "2d8",
 			},
 		},
@@ -2533,7 +2534,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 12,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 17,
 		},
 		activation: {
@@ -2551,7 +2552,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Constitution",
+				modifier: "Vitality",
 				damage: "6d10",
 			},
 		},
@@ -2570,7 +2571,7 @@ export const techniques = [
 		style: "any",
 		prerequisites: {
 			level: 18,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 18,
 		},
 		activation: {
@@ -2680,7 +2681,7 @@ export const techniques = [
 		style: "unarmed",
 		prerequisites: {
 			level: 4,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 14,
 		},
 		activation: {
@@ -2696,7 +2697,7 @@ export const techniques = [
 		mechanics: {
 			attack: {
 				type: "melee",
-				modifier: "Dexterity",
+				modifier: "Agility",
 				damage: "2d8",
 			},
 		},

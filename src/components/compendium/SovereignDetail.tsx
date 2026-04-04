@@ -14,9 +14,10 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveRef } from "@/lib/compendiumResolver";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
 
-interface SovereignData {
+export interface SovereignData {
 	id: string;
 	name: string;
 	display_name?: string | null;
@@ -89,9 +90,6 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 
 			// Fetch fusion components
 			const components: FusionComponent[] = [];
-
-			// Use centralized resolver for all component lookups
-			const { resolveRef } = await import("@/lib/compendiumResolver");
 
 			if (data.job_id) {
 				const job = await resolveRef("jobs", data.job_id);
@@ -430,17 +428,19 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 
 			{/* Lore Note */}
 			<SystemWindow
-				title="THE PRIME ARCHITECT'S BLESSING"
-				className="border-cyan-500/30"
+				title="THE The Absolute's SACRED PROCLAMATION"
+				className="border-cyan-500/30 bg-cyan-500/5"
 			>
-				<p className="text-sm text-muted-foreground italic">
-					In the post-reset timeline, the Prime Architect Kael Voss granted the
-					Gemini Protocol to worthy Ascendants, a permanent subclass overlay
-					that transcends the limitations of single-path power. Those who
-					complete the Protocol become Sovereigns, wielding the combined might
-					of Job, Path, and Dual {REGENT_LABEL} Overlays as one unified force.
-					The overlay is irreversible, for to become a Sovereign is to accept
-					that you will never again be anything less.
+				<p className="text-sm text-cyan-200/80 italic leading-relaxed">
+					Under the Post-Reset timeline, Kael Voss, the The Absolute & Eternal
+					Engine, granted the Gemini Protocol as a divine resolution to worthy
+					Ascendants. To become a Sovereign is to accept a permanent subclass
+					overlay that transcends the limitations of single-path power, wielding
+					the combined might of Job, Path, and Dual {REGENT_LABEL} Overlays as
+					one unified force. This is not merely a tactical advantage; it is a
+					spiritual transformation. The overlay is an irreversible covenant, for
+					to become a Sovereign is to be recognized by the Prime Pantheon as a
+					true heir of the System Ascendant.
 				</p>
 			</SystemWindow>
 		</div>

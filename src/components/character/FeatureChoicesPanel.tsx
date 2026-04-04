@@ -36,7 +36,7 @@ type ChoiceOptionRow = {
 	option_key: string;
 	name: string;
 	description: string | null;
-	grants: unknown;
+	grants: Json;
 };
 
 type ExtendedDatabase = Database & {
@@ -63,29 +63,35 @@ type CharacterChoiceRow = {
 	option_id: string;
 };
 
-function normalizeGrants(grants: unknown): Array<Record<string, unknown>> {
+function normalizeGrants(grants: Json): Array<Record<string, Json>> {
 	if (!grants) return [];
-	if (Array.isArray(grants)) return grants as Array<Record<string, unknown>>;
+	if (Array.isArray(grants)) return grants as Array<Record<string, Json>>;
 	return [];
 }
 
-function extractGrantedPowerNames(grants: unknown): string[] {
+function extractGrantedPowerNames(grants: Json): string[] {
 	const normalized = normalizeGrants(grants);
 	const names: string[] = [];
 	for (const grant of normalized) {
-		if (grant.type === "power" && typeof grant.name === "string") {
-			names.push(grant.name);
+		if (grant && typeof grant === "object" && !Array.isArray(grant)) {
+			const g = grant as Record<string, Json>;
+			if (g.type === "power" && typeof g.name === "string") {
+				names.push(g.name);
+			}
 		}
 	}
 	return names;
 }
 
-function asUuidArray(value: unknown): string[] {
+function asUuidArray(value: Json): string[] {
 	if (!Array.isArray(value)) return [];
-	return value.filter((v) => typeof v === "string") as string[];
+	return value.filter((v): v is string => typeof v === "string");
 }
 
-function isAbilityScore(value: unknown): value is AbilityScore {
+function isAbilityScore(
+	value: string | null | undefined | Json,
+): value is AbilityScore {
+	if (typeof value !== "string") return false;
 	return (
 		value === "STR" ||
 		value === "AGI" ||
@@ -491,7 +497,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 								}
 
 								const incSpecific = lower.match(
-									/increase\s+(str|strength|agi|dex|dexterity|vitality|vit|con|constitution|int|intelligence|sense|wis|wisdom|pre|presence|cha|charisma)\s+by\s+(\d+)/i,
+									/increase\s+(str|strength|agi|dex|agility|vitality|vit|con|vitality|int|intelligence|sense|wis|sense|pre|presence|cha|presence)\s+by\s+(\d+)/i,
 								);
 								if (incSpecific?.[1] && incSpecific?.[2]) {
 									const amount = parseInt(incSpecific[2], 10);
@@ -501,21 +507,17 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 										strength: "STR",
 										agi: "AGI",
 										dex: "AGI",
-										dexterity: "AGI",
 										agility: "AGI",
 										vit: "VIT",
-										vitality: "VIT",
 										con: "VIT",
-										constitution: "VIT",
+										vitality: "VIT",
 										int: "INT",
 										intelligence: "INT",
 										sense: "SENSE",
 										wis: "SENSE",
-										wisdom: "SENSE",
 										pre: "PRE",
 										presence: "PRE",
 										cha: "PRE",
-										charisma: "PRE",
 									};
 									const ability = toAbility[keyRaw];
 									if (ability && Number.isFinite(amount) && amount !== 0) {
@@ -568,7 +570,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 									continue;
 								}
 
-								// Skill/save bonuses: "+1 to Constitution saving throws", "+2 to Investigation"
+								// Skill/save bonuses: "+1 to Vitality saving throws", "+2 to Investigation"
 								const saveBonus = lower.match(
 									/\+\s*(\d+)\s+to\s+([a-z]+)\s+saving\s+throws?/i,
 								);
@@ -580,21 +582,17 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 										strength: "STR",
 										agi: "AGI",
 										dex: "AGI",
-										dexterity: "AGI",
 										agility: "AGI",
 										vit: "VIT",
-										vitality: "VIT",
 										con: "VIT",
-										constitution: "VIT",
+										vitality: "VIT",
 										int: "INT",
 										intelligence: "INT",
 										sense: "SENSE",
 										wis: "SENSE",
-										wisdom: "SENSE",
 										pre: "PRE",
-										presence: "PRE",
 										cha: "PRE",
-										charisma: "PRE",
+										presence: "PRE",
 									};
 									const ability = toAbility[key];
 									if (ability) {
@@ -658,9 +656,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 							action_type: null,
 							is_active: true,
 							modifiers:
-								featModifiers.length > 0
-									? (featModifiers as unknown as Json)
-									: null,
+								featModifiers.length > 0 ? (featModifiers as Json) : null,
 						});
 
 						existingFeatureNames.add(featName);

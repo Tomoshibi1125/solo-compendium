@@ -10,12 +10,12 @@ export const comprehensiveFeats = [
 			"Your mana signature has attuned to shadow-frequency energy, granting instinctive control over darkness.",
 		prerequisites: {
 			level: 5,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 13,
 		},
 		benefits: {
 			basic: [
-				"Advantage on Dexterity (Stealth) checks in dim light or darkness",
+				"Advantage on Agility (Stealth) checks in dim light or darkness",
 				"Can use Shadow Step as a bonus action (teleport up to 15 ft between shadows) 2 times per short rest",
 				"Resistance to necrotic damage",
 			],
@@ -41,10 +41,10 @@ export const comprehensiveFeats = [
 		},
 		benefits: {
 			basic: [
-				"When you reduce a creature to 0 HP, gain temporary HP equal to your Wisdom modifier",
+				"When you reduce a creature to 0 HP, gain temporary HP equal to your Sense modifier",
 				"Once per long rest, absorb essence to gain advantage on your next attack roll",
 				"Can store absorbed essence to fuel shadow abilities",
-				"+1 to Constitution saving throws",
+				"+1 to Vitality saving throws",
 			],
 			expert: [],
 			master: [],
@@ -63,14 +63,14 @@ export const comprehensiveFeats = [
 		description:
 			"You move through combat like a wraith, phasing between shadows to strike from impossible angles.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		benefits: {
 			basic: [
 				"When you take the Dodge action, move up to your speed without provoking opportunity attacks",
 				"Once per turn, teleport up to 15 feet to unoccupied space in dim light or darkness",
-				"Advantage on Dexterity saving throws against area effects",
+				"Advantage on Agility saving throws against area effects",
 				"Can use Shadow Step as a reaction when targeted by an attack",
 			],
 			expert: [],
@@ -92,7 +92,7 @@ export const comprehensiveFeats = [
 			"Your strikes carry shadow energy that erupts on critical hits, blinding targets with concentrated darkness.",
 		prerequisites: {
 			level: 9,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 17,
 		},
 		benefits: {
@@ -148,13 +148,13 @@ export const comprehensiveFeats = [
 		description:
 			"Your reflexes are attuned to the dimensional membrane, allowing you to slip through space when targeted.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
 			basic: [
 				"When you are targeted by an attack, you can use your reaction to teleport up to 5 feet to an unoccupied space you can see. If this move takes you out of the attack's range, the attack misses.",
-				"You have advantage on Dexterity checks made to initiative combat while in dim light or darkness.",
+				"You have advantage on Agility checks made to initiative combat while in dim light or darkness.",
 				"You can see through magical darkness out to 30 feet.",
 			],
 			expert: [],
@@ -173,7 +173,7 @@ export const comprehensiveFeats = [
 		id: "system-diagnostic-medic",
 		name: "System Diagnostic Medic",
 		description:
-			"You have unlocked the healer-class diagnostic HUD, allowing you to patch wounds with supernatural efficiency.",
+			"You have unlocked the healer-class diagnostic Aether-Sight, allowing you to patch wounds with supernatural efficiency.",
 		benefits: {
 			basic: [
 				"When you use a healer's kit to stabilize a dying creature, that creature also regains 1 HP.",
@@ -193,11 +193,11 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "phantom-algorithm-strike",
-		name: "Phantom Algorithm Strike",
+		name: "Phantom Mandate Strike",
 		description:
 			"The System provides predictive movement patterns, allowing you to strike and fade before an enemy can react.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
@@ -222,13 +222,13 @@ export const comprehensiveFeats = [
 		description:
 			"You have adapted to the heaviest armor by reinforcing your frame with mana-dense muscle fibers.",
 		prerequisites: {
-			armor_proficiencies: ["Medium armor"],
+			armor_proficiencies: ["Medium Aether Armor"],
 		},
 		benefits: {
 			basic: [
-				"Gain proficiency with heavy armor.",
-				"+1 to Constitution score (max 20).",
-				"While wearing heavy armor, reduce non-magical bludgeoning, piercing, and slashing damage by 3.",
+				"Gain proficiency with Heavy Carapace Armor.",
+				"+1 to Vitality score (max 20).",
+				"While wearing Heavy Carapace Armor, reduce non-magical bludgeoning, piercing, and slashing damage by 3.",
 			],
 			expert: [],
 			master: [],
@@ -305,7 +305,7 @@ export const comprehensiveFeats = [
 		},
 		benefits: {
 			basic: [
-				"Increase your Intelligence, Wisdom, or Charisma score by 1 (max 20).",
+				"Increase your Intelligence, Sense, or Presence score by 1 (max 20).",
 				"Once per long rest, recover a spent spell slot of level equal to half your level (rounded up, max 5th).",
 				"You learn one additional cantrip of your choice.",
 			],
@@ -327,12 +327,12 @@ export const comprehensiveFeats = [
 		description:
 			"Your awakening heightened your primal senses to a supernatural degree. No one can hide from you.",
 		prerequisites: {
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 13,
 		},
 		benefits: {
 			basic: [
-				"You gain advantage on Wisdom (Perception) and Wisdom (Survival) checks that rely on smell.",
+				"You gain advantage on Sense (Perception) and Sense (Survival) checks that rely on smell.",
 				"Track creatures through magically obscured areas or between dimensions if the trail is fresh.",
 				"Gain blindsight out to 10 feet.",
 			],
@@ -430,14 +430,14 @@ export const comprehensiveFeats = [
 		description:
 			"You can momentarily phase out of existence to avoid certain death.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
 			basic: [
-				"When subjected to an effect that allows a Dexterity save for half damage, take no damage on success and half on failure.",
+				"When subjected to an effect that allows a Agility save for half damage, take no damage on success and half on failure.",
 				"Use reaction to teleport 5 feet when an attack misses you.",
-				"+1 to Dexterity score (max 20).",
+				"+1 to Agility score (max 20).",
 			],
 			expert: [],
 			master: [],
@@ -453,16 +453,16 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "regent-command-protocol",
-		name: "Regent Command Protocol",
+		name: "Regent Command Decree",
 		description:
 			"Your voice carries the weight of the System, compelling others to follow your directives.",
 		prerequisites: {
-			ability: "Charisma",
+			ability: "Presence",
 			score: 13,
 		},
 		benefits: {
 			basic: [
-				"You can cast Command at 1st level without expending a spell slot (Charisma save).",
+				"You can cast Command at 1st level without expending a spell slot (Presence save).",
 				"Once per long rest, use an action to inspire up to 5 allies — they gain temp HP equal to your level + Cha mod.",
 				"Advantage on Intimidation checks against creatures of a lower rank.",
 			],
@@ -473,7 +473,7 @@ export const comprehensiveFeats = [
 			type: "active",
 			frequency: "long-rest",
 			action: "action",
-			save: "Charisma",
+			save: "Presence",
 			dc: "ability-modifier",
 		},
 		flavor:
@@ -509,7 +509,7 @@ export const comprehensiveFeats = [
 		description:
 			"You have survived more gate collapses than most ascendants see in a lifetime. Your endurance is legendary.",
 		prerequisites: {
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		benefits: {
@@ -517,7 +517,7 @@ export const comprehensiveFeats = [
 				"You have advantage on saving throws against exhaustion.",
 				"Short rests take only 10 minutes for you.",
 				"You can go without food or water for 3 days without penalty.",
-				"+1 to Constitution score (max 20).",
+				"+1 to Vitality score (max 20).",
 			],
 			expert: [],
 			master: [],
@@ -531,7 +531,7 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "combat-hud-analyzer",
-		name: "Combat HUD Analyzer",
+		name: "Combat Aether-Sight Analyzer",
 		description:
 			"Your System interface provides real-time combat analysis, highlighting enemy weaknesses.",
 		prerequisites: {
@@ -562,7 +562,7 @@ export const comprehensiveFeats = [
 		description:
 			"Your brain is shielded by a mana-reinforced firewall, making you nearly immune to mental intrusion.",
 		prerequisites: {
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 13,
 		},
 		benefits: {
@@ -587,14 +587,14 @@ export const comprehensiveFeats = [
 		description:
 			"Your reflexes are so sharp you can catch and redirect the kinetic energy of incoming projectiles.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		benefits: {
 			basic: [
 				"Use your reaction to reduce damage from a ranged weapon attack by 1d10 + Dex mod + your level.",
 				"If you reduce the damage to 0, you catch the projectile and can make a ranged attack with it as part of the same reaction.",
-				"+1 to Dexterity saving throws.",
+				"+1 to Agility saving throws.",
 			],
 			expert: [],
 			master: [],
@@ -610,7 +610,7 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "mana-leech-algorithm",
-		name: "Mana Leech Algorithm",
+		name: "Mana Leech Mandate",
 		description:
 			"You can sap the energy from an enemy's spells to fuel your own abilities.",
 		prerequisites: {
@@ -618,7 +618,7 @@ export const comprehensiveFeats = [
 		},
 		benefits: {
 			basic: [
-				"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Wisdom save.",
+				"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Sense save.",
 				"On a failure, the creature loses its lowest level spell slot, and you regain a spell slot of that level.",
 				"You gain resistance to force damage.",
 			],
@@ -629,7 +629,7 @@ export const comprehensiveFeats = [
 			type: "active",
 			frequency: "short-rest",
 			action: "bonus-action",
-			save: "Wisdom",
+			save: "Sense",
 			dc: "spell-save",
 		},
 		flavor:
@@ -691,7 +691,7 @@ export const comprehensiveFeats = [
 		description:
 			"You can force your body into a state of heightened physical performance at the cost of extreme fatigue.",
 		prerequisites: {
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 15,
 		},
 		benefits: {
@@ -721,7 +721,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"Climbing does not cost you extra movement.",
 				"You can make a running long jump or running high jump after moving only 5 feet.",
-				"You have advantage on Dexterity (Acrobatics) checks made to navigate difficult terrain.",
+				"You have advantage on Agility (Acrobatics) checks made to navigate difficult terrain.",
 			],
 			expert: [],
 			master: [],
@@ -743,7 +743,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"When you take damage, you can use your reaction to reduce the damage by an amount equal to your level + Int modifier.",
 				"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
-				"You gain proficiency in Constitution saving throws.",
+				"You gain proficiency in Vitality saving throws.",
 			],
 			expert: [],
 			master: [],
@@ -759,16 +759,16 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "apex-negotiator-algorithm",
-		name: "Apex Negotiator Algorithm",
+		name: "Apex Negotiator Mandate",
 		description:
 			"The System analyzes social cues and micro-expressions, feeding you the perfect responses.",
 		prerequisites: {
-			ability: "Charisma",
+			ability: "Presence",
 			score: 13,
 		},
 		benefits: {
 			basic: [
-				"You gain advantage on Charisma (Persuasion) and Charisma (Deception) checks against humanoids.",
+				"You gain advantage on Presence (Persuasion) and Presence (Deception) checks against humanoids.",
 				"The System highlights when someone is lying to you (Insight advantage).",
 				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
 			],
@@ -792,7 +792,7 @@ export const comprehensiveFeats = [
 		benefits: {
 			basic: [
 				"You gain blindsight out to 30 feet.",
-				"You have advantage on Wisdom (Perception) checks made to detect hidden creatures within 30 feet.",
+				"You have advantage on Sense (Perception) checks made to detect hidden creatures within 30 feet.",
 				"Creatures cannot gain advantage on attack rolls against you by being hidden.",
 			],
 			expert: [],
@@ -908,13 +908,13 @@ export const comprehensiveFeats = [
 		description:
 			"You have mastered the weight and balance of heavy defensive plating.",
 		prerequisites: {
-			armor_proficiencies: ["Heavy armor"],
+			armor_proficiencies: ["Heavy Carapace Armor"],
 		},
 		benefits: {
 			basic: [
 				"+1 to Strength score (max 20).",
-				"While wearing heavy armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
-				"You can don or doff heavy armor in half the normal time.",
+				"While wearing Heavy Carapace Armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
+				"You can don or doff Heavy Carapace Armor in half the normal time.",
 			],
 			expert: [],
 			master: [],
@@ -980,11 +980,11 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "guild-command-protocol",
-		name: "Guild Command Protocol",
+		name: "Guild Command Decree",
 		description:
-			"You have the natural charisma and tactical mind to lead a guild of ascendants.",
+			"You have the natural presence and tactical mind to lead a guild of ascendants.",
 		prerequisites: {
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		benefits: {
@@ -1016,7 +1016,7 @@ export const comprehensiveFeats = [
 		benefits: {
 			basic: [
 				"Your melee weapon attacks ignore resistance to their damage type.",
-				"Once per turn, when you hit a creature, you can force it to make a Charisma save or be banished to a void-space until the start of your next turn.",
+				"Once per turn, when you hit a creature, you can force it to make a Presence save or be banished to a void-space until the start of your next turn.",
 				"Your critical hits deal an additional 1d12 force damage.",
 			],
 			expert: [],
@@ -1025,8 +1025,8 @@ export const comprehensiveFeats = [
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
-			ability: "Charisma",
-			save: "Charisma",
+			ability: "Presence",
+			save: "Presence",
 			dc: "ability-modifier",
 		},
 		flavor:
@@ -1116,7 +1116,7 @@ export const comprehensiveFeats = [
 		},
 		benefits: {
 			basic: [
-				"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Wisdom save.",
+				"When you hit a creature with a melee weapon attack, you can use a bonus action to force it to make a Sense save.",
 				"On a failure, the creature loses its lowest level spell slot, and you regain mana points or a spell slot of that level.",
 				"You gain resistance to force damage.",
 			],
@@ -1127,7 +1127,7 @@ export const comprehensiveFeats = [
 			type: "active",
 			frequency: "short-rest",
 			action: "bonus-action",
-			save: "Wisdom",
+			save: "Sense",
 			dc: "spell-save",
 		},
 		flavor:
@@ -1189,7 +1189,7 @@ export const comprehensiveFeats = [
 		description:
 			"You can force your body into a state of heightened physical performance at the cost of extreme fatigue.",
 		prerequisites: {
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 15,
 		},
 		benefits: {
@@ -1219,7 +1219,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"Climbing does not cost you extra movement.",
 				"You can make a running long jump or running high jump after moving only 5 feet.",
-				"You have advantage on Dexterity (Acrobatics) checks made to navigate difficult terrain.",
+				"You have advantage on Agility (Acrobatics) checks made to navigate difficult terrain.",
 			],
 			expert: [],
 			master: [],
@@ -1241,7 +1241,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"When you take damage, you can use your reaction to reduce the damage by an amount equal to your level + Int modifier.",
 				"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
-				"You gain proficiency in Constitution saving throws.",
+				"You gain proficiency in Vitality saving throws.",
 			],
 			expert: [],
 			master: [],
@@ -1256,16 +1256,16 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "apex-negotiator-protocol",
-		name: "Apex Negotiator Protocol",
+		name: "Apex Negotiator Decree",
 		description:
 			"The System analyzes social cues and micro-expressions, feeding you the perfect responses.",
 		prerequisites: {
-			ability: "Charisma",
+			ability: "Presence",
 			score: 13,
 		},
 		benefits: {
 			basic: [
-				"You gain advantage on Charisma (Persuasion) and Charisma (Deception) checks against humanoids.",
+				"You gain advantage on Presence (Persuasion) and Presence (Deception) checks against humanoids.",
 				"The System highlights when someone is lying to you (Insight advantage).",
 				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
 			],
@@ -1289,7 +1289,7 @@ export const comprehensiveFeats = [
 		benefits: {
 			basic: [
 				"You gain blindsight out to 30 feet.",
-				"You have advantage on Wisdom (Perception) checks made to detect hidden creatures within 30 feet.",
+				"You have advantage on Sense (Perception) checks made to detect hidden creatures within 30 feet.",
 				"Creatures cannot gain advantage on attack rolls against you by being hidden.",
 			],
 			expert: [],
@@ -1405,13 +1405,13 @@ export const comprehensiveFeats = [
 		description:
 			"You have mastered the weight and balance of heavy defensive plating.",
 		prerequisites: {
-			armor_proficiencies: ["Heavy armor"],
+			armor_proficiencies: ["Heavy Carapace Armor"],
 		},
 		benefits: {
 			basic: [
 				"+1 to Strength score (max 20).",
-				"While wearing heavy armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
-				"You can don or doff heavy armor in half the normal time.",
+				"While wearing Heavy Carapace Armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
+				"You can don or doff Heavy Carapace Armor in half the normal time.",
 			],
 			expert: [],
 			master: [],
@@ -1477,11 +1477,11 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "ascendant-guild-leader",
-		name: "Guild Leader Protocol",
+		name: "Guild Leader Decree",
 		description:
-			"You have the natural charisma and tactical mind to lead a guild of ascendants.",
+			"You have the natural presence and tactical mind to lead a guild of ascendants.",
 		prerequisites: {
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		benefits: {
@@ -1512,7 +1512,7 @@ export const comprehensiveFeats = [
 		benefits: {
 			basic: [
 				"Your melee weapon attacks ignore resistance to their damage type.",
-				"Once per turn, when you hit a creature, you can force it to make a Charisma save or be banished to a void-space until the start of your next turn.",
+				"Once per turn, when you hit a creature, you can force it to make a Presence save or be banished to a void-space until the start of your next turn.",
 				"Your critical hits deal an additional 1d12 force damage.",
 			],
 			expert: [],
@@ -1521,8 +1521,8 @@ export const comprehensiveFeats = [
 		mechanics: {
 			type: "active",
 			frequency: "short-rest",
-			ability: "Charisma",
-			save: "Charisma",
+			ability: "Presence",
+			save: "Presence",
 			dc: "ability-modifier",
 		},
 		flavor:
@@ -1586,14 +1586,14 @@ export const comprehensiveFeats = [
 		description:
 			"You have mastered the art of catching and returning ranged fire.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
 			basic: [
 				"When a ranged weapon attack misses you, you can use your reaction to make a ranged weapon attack against the attacker.",
-				"You gain proficiency in Dexterity saving throws.",
-				"You can use your Dexterity modifier instead of Strength for jump distance.",
+				"You gain proficiency in Agility saving throws.",
+				"You can use your Agility modifier instead of Strength for jump distance.",
 			],
 			expert: [],
 			master: [],
@@ -1639,14 +1639,14 @@ export const comprehensiveFeats = [
 		name: "Dimensional Shifter Dodge",
 		description: "You flicker in and out of reality when under threat.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		benefits: {
 			basic: [
 				"When you take the Disengage action, you can teleport up to 10 feet to an unoccupied space.",
 				"Attack rolls against you have disadvantage if you have moved at least 20 feet this turn.",
-				"+1 to AC while not wearing heavy armor.",
+				"+1 to AC while not wearing Heavy Carapace Armor.",
 			],
 			expert: [],
 			master: [],
@@ -1715,7 +1715,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"+2 to Initiative rolls.",
 				"You can take the Dash or Disengage action as a bonus action.",
-				"You have advantage on Dexterity checks made to initiate combat.",
+				"You have advantage on Agility checks made to initiate combat.",
 			],
 			expert: [],
 			master: [],
@@ -1762,7 +1762,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"You are immune to the frightened condition.",
 				"You have advantage on all saving throws made while inside a gate.",
-				"+1 to Wisdom score (max 20).",
+				"+1 to Sense score (max 20).",
 			],
 			expert: [],
 			master: [],
@@ -1809,14 +1809,14 @@ export const comprehensiveFeats = [
 		name: "Dimensional Step Evader",
 		description: "You slip through cracks in space to avoid harm.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
 			basic: [
 				"When you are targeted by an opportunity attack, you can use your reaction to teleport up to 10 feet.",
 				"You can move through the space of hostile creatures regardless of their size.",
-				"+1 to Dexterity score (max 20).",
+				"+1 to Agility score (max 20).",
 			],
 			expert: [],
 			master: [],
@@ -1835,7 +1835,7 @@ export const comprehensiveFeats = [
 		name: "Mana Capacitor Armor",
 		description: "Your armor stores ambient energy to reinforce your strikes.",
 		prerequisites: {
-			armor_proficiencies: ["Medium armor"],
+			armor_proficiencies: ["Medium Aether Armor"],
 		},
 		benefits: {
 			basic: [
@@ -1882,7 +1882,7 @@ export const comprehensiveFeats = [
 		name: "System Fortress Body",
 		description: "Your body has been hardened into a living bunker.",
 		prerequisites: {
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 17,
 		},
 		benefits: {
@@ -1910,7 +1910,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"You can cast any spell you know with the ritual tag as a ritual.",
 				"Ritual casting time is reduced to 1 minute.",
-				"You gain proficiency in two Intelligence or Wisdom based skills.",
+				"You gain proficiency in two Intelligence or Sense based skills.",
 			],
 			expert: [],
 			master: [],
@@ -1953,7 +1953,7 @@ export const comprehensiveFeats = [
 		description:
 			"Your link with the System provides perfect ballistic calculations.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		benefits: {
@@ -2076,7 +2076,7 @@ export const comprehensiveFeats = [
 		description:
 			"You move with a flow that mirrors the currents of ambient mana, making your movements unpredictable.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
@@ -2101,7 +2101,7 @@ export const comprehensiveFeats = [
 		id: "system-recon-specialist",
 		name: "Recon Specialist",
 		description:
-			"Your HUD is tuned for long-range detection and structural analysis.",
+			"Your Aether-Sight is tuned for long-range detection and structural analysis.",
 		benefits: {
 			basic: [
 				"You gain darkvision out to 120 feet. If you already have darkvision, its range increases by 60 feet.",
@@ -2334,7 +2334,7 @@ export const comprehensiveFeats = [
 			"You push your System interface beyond safe limits, temporarily boosting all stat outputs.",
 		prerequisites: {
 			level: 5,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		benefits: {
@@ -2362,7 +2362,7 @@ export const comprehensiveFeats = [
 			"Your System broadcasts threat markers to allies, highlighting enemies and weak points.",
 		prerequisites: {
 			level: 3,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 12,
 		},
 		benefits: {
@@ -2390,14 +2390,14 @@ export const comprehensiveFeats = [
 		description:
 			"Your System feeds you hints about objectives, hidden paths, and threat assessments.",
 		prerequisites: {
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 13,
 		},
 		benefits: {
 			basic: [
 				"System highlights interactive objects and hidden doors within 30 feet",
 				"Receive threat assessment when entering a new area",
-				"Once per long rest, ask for a hint — Protocol Warden (PW) provides one true clue",
+				"Once per long rest, ask for a hint — Decree Warden (PW) provides one true clue",
 				"Cannot be surprised while System interface is active",
 			],
 			expert: [],
@@ -2447,7 +2447,7 @@ export const comprehensiveFeats = [
 			"You follow the System's daily training regimen. Consistent completion has enhanced your baseline.",
 		prerequisites: {
 			level: 2,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 12,
 		},
 		benefits: {
@@ -2475,7 +2475,7 @@ export const comprehensiveFeats = [
 			"Repeated gate exposure has attuned your senses to dimensional energy.",
 		prerequisites: {
 			level: 3,
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 12,
 		},
 		benefits: {
@@ -2502,7 +2502,7 @@ export const comprehensiveFeats = [
 			"Repeated gate exposure has warped your body, granting resistance to dimensional hazards.",
 		prerequisites: {
 			level: 6,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 14,
 		},
 		benefits: {
@@ -2615,7 +2615,7 @@ export const comprehensiveFeats = [
 			"You overload an enemy's mana network, disrupting their magical abilities.",
 		prerequisites: {
 			level: 7,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 14,
 		},
 		benefits: {
@@ -2632,7 +2632,7 @@ export const comprehensiveFeats = [
 			type: "active",
 			frequency: "short-rest",
 			action: "action",
-			save: "Constitution",
+			save: "Vitality",
 			dc: "spell-save",
 		},
 		flavor:
@@ -2653,7 +2653,7 @@ export const comprehensiveFeats = [
 				"On hit with heavy weapon, -5 attack for +10 damage",
 				"On crit with heavy weapon, add one additional damage die",
 				"After reducing to 0 HP, make one bonus action attack",
-				"Proficient with all martial weapons",
+				"Proficient with all Gate-Forged Weapons",
 			],
 			expert: [],
 			master: [],
@@ -2667,11 +2667,11 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "deadeye-protocol",
-		name: "Deadeye Protocol",
+		name: "Deadeye Decree",
 		description:
 			"The System feeds targeting data into your instincts, eliminating range penalties.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
@@ -2720,7 +2720,7 @@ export const comprehensiveFeats = [
 		description:
 			"You split mana flow into twin channels, wielding paired weapons with perfect sync.",
 		prerequisites: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 15,
 		},
 		benefits: {
@@ -2789,8 +2789,8 @@ export const comprehensiveFeats = [
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "iron-constitution",
-		name: "Iron Constitution",
+		id: "iron-vitality",
+		name: "Iron Vitality",
 		description:
 			"The System reinforced your cellular structure, increasing your capacity to absorb punishment.",
 		benefits: {
@@ -2845,10 +2845,10 @@ export const comprehensiveFeats = [
 		},
 		benefits: {
 			basic: [
-				"Heavy armor doesn't impose Stealth disadvantage",
+				"Heavy Carapace Armor doesn't impose Stealth disadvantage",
 				"Reduce non-magical physical damage by 3",
-				"Heavy armor doesn't reduce speed",
-				"Sleep in heavy armor without penalty",
+				"Heavy Carapace Armor doesn't reduce speed",
+				"Sleep in Heavy Carapace Armor without penalty",
 			],
 			expert: [],
 			master: [],
@@ -2868,7 +2868,7 @@ export const comprehensiveFeats = [
 			"Synchronize your System with allies, sharing real-time tactical data.",
 		prerequisites: {
 			level: 5,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 13,
 		},
 		benefits: {
@@ -2891,12 +2891,12 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "last-stand-protocol",
-		name: "Last Stand Protocol",
+		name: "Last Stand Decree",
 		description:
 			"At the brink, the System activates emergency combat mode — defense traded for offense.",
 		prerequisites: {
 			level: 8,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 14,
 		},
 		benefits: {
@@ -2923,7 +2923,7 @@ export const comprehensiveFeats = [
 		description: "Your System calculates escape routes from collapsing gates.",
 		prerequisites: {
 			level: 6,
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 13,
 		},
 		benefits: {
@@ -2981,7 +2981,7 @@ export const comprehensiveFeats = [
 		},
 		benefits: {
 			basic: [
-				"Advantage on Dexterity checks",
+				"Advantage on Agility checks",
 				"Move through difficult terrain without penalty",
 				"Advantage on Perception checks",
 				"Immunity to magical sleep effects",
@@ -3030,7 +3030,7 @@ export const comprehensiveFeats = [
 			"Your growth rate exceeds System predictions. Each level-up grants more than expected.",
 		prerequisites: {
 			level: 4,
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 13,
 		},
 		benefits: {
@@ -3133,12 +3133,12 @@ export const comprehensiveFeats = [
 	},
 	{
 		id: "rulers-authority",
-		name: "Ruler's Authority",
+		name: "Exarch's Authority",
 		description:
 			"Your mana pressure is so overwhelming that weaker creatures cannot raise a hand against you.",
 		prerequisites: {
 			level: 15,
-			ability: "Charisma",
+			ability: "Presence",
 			score: 18,
 		},
 		benefits: {
@@ -3154,7 +3154,7 @@ export const comprehensiveFeats = [
 		mechanics: {
 			type: "passive",
 			frequency: "at-will",
-			save: "Wisdom",
+			save: "Sense",
 			dc: "ability-modifier",
 		},
 		flavor:

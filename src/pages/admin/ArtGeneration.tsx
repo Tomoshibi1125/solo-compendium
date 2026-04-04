@@ -153,7 +153,7 @@ export default function ArtGenerationAdmin() {
 		let nextResult: GenerationResult | null = null;
 
 		const testRequest: ArtRequest = {
-			entityType: "monster" as const,
+			entityType: "Anomaly" as const,
 			entityId: "test-shadow-beast",
 			variant: "portrait" as const,
 			title: "Test Shadow Beast",
@@ -255,7 +255,7 @@ export default function ArtGenerationAdmin() {
 	const handleBatchGeneration = async () => {
 		const sampleRequests = [
 			{
-				entityType: "monster" as const,
+				entityType: "Anomaly" as const,
 				entityId: "goblin-shadow",
 				variant: "portrait" as const,
 				title: "Shadow Goblin",

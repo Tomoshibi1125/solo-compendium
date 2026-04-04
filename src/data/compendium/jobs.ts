@@ -24,11 +24,11 @@ export interface Job extends AuthoritativeStaticJob {
 	}[];
 	abilityScoreImprovements: {
 		strength?: number;
-		dexterity?: number;
-		constitution?: number;
+		agility?: number;
+		vitality?: number;
 		intelligence?: number;
-		wisdom?: number;
-		charisma?: number;
+		sense?: number;
+		presence?: number;
 	};
 	size: "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
 	speed: number;
@@ -55,11 +55,11 @@ export interface Job extends AuthoritativeStaticJob {
 	abilities: string[];
 	stats: {
 		strength: number;
-		dexterity: number;
-		constitution: number;
+		agility: number;
+		vitality: number;
 		intelligence: number;
-		wisdom: number;
-		charisma: number;
+		sense: number;
+		presence: number;
 	};
 	hit_dice?: string;
 }
@@ -98,7 +98,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"Former soldiers, MMA fighters, construction workers, and athletes whose awakening supercharged their musculature, bone density, and combat instincts. In a world where dimensional gates erupt in city centers and subway tunnels, Destroyers are the first responders — the ones the Ascendant Bureau sends when a gate needs to be cracked open by force. The System feeds them real-time targeting data through an AR-like HUD overlay. Off-duty, they work as guild enforcers, private military contractors, or competitive gate-clearance streamers. Where others study or finesse, Destroyers simply annihilate.",
+			"The Destroyer is an Awakened identity that specializes in the Living Siege Engine mandate. As an Ascendant of this lineage, their physiology is fundamentally restructured with crystallized mana, granting them bone density and combat instincts that surpass the human limit. They possess an innate Aetheric-Sight that perceives the structural weaknesses of enemies and gates alike. In the modern world, the Destroyer is the premier frontline asset of the Ascendant Bureau, their presence stabilizing the absolute order during gate eruptions.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
 		saving_throws: ["Strength", "Vitality"],
@@ -119,25 +119,25 @@ export const jobs: Job[] = [
 			{
 				name: "Reinforced Frame",
 				description:
-					"The System hardened your skeleton with crystallized mana — X-rays show bones denser than titanium. When reduced to 0 HP but not killed outright, drop to 1 HP instead. Once per long rest.",
+					"Your Awakening hardened your skeleton with crystallized mana — X-rays show bones denser than titanium. When reduced to 0 HP but not killed outright, drop to 1 HP instead. Once per long rest.",
 				level: 1,
 			},
 			{
-				name: "System Targeting HUD",
+				name: "Aetheric-Sight Resonance",
 				description:
-					"Your vision overlays combat telemetry like military-grade AR glasses, but built into your optic nerve. You sense hostile intent within 30 ft — even through walls and around corners — and cannot be surprised while conscious. On a crit, roll one additional weapon damage die.",
+					"Your vision resonates with the mana-signatures of the world, perceiving combat flow as an innate sense. You sense hostile intent within 30 ft — even through walls and around corners — and cannot be surprised while conscious. On a crit, roll one additional weapon damage die.",
 				level: 1,
 			},
 			{
-				name: "Adrenal Regulator",
+				name: "Adrenal Flux",
 				description:
-					"The System implanted a mana-fueled adrenal node near your kidneys — visible on MRI as a glowing cluster. Below half HP, it overclocks your system: attacks deal extra 1d4 force damage for 1 minute (1d6 at 11th). Once per short rest.",
+					"Your Awakening manifested a mana-fueled adrenal core near your kidneys. During the heat of battle, your essence overclocks: below half HP, attacks deal extra 1d4 force damage for 1 minute (1d6 at 11th). Once per short rest.",
 				level: 5,
 			},
 			{
-				name: "Weapon Neural Bond",
+				name: "Weapon Essence Bond",
 				description:
-					"Your preferred weapons register to your neural pathways like biometric locks — only you can wield them at full potential. +1 to attack and damage with all proficient weapons; you cannot be disarmed. (+2 at 17th level).",
+					"Your preferred weapons register to your soul-signature like a spiritual lock — only you can wield them at full potential. +1 to attack and damage with all proficient weapons; you cannot be disarmed. (+2 at 17th level).",
 				level: 11,
 			},
 		],
@@ -145,24 +145,24 @@ export const jobs: Job[] = [
 			{
 				name: "Gate Breaker",
 				description:
-					"You can punch through reinforced concrete and tear apart gate-crystal formations. Deal double damage to objects and structures. Advantage on saves against fear from gate monsters — you've seen worse on the evening news.",
+					"You can punch through reinforced concrete and tear apart gate-crystal formations. Deal double damage to objects and structures. Advantage on saves against fear from gate-born anomalies—your resonance is hardened against absolute chaos.",
 				type: "resistance",
 			},
 			{
-				name: "Combat Telemetry",
+				name: "Mana-Signature Scan",
 				description:
-					"Bonus action: your HUD scans a target like a full-body MRI in milliseconds. Learn its AC, HP percentage, highest save, and lowest save. Prof bonus uses per long rest.",
+					"Bonus action: your Aetheric-Sight scans a target's essence in milliseconds. Learn its AC, HP percentage, highest save, and lowest save. Prof bonus uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
 			},
 			{
 				name: "Damage Absorber",
 				description:
-					"Your crystallized mana skeleton absorbs impact like built-in body armor. When you use Adrenaline Burst, also gain temp HP equal to your Destroyer level.",
+					"Your crystallized mana skeleton absorbs impact like built-in spirit armor. When you use Adrenaline Burst, also gain temp HP equal to your Destroyer level.",
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { strength: 2, constitution: 1 },
+		abilityScoreImprovements: { strength: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -184,21 +184,21 @@ export const jobs: Job[] = [
 		classFeatures: [
 			{
 				level: 1,
-				name: "System Mark",
+				name: "Aetheric Mark",
 				description:
-					"Bonus action: your HUD locks onto a target like a fighter jet's missile tracking. Gain +1d4 to attack rolls against it (only one mark active). When the marked target drops to 0 HP, your HUD auto-locks the next threat as a free action.",
+					"Bonus action: your Aetheric-Sight locks onto a target's soul-signature. Gain +1d4 to attack rolls against it (only one mark active). When the marked target drops to 0 HP, your resonance auto-locks the next threat as a free action.",
 			},
 			{
 				level: 1,
-				name: "Kill Recovery",
+				name: "Essence Harvest",
 				description:
-					"When you reduce a creature to 0 HP, the System harvests residual mana from the corpse — your phone buzzes with a [MANA ABSORBED] notification. Regain HP equal to your Destroyer level + VIT mod. Once per short rest.",
+					"When you reduce a creature to 0 HP, you harvest the residual mana of the fallen. As an Ascendant of the modern era, your smartphone interface registers this influx as a [MANA ABSORBED] alert. Regain HP equal to your Destroyer level + VIT mod. Once per short rest.",
 			},
 			{
 				level: 2,
-				name: "Limiter Release",
+				name: "Unfettered Release",
 				description:
-					"Once per short rest, override your System's safety limiters — a warning flashes across your HUD: [LIMITER DISENGAGED]. For 1 round, your weapon attacks deal maximum damage dice (no rolling). At 17th level, twice per short rest.",
+					"Once per short rest, override your essence's safety limiters. For 1 round, your weapon attacks deal maximum damage dice (no rolling). At 17th level, twice per short rest.",
 			},
 			{
 				level: 3,
@@ -214,9 +214,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 5,
-				name: "Threat Escalation",
+				name: "Vulnerability Resonance",
 				description:
-					"Your HUD tracks cumulative damage data on engaged targets, highlighting weakening structural points in real-time. When you hit a creature you've already hit this combat, deal +1d6 bonus damage. At 11th level +1d8 and one additional attack. At 20th level, +1d10 and two additional attacks.",
+					"Your Aetheric-Sight tracks the deterioration of your target, highlighting weakening structural points in their mana-flow in real-time. When you hit a creature you've already hit this combat, deal +1d6 bonus damage. At 11th level +1d8 and one additional attack. At 20th level, +1d10 and two additional attacks.",
 			},
 			{
 				level: 7,
@@ -225,9 +225,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 9,
-				name: "System Override",
+				name: "Aetheric Realignment",
 				description:
-					"Force the System to recalculate — your HUD flashes [OVERRIDE AUTHORIZED]. When you fail a save, use your reaction to reroll with +prof bonus added. Once per long rest (twice at 13th, three at 17th).",
+					"Force the Aetheric-Weave to realign around you. When you fail a save, use your reaction to reroll with +prof bonus added. Once per long rest (twice at 13th, three at 17th).",
 			},
 			{
 				level: 10,
@@ -246,40 +246,40 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Apex Protocol",
+				name: "Zenith Mandate",
 				description:
-					"Your System profile updates globally: [RANK: S — APEX COMBAT POTENTIAL]. System Mark bonus becomes +1d8. Kill Recovery triggers on every kill (no rest limit). Limiter Release lasts 2 rounds. Ascendant Bureau databases flag you as a national strategic asset.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — APEX ABSOLUTE POTENTIAL]. Your Aetheric Mark bonus becomes +1d8. Essence Harvest triggers on every kill (no rest limit). Unfettered Release lasts 2 rounds. Ascendant Bureau databases flag you as a national strategic asset.",
 			},
 		],
 		abilities: [
-			"System Mark",
-			"Kill Recovery",
-			"Limiter Release",
-			"Threat Escalation",
-			"System Override",
+			"Aetheric Mark",
+			"Essence Harvest",
+			"Unfettered Release",
+			"Vulnerability Resonance",
+			"Aetheric Realignment",
 			"Destruction Path",
 		],
 		image: "/generated/compendium/jobs/warrior.webp",
 		stats: {
 			strength: 15,
-			dexterity: 13,
-			constitution: 14,
+			agility: 13,
+			vitality: 14,
 			intelligence: 10,
-			wisdom: 12,
-			charisma: 8,
+			sense: 12,
+			presence: 8,
 		},
 		primary_abilities: ["Strength", "Vitality"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
-	// 2. BERSERKER — Mana Overload Tank / Unstable Awakening
+	// 2. BERSERKER — Mana Overload Tank / Unstable Resonance
 	{
 		id: "berserker",
 		name: "Berserker",
 		type: "Job",
 		rank: "C",
 		description:
-			"Construction workers, bouncers, street fighters, and adrenaline junkies whose awakening went wrong — their System connection is unstable, flooding their body with raw mana under stress. In a modern world coping with the gate crisis, Berserkers are walking liability insurance nightmares. In Overload State, visible mana veins crawl across their skin and their muscles swell with crystallized energy — terrifying bystanders and going viral on social media. The Ascendant Bureau classifies them as high-risk assets, but no one clears gates faster. Many work solo or in guilds that specialize in controlled demolition of high-rank gates.",
+			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power—visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialized in the controlled demolition of high-rank gates.",
 		hitDie: "1d12",
 		primaryAbility: "Strength",
 		saving_throws: ["Strength", "Vitality"],
@@ -330,7 +330,7 @@ export const jobs: Job[] = [
 			{
 				name: "Threat Reflex",
 				description:
-					"Your destabilized System connection gives you split-second precognition — you flinch before a gun fires and dodge before a car crashes. Advantage on Agility saves against effects you can see while not blinded/deafened/incapacitated.",
+					"Your unstable Absolute resonance gives you split-second precognition — you flinch before a gun fires and dodge before a car crashes. Advantage on Agility saves against effects you can see while not blinded/deafened/incapacitated.",
 				type: "passive",
 			},
 			{
@@ -347,7 +347,7 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: { strength: 2, constitution: 1 },
+		abilityScoreImprovements: { strength: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -371,7 +371,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Overload State",
 				description:
-					"Bonus action: trigger mana overload — your veins glow, your muscles visibly swell, and nearby electronics emit static. Melee damage bonus = STR mod, resistance to bludgeoning/piercing/slashing, and HP temporarily increases by Berserker level (lost when Overload ends). 2/long rest, scaling to unlimited at 20th.",
+					"Bonus action: trigger an Absolute Surge — your veins glow, your muscles visibly swell, and nearby electronics emit static. Melee damage bonus = STR mod, resistance to bludgeoning/piercing/slashing, and HP temporarily increases by Berserker level (lost when Overload ends). 2/long rest, scaling to unlimited at 20th.",
 			},
 			{
 				level: 1,
@@ -455,9 +455,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "System Singularity",
+				name: "Zenith Singularity",
 				description:
-					"Your System status updates: [RANK: S — MANA SINGULARITY DETECTED]. STR and VIT increase by 4 (max 24). Overload grants resistance to ALL damage. Mana Shockwave extends to 10 ft. The Ascendant Bureau classifies you as an extinction-level asset.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE SINGULARITY]. STR and VIT increase by 4 (max 24). Overload grants resistance to ALL damage. Mana Shockwave extends to 10 ft. The Ascendant Bureau classifies you as an extinction-level asset.",
 			},
 		],
 		abilities: [
@@ -471,14 +471,14 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/berserker.webp",
 		stats: {
 			strength: 15,
-			dexterity: 13,
-			constitution: 14,
+			agility: 13,
+			vitality: 14,
 			intelligence: 8,
-			wisdom: 12,
-			charisma: 10,
+			sense: 12,
+			presence: 10,
 		},
 		primary_abilities: ["Strength", "Vitality"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// 3. ASSASSIN — Dimensional Phase Operative / Umbral Walker
@@ -488,7 +488,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Former intelligence operatives, cat burglars, hackers, parkour athletes, and special forces operators whose awakening attuned them to the dimensional membrane. In modern society, Assassins are the most in-demand ascendants for covert gate operations — clearing rifts that open in government buildings, corporate servers, and populated areas without causing public panic. They phase through walls, strike from impossible angles, and vanish before security cameras register anything. Many work as freelance contractors for the Ascendant Bureau, private security firms, or intelligence agencies. Some operate in the grey market, using their phase abilities for espionage and corporate extraction.",
+			"The Assassin is an Awakened identity that specializes in the Dimensional Phase Operative and Umbral Walker mandate. As an Ascendant of this lineage, their consciousness partially exists between realities, granting them the ability to phase through the physical world and strike from impossible angles. In the modern era, the Assassin is the supreme specialist in surgical rift-clearing and high-value target extraction within high-rank gates.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
 		saving_throws: ["Agility", "Intelligence"],
@@ -536,7 +536,7 @@ export const jobs: Job[] = [
 			{
 				name: "Kill Designation",
 				description:
-					"Bonus action: your System interface displays [TARGET DESIGNATED — LETHAL FORCE AUTHORIZED]. Crits on 19-20 against it for 1 minute. Once per long rest.",
+					"Bonus action: your Aetheric-Sight identifies your quarry: [RANK: S — LETHAL MANDATE AUTHORIZED]. Crits on 19-20 against it for 1 minute. Once per long rest.",
 				level: 14,
 			},
 		],
@@ -561,7 +561,7 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { dexterity: 2, intelligence: 1 },
+		abilityScoreImprovements: { agility: 2, intelligence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Umbral Cant"],
@@ -585,19 +585,19 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Specialist Training",
 				description:
-					"The System accelerates your learning in chosen fields — you master lockpicking, hacking, forgery, or surveillance in weeks instead of years. Double proficiency on two skill/tool proficiencies. Two more at 6th level.",
+					"Your Awakening accelerates your learning in chosen fields — you master lockpicking, hacking, forgery, or surveillance in weeks instead of years. Double proficiency on two skill/tool proficiencies. Two more at 6th level.",
 			},
 			{
 				level: 1,
 				name: "Vulnerability Analysis",
 				description:
-					"Your HUD highlights anatomical and structural weak points on any target you've observed — like an X-ray overlay showing joints, arteries, and stress fractures. Deal bonus damage: 1d6 at 1st, scaling +1d6 every 2 Assassin levels (10d6 at 19th). Requires finesse or ranged weapon.",
+					"Your Aetheric-Sight highlights the anatomical and structural weaknesses of any target you've observed, perceiving joints and arteries through a mana-resonant overlay. Deal bonus damage: 1d6 at 1st, scaling +1d6 every 2 Assassin levels (10d6 at 19th). Requires finesse or ranged weapon.",
 			},
 			{
 				level: 1,
 				name: "Umbral Cant",
 				description:
-					"A coded language used by ascendants in the umbral trade — encrypted dead drops, dark web forums, burner phone protocols, and anonymous gate intelligence networks. You recognize the signs in any city.",
+					"A coded language used by ascendants in the umbral trade — encrypted dead drops, dark web forums, burner phone rites, and anonymous gate intelligence networks. You recognize the signs in any city.",
 			},
 			{
 				level: 2,
@@ -638,7 +638,7 @@ export const jobs: Job[] = [
 				level: 11,
 				name: "Absolute Precision",
 				description:
-					"Your System auto-corrects every micro-movement — you never fumble a lock pick, miss a keystroke, or misjudge a jump. Any proficient ability check: treat d20 rolls of 9 or lower as 10.",
+					"Your internal resonance auto-corrects every micro-movement — you never fumble a lock pick, miss a keystroke, or misjudge a jump. Any proficient ability check: treat d20 rolls of 9 or lower as 10.",
 			},
 			{
 				level: 13,
@@ -670,9 +670,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Inevitable Strike",
+				name: "Zenith Strike",
 				description:
-					"Once per short rest: the System bends probability — your HUD displays [OUTCOME: GUARANTEED]. Turn any missed attack into a hit, or treat any failed check as a natural 20. Classified ascendants have used this to bypass bank vaults, dodge point-blank gunfire, and land impossible shots.",
+					"Once per short rest: the Aetheric-Weave bends probability around your strikes — your Aetheric-Sight displays [OUTCOME: GUARANTEED]. Turn any missed attack into a hit, or treat any failed check as a natural 20. Classified ascendants have used this to bypass bank vaults, dodge point-blank gunfire, and land impossible shots.",
 			},
 		],
 		abilities: [
@@ -686,14 +686,14 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/assassin.webp",
 		stats: {
 			strength: 10,
-			dexterity: 15,
-			constitution: 12,
+			agility: 15,
+			vitality: 12,
 			intelligence: 14,
-			wisdom: 13,
-			charisma: 8,
+			sense: 13,
+			presence: 8,
 		},
 		primary_abilities: ["Agility", "Intelligence"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// 4. STRIKER — Neural Overdrive Combatant / Impulse Channeler
@@ -703,7 +703,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"Martial artists, dancers, gymnasts, and professional athletes whose awakening rewired their entire nervous system into a mana-conductive network. In a world where gates can open in a crowded shopping mall, Strikers are the ideal rapid-response ascendants — no weapons to carry through security, no equipment to deploy. They process sensory input hundreds of times faster than normal humans and channel kinetic force through their limbs like living railguns. Off-duty, many run dojos, compete in ascendant martial arts leagues broadcast on streaming platforms, or work as celebrity bodyguards. Their body IS the weapon.",
+			"The Striker is an Awakened identity that specializes in the Neural Overdrive and Impulse Channeling mandate. As an Ascendant of this lineage, their entire nervous system was rewired into a mana-conductive network, allowing them to channel kinetic force through their limbs like living railguns. In modern society, Strikers are the premier rapid-response assets for urban gate eruptions, utilizing their impossible speed to neutralize threats with absolute precision.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
 		saving_throws: ["Strength", "Agility"],
@@ -720,9 +720,9 @@ export const jobs: Job[] = [
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
-				name: "Neural Overclock",
+				name: "Aetheric Overclock",
 				description:
-					"Your rewired nervous system auto-corrects physical errors faster than conscious thought — lab tests show your reaction time at 3 milliseconds, faster than any recorded human. When you roll a 1, you can reroll and must use the new result.",
+					"Your restructured nervous system auto-corrects physical errors faster than conscious thought — lab tests show your reaction time at 3 milliseconds, faster than any recorded human. When you roll a 1, you can reroll and must use the new result.",
 				level: 1,
 			},
 			{
@@ -771,7 +771,7 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { dexterity: 2, wisdom: 1 },
+		abilityScoreImprovements: { agility: 2, sense: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -799,15 +799,15 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 2,
-				name: "Impulse Gates",
+				name: "Impulse Rites",
 				description:
-					"Impulse points = Striker level, short rest recharge. Activate specific nerve clusters like flipping internal switches — your eyes flash briefly when a gate opens. Gate of Speed (Dash/Disengage), Gate of Force (2 bonus strikes), Gate of Iron (Dodge). 1 impulse point each.",
+					"Impulse points = Striker level, short rest recharge. Activate specific nerve clusters through precise internal Rites — your eyes flash briefly when a gate opens. Rite of Speed (Dash/Disengage), Rite of Force (2 bonus strikes), Rite of Iron (Dodge). 1 impulse point each.",
 			},
 			{
 				level: 2,
-				name: "Neural Acceleration",
+				name: "Impulse Acceleration",
 				description:
-					"+10 ft speed without armor (+15 at 6th, +20 at 10th, +25 at 14th, +30 at 18th). Speed-camera footage shows you as a blur. At 9th: run on walls and across water — your nerve impulses generate micro-adhesion fields.",
+					"+10 ft speed without armor (+15 at 6th, +20 at 10th, +25 at 14th, +30 at 18th). Speed-camera footage shows you as a blur. At 9th: run on walls and across water — your internal resonance generates micro-adhesion fields.",
 			},
 			{
 				level: 3,
@@ -842,7 +842,7 @@ export const jobs: Job[] = [
 				level: 5,
 				name: "Nerve Strike",
 				description:
-					"On melee hit, spend 1 impulse point to discharge bioelectric energy directly into the target's nervous system — like a biological EMP. VIT save or stunned until end of your next turn.",
+					"On melee hit, spend 1 impulse point to discharge aetheric energy directly into the target's mana-channels — like a biological overload. VIT save or stunned until end of your next turn.",
 			},
 			{
 				level: 6,
@@ -858,13 +858,13 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 7,
-				name: "Mental Firewall",
+				name: "Soul-Sanctum Ward",
 				description:
-					"Action: isolate and purge a mental intrusion like quarantining a virus — your autonomic system reboots the affected neural pathways. End one charmed or frightened effect on yourself.",
+					"Action: isolate and purge a mental intrusion through an Autonomic Rite — your internal resonance re-aligns your mana-flow circuits. End one charmed or frightened effect on yourself.",
 			},
 			{
 				level: 10,
-				name: "System-Purified Body",
+				name: "Aetheric-Purified Body",
 				description:
 					"Your mana network has purged all biological weakness — bloodwork comes back perfectly clean, no pathogens can survive in your system. Immune to disease and poison.",
 			},
@@ -872,13 +872,13 @@ export const jobs: Job[] = [
 				level: 13,
 				name: "Universal Resonance",
 				description:
-					"Your neural network decodes all language patterns in real-time — you walk into any country and speak like a native within seconds. Understand all spoken languages; any creature that knows a language understands you.",
+					"Your aetheric network decodes all language patterns in real-time — you walk into any country and speak like a native within seconds. Understand all spoken languages; any creature that knows a language understands you.",
 			},
 			{
 				level: 14,
 				name: "Impulse Perfection",
 				description:
-					"Your nerve network compensates for any failure — your body dodges poison, resists psychic intrusion, and shrugs off magic as automatically as breathing. Proficiency in all saves. Spend 1 impulse to reroll a failed save.",
+					"Your aetheric network compensates for any failure — your body dodges poison, resists psychic intrusion, and shrugs off magic as automatically as breathing. Proficiency in all saves. Spend 1 impulse to reroll a failed save.",
 			},
 			{
 				level: 15,
@@ -894,9 +894,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Perfected System",
+				name: "Zenith Ascension",
 				description:
-					"Your System status updates: [RANK: S — PERFECTED BIOLOGICAL SYSTEM]. Roll initiative with 0 impulse → regain 4. Velocity Chain adds full speed ÷ 5. Sports scientists, military researchers, and pharmaceutical companies all want to study you. The Ascendant Bureau won't let them.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — PERFECTED ABSOLUTE BIOLOGY]. Roll initiative with 0 impulse → regain 4. Velocity Chain adds full speed ÷ 5. The Ascendant Bureau ensures your secrets stay guarded from the reach of pharmaceutical giants.",
 			},
 		],
 		abilities: [
@@ -910,24 +910,24 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/monk.webp",
 		stats: {
 			strength: 13,
-			dexterity: 15,
-			constitution: 14,
+			agility: 15,
+			vitality: 14,
 			intelligence: 10,
-			wisdom: 14,
-			charisma: 8,
+			sense: 14,
+			presence: 8,
 		},
 		primary_abilities: ["Agility", "Sense"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
-	// 5. MAGE — System Data Analyst / Spell Matrix Compiler
+	// 5. MAGE — Arcane Custodian / Aetheric Scholar
 	{
 		id: "mage",
 		name: "Mage",
 		type: "Job",
 		rank: "C",
 		description:
-			"Programmers, scientists, researchers, and academics whose awakening granted direct read-access to the System's spell matrix — the source code governing magical phenomena. In modern society, Mages are recruited heavily by universities, tech companies, and government research labs. They reverse-engineer magic like software, compile spells from System data into personal digital grimoires (often stored on tablets or custom devices), and optimize casting parameters with mathematical precision. Many publish papers, consult for the Ascendant Bureau's R&D division, or run private arcane-tech startups. The most versatile casters alive, limited only by how many spells they can decode.",
+			"The Mage is an Awakened identity that specializes in the Arcane Custodian and Aetheric Scholar mandate. As an Ascendant of this lineage, their Awakening provides a direct attunement to the Aetheric-Weave—the fundamental tapestry of absolute magical phenomena. In the modern world, Mages treat magic with the analytical rigor of higher mathematics, optimizing their rites with a precision that defines the modern era of aetheric research.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
 		saving_throws: ["Intelligence", "Sense"],
@@ -952,25 +952,25 @@ export const jobs: Job[] = [
 			{
 				name: "Mana-Shielded Cortex",
 				description:
-					"Your brain restructured to process raw System data — EEGs show neural activity patterns that don't match any known brain architecture. Advantage on INT, Sense, and Presence saves against spells and magical effects.",
+					"Your brain restructured to process the raw flow of the Aetheric-Weave — EEGs show neural activity patterns that don't match any known brain architecture. Advantage on INT, Sense, and Presence saves against spells and magical effects.",
 				level: 1,
 			},
 			{
-				name: "System Read Access",
+				name: "Aetheric-Sight Resonance",
 				description:
-					"You perceive magic as visible data streams — like holographic code overlaid on reality, readable only by you. Sense magical energy, auto-identify spell components and school. Other Mages describe it as 'seeing the source code of physics.'",
+					"Your vision perceives the flows of the Aetheric-Weave as visible streams of light. Sense magical energy, and automatically identify the school of any spell. Other Mages describe it as 'perceiving the architecture of creation.'",
 				level: 1,
 			},
 			{
 				name: "Parallel Processing",
 				description:
-					"Your mind runs multiple spell compilations simultaneously like a multi-core processor — researchers at MIT have clocked your cognitive throughput at 47x baseline human. Weave spell effects together and amplify power through sustained focus.",
+					"Your mind runs multiple spell compilations simultaneously like a multi-core processor — Global Aetheric research divisions have clocked your cognitive throughput at 47x baseline human. Weave spell effects together and amplify power through sustained focus.",
 				level: 3,
 			},
 			{
-				name: "Real-Time Decompilation",
+				name: "Aetheric-Parsing",
 				description:
-					"Analyze enemy spells as they're cast — your vision displays the spell's code structure in real-time, like a live debugger for magic. Create counter-routines on the fly: instant-cast defenses, delayed triggers, and live spell analysis.",
+					"Analyze enemy spells as they're cast — your vision identifies structural flaws in an enemy's spellcraft as it manifests. Create counter-rites on the fly: instant-cast defenses and live resonance analysis.",
 				level: 11,
 			},
 		],
@@ -978,24 +978,24 @@ export const jobs: Job[] = [
 			{
 				name: "Arcane Sight",
 				description:
-					"Perceive magical auras as holographic data overlays — like wearing permanent AR glasses tuned to the System's frequency. Auto-identify spell power levels. You can spot enchanted items in a pawn shop from across the room.",
+					"Perceive magical auras as shifting spectra of light, tuned to the resonance of the Aetheric-Weave. Auto-identify spell power levels. You can spot enchanted items in a pawn shop from across the room.",
 				type: "passive",
 			},
 			{
-				name: "Spell Resistance Matrix",
+				name: "Aetheric-Sanctum Mind",
 				description:
-					"Your mana-shielded brain has built-in anti-malware — hostile magic gets flagged and quarantined before it reaches your consciousness. Resistance to psychic damage.",
+					"Your mind is shielded by an innate resonance that flags and neutralizes hostile magic before it can take root. Resistance to psychic damage.",
 				type: "resistance",
 			},
 			{
-				name: "Optimized Casting",
+				name: "Optimized Rites",
 				description:
-					"Optimize a compiled spell like refactoring code — amplify damage output, extend duration, or fork to additional targets. Your guild's Mages probably argue about whose optimization algorithms are better. INT mod uses per long rest.",
+					"Optimize a prepared rite through precise mental compilation — amplify damage, extend duration, or fork to additional targets. Your colleagues at the Bureau probably argue about whose resonance theories are superior. INT mod uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: { intelligence: 2, wisdom: 1 },
+		abilityScoreImprovements: { intelligence: 2, sense: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1021,19 +1021,19 @@ export const jobs: Job[] = [
 		classFeatures: [
 			{
 				level: 1,
-				name: "Matrix Compilation",
+				name: "Resonance Alignment",
 				description:
-					"Compile Mage spells using Intelligence — you prepare spell routines from your digital grimoire each morning like a developer loading a build. You can modify one prepared spell per long rest: swap its damage type to any other you've catalogued.",
+					"Prepare Mage spells using Intelligence — you align spell rites from your digital grimoire each morning like a specialist loading a configuration. You can modify one prepared spell per long rest: swap its damage type to any other you've catalogued.",
 			},
 			{
 				level: 1,
-				name: "Spell Deconstruction",
+				name: "Resonance Deconstruction",
 				description:
-					"When you observe a spell cast — even by a gate boss — you can attempt to reverse-engineer it like decompiling software. INT check DC 10 + spell level: success lets you add it to your grimoire during your next rest (normal copying cost). Short rest: recover one spell slot ≤ half Mage level. Once per day.",
+					"When you observe a spell cast — even by a gate boss — you can attempt to deconstruct its resonance. Intelligence check DC 10 + spell level: success lets you add it to your grimoire during your next rest (normal copying cost). Short rest: recover one spell slot ≤ half Mage level. Once per day.",
 			},
 			{
 				level: 2,
-				name: "Specialization Protocol",
+				name: "Arcane Specialization",
 				description:
 					"Choose a school of magic to specialize in. Features at 2nd, 6th, 10th, and 14th level.",
 			},
@@ -1044,8 +1044,8 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 6,
-				name: "Protocol Feature",
-				description: "Feature from your Specialization Protocol.",
+				name: "Specialization Feature",
+				description: "Feature from your Arcane Specialization.",
 			},
 			{
 				level: 8,
@@ -1055,55 +1055,55 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 10,
-				name: "Protocol Feature",
-				description: "Feature from your Specialization Protocol.",
+				name: "Specialization Feature",
+				description: "Feature from your Arcane Specialization.",
 			},
 			{
 				level: 14,
-				name: "Protocol Feature",
-				description: "Feature from your Specialization Protocol.",
+				name: "Specialization Feature",
+				description: "Feature from your Arcane Specialization.",
 			},
 			{
 				level: 18,
-				name: "Permanent Cache",
+				name: "Permanent Tuning",
 				description:
-					"Choose one 1st-level and one 2nd-level spell. These are permanently compiled into your neural matrix like firmware — cast them without a slot, at will. They run as background processes in your mind.",
+					"Choose one 1st-level and one 2nd-level spell. These are permanently attuned to your soul resonance — cast them without a slot, at will. They exist as ambient flows within your consciousness.",
 			},
 			{
 				level: 20,
-				name: "System Root Access",
+				name: "Zenith Ascension",
 				description:
-					"Your System profile updates: [RANK: S — ROOT ACCESS GRANTED]. Two 3rd-level spells always loaded; cast each once without a slot per short rest. Once per long rest, compile any spell in your grimoire without expending a slot (max 7th level). Universities name lecture halls after you.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE AUTHORITY]. Two 3rd-level spells are always prepared; cast each once without a slot per short rest. Once per long rest, cast any spell in your grimoire without expending a slot (max 7th level). Universities and academies globally seek your patronage.",
 			},
 		],
 		abilities: [
-			"Matrix Compilation",
+			"Lattice Compilation",
 			"Spell Deconstruction",
 			"Spell Layering",
 			"Permanent Cache",
-			"Specialization Protocol",
+			"Specialization Rite",
 		],
 		image: "/generated/compendium/jobs/mage.webp",
 		stats: {
 			strength: 8,
-			dexterity: 14,
-			constitution: 13,
+			agility: 14,
+			vitality: 13,
 			intelligence: 15,
-			wisdom: 12,
-			charisma: 10,
+			sense: 12,
+			presence: 10,
 		},
 		primary_abilities: ["Intelligence", "Sense"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
-	// 6. ESPER — Anomalous Awakening / Mana Radiation Channeler
+	// 6. ESPER — Reality Distorter / Unfiltered Vessel
 	{
 		id: "esper",
 		name: "Esper",
 		type: "Job",
 		rank: "B",
 		description:
-			"Ordinary people — baristas, students, office workers, teenagers — whose awakening went catastrophically right. Their System connection is raw and unfiltered, mana bleeding from their body like radiation. In modern society, Espers are celebrities and pariahs in equal measure — their uncontrolled power has leveled city blocks and gone viral in disaster footage. The Ascendant Bureau monitors them closely. Some become famous ascendants with massive social media followings; others are quietly contained in government facilities. They reshape reality through sheer willpower, bending spells mid-cast with a thought. Unpredictable, terrifyingly powerful, and classified as high-risk anomalies.",
+			"The Esper is an Awakened identity that specializes in the Reality Distorter and Unfiltered Vessel mandate. As the SA version of a Sorcerer, their connection to the Aetheric-Weave is raw and volatile—mana bleeds from their body like radiation, reshaping reality through sheer willpower. In modern society, Espers are celebrities and pariahs in equal measure; their aetheric flares reshape the tapestry of existence with absolute authority.",
 		hitDie: "1d6",
 		primaryAbility: "Presence",
 		saving_throws: ["Vitality", "Presence"],
@@ -1171,7 +1171,7 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { charisma: 2, constitution: 1 },
+		abilityScoreImprovements: { presence: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1252,9 +1252,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Critical Mass",
+				name: "Zenith Awakening",
 				description:
-					"Your System status updates: [RANK: S — MANA REACTOR: CRITICAL MASS]. Regain 4 flux on short rest. Once per long rest, Overcharge with no flux limit — spend any amount, adding 1d6 per point. Satellite imagery shows a visible mana flare when you go all-out. Government agencies have contingency plans for you.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE SINGULARITY]. Regain 4 flux on short rest. Once per long rest, Overcharge with no flux limit — spend any amount, adding 1d6 per point. Satellite imagery of the Ascendant Bureau captures the visible mana-flare when you go all-out. Government agencies maintain deep files on your potential.",
 			},
 		],
 		abilities: [
@@ -1267,24 +1267,24 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/tank.webp",
 		stats: {
 			strength: 8,
-			dexterity: 13,
-			constitution: 14,
+			agility: 13,
+			vitality: 14,
 			intelligence: 10,
-			wisdom: 12,
-			charisma: 15,
+			sense: 12,
+			presence: 15,
 		},
 		primary_abilities: ["Presence", "Vitality"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
-	// 7. REVENANT — Death-Gate Survivor / Entropy Caster
+	// 7. REVENANT — Mandated of Marthos / Void-Breath Reaper
 	{
 		id: "revenant",
 		name: "Revenant",
 		type: "Job",
 		rank: "A",
 		description:
-			"Ascendants who flatlined inside a gate — their heart stopped, brain activity ceased, the hospital called time of death — and then the System brought them back. EMTs, soldiers, firefighters, even civilians caught in gate breaks. The reconstruction left them permanently tethered to the entropy layer. In modern society, Revenants are deeply unsettling: food spoils near them, plants wilt, and electronics glitch. Many struggle to hold normal jobs or relationships. They find purpose in high-rank gate clearance, where their power to accelerate or reverse decay makes them invaluable. The closer a Revenant is to death, the more powerful they become.",
+			"The Revenant is an Awakened identity granted the mandate of the Marthos Reaper. As an Ascendant of this lineage, they are the living vessels of the Void-Breath, authorized by the Dragon-King Marthos to unmake the corrupted and the fallen. They do not merely kill; they dissolve the very essence of their enemies into the entropy layer. In modern society, Revenants are figures of cold awe—where they walk, the air grows still and the weak-hearted feel the weight of their mortal end. They are the ultimate cleanup crew for the Ascendant Bureau, tasked with erasing gate breaks that threaten to consume reality.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
 		saving_throws: ["Intelligence", "Sense"],
@@ -1307,35 +1307,35 @@ export const jobs: Job[] = [
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
-				name: "Reconstructed Biology",
+				name: "Mandate of the End-Cycle",
 				description:
-					"You died and the System rebuilt you — your death certificate is still on file. You don't need to eat, drink, or breathe. You age at 1/10th the normal rate. Doctors can't explain your bloodwork; coroners say you should still be dead.",
+					"Your Awakening occurred at the threshold of the Void. Your physiology is saturated with entropy-mana, granting you resistance to necrotic and force damage. You do not need to breathe, eat, or drink, and you have advantage on saves against being unmade.",
 				level: 1,
 			},
 			{
-				name: "Death's Threshold",
+				name: "Reaper's Resilience",
 				description:
-					"You've already died once — you have the hospital records to prove it. Advantage on death saves. When stabilized, regain 1 HP instead of 0. Immune to the frightened condition — horror movies, gate bosses, and jump scares don't register.",
+					"You have already touched the Void—you have the hospital records to prove it from your moment of Awakening. Advantage on death saves. When stabilized, regain 1 HP instead of 0. Immune to the frightened condition.",
 				level: 1,
 			},
 			{
-				name: "Entropic Aura",
+				name: "Void-Dissension Aura",
 				description:
-					"Houseplants die, milk curdles in the fridge, and your phone battery drains twice as fast. Nonmagical plants within 10 ft wither. Food within 5 ft spoils in 1 minute. Restaurants politely ask you to use takeout.",
+					"The Aetheric-Weave surrounding you is destabilized by your presence. Nonmagical objects and lifeforms within 10 ft suffer accelerated decay. Non-Awakened individuals feel a primal urge to keep their distance; milk spoils and batteries drain in your wake.",
 				level: 1,
 			},
 			{
-				name: "Life Siphon",
+				name: "Soul Reaping",
 				description:
-					"When you deal necrotic damage, the target's life force visibly streams into you like luminous smoke — deeply unsettling to watch. Regain HP = half the necrotic dealt. Once per turn.",
+					"When you deal necrotic damage, the target's life force is reaped into your vessel as raw mana. Regain HP = half the necrotic dealt. Once per turn.",
 				level: 14,
 			},
 		],
 		jobTraits: [
 			{
-				name: "Deathsight",
+				name: "Aetheric-Sight: Entropy-Tuned",
 				description:
-					"You perceive life force as a visible glow — healthy people shine, injured people flicker, and the dying are almost dark. Sense dying creatures and undead within 120 ft, even through walls. Know exact HP of any creature below half max.",
+					"You perceive the fading life-force and structural decay of all things. Sense dying creatures and undead within 120 ft, even through walls. Know the exact health of any creature below half their maximum.",
 				type: "passive",
 			},
 			{
@@ -1345,14 +1345,14 @@ export const jobs: Job[] = [
 				type: "resistance",
 			},
 			{
-				name: "Voice of the Dead",
+				name: "Voice of the Void",
 				description:
-					"Speak with the dead at will — at crime scenes, battlefields, and gate clearance sites, you can interview the deceased. The dead recognize you as one of their own and answer truthfully. Cold case detectives love you.",
+					"Speak with the lingering echoes of the deceased at will. The dead recognize you as a Mandated Reaper and answer truthfully. Cold case detectives and Bureau investigators often seek your insight.",
 				type: "active",
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { intelligence: 2, constitution: 1 },
+		abilityScoreImprovements: { intelligence: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1379,21 +1379,21 @@ export const jobs: Job[] = [
 		classFeatures: [
 			{
 				level: 1,
-				name: "Entropy Matrix",
+				name: "Rite of Dissolution",
 				description:
-					"Cast Revenant spells using Intelligence — you prepare them from a grimoire that no living person can read without getting nauseous. Your necrotic spells ignore resistance (not immunity). Below half HP, your spell save DC increases by 1 — the closer to death, the stronger you get.",
+					"Perform specialized entropy rites using Intelligence — your grimoire is a record of everything reaped. Your necrotic rites ignore resistance. Below half HP, your power surges: your spell save DC increases by 1.",
 			},
 			{
 				level: 1,
-				name: "Death Harvest",
+				name: "Final Harvest",
 				description:
-					"When a creature dies within 60 ft, you passively absorb its fading life force — visible as a wisp of light drifting toward you. Gain temp HP = creature's CR (min 1) + INT mod. Once per round, no action. Paramedics find this deeply uncomfortable.",
+					"When a creature falls within 60 ft, you passively absorb its fading resonance. Gain temp HP = creature's Rank (level equivalent) + Intelligence mod. Once per round.",
 			},
 			{
 				level: 2,
-				name: "Entropy Specialization",
+				name: "Reaping Specialization",
 				description:
-					"Choose an entropy discipline — each manifests differently in the field. Half cost/time to copy necromancy spells (your grimoire absorbs them like a sponge). When you kill with a necromancy spell, decay chain-reacts: one creature within 10 ft takes necrotic = INT mod. Features at 2nd, 6th, 10th, and 14th.",
+					"Choose a Reaping discipline — each manifests differently in the field. Half cost/time to copy necromancy rites. When you unmake a target with a necromancy rite, decay chain-reacts: one creature within 10 ft takes necrotic damage equal to your INT mod. Features at 2nd, 6th, 10th, and 14th.",
 			},
 			{
 				level: 4,
@@ -1407,9 +1407,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 8,
-				name: "Decay Field",
+				name: "Breath of Dissolution",
 				description:
-					"Once per long rest, emit a 20-ft radius field of accelerated entropy — grass blackens, metal rusts, and the air tastes like ozone. For 1 min (concentration): enemies starting their turn in it take necrotic = prof + INT mod. Enemy healing in the field is halved.",
+					"Once per long rest, emit a 20-ft radius field of accelerated entropy—the signature of Marthos's Void-Breath. For 1 min: enemies starting their turn in it take necrotic damage equal to your proficiency bonus + INT mod. Enemy healing in the field is halved.",
 			},
 			{
 				level: 10,
@@ -1429,19 +1429,19 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 18,
-				name: "Permanent Cache",
+				name: "Permanent Reaping",
 				description:
-					"Choose one 1st and one 2nd-level spell. These are permanently woven into your entropy field like background radiation — cast them without a slot, at will. They're always running, like apps you never close.",
+					"Choose one 1st and one 2nd-level spell. These are permanently attuned to your internal resonance — cast them without a slot, at will. They exist as ambient flows within your consciousness.",
 			},
 			{
 				level: 20,
-				name: "Entropy Regent",
+				name: "Zenith Avatar of Marthos",
 				description:
-					"Your System status updates: [RANK: S — ENTROPY REGENT]. Decay Field becomes at-will (no concentration). Below half HP, necrotic spells deal +INT mod bonus damage. Death Harvest has no per-round limit. The Ascendant Bureau lists you as a biohazard. Insurance companies won't cover buildings you enter.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — AVATAR OF THE VOID-BREATH]. Breath of Dissolution becomes at-will. Below half HP, your necrotic rites deal bonus damage equal to your INT mod. The Ascendant Bureau lists you as a localized end-cycle occurrence. You are the final harvest.",
 			},
 		],
 		abilities: [
-			"Entropy Matrix",
+			"Entropy Mandate",
 			"Death Harvest",
 			"Entropy Specialization",
 			"Decay Field",
@@ -1450,24 +1450,24 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/necromancer.webp",
 		stats: {
 			strength: 8,
-			dexterity: 14,
-			constitution: 13,
+			agility: 14,
+			vitality: 13,
 			intelligence: 15,
-			wisdom: 12,
-			charisma: 10,
+			sense: 12,
+			presence: 10,
 		},
 		primary_abilities: ["Intelligence", "Vitality"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
-	// 8. SUMMONER — Gate Ecologist / Entity Shapeshifter
+	// 8. SUMMONER — Scion of the Hive / Gate Ecologist
 	{
 		id: "summoner",
 		name: "Summoner",
 		type: "Job",
 		rank: "B",
 		description:
-			"Veterinarians, park rangers, marine biologists, environmental scientists, and farmers whose awakening bonded them to the alien ecosystems inside gates. In a world where gate biomes are bleeding into Earth's environment — mutant plants in Central Park, gate insects in Tokyo's sewers — Summoners are critical. They're employed by environmental agencies, the Ascendant Bureau's Ecology Division, and wildlife management firms. They shapeshift into gate creatures, command gate environments, and are the only ascendants who can predict boss spawns by reading ecosystem stress. Many advocate for gate conservation, arguing some gate biomes are worth preserving.",
+			"The Summoner is an Awakened identity granted the mandate of the Hive-Mother. As an Ascendant of this lineage, their mana is harmonized with the extraterrestrial ecosystems that bleed through the gates. They do not merely fight; they command the very flora and fauna of the dungeon dimensions. In modern society, Summoners are the premier ecologists of the Ascendant Bureau, serving as the bridge between human civilization and the rapidly evolving lifeforms of the Gate-Era. They shapeshift into gate creatures, command gate environments, and are the only ascendants who can predict boss spawns by reading resonance markers.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
 		saving_throws: ["Intelligence", "Sense"],
@@ -1542,7 +1542,7 @@ export const jobs: Job[] = [
 				frequency: "short-rest",
 			},
 		],
-		abilityScoreImprovements: { wisdom: 2, constitution: 1 },
+		abilityScoreImprovements: { sense: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Gate Speak"],
@@ -1631,9 +1631,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Archsummoner",
+				name: "Zenith Archon of the Swarm",
 				description:
-					"Your System status updates: [RANK: S — ARCHSUMMONER]. Unlimited Entity Shift uses. Forms can be any creature you've encountered (max CR = half level). Biome Command becomes at-will. Environmental agencies and the UN consult you on gate ecosystem policy. Your bond with gate biomes is absolute.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — RADIANT NEXUS OF THE HIVE]. Unlimited Entity Shift uses. Forms can be any creature you've encountered (max CR = half level). Biome Command becomes at-will. Global environmental agencies and the UN consult you on gate ecosystem policy. Your bond with the gate biomes is absolute.",
 			},
 		],
 		abilities: [
@@ -1646,24 +1646,24 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/summoner.webp",
 		stats: {
 			strength: 10,
-			dexterity: 12,
-			constitution: 14,
+			agility: 12,
+			vitality: 14,
 			intelligence: 13,
-			wisdom: 15,
-			charisma: 8,
+			sense: 15,
+			presence: 8,
 		},
 		primary_abilities: ["Sense", "Vitality"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
-	// 9. HERALD — System Conduit / Direct Transmission Receiver
+	// 9. HERALD — Divine Radiance / System Decree Conduit
 	{
 		id: "herald",
 		name: "Herald",
 		type: "Job",
 		rank: "B",
 		description:
-			"Doctors, nurses, paramedics, chaplains, and first responders whose awakening installed a direct uplink to the System core. In a world where gate breaks can cause mass casualties in minutes, Heralds are the most valuable ascendants in any raid party — and the most recruited by hospitals, military medical corps, and humanitarian organizations. They channel the System's own restorative and destructive energy, receiving encrypted transmissions that guide their healing and combat. Many run trauma clinics for gate-injured civilians, serve as guild medics, or work with the Red Cross during gate emergencies.",
+			"The Herald is an Awakened identity that specializes in the Divine Radiance mandate. As an Ascendant of this lineage, they serve as the direct conduits for the Absolute's restorative and protective mandates. In modern society, Heralds are the most celebrated healers, their presence a beacon of hope at gate-break sites and busy multi-specialty hospitals. They channel pure Aetheric light, guided by an intuitive resonance that identifies wounds and fractures before the eye can see them. They are the living bridge between the mortal realm and the Absolute authority.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
 		saving_throws: ["Sense", "Presence"],
@@ -1673,27 +1673,27 @@ export const jobs: Job[] = [
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
-				name: "Restoration Protocol",
+				name: "Restoration Mandate",
 				description:
-					"Your hands channel the System's restorative signal — visible as a warm golden glow that hospital patients and trauma victims find deeply comforting. As an action, touch a creature and restore HP = Herald level. Once per long rest.",
+					"Your hands channel the Absolute's restorative resonance — visible as a warm golden glow that hospital patients and trauma victims find deeply comforting. As an action, touch a creature and restore HP = Herald level. Once per long rest.",
 				level: 1,
 			},
 			{
-				name: "System Uplink",
+				name: "Aetheric-Sight Connection",
 				description:
-					"Direct connection to the System core — you receive encrypted data bursts that feel like intuition, guiding your hands to wounds and your spells to where they're needed most. Action touch: heal 1d8 + Sense mod HP. Prof bonus uses per long rest.",
+					"Direct attunement to the Absolute's governing mandate — you receive resonance bursts that feel like intuition, guiding your hands to wounds and your rites to where they're needed most. Action touch: heal 1d8 + Sense mod HP. Prof bonus uses per long rest.",
 				level: 1,
 			},
 			{
-				name: "Broadcast Aura",
+				name: "Absolute Connection",
 				description:
-					"Your System connection radiates outward. Allies within 10 ft gain +1 to saves (+2 at 11th). Range 30 ft at 18th.",
+					"Your resonance radiates outward. Allies within 10 ft gain +1 to saves (+2 at 11th). Range 30 ft at 18th.",
 				level: 6,
 			},
 			{
 				name: "Direct Petition",
 				description:
-					"Petition the System directly for intervention. At 20th level, the System always responds.",
+					"Petition the Absolute directly for intervention. At 20th level, the Absolute always responds.",
 				level: 10,
 			},
 		],
@@ -1701,24 +1701,24 @@ export const jobs: Job[] = [
 			{
 				name: "Entity Detection",
 				description:
-					"Your System uplink flags hostile entities like a threat-detection app running in the background — you get a notification ping when fiends, celestials, or undead are within 60 ft. Know type but not identity.",
+					"Your Absolute attunement flags hostile entities through an intuitive resonance—you get an internal ping when fiends, celestials, or undead are within 60 ft. Know type but not identity.",
 				type: "passive",
 			},
 			{
-				name: "Signal Hardening",
+				name: "Resonance Hardening",
 				description:
-					"Your System connection reinforces your life force like a firewall protects a server — death energy and radiant overloads get filtered before reaching your core. Resistance to necrotic and radiant. Advantage on saves vs HP max reduction.",
+					"Your Absolute connection reinforces your life force like a spiritual sanctum — death energy and radiant surges are harmonized before reaching your core. Resistance to necrotic and radiant. Advantage on saves vs HP max reduction.",
 				type: "resistance",
 			},
 			{
-				name: "Purge Command",
+				name: "Purge Mandate",
 				description:
-					"Action: broadcast a System purge signal — visible as a pulse of golden light that makes undead recoil like cockroaches from a flashlight. Undead within 30 ft: Sense save or turned 1 min. Destroy low-CR undead at 5th+.",
+					"Action: broadcast an Absolute purge resonance — visible as a pulse of golden light that makes undead recoil like cockroaches from a flashlight. Undead within 30 ft: Sense save or turned 1 min. Destroy low-CR undead at 5th+.",
 				type: "active",
 				frequency: "short-rest",
 			},
 		],
-		abilityScoreImprovements: { wisdom: 2, charisma: 1 },
+		abilityScoreImprovements: { sense: 2, presence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1731,14 +1731,14 @@ export const jobs: Job[] = [
 			["Crossbow Bolts (20)"],
 			["Priest's Pack", "Explorer's Pack"],
 			["Shield"],
-			["System Focus"],
+			["Absolute Focus"],
 		],
 		hitPointsAtFirstLevel: "8 + your Vitality modifier",
 		hitPointsAtHigherLevels:
 			"1d8 (or 5) + your Vitality modifier per level after 1st",
 		spellcasting: {
 			ability: "Sense",
-			focus: "System focus",
+			focus: "Absolute focus",
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 			],
@@ -1747,21 +1747,21 @@ export const jobs: Job[] = [
 		classFeatures: [
 			{
 				level: 1,
-				name: "System Transmission",
+				name: "Aetheric Transmission",
 				description:
-					"Receive and cast Herald spells using Sense. Prepare from the full transmission list each day. When you heal a creature with a spell, they also gain temp HP equal to your Sense mod — the System reinforces what you restore.",
+					"Receive and cast Herald spells using Sense. Prepare from the full list each day. When you heal a creature with a rite, they also gain temp HP equal to your Sense mod — the Absolute reinforces what you restore.",
 			},
 			{
 				level: 1,
-				name: "System Protocol",
+				name: "Divine Mandate",
 				description:
-					"Choose a System protocol — the specific frequency of System energy you channel. Bonus spells and features at 1st, 2nd, 6th, 8th, and 17th level.",
+					"Choose a Divine Mandate — the specific frequency of Aetheric energy you channel. Bonus spells and features at 1st, 2nd, 6th, 8th, and 17th level.",
 			},
 			{
 				level: 2,
-				name: "Protocol Activation",
+				name: "Mandate Activation",
 				description:
-					"Channel raw System energy for powerful effects: Purge Signal (undead/fiends in 30 ft make Sense save or are turned 1 min) + one protocol-specific ability. 1/short rest (2 at 6th, 3 at 18th).",
+					"Channel raw Absolute energy for powerful effects: Purge Mandate (undead/fiends in 30 ft make Sense save or are turned 1 min) + one mandate-specific ability. 1/short rest (2 at 6th, 3 at 18th).",
 			},
 			{
 				level: 4,
@@ -1770,62 +1770,62 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 5,
-				name: "Signal Amplification",
+				name: "Frequency Amplification",
 				description:
-					"Purge Signal now destroys weak undead outright (CR ≤ 1/2 at 5th, 1 at 8th, 2 at 11th, 3 at 14th, 4 at 17th). Your System uplink broadcasts at higher power.",
+					"Purge resonance now destroys weak undead outright (CR ≤ 1/2 at 5th, 1 at 8th, 2 at 11th, 3 at 14th, 4 at 17th). Your Absolute connection broadcasts at higher power.",
 			},
 			{
 				level: 6,
-				name: "Protocol Feature",
-				description: "Feature from your System Protocol.",
+				name: "Mandate Feature",
+				description: "Feature from your Divine Mandate.",
 			},
 			{
 				level: 8,
-				name: "Protocol Feature",
-				description: "Feature from your System Protocol.",
+				name: "Mandate Feature",
+				description: "Feature from your Divine Mandate.",
 			},
 			{
 				level: 10,
 				name: "Direct Petition",
 				description:
-					"Once per long rest, petition the System directly. Roll d100 ≤ Herald level for the System to intervene with an effect of the PW's choosing. Your uplink reaches the System core.",
+					"Once per long rest, petition the Absolute directly. Roll d100 ≤ Herald level for the Absolute to intervene with an effect of the PW's choosing. Your connection reaches the Absolute core.",
 			},
 			{
 				level: 14,
 				name: "Mana Redistribution",
 				description:
-					"When you cast a healing spell of 1st+, you can simultaneously purge one spell effect or condition on the target — the System overwrites the affliction like patching corrupted data. Emergency rooms with Herald staff have the highest survival rates in the world.",
+					"When you cast a healing spell of 1st+, you can simultaneously purge one spell effect or condition on the target — the Absolute overwrites the affliction like realigning corrupted frequencies. Emergency rooms with Herald staff have the highest survival rates in the world.",
 			},
 			{
 				level: 17,
-				name: "Protocol Feature",
-				description: "Final feature from your System Protocol.",
+				name: "Mandate Feature",
+				description: "Final feature from your Divine Mandate.",
 			},
 			{
 				level: 20,
-				name: "System's Chosen",
+				name: "Zenith Herald of the Absolute",
 				description:
-					"Your System status updates: [RANK: S — PRIORITY CONDUIT]. Direct Petition succeeds automatically. Once per long rest, cast any Herald spell without a slot (max 7th). The WHO, the Ascendant Bureau, and every major hospital network have you on speed dial.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE MANDATE]. Direct Petition succeeds automatically. Once per long rest, cast any Herald rite without a slot (max 7th). Your resonance with the Absolute core is total; hospital networks and global agencies seek your intervention.",
 			},
 		],
 		abilities: [
-			"System Transmission",
-			"System Protocol",
-			"Protocol Activation",
+			"Absolute Transmission",
+			"Absolute Mandate",
+			"Mandate Activation",
 			"Direct Petition",
 			"Mana Redistribution",
 		],
 		image: "/generated/compendium/jobs/healer.webp",
 		stats: {
 			strength: 12,
-			dexterity: 10,
-			constitution: 14,
+			agility: 10,
+			vitality: 14,
 			intelligence: 13,
-			wisdom: 15,
-			charisma: 8,
+			sense: 15,
+			presence: 8,
 		},
 		primary_abilities: ["Sense", "Presence"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// 10. CONTRACTOR — Entity Broker / Gate Pact Negotiator
@@ -1835,7 +1835,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Lawyers, negotiators, con artists, politicians, and desperate people who cut deals with powerful entities trapped inside gates. In modern society, Contractors are controversial — human rights groups debate whether pacting with gate entities constitutes trafficking, and the Ascendant Bureau regulates contract terms. The entity grants power; the Contractor provides service (often gate-clearance kills that feed the entity). It's a dangerous bargain regulated by modern contract law — literal supernatural NDAs. Many Contractors work as lobbyists, fixers, or high-end consultants, leveraging their patron's influence in both the gate world and boardrooms.",
+			"The Contractor is an Awakened identity that specializes in the Entity Broker and Gate Pact Negotiator mandate. As an Ascendant of this lineage, their power is forged through supernatural NDAs and legal-magical bargains regulated by modern contract law. The entity grants power; the Contractor provides service (often gate-clearance kills that feed the entity). Many Contractors work as lobbyists, fixers, or high-end consultants, leveraging their patron's influence in both the gate world and boardrooms.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
 		saving_throws: ["Sense", "Presence"],
@@ -1879,9 +1879,9 @@ export const jobs: Job[] = [
 		],
 		jobTraits: [
 			{
-				name: "Binary Void-Data Sight",
+				name: "Umbral-Sight Resonance",
 				description:
-					"Your patron's influence rewired your optic nerves — you see perfectly in total darkness, including inside blacked-out gates where other ascendants need flashlights. Superior darkvision 120 ft.",
+					"Your patron's influence rewired your vision—you see perfectly in total darkness, including inside absolute voids where other ascendants stumble. Superior darkvision 120 ft.",
 				type: "passive",
 			},
 			{
@@ -1898,7 +1898,7 @@ export const jobs: Job[] = [
 				frequency: "short-rest",
 			},
 		],
-		abilityScoreImprovements: { charisma: 2, constitution: 1 },
+		abilityScoreImprovements: { presence: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1986,9 +1986,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Full Manifestation",
+				name: "Zenith Arch-Contractor",
 				description:
-					"Your System status updates: [RANK: S — FULL MANIFESTATION AUTHORIZED]. Entity Manifestation lasts 10 min, grants resistance to all damage, and your aura extends to 30 ft. Regain all contract slots by demanding your entity's full power (1 min). International law firms now specialize in entity contract disputes because of ascendants like you.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE MANIFESTATION GRANTED]. Entity Manifestation lasts 10 min, grants resistance to all damage, and your aura extends to 30 ft. You transcend the limits of a mere broker, becoming a peer to your patron. International legal systems have been rewritten to accommodate your mandated authority.",
 			},
 		],
 		abilities: [
@@ -2001,14 +2001,14 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/warlock.webp",
 		stats: {
 			strength: 8,
-			dexterity: 14,
-			constitution: 13,
+			agility: 14,
+			vitality: 13,
 			intelligence: 12,
-			wisdom: 10,
-			charisma: 15,
+			sense: 10,
+			presence: 15,
 		},
 		primary_abilities: ["Presence", "Vitality"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// 11. STALKER — Rift Tracker / Dimensional Predator
@@ -2018,7 +2018,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Ex-military scouts, wilderness guides, bounty ascendants, private investigators, and survivalists whose awakening specialized them for tracking prey across dimensional boundaries. In a world where gate monsters occasionally escape into cities, Stalkers are employed by police departments, the Ascendant Bureau's Containment Division, and private security firms. They taste mana signatures, follow monster energy trails through urban environments, and adapt to any terrain in seconds. Many work as freelance bounty ascendants tracking escaped gate creatures through subway systems, forests, and abandoned buildings. Half martial, half primal caster, all predator.",
+			"The Stalker is an Awakened identity that specializes in the Rift Tracker and Dimensional Predator mandate. As an Ascendant of this lineage, they possess a refined aetheric sense that perceives mana-trails and gate-born energy signatures even through dense urban environments. They adapt to any terrain in seconds, tracking prey across dimensional boundaries. Many work as freelance bounty ascendants tracking escaped gate creatures through subway systems, forests, and abandoned buildings. Half martial, half primal caster, all predator.",
 		hitDie: "1d10",
 		primaryAbility: "Agility",
 		saving_throws: ["Strength", "Agility"],
@@ -2051,7 +2051,7 @@ export const jobs: Job[] = [
 			{
 				name: "Prey Lock",
 				description:
-					"Choose a designated prey type — the Ascendant Bureau assigns Stalkers to specific monster categories like detectives get case specialties. Sense creatures of that type within 120 ft by mana signature, even through concrete walls. Advantage on Survival to track them across any terrain.",
+					"Choose a designated prey type — the Ascendant Bureau assigns Stalkers to specific anomaly classifications like detectives get case specialties. Sense creatures of that type within 120 ft by mana signature, even through concrete walls. Advantage on Survival to track them across any terrain.",
 				level: 1,
 			},
 			{
@@ -2063,7 +2063,7 @@ export const jobs: Job[] = [
 			{
 				name: "Apex Instinct",
 				description:
-					"Your first attack each turn against designated prey deals extra damage equal to your proficiency bonus. The System marks their weak points.",
+					"Your first attack each turn against designated prey deals extra damage equal to your proficiency bonus. Your Aetheric-Sight identifies their primal weaknesses.",
 				level: 11,
 			},
 		],
@@ -2089,7 +2089,7 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { dexterity: 2, wisdom: 1 },
+		abilityScoreImprovements: { agility: 2, sense: 1 },
 		size: "medium",
 		speed: 35,
 		languages: ["English"],
@@ -2180,7 +2180,7 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 14,
-				name: "Ghost Protocol",
+				name: "Ghost Mandate",
 				description:
 					"Hide as a bonus action. Cannot be tracked by nonmagical means, including drones and surveillance cameras. Your Prey Lock range extends to 10 miles, allowing you to track targets across entire cities.",
 			},
@@ -2197,9 +2197,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Apex Predator",
+				name: "Zenith Apex Predator",
 				description:
-					"Your System status updates: [RANK: S — APEX PREDATOR]. Prey Lock bonus → +1d8. Ambush Tactics → +2d8. Add Sense mod to attack/damage vs locked targets once per turn. No creature has ever escaped an S-Rank Stalker. The bounty board is always clear when you're working, and your name is whispered in fear by those who know what you do.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — APEX PREDATOR]. No prey has ever escaped your scent once the Aetheric-Weave has marked them. The global bounty networks fall silent when you take a contract. Your Prey Lock bonus → +1d8. Ambush Tactics → +2d8. Add Sense mod to attack/damage vs locked targets once per turn.",
 			},
 		],
 		abilities: [
@@ -2213,14 +2213,14 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/ranger.webp",
 		stats: {
 			strength: 12,
-			dexterity: 15,
-			constitution: 13,
+			agility: 15,
+			vitality: 13,
 			intelligence: 10,
-			wisdom: 14,
-			charisma: 8,
+			sense: 14,
+			presence: 8,
 		},
 		primary_abilities: ["Agility", "Sense"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// 12. HOLY KNIGHT — Oath-Bound Enforcer / System Covenant Warrior
@@ -2230,7 +2230,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"Police officers, firefighters, soldiers, judges, and idealists who swore a binding oath to the System itself — a literal covenant inscribed into their mana pathways. In modern society, Holy Knights are the closest thing to superhero cops. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully — several high-profile cases of fallen Holy Knights have made international news. They channel radiant System energy through weapons, heal allies, and project protective auras. Many stream their gate raids for public morale.",
+			"The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itself—a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
 		saving_throws: ["Sense", "Presence"],
@@ -2249,13 +2249,13 @@ export const jobs: Job[] = [
 			{
 				name: "Covenant Bond",
 				description:
-					"Your oath links you to nearby allies like a supernatural buddy system — paramedics have documented Holy Knight teammates' vitals stabilizing in sync. When you or an ally within 10 ft succeeds on a death save, they regain 1 HP.",
+					"Your oath links you to nearby allies like a supernatural resonant bond — paramedics have documented Holy Knight teammates' vitals stabilizing in sync. When you or an ally within 10 ft succeeds on a death save, they regain 1 HP.",
 				level: 1,
 			},
 			{
 				name: "Oath Sense",
 				description:
-					"Your covenant pings threats to the System's order like a security alert — your phone buzzes with [HOSTILE ENTITY DETECTED] when fiends, celestials, or undead are within 60 ft. Know type and location. 1 + Presence mod uses per long rest.",
+					"Your covenant pings threats to the Absolute's order like a sensory alert — your phone buzzes with [HOSTILE ENTITY DETECTED] when fiends, celestials, or undead are within 60 ft. Know type and location. 1 + Presence mod uses per long rest.",
 				level: 1,
 			},
 			{
@@ -2267,7 +2267,7 @@ export const jobs: Job[] = [
 			{
 				name: "Purification Touch",
 				description:
-					"Channel the System to purge hostile magic like running antivirus on a corrupted file — curses, hexes, and magical diseases dissolve under your hands. End one spell on a willing creature you touch. Presence mod uses per long rest.",
+					"Channel the Absolute to purge hostile magic as the divine decree overwrites the resonance of the affliction—curses, hexes, and magical diseases dissolve under your hands. End one spell on a willing creature you touch. Presence mod uses per long rest.",
 				level: 14,
 			},
 		],
@@ -2275,7 +2275,7 @@ export const jobs: Job[] = [
 			{
 				name: "Covenant's Mercy",
 				description:
-					"You carry a reservoir of System healing energy = 5 × Holy Knight level — your touch glows golden and field hospitals prioritize your patients. Restore HP by touch or purge disease/poison (5 HP per purge).",
+					"You carry a reservoir of Absolute healing energy = 5 × Holy Knight level — your touch glows golden and field hospitals prioritize your patients. Restore HP by touch or purge disease/poison (5 HP per purge).",
 				type: "active",
 				frequency: "long-rest",
 			},
@@ -2292,7 +2292,7 @@ export const jobs: Job[] = [
 				type: "immunity",
 			},
 		],
-		abilityScoreImprovements: { strength: 2, charisma: 1 },
+		abilityScoreImprovements: { strength: 2, presence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Ancient Hebrew Strings"],
@@ -2308,14 +2308,14 @@ export const jobs: Job[] = [
 			["Javelin"],
 			["Priest's Pack", "Explorer's Pack"],
 			["Chain Mail"],
-			["System Focus"],
+			["Absolute Focus"],
 		],
 		hitPointsAtFirstLevel: "10 + your Vitality modifier",
 		hitPointsAtHigherLevels:
 			"1d10 (or 6) + your Vitality modifier per level after 1st",
 		spellcasting: {
 			ability: "Presence",
-			focus: "System focus",
+			focus: "Absolute focus",
 			spellSlots: { ...HALF_CASTER_SLOTS },
 		},
 		classFeatures: [
@@ -2329,7 +2329,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Covenant's Mercy",
 				description:
-					"You carry a reservoir of System healing energy = 5 × Holy Knight level. Touch a creature to transfer HP from the pool. Spend 5 HP from the pool to cure one disease or neutralize one poison.",
+					"You carry a reservoir of Absolute healing energy = 5 × Holy Knight level. Touch a creature to transfer HP from the pool. Spend 5 HP from the pool to cure one disease or neutralize one poison.",
 			},
 			{
 				level: 2,
@@ -2353,7 +2353,7 @@ export const jobs: Job[] = [
 				level: 3,
 				name: "Sworn Oath",
 				description:
-					"Choose the specific terms of your System covenant. Oath spells and features at 3rd, 7th, 15th, and 20th level.",
+					"Choose the specific terms of your Absolute covenant. Oath spells and features at 3rd, 7th, 15th, and 20th level.",
 			},
 			{
 				level: 4,
@@ -2387,7 +2387,7 @@ export const jobs: Job[] = [
 				level: 11,
 				name: "Radiant Conduit",
 				description:
-					"The System's energy flows through every strike. All melee weapon hits deal +1d8 radiant. When you reduce a creature to 0 HP, allies within 30 ft regain HP = your Presence mod.",
+					"The Absolute's energy flows through every strike. All melee weapon hits deal +1d8 radiant. When you reduce a creature to 0 HP, allies within 30 ft regain HP = your Presence mod.",
 			},
 			{
 				level: 14,
@@ -2402,9 +2402,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Sacred Avatar",
+				name: "Zenith Sacred Avatar",
 				description:
-					"Your System status updates: [RANK: S — SACRED AVATAR]. Transform into a radiant avatar of your oath for 1 min: 30 ft fly speed, resistance to all damage, Oath Ward extends to 60 ft. Once per long rest. News helicopters film your transformations. Children dress as you for Halloween.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — SACRED AVATAR]. Transform into a radiant avatar of your oath for 1 min: 30 ft fly speed, resistance to all damage, Oath Ward extends to 60 ft. Once per long rest. You are a living monument to the Absolute's authority; your manifestations are global events broadcast across every screen on Earth.",
 			},
 		],
 		abilities: [
@@ -2418,24 +2418,24 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/paladin.webp",
 		stats: {
 			strength: 15,
-			dexterity: 10,
-			constitution: 13,
+			agility: 10,
+			vitality: 13,
 			intelligence: 8,
-			wisdom: 12,
-			charisma: 14,
+			sense: 12,
+			presence: 14,
 		},
 		primary_abilities: ["Strength", "Presence"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
-	// 13. TECHNOMANCER — System Engineer / Mana-Tech Architect
+	// 13. TECHNOMANCER — Absolute Architect / Aetheric Design Engineer
 	{
 		id: "technomancer",
 		name: "Technomancer",
 		type: "Job",
 		rank: "B",
 		description:
-			"Software engineers, mechanics, electricians, hardware hackers, and makers whose awakening gave them write-access to the System's hardware layer. In modern society, Technomancers are the most commercially valuable ascendants — Silicon Valley and Shenzhen are full of them. They see System blueprints embedded in every magical object and build devices that shouldn't exist: mana-powered turrets, self-repairing gear, drone swarms, and apps that interface with gate energy. Many run startups, work for defense contractors, or sell enchanted tech on the ascendant black market. They keep raid parties equipped and civilization running.",
+			"The Technomancer is an Awakened identity that specializes in the Absolute Architect and Aetheric Design mandate. As an Ascendant of this lineage, their Awakening provides architectural access to the Weave-Resonance layer—the fundamental interface between magic and physical matter. In the modern world, Technomancers are the most commercially valuable ascendants, turning Silicon Valley and Shenzhen into hubs of Aetheric innovation. They build devices that redefine reality: mana-powered drones, self-repairing gear, and resonance-enabled technologies.",
 		hitDie: "1d8",
 		primaryAbility: "Intelligence",
 		saving_throws: ["Vitality", "Intelligence"],
@@ -2457,21 +2457,21 @@ export const jobs: Job[] = [
 		],
 		awakeningFeatures: [
 			{
-				name: "Blueprint Vision",
+				name: "Mandate Vision",
 				description:
-					"You see the System's construction data overlaid on objects like a permanent AR schematic display — pick up any gadget and you instantly see its internal wiring, stress points, and upgrade paths. Double proficiency on INT checks related to magic items, tech, or System constructs.",
+					"You see the Absolute's construction resonance overlaid on objects like a permanent AR schematic display — pick up any gadget and you instantly see its internal wiring, stress points, and upgrade paths. Double proficiency on INT checks related to magic items, tech, or Absolute constructs.",
 				level: 1,
 			},
 			{
-				name: "Neural Linkage",
+				name: "Neural Synchronization",
 				description:
-					"Your brain is hardwired for System-tech interface. You gain one additional attunement slot, and you can attune to magic items as a bonus action instead of during a short rest.",
+					"Your brain is hardwired for Mandate-tech interface. You gain one additional attunement slot, and you can attune to magic items as a bonus action instead of during a short rest.",
 				level: 1,
 			},
 			{
-				name: "System Write Access",
+				name: "Aetheric-Mandate Access",
 				description:
-					"Interface with any System construct or magical device like plugging into a USB port — read functions, bypass security, and rewrite behavior. You've jailbroken gate artifacts that government labs couldn't crack. Advantage on checks to analyze magical technology.",
+					"Interface with any Absolute construct or divine device like touching an intuitive schematic — read functions, bypass security, and rewrite resonance behavior. You've unraveled gate artifacts that global research labs couldn't crack. Advantage on checks to analyze magical technology.",
 				level: 1,
 			},
 			{
@@ -2483,15 +2483,15 @@ export const jobs: Job[] = [
 			{
 				name: "Construct Reinforcement",
 				description:
-					"Constructs you build are fortified with extra System data. They gain extra HP = 2 × Technomancer level and advantage on saves vs being banished or dispelled.",
+					"Constructs you build are fortified with extra Absolute data. They gain extra HP = 2 × Technomancer level and advantage on saves vs being banished or dispelled.",
 				level: 10,
 			},
 		],
 		jobTraits: [
 			{
-				name: "System Tinkering",
+				name: "Mandate Tinkering",
 				description:
-					"Imbue tiny objects with System-powered effects — turn a pen into a flashlight, a coin into a voice recorder, or a business card into a GPS tracker. Up to INT mod objects at once. Your apartment is full of enchanted household items.",
+					"Imbue tiny objects with Absolute-powered effects — turn a pen into a flashlight, a coin into a voice recorder, or a business card into a GPS tracker. Up to INT mod objects at once. Your apartment is full of enchanted household items.",
 				type: "active",
 				frequency: "at-will",
 			},
@@ -2502,22 +2502,20 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 			{
-				name: "System Assist",
+				name: "Absolute Assist",
 				description:
-					"Reaction: feed real-time System telemetry to a nearby ally through their earpiece, HUD, or phone — like having a mission control in your head. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest.",
+					"Reaction: feed real-time Absolute telemetry to a nearby ally through their earpiece, HUD, or phone — like having a mission control in your head. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: { intelligence: 2, constitution: 1 },
+		abilityScoreImprovements: { intelligence: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
 		darkvision: 60,
 		damage_resistances: ["lightning"],
-		specialSenses: [
-			"Blueprint Vision (identify magic items by touch, 1 minute)",
-		],
+		specialSenses: ["Mandate Vision (identify magic items by touch, 1 minute)"],
 		startingEquipment: [
 			["Handaxe", "Dagger"],
 			["Handaxe", "Dagger"],
@@ -2541,15 +2539,15 @@ export const jobs: Job[] = [
 		classFeatures: [
 			{
 				level: 1,
-				name: "Neural Linkage",
+				name: "Neural Synchronization",
 				description:
-					"Your brain is hardwired for System-tech interface. You gain one additional attunement slot, and you can attune to magic items as a bonus action instead of during a short rest.",
+					"Your brain is hardwired for Mandate-tech interface. You gain one additional attunement slot, and you can attune to magic items as a bonus action instead of during a short rest.",
 			},
 			{
 				level: 1,
-				name: "System Tinkering",
+				name: "Mandate Tinkering",
 				description:
-					"Imbue tiny objects with System-powered properties — enchant your keys to glow, your wallet to play a sound when lost, or a sticky note to display a holographic message. Up to INT mod objects simultaneously.",
+					"Imbue tiny objects with Absolute-powered properties — enchant your keys to glow, your wallet to play a sound when lost, or a sticky note to display a holographic message. Up to INT mod objects simultaneously.",
 			},
 			{
 				level: 1,
@@ -2559,13 +2557,13 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 2,
-				name: "System Infusion",
+				name: "Absolute Infusion",
 				description:
-					"Write System data into nonmagical items, granting them magical properties. Choose from a list of infusion blueprints. Active infusions scale with level. Unique: you can infuse an item with a cantrip you know — the item can cast it INT mod times per day (anyone holding it).",
+					"Write Absolute data into nonmagical items, granting them magical properties. Choose from a list of infusion designs. Active infusions scale with level. Unique: you can infuse an item with a cantrip you know — the item can cast it INT mod times per day (anyone holding it).",
 			},
 			{
 				level: 3,
-				name: "Engineering Path",
+				name: "Architectural Path",
 				description:
 					"Choose a specialization. Features at 3rd, 5th, 9th, and 15th.",
 			},
@@ -2582,8 +2580,8 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 5,
-				name: "Engineering Feature",
-				description: "Feature from your Engineering Path.",
+				name: "Architectural Feature",
+				description: "Feature from your Architectural Path.",
 			},
 			{
 				level: 6,
@@ -2592,14 +2590,14 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 7,
-				name: "System Assist",
+				name: "Absolute Assist",
 				description:
-					"Reaction: feed System telemetry to an ally. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest. If the check/save succeeds, regain one use.",
+					"Reaction: feed Absolute telemetry to an ally. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest. If the check/save succeeds, regain one use.",
 			},
 			{
 				level: 9,
-				name: "Engineering Feature",
-				description: "Feature from your Engineering Path.",
+				name: "Architectural Feature",
+				description: "Feature from your Architectural Path.",
 			},
 			{
 				level: 10,
@@ -2617,12 +2615,12 @@ export const jobs: Job[] = [
 				level: 14,
 				name: "Universal Compatibility",
 				description:
-					"Your System write-access overrides item restrictions. Ignore class/race/spell/level requirements for magic items. Attune to 11 items (Total).",
+					"Your Absolute write-access overrides item restrictions. Ignore class/race/spell/level requirements for magic items. Attune to 11 items (Total).",
 			},
 			{
 				level: 15,
-				name: "Engineering Feature",
-				description: "Feature from your Engineering Path.",
+				name: "Architectural Feature",
+				description: "Feature from your Architectural Path.",
 			},
 			{
 				level: 18,
@@ -2632,30 +2630,30 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Core Integration",
+				name: "Zenith Architect of the Weave",
 				description:
-					"Your System status updates: [RANK: S — CORE INTEGRATION COMPLETE]. +1 to all saves per attuned item. When reduced to 0 HP, sacrifice one attunement to drop to 1 HP and release a 20-ft mana EMP dealing 3d10 force. Defense contractors and tech billionaires compete for your consulting time.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ARCHITECT OF THE ABSOLUTE]. +1 to all saves per attuned item. When reduced to 0 HP, sacrifice one attunement to drop to 1 HP and release a 20-ft mana EMP dealing 3d10 force. Global defense contractors and tech titans compete for your divine designs.",
 			},
 		],
 		abilities: [
-			"System Tinkering",
+			"Mandate Tinkering",
 			"Technical Casting",
-			"System Infusion",
-			"Engineering Path",
-			"System Assist",
+			"Absolute Infusion",
+			"Architectural Path",
+			"Absolute Assist",
 			"Spell Capacitor",
 		],
 		image: "/generated/compendium/jobs/artificer.webp",
 		stats: {
 			strength: 10,
-			dexterity: 12,
-			constitution: 14,
+			agility: 12,
+			vitality: 14,
 			intelligence: 15,
-			wisdom: 13,
-			charisma: 8,
+			sense: 13,
+			presence: 8,
 		},
 		primary_abilities: ["Intelligence", "Vitality"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// 14. IDOL — Frequency Manipulator / Resonance Caster
@@ -2665,7 +2663,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"Musicians, actors, streamers, social media influencers, DJs, motivational speakers, and content creators whose awakening attuned them to the System's harmonic frequencies. In modern society, Idols are the most publicly visible ascendants — they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers. Major labels sign awakened Idols for record deals; gaming companies sponsor their raid streams. They manipulate frequencies through performance, speech, and sheer force of personality — a viral TikTok from an Idol can literally buff viewers through their screens. Every raid party wants one; no one admits they need one.",
+			"The Idol is an Awakened identity that specializes in the Frequency Manipulator and Resonance Caster mandate. As an Ascendant of this lineage, their power is attuned to the Absolute's harmonic frequencies, allowing them to broadcast buffs and hype with absolute presence. In modern society, Idols are the most publicly visible ascendants — they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
 		saving_throws: ["Agility", "Presence"],
@@ -2702,7 +2700,7 @@ export const jobs: Job[] = [
 			{
 				name: "Broad-Spectrum Awakening",
 				description:
-					"Your frequency attunement grants intuitive understanding of many disciplines — you pick up new skills the way most people pick up slang, absorbing competence from the System's data streams. Gain proficiency in two additional skills of your choice.",
+					"Your frequency attunement grants intuitive understanding of many disciplines — you pick up new skills the way most people pick up slang, absorbing competence from the Absolute's resonance flows. Gain proficiency in two additional skills of your choice.",
 				level: 1,
 			},
 			{
@@ -2732,9 +2730,9 @@ export const jobs: Job[] = [
 		],
 		jobTraits: [
 			{
-				name: "System Versatility",
+				name: "Absolute Versatility",
 				description:
-					"The System's background frequencies feed you data about everything — you're the person who's weirdly good at trivia, can fix a flat tire, knows first aid, and speaks conversational Japanese despite never studying it. Add half prof bonus to unproficient checks.",
+					"The Absolute's ambient frequencies feed you data about everything — you're the person who's weirdly good at trivia, can fix a flat tire, knows first aid, and speaks conversational Japanese despite never studying it. Add half prof bonus to unproficient checks.",
 				type: "passive",
 			},
 			{
@@ -2751,7 +2749,7 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { charisma: 2, dexterity: 1 },
+		abilityScoreImprovements: { presence: 2, agility: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "One additional Earth language"],
@@ -2793,9 +2791,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 2,
-				name: "System Versatility",
+				name: "Absolute Versatility",
 				description:
-					"The System's background frequencies feed you fragments of every skill. Add half proficiency bonus to any ability check that doesn't already include your proficiency bonus.",
+					"The Absolute's ambient frequencies feed you fragments of every skill. Add half proficiency bonus to any ability check that doesn't already include your proficiency bonus.",
 			},
 			{
 				level: 2,
@@ -2850,15 +2848,15 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 20,
-				name: "Infinite Resonance",
+				name: "Zenith Idol of the Decree",
 				description:
-					"Roll initiative with 0 Hype dice → regain 1. Once per long rest, you can broadcast an Anthem of Ascendance: for 1 minute, all allies within 60 ft add your Presence mod to their attack rolls and saving throws.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — SUPREME RESONANCE CONDUCTOR]. Roll initiative with 0 Hype dice → regain 1. Once per long rest, you can broadcast an Anthem of Ascendance: for 1 minute, all allies within 60 ft add your Presence mod to their attack rolls and saving throws. Your performances are global mandates.",
 			},
 		],
 		abilities: [
 			"Frequency Casting",
 			"Hype",
-			"System Versatility",
+			"Absolute Versatility",
 			"Frequency Restoration",
 			"Resonance Path",
 			"Cross-Frequency Access",
@@ -2866,13 +2864,13 @@ export const jobs: Job[] = [
 		image: "/generated/compendium/jobs/bard.webp",
 		stats: {
 			strength: 8,
-			dexterity: 14,
-			constitution: 12,
+			agility: 14,
+			vitality: 12,
 			intelligence: 13,
-			wisdom: 10,
-			charisma: 15,
+			sense: 10,
+			presence: 15,
 		},
 		primary_abilities: ["Presence", "Agility"],
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 ];

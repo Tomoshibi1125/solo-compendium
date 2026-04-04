@@ -11,19 +11,19 @@ import { DMPage } from "../pages/DMPage";
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
-const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
+const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
 test.describe("Comprehensive DM UI/UX Test", () => {
 	let context: BrowserContext;
 	let page: Page;
 	let authPage: AuthPage;
-	let dmPage: DMPage;
+	let _dmPage: DMPage;
 
 	test.beforeAll(async ({ browser }) => {
 		context = await browser.newContext();
 		page = await context.newPage();
 		authPage = new AuthPage(page);
-		dmPage = new DMPage(page);
+		_dmPage = new DMPage(page);
 	});
 
 	test.afterAll(async () => {

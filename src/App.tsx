@@ -106,7 +106,7 @@ const NPCGenerator = lazy(
 const TreasureGenerator = lazy(
 	() => import("./pages/warden-protocols/TreasureGenerator"),
 );
-const DirectiveMatrix = lazy(
+const DirectiveLattice = lazy(
 	() => import("./pages/warden-protocols/DirectiveMatrix"),
 );
 const SessionPlanner = lazy(
@@ -539,18 +539,20 @@ const AppContent = () => {
 				/>
 				<Route
 					path="/warden-protocols/quest-generator"
-					element={<Navigate to="/warden-protocols/directive-matrix" replace />}
+					element={
+						<Navigate to="/warden-protocols/directive-Lattice" replace />
+					}
 				/>
 				<Route
 					path="/warden-protocols/campaign-manager"
 					element={<Navigate to="/warden-protocols" replace />}
 				/>
 				<Route
-					path="/warden-protocols/directive-matrix"
+					path="/warden-protocols/directive-Lattice"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
-								<DirectiveMatrix />
+								<DirectiveLattice />
 							</Suspense>
 						</ProtectedRoute>
 					}

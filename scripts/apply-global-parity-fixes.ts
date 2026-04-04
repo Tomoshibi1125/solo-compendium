@@ -35,7 +35,7 @@ async function applyGlobalFixes() {
 		"compendium_sigils",
 		"compendium_tattoos",
 		"compendium_shadow_soldiers",
-		"compendium_locations"
+		"compendium_locations",
 	];
 
 	let sql = "";
@@ -50,8 +50,8 @@ async function applyGlobalFixes() {
         `;
 	}
 
-    // Special fix for items/equipment naming consistency
-    sql += `
+	// Special fix for items/equipment naming consistency
+	sql += `
         ALTER TABLE public.compendium_equipment ADD COLUMN IF NOT EXISTS value_credits INTEGER;
         ALTER TABLE public.compendium_equipment ADD COLUMN IF NOT EXISTS weight FLOAT;
     `;
@@ -61,7 +61,9 @@ async function applyGlobalFixes() {
 	if (error) {
 		console.error("Error applying global fixes:", error.message);
 	} else {
-		console.log("Successfully applied global parity columns to all compendium tables.");
+		console.log(
+			"Successfully applied global parity columns to all compendium tables.",
+		);
 	}
 
 	console.log("=== Global Fixes Complete ===");

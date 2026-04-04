@@ -434,8 +434,12 @@ const getLabelTexture = (label: string, style: LabelStyle) => {
 		throw new Error("Dice label canvas not supported");
 	}
 	ctx.imageSmoothingEnabled = true;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- canvas optional API varies by browser
-	(ctx as unknown as Record<string, unknown>).imageSmoothingQuality = "high";
+	if ("imageSmoothingQuality" in ctx) {
+		const ctxExtended = ctx as CanvasRenderingContext2D & {
+			imageSmoothingQuality: string;
+		};
+		ctxExtended.imageSmoothingQuality = "high";
+	}
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	const center = canvas.width / 2;
 	const plateRadius = canvasSize * 0.36;

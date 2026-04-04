@@ -1,3 +1,4 @@
+import type { Json } from "@/integrations/supabase/types";
 import { aiService } from "@/lib/ai/aiService";
 import { logger } from "@/lib/logger";
 
@@ -39,7 +40,7 @@ interface ContentGenerationOptions {
 const AI_CONTENT_PROMPTS = {
 	npc: "Generate a detailed System Ascendant NPC (Ascendant or Citizen). Include name, appearance, personality, background, motivations, and dialogue examples. Use System Ascendant terminology: Awakened, Rifts, System, Awakened Council.",
 	encounter:
-		"Create a combat encounter set in a Rift or the Umbral Waste. Include enemies (Monsters/Regents), environment, tactics, treasure (Credits, Mats, Runes), and story context.",
+		"Create a combat encounter set in a Rift or the Umbral Waste. Include enemies (Anomalies/Regents), environment, tactics, treasure (Credits, Mats, Runes), and story context.",
 	location:
 		"Describe a detailed location within the world of System Ascendant (e.g., Neon District, Umbral Forest, Rift Interior). Include atmosphere, features, secrets, and interactive elements.",
 	quest:
@@ -133,17 +134,16 @@ export class AIContentGenerator {
 		return enhancedPrompt;
 	}
 
-	private resolveContentText(data: unknown): string {
+	private resolveContentText(data: Json): string {
 		if (typeof data === "string") {
 			return data;
 		}
 
 		if (data && typeof data === "object") {
 			const candidate =
-				(data as { content?: unknown; output?: unknown; text?: unknown })
-					.content ??
-				(data as { output?: unknown }).output ??
-				(data as { text?: unknown }).text;
+				(data as { content?: Json; output?: Json; text?: Json }).content ??
+				(data as { output?: Json }).output ??
+				(data as { text?: Json }).text;
 			if (typeof candidate === "string") {
 				return candidate;
 			}

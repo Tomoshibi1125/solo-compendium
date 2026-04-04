@@ -126,8 +126,8 @@ export function AddEquipmentDialog({
 						if (Array.isArray(item.properties)) return item.properties;
 						const props: string[] = [];
 
-						const passiveEffects = (item.effects as Record<string, unknown>)
-							?.passive;
+						const effects = item.effects as { passive?: string[] } | null;
+						const passiveEffects = effects?.passive;
 						if (Array.isArray(passiveEffects)) {
 							for (const line of passiveEffects) {
 								if (typeof line === "string" && line.trim().length > 0) {
@@ -135,17 +135,26 @@ export function AddEquipmentDialog({
 								}
 							}
 						}
-						const weapon = (item.properties as Record<string, unknown>)
-							?.weapon as
-							| {
-									isSimple?: boolean;
-									isMartial?: boolean;
-									isFirearm?: boolean;
-									damage?: string;
-									damageType?: string;
-									finesse?: boolean;
-							  }
-							| undefined;
+						const itemProps = item.properties as {
+							weapon?: {
+								isSimple?: boolean;
+								isMartial?: boolean;
+								isFirearm?: boolean;
+								damage?: string;
+								damageType?: string;
+								finesse?: boolean;
+							};
+							armor?: { baseAC?: number; type?: string };
+							magical?: {
+								bonus?: {
+									armorClass?: number;
+									attack?: number;
+									damage?: number;
+								};
+							};
+						} | null;
+
+						const weapon = itemProps?.weapon;
 						if (weapon) {
 							if (
 								typeof weapon.damage === "string" &&
@@ -156,25 +165,14 @@ export function AddEquipmentDialog({
 							if (weapon.finesse === true) props.push("finesse");
 						}
 
-						const armor = (item.properties as Record<string, unknown>)?.armor as
-							| { baseAC?: number; type?: string }
-							| undefined;
+						const armor = itemProps?.armor;
 						if (armor) {
 							if (typeof armor.baseAC === "number")
 								props.push(`AC ${armor.baseAC}`);
 							if (typeof armor.type === "string") props.push(armor.type);
 						}
 
-						const magical = (item.properties as Record<string, unknown>)
-							?.magical as
-							| {
-									bonus?: {
-										armorClass?: number;
-										attack?: number;
-										damage?: number;
-									};
-							  }
-							| undefined;
+						const magical = itemProps?.magical;
 						if (
 							magical?.bonus?.armorClass &&
 							typeof magical.bonus.armorClass === "number"

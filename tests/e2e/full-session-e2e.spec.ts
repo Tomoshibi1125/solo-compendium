@@ -28,9 +28,9 @@ import { SharedPage } from "../pages/SharedPage";
  *   E2E_PLAYER_PASSWORD – default test1234
  */
 
-const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
+const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
-const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
+const _PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
 
 // Shared state across serial phases
 let dmContext: BrowserContext;
@@ -49,7 +49,7 @@ const getSessionIdFromUrl = (urlString: string): string => {
 	return url.searchParams.get("sessionId") ?? "";
 };
 
-const itUrl = (cId: string, sId?: string) => {
+const _itUrl = (cId: string, sId?: string) => {
 	const base = `/dm-tools/initiative-tracker?campaignId=${cId}`;
 	return sId ? `${base}&sessionId=${sId}` : base;
 };

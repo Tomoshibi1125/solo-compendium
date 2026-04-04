@@ -26,7 +26,7 @@ export interface VTTRenderConfig {
 export interface VTTAsset {
 	id: string;
 	name: string;
-	type: "token" | "map" | "effect" | "prop" | "character" | "monster" | "npc";
+	type: "token" | "map" | "effect" | "prop" | "character" | "Anomaly" | "npc";
 	imageUrl: string;
 	thumbnailUrl?: string;
 	campaignId?: string;
@@ -38,7 +38,7 @@ export interface VTTAsset {
 export interface VTTTokenInstance {
 	id: string;
 	characterId?: string;
-	tokenType?: "character" | "monster" | "npc" | "prop" | "effect" | "custom";
+	tokenType?: "character" | "Anomaly" | "npc" | "prop" | "effect" | "custom";
 	name: string;
 	emoji?: string;
 	imageUrl?: string;

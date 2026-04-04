@@ -439,7 +439,7 @@ const PartyTracker = () => {
 														</Label>
 														<span
 															className={cn(
-																"font-arise text-lg font-bold",
+																"font-resurge text-lg font-bold",
 																getHpColor(member.hp, member.maxHp),
 															)}
 														>

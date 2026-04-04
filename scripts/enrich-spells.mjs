@@ -62,7 +62,7 @@ for (let i = 0; i < arrayBody.length; i++) {
 				// Remove trailing commas before parsing
 				const cleaned = current.replace(/,\s*}/g, "}").replace(/,\s*]/g, "]");
 				entries.push(JSON.parse(cleaned));
-			} catch (e) {
+			} catch (_e) {
 				// Skip unparseable entries
 			}
 			current = "";
@@ -377,7 +377,7 @@ const output =
 	header +
 	"export const spells = [\n" +
 	entries
-		.map((e) => "  " + JSON.stringify(e, null, 2).split("\n").join("\n  "))
+		.map((e) => `  ${JSON.stringify(e, null, 2).split("\n").join("\n  ")}`)
 		.join(",\n") +
 	"\n];\n";
 

@@ -1,11 +1,16 @@
+import fs from "node:fs";
+import path from "node:path";
 import { GoogleGenAI } from "@google/genai";
-import fs from "fs";
-import path from "path";
 import sharp from "sharp";
-import { monsters } from "../src/data/compendium/monsters";
+import { anomalies } from "../src/data/compendium/anomalies";
 import { allItems as rawItems } from "../src/data/compendium/items-index";
+import type {
+	CompendiumAnomaly,
+	CompendiumItem,
+} from "../src/types/compendium";
 
-const vehicles = rawItems.filter(x => (x as any).item_type === "vehicle");
+const items = rawItems as unknown as CompendiumItem[];
+const vehicles = items.filter((x) => x.item_type === "vehicle");
 
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
@@ -19,7 +24,7 @@ const PUBLIC_DIR = path.resolve("public");
 
 // Collect all new entries that need tokens
 const entriesToProcess = [
-	...monsters
+	...(anomalies as unknown as CompendiumAnomaly[])
 		.filter(
 			(x) =>
 				x.id.startsWith("companion-") ||
@@ -27,11 +32,18 @@ const entriesToProcess = [
 				x.id.startsWith("pet-"),
 		)
 		.map((x) => ({ name: x.name, img: x.image, desc: x.description || "" })),
-	...vehicles
-		.map((x) => ({ name: x.name, img: (x as any).image || (x as any).image_url, desc: x.description || "" })),
+	...vehicles.map((x) => ({
+		name: x.name,
+		img: x.image || "",
+		desc: x.description || "",
+	})),
 ].filter((x): x is { name: string; img: string; desc: string } => !!x.img);
 
-async function generateToken(item: { name: string; img: string; desc: string }) {
+async function generateToken(item: {
+	name: string;
+	img: string;
+	desc: string;
+}) {
 	const fullPath = path.join(PUBLIC_DIR, item.img);
 	if (fs.existsSync(fullPath)) {
 		// Check if it's a real image (>10KB) or a placeholder (<10KB)
@@ -71,7 +83,10 @@ async function generateToken(item: { name: string; img: string; desc: string }) 
 				const dir = path.dirname(fullPath);
 				if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-				const buffer = Buffer.from(part.inlineData.data!, "base64");
+				const data = part.inlineData.data;
+				if (!data) continue;
+
+				const buffer = Buffer.from(data, "base64");
 				await sharp(buffer)
 					.resize(512, 512, { fit: "cover" })
 					.webp({ quality: 90 })
@@ -83,15 +98,18 @@ async function generateToken(item: { name: string; img: string; desc: string }) 
 		}
 
 		console.log(` -> No image data in response for ${item.name}`);
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as Error;
 		console.error(
-			` -> Error generating ${item.name}: ${e.message?.substring(0, 100)}`,
+			` -> Error generating ${item.name}: ${err.message?.substring(0, 100)}`,
 		);
 	}
 }
 
 async function main() {
-	console.log(`Found ${entriesToProcess.length} tokens to potentially generate.`);
+	console.log(
+		`Found ${entriesToProcess.length} tokens to potentially generate.`,
+	);
 
 	for (let i = 0; i < entriesToProcess.length; i++) {
 		console.log(`\n[${i + 1}/${entriesToProcess.length}] Processing...`);

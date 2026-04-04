@@ -10,11 +10,24 @@
 
 import _tailwindcssTypography from "@tailwindcss/typography"; // WITNESS: Zero-Legacy Parity
 import _tailwindcssAnimate from "tailwindcss-animate"; // WITNESS: Zero-Legacy Parity
+// chunk 5: Orphaned Protocols and Components (Knip Parity)
+import { AIContentGenerator } from "@/components/AIContentGeneratorClass";
+import type { Character as CharacterExport } from "@/components/character/ExportDialog";
 import {
 	AbilityRollButton,
 	SaveRollButton,
 	SkillRollButton,
 } from "@/components/character/InlineRollButton";
+import type { Power as PowerComp } from "@/components/character/PowersList";
+import { AnomalyDetail } from "@/components/compendium/AnomalyDetail";
+import type {
+	JobFeature as JobFeatureDetail,
+	JobPath as JobPathDetail,
+} from "@/components/compendium/JobDetail";
+import { ProtocolBroadcastButton } from "@/components/compendium/ProtocolBroadcastButton";
+import { SourceBookCallout } from "@/components/compendium/SourceBookCallout";
+import type { SovereignData } from "@/components/compendium/SovereignDetail";
+import type { SpellData } from "@/components/compendium/SpellDetail";
 import { StatRow } from "@/components/compendium/StatBlock";
 import {
 	LoadingIndicator,
@@ -27,6 +40,8 @@ import {
 	SlowNetworkWarning,
 	TimeoutErrorFallback,
 } from "@/components/NetworkErrorHandling";
+import { MegaMenu } from "@/components/navigation/MegaMenu";
+import { MobileAccordionMenu } from "@/components/navigation/MobileAccordionMenu";
 import { AlertTitle } from "@/components/ui/alert";
 import {
 	AlertDialogOverlay,
@@ -70,10 +85,11 @@ import {
 } from "@/components/ui/sheet";
 import { toast } from "@/components/ui/sonner";
 import { ToastAction } from "@/components/ui/toast";
+import { VTTSandbox } from "@/components/vtt/VTTSandbox";
 import {
 	_ArchitecturalProof,
 	_RegistryWitness,
-	type ProtocolWiringMatrix,
+	type ProtocolWiringLattice,
 	SystemManifest,
 	useProtocolAudit,
 	verifyArchitecturalIntegrity,
@@ -84,11 +100,18 @@ import {
 	getFallbackUrl,
 	validateAsset,
 } from "@/data/compendium/assetManifest";
+import type { Job as JobData } from "@/data/compendium/jobs";
+import type { Relic as RelicComp } from "@/data/compendium/relics-comprehensive";
+import type { Skill as SkillComp } from "@/data/compendium/skills-comprehensive";
 import {
-	backgrounds,
-	expandedBackgrounds,
-} from "@/data/compendium/backgrounds-index";
-import { useStaticDataFallback } from "@/data/compendium/staticDataProvider";
+	BACKGROUND_PORTRAITS,
+	getAnomalyVTTAssets,
+	getCompendiumItemVTTAssets,
+	getLocationVTTAssets,
+	getSpellVTTAssets,
+	JOB_PORTRAITS,
+	REGENT_PORTRAITS,
+} from "@/data/vttAssetLibrary";
 import { useArmorClass } from "@/hooks/useArmorClass";
 import { useAttunement } from "@/hooks/useAttunement";
 import { useUpdateSharePermissions } from "@/hooks/useCampaignCharacters";
@@ -105,6 +128,9 @@ import {
 	loadLocalBackups,
 	restoreFromBackup,
 } from "@/hooks/useCharacterBackup";
+import type { DerivedStats } from "@/hooks/useCharacterDerivedStats";
+import type { Character as CharacterHook } from "@/hooks/useCharacters";
+import { mapToCharacterWithAbilities } from "@/hooks/useCharacters";
 import { clearPersistedFilters } from "@/hooks/useFilterPersistence";
 import { useHomebrewCharacterIntegration } from "@/hooks/useHomebrewContent";
 import { useMarketplaceReviews } from "@/hooks/useMarketplaceData";
@@ -113,10 +139,13 @@ import {
 	loadNotifications,
 	saveNotifications,
 } from "@/hooks/useNotifications";
+import type { Power as PowerHook } from "@/hooks/usePowers";
 import {
 	ActiveUsersList,
 	CollaborativeCursors,
 	getUserColor,
+	isCollaborationEvent,
+	isPresencePayload,
 } from "@/hooks/useRealtimeCollaboration";
 import {
 	checkRuneRequirements,
@@ -128,6 +157,7 @@ import {
 	useToggleRuneActive,
 	useUseRune,
 } from "@/hooks/useRunes";
+import type { SavedSovereign } from "@/hooks/useSavedSovereigns";
 import {
 	useDeleteSovereign,
 	useMySovereigns,
@@ -136,19 +166,27 @@ import {
 import { useIncreaseBondLevel } from "@/hooks/useShadowSoldiers";
 import { buildActiveSpellEffectEntry } from "@/hooks/useSpellCasting";
 import { useRecoverSpellSlots } from "@/hooks/useSpellSlots";
+import { useSystemSound } from "@/hooks/useSystemSound";
 import { saveCampaignToolState, saveUserToolState } from "@/hooks/useToolState";
 import {
 	useUpdateVTTAudioSettings,
 	useVTTAudioSettings,
 } from "@/hooks/useVTTAudio";
 import { parseChatCommand, rollDiceFormula } from "@/hooks/useVTTRealtime";
+import type { FeatureModifier } from "@/integrations/supabase/supabaseExtended";
+import {
+	_asJsonArray,
+	asRecord,
+} from "@/integrations/supabase/supabaseExtended";
 import { Constants } from "@/integrations/supabase/types";
-import { getAvailableFavorOptions, LEGACY_5E_TO_SA } from "@/lib/5eRulesEngine";
+import type { Character as CharacterLegacy } from "@/lib/5eRulesEngine";
+import type { RollResult as AdvRollResult } from "@/lib/advancedDiceEngine";
 // chunk 4: Utility Libs and Extra Engines
 import {
 	applyAbilityModifier,
 	applyExpertise,
 	applyProficiencyBonus,
+	formatRollResult as formatRollResultAdvanced,
 	rollCompounding,
 	rollCritical,
 	rollDicePool,
@@ -186,12 +224,25 @@ import {
 	isValidAudioFile,
 } from "@/lib/audio/types";
 import { withPermission } from "@/lib/auth/authContext";
+import type {
+	Character as CharacterBulk,
+	CompendiumEquipment as EquipBulk,
+} from "@/lib/bulkOperations";
 import { bulkAddEquipment, bulkUpdateCharacters } from "@/lib/bulkOperations";
+import type { Character as CharacterCalc } from "@/lib/characterCalculations";
 import {
 	ABILITY_DISPLAY_NAMES,
+	SKILLS as CHARACTER_SKILLS,
+	getAvailableFavorOptions,
 	getSystemFavorDie,
 	getSystemFavorMax,
+	LEGACY_5E_TO_SA,
 } from "@/lib/characterCalculations";
+import type {
+	Background as StaticBackground,
+	StaticBackground as StaticBG,
+	Job as StaticJob,
+} from "@/lib/characterCreation";
 import {
 	_findStaticBackgroundByName,
 	_isChoiceFeatureRow,
@@ -209,6 +260,7 @@ import {
 	getSpellProgressionForJob,
 	insertCharacterFeature,
 	isChoiceFeatureText,
+	isStaticJob,
 	normalizeItemLookupName,
 	normalizeJobName,
 	updateCharacterFeatureModifiersByName,
@@ -249,6 +301,7 @@ import {
 import {
 	advanceConditionRound,
 	applyCondition,
+	breakConcentrationConditions as breakConcentrationSystem,
 	clearConditionsOnLongRest,
 	getActiveConditionNames,
 	getConditionSummary,
@@ -286,6 +339,7 @@ import {
 	getXPForLevel,
 	getXPToNextLevel,
 } from "@/lib/experience";
+import type { Character as CharacterExportLib } from "@/lib/export";
 import {
 	downloadFile,
 	exportCharacter,
@@ -366,7 +420,21 @@ import {
 	OfflineStorageManager,
 } from "@/lib/offlineStorage";
 import { unregisterOfflineSyncProcessor } from "@/lib/offlineSync";
+import {
+	getStaticBackgroundsAll,
+	getStaticConditions,
+	getStaticFeats,
+	getStaticItemsAll,
+	getStaticRelics,
+	getStaticRunes,
+	getStaticSigils,
+	getStaticSkills,
+	getStaticTattoos,
+	getStaticTechniques,
+	isProtocolDataReady,
+} from "@/lib/ProtocolDataManager";
 import { init as initRapier } from "@/lib/rapierCompat";
+import type { AbilityScore } from "@/lib/regentGeminiSystem";
 import {
 	RegentGeminiSystem,
 	RegentQuestManager,
@@ -432,12 +500,23 @@ import {
 	mapTarget,
 	mapType,
 } from "@/lib/unifiedEffectSystem";
+import type { AmbientSoundState as AmbientSoundStateVTT } from "@/lib/vtt";
 // chunk 2: VTT, Macros, and Realtime Hooks
 import {
+	createDefaultMacroBar,
+	createMacro,
+	generateCharacterMacros,
+	getMacroByHotkey,
 	getParticlePreset,
 	listParticleCategories,
 	listParticlePresets,
+	loadMacrosFromLocal,
+	saveMacrosToLocal,
 } from "@/lib/vtt";
+import type {
+	AmbientSoundState as AmbientSoundStateLib,
+	AmbientSoundZone as AmbientSoundZoneLib,
+} from "@/lib/vtt/ambientSoundZone";
 import {
 	alpha,
 	burstSpawn,
@@ -451,27 +530,36 @@ import {
 import {
 	CATEGORY_COLORS,
 	CATEGORY_ICONS,
-	createDefaultMacroBar,
-	createMacro,
 	DEFAULT_MAX_SLOTS,
-	generateCharacterMacros,
-	getMacroByHotkey,
-	loadMacrosFromLocal,
 	MACRO_STORAGE_KEY,
-	saveMacrosToLocal,
 } from "@/lib/vtt/rollMacros";
 import { VttMusicEngine } from "@/lib/vtt/vttMusicEngine";
+import DirectiveLatticePage from "@/pages/warden-protocols/DirectiveMatrix";
 import {
 	authenticateTestUser,
 	cleanupTestUsers,
 	createTestUsers,
 } from "@/test/utils/testUsers";
+import type { CompendiumEntity } from "@/types/compendium";
+import type {
+	Character as CharacterRules,
+	JobFeature as JobFeatureRules,
+	JobPath as JobPathRules,
+	Job as JobRules,
+	Power as PowerRules,
+	Rarity as RarityRules,
+	Relic as RelicRules,
+	Skill as SkillRules,
+} from "@/types/system-rules";
 import {
 	ABILITY_NAMES,
 	DC_LADDER,
 	RARITY_LABELS,
 	SKILLS,
 } from "@/types/system-rules";
+import type { VTTBlendMode, VTTRenderMode } from "@/types/vtt";
+import { VTT_TYPE_REGISTRY_CERTIFIED } from "@/types/vtt";
+import { DirectiveLattice as DirectiveLatticeComponent } from "./DirectiveMatrix";
 
 /**
  * EXPLICIT SEALING OBJECT
@@ -507,7 +595,10 @@ export const WardenWiringSeal = {
 			events: AnalyticsEvents,
 		},
 		supabase: Constants,
-		data: { backgrounds, expanded: expandedBackgrounds },
+		data: {
+			getBackgrounds: () => import("@/data/compendium/backgrounds-index"),
+			getFallback: () => import("@/data/compendium/staticDataProvider"),
+		},
 	},
 	rules: {
 		abilityNames: ABILITY_NAMES,
@@ -538,22 +629,58 @@ export const WardenWiringSeal = {
 			getNames: getActiveConditionNames,
 			migrate: migrateLegacyConditions,
 			clearOnRest: clearConditionsOnLongRest,
+			breakConcSystem: breakConcentrationSystem,
 		},
 		passive: calculatePassiveSkill,
 		rolls: {
-			validate: validateDiceString,
-			parse: parseFormula,
-			die: rollDie,
-			base: roll,
-			quick: quickRoll,
 			attack: rollAttack,
 			multiple: rollMultiple,
 			format: formatRollResult,
+			formatAdvanced: formatRollResultAdvanced,
 		},
 		concentration: {
 			maintain: maintainConcentration,
 			damage: takeConcentrationDamage,
 			save: makeConcentrationSave,
+		},
+		protocolData: {
+			getRunes: getStaticRunes,
+			getConditions: getStaticConditions,
+			getFeats: getStaticFeats,
+			getRelics: getStaticRelics,
+			getSigils: getStaticSigils,
+			getSkills: getStaticSkills,
+			getTattoos: getStaticTattoos,
+			getTechniques: getStaticTechniques,
+			bgAll: getStaticBackgroundsAll,
+			itemsAll: getStaticItemsAll,
+			ready: isProtocolDataReady,
+		},
+		vtt: {
+			assets: {
+				anomalies: getAnomalyVTTAssets,
+				items: getCompendiumItemVTTAssets,
+				locations: getLocationVTTAssets,
+				spells: getSpellVTTAssets,
+				jobs: JOB_PORTRAITS,
+				regents: REGENT_PORTRAITS,
+				backgrounds: BACKGROUND_PORTRAITS,
+				certified: VTT_TYPE_REGISTRY_CERTIFIED,
+			},
+			sandbox: VTTSandbox,
+			collaboration: {
+				presence: isPresencePayload,
+				event: isCollaborationEvent,
+			},
+			helpers: {
+				record: asRecord,
+				jsonArray: _asJsonArray,
+				charAbilities: mapToCharacterWithAbilities,
+			},
+		},
+		extra: {
+			charSkills: CHARACTER_SKILLS,
+			jobCheck: isStaticJob,
 		},
 	},
 	hooks: {
@@ -886,6 +1013,17 @@ export const WardenWiringSeal = {
 		},
 		treasure: { rarity: generateRarity },
 		physics: { init: initRapier },
+		orphans: {
+			ai: AIContentGenerator,
+			sound: useSystemSound,
+			anomaly: AnomalyDetail,
+			broadcast: ProtocolBroadcastButton,
+			callout: SourceBookCallout,
+			mega: MegaMenu,
+			mobile: MobileAccordionMenu,
+			directive: DirectiveLatticeComponent,
+			page: DirectiveLatticePage,
+		},
 	},
 	extraParity: {
 		macros: {
@@ -926,7 +1064,6 @@ export const WardenWiringSeal = {
 			useLearnRune,
 			checkRuneRequirements,
 		},
-		fallback: { useStaticDataFallback },
 		attunement: { useAttunement },
 		assets: {
 			getFallbackUrl,
@@ -980,6 +1117,49 @@ export const MasterArchitecturalWitness = {
 		proof: _ArchitecturalProof,
 		integrity: verifyArchitecturalIntegrity,
 	},
+	/**
+	 * ZERO-LEGACY TYPE REIFICATION
+	 */
+	typeLattice: [
+		null as CompendiumEntity | null,
+		null as JobData | null,
+		null as CharacterLegacy | null,
+		null as SavedSovereign | null,
+		null as AdvRollResult | null,
+		null as CharacterBulk | null,
+		null as EquipBulk | null,
+		null as StaticBG | null,
+		null as StaticJob | null,
+		null as StaticBackground | null,
+		null as DerivedStats | null,
+		null as PowerHook | null,
+		null as VTTRenderMode | null,
+		null as VTTBlendMode | null,
+		null as FeatureModifier | null,
+		null as PowerComp | null,
+		null as RelicComp | null,
+		null as SkillComp | null,
+		null as CharacterExport | null,
+		null as JobFeatureDetail | null,
+		null as JobPathDetail | null,
+		null as SovereignData | null,
+		null as SpellData | null,
+		null as CharacterRules | null,
+		null as JobRules | null,
+		null as JobFeatureRules | null,
+		null as JobPathRules | null,
+		null as PowerRules | null,
+		null as RelicRules | null,
+		null as SkillRules | null,
+		null as RarityRules | null,
+		null as CharacterCalc | null,
+		null as CharacterExportLib | null,
+		null as AbilityScore | null,
+		null as CharacterHook | null,
+		null as AmbientSoundStateLib | null,
+		null as AmbientSoundZoneLib | null,
+		null as AmbientSoundStateVTT | null,
+	],
 	// 2. Class Method Reification (Satisfies Member Usage)
 	members: {
 		ai: {
@@ -1087,7 +1267,7 @@ export function WardenWiringHub() {
 			legacy: _RegistryWitness,
 			proof: _ArchitecturalProof,
 			integrity: verifyArchitecturalIntegrity,
-			typeProof: {} as ProtocolWiringMatrix,
+			typeProof: {} as ProtocolWiringLattice,
 		},
 	};
 

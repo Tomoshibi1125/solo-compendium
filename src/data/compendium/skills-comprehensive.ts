@@ -8,11 +8,11 @@ export interface Skill {
 	description: string;
 	ability:
 		| "Strength"
-		| "Dexterity"
-		| "Constitution"
+		| "Agility"
+		| "Vitality"
 		| "Intelligence"
-		| "Wisdom"
-		| "Charisma";
+		| "Sense"
+		| "Presence";
 	type:
 		| "combat"
 		| "exploration"
@@ -47,11 +47,11 @@ export const comprehensiveSkills: Skill[] = [
 		name: "Dagger Mastery",
 		description:
 			"Expertise with daggers and similar small blades, especially effective for shadow assassins.",
-		ability: "Dexterity",
+		ability: "Agility",
 		type: "combat",
 		uses: "Passive",
 		mechanics: {
-			check: "Dexterity (Attack rolls)",
+			check: "Agility (Attack rolls)",
 			scaling: "proficiency",
 		},
 		benefits: {
@@ -133,7 +133,7 @@ export const comprehensiveSkills: Skill[] = [
 		benefits: {
 			basic: [
 				"Unarmed strikes deal 1d4 + Strength modifier damage",
-				"Can use Dexterity instead of Strength for unarmed attacks",
+				"Can use Agility instead of Strength for unarmed attacks",
 				"No disadvantage when attacking with both hands occupied",
 			],
 			expert: [
@@ -144,7 +144,7 @@ export const comprehensiveSkills: Skill[] = [
 			master: [
 				"Unarmed strikes deal 1d8 + Strength modifier damage",
 				"Can make three unarmed attacks per attack action",
-				"Can stun opponent on critical hit (Constitution save DC 15)",
+				"Can stun opponent on critical hit (Vitality save DC 15)",
 			],
 		},
 		applications: [
@@ -160,11 +160,11 @@ export const comprehensiveSkills: Skill[] = [
 		id: "archery",
 		name: "Archery",
 		description: "Expertise with bows, crossbows, and other ranged weapons.",
-		ability: "Dexterity",
+		ability: "Agility",
 		type: "combat",
 		uses: "Passive",
 		mechanics: {
-			check: "Dexterity (Attack rolls)",
+			check: "Agility (Attack rolls)",
 			scaling: "proficiency",
 		},
 		benefits: {
@@ -237,11 +237,11 @@ export const comprehensiveSkills: Skill[] = [
 		name: "Dungeon Navigation",
 		description:
 			"Expertise in navigating complex underground environments and dungeons.",
-		ability: "Wisdom",
+		ability: "Sense",
 		type: "exploration",
 		uses: "Passive",
 		mechanics: {
-			check: "Wisdom (Survival)",
+			check: "Sense (Survival)",
 			scaling: "proficiency",
 		},
 		benefits: {
@@ -253,7 +253,7 @@ export const comprehensiveSkills: Skill[] = [
 			expert: [
 				"Can map dungeons from memory",
 				"Automatically notice secret doors on passive Perception",
-				"Can predict dungeon layouts and monster placements",
+				"Can predict dungeon layouts and anomaly placements",
 			],
 			master: [
 				"Can sense dungeon magic and enchantments",
@@ -274,11 +274,11 @@ export const comprehensiveSkills: Skill[] = [
 		id: "wilderness-survival",
 		name: "Wilderness Survival",
 		description: "Expertise in surviving and thriving in natural environments.",
-		ability: "Wisdom",
+		ability: "Sense",
 		type: "exploration",
 		uses: "Passive",
 		mechanics: {
-			check: "Wisdom (Survival)",
+			check: "Sense (Survival)",
 			scaling: "proficiency",
 		},
 		benefits: {
@@ -349,11 +349,11 @@ export const comprehensiveSkills: Skill[] = [
 		id: "tracking",
 		name: "Tracking",
 		description: "The ability to follow tracks and trails left by creatures.",
-		ability: "Wisdom",
+		ability: "Sense",
 		type: "exploration",
 		uses: "Action or passive",
 		mechanics: {
-			check: "Wisdom (Survival)",
+			check: "Sense (Survival)",
 			dc: "Based on terrain and age of tracks",
 			scaling: "proficiency",
 		},
@@ -390,18 +390,18 @@ export const comprehensiveSkills: Skill[] = [
 		name: "Intimidation",
 		description:
 			"Using presence, threats, and reputation to influence others through fear.",
-		ability: "Charisma",
+		ability: "Presence",
 		type: "social",
 		uses: "Action or conversation",
 		mechanics: {
-			check: "Charisma (Intimidation)",
+			check: "Presence (Intimidation)",
 			dc: "opposed",
 			scaling: "proficiency",
 		},
 		benefits: {
 			basic: [
-				"Advantage on Charisma (Intimidation) checks",
-				"Can use Wisdom modifier instead of Charisma for Intimidation",
+				"Advantage on Presence (Intimidation) checks",
+				"Can use Sense modifier instead of Presence for Intimidation",
 				"Enemies within 30 feet have disadvantage on attacks against your allies",
 			],
 			expert: [
@@ -429,17 +429,17 @@ export const comprehensiveSkills: Skill[] = [
 		name: "Persuasion",
 		description:
 			"Using logic, charm, and reasoning to influence others' opinions and actions.",
-		ability: "Charisma",
+		ability: "Presence",
 		type: "social",
 		uses: "Conversation or action",
 		mechanics: {
-			check: "Charisma (Persuasion)",
+			check: "Presence (Persuasion)",
 			dc: "Based on target's attitude",
 			scaling: "proficiency",
 		},
 		benefits: {
 			basic: [
-				"Advantage on Charisma (Persuasion) checks",
+				"Advantage on Presence (Persuasion) checks",
 				"Can persuade neutral creatures more easily",
 				"Can change attitudes of friendly creatures",
 			],
@@ -467,17 +467,17 @@ export const comprehensiveSkills: Skill[] = [
 		id: "deception",
 		name: "Deception",
 		description: "The art of lying, misleading others, and hiding the truth.",
-		ability: "Charisma",
+		ability: "Presence",
 		type: "social",
 		uses: "Conversation or action",
 		mechanics: {
-			check: "Charisma (Deception)",
-			dc: "opposed by Wisdom (Insight)",
+			check: "Presence (Deception)",
+			dc: "opposed by Sense (Insight)",
 			scaling: "proficiency",
 		},
 		benefits: {
 			basic: [
-				"Advantage on Charisma (Deception) checks",
+				"Advantage on Presence (Deception) checks",
 				"Can maintain lies under basic questioning",
 				"Can create simple alibis",
 			],
@@ -506,11 +506,11 @@ export const comprehensiveSkills: Skill[] = [
 		name: "Performance",
 		description:
 			"Entertaining audiences through music, acting, storytelling, or other arts.",
-		ability: "Charisma",
+		ability: "Presence",
 		type: "social",
 		uses: "Performance or action",
 		mechanics: {
-			check: "Charisma (Performance)",
+			check: "Presence (Performance)",
 			dc: "Based on audience and difficulty",
 			scaling: "proficiency",
 		},
@@ -652,7 +652,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Magical research",
 			"Understanding complex spells",
 			"Creating new magic systems",
-			"Magical engineering",
+			"Magical architecture",
 		],
 		synergies: ["Arcana", "Spellcraft", "Research"],
 		source: "System Ascendant Canon",
@@ -781,11 +781,11 @@ export const comprehensiveSkills: Skill[] = [
 		id: "healing-enhancement",
 		name: "Healing Enhancement",
 		description: "Improved natural and magical healing abilities.",
-		ability: "Wisdom",
+		ability: "Sense",
 		type: "exploration",
 		uses: "Varies by method",
 		mechanics: {
-			check: "Wisdom (Medicine)",
+			check: "Sense (Medicine)",
 			scaling: "proficiency",
 		},
 		benefits: {
@@ -818,7 +818,7 @@ export const comprehensiveSkills: Skill[] = [
 		id: "strength-enhancement",
 		name: "Strength Enhancement",
 		description: "Supernatural physical strength beyond normal limits.",
-		ability: "Constitution",
+		ability: "Vitality",
 		type: "combat",
 		uses: "Passive",
 		mechanics: {
@@ -855,26 +855,26 @@ export const comprehensiveSkills: Skill[] = [
 		id: "perception-enhancement",
 		name: "Perception Enhancement",
 		description: "Supernatural senses and perception beyond normal limits.",
-		ability: "Wisdom",
+		ability: "Sense",
 		type: "exploration",
 		uses: "Passive",
 		mechanics: {
-			check: "Wisdom (Perception)",
+			check: "Sense (Perception)",
 			scaling: "expertise",
 		},
 		benefits: {
 			basic: [
-				"+2 to Wisdom (Perception) checks",
+				"+2 to Sense (Perception) checks",
 				"Can see in dim light as if it were bright light",
 				"Can hear whispers from 30 feet away",
 			],
 			expert: [
-				"+4 to Wisdom (Perception) checks",
+				"+4 to Sense (Perception) checks",
 				"Can see in magical darkness",
 				"Can hear heartbeats from 10 feet away",
 			],
 			master: [
-				"+6 to Wisdom (Perception) checks",
+				"+6 to Sense (Perception) checks",
 				"Can see invisible creatures",
 				"Can hear thoughts from 5 feet away",
 			],
@@ -892,26 +892,26 @@ export const comprehensiveSkills: Skill[] = [
 		id: "agility-enhancement",
 		name: "Agility Enhancement",
 		description: "Supernatural agility and reflexes beyond normal limits.",
-		ability: "Dexterity",
+		ability: "Agility",
 		type: "combat",
 		uses: "Passive",
 		mechanics: {
-			check: "Dexterity (Acrobatics)",
+			check: "Agility (Acrobatics)",
 			scaling: "proficiency",
 		},
 		benefits: {
 			basic: [
-				"+2 to Dexterity ability checks",
+				"+2 to Agility ability checks",
 				"Move through difficult terrain without penalty",
 				"Reflex saves made with advantage",
 			],
 			expert: [
-				"+4 to Dexterity ability checks",
+				"+4 to Agility ability checks",
 				"Can move on walls and ceilings briefly",
 				"Can dodge attacks as reaction",
 			],
 			master: [
-				"+6 to Dexterity ability checks",
+				"+6 to Agility ability checks",
 				"Can fly for short periods",
 				"Can move faster than the eye can follow",
 			],

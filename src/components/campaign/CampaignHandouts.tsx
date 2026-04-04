@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
 
@@ -31,7 +31,7 @@ type RemoteJournalRow = Pick<
 >;
 
 const JOURNAL_CATEGORIES = ["session", "note", "lore", "handout"] as const;
-const toJournalCategory = (value: unknown): HandoutEntry["category"] => {
+const toJournalCategory = (value: Json): HandoutEntry["category"] => {
 	return (JOURNAL_CATEGORIES as readonly string[]).includes(String(value))
 		? (value as HandoutEntry["category"])
 		: "note";

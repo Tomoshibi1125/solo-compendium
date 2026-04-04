@@ -18,9 +18,9 @@ import { PlayerPage } from "./pages/PlayerPage";
  *   E2E_USE_GUEST_PLAYER – set to "true" to use guest mode for the player
  */
 
-const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
+const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
-const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
+const _PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
 const USE_GUEST_PLAYER = process.env.E2E_USE_GUEST_PLAYER === "true";
 
 test.describe("Dual-context: DM + Player campaign flow", () => {

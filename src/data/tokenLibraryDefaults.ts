@@ -2,14 +2,14 @@ import tokensCompendium, { type Token as BaseToken } from "@/data/tokens";
 
 export type TokenType =
 	| "character"
-	| "monster"
+	| "Anomaly"
 	| "npc"
 	| "prop"
 	| "effect"
 	| "custom";
 export type TokenCategory =
 	| "ascendant"
-	| "monster"
+	| "Anomaly"
 	| "boss"
 	| "npc"
 	| "treasure"
@@ -101,13 +101,13 @@ const BASE_TYPE_MAP: Record<
 		size: "medium",
 		tag: "ascendant",
 	},
-	monster: {
-		type: "monster",
-		category: "monster",
+	Anomaly: {
+		type: "Anomaly",
+		category: "Anomaly",
 		size: "large",
-		tag: "monster",
+		tag: "Anomaly",
 	},
-	boss: { type: "monster", category: "boss", size: "huge", tag: "boss" },
+	boss: { type: "Anomaly", category: "boss", size: "huge", tag: "boss" },
 	npc: { type: "npc", category: "npc", size: "medium", tag: "npc" },
 	merchant: { type: "npc", category: "npc", size: "medium", tag: "merchant" },
 	guard: { type: "npc", category: "npc", size: "medium", tag: "guard" },
@@ -200,65 +200,65 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 
-	// Monsters
+	// Anomalies
 	{
-		id: "monster-1",
-		name: "Monster (E-Rank)",
-		type: "monster",
-		category: "monster",
+		id: "Anomaly-1",
+		name: "Anomaly (E-Rank)",
+		type: "Anomaly",
+		category: "Anomaly",
 		emoji: "M-E",
 		size: "small",
-		tags: ["monster", "e-rank"],
+		tags: ["Anomaly", "e-rank"],
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "monster-2",
-		name: "Monster (D-Rank)",
-		type: "monster",
-		category: "monster",
+		id: "Anomaly-2",
+		name: "Anomaly (D-Rank)",
+		type: "Anomaly",
+		category: "Anomaly",
 		emoji: "M-D",
 		size: "small",
-		tags: ["monster", "d-rank"],
+		tags: ["Anomaly", "d-rank"],
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "monster-3",
-		name: "Monster (C-Rank)",
-		type: "monster",
-		category: "monster",
+		id: "Anomaly-3",
+		name: "Anomaly (C-Rank)",
+		type: "Anomaly",
+		category: "Anomaly",
 		emoji: "M-C",
 		size: "medium",
-		tags: ["monster", "c-rank"],
+		tags: ["Anomaly", "c-rank"],
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "monster-4",
-		name: "Monster (B-Rank)",
-		type: "monster",
-		category: "monster",
+		id: "Anomaly-4",
+		name: "Anomaly (B-Rank)",
+		type: "Anomaly",
+		category: "Anomaly",
 		emoji: "M-B",
 		size: "medium",
-		tags: ["monster", "b-rank"],
+		tags: ["Anomaly", "b-rank"],
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "monster-5",
-		name: "Monster (A-Rank)",
-		type: "monster",
-		category: "monster",
+		id: "Anomaly-5",
+		name: "Anomaly (A-Rank)",
+		type: "Anomaly",
+		category: "Anomaly",
 		emoji: "M-A",
 		size: "large",
-		tags: ["monster", "a-rank"],
+		tags: ["Anomaly", "a-rank"],
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 	{
-		id: "monster-6",
-		name: "Monster (S-Rank)",
-		type: "monster",
-		category: "monster",
+		id: "Anomaly-6",
+		name: "Anomaly (S-Rank)",
+		type: "Anomaly",
+		category: "Anomaly",
 		emoji: "M-S",
 		size: "huge",
-		tags: ["monster", "s-rank"],
+		tags: ["Anomaly", "s-rank"],
 		createdAt: DEFAULT_TOKEN_CREATED_AT,
 	},
 
@@ -266,7 +266,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 	{
 		id: "boss-1",
 		name: "Boss (E-Rank)",
-		type: "monster",
+		type: "Anomaly",
 		category: "boss",
 		emoji: "B-E",
 		size: "large",
@@ -277,7 +277,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 	{
 		id: "boss-2",
 		name: "Boss (D-Rank)",
-		type: "monster",
+		type: "Anomaly",
 		category: "boss",
 		emoji: "B-D",
 		size: "large",
@@ -288,7 +288,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 	{
 		id: "boss-3",
 		name: "Boss (C-Rank)",
-		type: "monster",
+		type: "Anomaly",
 		category: "boss",
 		emoji: "B-C",
 		size: "large",
@@ -299,7 +299,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 	{
 		id: "boss-4",
 		name: "Boss (B-Rank)",
-		type: "monster",
+		type: "Anomaly",
 		category: "boss",
 		emoji: "B-B",
 		size: "huge",
@@ -310,7 +310,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 	{
 		id: "boss-5",
 		name: "Boss (A-Rank)",
-		type: "monster",
+		type: "Anomaly",
 		category: "boss",
 		emoji: "B-A",
 		size: "huge",
@@ -321,7 +321,7 @@ export const DEFAULT_TOKENS: LibraryToken[] = [
 	{
 		id: "boss-6",
 		name: "Boss (S-Rank)",
-		type: "monster",
+		type: "Anomaly",
 		category: "boss",
 		emoji: "B-S",
 		size: "huge",
@@ -893,7 +893,7 @@ const normalizeTokenCategory = (
 	if (category === "ascendant") return "ascendant";
 	if (!category) return "other";
 	if (category === "ascendant") return "ascendant";
-	if (category === "monster") return "monster";
+	if (category === "Anomaly") return "Anomaly";
 	if (category === "boss") return "boss";
 	if (category === "npc") return "npc";
 	if (category === "treasure") return "treasure";

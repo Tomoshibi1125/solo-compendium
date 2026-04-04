@@ -7,7 +7,7 @@ export const regents: Regent[] = [
 		title: "Umbral (Regent of Shadows)",
 		theme: "Umbral and Death",
 		description:
-			"The ultimate umbral manipulation Ascendant class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Ascendant class available to players, granting true Regent-level power over the umbral realm and the ability to command umbral shadows.",
+			"The ultimate umbral manifestation Ascendant class overlay, sharing the sovereign power of Kael Voss, the Weaver of the Absolute. You embody mastery over the veil and the ability to 'Resurge' an infinite legion of Umbral Echoes. This is the highest tier veil-based Ascendant class, granting true Eternal-tier authority over the shadow realm to protect the timeline in the name of the Prime Eternal.",
 		rank: "S",
 		image: "/generated/compendium/Regents/umbral-regent.webp",
 		type: "ascendant-class-overlay",
@@ -19,13 +19,22 @@ export const regents: Regent[] = [
 			"shadow-soldier-command",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d12",
-		primary_ability: ["Charisma", "Wisdom"],
-		saving_throws: ["Wisdom", "Charisma"],
-		skill_proficiencies: ["Stealth", "Intimidation", "Arcana", "Religion"],
-		armor_proficiencies: ["Light armor", "Medium armor", "Shields"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		primary_ability: ["Presence", "Sense"],
+		saving_throws: ["Sense", "Presence"],
+		skill_proficiencies: [
+			"Stealth",
+			"Intimidation",
+			"Mana Flow",
+			"Cosmic Lore",
+		],
+		armor_proficiencies: [
+			"Light Mana-Weave Armor",
+			"Medium Aether Armor",
+			"Mana Shields",
+		],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -63,7 +72,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Regent's Presence",
 				description:
-					"Frightening presence: enemies within 30 feet must make a Wisdom saving throw (DC 18) or be frightened of you.",
+					"Frightening presence: enemies within 30 feet must make a Sense saving throw (DC 18) or be frightened of you.",
 				type: "passive",
 			},
 			{
@@ -138,7 +147,7 @@ export const regents: Regent[] = [
 				level: 9,
 				name: "Death's Authority",
 				description:
-					"As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your loyal servants.",
+					"As an action, force all undead within 300 feet to make a Sense save (DC 20) or become your loyal servants.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -318,7 +327,7 @@ export const regents: Regent[] = [
 			},
 		],
 		spellcasting: {
-			ability: "Charisma",
+			ability: "Presence",
 			spell_slots: {
 				"1st": [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
 				"2nd": [2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
@@ -447,8 +456,8 @@ export const regents: Regent[] = [
 		regent_requirements: {
 			level: 5,
 			abilities: {
-				charisma: 13,
-				wisdom: 13,
+				presence: 13,
+				sense: 13,
 			},
 			quest_completion: "Complete the Umbral Regent Ascension quest series",
 			warden_approval: true,
@@ -456,11 +465,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 4,
-				dexterity: 4,
-				constitution: 4,
+				agility: 4,
+				vitality: 4,
 				intelligence: 4,
-				wisdom: 4,
-				charisma: 4,
+				sense: 4,
+				presence: 4,
 			},
 			special_abilities: [
 				"Immune to fear and charm effects",
@@ -480,19 +489,23 @@ export const regents: Regent[] = [
 		title: "Radiant Regent (Regent of White Flames)",
 		theme: "White Flames and Purification",
 		description:
-			"The ultimate manifestation of purification fire, embodying the power of the Regent of White Flames. You command sacred flames that incinerate corruption, cleanse the wicked, and illuminate the darkest depths of the multiverse.",
+			"The ultimate manifestation of purification fire, sharing a fragment of Solara, the Brightest Fragment. You command the sacred 'Exarch's Authority' that incinerates corruption and illuminates the darkest depths of the realms. As a vessel of the Radiant Warden, you are tasked with stabilizing the gates and purging the void-noise from reality.",
 		rank: "S",
 		image: "/generated/compendium/Regents/white-flame-Regent.webp",
 		type: "ascendant-class-overlay",
 		tags: ["regent", "radiant", "white-flames", "purification", "fire"],
 		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d10",
 		primary_ability: ["Presence", "Strength"],
-		saving_throws: ["Presence", "Dexterity"],
-		skill_proficiencies: ["Perception", "Insight", "Religion", "Athletics"],
-		armor_proficiencies: ["Light armor", "Medium armor", "Shields"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		saving_throws: ["Presence", "Agility"],
+		skill_proficiencies: ["Perception", "Insight", "Cosmic Lore", "Athletics"],
+		armor_proficiencies: [
+			"Light Mana-Weave Armor",
+			"Medium Aether Armor",
+			"Mana Shields",
+		],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Flame Regent Trials quest series",
@@ -504,7 +517,7 @@ export const regents: Regent[] = [
 			{
 				name: "White Flame Burst",
 				description:
-					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Constitution saving throw (DC 18) or be blinded for 1 minute. Purification fire that erases corruption.",
+					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Vitality saving throw (DC 18) or be blinded for 1 minute. Purification fire that erases corruption.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 3,
@@ -552,7 +565,7 @@ export const regents: Regent[] = [
 			{
 				name: "Purification Authority",
 				description:
-					"As an action, force all fiends or undead within 300 feet to make a Wisdom save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
+					"As an action, force all fiends or undead within 300 feet to make a Sense save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
@@ -732,11 +745,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 4,
-				dexterity: 2,
-				constitution: 2,
+				agility: 2,
+				vitality: 2,
 				intelligence: 2,
-				wisdom: 4,
-				charisma: 6,
+				sense: 4,
+				presence: 6,
 			},
 			special_abilities: [
 				"Immune to fire and radiant damage",
@@ -862,19 +875,19 @@ export const regents: Regent[] = [
 		title: "Steel Regent (Regent of Iron Body)",
 		theme: "Conceptual Invulnerability & Absolutist Defense",
 		description:
-			"Embodiment of absolute defense and iron-willed sovereignty, wielding the power of the Regent of Iron Body. You are conceptually invulnerable, an immovable object that disregards the laws of physics. The Ascendant Bureau classifies you as an unkillable entity whose containment is fundamentally impossible.",
+			"Embodiment of absolute structural integrity, wielding the shared power of Golem, the Eternal of Giants. You are a foundational pillar of the Ascendant, a conceptually invulnerable entity that anchors the realms against the pull of the Void. Your iron will mirrors the Unyielding Wall, making containment of your presence fundamentally impossible.",
 		rank: "S",
 		image: "/generated/compendium/Regents/steel-flesh-Regent.webp",
 		type: "ascendant-class-overlay",
 		tags: ["regent", "iron_body", "tarnak", "invulnerable", "titan", "defense"],
 		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d12",
 		primary_ability: ["Vitality", "Strength"],
-		saving_throws: ["Vitality", "Constitution"],
+		saving_throws: ["Vitality", "Vitality"],
 		skill_proficiencies: ["Athletics", "Intimidation", "Survival"],
-		armor_proficiencies: ["All armor", "Shields"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		armor_proficiencies: ["All armor", "Mana Shields"],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Steel Regent Ascension trials",
@@ -886,7 +899,7 @@ export const regents: Regent[] = [
 			{
 				name: "Conceptual Invulnerability",
 				description:
-					"As an action, enter a state of absolute defense for 1 minute. You are immune to ALL damage and your AC becomes 30. This mirrors the Regent of Iron Body's physics-defying resilience.",
+					"As an action, enter a state of absolute defense for 1 minute. You are immune to ALL damage and your AC becomes 30. This mirrors the Regent of Iron Body's reality-defying resilience.",
 				type: "action",
 				frequency: "long-rest",
 				power_level: 3,
@@ -1113,11 +1126,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 4,
-				dexterity: 2,
-				constitution: 6,
+				agility: 2,
+				vitality: 6,
 				intelligence: 2,
-				wisdom: 2,
-				charisma: 2,
+				sense: 2,
+				presence: 2,
 			},
 			special_abilities: [
 				"Immune to disease, poison, and aging effects",
@@ -1251,7 +1264,7 @@ export const regents: Regent[] = [
 		title: "Destruction Regent (Regent of Destruction)",
 		theme: "Primordial Destruction and Draconic Apocalypse",
 		description:
-			"Incarnation of primordial destruction, embodying the power of the Regent of Destruction. You can transform into the dragon of apocalypse, whose breath incinerates reality and presence melts the very asphalt. As the ultimate force of annihilation, you are classified as a Kaiju-class extinction event.",
+			"Incarnation of primordial destruction, sharing the catastrophic power of Marthos, the Dragon-King of Void. You are the Ascendant's necessary delete-command, capable of transforming into the dragon of apocalypse whose breath erases corrupted reality. As the mortal anchor for the Void Weaver, you represent the inevitable end and the Next Beginning.",
 		rank: "S",
 		image: "/generated/compendium/Regents/destruction-Regent.webp",
 		type: "ascendant-class-overlay",
@@ -1264,13 +1277,17 @@ export const regents: Regent[] = [
 			"apocalypse",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d12",
 		primary_ability: ["Strength", "Vitality"],
-		saving_throws: ["Strength", "Dexterity"],
+		saving_throws: ["Strength", "Agility"],
 		skill_proficiencies: ["Athletics", "Intimidation", "Perception"],
-		armor_proficiencies: ["Light armor", "Medium armor", "Shields"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		armor_proficiencies: [
+			"Light Mana-Weave Armor",
+			"Medium Aether Armor",
+			"Mana Shields",
+		],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Path of Destruction quest series",
@@ -1330,7 +1347,7 @@ export const regents: Regent[] = [
 			{
 				name: "Annihilation Authority",
 				description:
-					"As an action, force all constructs within 300 feet to make a Wisdom save (DC 20) or be destroyed and become your servants. This reflects the Destruction Regent's command over destruction.",
+					"As an action, force all constructs within 300 feet to make a Sense save (DC 20) or be destroyed and become your servants. This reflects the Destruction Regent's command over destruction.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
@@ -1514,11 +1531,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 6,
-				dexterity: 2,
-				constitution: 4,
+				agility: 2,
+				vitality: 4,
 				intelligence: 2,
-				wisdom: 2,
-				charisma: 2,
+				sense: 2,
+				presence: 2,
 			},
 			special_abilities: [
 				"Immune to force and thunder damage",
@@ -1675,13 +1692,18 @@ export const regents: Regent[] = [
 			"class-overlay",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d10",
 		primary_ability: ["Presence", "Intelligence"],
 		saving_throws: ["Presence", "Intelligence"],
-		skill_proficiencies: ["History", "Insight", "Persuasion", "Intimidation"],
-		armor_proficiencies: ["All armor", "Shields"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		skill_proficiencies: [
+			"Dimensional Lore",
+			"Insight",
+			"Persuasion",
+			"Intimidation",
+		],
+		armor_proficiencies: ["All armor", "Mana Shields"],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Command Regent Ascension trials",
@@ -1918,11 +1940,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 2,
-				dexterity: 2,
-				constitution: 4,
+				agility: 2,
+				vitality: 4,
 				intelligence: 4,
-				wisdom: 4,
-				charisma: 6,
+				sense: 4,
+				presence: 6,
 			},
 			special_abilities: [
 				"Immune to fear and charm effects",
@@ -2061,23 +2083,28 @@ export const regents: Regent[] = [
 			"frost",
 			"cold",
 			"winter",
-			"monarch_of_frost",
+			"eternal_of_frost",
 			"ice",
 			"glacio-regency",
 		],
 		created_at: "2026-02-26T00:00:00.000Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d10",
 		primary_ability: ["Intelligence", "Sense"],
 		saving_throws: ["Intelligence", "Sense"],
-		skill_proficiencies: ["Arcana", "Investigation", "Nature", "Perception"],
-		armor_proficiencies: ["Light armor", "Medium armor"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		skill_proficiencies: [
+			"Mana Flow",
+			"Investigation",
+			"Gate Topology",
+			"Perception",
+		],
+		armor_proficiencies: ["Light Mana-Weave Armor", "Medium Aether Armor"],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
 				level: 1,
-				name: "Ice Age Protocol",
+				name: "Ice Age Decree",
 				description:
 					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. This mirrors the Regent of Frost's climate-shattering power.",
 				type: "action",
@@ -2291,7 +2318,7 @@ export const regents: Regent[] = [
 		},
 		progression_table: {
 			"1": {
-				features_gained: ["Ice Age Protocol", "Frost Dominion"],
+				features_gained: ["Ice Age Decree", "Frost Dominion"],
 				abilities_improved: [],
 			},
 			"2": {
@@ -2378,11 +2405,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 2,
-				dexterity: 2,
-				constitution: 6,
+				agility: 2,
+				vitality: 6,
 				intelligence: 8,
-				wisdom: 4,
-				charisma: 2,
+				sense: 4,
+				presence: 2,
 			},
 			special_abilities: [
 				"Immune to cold damage",
@@ -2417,17 +2444,26 @@ export const regents: Regent[] = [
 			"beast",
 			"primal",
 			"evolution",
-			"monarch_of_beasts",
+			"eternal_of_beasts",
 			"nature",
 		],
 		created_at: "2026-02-26T00:00:00.000Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d12",
 		primary_ability: ["Strength", "Vitality"],
 		saving_throws: ["Strength", "Vitality"],
-		skill_proficiencies: ["Athletics", "Animal Handling", "Nature", "Survival"],
-		armor_proficiencies: ["Light armor", "Medium armor", "Shields"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		skill_proficiencies: [
+			"Athletics",
+			"Beast Taming",
+			"Gate Topology",
+			"Survival",
+		],
+		armor_proficiencies: [
+			"Light Mana-Weave Armor",
+			"Medium Aether Armor",
+			"Mana Shields",
+		],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -2715,11 +2751,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 4,
-				dexterity: 2,
-				constitution: 6,
+				agility: 2,
+				vitality: 6,
 				intelligence: 2,
-				wisdom: 4,
-				charisma: 2,
+				sense: 4,
+				presence: 2,
 			},
 			special_abilities: [
 				"Beasts automatically friendly",
@@ -2745,26 +2781,26 @@ export const regents: Regent[] = [
 		title: "Plague Regent Ascendant Class",
 		theme: "Pandemic Incarnate",
 		description:
-			"Incarnation of plague and pestilence. Walking biological apocalypse. The CDC tracks 47 unknown pathogens in your wake. The Ascendant Bureau classifies you as a Pandemic-class bioweapon. Insects obey your will, diseases are your art form, and quarantine zones form wherever you walk. Hospitals refuse your admittance, biohazard teams follow your movements, and the WHO has a dedicated task force assigned to you.",
+			"Incarnation of plague and pestilence. Walking miasma apocalypse. the Ascendant Bureau tracks 47 unknown pathogens in your wake. The Ascendant Bureau classifies you as a Cataclysm-class entity. Insects obey your will, diseases are your art form, and quarantine zones form wherever you walk. Healing sanctuaries refuse your admittance, biohazard teams follow your movements, and the Grand Healer Guilds have a dedicated task force assigned to you.",
 		rank: "S",
 		image: "/generated/compendium/Regents/plague-regent.webp",
 		type: "ascendant-class-overlay",
 		tags: ["regent", "plague", "disease", "swarm", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d10",
 		primary_ability: ["Intelligence", "Sense"],
 		saving_throws: ["Intelligence", "Vitality"],
-		skill_proficiencies: ["Arcana", "Medicine", "Nature", "Survival"],
-		armor_proficiencies: ["Light armor"],
-		weapon_proficiencies: ["Simple weapons"],
+		skill_proficiencies: ["Mana Flow", "Medicine", "Gate Topology", "Survival"],
+		armor_proficiencies: ["Light Mana-Weave Armor"],
+		weapon_proficiencies: ["Awakened Weapons"],
 		tool_proficiencies: ["Poisoner's kit", "Herbalism kit"],
 		class_features: [
 			{
 				level: 1,
 				name: "Typhoid Incarnate",
 				description:
-					"You emit a 60-foot aura of supernatural pestilence. Any creature entering the aura must make a VIT save (DC 8+prof+INT) or contract a disease that causes 4d12 necrotic damage per day and spreads to others. You see the infected via the System HUD as [INFECTED: TARGET]. Only you or a Wish can cure it.",
+					"You emit a 60-foot aura of supernatural pestilence. Any creature entering the aura must make a VIT save (DC 8+prof+INT) or contract a disease that causes 4d12 necrotic damage per day and spreads to others. You see the infected via the Aether-sight as blighted souls. Only you or a Wish can cure it.",
 				type: "passive",
 			},
 			{
@@ -2777,9 +2813,9 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 2,
-				name: "Pandemic Protocol",
+				name: "Pandemic Decree",
 				description:
-					"You can design and release a supernatural pandemic once per month. You determine its transmission method (airborne, touch, or water), symptoms, and lethality. The disease spreads with an R0 of 10 and cannot be cured by conventional medicine or magic. The System displays [PANDEMIC STATUS: ACTIVE] and tracks the infection rate globally.",
+					"You can design and release a supernatural pandemic once per month. You determine its transmission method (airborne, touch, or water), symptoms, and lethality. The disease spreads with an R0 of 10 and cannot be cured by conventional medicine or magic. The Ascendant displays [PANDEMIC STATUS: ACTIVE] and tracks the infection rate globally.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -2808,7 +2844,7 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 9,
-				name: "Biological Apocalypse",
+				name: "miasma apocalypse",
 				description:
 					"1-mile radius: all organic matter begins rapid decay. 8d10 necrotic/round. 1/long rest.",
 				type: "action",
@@ -2828,7 +2864,7 @@ export const regents: Regent[] = [
 				abilities_improved: [],
 			},
 			"2": {
-				features_gained: ["Pandemic Protocol"],
+				features_gained: ["Pandemic Decree"],
 				abilities_improved: [],
 			},
 			"3": {
@@ -2856,7 +2892,7 @@ export const regents: Regent[] = [
 				abilities_improved: ["Primary Ability +2"],
 			},
 			"9": {
-				features_gained: ["Biological Apocalypse"],
+				features_gained: ["miasma apocalypse"],
 				abilities_improved: [],
 			},
 			"10": {
@@ -2950,7 +2986,7 @@ export const regents: Regent[] = [
 				power_level: 3,
 			},
 			{
-				name: "Biological Apocalypse",
+				name: "miasma apocalypse",
 				description: "1-mile decay zone. 8d10 necrotic/round.",
 				type: "action",
 				frequency: "long-rest",
@@ -2976,7 +3012,7 @@ export const regents: Regent[] = [
 				power_level: 1,
 			},
 			{
-				name: "Pandemic Protocol",
+				name: "Pandemic Decree",
 				description: "Create supernatural pandemics.",
 				power_level: 2,
 			},
@@ -2996,7 +3032,7 @@ export const regents: Regent[] = [
 				power_level: 7,
 			},
 			{
-				name: "Biological Apocalypse",
+				name: "miasma apocalypse",
 				description: "1-mile decay zone.",
 				power_level: 9,
 			},
@@ -3117,11 +3153,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 2,
-				dexterity: 2,
-				constitution: 4,
+				agility: 2,
+				vitality: 4,
 				intelligence: 4,
-				wisdom: 2,
-				charisma: 2,
+				sense: 2,
+				presence: 2,
 			},
 			special_abilities: [
 				"Immune to disease and poison",
@@ -3147,13 +3183,18 @@ export const regents: Regent[] = [
 		type: "ascendant-class-overlay",
 		tags: ["regent", "spatial", "dimensional", "void", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d8",
 		primary_ability: ["Intelligence"],
 		saving_throws: ["Intelligence", "Sense"],
-		skill_proficiencies: ["Arcana", "Investigation", "History", "Perception"],
-		armor_proficiencies: ["Light armor"],
-		weapon_proficiencies: ["Simple weapons"],
+		skill_proficiencies: [
+			"Mana Flow",
+			"Investigation",
+			"Dimensional Lore",
+			"Perception",
+		],
+		armor_proficiencies: ["Light Mana-Weave Armor"],
+		weapon_proficiencies: ["Awakened Weapons"],
 		tool_proficiencies: ["Cartographer's tools", "Navigator's tools"],
 		class_features: [
 			{
@@ -3176,7 +3217,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Spatial Anchors",
 				description:
-					"You can place up to 12 invisible dimensional anchors anywhere in the multiverse. As an action, you can teleport between these anchors regardless of distance. These anchors are permanent and undetectable by normal means, appearing on your System HUD as [QUANTUM TUNNEL POINTS].",
+					"You can place up to 12 invisible dimensional anchors anywhere in the multiverse. As an action, you can teleport between these anchors regardless of distance. These anchors are permanent and undetectable by normal means, appearing on your Ascendant Aether-Sight as [QUANTUM TUNNEL POINTS].",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -3450,11 +3491,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 2,
-				dexterity: 2,
-				constitution: 2,
+				agility: 2,
+				vitality: 2,
 				intelligence: 8,
-				wisdom: 4,
-				charisma: 2,
+				sense: 4,
+				presence: 2,
 			},
 			special_abilities: [
 				"Create permanent demiplanes",
@@ -3486,13 +3527,13 @@ export const regents: Regent[] = [
 		type: "ascendant-class-overlay",
 		tags: ["regent", "mimic", "shapeshifting", "adaptation", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d10",
 		primary_ability: ["Agility", "Presence"],
 		saving_throws: ["Agility", "Presence"],
 		skill_proficiencies: ["Deception", "Stealth", "Perception", "Performance"],
-		armor_proficiencies: ["Light armor", "Medium armor"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		armor_proficiencies: ["Light Mana-Weave Armor", "Medium Aether Armor"],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: ["Disguise kit", "Forgery kit"],
 		class_features: [
 			{
@@ -3507,7 +3548,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Power Theft",
 				description:
-					"By observing a feature, spell, or ability being used, you can archive and copy it perfectly (no save required). You can store up to level/2 stolen powers in your System's [ABILITY ARCHIVE]. You can use any stolen power a number of times equal to your proficiency bonus per long rest.",
+					"By observing a feature, spell, or ability being used, you can archive and copy it perfectly (no save required). You can store up to level/2 stolen powers in your Ascendant Core's Memory. You can use any stolen power a number of times equal to your proficiency bonus per long rest.",
 				type: "reaction",
 				frequency: "long-rest",
 			},
@@ -3515,7 +3556,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Reactive Evolution",
 				description:
-					"Your cellular structure adapts instantly to incoming threats. If you are damaged by an element, you gain immunity to it. If you fail a saving throw, you automatically succeed on the next save of that type. If attacked by a weapon, you gain resistance to its damage. Biologists describe this as 'physics-defying evolution speed'.",
+					"Your cellular structure adapts instantly to incoming threats. If you are damaged by an element, you gain immunity to it. If you fail a saving throw, you automatically succeed on the next save of that type. If attacked by a weapon, you gain resistance to its damage. mana scholars describe this as 'reality-defying evolution speed'.",
 				type: "reaction",
 				frequency: "at-will",
 			},
@@ -3645,7 +3686,7 @@ export const regents: Regent[] = [
 		regent_requirements: {
 			level: 11,
 			abilities: {
-				dexterity: 17,
+				agility: 17,
 			},
 			quest_completion: "Complete the Trial of the Mimic Gate",
 			warden_approval: true,
@@ -3846,11 +3887,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 2,
-				dexterity: 4,
-				constitution: 2,
+				agility: 4,
+				vitality: 2,
 				intelligence: 2,
-				wisdom: 2,
-				charisma: 4,
+				sense: 2,
+				presence: 4,
 			},
 			special_abilities: [
 				"Undetectable shapeshifting",
@@ -3867,19 +3908,24 @@ export const regents: Regent[] = [
 		title: "Blood Regent (Regent of Blood)",
 		theme: "Hemomancy & Sanguine Regentty",
 		description:
-			"Regent of life essence and master of hemomancy, wielding the power of the Regent of Blood. You control the very fluid of life, turning it into a weapon or a restorative force at your whim. Your presence causes the hearts of enemies to falter and the wounds of allies to seal instantly. The Ascendant Bureau classifies you as a Sanguine Catastrophe, capable of draining the life from an entire city.",
+			"The ultimate authority of biological evolution and living mana-ichor, sharing the adaptive power of Lyra, the Queen of the Swarm. You control the fluid of life, turning it into a sovereign weapon that ignores the limitations of mortal biology. As a node of the Swarm-Heart, your presence accelerates the evolution of reality and cleanses the bloodlines of the world.",
 		rank: "S",
 		image: "/generated/compendium/Regents/blood-regent.webp",
 		type: "ascendant-class-overlay",
-		tags: ["regent", "blood", "hemomancy", "life", "monarch_of_blood"],
+		tags: ["regent", "blood", "hemomancy", "life", "eternal_of_blood"],
 		created_at: "2026-02-26T00:00:00.000Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d10",
-		primary_ability: ["Vitality", "Charisma"],
-		saving_throws: ["Vitality", "Charisma"],
-		skill_proficiencies: ["Medicine", "Persuasion", "Intimidation", "Arcana"],
-		armor_proficiencies: ["Light armor", "Medium armor"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		primary_ability: ["Vitality", "Presence"],
+		saving_throws: ["Vitality", "Presence"],
+		skill_proficiencies: [
+			"Medicine",
+			"Persuasion",
+			"Intimidation",
+			"Mana Flow",
+		],
+		armor_proficiencies: ["Light Mana-Weave Armor", "Medium Aether Armor"],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -4172,11 +4218,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 2,
-				dexterity: 2,
-				constitution: 8,
+				agility: 2,
+				vitality: 8,
 				intelligence: 2,
-				wisdom: 2,
-				charisma: 6,
+				sense: 2,
+				presence: 6,
 			},
 			special_abilities: [
 				"Sense all living beings within 1 mile",
@@ -4202,7 +4248,7 @@ export const regents: Regent[] = [
 		title: "Gravity Regent (Regent of Weight)",
 		theme: "Gravitational Mastery & Fundamental Force",
 		description:
-			"God of attraction and repulsion, wielding the absolute authority of the Regent of Weight. You command the fundamental force that binds galaxies and collapses stars. Your presence causes the Earth to groan under your footfall, and the air itself thickens as your will fluctuates. The Ascendant Bureau classifies you as a Singularity Event.",
+			"Vessel of fundamental attraction and universal sovereignty, wielding the incalculable force of Kronos, the Fragment of the Absolute. You command the weight that binds the worlds and collapses the Void into stable geometry. Your will is the anchor of the Ascendant's physics, a universal singularity that dictates the path of all existence in the name of the Absolute Origin.",
 		rank: "S",
 		image: "/generated/compendium/Regents/gravity-regent.webp",
 		type: "ascendant-class-overlay",
@@ -4211,17 +4257,21 @@ export const regents: Regent[] = [
 			"gravity",
 			"weight",
 			"force",
-			"monarch_of_weight",
+			"eternal_of_weight",
 			"physics",
 		],
 		created_at: "2026-02-26T00:00:00.000Z",
-		source_book: "System Ascendant Canon",
+		source_book: "Ascendant Ascendant Canon",
 		hit_dice: "1d12",
 		primary_ability: ["Strength", "Intelligence"],
 		saving_throws: ["Strength", "Intelligence"],
-		skill_proficiencies: ["Athletics", "Arcana", "Science", "Perception"],
-		armor_proficiencies: ["Light armor", "Medium armor", "Heavy armor"],
-		weapon_proficiencies: ["Simple weapons", "Martial weapons"],
+		skill_proficiencies: ["Athletics", "Mana Flow", "Science", "Perception"],
+		armor_proficiencies: [
+			"Light Mana-Weave Armor",
+			"Medium Aether Armor",
+			"Heavy Carapace Armor",
+		],
+		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -4518,11 +4568,11 @@ export const regents: Regent[] = [
 		mechanics: {
 			stat_bonuses: {
 				strength: 8,
-				dexterity: 2,
-				constitution: 6,
+				agility: 2,
+				vitality: 6,
 				intelligence: 6,
-				wisdom: 2,
-				charisma: 2,
+				sense: 2,
+				presence: 2,
 			},
 			special_abilities: [
 				"Immune to forced movement",

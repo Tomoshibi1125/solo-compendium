@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import type { Json } from "@/integrations/supabase/types";
 import {
 	useAIEnhancement,
 	useAIMoodDetection,
@@ -34,7 +35,7 @@ import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 
 interface AIEnhancedArtGeneratorProps {
-	entityType?: "monster" | "npc" | "item" | "location";
+	entityType?: "Anomaly" | "npc" | "item" | "location";
 	entityId?: string;
 	title?: string;
 	onArtGenerated?: (assetId: string, previewUrl?: string) => void;
@@ -43,7 +44,7 @@ interface AIEnhancedArtGeneratorProps {
 	className?: string;
 }
 
-const pickPreviewUrl = (paths?: unknown): string | undefined => {
+const pickPreviewUrl = (paths?: Json): string | undefined => {
 	if (!paths) return undefined;
 	if (Array.isArray(paths)) {
 		const url = paths.find(
@@ -52,7 +53,7 @@ const pickPreviewUrl = (paths?: unknown): string | undefined => {
 		return url as string | undefined;
 	}
 	if (typeof paths === "object") {
-		const values = Object.values(paths as Record<string, unknown>);
+		const values = Object.values(paths as Record<string, Json>);
 		const url = values.find(
 			(value) => typeof value === "string" && value.startsWith("http"),
 		);
@@ -178,7 +179,7 @@ export function AIEnhancedArtGenerator({
 
 		try {
 			const startedAt = Date.now();
-			const resolvedEntityType = entityType ?? "monster";
+			const resolvedEntityType = entityType ?? "Anomaly";
 			const resolvedEntityId = entityId ?? `ai-enhanced-${Date.now()}`;
 			const resolvedTitle = title?.trim() || "AI Enhanced Art";
 			const resolvedTags =

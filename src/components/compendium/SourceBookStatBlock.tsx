@@ -1,8 +1,8 @@
 import type React from "react";
-import type { CompendiumMonster } from "@/types/compendium";
+import type { CompendiumAnomaly } from "@/types/compendium";
 
 interface StatBlockProps {
-	monster: CompendiumMonster;
+	Anomaly: CompendiumAnomaly;
 }
 
 const getModifier = (val: number | undefined) => {
@@ -11,104 +11,112 @@ const getModifier = (val: number | undefined) => {
 	return mod >= 0 ? `+${mod}` : mod;
 };
 
-export const SourceBookStatBlock: React.FC<StatBlockProps> = ({ monster }) => {
+export const SourceBookStatBlock: React.FC<StatBlockProps> = ({ Anomaly }) => {
 	// Fallback to top-level or nested stats
-	const ac = monster.ac ?? monster.armor_class ?? 10;
-	const hp = monster.hp ?? monster.hit_points ?? 10;
-	const speed = monster.speed ?? "30 ft.";
+	const ac = Anomaly.ac ?? Anomaly.armor_class ?? 10;
+	const hp = Anomaly.hp ?? Anomaly.hit_points ?? 10;
+	const speed = Anomaly.speed ?? "30 ft.";
 
-	const abilityScores = monster.stats?.ability_scores || {
+	const abilityScores = Anomaly.stats?.ability_scores || {
 		strength: 10,
-		dexterity: 10,
-		constitution: 10,
+		agility: 10,
+		vitality: 10,
 		intelligence: 10,
-		wisdom: 10,
-		charisma: 10,
+		sense: 10,
+		presence: 10,
 	};
 
 	const displayStats = {
 		STR: abilityScores.strength || 10,
-		DEX: abilityScores.dexterity || 10,
-		CON: abilityScores.constitution || 10,
+		AGI: abilityScores.agility || 10,
+		VIT: abilityScores.vitality || 10,
 		INT: abilityScores.intelligence || 10,
-		WIS: abilityScores.wisdom || 10,
-		CHA: abilityScores.charisma || 10,
+		SENSE: abilityScores.sense || 10,
+		PRE: abilityScores.presence || 10,
 	};
 
 	return (
 		<div className="sb-stat-block">
 			<div className="sb-stat-header">
 				<h3 className="text-xl font-bold uppercase tracking-wider">
-					{monster.name}
+					{Anomaly.name}
 				</h3>
-				<p className="italic text-sm text-muted-foreground">{monster.type}</p>
+				<p className="italic text-sm text-muted-foreground">{Anomaly.type}</p>
 			</div>
 
-			<div className="flex justify-between border-b border-amethyst/30 pb-2 mb-2">
+			<div className="flex justify-between border-b border-fuchsia-500/30 pb-2 mb-2">
 				<div>
-					<span className="font-bold text-cyan">Armor Class</span> {ac}
+					<span className="font-bold text-fuchsia-400">Resonant Guard</span>{" "}
+					{ac}
 				</div>
 				<div>
-					<span className="font-bold text-cyan">Hit Points</span> {hp}
+					<span className="font-bold text-fuchsia-400">Vitality Threshold</span>{" "}
+					{hp}
 				</div>
 				<div>
-					<span className="font-bold text-cyan">Speed</span> {speed}
+					<span className="font-bold text-fuchsia-400">Movement</span> {speed}
 				</div>
 			</div>
 
 			<div className="sb-ability-box">
 				{Object.entries(displayStats).map(([key, val]) => (
 					<div key={key} className="sb-ability">
-						<div className="sb-ability-label uppercase">{key}</div>
-						<div className="text-lg font-bold">{val}</div>
-						<div className="text-xs">({getModifier(val)})</div>
+						<div className="sb-ability-label uppercase text-[10px] text-fuchsia-300/70">
+							{key}
+						</div>
+						<div className="text-lg font-bold text-white">{val}</div>
+						<div className="text-[10px] text-fuchsia-400/50">
+							({getModifier(val)})
+						</div>
 					</div>
 				))}
 			</div>
 
-			{monster.traits?.map((trait) => (
+			{Anomaly.traits?.map((trait) => (
 				<div
 					key={`${trait.name}-${trait.description.substring(0, 10)}`}
-					className="mb-2"
+					className="mb-3 text-xs leading-relaxed"
 				>
-					<span className="font-bold italic text-cyan">{trait.name}.</span>{" "}
-					{trait.description}
+					<span className="font-bold italic text-fuchsia-400">
+						{trait.name}.
+					</span>{" "}
+					<span className="text-slate-300">{trait.description}</span>
 				</div>
 			))}
 
-			{monster.actions && monster.actions.length > 0 && (
+			{Anomaly.actions && Anomaly.actions.length > 0 && (
 				<>
-					<h4 className="border-b border-cyan/30 text-cyan uppercase font-bold mt-4 mb-2">
-						Actions
+					<h4 className="border-b border-fuchsia-500/30 text-fuchsia-400 uppercase font-display text-xs tracking-widest mt-6 mb-3">
+						Aetheric Techniques
 					</h4>
-					{monster.actions.map((action) => (
+					{Anomaly.actions.map((action) => (
 						<div
 							key={`${action.name}-${action.description.substring(0, 10)}`}
-							className="mb-2"
+							className="mb-3 text-xs leading-relaxed"
 						>
-							<span className="font-bold italic text-amethyst">
+							<span className="font-bold italic text-fuchsia-300">
 								{action.name}.
 							</span>{" "}
-							{action.description}
+							<span className="text-slate-400">{action.description}</span>
 						</div>
 					))}
 				</>
 			)}
 
-			{monster.legendary_actions && monster.legendary_actions.length > 0 && (
+			{Anomaly.legendary_actions && Anomaly.legendary_actions.length > 0 && (
 				<>
-					<h4 className="border-b border-cyan/30 text-cyan uppercase font-bold mt-4 mb-2">
-						Legendary Actions
+					<h4 className="border-b border-fuchsia-500/30 text-amber-500 uppercase font-display text-xs tracking-widest mt-6 mb-3">
+						Sovereign Decrees
 					</h4>
-					{monster.legendary_actions.map((action) => (
+					{Anomaly.legendary_actions.map((action) => (
 						<div
 							key={`${action.name}-${action.description.substring(0, 10)}`}
-							className="mb-2"
+							className="mb-3 text-xs leading-relaxed"
 						>
-							<span className="font-bold italic text-amethyst">
+							<span className="font-bold italic text-amber-400">
 								{action.name}.
 							</span>{" "}
-							{action.description}
+							<span className="text-slate-400">{action.description}</span>
 						</div>
 					))}
 				</>

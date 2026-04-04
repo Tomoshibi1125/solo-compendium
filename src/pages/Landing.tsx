@@ -94,9 +94,9 @@ const Landing = () => {
 						</SystemText>
 						<div className="mt-8 flex flex-col gap-4 sm:flex-row">
 							<Button
-								variant="arise"
+								variant="resurge"
 								size="lg"
-								className="font-system tracking-widest uppercase font-bold text-base h-12 hover:shadow-[0_0_40px_hsl(var(--arise-violet)/0.8)] shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]"
+								className="font-system tracking-widest uppercase font-bold text-base h-12 hover:shadow-[0_0_40px_hsl(var(--resurge-violet)/0.8)] shadow-[0_0_15px_hsl(var(--resurge-violet)/0.4)]"
 								onClick={handleEnterSystem}
 							>
 								Enter System
@@ -193,7 +193,7 @@ const Landing = () => {
 						<EnhancedCard
 							variant="gate"
 							title="3,218+ Assets"
-							description="Complete System Ascendant compendium with monsters, items, spells, and more."
+							description="Complete System Ascendant compendium with Anomalies, items, spells, and more."
 							icon={<Sword className="h-6 w-6" />}
 							interactive
 							onClick={() => navigate("/compendium")}

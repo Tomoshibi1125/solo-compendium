@@ -7,9 +7,9 @@
  *
  * Armor categories:
  *  - No armor: 10 + AGI mod
- *  - Light armor: armor AC + AGI mod
- *  - Medium armor: armor AC + min(AGI mod, 2)
- *  - Heavy armor: armor AC (no AGI)
+ *  - Light Mana-Weave Armor: armor AC + AGI mod
+ *  - Medium Aether Armor: armor AC + min(AGI mod, 2)
+ *  - Heavy Carapace Armor: armor AC (no AGI)
  *  - Shield: +2 (or item AC)
  */
 
@@ -75,19 +75,19 @@ export function calculateAC(
 		agiApplied = agiMod;
 		formula = `10 + AGI (${agiMod >= 0 ? "+" : ""}${agiMod})`;
 	} else if (armor.category === "light") {
-		// Light armor: armor AC + full AGI mod
+		// Light Mana-Weave Armor: armor AC + full AGI mod
 		base = armor.baseAC;
 		armorAC = armor.baseAC;
 		agiApplied = agiMod;
 		formula = `${armor.name} (${armor.baseAC}) + AGI (${agiMod >= 0 ? "+" : ""}${agiMod})`;
 	} else if (armor.category === "medium") {
-		// Medium armor: armor AC + AGI mod (max 2)
+		// Medium Aether Armor: armor AC + AGI mod (max 2)
 		base = armor.baseAC;
 		armorAC = armor.baseAC;
 		agiApplied = Math.min(agiMod, 2);
 		formula = `${armor.name} (${armor.baseAC}) + AGI (${agiApplied >= 0 ? "+" : ""}${agiApplied}, max 2)`;
 	} else {
-		// Heavy armor: armor AC only
+		// Heavy Carapace Armor: armor AC only
 		base = armor.baseAC;
 		armorAC = armor.baseAC;
 		agiApplied = 0;

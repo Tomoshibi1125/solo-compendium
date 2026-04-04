@@ -36,6 +36,7 @@ import {
 	useSaveSovereign,
 } from "@/hooks/useSavedSovereigns";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import {
 	calculateTotalCombinations,
@@ -56,7 +57,7 @@ type RegentOption = {
 	title?: string | null;
 	theme?: string | null;
 	source_book?: string | null;
-	[key: string]: unknown;
+	[key: string]: Json | undefined;
 };
 
 export function GeminiProtocolGenerator() {
@@ -149,15 +150,37 @@ export function GeminiProtocolGenerator() {
 				.select("*")
 				.order("name");
 
-			let data = (canonicalResult.data as RegentOption[] | null) || [];
-			if (canonicalResult.error) {
+			if (!canonicalResult.data || canonicalResult.error) {
 				const fallbackResult = await supabase
 					.from("compendium_regents")
 					.select("*")
 					.order("name");
 				if (fallbackResult.error) throw fallbackResult.error;
-				data = (fallbackResult.data as unknown as RegentOption[]) || [];
+
+				const fallbackData: RegentOption[] = (fallbackResult.data || []).map(
+					(r) => ({
+						...r,
+						title: r.title || null,
+						theme: r.theme || null,
+						source_book: r.source_book || null,
+					}),
+				);
+
+				return filterRowsBySourcebookAccess(
+					fallbackData,
+					(regent) => regent.source_book,
+					{
+						campaignId,
+					},
+				);
 			}
+
+			const data: RegentOption[] = canonicalResult.data.map((r) => ({
+				...r,
+				title: r.title || null,
+				theme: r.theme || null,
+				source_book: r.source_book || null,
+			}));
 
 			return filterRowsBySourcebookAccess(
 				data,
@@ -454,12 +477,10 @@ export function GeminiProtocolGenerator() {
 					generatedSovereign.path.name.replace("Path of the ", ""),
 				),
 				regentATheme: formatRegentVernacular(
-					(generatedSovereign as unknown as { regentA?: { theme?: string } })
-						.regentA?.theme,
+					generatedSovereign.regentA.theme || "",
 				),
 				regentBTheme: formatRegentVernacular(
-					(generatedSovereign as unknown as { regentB?: { theme?: string } })
-						.regentB?.theme,
+					generatedSovereign.regentB.theme || "",
 				),
 				fusionTheme: formatRegentVernacular(generatedSovereign.fusion_theme),
 				powerMultiplier: formatRegentVernacular(
@@ -523,9 +544,9 @@ export function GeminiProtocolGenerator() {
 		<div className="space-y-6">
 			{/* Existing Sovereign Notice (auto player mode only) */}
 			{autoMode && existingSovereign && (
-				<Card className="border-arise-violet/50 bg-arise-violet/5">
+				<Card className="border-resurge-violet/50 bg-resurge-violet/5">
 					<CardHeader className="pb-3">
-						<CardTitle className="flex items-center gap-2 text-arise-violet">
+						<CardTitle className="flex items-center gap-2 text-resurge-violet">
 							<Crown className="h-5 w-5" />
 							Sovereign Overlay: {existingSovereign.name}
 						</CardTitle>
@@ -542,7 +563,7 @@ export function GeminiProtocolGenerator() {
 						</p>
 						<div className="flex flex-wrap gap-2 mt-3">
 							{existingSovereign.fusion_theme && (
-								<span className="text-xs bg-arise-violet/20 text-arise-violet border border-arise-violet/30 rounded-full px-2 py-0.5">
+								<span className="text-xs bg-resurge-violet/20 text-resurge-violet border border-resurge-violet/30 rounded-full px-2 py-0.5">
 									{existingSovereign.fusion_theme}
 								</span>
 							)}

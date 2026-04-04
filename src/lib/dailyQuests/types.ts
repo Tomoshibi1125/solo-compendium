@@ -4,6 +4,7 @@
  */
 
 import { z } from "zod";
+import type { Json } from "@/integrations/supabase/types";
 
 // Quest requirement types
 const QuestRequirementSchema = z.object({
@@ -194,17 +195,13 @@ export function isQuestActive(quest: DailyQuestInstance): boolean {
 }
 
 export function getQuestProgress(quest: DailyQuestInstance): QuestProgress {
-	const progress = (quest.progress as unknown as QuestProgress) || {
-		current: 0,
-		target: 0,
-		completed: false,
-		last_updated: quest.updated_at,
-	};
+	const p = quest.progress as Record<string, Json>;
 	return {
-		current: progress.current || 0,
-		target: progress.target || 0,
-		completed: progress.completed || false,
-		last_updated: progress.last_updated || quest.updated_at,
+		current: typeof p.current === "number" ? p.current : 0,
+		target: typeof p.target === "number" ? p.target : 0,
+		completed: typeof p.completed === "boolean" ? p.completed : false,
+		last_updated:
+			typeof p.last_updated === "string" ? p.last_updated : quest.updated_at,
 	};
 }
 

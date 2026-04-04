@@ -110,7 +110,7 @@ const RelicSchema = z.object({
 	theme_tags: z.array(z.string()).optional(),
 });
 
-const MonsterSchema = z.object({
+const Anomalieschema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
@@ -195,7 +195,7 @@ export const ContentBundleSchema = z.object({
 		.optional(),
 	powers: z.array(PowerSchema).optional(),
 	relics: z.array(RelicSchema).optional(),
-	monsters: z.array(MonsterSchema).optional(),
+	Anomalies: z.array(Anomalieschema).optional(),
 	backgrounds: z.array(BackgroundSchema).optional(),
 });
 

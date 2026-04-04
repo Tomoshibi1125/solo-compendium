@@ -1,19 +1,31 @@
-/**
- * Centralized Compendium Reference Resolver
- *
- * Provides a single source of truth for resolving compendium entity references.
- * Replaces ad-hoc Supabase queries throughout the codebase.
- */
-
 import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { logger } from "@/lib/logger";
 import {
 	filterRowsBySourcebookAccess,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
+import type {
+	CompendiumAnomaly,
+	CompendiumBackground,
+	CompendiumCondition,
+	CompendiumDeity,
+	CompendiumFeat,
+	CompendiumItem,
+	CompendiumJob,
+	CompendiumLocation,
+	CompendiumPath,
+	CompendiumRegent,
+	CompendiumRelic,
+	CompendiumRune,
+	CompendiumSkill,
+	CompendiumSovereign,
+	CompendiumSpell,
+	CompendiumTattoo,
+	CompendiumTechnique,
+} from "@/types/compendium";
 
 export const entryTypes = [
 	"jobs",
@@ -21,7 +33,7 @@ export const entryTypes = [
 	"powers",
 	"runes",
 	"relics",
-	"monsters",
+	"anomalies",
 	"backgrounds",
 	"conditions",
 	"regents",
@@ -37,17 +49,30 @@ export const entryTypes = [
 	"locations",
 	"sigils",
 	"tattoos",
+	"deities",
+	"npcs",
 ] as const;
 
 export type EntryType = (typeof entryTypes)[number];
 
-export interface CompendiumEntity {
-	id: string;
-	name: string;
-	type: EntryType;
-	description?: string | null;
-	[key: string]: unknown; // Allow additional properties
-}
+export type CompendiumEntity =
+	| CompendiumJob
+	| CompendiumPath
+	| CompendiumAnomaly
+	| CompendiumBackground
+	| CompendiumCondition
+	| CompendiumRegent
+	| CompendiumFeat
+	| CompendiumSkill
+	| CompendiumItem
+	| CompendiumSpell
+	| CompendiumTattoo
+	| CompendiumTechnique
+	| CompendiumLocation
+	| CompendiumRelic
+	| CompendiumRune
+	| CompendiumSovereign
+	| CompendiumDeity;
 
 const supabaseTableMap: Partial<
 	Record<EntryType, keyof Database["public"]["Tables"]>
@@ -57,7 +82,7 @@ const supabaseTableMap: Partial<
 	powers: "compendium_powers",
 	runes: "compendium_runes",
 	relics: "compendium_relics",
-	monsters: "compendium_monsters",
+	anomalies: "compendium_Anomalies",
 	backgrounds: "compendium_backgrounds",
 	conditions: "compendium_conditions",
 	regents: "compendium_regents" as never,
@@ -82,7 +107,7 @@ export type StaticDataProvider = {
 	getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getRunes: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getAnomalies: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -131,8 +156,8 @@ const getStaticEntries = async (
 		case "relics":
 			entries = await provider.getRelics(search);
 			break;
-		case "monsters":
-			entries = await provider.getMonsters(search);
+		case "anomalies":
+			entries = await provider.getAnomalies(search);
 			break;
 		case "backgrounds":
 			entries = await provider.getBackgrounds(search);
@@ -419,13 +444,12 @@ export async function mergeHomebrewEntries(
 				.neq("user_id", userId); // Don't include user's own content twice
 
 			if (items) {
-				// Use formal interface for homebrew items instead of unknown cast
 				homebrewItems.push(
 					...(items as Array<{
 						id: string;
 						name: string;
 						description: string | null;
-						data: unknown;
+						data: Json;
 						source_book: string | null;
 					}>),
 				);
@@ -436,11 +460,11 @@ export async function mergeHomebrewEntries(
 			id: `homebrew:${item.id}`,
 			name: item.name,
 			type,
-			description: item.description || null,
+			description: item.description || undefined,
 			source: "homebrew" as const,
 			homebrew_id: item.id,
-			...((item.data as Record<string, unknown>) || {}),
-		}));
+			...((item.data as Record<string, Json>) || {}),
+		})) as CompendiumEntity[];
 	} catch (err) {
 		logger.warn(`[mergeHomebrewEntries] Exception for ${type}:`, err);
 		return [];

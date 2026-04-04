@@ -104,16 +104,16 @@ const themeColors: Record<
 		glow: "shadow-[0_0_12px_hsl(var(--foreground)/0.2)]",
 	},
 	Transfiguration: {
-		bg: "bg-arise-violet/15",
-		text: "text-arise-violet",
-		border: "border-arise-violet/40",
-		glow: "shadow-[0_0_12px_hsl(var(--arise-violet)/0.3)]",
+		bg: "bg-resurge-violet/15",
+		text: "text-resurge-violet",
+		border: "border-resurge-violet/40",
+		glow: "shadow-[0_0_12px_hsl(var(--resurge-violet)/0.3)]",
 	},
 	Beginning: {
-		bg: "bg-arise-violet/15",
-		text: "text-arise-violet",
-		border: "border-arise-violet/40",
-		glow: "shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]",
+		bg: "bg-resurge-violet/15",
+		text: "text-resurge-violet",
+		border: "border-resurge-violet/40",
+		glow: "shadow-[0_0_15px_hsl(var(--resurge-violet)/0.4)]",
 	},
 };
 
@@ -206,16 +206,16 @@ export function RegentUnlocksPanel({
 		if (!abilities) return availableLockedRegents.slice(0, 3);
 
 		const strength = abilities.STR || 10;
-		const dexterity = abilities.AGI || 10;
-		const constitution = abilities.VIT || 10;
+		const agility = abilities.AGI || 10;
+		const vitality = abilities.VIT || 10;
 		const intelligence = abilities.INT || 10;
-		const wisdom = abilities.SENSE || 10;
-		const charisma = abilities.PRE || 10;
+		const sense = abilities.SENSE || 10;
+		const presence = abilities.PRE || 10;
 
 		// Simple heuristic:
 		// Martial sum (Str + Dex + Con) vs Caster sum (Int + Wis + Cha)
-		const martialSum = strength + dexterity + constitution;
-		const casterSum = intelligence + wisdom + charisma;
+		const martialSum = strength + agility + vitality;
+		const casterSum = intelligence + sense + presence;
 
 		// Sort regents by some thematic relevance
 		const shuffled = [...availableLockedRegents].sort((a, b) => {
@@ -300,7 +300,7 @@ export function RegentUnlocksPanel({
 						</div>
 					</div>
 					{canUnlockSovereign && (
-						<Badge className="bg-arise-violet/20 text-arise-violet border-arise-violet/40 font-display animate-pulse-2s">
+						<Badge className="bg-resurge-violet/20 text-resurge-violet border-resurge-violet/40 font-display animate-pulse-2s">
 							<Star className="h-3 w-3 mr-1" />
 							Sovereign Ready
 						</Badge>
@@ -333,7 +333,7 @@ export function RegentUnlocksPanel({
 											themeStyle.border,
 											themeStyle.bg,
 											unlock.is_primary && themeStyle.glow,
-											index < 2 && "animate-arise",
+											index < 2 && "animate-resurge",
 										)}
 									>
 										<div className="flex items-center justify-between mb-2">
@@ -431,17 +431,17 @@ export function RegentUnlocksPanel({
 
 				{/* Sovereign Status */}
 				{canUnlockSovereign && (
-					<div className="p-4 rounded-lg border border-arise-violet/40 bg-arise-violet/5">
+					<div className="p-4 rounded-lg border border-resurge-violet/40 bg-resurge-violet/5">
 						<div className="flex items-center gap-2 mb-2">
-							<CheckCircle className="h-4 w-4 text-arise-violet" />
-							<span className="font-display text-sm text-arise-violet tracking-wider">
+							<CheckCircle className="h-4 w-4 text-resurge-violet" />
+							<span className="font-display text-sm text-resurge-violet tracking-wider">
 								SOVEREIGN FUSION AVAILABLE
 							</span>
 						</div>
 						<p className="text-xs text-muted-foreground">
 							With two {REGENT_LABEL_PLURAL} unlocked, use the{" "}
-							<span className="text-arise-violet">Gemini Protocol</span> in the
-							Compendium to generate your unique Sovereign abilities.
+							<span className="text-resurge-violet">Gemini Protocol</span> in
+							the Compendium to generate your unique Sovereign abilities.
 						</p>
 					</div>
 				)}

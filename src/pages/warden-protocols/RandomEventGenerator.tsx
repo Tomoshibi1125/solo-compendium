@@ -34,7 +34,7 @@ const WORLD_EVENTS: { description: string; impact: string }[] = [
 		description:
 			"Awakened Council Lockdown: The Council has issued an 'Orange Protocol' alert, restricting all non-sanctioned travel.",
 		impact:
-			"Charisma checks against official NPCs are DC 20; forged permits are required for sector transit.",
+			"Presence checks against official NPCs are DC 20; forged permits are required for sector transit.",
 	},
 	{
 		description:
@@ -46,7 +46,7 @@ const WORLD_EVENTS: { description: string; impact: string }[] = [
 		description:
 			"Mana Storm: High-frequency atmospheric mana discharge is interfering with bio-electric signals.",
 		impact:
-			"All Long-Range communication is JAMMED; spellcasters must succeed on a DC 14 Wisdom save or lose 1 random spell slot.",
+			"All Long-Range communication is JAMMED; spellcasters must succeed on a DC 14 Sense save or lose 1 random spell slot.",
 	},
 	{
 		description:
@@ -64,11 +64,11 @@ const WORLD_EVENTS: { description: string; impact: string }[] = [
 		description:
 			"Shadow Corruption Leak: A ruptured Shadow Containment Unit is leaking concentrated miasma into the groundwater.",
 		impact:
-			"Constitution saves (DC 15) required every 4 hours or gain 1 level of Exhaustion; water-based healing is ineffective.",
+			"Vitality saves (DC 15) required every 4 hours or gain 1 level of Exhaustion; water-based healing is ineffective.",
 	},
 	{
 		description:
-			"Prime Architect's Decree: A localized 'Safe Zone' has been established by the System's core logic.",
+			"The Absolute's Decree: A localized 'Safe Zone' has been established by the System's core logic.",
 		impact:
 			"Hostile entities cannot enter the 1-mile radius; all healing during Short Rests is doubled within the zone.",
 	},
@@ -103,7 +103,7 @@ const NPC_ENCOUNTERS: { description: string; impact: string }[] = [
 		description:
 			"S-Rank Deserter: A legendary walker who has 'disconnected' from the System, hiding in the slums.",
 		impact:
-			"Provides a 'Manual of the Hidden Path' (+1 to Wisdom) if convinced of the party's discretion; failing to hide encounter alerts the Council.",
+			"Provides a 'Manual of the Hidden Path' (+1 to Sense) if convinced of the party's discretion; failing to hide encounter alerts the Council.",
 	},
 ];
 
@@ -118,7 +118,7 @@ const COMPLICATIONS: { description: string; impact: string }[] = [
 		description:
 			"Gravity Well: A localized rift anomaly has increased the gravitational constant by 4x.",
 		impact:
-			"Movement speed is HALVED; Jump distance is 0; falling damage is tripled; Heavy Armor users must save (DC 15 STR) or be restrained.",
+			"Movement speed is HALVED; Jump distance is 0; falling damage is tripled; Heavy Carapace Armor users must save (DC 15 STR) or be restrained.",
 	},
 	{
 		description:
@@ -136,7 +136,7 @@ const COMPLICATIONS: { description: string; impact: string }[] = [
 		description:
 			"Reality Bleed: The barrier between Earth and the Void has vanished here. Conceptual horrors are visible.",
 		impact:
-			"Sanity check (DC 14 Wisdom Save) per round or become 'Frightened' for 1 minute; Psychic damage is doubled in this region.",
+			"Sanity check (DC 14 Sense Save) per round or become 'Frightened' for 1 minute; Psychic damage is doubled in this region.",
 	},
 ];
 

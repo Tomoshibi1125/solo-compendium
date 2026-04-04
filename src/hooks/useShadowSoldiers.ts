@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 
 export interface ShadowSoldierAbility {
+	[key: string]: Json | undefined;
 	name: string;
 	description: string;
 	action_type: string;

@@ -73,35 +73,41 @@ const Favorites = () => {
 						const entry = resolved.get(`${ref.type}:${ref.id}`);
 						if (!entry) return null;
 
-						const entryData = entry as Record<string, unknown>;
 						const displayName =
-							typeof entryData.display_name === "string" &&
-							entryData.display_name.trim()
-								? entryData.display_name
+							"display_name" in entry &&
+							typeof entry.display_name === "string" &&
+							entry.display_name.trim()
+								? entry.display_name
 								: entry.name;
 						const description =
-							typeof entryData.description === "string"
-								? entryData.description
+							"description" in entry && typeof entry.description === "string"
+								? entry.description
 								: undefined;
-						const tags = Array.isArray(entryData.tags)
-							? entryData.tags.filter((tag) => typeof tag === "string")
+						const tags = Array.isArray("tags" in entry ? entry.tags : undefined)
+							? (entry as { tags?: string[] }).tags?.filter(
+									(tag: string) => typeof tag === "string",
+								)
 							: undefined;
 						const sourceBook =
-							typeof entryData.source_book === "string"
-								? entryData.source_book
+							"source_book" in entry && typeof entry.source_book === "string"
+								? entry.source_book
 								: undefined;
 						const rarity =
-							typeof entryData.rarity === "string"
-								? entryData.rarity
+							"rarity" in entry && typeof entry.rarity === "string"
+								? entry.rarity
 								: undefined;
 						const gateRank =
-							typeof entryData.gate_rank === "string"
-								? entryData.gate_rank
+							"gate_rank" in entry && typeof entry.gate_rank === "string"
+								? entry.gate_rank
 								: undefined;
 						const level =
-							typeof entryData.level === "number" ? entryData.level : undefined;
+							"level" in entry && typeof entry.level === "number"
+								? entry.level
+								: undefined;
 						const cr =
-							typeof entryData.cr === "string" ? entryData.cr : undefined;
+							"cr" in entry && typeof entry.cr === "string"
+								? entry.cr
+								: undefined;
 
 						return {
 							id: `${ref.type}:${ref.id}`,
@@ -160,7 +166,7 @@ const Favorites = () => {
 
 	const getTypeColor = (type: string) => {
 		const colors: Record<string, string> = {
-			monsters: "border-red-500/30 bg-red-500/10",
+			Anomalies: "border-red-500/30 bg-red-500/10",
 			powers: "border-blue-500/30 bg-blue-500/10",
 			spells: "border-purple-500/30 bg-purple-500/10",
 			equipment: "border-green-500/30 bg-green-500/10",

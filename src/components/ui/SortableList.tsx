@@ -26,6 +26,17 @@ interface SortableItemProps {
 	className?: string;
 }
 
+interface DndTransform {
+	x: number;
+	y: number;
+	scaleX: number;
+	scaleY: number;
+}
+
+function hasId(obj: unknown): obj is { id: string | number } {
+	return obj !== null && typeof obj === "object" && "id" in obj;
+}
+
 function SortableItem({
 	id,
 	children,
@@ -41,9 +52,11 @@ function SortableItem({
 		isDragging,
 	} = useSortable({ id, disabled });
 
-	const style = {
-		transform: CSS.Transform.toString(transform as never),
-		transition: transition as never,
+	const dndTransform = transform as DndTransform | null;
+
+	const style: React.CSSProperties = {
+		transform: dndTransform ? CSS.Transform.toString(dndTransform) : undefined,
+		transition: typeof transition === "string" ? transition : undefined,
 		opacity: isDragging ? 0.5 : 1,
 	};
 
@@ -53,11 +66,11 @@ function SortableItem({
 			style={style}
 			className={cn("relative group", isDragging && "z-50", className)}
 		>
-			{!disabled && (
+			{!disabled && !!attributes && !!listeners && (
 				<button
 					type="button"
-					{...(attributes as Record<string, unknown>)}
-					{...(listeners as Record<string, unknown>)}
+					{...attributes}
+					{...listeners}
 					className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing p-1"
 					aria-label="Drag to reorder"
 				>
@@ -100,19 +113,15 @@ export function SortableList<T extends { id: string }>({
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
 
-		if (
-			over &&
-			String((active as { id: string }).id) !==
-				String((over as { id: string }).id)
-		) {
-			const oldIndex = items.findIndex(
-				(item) => item.id === String((active as { id: string }).id),
-			);
-			const newIndex = items.findIndex(
-				(item) => item.id === String((over as { id: string }).id),
-			);
-			const newOrder = arrayMove(items, oldIndex, newIndex);
-			onReorder(newOrder);
+		if (hasId(over) && hasId(active) && active.id !== over.id) {
+			const activeId = String(active.id);
+			const overId = String(over.id);
+			const oldIndex = items.findIndex((item) => item.id === activeId);
+			const newIndex = items.findIndex((item) => item.id === overId);
+			if (oldIndex !== -1 && newIndex !== -1) {
+				const newOrder = arrayMove(items, oldIndex, newIndex);
+				onReorder(newOrder);
+			}
 		}
 	};
 
@@ -134,7 +143,7 @@ export function SortableList<T extends { id: string }>({
 							disabled={disabled}
 							className={itemClassName}
 						>
-							export {renderItem(item, index)}
+							{renderItem(item, index)}
 						</SortableItem>
 					))}
 				</div>

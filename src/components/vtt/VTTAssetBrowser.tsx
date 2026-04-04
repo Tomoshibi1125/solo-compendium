@@ -34,22 +34,21 @@ import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
+	getVTTAssetCategories,
+	getVTTAssetLibrary,
 	searchAssets,
-	VTT_ASSET_CATEGORIES,
-	VTT_ASSET_LIBRARY,
 	type VTTAsset,
 	type VTTAssetCategory,
 } from "@/data/vttAssetLibrary";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { compressImage } from "@/lib/imageOptimization";
 import { cn } from "@/lib/utils";
-
-const TOTAL_ASSETS = VTT_ASSET_LIBRARY.length;
 
 const CATEGORY_ICONS: Record<VTTAssetCategory, React.ReactNode> = {
 	map: <MapPin className="w-3 h-3" />,
-	monster: <Skull className="w-3 h-3" />,
+	Anomaly: <Skull className="w-3 h-3" />,
 	portrait: <User className="w-3 h-3" />,
 	location: <Layers className="w-3 h-3" />,
 	spell: <Wand2 className="w-3 h-3" />,
@@ -153,7 +152,7 @@ export function VTTAssetBrowser({
 	const recentAssets = useMemo(() => {
 		const ids = getRecentAssetIds();
 		return ids
-			.map((id) => VTT_ASSET_LIBRARY.find((a) => a.id === id))
+			.map((id) => getVTTAssetLibrary().find((a) => a.id === id))
 			.filter(Boolean) as VTTAsset[];
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -203,7 +202,6 @@ export function VTTAssetBrowser({
 			try {
 				let publicUrl = "";
 				if (isSupabaseConfigured && user?.id) {
-					const { compressImage } = await import("@/lib/imageOptimization");
 					const maxSize = usage === "map" ? 4096 : 512;
 					const compressed = await compressImage(file, {
 						maxWidth: maxSize,
@@ -266,7 +264,7 @@ export function VTTAssetBrowser({
 				<Input
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
-					placeholder={`Search ${TOTAL_ASSETS} assets...`}
+					placeholder={`Search ${getVTTAssetLibrary().length} assets...`}
 					className="pl-8 text-xs h-8"
 				/>
 				{search && (
@@ -293,9 +291,9 @@ export function VTTAssetBrowser({
 							: "border-border/50 text-muted-foreground hover:bg-muted/30",
 					)}
 				>
-					All ({TOTAL_ASSETS})
+					All ({getVTTAssetLibrary().length})
 				</button>
-				{VTT_ASSET_CATEGORIES.map((cat) => (
+				{getVTTAssetCategories().map((cat) => (
 					<button
 						type="button"
 						key={cat.id}
@@ -414,7 +412,7 @@ export function VTTAssetBrowser({
 			<div className="text-[10px] text-muted-foreground px-1">
 				{allResults.length} asset{allResults.length !== 1 ? "s" : ""} found
 				{activeCategory &&
-					` in ${VTT_ASSET_CATEGORIES.find((c) => c.id === activeCategory)?.label}`}
+					` in ${getVTTAssetCategories().find((c) => c.id === activeCategory)?.label}`}
 				{hasMore && ` (showing ${results.length})`}
 			</div>
 
@@ -526,7 +524,7 @@ export function VTTAssetBrowser({
 										<MapPin className="w-3 h-3 mr-1" /> Use as Map
 									</Button>
 								)}
-							{(previewAsset.category === "monster" ||
+							{(previewAsset.category === "Anomaly" ||
 								previewAsset.category === "token" ||
 								previewAsset.category === "portrait") &&
 								onUseAsToken && (
@@ -607,7 +605,7 @@ export function VTTAssetBrowser({
 										<MapPin className="w-3 h-3" />
 									</Button>
 								)}
-							{previewAsset.category !== "monster" &&
+							{previewAsset.category !== "Anomaly" &&
 								previewAsset.category !== "token" &&
 								previewAsset.category !== "portrait" &&
 								onUseAsToken && (

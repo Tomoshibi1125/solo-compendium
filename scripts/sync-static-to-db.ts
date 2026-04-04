@@ -1,20 +1,18 @@
 /**
  * sync-static-to-db.ts — Seed Supabase compendium tables from static TS data.
- * 
+ *
  * Objective: 100% data parity between static TS source and Supabase.
  * Strategy: Hard-Typed, Non-Generic synchronization for absolute type safety.
  * Zero-Any, Zero-Generic, Zero-Suppression Policy.
  */
 
-import { createClient } from "@supabase/supabase-js";
-import { config } from "dotenv";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createClient } from "@supabase/supabase-js";
+import { config } from "dotenv";
 
-import {
-	staticDataProvider,
-} from "../src/data/compendium/staticDataProvider";
+import { staticDataProvider } from "../src/data/compendium/staticDataProvider";
 import type { Database, Json } from "../src/integrations/supabase/types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -36,7 +34,10 @@ const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
 // Constants & Lookups
 // ---------------------------------------------------------------------------
 const LOG_FILE = path.resolve(__dirname, "../sync-log.txt");
-const logStream = fs.createWriteStream(LOG_FILE, { flags: "w", encoding: "utf8" });
+const logStream = fs.createWriteStream(LOG_FILE, {
+	flags: "w",
+	encoding: "utf8",
+});
 
 function log(message: string) {
 	const timestamp = new Date().toISOString();
@@ -46,7 +47,9 @@ function log(message: string) {
 const JOB_NAME_TO_ID: Record<string, string> = {};
 
 async function initializeJobMap() {
-	const { data, error } = await supabase.from("compendium_jobs").select("id, name");
+	const { data, error } = await supabase
+		.from("compendium_jobs")
+		.select("id, name");
 	if (error) {
 		log(`  [Jobs] Warning: Failed to fetch job map: ${error.message}`);
 		return;
@@ -79,7 +82,9 @@ function castToStringArray(v: unknown): string[] | null {
 	return null;
 }
 
-function mapAbility(s: string | null | undefined): Database["public"]["Enums"]["ability_score"] {
+function mapAbility(
+	s: string | null | undefined,
+): Database["public"]["Enums"]["ability_score"] {
 	if (!s) return "STR";
 	const upper = s.toUpperCase();
 	if (upper === "STRENGTH" || upper === "STR") return "STR";
@@ -91,8 +96,16 @@ function mapAbility(s: string | null | undefined): Database["public"]["Enums"]["
 	return "STR";
 }
 
-const ALLOWED_RARITIES: Database["public"]["Enums"]["rarity"][] = ["common", "uncommon", "rare", "very_rare", "legendary"];
-function mapRarity(r: string | null | undefined): Database["public"]["Enums"]["rarity"] {
+const ALLOWED_RARITIES: Database["public"]["Enums"]["rarity"][] = [
+	"common",
+	"uncommon",
+	"rare",
+	"very_rare",
+	"legendary",
+];
+function mapRarity(
+	r: string | null | undefined,
+): Database["public"]["Enums"]["rarity"] {
 	if (!r) return "common";
 	const norm = r.toLowerCase().trim().replace(/\s+/g, "_");
 	for (const allowed of ALLOWED_RARITIES) {
@@ -106,12 +119,13 @@ function mapRarity(r: string | null | undefined): Database["public"]["Enums"]["r
 // Explicit Sync Functions (No Generics)
 // ---------------------------------------------------------------------------
 
-async function syncMonsters() {
-	const data = await staticDataProvider.getMonsters("");
-	log(`Syncing ${data.length} monsters...`);
+async function syncAnomalies() {
+	const data = await staticDataProvider.getAnomalies("");
+	log(`Syncing ${data.length} anomalies...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_monsters"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_Anomalies"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -152,30 +166,37 @@ async function syncMonsters() {
 			is_boss: !!m.is_boss,
 			source_book: m.source_book || "System Ascendant Canon",
 			tags: m.tags || [],
-			image_url: m.image_url || m.image || null
+			image_url: m.image_url || m.image || null,
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_monsters").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_Anomalies")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
-		const { error } = await supabase.from("compendium_monsters").insert(chunk);
-		if (error) { log(`  [Monsters] Error: ${error.message}`); errors++; }
+		const { error } = await supabase.from("compendium_Anomalies").insert(chunk);
+		if (error) {
+			log(`  [Anomalies] Error: ${error.message}`);
+			errors++;
+		}
 	}
-	log(`  [Monsters] Synced ${rows.length} rows. Errors: ${errors}`);
+	log(`  [Anomalies] Synced ${rows.length} rows. Errors: ${errors}`);
 }
 
 async function syncSpells() {
 	const data = await staticDataProvider.getSpells("");
 	log(`Syncing ${data.length} spells...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_spells"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_spells"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -197,20 +218,26 @@ async function syncSpells() {
 			duration: castToJson(m.duration),
 			concentration: !!m.concentration,
 			ritual: !!m.ritual,
-			spell_type: m.spell_type || "Utility"
+			spell_type: m.spell_type || "Utility",
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_spells").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_spells")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_spells").insert(chunk);
-		if (error) { log(`  [Spells] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Spells] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Spells] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -220,7 +247,7 @@ async function syncRunes() {
 	log(`Syncing ${data.length} runes...`);
 	const seen = new Set<string>();
 	const rows: Database["public"]["Tables"]["compendium_runes"]["Insert"][] = [];
-	
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -249,20 +276,26 @@ async function syncRunes() {
 			caster_penalty: m.caster_penalty || null,
 			martial_penalty: m.martial_penalty || null,
 			passive_bonuses: castToJson(m.passive_bonuses),
-			effect_description: m.effect_description || m.description || ""
+			effect_description: m.effect_description || m.description || "",
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_runes").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_runes")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_runes").insert(chunk);
-		if (error) { log(`  [Runes] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Runes] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Runes] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -271,8 +304,9 @@ async function syncEquipment() {
 	const data = await staticDataProvider.getItems("");
 	log(`Syncing ${data.length} equipment...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_equipment"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_equipment"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -288,20 +322,26 @@ async function syncEquipment() {
 			sigil_slots_base: Math.round(Number(m.sigil_slots_base) || 0),
 			cost_credits: Math.round(Number(m.value || m.cost_credits || 0)),
 			weight: Math.round(Number(m.weight || 0)),
-			source_book: m.source_book || "System Ascendant Canon"
+			source_book: m.source_book || "System Ascendant Canon",
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_equipment").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_equipment")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_equipment").insert(chunk);
-		if (error) { log(`  [Equipment] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Equipment] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Equipment] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -311,7 +351,7 @@ async function syncJobs() {
 	log(`Syncing ${data.length} jobs...`);
 	const seen = new Set<string>();
 	const rows: Database["public"]["Tables"]["compendium_jobs"]["Insert"][] = [];
-	
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -322,25 +362,33 @@ async function syncJobs() {
 			flavor_text: m.flavor || m.flavor_text || null,
 			hit_die: m.hit_die || 8,
 			primary_abilities: (m.primary_abilities || []).map(mapAbility),
-			saving_throw_proficiencies: (m.saving_throw_proficiencies || []).map(mapAbility),
+			saving_throw_proficiencies: (m.saving_throw_proficiencies || []).map(
+				mapAbility,
+			),
 			armor_proficiencies: castToStringArray(m.armor_proficiencies),
 			weapon_proficiencies: castToStringArray(m.weapon_proficiencies),
 			skill_choices: castToStringArray(m.skill_choices),
 			skill_choice_count: m.skill_choice_count || 2,
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_jobs").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_jobs")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_jobs").insert(chunk);
-		if (error) { log(`  [Jobs] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Jobs] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Jobs] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -349,14 +397,18 @@ async function syncJobPaths() {
 	const data = await staticDataProvider.getPaths("");
 	log(`Syncing ${data.length} job paths...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_job_paths"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_job_paths"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
-		const jobId = JOB_NAME_TO_ID[m.job_name || ""] || JOB_NAME_TO_ID[m.job_id || ""];
+		const jobId =
+			JOB_NAME_TO_ID[m.job_name || ""] || JOB_NAME_TO_ID[m.job_id || ""];
 		if (!jobId) {
-			log(`  [JobPaths] Error: Missing Job ID for path ${m.name} (Job: ${m.job_name})`);
+			log(
+				`  [JobPaths] Error: Missing Job ID for path ${m.name} (Job: ${m.job_name})`,
+			);
 			continue;
 		}
 		rows.push({
@@ -365,20 +417,26 @@ async function syncJobPaths() {
 			description: m.description || "",
 			flavor_text: m.flavor || m.flavor_text || null,
 			path_level: m.path_level || 1,
-			job_id: jobId
+			job_id: jobId,
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_job_paths").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_job_paths")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_job_paths").insert(chunk);
-		if (error) { log(`  [JobPaths] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [JobPaths] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [JobPaths] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -387,8 +445,9 @@ async function syncPowers() {
 	const data = await staticDataProvider.getPowers("");
 	log(`Syncing ${data.length} powers...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_powers"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_powers"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -406,20 +465,26 @@ async function syncPowers() {
 			range: castToString(m.range) || "Self",
 			duration: castToString(m.duration) || "Instantaneous",
 			source_book: m.source_book || "System Ascendant Canon",
-			tags: castToStringArray(m.tags) || []
+			tags: castToStringArray(m.tags) || [],
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_powers").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_powers")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_powers").insert(chunk);
-		if (error) { log(`  [Powers] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Powers] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Powers] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -428,8 +493,9 @@ async function syncArtifacts() {
 	const data = await staticDataProvider.getArtifacts("");
 	log(`Syncing ${data.length} artifacts...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_artifacts"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_artifacts"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -448,20 +514,26 @@ async function syncArtifacts() {
 			mechanics: castToJson(m.mechanics),
 			tags: castToStringArray(m.tags) || [],
 			source_book: m.source_book || "System Ascendant Canon",
-			image_url: m.image_url || m.image || null
+			image_url: m.image_url || m.image || null,
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_artifacts").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_artifacts")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_artifacts").insert(chunk);
-		if (error) { log(`  [Artifacts] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Artifacts] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Artifacts] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -470,8 +542,9 @@ async function syncTattoos() {
 	const data = await staticDataProvider.getTattoos("");
 	log(`Syncing ${data.length} tattoos...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_tattoos"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_tattoos"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -490,20 +563,26 @@ async function syncTattoos() {
 			image_url: m.image_url || m.image || null,
 			source: m.source || m.source_book || "System Ascendant Canon",
 			tags: castToStringArray(m.tags) || [],
-			theme_tags: castToStringArray(m.theme_tags) || []
+			theme_tags: castToStringArray(m.theme_tags) || [],
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_tattoos").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_tattoos")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_tattoos").insert(chunk);
-		if (error) { log(`  [Tattoos] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Tattoos] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Tattoos] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -512,8 +591,9 @@ async function syncShadowSoldiers() {
 	const data = await staticDataProvider.getShadowSoldiers("");
 	log(`Syncing ${data.length} shadow soldiers...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_shadow_soldiers"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_shadow_soldiers"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -532,20 +612,28 @@ async function syncShadowSoldiers() {
 			int: m.int || 10,
 			sense: m.sense || 10,
 			pre: m.pre || 10,
-			abilities: castToJson(m.abilities || {})
+			abilities: castToJson(m.abilities || {}),
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_shadow_soldiers").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_shadow_soldiers")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
-		const { error } = await supabase.from("compendium_shadow_soldiers").insert(chunk);
-		if (error) { log(`  [ShadowSoldiers] Error: ${error.message}`); errors++; }
+		const { error } = await supabase
+			.from("compendium_shadow_soldiers")
+			.insert(chunk);
+		if (error) {
+			log(`  [ShadowSoldiers] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [ShadowSoldiers] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -554,8 +642,9 @@ async function syncLocations() {
 	const data = await staticDataProvider.getLocations("");
 	log(`Syncing ${data.length} locations...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_locations"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_locations"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -568,20 +657,26 @@ async function syncLocations() {
 			lore: m.lore ? castToString(m.lore) : null,
 			tags: castToStringArray(m.tags) || [],
 			source_book: m.source_book || "System Ascendant Canon",
-			image: m.image || null
+			image: m.image || null,
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_locations").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_locations")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_locations").insert(chunk);
-		if (error) { log(`  [Locations] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Locations] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Locations] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -590,8 +685,9 @@ async function syncBackgrounds() {
 	const data = await staticDataProvider.getBackgrounds("");
 	log(`Syncing ${data.length} backgrounds...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_backgrounds"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_backgrounds"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -609,11 +705,11 @@ async function syncBackgrounds() {
 			ideals: castToStringArray(m.ideals),
 			bonds: castToStringArray(m.bonds),
 			flaws: castToStringArray(m.flaws),
-			source_book: m.source_book || "System Ascendant Canon"
+			source_book: m.source_book || "System Ascendant Canon",
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	await supabase.from("compendium_backgrounds").delete().in("name", names);
 	const { error } = await supabase.from("compendium_backgrounds").insert(rows);
 	if (error) log(`  [Backgrounds] Error: ${error.message}`);
@@ -623,19 +719,21 @@ async function syncBackgrounds() {
 async function syncRegents() {
 	const data = await staticDataProvider.getRegents("");
 	log(`Syncing ${data.length} regents...`);
-	const rows: Database["public"]["Tables"]["compendium_regents"]["Insert"][] = data.map(m => ({
-		name: m.name,
-		display_name: m.display_name || m.name,
-		description: m.description || "",
-		title: m.regent_title || m.title || "Regent",
-		corruption_risk: m.regent_corruption_risk || m.corruption_risk || null,
-		manifestation_description: m.regent_manifestation || m.manifestation_description || null,
-		unlock_level: m.level || m.unlock_level || 0,
-		theme: m.regent_theme || m.theme || "Generic",
-		damage_type: m.damage_type || null
-	}));
-	
-	const names = rows.map(r => r.name);
+	const rows: Database["public"]["Tables"]["compendium_regents"]["Insert"][] =
+		data.map((m) => ({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			title: m.regent_title || m.title || "Regent",
+			corruption_risk: m.regent_corruption_risk || m.corruption_risk || null,
+			manifestation_description:
+				m.regent_manifestation || m.manifestation_description || null,
+			unlock_level: m.level || m.unlock_level || 0,
+			theme: m.regent_theme || m.theme || "Generic",
+			damage_type: m.damage_type || null,
+		}));
+
+	const names = rows.map((r) => r.name);
 	await supabase.from("compendium_regents").delete().in("name", names);
 	const { error } = await supabase.from("compendium_regents").insert(rows);
 	log(`  [Regents] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
@@ -644,14 +742,15 @@ async function syncRegents() {
 async function syncConditions() {
 	const data = await staticDataProvider.getConditions("");
 	log(`Syncing ${data.length} conditions...`);
-	const rows: Database["public"]["Tables"]["compendium_conditions"]["Insert"][] = data.map(m => ({
-		name: m.name,
-		display_name: m.display_name || m.name,
-		description: m.description || "",
-		effects: castToStringArray(m.condition_effects) || []
-	}));
-	
-	const names = rows.map(r => r.name);
+	const rows: Database["public"]["Tables"]["compendium_conditions"]["Insert"][] =
+		data.map((m) => ({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			effects: castToStringArray(m.condition_effects) || [],
+		}));
+
+	const names = rows.map((r) => r.name);
 	await supabase.from("compendium_conditions").delete().in("name", names);
 	const { error } = await supabase.from("compendium_conditions").insert(rows);
 	log(`  [Conditions] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
@@ -660,17 +759,18 @@ async function syncConditions() {
 async function syncFeats() {
 	const data = await staticDataProvider.getFeats("");
 	log(`Syncing ${data.length} feats...`);
-	const rows: Database["public"]["Tables"]["compendium_feats"]["Insert"][] = data.map(m => ({
-		name: m.name,
-		display_name: m.display_name || m.name,
-		description: m.description || "",
-		flavor: m.flavor || null,
-		benefits: castToStringArray(m.benefits),
-		prerequisites: castToString(m.prerequisites),
-		source_book: m.source_book || "System Ascendant Canon"
-	}));
-	
-	const names = rows.map(r => r.name);
+	const rows: Database["public"]["Tables"]["compendium_feats"]["Insert"][] =
+		data.map((m) => ({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			flavor: m.flavor || null,
+			benefits: castToStringArray(m.benefits),
+			prerequisites: castToString(m.prerequisites),
+			source_book: m.source_book || "System Ascendant Canon",
+		}));
+
+	const names = rows.map((r) => r.name);
 	await supabase.from("compendium_feats").delete().in("name", names);
 	const { error } = await supabase.from("compendium_feats").insert(rows);
 	if (error) log(`  [Feats] Error: ${error.message}`);
@@ -680,14 +780,15 @@ async function syncFeats() {
 async function syncSkills() {
 	const data = await staticDataProvider.getSkills("");
 	log(`Syncing ${data.length} skills...`);
-	const rows: Database["public"]["Tables"]["compendium_skills"]["Insert"][] = data.map(m => ({
-		name: m.name,
-		display_name: m.display_name || m.name,
-		description: m.description || "",
-		ability: m.ability || "Strength"
-	}));
-	
-	const names = rows.map(r => r.name);
+	const rows: Database["public"]["Tables"]["compendium_skills"]["Insert"][] =
+		data.map((m) => ({
+			name: m.name,
+			display_name: m.display_name || m.name,
+			description: m.description || "",
+			ability: m.ability || "Strength",
+		}));
+
+	const names = rows.map((r) => r.name);
 	await supabase.from("compendium_skills").delete().in("name", names);
 	const { error } = await supabase.from("compendium_skills").insert(rows);
 	log(`  [Skills] Synced ${rows.length} rows. Errors: ${error ? 1 : 0}`);
@@ -697,8 +798,9 @@ async function syncRelics() {
 	const data = await staticDataProvider.getRelics("");
 	log(`Syncing ${data.length} relics...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_relics"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_relics"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -716,11 +818,11 @@ async function syncRelics() {
 			attunement_requirements: castToString(m.attunement_requirements) || null,
 			value_credits: m.value_credits || 0,
 			weight: m.weight || 0,
-			source_book: m.source_book || "System Ascendant Canon"
+			source_book: m.source_book || "System Ascendant Canon",
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	await supabase.from("compendium_relics").delete().in("name", names);
 	const { error } = await supabase.from("compendium_relics").insert(rows);
 	if (error) log(`  [Relics] Error: ${error.message}`);
@@ -731,8 +833,9 @@ async function syncTechniques() {
 	const data = await staticDataProvider.getTechniques("");
 	log(`Syncing ${data.length} techniques...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_techniques"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_techniques"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -749,20 +852,28 @@ async function syncTechniques() {
 			primary_effect: m.primary_effect || m.description || "",
 			secondary_effect: m.secondary_effect || null,
 			source: m.source || m.source_book || "System Ascendant Canon",
-			style: m.style || "None"
+			style: m.style || "None",
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_techniques").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_techniques")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
-		const { error } = await supabase.from("compendium_techniques").insert(chunk);
-		if (error) { log(`  [Techniques] Error: ${error.message}`); errors++; }
+		const { error } = await supabase
+			.from("compendium_techniques")
+			.insert(chunk);
+		if (error) {
+			log(`  [Techniques] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Techniques] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -771,8 +882,9 @@ async function syncSigils() {
 	const data = await staticDataProvider.getSigils("");
 	log(`Syncing ${data.length} sigils...`);
 	const seen = new Set<string>();
-	const rows: Database["public"]["Tables"]["compendium_sigils"]["Insert"][] = [];
-	
+	const rows: Database["public"]["Tables"]["compendium_sigils"]["Insert"][] =
+		[];
+
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
@@ -788,20 +900,26 @@ async function syncSigils() {
 			can_inscribe_on: castToStringArray(m.can_inscribe_on),
 			flavor: m.flavor || null,
 			lore: m.lore ? String(m.lore) : null,
-			image_url: m.image_url || m.image || null
+			image_url: m.image_url || m.image || null,
 		});
 	}
-	
-	const names = rows.map(r => r.name);
+
+	const names = rows.map((r) => r.name);
 	for (let i = 0; i < names.length; i += 500) {
-		await supabase.from("compendium_sigils").delete().in("name", names.slice(i, i + 500));
+		await supabase
+			.from("compendium_sigils")
+			.delete()
+			.in("name", names.slice(i, i + 500));
 	}
-	
+
 	let errors = 0;
 	for (let i = 0; i < rows.length; i += 100) {
 		const chunk = rows.slice(i, i + 100);
 		const { error } = await supabase.from("compendium_sigils").insert(chunk);
-		if (error) { log(`  [Sigils] Error: ${error.message}`); errors++; }
+		if (error) {
+			log(`  [Sigils] Error: ${error.message}`);
+			errors++;
+		}
 	}
 	log(`  [Sigils] Synced ${rows.length} rows. Errors: ${errors}`);
 }
@@ -811,7 +929,7 @@ async function main() {
 	try {
 		await syncJobs();
 		await initializeJobMap(); // Populate dynamic map after jobs are synced
-		await syncMonsters();
+		await syncAnomalies();
 		await syncSpells();
 		await syncRunes();
 		await syncEquipment();

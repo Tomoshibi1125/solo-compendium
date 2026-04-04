@@ -53,7 +53,7 @@ export function toTsQuery(searchQuery: string): string {
  */
 export async function searchWithRPC(
 	supabase: Pick<SupabaseClient, "rpc">,
-	table: "jobs" | "powers" | "relics" | "monsters" | "paths" | "regents",
+	table: "jobs" | "powers" | "relics" | "Anomalies" | "paths" | "regents",
 	searchQuery: string,
 	limit: number = 50,
 ) {

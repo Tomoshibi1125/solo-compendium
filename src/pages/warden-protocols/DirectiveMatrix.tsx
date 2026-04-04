@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
-import { DirectiveMatrix as DirectiveMatrixComponent } from "@/components/warden-protocols/DirectiveMatrix";
+import { DirectiveLattice as DirectiveLatticeComponent } from "@/components/warden-protocols/DirectiveMatrix";
 
-const DirectiveMatrixPage = () => {
+const DirectiveLatticePage = () => {
 	const navigate = useNavigate();
 
 	return (
@@ -26,7 +26,7 @@ const DirectiveMatrixPage = () => {
 						dimensional
 						className="mb-2"
 					>
-						Directive Matrix
+						Directive Lattice
 					</SystemHeading>
 					<DataStreamText
 						variant="system"
@@ -39,10 +39,10 @@ const DirectiveMatrixPage = () => {
 					</DataStreamText>
 				</div>
 
-				<DirectiveMatrixComponent />
+				<DirectiveLatticeComponent />
 			</div>
 		</Layout>
 	);
 };
 
-export default DirectiveMatrixPage;
+export default DirectiveLatticePage;

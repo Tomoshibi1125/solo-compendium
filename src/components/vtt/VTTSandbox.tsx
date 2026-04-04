@@ -7,10 +7,10 @@ import {
 	DEFAULT_PING_CONFIG,
 	EFFECT_ASSETS,
 	formatWhisperLabel,
+	getAnomalyTokensForTier,
 	getAssetSummary,
 	getHexGridSVGPaths,
 	getMapsForTier,
-	getMonsterTokensForTier,
 	getParticlePreset,
 	getPingAnimationCSS,
 	hexDistance,
@@ -83,7 +83,7 @@ export function VTTSandbox() {
 			presets: listParticlePresets(undefined).length,
 			assetSummary: Object.values(getAssetSummary()).reduce((a, b) => a + b, 0),
 			mapCount: getMapsForTier("A").length,
-			monsterCount: getMonsterTokensForTier("A").length,
+			AnomalyCount: getAnomalyTokensForTier("A").length,
 			whisper: formatWhisperLabel(
 				{
 					id: "test",

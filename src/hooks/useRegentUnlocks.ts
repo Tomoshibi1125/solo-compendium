@@ -3,7 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
-interface RegentUnlock {
+export interface RegentUnlock {
 	id: string;
 	character_id: string;
 	regent_id: string;
@@ -11,13 +11,16 @@ interface RegentUnlock {
 	quest_name: string;
 	dm_notes: string | null;
 	is_primary: boolean;
+	character?: {
+		id: string;
+		name: string;
+	};
 	regent?: {
 		id: string;
 		name: string;
 		title: string;
 		theme: string;
 		description: string;
-		rank: "D" | "C" | "B" | "A" | "S";
 		image?: string;
 		tags?: string[];
 	};
@@ -215,7 +218,7 @@ export function useCampaignRegentUnlocks(campaignId: string) {
 				.order("unlocked_at", { ascending: false });
 
 			if (error) throw error;
-			return data;
+			return JSON.parse(JSON.stringify(data || [])) as RegentUnlock[];
 		},
 		enabled: !!campaignId,
 	});

@@ -441,8 +441,8 @@ export default function FeatureChoicesAdmin() {
 			<div className="container mx-auto px-4 py-8 max-w-7xl">
 				<div className="mb-6">
 					<div className="flex items-center gap-3">
-						<div className="w-12 h-12 rounded-xl bg-gradient-to-br from-arise/20 to-shadow-purple/20 border border-arise/30 flex items-center justify-center">
-							<Layers className="w-6 h-6 text-arise" />
+						<div className="w-12 h-12 rounded-xl bg-gradient-to-br from-resurge/20 to-shadow-purple/20 border border-resurge/30 flex items-center justify-center">
+							<Layers className="w-6 h-6 text-resurge" />
 						</div>
 						<div className="flex-1">
 							<SystemHeading
@@ -464,7 +464,7 @@ export default function FeatureChoicesAdmin() {
 
 						<Button
 							variant="outline"
-							className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise"
+							className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge"
 							onClick={handleAutoSeedASI}
 							disabled={autoSeeding}
 						>
@@ -481,7 +481,7 @@ export default function FeatureChoicesAdmin() {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 					<SystemWindow
 						title="CHOICE-POINT FEATURES"
-						className="border-arise/30"
+						className="border-resurge/30"
 					>
 						<div className="space-y-4">
 							<div className="relative">
@@ -517,7 +517,7 @@ export default function FeatureChoicesAdmin() {
 												className={cn(
 													"w-full text-left p-3 rounded-lg border transition-colors",
 													isSelected
-														? "border-arise/50 bg-arise/10"
+														? "border-resurge/50 bg-resurge/10"
 														: "border-border bg-muted/30 hover:bg-muted/50",
 												)}
 											>
@@ -547,7 +547,7 @@ export default function FeatureChoicesAdmin() {
 						</div>
 					</SystemWindow>
 
-					<SystemWindow title="PROTOCOL CONFIG" className="border-arise/30">
+					<SystemWindow title="PROTOCOL CONFIG" className="border-resurge/30">
 						{!selectedFeature ? (
 							<div className="text-sm text-muted-foreground">
 								Select a feature on the left to configure its choice protocol.

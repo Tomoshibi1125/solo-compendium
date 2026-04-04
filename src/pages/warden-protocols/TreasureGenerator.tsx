@@ -344,7 +344,7 @@ READ-ALOUD DISCOVERY:
 								>
 									Rank {treasure.rank}
 								</Badge>
-								<div className="flex items-center gap-2 text-2xl font-arise text-emerald-400">
+								<div className="flex items-center gap-2 text-2xl font-resurge text-emerald-400">
 									<Coins className="w-6 h-6" />${treasure.tens * 10} USD
 								</div>
 							</div>

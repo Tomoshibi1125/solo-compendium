@@ -425,8 +425,10 @@ const InitiativeTracker = () => {
 						damage_immunities: combatant.damage_immunities ?? null,
 						damage_vulnerabilities: combatant.damage_vulnerabilities ?? null,
 						condition_timers: combatant.condition_timers ?? null,
-						advancedConditions: (combatant.advancedConditions ||
-							[]) as unknown as Json,
+						advancedConditions: combatant.advancedConditions.map((cond) => ({
+							...cond,
+							appliedAtRound: cond.appliedAtRound || 0,
+						})) as Json,
 					},
 					conditions: getActiveConditionNames(combatant.advancedConditions),
 					flags: {
@@ -820,10 +822,7 @@ const InitiativeTracker = () => {
 			const ab = ability.toLowerCase();
 			const hasDisadv =
 				normalized.some((c) => c === "restrained") &&
-				(ab === "agi" ||
-					ab === "agility" ||
-					ab === "dex" ||
-					ab === "dexterity");
+				(ab === "agi" || ab === "agility" || ab === "dex" || ab === "agility");
 			return hasDisadv ? ("disadvantage" as const) : ("normal" as const);
 		};
 
@@ -1202,7 +1201,7 @@ const InitiativeTracker = () => {
 																</Badge>
 															) : (
 																<Badge variant="outline" className="text-xs">
-																	Monster
+																	Anomaly
 																</Badge>
 															)}
 														</div>

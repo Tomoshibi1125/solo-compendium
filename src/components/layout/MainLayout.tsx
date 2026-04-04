@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 import { AppSidebar } from "@/components/navigation/AppSidebar";
 import { GlobalCharacterHUD } from "@/components/navigation/GlobalCharacterHUD";
 import { NavBar } from "@/components/navigation/NavBar";
@@ -11,6 +12,9 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children, className }: MainLayoutProps) {
+	const location = useLocation();
+	const isCharacterSheet = location.pathname.startsWith("/characters/");
+
 	return (
 		<div className="min-h-screen flex bg-background selection:bg-primary/30 relative overflow-hidden">
 			{/* Global System Visual Effects */}
@@ -23,8 +27,8 @@ export function MainLayout({ children, className }: MainLayoutProps) {
 				{/* The Header (NavBar) will be sticky at the top of this flex container */}
 				<NavBar />
 
-				{/* Global Character HUD (Sticky below NavBar) */}
-				<GlobalCharacterHUD />
+				{/* Global Character HUD (Sticky below NavBar) - Hidden on character sheets */}
+				{!isCharacterSheet && <GlobalCharacterHUD />}
 
 				{/* Main Content Area - Scrollable */}
 				<main

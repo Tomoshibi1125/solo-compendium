@@ -6,7 +6,8 @@ $jscomp.arrayIteratorImpl = (h) => {
 };
 $jscomp.arrayIterator = (h) => ({ next: $jscomp.arrayIteratorImpl(h) });
 $jscomp.makeIterator = (h) => {
-	var n = "undefined" != typeof Symbol && Symbol.iterator && h[Symbol.iterator];
+	var n =
+		"undefined" !== typeof Symbol && Symbol.iterator && h[Symbol.iterator];
 	return n ? n.call(h) : $jscomp.arrayIterator(h);
 };
 $jscomp.ASSUME_ES5 = !1;
@@ -18,24 +19,24 @@ $jscomp.FORCE_POLYFILL_PROMISE = !1;
 $jscomp.FORCE_POLYFILL_PROMISE_WHEN_NO_UNHANDLED_REJECTION = !1;
 $jscomp.getGlobal = (h) => {
 	h = [
-		"object" == typeof globalThis && globalThis,
+		"object" === typeof globalThis && globalThis,
 		h,
-		"object" == typeof window && window,
-		"object" == typeof self && self,
-		"object" == typeof global && global,
+		"object" === typeof window && window,
+		"object" === typeof self && self,
+		"object" === typeof global && global,
 	];
 	for (var n = 0; n < h.length; ++n) {
 		var k = h[n];
-		if (k && k.Math == Math) return k;
+		if (k && k.Math === Math) return k;
 	}
 	throw Error("Cannot find global object");
 };
 $jscomp.global = $jscomp.getGlobal(this);
 $jscomp.defineProperty =
-	$jscomp.ASSUME_ES5 || "function" == typeof Object.defineProperties
+	$jscomp.ASSUME_ES5 || "function" === typeof Object.defineProperties
 		? Object.defineProperty
 		: (h, n, k) => {
-				if (h == Array.prototype || h == Object.prototype) return h;
+				if (h === Array.prototype || h === Object.prototype) return h;
 				h[n] = k.value;
 				return h;
 			};
@@ -46,7 +47,7 @@ $jscomp.TRUST_ES6_POLYFILLS =
 $jscomp.polyfills = {};
 $jscomp.propertyToPolyfillSymbol = {};
 $jscomp.POLYFILL_PREFIX = "$jscp$";
-var $jscomp$lookupPolyfilledValue = (h, n) => {
+var _$jscomp$lookupPolyfilledValue = (h, n) => {
 	var k = $jscomp.propertyToPolyfillSymbol[n];
 	if (null == k) return h[n];
 	k = h[k];
@@ -69,7 +70,7 @@ $jscomp.polyfillUnisolated = (h, n, k, p) => {
 	h = h[h.length - 1];
 	p = k[h];
 	n = n(p);
-	n != p &&
+	n !== p &&
 		null != n &&
 		$jscomp.defineProperty(k, h, { configurable: !0, writable: !0, value: n });
 };
@@ -98,7 +99,7 @@ $jscomp.polyfillIsolated = (h, n, k, p) => {
 					((k = (1e9 * Math.random()) >>> 0),
 					($jscomp.propertyToPolyfillSymbol[l] = $jscomp.IS_SYMBOL_NATIVE
 						? $jscomp.global.Symbol(l)
-						: $jscomp.POLYFILL_PREFIX + k + "$" + l)),
+						: `${$jscomp.POLYFILL_PREFIX + k}$${l}`)),
 				$jscomp.defineProperty(p, $jscomp.propertyToPolyfillSymbol[l], {
 					configurable: !0,
 					writable: !0,
@@ -114,7 +115,7 @@ $jscomp.polyfill(
 		function k(f) {
 			return f instanceof l
 				? f
-				: new l((q, u) => {
+				: new l((q, _u) => {
 						q(f);
 					});
 		}
@@ -144,7 +145,7 @@ $jscomp.polyfill(
 			p(f, 0);
 		};
 		n.prototype.executeBatch_ = function () {
-			for (; this.batch_ && this.batch_.length; ) {
+			for (; this.batch_?.length; ) {
 				var f = this.batch_;
 				this.batch_ = [];
 				for (var q = 0; q < f.length; ++q) {
@@ -213,7 +214,7 @@ $jscomp.polyfill(
 				this.reject_(u);
 				return;
 			}
-			"function" == typeof q
+			"function" === typeof q
 				? this.settleSameAsThenable_(q, f)
 				: this.fulfill_(f);
 		};
@@ -224,7 +225,7 @@ $jscomp.polyfill(
 			this.settle_(1, f);
 		};
 		l.prototype.settle_ = function (f, q) {
-			if (0 != this.state_)
+			if (0 !== this.state_)
 				throw Error(
 					"Cannot settle(" +
 						f +
@@ -242,7 +243,7 @@ $jscomp.polyfill(
 			p(() => {
 				if (this.notifyUnhandledRejection_()) {
 					var q = $jscomp.global.console;
-					"undefined" !== typeof q && q.error(this.result_);
+					q?.error(this.result_);
 				}
 			}, 1);
 		};
@@ -284,7 +285,7 @@ $jscomp.polyfill(
 		};
 		l.prototype.then = function (f, q) {
 			function u(w, B) {
-				return "function" == typeof w
+				return "function" === typeof w
 					? (R) => {
 							try {
 								A(w(R));
@@ -316,7 +317,7 @@ $jscomp.polyfill(
 						q(A.result_);
 						break;
 					default:
-						throw Error("Unexpected state: " + A.state_);
+						throw Error(`Unexpected state: ${A.state_}`);
 				}
 			}
 			var A = this;
@@ -327,7 +328,7 @@ $jscomp.polyfill(
 		};
 		l.resolve = k;
 		l.reject = (f) =>
-			new l((q, u) => {
+			new l((_q, u) => {
 				u(f);
 			});
 		l.race = (f) =>
@@ -349,7 +350,7 @@ $jscomp.polyfill(
 							return (Z) => {
 								w[R] = Z;
 								B--;
-								0 == B && A(w);
+								0 === B && A(w);
 							};
 						}
 						var w = [],
@@ -369,9 +370,9 @@ $jscomp.polyfill(
 );
 $jscomp.owns = (h, n) => Object.hasOwn(h, n);
 $jscomp.assign =
-	$jscomp.TRUST_ES6_POLYFILLS && "function" == typeof Object.assign
+	$jscomp.TRUST_ES6_POLYFILLS && "function" === typeof Object.assign
 		? Object.assign
-		: function (h, n) {
+		: function (h, _n) {
 				for (var k = 1; k < arguments.length; k++) {
 					var p = arguments[k];
 					if (p) for (var l in p) $jscomp.owns(p, l) && (h[l] = p[l]);
@@ -392,7 +393,7 @@ $jscomp.checkStringArgs = (h, n, k) => {
 				k +
 				" must not be a regular expression",
 		);
-	return h + "";
+	return `${h}`;
 };
 $jscomp.polyfill(
 	"String.prototype.startsWith",
@@ -405,7 +406,7 @@ $jscomp.polyfill(
 					var l = p.length,
 						y = n.length;
 					k = Math.max(0, Math.min(k | 0, p.length));
-					for (var f = 0; f < y && k < l; ) if (p[k++] != n[f++]) return !1;
+					for (var f = 0; f < y && k < l; ) if (p[k++] !== n[f++]) return !1;
 					return f >= y;
 				},
 	"es6",
@@ -516,12 +517,12 @@ var DracoDecoderModule = (() => {
 						var g = c[e++];
 						if (g & 128) {
 							var t = c[e++] & 63;
-							if (192 == (g & 224))
+							if (192 === (g & 224))
 								d += String.fromCharCode(((g & 31) << 6) | t);
 							else {
 								var aa = c[e++] & 63;
 								g =
-									224 == (g & 240)
+									224 === (g & 240)
 										? ((g & 15) << 12) | (t << 6) | aa
 										: ((g & 7) << 18) | (t << 12) | (aa << 6) | (c[e++] & 63);
 								65536 > g
@@ -552,18 +553,18 @@ var DracoDecoderModule = (() => {
 		}
 		function y(e) {
 			if (a.onAbort) a.onAbort(e);
-			e = "Aborted(" + e + ")";
+			e = `Aborted(${e})`;
 			da(e);
 			sa = !0;
 			e = new WebAssembly.RuntimeError(
-				e + ". Build with -sASSERTIONS for more info.",
+				`${e}. Build with -sASSERTIONS for more info.`,
 			);
 			ka(e);
 			throw e;
 		}
 		function f(e) {
 			try {
-				if (e == P && ea) return new Uint8Array(ea);
+				if (e === P && ea) return new Uint8Array(ea);
 				if (ma) return ma(e);
 				throw "both async and sync fetching of the wasm failed";
 			} catch (b) {
@@ -572,10 +573,10 @@ var DracoDecoderModule = (() => {
 		}
 		function q() {
 			if (!ea && (ta || fa)) {
-				if ("function" == typeof fetch && !P.startsWith("file://"))
+				if ("function" === typeof fetch && !P.startsWith("file://"))
 					return fetch(P, { credentials: "same-origin" })
 						.then((e) => {
-							if (!e.ok) throw "failed to load wasm binary file at '" + P + "'";
+							if (!e.ok) throw `failed to load wasm binary file at '${P}'`;
 							return e.arrayBuffer();
 						})
 						.catch(() => f(P));
@@ -617,13 +618,13 @@ var DracoDecoderModule = (() => {
 				W[(this.ptr + 12) >> 0] = b ? 1 : 0;
 			};
 			this.get_caught = function () {
-				return 0 != W[(this.ptr + 12) >> 0];
+				return 0 !== W[(this.ptr + 12) >> 0];
 			};
 			this.set_rethrown = function (b) {
 				W[(this.ptr + 13) >> 0] = b ? 1 : 0;
 			};
 			this.get_rethrown = function () {
-				return 0 != W[(this.ptr + 13) >> 0];
+				return 0 !== W[(this.ptr + 13) >> 0];
 			};
 			this.init = function (b, c) {
 				this.set_adjusted_ptr(0);
@@ -662,7 +663,7 @@ var DracoDecoderModule = (() => {
 					if (a.onRuntimeInitialized) a.onRuntimeInitialized();
 					if (a.postRun)
 						for (
-							"function" == typeof a.postRun && (a.postRun = [a.postRun]);
+							"function" === typeof a.postRun && (a.postRun = [a.postRun]);
 							a.postRun.length;
 						)
 							xa.unshift(a.postRun.shift());
@@ -672,7 +673,7 @@ var DracoDecoderModule = (() => {
 			if (!(0 < ba)) {
 				if (a.preRun)
 					for (
-						"function" == typeof a.preRun && (a.preRun = [a.preRun]);
+						"function" === typeof a.preRun && (a.preRun = [a.preRun]);
 						a.preRun.length;
 					)
 						ya.unshift(a.preRun.shift());
@@ -840,7 +841,7 @@ var DracoDecoderModule = (() => {
 			w(m)[this.ptr] = this;
 		}
 		n = void 0 === n ? {} : n;
-		var a = "undefined" != typeof n ? n : {},
+		var a = "undefined" !== typeof n ? n : {},
 			wa,
 			ka;
 		a.ready = new Promise((e, b) => {
@@ -862,24 +863,24 @@ var DracoDecoderModule = (() => {
 			e = e.split(".");
 			return 2 > e.length || 3 < e.length
 				? !1
-				: 1 == e[0] && 0 <= e[1] && 5 >= e[1]
+				: 1 === e[0] && 0 <= e[1] && 5 >= e[1]
 					? !0
-					: 0 != e[0] || 10 < e[1]
+					: 0 !== e[0] || 10 < e[1]
 						? !1
 						: !0;
 		};
 		var Ta = Object.assign({}, a),
-			ta = "object" == typeof window,
-			fa = "function" == typeof importScripts,
+			ta = "object" === typeof window,
+			fa = "function" === typeof importScripts,
 			Ua =
-				"object" == typeof process &&
-				"object" == typeof process.versions &&
-				"string" == typeof process.versions.node,
+				"object" === typeof process &&
+				"object" === typeof process.versions &&
+				"string" === typeof process.versions.node,
 			U = "";
 		if (Ua) {
-			var Va = require("fs"),
-				pa = require("path");
-			U = fa ? pa.dirname(U) + "/" : __dirname + "/";
+			var Va = require("node:fs"),
+				pa = require("node:path");
+			U = fa ? `${pa.dirname(U)}/` : `${__dirname}/`;
 			var Wa = (e, b) => {
 				e = e.startsWith("file://") ? new URL(e) : pa.normalize(e);
 				return Va.readFileSync(e, b ? void 0 : "utf8");
@@ -901,7 +902,7 @@ var DracoDecoderModule = (() => {
 		} else if (ta || fa)
 			fa
 				? (U = self.location.href)
-				: "undefined" != typeof document &&
+				: "undefined" !== typeof document &&
 					document.currentScript &&
 					(U = document.currentScript.src),
 				h && (U = h),
@@ -928,7 +929,7 @@ var DracoDecoderModule = (() => {
 					d.open("GET", e, !0);
 					d.responseType = "arraybuffer";
 					d.onload = () => {
-						200 == d.status || (0 == d.status && d.response)
+						200 === d.status || (0 === d.status && d.response)
 							? b(d.response)
 							: c();
 					};
@@ -941,10 +942,11 @@ var DracoDecoderModule = (() => {
 		Ta = null;
 		var ea;
 		a.wasmBinary && (ea = a.wasmBinary);
-		"object" != typeof WebAssembly && y("no native wasm support detected");
+		"object" !== typeof WebAssembly && y("no native wasm support detected");
 		var ja,
 			sa = !1,
-			ra = "undefined" != typeof TextDecoder ? new TextDecoder("utf8") : void 0,
+			ra =
+				"undefined" !== typeof TextDecoder ? new TextDecoder("utf8") : void 0,
 			W,
 			ia,
 			ca,
@@ -958,11 +960,11 @@ var DracoDecoderModule = (() => {
 			ha = null;
 		var P = "draco_decoder_gltf.wasm";
 		P.startsWith("data:application/octet-stream;base64,") || (P = k(P));
-		var pd = 0,
+		var _pd = 0,
 			qd = {
 				b: (e, b, c) => {
 					new A(e).init(b, c);
-					pd++;
+					_pd++;
 					throw e;
 				},
 				a: () => {
@@ -988,7 +990,7 @@ var DracoDecoderModule = (() => {
 								l();
 								var t = 1;
 								break a;
-							} catch (aa) {}
+							} catch (_aa) {}
 							t = void 0;
 						}
 						if (t) return !0;
@@ -997,14 +999,14 @@ var DracoDecoderModule = (() => {
 				},
 			};
 		(() => {
-			function e(g, t) {
+			function e(g, _t) {
 				a.asm = g.exports;
 				ja = a.asm.e;
 				l();
 				oa.unshift(a.asm.f);
 				ba--;
-				a.monitorRunDependencies && a.monitorRunDependencies(ba);
-				0 == ba &&
+				a.monitorRunDependencies?.(ba);
+				0 === ba &&
 					(null !== qa && (clearInterval(qa), (qa = null)),
 					ha && ((g = ha), (ha = null), g()));
 			}
@@ -1016,30 +1018,30 @@ var DracoDecoderModule = (() => {
 					.then((t) => WebAssembly.instantiate(t, d))
 					.then((t) => t)
 					.then(g, (t) => {
-						da("failed to asynchronously prepare wasm: " + t);
+						da(`failed to asynchronously prepare wasm: ${t}`);
 						y(t);
 					});
 			}
 			var d = { a: qd };
 			ba++;
-			a.monitorRunDependencies && a.monitorRunDependencies(ba);
+			a.monitorRunDependencies?.(ba);
 			if (a.instantiateWasm)
 				try {
 					return a.instantiateWasm(d, e);
 				} catch (g) {
-					da("Module.instantiateWasm callback failed with error: " + g), ka(g);
+					da(`Module.instantiateWasm callback failed with error: ${g}`), ka(g);
 				}
 			(() =>
 				ea ||
-				"function" != typeof WebAssembly.instantiateStreaming ||
+				"function" !== typeof WebAssembly.instantiateStreaming ||
 				P.startsWith("data:application/octet-stream;base64,") ||
 				P.startsWith("file://") ||
 				Ua ||
-				"function" != typeof fetch
+				"function" !== typeof fetch
 					? c(b)
 					: fetch(P, { credentials: "same-origin" }).then((g) =>
 							WebAssembly.instantiateStreaming(g, d).then(b, (t) => {
-								da("wasm streaming compile failed: " + t);
+								da(`wasm streaming compile failed: ${t}`);
 								da("falling back to ArrayBuffer instantiation");
 								return c(b);
 							}),
@@ -1766,7 +1768,7 @@ var DracoDecoderModule = (() => {
 		};
 		if (a.preInit)
 			for (
-				"function" == typeof a.preInit && (a.preInit = [a.preInit]);
+				"function" === typeof a.preInit && (a.preInit = [a.preInit]);
 				0 < a.preInit.length;
 			)
 				a.preInit.pop()();
@@ -1853,7 +1855,7 @@ var DracoDecoderModule = (() => {
 		S.prototype.Init = S.prototype.Init = function (b, c) {
 			var d = this.ptr;
 			r.prepare();
-			"object" == typeof b && (b = Z(b));
+			"object" === typeof b && (b = Z(b));
 			c && "object" === typeof c && (c = c.ptr);
 			Ya(d, b, c);
 		};
@@ -2197,7 +2199,7 @@ var DracoDecoderModule = (() => {
 			function (b, c, d) {
 				var g = this.ptr;
 				r.prepare();
-				"object" == typeof b && (b = Z(b));
+				"object" === typeof b && (b = Z(b));
 				c && "object" === typeof c && (c = c.ptr);
 				d && "object" === typeof d && (d = d.ptr);
 				return B(ic(g, b, c, d), C);
@@ -2209,7 +2211,7 @@ var DracoDecoderModule = (() => {
 		) {
 			var g = this.ptr;
 			r.prepare();
-			"object" == typeof b && (b = Z(b));
+			"object" === typeof b && (b = Z(b));
 			c && "object" === typeof c && (c = c.ptr);
 			d && "object" === typeof d && (d = d.ptr);
 			return B(jc(g, b, c, d), C);

@@ -16,7 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import { getRandomMonster } from "@/lib/compendiumAutopopulate";
+import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 const RIFT_RANKS = ["E", "D", "C", "B", "A", "S"];
@@ -27,7 +27,7 @@ const RIFT_THEMES = [
 	"Construct Forge",
 	"Abyssal Depths",
 	"Celestial Spire",
-	"Prime Architect's Domain",
+	"The Absolute's Domain",
 	"Necromantic Lab",
 	"Mana Nexus",
 	"Umbral Regent's Memory",
@@ -61,7 +61,7 @@ const BOSS_TYPES = [
 const COMPLICATIONS = [
 	"Mana surge causes random effects",
 	"Rift structure shifts",
-	"Monster reinforcements",
+	"Anomaly reinforcements",
 	"Environmental hazard activates",
 	"Time distortion",
 	"Shadow corruption spreads",
@@ -174,7 +174,7 @@ const GateGenerator = () => {
 		const baseRift = generateRift(selectedRank || undefined);
 
 		// 100% Automation: Pull real boss from compendium
-		const realBoss = await getRandomMonster(selectedRank || baseRift.rank);
+		const realBoss = await getRandomAnomaly(selectedRank || baseRift.rank);
 		if (realBoss) {
 			const boss = realBoss as { name: string };
 			baseRift.boss = boss.name;
@@ -207,7 +207,7 @@ SEED DATA:
 Provide ALL of the following sections with full detail:
 
 1. DESCRIPTION: Rift appearance, sensory details (sight/sound/smell), entry conditions, environmental hazards
-2. MONSTERS: 3-5 monsters with CR, type, HP, key abilities, tactical behavior
+2. ANOMALIES: 3-5 anomalies with CR, type, HP, key abilities, tactical behavior
 3. BOSS: Full stat block for ${rift.boss} (AC, HP, abilities, legendary actions, lair actions, tactics)
 4. ENVIRONMENT: Terrain features, traps (DCs, damage, triggers), hazard zones, cover positions
 5. LORE: Rift origin, which Regent domain it connects to, System classification, historical significance
@@ -229,15 +229,15 @@ ${rift.description}
 
 APPEARANCE:
 • Visual Features: [Sensory details of Rift entrance and interior]
-• Sounds: [Audio cues - humming, crackling, monster sounds]
+• Sounds: [Audio cues - humming, crackling, anomaly sounds]
 • Smells: [Olfactory sensations - ozone, decay, magic]
 • Entry Conditions: [Requirements to enter the Rift]
 • Environmental Hazards: [Immediate dangers upon entry]
 
-MONSTERS:
+ANOMALIES:
 ${rift.complications
 	.map(
-		(_complication, i) => `${i + 1}. [Monster type related to ${rift.theme}]
+		(_complication, i) => `${i + 1}. [Anomaly type related to ${rift.theme}]
    • Challenge Rating: [Appropriate to ${rift.rank} Rank]
    • Armor Class: [${rift.rank} Rank appropriate]
    • Hit Points: [${rift.rank} Rank appropriate]

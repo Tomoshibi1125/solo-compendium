@@ -23,9 +23,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-fire-weapon-1",
 		name: "Sigil of Fire Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure fire energy to grant unique abilities.",
+			"A pulse of solar energy trapped in lead-tin alloy. When inscribed on a weapon, it bleeds white-hot mana into every strike.",
 		effect_description:
-			"Your weapon attacks deal an extra 1d6 fire damage. Once per short rest, you can unleash a 'Searing Burst' on hit, dealing an extra 1d6 fire damage and forcing the target to make a DC 13 Strength save or be knocked prone by the thermal shock.",
+			"Your weapon attacks deal an extra 1d6 fire damage. Once per short rest, you can unleash a 'Searing Burst' on hit, dealing an extra 1d6 fire damage and forcing the target to make a DC 13 Strength check or be knocked prone by the thermal shock.",
 		rune_type: "offensive",
 		rune_category: "Combat",
 		rune_level: 2,
@@ -40,10 +40,10 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Searing Burst",
 			description:
-				"When you hit with this weapon, add 1d6 fire damage and knock the target prone (DC 13 Str save).",
+				"When you hit with this weapon, add 1d6 fire damage and knock the target prone (DC 13 Str check).",
 			action_type: "bonus-action",
 			damage: "1d6 fire",
-			resolution: "DC 13 Str save",
+			resolution: "DC 13 Str check",
 		},
 		tags: ["fire", "sigil", "weapon"],
 		image: "/generated/sigils/fire-sigil.webp",
@@ -52,7 +52,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-fire-armor-2",
 		name: "Sigil of Fire Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure fire energy to grant unique abilities.",
+			"Layers of interlocking flame-wards etched into a crystalline lattice. When inscribed on armor, it projects a shimmering heat-shroud.",
 		effect_description:
 			"Grants resistance to fire damage. Once per long rest, you can activate 'Inferno Aura' as a bonus action. For 1 minute, any creature that starts its turn within 5 feet of you takes 2d6 fire damage.",
 		rune_type: "defensive",
@@ -81,9 +81,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-fire-shield-3",
 		name: "Sigil of Fire Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure fire energy to grant unique abilities.",
+			"A heavy basalt plate inscribed with the geometry of a dying star. When inscribed on a shield, it absorbs kinetic force and vents it as a solar flare.",
 		effect_description:
-			"When you block an attack, you can use your reaction to emit a burst of flame. Attackers within 5 feet must make a DC 30 Dexterity save or take 3d8 fire damage.",
+			"When you block an attack, you can use your reaction to emit a burst of flame. Attackers within 5 feet must make a DC 30 Agility check or take 3d8 fire damage.",
 		rune_type: "defensive",
 		rune_category: "Defense",
 		rune_level: 8,
@@ -95,11 +95,11 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Nova Deflection",
 			description:
-				"As a reaction when you block an attack, emit a blinding solar flare. All creatures in a 15ft cone must make a DC 20 Dexterity save or take 4d8 fire damage and be blinded until the end of your next turn.",
+				"As a reaction when you block an attack, emit a blinding solar flare. All creatures in a 15ft cone must make a DC 20 Agility check or take 4d8 fire damage and be blinded until the end of your next turn.",
 			action_type: "reaction",
 			range: "15 ft cone",
 			target: "All in cone",
-			resolution: "DC 20 Dex save",
+			resolution: "DC 20 Agility check",
 			damage: "4d8 fire",
 			condition: "Blinded",
 		},
@@ -110,7 +110,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-fire-accessory-4",
 		name: "Sigil of Fire Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure fire energy to grant unique abilities.",
+			"A delicate amber loop etched with combustion-loops. When inscribed on an accessory, it acts as a thermal conduit for spellcasting.",
 		effect_description:
 			"Your fire spells deal an additional 10 damage, and ignore fire resistance.",
 		rune_type: "caster",
@@ -128,7 +128,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-fire-boots-5",
 		name: "Sigil of Fire Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure fire energy to grant unique abilities.",
+			"Jagged obsidian shards etched with the runes of a volcanic flow. When inscribed on boots, they ignite the air behind the wearer.",
 		effect_description:
 			"You leave a trail of fire behind you. Once per turn, you can dash as a bonus action, causing spaces you leave to deal 1d8 fire damage to enemies entering them.",
 		rune_type: "martial",
@@ -146,9 +146,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-ice-weapon-6",
 		name: "Sigil of Ice Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure ice energy to grant unique abilities.",
+			"A series of jagged, aggressive runes etched into void-glass. When bound to a weapon, it leeches spectral resonance from the wielder's surroundings, manifesting as crackling arcs.",
 		effect_description:
-			"Your weapon attacks deal an extra 1d6 cold damage. Once per short rest, you can use 'Frost Binding' to force a target hit by your weapon to make a DC 13 Strength save or have its speed reduced to 0 until the end of its next turn.",
+			"Your weapon attacks deal an extra 1d6 cold damage. Once per short rest, you can use 'Frost Binding' to force a target hit by your weapon to make a DC 13 Strength check or have its speed reduced to 0 until the end of its next turn.",
 		rune_type: "offensive",
 		rune_category: "Combat",
 		rune_level: 2,
@@ -163,9 +163,9 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Frost Binding",
 			description:
-				"On hit, force a DC 13 Str save or target's speed becomes 0.",
+				"A protective mandate from the System, etched into void-glass. It generates a shimmering flickering shadows shroud that dampens incoming kinetic force.",
 			action_type: "bonus-action",
-			resolution: "DC 13 Str save",
+			resolution: "DC 13 Str check",
 		},
 		tags: ["ice", "sigil", "weapon"],
 		image: "/generated/sigils/ice-sigil.webp",
@@ -192,7 +192,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-ice-shield-8",
 		name: "Sigil of Ice Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure ice energy to grant unique abilities.",
+			"A protective mandate from the System, etched into void-glass. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to flash-freeze the attacker's weapon, imposing a -2 penalty to their next attack roll.",
 		rune_type: "defensive",
@@ -210,7 +210,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-ice-accessory-9",
 		name: "Sigil of Ice Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure ice energy to grant unique abilities.",
+			"A multi-layered void-glass sigil that acts as a focal point for kinetic force manipulation. It grants the wielder shimmering frost capabilities.",
 		effect_description:
 			"Your cold spells can target one additional creature within 10 feet of the original target.",
 		rune_type: "caster",
@@ -228,9 +228,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-ice-boots-10",
 		name: "Sigil of Ice Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure ice energy to grant unique abilities.",
+			"A multi-layered frozen moonlight sigil that acts as a focal point for kinetic force manipulation. It grants the wielder flickering shadows capabilities.",
 		effect_description:
-			"You can move across icy and slippery surfaces without penalty. As a bonus action, move up to your speed; every space you leave becomes slippery ice (Difficult Terrain). Enemies entering or starting their turn in this ice must make a DC 20 Dex save or take 4d8 cold damage and fall prone.",
+			"You can move across icy and slippery surfaces without penalty. As a bonus action, move up to your speed; every space you leave becomes slippery ice (Difficult Terrain). Enemies entering or starting their turn in this ice must make a DC 20 Agility check or take 4d8 cold damage and fall prone.",
 		rune_type: "martial",
 		rune_category: "Mobility",
 		rune_level: 8,
@@ -245,10 +245,10 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Glacier Path",
 			description:
-				"Move speed: leave ice trail (4d8 cold, DC 20 Dex save or fall prone).",
+				"The System's offensive directive is transcribed here in soul-bonded alloy. It hums with a spectral resonance frequency, causing the weapon's edge to shimmer with luminous ripples.",
 			action_type: "bonus-action",
 			damage: "4d8 cold",
-			resolution: "DC 20 Dex save",
+			resolution: "DC 20 Agility check",
 		},
 		tags: ["ice", "sigil", "boots"],
 		image: "/generated/sigils/ice-sigil.webp",
@@ -274,10 +274,10 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Chain Induction",
 			description:
-				"Arc 1d6 lightning damage to 3 targets within 15ft (DC 13 Dex save for half).",
+				"Interlocking geometric patterns of crystallized mana form a localized kinetic force field. It acts as a primary buffer against shimmering frost incursions.",
 			action_type: "bonus-action",
 			damage: "1d6 lightning",
-			resolution: "DC 13 Dex save",
+			resolution: "DC 13 Agility check",
 		},
 		tags: ["lightning", "sigil", "weapon"],
 		image: "/generated/sigils/lightning-sigil.webp",
@@ -303,7 +303,7 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Static Overload",
 			description:
-				"For 1 minute, attackers take 2d6 lightning damage and lose reactions (No save).",
+				"A protective mandate from the System, etched into void-glass. It generates a shimmering shimmering frost shroud that dampens incoming kinetic force.",
 			action_type: "bonus-action",
 			duration: "1 minute",
 			damage: "2d6 lightning",
@@ -317,7 +317,7 @@ export const sigils: SigilEntry[] = [
 		description:
 			"A mastercrafted sigil. When inscribed on a shield, it channels pure lightning energy to grant unique abilities.",
 		effect_description:
-			"When you block an attack, you can use your reaction to trigger 'Thunderous Reprisal', pushing the attacker 15 feet away and dealing 2d6 thunder damage (DC 15 Strength save to avoid push).",
+			"When you block an attack, you can use your reaction to trigger 'Thunderous Reprisal', pushing the attacker 15 feet away and dealing 2d6 thunder damage (DC 15 Strength check to avoid push).",
 		rune_type: "defensive",
 		rune_category: "Defense",
 		rune_level: 4,
@@ -332,10 +332,10 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Thunderous Reprisal",
 			description:
-				"Push attacker 15ft and deal 2d6 thunder damage (DC 15 Str save for push).",
+				"An intricate web of frozen moonlight designed for aetheric flow stabilization. It provides the wielder with flickering shadows during complex System interactions.",
 			action_type: "reaction",
 			damage: "2d6 thunder",
-			resolution: "DC 15 Str save",
+			resolution: "DC 15 Str check",
 		},
 		tags: ["lightning", "sigil", "shield"],
 		image: "/generated/sigils/lightning-sigil.webp",
@@ -362,7 +362,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-lightning-boots-15",
 		name: "Sigil of Lightning Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure lightning energy to grant unique abilities.",
+			"An intricate web of liquid aether designed for elemental potential stabilization. It provides the wielder with shimmering frost during complex System interactions.",
 		effect_description:
 			"Your movement speed increases by 40 ft. Moving out of an enemy's reach does not provoke opportunity attacks.",
 		rune_type: "martial",
@@ -384,7 +384,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-shadow-weapon-16",
 		name: "Sigil of Shadow Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure shadow energy to grant unique abilities.",
+			"A series of jagged, aggressive runes etched into frozen moonlight. When bound to a weapon, it leeches umbral essence from the wielder's surroundings, manifesting as shimmering frost.",
 		effect_description:
 			"Your weapon attacks deal an extra 1d8 necrotic damage. You gain advantage on attacks against targets in dim light or darkness.",
 		rune_type: "offensive",
@@ -404,7 +404,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-shadow-armor-17",
 		name: "Sigil of Shadow Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure shadow energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's tempered gate-steel surface absorbs elemental potential and vents it as shimmering frost.",
 		effect_description:
 			"Grants resistance to necrotic damage. While in dim light, attacks against you have disadvantage.",
 		rune_type: "defensive",
@@ -426,7 +426,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-shadow-shield-18",
 		name: "Sigil of Shadow Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure shadow energy to grant unique abilities.",
+			"A protective mandate from the System, etched into liquid aether. It generates a shimmering white-hot sparks shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to fade into shadows, becoming invisible until the start of your next turn.",
 		rune_type: "defensive",
@@ -450,7 +450,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-shadow-accessory-19",
 		name: "Sigil of Shadow Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure shadow energy to grant unique abilities.",
+			"An intricate web of obsidian shards designed for aetheric flow stabilization. It provides the wielder with crackling arcs during complex System interactions.",
 		effect_description:
 			"Your illusion and necrotic spells have their range doubled.",
 		rune_type: "caster",
@@ -469,7 +469,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-shadow-boots-20",
 		name: "Sigil of Shadow Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure shadow energy to grant unique abilities.",
+			"A multi-layered tempered gate-steel sigil that acts as a focal point for spectral resonance manipulation. It grants the wielder luminous ripples capabilities.",
 		effect_description:
 			"You can use a bonus action to teleport up to 80 feet to an unoccupied space you can see that is also in dim light or darkness.",
 		rune_type: "martial",
@@ -495,7 +495,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-light-weapon-21",
 		name: "Sigil of Light Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure light energy to grant unique abilities.",
+			"The System's offensive directive is transcribed here in liquid aether. It hums with a umbral essence frequency, causing the weapon's edge to shimmer with shimmering frost.",
 		effect_description:
 			"Your weapon attacks deal an extra 3d8 radiant damage. The target sheds bright light for 10 feet and cannot benefit from invisibility.",
 		rune_type: "offensive",
@@ -515,7 +515,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-light-armor-22",
 		name: "Sigil of Light Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure light energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's liquid aether surface absorbs elemental potential and vents it as luminous ripples.",
 		effect_description:
 			"Grants resistance to radiant damage. You emit bright light in a 15-foot radius; allies within this light gain +1 to saving throws.",
 		rune_type: "defensive",
@@ -537,9 +537,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-light-shield-23",
 		name: "Sigil of Light Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure light energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's crystallized mana surface absorbs spectral resonance and vents it as luminous ripples.",
 		effect_description:
-			"When you block an attack, you can use your reaction to trigger 'Solar Flare', forcing the attacker to make a DC 17 Constitution save or take 3d6 radiant damage and be blinded until the end of their turn.",
+			"When you block an attack, you can use your reaction to trigger 'Solar Flare', forcing the attacker to make a DC 17 Vitality check or take 3d6 radiant damage and be blinded until the end of their turn.",
 		rune_type: "defensive",
 		rune_category: "Defense",
 		rune_level: 6,
@@ -554,10 +554,10 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Solar Flare",
 			description:
-				"As reaction to block, deal 3d6 radiant and blind (DC 17 Con save).",
+				"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the umbral essence of the world through distorted space overlays.",
 			action_type: "reaction",
 			damage: "3d6 radiant",
-			resolution: "DC 17 Con save",
+			resolution: "DC 17 Vitality check",
 			condition: "Blinded",
 		},
 		tags: ["light", "sigil", "shield"],
@@ -586,7 +586,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-light-boots-25",
 		name: "Sigil of Light Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure light energy to grant unique abilities.",
+			"A multi-layered obsidian shards sigil that acts as a focal point for kinetic force manipulation. It grants the wielder luminous ripples capabilities.",
 		effect_description:
 			"As a bonus action, you can activate 'Solar Dash' to move up to your speed. You leave a trail of floating starlight that illuminates a 10ft radius for 1 minute.",
 		rune_type: "martial",
@@ -602,7 +602,8 @@ export const sigils: SigilEntry[] = [
 		},
 		active_feature: {
 			name: "Solar Dash",
-			description: "Dash as bonus action, leaving light trail.",
+			description:
+				"Forged from the residue of a Rank-S gate, this sigil pulses with spectral resonance. It rewrites the weapon's soul-signature to favor shimmering frost strikes.",
 			action_type: "bonus-action",
 		},
 		tags: ["light", "sigil", "boots"],
@@ -614,7 +615,7 @@ export const sigils: SigilEntry[] = [
 		description:
 			"A mastercrafted sigil. When inscribed on a weapon, it channels pure earth energy to grant unique abilities.",
 		effect_description:
-			"Your weapon attacks deal an extra 3d6 bludgeoning damage. Once per short rest, you can unleash a 'Quake Strike', forcing the target to make a DC 17 Strength save or be knocked prone and restrained until the end of its next turn.",
+			"Your weapon attacks deal an extra 3d6 bludgeoning damage. Once per short rest, you can unleash a 'Quake Strike', forcing the target to make a DC 17 Strength check or be knocked prone and restrained until the end of its next turn.",
 		rune_type: "offensive",
 		rune_category: "Combat",
 		rune_level: 6,
@@ -629,10 +630,11 @@ export const sigils: SigilEntry[] = [
 		},
 		active_feature: {
 			name: "Quake Strike",
-			description: "On hit, add prone/restrained (DC 17 Str save).",
+			description:
+				"A protective mandate from the System, etched into liquid aether. It generates a shimmering crackling arcs shroud that dampens incoming kinetic force.",
 			action_type: "bonus-action",
 			damage: "3d6 bludgeoning",
-			resolution: "DC 17 Strength save",
+			resolution: "DC 17 Strength check",
 			condition: "Restrained",
 		},
 		tags: ["earth", "sigil", "weapon"],
@@ -664,7 +666,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-earth-shield-28",
 		name: "Sigil of Earth Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure earth energy to grant unique abilities.",
+			"A protective mandate from the System, etched into tempered gate-steel. It generates a shimmering white-hot sparks shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you gain temporary hit points equal to the damage blocked, up to 40.",
 		rune_type: "defensive",
@@ -686,7 +688,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-earth-accessory-29",
 		name: "Sigil of Earth Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure earth energy to grant unique abilities.",
+			"The System's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the spectral resonance of the world through flickering shadows overlays.",
 		effect_description:
 			"Earth and transmutation spells you cast count as one level higher.",
 		rune_type: "caster",
@@ -705,7 +707,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-earth-boots-30",
 		name: "Sigil of Earth Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure earth energy to grant unique abilities.",
+			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the elemental potential of the world through crackling arcs overlays.",
 		effect_description:
 			"You gain tremorsense out to 40 feet and ignore difficult terrain made of earth or stone.",
 		rune_type: "martial",
@@ -724,7 +726,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-wind-weapon-31",
 		name: "Sigil of Wind Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure wind energy to grant unique abilities.",
+			"Forged from the residue of a Rank-A gate, this sigil pulses with thermal energy. It rewrites the weapon's soul-signature to favor white-hot sparks strikes.",
 		effect_description:
 			"Your weapon attacks gain reach (an extra 5 feet) and deal an extra 1d8 slashing damage from razor winds.",
 		rune_type: "offensive",
@@ -744,9 +746,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-wind-armor-32",
 		name: "Sigil of Wind Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure wind energy to grant unique abilities.",
+			"Interlocking geometric patterns of crystallized mana form a localized thermal energy field. It acts as a primary buffer against white-hot sparks incursions.",
 		effect_description:
-			"Grants advantage on Dexterity saving throws against area of effect spells. Missiles have a 50% chance to be deflected away from you.",
+			"Grants advantage on Agility saving throws against area of effect spells. Missiles have a 50% chance to be deflected away from you.",
 		rune_type: "defensive",
 		rune_category: "Defense",
 		rune_level: 2,
@@ -755,7 +757,7 @@ export const sigils: SigilEntry[] = [
 		requires_level: 2,
 		passive_bonuses: {
 			traits: [
-				"Advantage on Dex saves vs AoE",
+				"Advantage on Agility checks vs AoE",
 				"50% chance to deflect missiles",
 			],
 		},
@@ -766,7 +768,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-wind-shield-33",
 		name: "Sigil of Wind Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure wind energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's tempered gate-steel surface absorbs umbral essence and vents it as white-hot sparks.",
 		effect_description:
 			"When you block a ranged attack, you can use your reaction to redirect the projectile at another target within 30 feet.",
 		rune_type: "defensive",
@@ -788,7 +790,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-wind-accessory-34",
 		name: "Sigil of Wind Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure wind energy to grant unique abilities.",
+			"An intricate web of tempered gate-steel designed for aetheric flow stabilization. It provides the wielder with crackling arcs during complex System interactions.",
 		effect_description:
 			"Your spells that deal thunder or slashing damage push targets 10 feet away on a failed saving throw.",
 		rune_type: "caster",
@@ -807,7 +809,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-wind-boots-35",
 		name: "Sigil of Wind Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure wind energy to grant unique abilities.",
+			"A multi-layered tempered gate-steel sigil that acts as a focal point for thermal energy manipulation. It grants the wielder shimmering frost capabilities.",
 		effect_description:
 			"You can cast Levitate on yourself at will, and you have advantage on Acrobatics checks.",
 		rune_type: "martial",
@@ -831,7 +833,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-blood-weapon-36",
 		name: "Sigil of Blood Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure blood energy to grant unique abilities.",
+			"A series of jagged, aggressive runes etched into obsidian shards. When bound to a weapon, it leeches spectral resonance from the wielder's surroundings, manifesting as crackling arcs.",
 		effect_description:
 			"Your weapon attacks deal an extra 3d8 necrotic damage. You heal for half of the necrotic damage dealt.",
 		rune_type: "offensive",
@@ -851,7 +853,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-blood-armor-37",
 		name: "Sigil of Blood Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure blood energy to grant unique abilities.",
+			"Interlocking geometric patterns of soul-bonded alloy form a localized aetheric flow field. It acts as a primary buffer against shimmering frost incursions.",
 		effect_description:
 			"When you fall below half your maximum hit points, you gain temporary HP equal to 90.",
 		rune_type: "defensive",
@@ -877,7 +879,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-blood-shield-38",
 		name: "Sigil of Blood Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure blood energy to grant unique abilities.",
+			"A protective mandate from the System, etched into obsidian shards. It generates a shimmering crackling arcs shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can expend a Hit Die to immediately heal yourself.",
 		rune_type: "defensive",
@@ -895,7 +897,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-blood-accessory-39",
 		name: "Sigil of Blood Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure blood energy to grant unique abilities.",
+			"The System's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the aetheric flow of the world through luminous ripples overlays.",
 		effect_description:
 			"When you cast a spell that deals damage, you can expend 5 HP to max out one of the damage dice.",
 		rune_type: "caster",
@@ -913,7 +915,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-blood-boots-40",
 		name: "Sigil of Blood Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure blood energy to grant unique abilities.",
+			"A multi-layered crystallized mana sigil that acts as a focal point for spectral resonance manipulation. It grants the wielder shimmering frost capabilities.",
 		effect_description:
 			"You can flawlessly track bleeding targets up to 1 mile away, and you gain +10 movement speed when moving toward a wounded enemy.",
 		rune_type: "martial",
@@ -931,7 +933,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-weapon-41",
 		name: "Sigil of Void Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure void energy to grant unique abilities.",
+			"The System's offensive directive is transcribed here in crystallized mana. It hums with a thermal energy frequency, causing the weapon's edge to shimmer with luminous ripples.",
 		effect_description:
 			"Your weapon attacks deal an extra 1d6 force damage. Targets hit lose their resistance to force damage for 1 minute.",
 		rune_type: "offensive",
@@ -951,7 +953,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-armor-42",
 		name: "Sigil of Void Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure void energy to grant unique abilities.",
+			"A protective mandate from the System, etched into soul-bonded alloy. It generates a shimmering flickering shadows shroud that dampens incoming kinetic force.",
 		effect_description:
 			"Grants resistance to force damage. Spells targeting you have a 20% chance to be absorbed harmlessly into the void.",
 		rune_type: "defensive",
@@ -973,7 +975,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-shield-43",
 		name: "Sigil of Void Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure void energy to grant unique abilities.",
+			"A protective mandate from the System, etched into obsidian shards. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to create a gravity well, pulling enemies within 15 feet exactly 5 feet closer to you.",
 		rune_type: "defensive",
@@ -996,7 +998,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-accessory-44",
 		name: "Sigil of Void Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure void energy to grant unique abilities.",
+			"A multi-layered frozen moonlight sigil that acts as a focal point for spectral resonance manipulation. It grants the wielder shimmering frost capabilities.",
 		effect_description:
 			"Your spells ignore half cover and three-quarters cover.",
 		rune_type: "caster",
@@ -1015,7 +1017,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-boots-45",
 		name: "Sigil of Void Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure void energy to grant unique abilities.",
+			"A multi-layered tempered gate-steel sigil that acts as a focal point for thermal energy manipulation. It grants the wielder shimmering frost capabilities.",
 		effect_description:
 			"You hover slightly off the ground, leaving no tracks and ignoring ground-based traps. You are immune to the Prone condition.",
 		rune_type: "martial",
@@ -1034,7 +1036,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-time-weapon-46",
 		name: "Sigil of Time Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure time energy to grant unique abilities.",
+			"A series of jagged, aggressive runes etched into frozen moonlight. When bound to a weapon, it leeches aetheric flow from the wielder's surroundings, manifesting as white-hot sparks.",
 		effect_description:
 			"When you take the Attack action, you can make one additional weapon attack as a bonus action, dealing 3d8 force damage.",
 		rune_type: "offensive",
@@ -1057,9 +1059,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-time-armor-47",
 		name: "Sigil of Time Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure time energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's crystallized mana surface absorbs kinetic force and vents it as luminous ripples.",
 		effect_description:
-			"Once per long rest, when you would be reduced to 0 hit points, time rewinds, restoring you to the hit points you had at the start of your previous turn.",
+			"Once per long rest, when you would be reduced to 0 hit points, time rewinds, restoring you to the hit points you had at the start of your prior turn.",
 		rune_type: "defensive",
 		rune_category: "Defense",
 		rune_level: 2,
@@ -1069,7 +1071,7 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Time Rewind",
 			description:
-				"Once per long rest, if reduced to 0 HP, restore HP to start of previous turn.",
+				"Once per long rest, if reduced to 0 HP, restore HP to start of prior turn.",
 			action_type: "reaction", // automatic trigger
 			uses_max: 1,
 			recharge: "Long Rest",
@@ -1081,7 +1083,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-time-shield-48",
 		name: "Sigil of Time Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure time energy to grant unique abilities.",
+			"Interlocking geometric patterns of soul-bonded alloy form a localized spectral resonance field. It acts as a primary buffer against shimmering frost incursions.",
 		effect_description:
 			"When you are hit by an attack, you can use your reaction to force the attacker to reroll the attack (taking the lower result).",
 		rune_type: "defensive",
@@ -1103,7 +1105,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-time-accessory-49",
 		name: "Sigil of Time Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure time energy to grant unique abilities.",
+			"An intricate web of tempered gate-steel designed for kinetic force stabilization. It provides the wielder with shimmering frost during complex System interactions.",
 		effect_description:
 			"You have advantage on Initiative rolls, and you can cast 'Haste' once per long rest without expending a slot.",
 		rune_type: "caster",
@@ -1129,7 +1131,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-time-boots-50",
 		name: "Sigil of Time Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure time energy to grant unique abilities.",
+			"A multi-layered tempered gate-steel sigil that acts as a focal point for elemental potential manipulation. It grants the wielder luminous ripples capabilities.",
 		effect_description:
 			"You can use a bonus action to mark your current location in time. At the end of your next turn, you teleport back to that space.",
 		rune_type: "martial",
@@ -1151,7 +1153,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-weapon-51",
 		name: "Sigil of Space Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure space energy to grant unique abilities.",
+			"A series of jagged, aggressive runes etched into crystallized mana. When bound to a weapon, it leeches elemental potential from the wielder's surroundings, manifesting as luminous ripples.",
 		effect_description:
 			"Your melee attacks can hit targets up to 15 feet away through micro-portals, dealing an extra 1d8 force damage.",
 		rune_type: "offensive",
@@ -1171,7 +1173,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-armor-52",
 		name: "Sigil of Space Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure space energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's frozen moonlight surface absorbs spectral resonance and vents it as shimmering frost.",
 		effect_description:
 			"Ranged attacks against you are made with disadvantage as reality distort around you.",
 		rune_type: "defensive",
@@ -1190,7 +1192,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-shield-53",
 		name: "Sigil of Space Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure space energy to grant unique abilities.",
+			"A protective mandate from the System, etched into tempered gate-steel. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to swap places with a willing creature within 30 feet.",
 		rune_type: "defensive",
@@ -1213,7 +1215,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-accessory-54",
 		name: "Sigil of Space Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure space energy to grant unique abilities.",
+			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the thermal energy of the world through distorted space overlays.",
 		effect_description:
 			"Your spells double in range, and touch spells can be cast at a distance of 30 feet.",
 		rune_type: "caster",
@@ -1232,7 +1234,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-boots-55",
 		name: "Sigil of Space Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure space energy to grant unique abilities.",
+			"The System's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the thermal energy of the world through crackling arcs overlays.",
 		effect_description:
 			"You can teleport up to your movement speed instead of walking.",
 		rune_type: "martial",
@@ -1251,7 +1253,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-mind-weapon-56",
 		name: "Sigil of Mind Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure mind energy to grant unique abilities.",
+			"Forged from the residue of a Rank-C gate, this sigil pulses with thermal energy. It rewrites the weapon's soul-signature to favor distorted space strikes.",
 		effect_description:
 			"Your weapon attacks deal an extra 1d6 psychic damage. On a critical hit, the target is confused until their next turn.",
 		rune_type: "offensive",
@@ -1271,7 +1273,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-mind-armor-57",
 		name: "Sigil of Mind Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure mind energy to grant unique abilities.",
+			"Interlocking geometric patterns of tempered gate-steel form a localized elemental potential field. It acts as a primary buffer against white-hot sparks incursions.",
 		effect_description:
 			"Grants resistance to psychic damage. You are immune to being charmed or frightened.",
 		rune_type: "defensive",
@@ -1290,7 +1292,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-mind-shield-58",
 		name: "Sigil of Mind Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure mind energy to grant unique abilities.",
+			"A protective mandate from the System, etched into void-glass. It generates a shimmering luminous ripples shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block a melee attack, the attacker takes 2d8 psychic damage from a mental backlash.",
 		rune_type: "defensive",
@@ -1313,9 +1315,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-mind-accessory-59",
 		name: "Sigil of Mind Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure mind energy to grant unique abilities.",
+			"A multi-layered tempered gate-steel sigil that acts as a focal point for thermal energy manipulation. It grants the wielder luminous ripples capabilities.",
 		effect_description:
-			"You gain telepathy out to 60 feet, and illusion spells you cast require an Intelligence saving throw instead of Wisdom.",
+			"You gain telepathy out to 60 feet, and illusion spells you cast require an Intelligence saving throw instead of Sense.",
 		rune_type: "caster",
 		rune_category: "Control",
 		rune_level: 8,
@@ -1323,7 +1325,10 @@ export const sigils: SigilEntry[] = [
 		effect_type: "passive",
 		requires_level: 8,
 		passive_bonuses: {
-			traits: ["Telepathy 60ft", "Illusion spells use INT save instead of WIS"],
+			traits: [
+				"Telepathy 60ft",
+				"Illusion spells use INT save instead of SENSE",
+			],
 		},
 		tags: ["mind", "sigil", "accessory"],
 		image: "/generated/sigils/mind-sigil.webp",
@@ -1332,7 +1337,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-mind-boots-60",
 		name: "Sigil of Mind Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure mind energy to grant unique abilities.",
+			"An intricate web of crystallized mana designed for thermal energy stabilization. It provides the wielder with flickering shadows during complex System interactions.",
 		effect_description:
 			"You can use a bonus action to become invisible to one specific creature you can see for 1 minute.",
 		rune_type: "martial",
@@ -1355,7 +1360,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-soul-weapon-61",
 		name: "Sigil of Soul Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure soul energy to grant unique abilities.",
+			"The System's offensive directive is transcribed here in tempered gate-steel. It hums with a spectral resonance frequency, causing the weapon's edge to shimmer with shimmering frost.",
 		effect_description:
 			"Your attacks deal an extra 1d6 radiant or necrotic damage (your choice). Slain enemies can't be raised as undead.",
 		rune_type: "offensive",
@@ -1375,7 +1380,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-soul-armor-62",
 		name: "Sigil of Soul Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure soul energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's soul-bonded alloy surface absorbs spectral resonance and vents it as white-hot sparks.",
 		effect_description:
 			"You gain advantage on death saving throws. When you heal a creature, you both gain 40 temporary hit points.",
 		rune_type: "defensive",
@@ -1397,7 +1402,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-soul-shield-63",
 		name: "Sigil of Soul Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure soul energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's frozen moonlight surface absorbs umbral essence and vents it as shimmering frost.",
 		effect_description:
 			"When you block an attack, you can use your reaction to grant an ally within 30 feet a bonus to their next saving throw equal to your proficiency modifier.",
 		rune_type: "defensive",
@@ -1420,7 +1425,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-soul-accessory-64",
 		name: "Sigil of Soul Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure soul energy to grant unique abilities.",
+			"An intricate web of obsidian shards designed for thermal energy stabilization. It provides the wielder with distorted space during complex System interactions.",
 		effect_description:
 			"Your soul fuels your magic. You can cast spells without material components up to a value of 300 gold.",
 		rune_type: "caster",
@@ -1439,7 +1444,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-soul-boots-65",
 		name: "Sigil of Soul Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure soul energy to grant unique abilities.",
+			"The System's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the umbral essence of the world through flickering shadows overlays.",
 		effect_description:
 			"You can walk through solid objects up to 5 feet thick as difficult terrain once per turn.",
 		rune_type: "martial",
@@ -1460,7 +1465,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-nature-weapon-66",
 		name: "Sigil of Nature Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure nature energy to grant unique abilities.",
+			"A series of jagged, aggressive runes etched into crystallized mana. When bound to a weapon, it leeches spectral resonance from the wielder's surroundings, manifesting as flickering shadows.",
 		effect_description:
 			"Your weapons deal an extra 2d8 poison damage. On a hit, thorns sprout from the wound causing 1d4 damage if the target moves.",
 		rune_type: "offensive",
@@ -1480,7 +1485,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-nature-armor-67",
 		name: "Sigil of Nature Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure nature energy to grant unique abilities.",
+			"Interlocking geometric patterns of tempered gate-steel form a localized spectral resonance field. It acts as a primary buffer against shimmering frost incursions.",
 		effect_description:
 			"Grants resistance to poison damage. You blend into natural terrain, gaining advantage on Stealth checks in wilderness.",
 		rune_type: "defensive",
@@ -1502,7 +1507,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-nature-shield-68",
 		name: "Sigil of Nature Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure nature energy to grant unique abilities.",
+			"Derived from the shell of a gate-born behemoth, this sigil's soul-bonded alloy surface absorbs umbral essence and vents it as white-hot sparks.",
 		effect_description:
 			"When you block an attack, grasping vines erupt, reducing the attacker's speed to 0 until the start of their next turn.",
 		rune_type: "defensive",
@@ -1523,7 +1528,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-nature-accessory-69",
 		name: "Sigil of Nature Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure nature energy to grant unique abilities.",
+			"An intricate web of void-glass designed for elemental potential stabilization. It provides the wielder with shimmering frost during complex System interactions.",
 		effect_description:
 			"Beasts and plants will not attack you unless provoked. Your healing spells also cure the poisoned condition.",
 		rune_type: "caster",
@@ -1545,7 +1550,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-nature-boots-70",
 		name: "Sigil of Nature Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure nature energy to grant unique abilities.",
+			"The System's discernment mandate, etched into frozen moonlight. It allows the wielder to perceive the elemental potential of the world through flickering shadows overlays.",
 		effect_description:
 			"You ignore difficult terrain caused by plants or natural overgrowth, and you leave no trace of your passage.",
 		rune_type: "martial",
@@ -1564,7 +1569,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-metal-weapon-71",
 		name: "Sigil of Metal Strikes",
 		description:
-			"A mastercrafted sigil. When inscribed on a weapon, it channels pure metal energy to grant unique abilities.",
+			"A series of jagged, aggressive runes etched into soul-bonded alloy. When bound to a weapon, it leeches kinetic force from the wielder's surroundings, manifesting as luminous ripples.",
 		effect_description:
 			"Your attacks are considered adamantine, dealing max damage to objects and ignoring resistances of constructs. They deal an extra 2d8 slashing damage.",
 		rune_type: "offensive",
@@ -1586,7 +1591,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-metal-armor-72",
 		name: "Sigil of Metal Bulwark",
 		description:
-			"A mastercrafted sigil. When inscribed on a armor, it channels pure metal energy to grant unique abilities.",
+			"A protective mandate from the System, etched into liquid aether. It generates a shimmering shimmering frost shroud that dampens incoming kinetic force.",
 		effect_description:
 			"Your AC increases by +2, and critical hits against you become normal hits.",
 		rune_type: "defensive",
@@ -1606,9 +1611,9 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-metal-shield-73",
 		name: "Sigil of Metal Deflection",
 		description:
-			"A mastercrafted sigil. When inscribed on a shield, it channels pure metal energy to grant unique abilities.",
+			"Interlocking geometric patterns of tempered gate-steel form a localized thermal energy field. It acts as a primary buffer against flickering shadows incursions.",
 		effect_description:
-			"When you block an attack, you can use your reaction to disarm the attacker if they are wielding a metal weapon (DC 30 Strength save).",
+			"When you block an attack, you can use your reaction to disarm the attacker if they are wielding a metal weapon (DC 30 Strength check).",
 		rune_type: "defensive",
 		rune_category: "Defense",
 		rune_level: 8,
@@ -1618,9 +1623,9 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Iron Grip Disarm",
 			description:
-				"As reaction to block metal weapon, force DC 30 Str save or disarm.",
+				"As reaction to block metal weapon, force DC 30 Str check or disarm.",
 			action_type: "reaction",
-			resolution: "DC 30 Strength save",
+			resolution: "DC 30 Strength check",
 		},
 		tags: ["metal", "sigil", "shield"],
 		image: "/generated/sigils/metal-sigil.webp",
@@ -1629,7 +1634,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-metal-accessory-74",
 		name: "Sigil of Metal Channeling",
 		description:
-			"A mastercrafted sigil. When inscribed on a accessory, it channels pure metal energy to grant unique abilities.",
+			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the spectral resonance of the world through crackling arcs overlays.",
 		effect_description:
 			"You have advantage on saving throws to maintain concentration, and you gain resistance to nonmagical bludgeoning damage.",
 		rune_type: "caster",
@@ -1651,7 +1656,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-metal-boots-75",
 		name: "Sigil of Metal Stride",
 		description:
-			"A mastercrafted sigil. When inscribed on a boots, it channels pure metal energy to grant unique abilities.",
+			"A multi-layered crystallized mana sigil that acts as a focal point for aetheric flow manipulation. It grants the wielder shimmering frost capabilities.",
 		effect_description:
 			"You cannot be forcibly moved by wind or magic, and your kicks deal 1d8 bludgeoning damage.",
 		rune_type: "martial",
@@ -1730,7 +1735,7 @@ export const sigils: SigilEntry[] = [
 		description:
 			"A deep blue sapphire. When socketed into an amulet, it grants mental clarity.",
 		effect_description:
-			"You gain a +1 bonus to Intelligence and Wisdom saving throws.",
+			"You gain a +1 bonus to Intelligence and Sense saving throws.",
 		rune_type: "caster",
 		rune_category: "Control",
 		rune_level: 5,
@@ -1738,7 +1743,7 @@ export const sigils: SigilEntry[] = [
 		effect_type: "passive",
 		requires_level: 5,
 		passive_bonuses: {
-			traits: ["+1 bonus to Intelligence and Wisdom saving throws"],
+			traits: ["+1 bonus to Intelligence and Sense saving throws"],
 		},
 		tags: ["insight", "sigil", "amulet", "gem"],
 		image: "/generated/sigils/insight-sigil.webp",
@@ -1748,7 +1753,7 @@ export const sigils: SigilEntry[] = [
 		name: "Umbral Obsidian",
 		description:
 			"A shard of pure black obsidian. When socketed into a cloak, it bends light around you.",
-		effect_description: "You gain advantage on Dexterity (Stealth) checks.",
+		effect_description: "You gain advantage on Agility (Stealth) checks.",
 		rune_type: "utility",
 		rune_category: "Stealth",
 		rune_level: 2,
@@ -1756,7 +1761,7 @@ export const sigils: SigilEntry[] = [
 		effect_type: "passive",
 		requires_level: 2,
 		passive_bonuses: {
-			traits: ["Advantage on Dexterity (Stealth) checks"],
+			traits: ["Advantage on Agility (Stealth) checks"],
 		},
 		tags: ["stealth", "sigil", "cloak", "gem"],
 		image: "/generated/sigils/shadow-sigil.webp",
@@ -1767,7 +1772,7 @@ export const sigils: SigilEntry[] = [
 		description:
 			"A cloudy, swirling opal. When socketed into a cloak, it grants limited flight.",
 		effect_description:
-			"You gain a fly speed of 20 feet. This speed cannot be used while wearing medium or heavy armor.",
+			"You gain a fly speed of 20 feet. This speed cannot be used while wearing medium or Heavy Carapace Armor.",
 		rune_type: "mobility",
 		rune_category: "Mobility",
 		rune_level: 6,
@@ -1776,7 +1781,7 @@ export const sigils: SigilEntry[] = [
 		requires_level: 6,
 		passive_bonuses: {
 			speed_bonus: 20,
-			traits: ["Fly speed 20ft (No medium/heavy armor)"],
+			traits: ["Fly speed 20ft (No medium/Heavy Carapace Armor)"],
 		},
 		tags: ["flight", "sigil", "cloak", "gem"],
 		image: "/generated/sigils/wind-sigil.webp",
@@ -1818,12 +1823,12 @@ export const sigils: SigilEntry[] = [
 		image: "/generated/sigils/ward-sigil.webp",
 	},
 	{
-		id: "sigil-gloves-dexterity-1",
-		name: "Tourmaline of Dexterity",
+		id: "sigil-gloves-agility-1",
+		name: "Tourmaline of Agility",
 		description:
 			"A multi-faceted tourmaline. When socketed into gloves, it enhances hand coordination.",
 		effect_description:
-			"You gain a +1 bonus to Dexterity (Sleight of Hand) checks.",
+			"You gain a +1 bonus to Agility (Sleight of Hand) checks.",
 		rune_type: "utility",
 		rune_category: "Enhancement",
 		rune_level: 2,
@@ -1832,7 +1837,7 @@ export const sigils: SigilEntry[] = [
 		requires_level: 2,
 		can_inscribe_on: ["gloves"],
 		inscription_difficulty: 12,
-		tags: ["dexterity", "sigil", "gloves", "gem"],
+		tags: ["agility", "sigil", "gloves", "gem"],
 		image: "/generated/sigils/wind-sigil.webp",
 	},
 	{
@@ -1841,7 +1846,7 @@ export const sigils: SigilEntry[] = [
 		description:
 			"A resonant quartz crystal. When socketed into gloves, it stabilizes spellcasting.",
 		effect_description:
-			"You have advantage on Constitution saving throws to maintain concentration on a spell.",
+			"You have advantage on Vitality saving throws to maintain concentration on a spell.",
 		rune_type: "caster",
 		rune_category: "Control",
 		rune_level: 4,
@@ -1893,7 +1898,7 @@ export const sigils: SigilEntry[] = [
 		name: "Emerald of Awareness",
 		description:
 			"A brilliant green emerald. When socketed into headwear, it sharpens perception.",
-		effect_description: "You gain a +1 bonus to Wisdom (Perception) checks.",
+		effect_description: "You gain a +1 bonus to Sense (Perception) checks.",
 		rune_type: "utility",
 		rune_category: "Enhancement",
 		rune_level: 2,
@@ -1906,12 +1911,12 @@ export const sigils: SigilEntry[] = [
 		image: "/generated/sigils/light-sigil.webp",
 	},
 	{
-		id: "sigil-headwear-charisma-2",
+		id: "sigil-headwear-presence-2",
 		name: "Sunstone of Presence",
 		description:
 			"A warm, golden sunstone. When socketed into headwear, it projects authority.",
 		effect_description:
-			"You gain advantage on Charisma (Persuasion) and Charisma (Intimidation) checks.",
+			"You gain advantage on Presence (Persuasion) and Presence (Intimidation) checks.",
 		rune_type: "utility",
 		rune_category: "Social",
 		rune_level: 6,
@@ -1920,7 +1925,7 @@ export const sigils: SigilEntry[] = [
 		requires_level: 6,
 		can_inscribe_on: ["headwear"],
 		inscription_difficulty: 16,
-		tags: ["charisma", "sigil", "headwear", "gem"],
+		tags: ["presence", "sigil", "headwear", "gem"],
 		image: "/generated/sigils/light-sigil.webp",
 	},
 	{
@@ -1943,7 +1948,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-lifeblood-ruby",
 		name: "Lifeblood Ruby",
-		description: "A pulsating ruby that resonates with vitality.",
+		description:
+			"Derived from the shell of a gate-born behemoth, this sigil's obsidian shards surface absorbs elemental potential and vents it as shimmering frost.",
 		effect_description:
 			"Your hit point maximum increases by 10, and whenever you expend a Hit Die to heal, you regain an additional 1d4 hit points.",
 		rune_type: "defensive",
@@ -1995,7 +2001,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-thunderstrike-sapphire",
 		name: "Thunderstrike Sapphire",
-		description: "A crackling sapphire containing a trapped storm.",
+		description:
+			"An intricate web of crystallized mana designed for aetheric flow stabilization. It provides the wielder with flickering shadows during complex System interactions.",
 		effect_description:
 			"When you hit with an attack, you can trigger a thunderclap. The target and creatures within 5 feet take 2d6 thunder damage (recharges on a short rest).",
 		rune_type: "hybrid",
@@ -2012,7 +2019,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-minds-eye-pearl",
 		name: "Mind's Eye Pearl",
-		description: "An iridescent pearl that enhances mental acuity.",
+		description:
+			"An intricate web of obsidian shards designed for elemental potential stabilization. It provides the wielder with white-hot sparks during complex System interactions.",
 		effect_description:
 			"You can cast Detect Magic and Identify at will without expending a spell slot or material components.",
 		rune_type: "utility",
@@ -2046,7 +2054,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-manathirst-onyx",
 		name: "Manathirst Onyx",
-		description: "A pitch-black onyx that feeds on raw magic.",
+		description:
+			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the spectral resonance of the world through distorted space overlays.",
 		effect_description:
 			"When you counter or dispel a spell, you regain hit points equal to 1d8 + your spellcasting modifier.",
 		rune_type: "hybrid",
@@ -2080,7 +2089,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-martyrs-tear",
 		name: "Martyr's Tear",
-		description: "A crystallized tear of pure radiant energy.",
+		description:
+			"A multi-layered tempered gate-steel sigil that acts as a focal point for aetheric flow manipulation. It grants the wielder distorted space capabilities.",
 		effect_description:
 			"When an ally within 30 feet drops to 0 hit points, you can use your reaction to instantly stabilize them and heal them for 1 HP instead. In exchange, you suffer 3d8 radiant damage. (Once per short rest).",
 		rune_type: "hybrid",
@@ -2114,7 +2124,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-shadowstep-obsidian",
 		name: "Shadowstep Obsidian",
-		description: "A chunk of unreflective obsidian.",
+		description:
+			"A multi-layered soul-bonded alloy sigil that acts as a focal point for aetheric flow manipulation. It grants the wielder shimmering frost capabilities.",
 		effect_description:
 			"As a bonus action, you can teleport up to 30 feet to an unoccupied space you can see that is in dim light or darkness. (Proficiency Bonus times per long rest).",
 		rune_type: "utility",
@@ -2149,7 +2160,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-vampiric-garnet",
 		name: "Vampiric Garnet",
-		description: "A deep crimson garnet that thirsts for life force.",
+		description:
+			"The System's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the kinetic force of the world through luminous ripples overlays.",
 		effect_description:
 			"When you deal a critical hit with this weapon, you regain hit points equal to half the necrotic or slashing damage dealt.",
 		rune_type: "hybrid",
@@ -2184,7 +2196,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-binary-void-data-pearl",
 		name: "Binary Void-Data Pearl",
-		description: "A pearl harvested from the crushing depths.",
+		description:
+			"The System's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the elemental potential of the world through crackling arcs overlays.",
 		effect_description:
 			"You gain a swimming speed of 40 feet and can breathe underwater. You also gain resistance to cold damage.",
 		rune_type: "utility",
@@ -2219,9 +2232,10 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-basilisk-scale",
 		name: "Petrified Basilisk Scale",
-		description: "A scale hardened into a gem-like substance.",
+		description:
+			"Derived from the shell of a gate-born behemoth, this sigil's crystallized mana surface absorbs aetheric flow and vents it as white-hot sparks.",
 		effect_description:
-			"When a creature within 10 feet of you hits you with a melee attack, it must succeed on a DC 15 Constitution saving throw or have its speed reduced by 10 feet until the start of its next turn.",
+			"When a creature within 10 feet of you hits you with a melee attack, it must succeed on a DC 15 Vitality saving throw or have its speed reduced by 10 feet until the start of its next turn.",
 		rune_type: "defensive",
 		rune_category: "Defense",
 		rune_level: 4,
@@ -2239,7 +2253,7 @@ export const sigils: SigilEntry[] = [
 		description:
 			"A crystal that seems to vibrate out of sync with normal time.",
 		effect_description:
-			"You gain a +2 bonus to initiative rolls. Once per long rest, you can use a reaction to reroll a failed Dexterity saving throw.",
+			"You gain a +2 bonus to initiative rolls. Once per long rest, you can use a reaction to reroll a failed Agility saving throw.",
 		rune_type: "hybrid",
 		rune_category: "Control",
 		rune_level: 7,
@@ -2254,7 +2268,8 @@ export const sigils: SigilEntry[] = [
 	{
 		id: "sigil-gem-phoenix-feather",
 		name: "Crystallized Phoenix Feather",
-		description: "A feather encased in eternal, solidified golden light.",
+		description:
+			"A protective mandate from the System, etched into obsidian shards. It generates a shimmering luminous ripples shroud that dampens incoming kinetic force.",
 		effect_description:
 			"If you drop to 0 hit points and don't die outright, you can drop to 1 hit point instead and release a burst of fire dealing 2d6 fire damage to creatures in a 10-ft radius. (Once per long rest).",
 		rune_type: "defensive",
@@ -2283,7 +2298,7 @@ export const sigils: SigilEntry[] = [
 		requires_level: 10,
 		can_inscribe_on: ["boots", "accessory"],
 		passive_bonuses: {
-			traits: ["Advantage on Dexterity (Stealth) checks"],
+			traits: ["Advantage on Agility (Stealth) checks"],
 		},
 		active_feature: {
 			name: "Void Blink",

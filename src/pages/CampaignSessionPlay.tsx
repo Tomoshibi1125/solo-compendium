@@ -127,7 +127,7 @@ const CampaignSessionPlay = () => {
 							Active Engagement
 						</SystemHeading>
 						<DataStreamText variant="system" speed="slow" className="text-sm">
-							Live engagement matrix: initiative queues, temporal tracking, and
+							Live engagement Lattice: initiative queues, temporal tracking, and
 							dimensional topology.
 						</DataStreamText>
 					</div>

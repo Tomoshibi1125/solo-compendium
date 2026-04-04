@@ -24,7 +24,7 @@ type TokenBlendMode =
 
 type PlacedToken = {
 	id: string;
-	tokenType?: "character" | "monster" | "npc" | "prop" | "effect" | "custom";
+	tokenType?: "character" | "Anomaly" | "npc" | "prop" | "effect" | "custom";
 	name: string;
 	emoji?: string;
 	imageUrl?: string;

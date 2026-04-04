@@ -14,7 +14,7 @@ export interface CompendiumEntry {
 		| "powers"
 		| "runes"
 		| "relics"
-		| "monsters"
+		| "anomalies"
 		| "backgrounds"
 		| "conditions"
 		| "regents"
@@ -78,7 +78,7 @@ const STARTUP_CATEGORIES = [
 	"powers",
 	"runes",
 	"relics",
-	"monsters",
+	"anomalies",
 	"backgrounds",
 	"conditions",
 	"regents",
@@ -152,8 +152,8 @@ export const useStartupData = () => {
 						case "jobs":
 							data = await staticDataProvider.getJobs("");
 							break;
-						case "monsters":
-							data = await staticDataProvider.getMonsters("");
+						case "anomalies":
+							data = await staticDataProvider.getAnomalies("");
 							break;
 						case "powers":
 							data = await staticDataProvider.getPowers("");
@@ -238,7 +238,7 @@ export const useStartupData = () => {
 							image_url: item.image_url,
 							isFavorite: false,
 							// Include type-specific fields
-							...(category === "monsters" && {
+							...(category === "anomalies" && {
 								cr: item.cr ?? undefined,
 								gate_rank: item.gate_rank ?? undefined,
 								is_boss: item.is_boss ?? undefined,
@@ -309,9 +309,9 @@ export const useStartupData = () => {
 								)
 								.limit(STARTUP_LIMIT);
 							break;
-						case "monsters":
+						case "anomalies":
 							query = supabase
-								.from("compendium_monsters")
+								.from("compendium_Anomalies")
 								.select(
 									"id, name, display_name, description, created_at, tags, source_book, image_url, cr, gate_rank, is_boss",
 								)
@@ -497,7 +497,7 @@ export const useStartupData = () => {
 							image_url: item.image_url,
 							isFavorite: false,
 							// Include type-specific fields
-							...(category === "monsters" && {
+							...(category === "anomalies" && {
 								cr: item.cr ?? undefined,
 								gate_rank: item.gate_rank ?? undefined,
 								is_boss: item.is_boss ?? undefined,

@@ -72,12 +72,6 @@ interface VTTTokenMove {
 	movedBy: string;
 }
 
-interface VTTTokenUpdate {
-	tokenId: string;
-	updates: Record<string, unknown>;
-	updatedBy: string;
-}
-
 interface VTTSceneChange {
 	sceneId: string;
 	changedBy: string;
@@ -920,7 +914,7 @@ export function useVTTRealtime({
 		broadcast({ type: "initiative_update", payload: next });
 	}, [broadcast]);
 
-	// Ruler (live measurement visible to all)
+	// Exarch (live measurement visible to all)
 	const [rulerSegments, setRulerSegments] = useState<VTTRulerSegment[]>([]);
 
 	const broadcastRuler = useCallback(
@@ -1274,7 +1268,7 @@ export function useVTTRealtime({
 		// Cursor
 		updateCursor,
 
-		// Ruler (live measurement visible to all)
+		// Exarch (live measurement visible to all)
 		rulerSegments,
 		broadcastRuler,
 		clearRuler,

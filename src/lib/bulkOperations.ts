@@ -3,11 +3,15 @@
  * Perform operations on multiple items at once
  */
 
-import { jobs as staticJobs } from "@/data/compendium/jobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import {
+	addJobAwakeningBenefitsForLevel,
+	autoUpdateFeatureUses,
+} from "@/lib/characterCreation";
 import { error as logError } from "@/lib/logger";
+import { getStaticJobs } from "@/lib/ProtocolDataManager";
 import type { StaticJob } from "@/types/character";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
@@ -202,10 +206,7 @@ export async function bulkLevelUp(
 
 			// Grant job awakening benefits at the new level
 			try {
-				const { addJobAwakeningBenefitsForLevel } = await import(
-					"@/lib/characterCreation"
-				);
-				const jobObj = staticJobs.find((j) => j.name === character.job) as
+				const jobObj = getStaticJobs().find((j) => j.name === character.job) as
 					| StaticJob
 					| undefined;
 				await addJobAwakeningBenefitsForLevel(id, jobObj, newLevel);
@@ -215,9 +216,6 @@ export async function bulkLevelUp(
 
 			// Auto-update existing feature uses (proficiency-based features scale with level)
 			try {
-				const { autoUpdateFeatureUses } = await import(
-					"@/lib/characterCreation"
-				);
 				await autoUpdateFeatureUses(id);
 			} catch {
 				// Best-effort

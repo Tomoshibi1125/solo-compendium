@@ -5,10 +5,10 @@ import type { Database } from "@/integrations/supabase/types";
 
 type CharacterExtra = Database["public"]["Tables"]["character_extras"]["Row"];
 
-type CharacterExtraWithMonster = CharacterExtra & {
-	monster?:
-		| (Database["public"]["Tables"]["compendium_monsters"]["Row"] & {
-				actions?: Database["public"]["Tables"]["compendium_monster_actions"]["Row"][];
+type CharacterExtraWithAnomaly = CharacterExtra & {
+	Anomaly?:
+		| (Database["public"]["Tables"]["compendium_Anomalies"]["Row"] & {
+				actions?: Database["public"]["Tables"]["compendium_Anomaly_actions"]["Row"][];
 		  })
 		| null;
 };
@@ -24,9 +24,9 @@ export function useCharacterExtras(characterId: string) {
 				.from("character_extras")
 				.select(`
           *,
-          monster:compendium_monsters(
+          Anomaly:compendium_Anomalies(
             *,
-            actions:compendium_monster_actions(*)
+            actions:compendium_Anomaly_actions(*)
           )
         `)
 				.eq("character_id", characterId)
@@ -41,7 +41,7 @@ export function useCharacterExtras(characterId: string) {
 				return [];
 			}
 
-			return data as CharacterExtraWithMonster[];
+			return data as CharacterExtraWithAnomaly[];
 		},
 		enabled: !!characterId,
 	});

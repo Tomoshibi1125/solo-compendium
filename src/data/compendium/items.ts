@@ -16,7 +16,7 @@ export interface Item {
 	range?: string; // "Melee", "Ranged (20/60)", etc.
 	armor_class?: string; // "15 + Dex modifier", "18", etc.
 	armor_type?: string; // "Light", "Medium", "Heavy", "Shield"
-	stealth_disadvantage?: boolean; // For heavy armor
+	stealth_disadvantage?: boolean; // For Heavy Carapace Armor
 
 	// Sigils
 	sigil_slots_base?: number;
@@ -75,11 +75,11 @@ export interface Item {
 				savingThrows?: string[];
 				abilityScores?: {
 					strength?: number;
-					dexterity?: number;
-					constitution?: number;
+					agility?: number;
+					vitality?: number;
 					intelligence?: number;
-					wisdom?: number;
-					charisma?: number;
+					sense?: number;
+					presence?: number;
 				};
 			};
 			resistance?: string[];

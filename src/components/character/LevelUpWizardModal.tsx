@@ -31,8 +31,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-
-import { regents } from "@/data/compendium/regents";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter, useUpdateCharacter } from "@/hooks/useCharacters";
@@ -42,9 +40,11 @@ import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-
 import { getLevelingMode } from "@/lib/campaignSettings";
-import { autoUpdateFeatureUses } from "@/lib/characterCreation";
+import {
+	addJobAwakeningBenefitsForLevel,
+	autoUpdateFeatureUses,
+} from "@/lib/characterCreation";
 import { calculateFeatureUses } from "@/lib/characterEngine";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import {
@@ -54,6 +54,7 @@ import {
 } from "@/lib/domainEvents";
 import { isASILevel } from "@/lib/levelGating";
 import { logger } from "@/lib/logger";
+import { getStaticRegents } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -222,7 +223,7 @@ export const LevelUpWizardModal = ({
 		regentUnlocks.find((u: { is_primary?: boolean }) => u.is_primary) ??
 		regentUnlocks[0];
 	const regentData = primaryRegentUnlock
-		? regents.find(
+		? getStaticRegents().find(
 				(m: { id: string }) => m.id === primaryRegentUnlock.regent_id,
 			)
 		: null;
@@ -333,11 +334,11 @@ export const LevelUpWizardModal = ({
 	if (isLoading || jobsLoading || !character || !staticJobs) {
 		return (
 			<Dialog open={isOpen} onOpenChange={onClose}>
-				<DialogContent className="max-w-md bg-background border-arise/20">
+				<DialogContent className="max-w-md bg-background border-resurge/20">
 					<div className="flex flex-col items-center justify-center py-12 gap-4">
 						<div className="relative">
-							<div className="w-16 h-16 border-4 border-arise/20 rounded-full" />
-							<div className="absolute inset-0 w-16 h-16 border-4 border-t-arise rounded-full animate-spin" />
+							<div className="w-16 h-16 border-4 border-resurge/20 rounded-full" />
+							<div className="absolute inset-0 w-16 h-16 border-4 border-t-resurge rounded-full animate-spin" />
 						</div>
 						<p className="text-muted-foreground font-heading animate-pulse">
 							Accessing Ascendant Data...
@@ -354,14 +355,14 @@ export const LevelUpWizardModal = ({
 	if (character.level >= 20) {
 		return (
 			<Dialog open={isOpen} onOpenChange={onClose}>
-				<DialogContent className="max-w-2xl bg-background border-arise/20">
+				<DialogContent className="max-w-2xl bg-background border-resurge/20">
 					<SystemWindow
 						title="MAXIMUM LEVEL REACHED"
 						variant="alert"
 						className="text-center py-12"
 					>
 						<Crown className="w-16 h-16 mx-auto text-amber-400 mb-4" />
-						<p className="text-lg font-arise text-amber-400 mb-2">
+						<p className="text-lg font-resurge text-amber-400 mb-2">
 							{character.name} has reached the pinnacle of power.
 						</p>
 						<p className="text-muted-foreground">
@@ -607,9 +608,6 @@ export const LevelUpWizardModal = ({
 
 			// Grant job awakening benefits (awakening features + job traits) at this level
 			try {
-				const { addJobAwakeningBenefitsForLevel } = await import(
-					"@/lib/characterCreation"
-				);
 				await addJobAwakeningBenefitsForLevel(
 					character.id,
 					jobObj || character.job,
@@ -710,7 +708,7 @@ export const LevelUpWizardModal = ({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0 bg-background border-arise/20">
+			<DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0 bg-background border-resurge/20">
 				<DialogTitle className="sr-only">Level Up Protocol</DialogTitle>
 				<DialogDescription className="sr-only">
 					Ascendant advancement modal
@@ -719,26 +717,26 @@ export const LevelUpWizardModal = ({
 					<div className="px-4 py-6 sm:py-8 sm:px-6">
 						{/* Level Up Header */}
 						<div className="text-center mb-6 sm:mb-8">
-							<div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-arise/10 rounded-full border border-arise/30 mb-4">
-								<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-arise" />
-								<span className="font-arise text-arise tracking-wide text-sm sm:text-base">
+							<div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-resurge/10 rounded-full border border-resurge/30 mb-4">
+								<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-resurge" />
+								<span className="font-resurge text-resurge tracking-wide text-sm sm:text-base">
 									LEVEL UP PROTOCOL
 								</span>
 							</div>
-							<h1 className="font-arise text-2xl sm:text-3xl font-bold gradient-text-shadow tracking-wider mb-2 leading-tight">
+							<h1 className="font-resurge text-2xl sm:text-3xl font-bold gradient-text-shadow tracking-wider mb-2 leading-tight">
 								{character.name.toUpperCase()}
 							</h1>
-							<div className="flex items-center justify-center gap-2 sm:gap-4 text-lg sm:text-2xl font-arise flex-wrap">
+							<div className="flex items-center justify-center gap-2 sm:gap-4 text-lg sm:text-2xl font-resurge flex-wrap">
 								<span className="text-muted-foreground">
 									LV. {character.level}
 								</span>
-								<span className="text-arise animate-pulse">{"->"}</span>
+								<span className="text-resurge animate-pulse">{"->"}</span>
 								<span className={cn("font-bold", rankInfo.color)}>
 									LV. {newLevel}
 								</span>
 								<Badge
 									className={cn(
-										"ml-2 font-arise",
+										"ml-2 font-resurge",
 										rankInfo.color,
 										"bg-transparent border-current text-xs sm:text-sm",
 									)}
@@ -750,12 +748,12 @@ export const LevelUpWizardModal = ({
 
 						<SystemWindow
 							title="SYSTEM ENHANCEMENT"
-							className="border-arise/50 mb-6"
+							className="border-resurge/50 mb-6"
 						>
 							<div className="space-y-6">
 								{/* Level Selection */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-arise/10 to-transparent border border-arise/20">
-									<Label className="font-arise text-arise tracking-wide flex items-center gap-2">
+								<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/10 to-transparent border border-resurge/20">
+									<Label className="font-resurge text-resurge tracking-wide flex items-center gap-2">
 										<Star className="w-4 h-4" />
 										TARGET LEVEL
 									</Label>
@@ -763,7 +761,7 @@ export const LevelUpWizardModal = ({
 										<span className="text-lg text-muted-foreground font-heading">
 											Current: {character.level}
 										</span>
-										<span className="text-2xl font-arise text-arise">
+										<span className="text-2xl font-resurge text-resurge">
 											{"->"}
 										</span>
 										<Input
@@ -783,20 +781,20 @@ export const LevelUpWizardModal = ({
 													),
 												)
 											}
-											className="w-24 text-center font-arise text-xl border-arise/30 focus:border-arise"
+											className="w-24 text-center font-resurge text-xl border-resurge/30 focus:border-resurge"
 										/>
 									</div>
 								</div>
 
 								{!isMilestone && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
-										<Label className="font-arise text-blue-400 tracking-wide flex items-center gap-2">
+										<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2">
 											<Star className="w-4 h-4" />
 											EXPERIENCE REQUIREMENT
 										</Label>
 										<div className="flex items-center justify-between mt-3 text-sm font-heading">
 											<span className="text-muted-foreground">Current XP</span>
-											<span className="font-arise text-blue-400">
+											<span className="font-resurge text-blue-400">
 												{currentExperience}
 											</span>
 										</div>
@@ -804,7 +802,7 @@ export const LevelUpWizardModal = ({
 											<span className="text-muted-foreground">
 												Needed for Next Level
 											</span>
-											<span className="font-arise text-blue-400">
+											<span className="font-resurge text-blue-400">
 												{experienceNeeded}
 											</span>
 										</div>
@@ -813,7 +811,7 @@ export const LevelUpWizardModal = ({
 
 								{/* HP Increase */}
 								<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
-									<Label className="font-arise text-red-400 tracking-wide flex items-center gap-2">
+									<Label className="font-resurge text-red-400 tracking-wide flex items-center gap-2">
 										<Heart className="w-4 h-4" />
 										VITALITY INCREASE
 									</Label>
@@ -830,7 +828,7 @@ export const LevelUpWizardModal = ({
 													}
 													placeholder={`Average: ${averageHP}`}
 													className={cn(
-														"text-center font-arise text-xl border-red-500/30 focus:border-red-500",
+														"text-center font-resurge text-xl border-red-500/30 focus:border-red-500",
 														isRolling && "animate-pulse text-red-400",
 													)}
 												/>
@@ -851,7 +849,7 @@ export const LevelUpWizardModal = ({
 											onClick={rollHP}
 											disabled={isRolling}
 											className={cn(
-												"gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise",
+												"gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge",
 												isRolling && "animate-pulse",
 											)}
 										>
@@ -874,7 +872,7 @@ export const LevelUpWizardModal = ({
 								{/* Path Selection (shown when character has no path and paths are available at this level) */}
 								{showPathSelection && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
-										<Label className="font-arise text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
 											<Swords className="w-4 h-4" />
 											PATH SPECIALIZATION UNLOCKED
 										</Label>
@@ -928,7 +926,7 @@ export const LevelUpWizardModal = ({
 								{/* ASI / Feat Selection (shown at ASI levels: 4, 8, 12, 16, 19) */}
 								{showASISection && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20">
-										<Label className="font-arise text-green-400 tracking-wide flex items-center gap-2 mb-4">
+										<Label className="font-resurge text-green-400 tracking-wide flex items-center gap-2 mb-4">
 											<Shield className="w-4 h-4" />
 											ABILITY SCORE IMPROVEMENT
 										</Label>
@@ -960,7 +958,7 @@ export const LevelUpWizardModal = ({
 														className="flex items-center justify-between p-2 rounded-lg bg-background/50 border border-green-500/10"
 													>
 														<div>
-															<span className="font-arise text-sm text-green-400">
+															<span className="font-resurge text-sm text-green-400">
 																{ability}
 															</span>
 															<span className="text-xs text-muted-foreground ml-2 font-heading">
@@ -987,7 +985,7 @@ export const LevelUpWizardModal = ({
 															</Button>
 															<span
 																className={cn(
-																	"font-arise text-sm w-6 text-center",
+																	"font-resurge text-sm w-6 text-center",
 																	bonus > 0
 																		? "text-green-400"
 																		: "text-muted-foreground",
@@ -1027,7 +1025,7 @@ export const LevelUpWizardModal = ({
 								{/* Feat Selection (shown when feats are available from awakening features) */}
 								{showFeatSelection && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
-										<Label className="font-arise text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
 											<Star className="w-4 h-4" />
 											FEAT SELECTION
 										</Label>
@@ -1083,7 +1081,7 @@ export const LevelUpWizardModal = ({
 															className="flex-1 cursor-pointer"
 														>
 															<div>
-																<span className="font-arise text-sm text-purple-400">
+																<span className="font-resurge text-sm text-purple-400">
 																	{formatRegentVernacular(feat.name)}
 																</span>
 																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
@@ -1106,7 +1104,7 @@ export const LevelUpWizardModal = ({
 								{/* New Features */}
 								{newFeatures.length > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
-										<Label className="font-arise text-amber-400 tracking-wide flex items-center gap-2 mb-4">
+										<Label className="font-resurge text-amber-400 tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											NEW ABILITIES UNLOCKED
 										</Label>
@@ -1133,7 +1131,7 @@ export const LevelUpWizardModal = ({
 																<div className="flex items-center gap-2 mb-1 flex-wrap">
 																	<Label
 																		htmlFor={`feature-${feature.id}`}
-																		className="font-arise font-semibold cursor-pointer text-amber-400 tracking-wide"
+																		className="font-resurge font-semibold cursor-pointer text-amber-400 tracking-wide"
 																	>
 																		{formatRegentVernacular(feature.name)}
 																	</Label>
@@ -1183,7 +1181,7 @@ export const LevelUpWizardModal = ({
 								{/* Regent Features Unlocked at This Level */}
 								{primaryRegentUnlock && newRegentFeatures.length > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-regent-gold/10 to-shadow-purple/10 border border-regent-gold/20">
-										<Label className="font-arise text-regent-gold tracking-wide flex items-center gap-2 mb-4">
+										<Label className="font-resurge text-regent-gold tracking-wide flex items-center gap-2 mb-4">
 											<Crown className="w-4 h-4" />
 											{formatRegentVernacular(regentData?.name ?? "")} — NEW
 											ABILITIES
@@ -1207,7 +1205,7 @@ export const LevelUpWizardModal = ({
 															className="p-4 rounded-lg border border-regent-gold/10 bg-muted/30"
 														>
 															<div className="flex items-center gap-2 mb-1 flex-wrap">
-																<span className="font-arise font-semibold text-regent-gold tracking-wide">
+																<span className="font-resurge font-semibold text-regent-gold tracking-wide">
 																	{formatRegentVernacular(feature.name)}
 																</span>
 																{feature.type && (
@@ -1241,8 +1239,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{/* Stat Changes Preview */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-arise/5 to-shadow-purple/5 border border-arise/20">
-									<h4 className="font-arise font-semibold mb-4 text-arise tracking-wide flex items-center gap-2">
+								<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/5 to-shadow-purple/5 border border-resurge/20">
+									<h4 className="font-resurge font-semibold mb-4 text-resurge tracking-wide flex items-center gap-2">
 										<TrendingUp className="w-4 h-4" />
 										STAT MODIFICATIONS
 									</h4>
@@ -1251,9 +1249,9 @@ export const LevelUpWizardModal = ({
 											<span className="text-muted-foreground font-heading">
 												Proficiency Bonus
 											</span>
-											<span className="font-arise text-lg">
+											<span className="font-resurge text-lg">
 												+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
-												<span className="text-arise">
+												<span className="text-resurge">
 													+{Math.ceil(newLevel / 4) + 1}
 												</span>
 											</span>
@@ -1262,9 +1260,9 @@ export const LevelUpWizardModal = ({
 											<span className="text-muted-foreground font-heading">
 												System Favor Die
 											</span>
-											<span className="font-arise text-lg">
+											<span className="font-resurge text-lg">
 												d{character.system_favor_die} {"->"}{" "}
-												<span className="text-arise">
+												<span className="text-resurge">
 													d
 													{newLevel <= 4
 														? 4
@@ -1280,7 +1278,7 @@ export const LevelUpWizardModal = ({
 											<span className="text-muted-foreground font-heading">
 												Max HP
 											</span>
-											<span className="font-arise text-lg">
+											<span className="font-resurge text-lg">
 												{character.hp_max} {"->"}{" "}
 												<span className="text-red-400">
 													{character.hp_max + (hpIncrease || 0)}
@@ -1291,9 +1289,9 @@ export const LevelUpWizardModal = ({
 											<span className="text-muted-foreground font-heading">
 												Hit Dice
 											</span>
-											<span className="font-arise text-lg">
+											<span className="font-resurge text-lg">
 												{character.hit_dice_max} {"->"}{" "}
-												<span className="text-arise">{newLevel}</span>
+												<span className="text-resurge">{newLevel}</span>
 											</span>
 										</div>
 									</div>
@@ -1317,7 +1315,7 @@ export const LevelUpWizardModal = ({
 									newLevel <= character.level ||
 									(!isMilestone && !canLevelUp)
 								}
-								className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all"
+								className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
 							>
 								{loading ? (
 									<>

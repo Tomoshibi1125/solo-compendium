@@ -167,26 +167,26 @@
 			"supabase/functions/*/index.ts",
 			"scripts/**/*.{ts,js,mjs}",
 			"src/index.ts",
-            "src/components/warden-protocols/WardenWiringHub.tsx"
+			"src/components/warden-protocols/WardenWiringHub.tsx"
 		],
 		"project": [
 			"src/**/*.{ts,tsx}"
 		],
-        "ignore": [],
-        "ignoreDependencies": [
-            "@pollinations_ai/sdk"
-        ]
+		"ignore": [],
+		"ignoreDependencies": [
+			"@pollinations_ai/sdk"
+		]
 	},
-    "ProtocolWarden_Metadata": {
-        "authoritativeFallback": "@pollinations_ai/sdk",
-        "certification": "Zero Legacy",
-        "auditDate": "2026-03-31"
-    },
-    "protocolWarden": {
-        "legacyStatus": "Zero Legacy Certified",
-        "documentation": "https://system-ascendant.protocol/docs",
-        "architecturalFallbacks": [
-            "@pollinations_ai/sdk"
-        ]
-    }
+	"ProtocolWarden_Metadata": {
+		"authoritativeFallback": "@pollinations_ai/sdk",
+		"certification": "Zero Legacy",
+		"auditDate": "2026-03-31"
+	},
+	"protocolWarden": {
+		"legacyStatus": "Zero Legacy Certified",
+		"documentation": "https://system-ascendant.protocol/docs",
+		"architecturalFallbacks": [
+			"@pollinations_ai/sdk"
+		]
+	}
 }

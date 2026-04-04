@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SystemWindow } from "@/components/ui/SystemWindow";
 import "./EncounterBuilder.css";
-import { monsters as staticMonsters } from "@/data/compendium/monsters";
 import { useToast } from "@/hooks/use-toast";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -19,60 +18,26 @@ import {
 } from "@/hooks/useToolState";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { getRandomMonster } from "@/lib/compendiumAutopopulate";
+import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { calculateDifficulty, calculateXP } from "@/lib/encounterMath";
 import { getCRXP } from "@/lib/experience";
+import { getStaticAnomalies } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { normalizeRegentSearch } from "@/lib/vernacular";
+import type { CompendiumAnomaly } from "@/types/compendium";
 
 // --- Types ---
 
-type Monster = Database["public"]["Tables"]["compendium_monsters"]["Row"] & {
+type Anomaly = Database["public"]["Tables"]["compendium_Anomalies"]["Row"] & {
 	mechanics?: Database["public"]["Tables"]["compendium_runes"]["Row"]["mechanics"];
 };
 
-interface EncounterMonster {
+interface EncounterAnomaly {
 	id: string;
-	monster: Monster;
+	Anomaly: Anomaly;
 	quantity: number;
 }
-
-type AbilityScores = {
-	strength: number;
-	dexterity: number;
-	constitution: number;
-	intelligence: number;
-	wisdom: number;
-	charisma: number;
-};
-
-type SavingThrows = Partial<AbilityScores>;
-
-type StaticMonster = {
-	id: string;
-	name: string;
-	type: string;
-	rank: string;
-	description?: string;
-	lore?: string;
-	size?: string;
-	image?: string;
-	skills?: string[] | string;
-	senses?: string[] | string;
-	languages?: string[] | string;
-	damageResistances?: string[] | string;
-	damageImmunities?: string[] | string;
-	damageVulnerabilities?: string[] | string;
-	conditionImmunities?: string[] | string;
-	stats?: {
-		abilityScores?: Partial<AbilityScores>;
-		armorClass?: number;
-		hitPoints?: number;
-		challengeRating?: number;
-		savingThrows?: SavingThrows;
-	};
-};
 
 const ENCOUNTER_STORAGE_KEY = "solo-compendium.PW-tools.encounter-builder.v1";
 const INITIATIVE_STORAGE_KEY = "solo-compendium.PW-tools.initiative.v1";
@@ -86,8 +51,6 @@ const RANK_CR_MAP: Record<string, string> = {
 };
 
 // --- Mappers ---
-
-const staticMonstersList = staticMonsters as StaticMonster[];
 
 const toNumber = (value: number | undefined, fallback: number) =>
 	Number.isFinite(value) ? (value as number) : fallback;
@@ -104,47 +67,47 @@ const toStringArray = (value: string | string[] | null | undefined) => {
 	return null;
 };
 
-const mapStaticMonster = (monster: StaticMonster): Monster => {
-	const abilities: Partial<AbilityScores> = monster.stats?.abilityScores ?? {};
+const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
+	const abilities = Anomaly.stats?.ability_scores ?? {};
 	const crValue =
-		typeof monster.stats?.challengeRating === "number"
-			? String(monster.stats.challengeRating)
-			: RANK_CR_MAP[monster.rank] || "1";
-	const hitPoints = toNumber(monster.stats?.hitPoints, 1);
+		typeof Anomaly.stats?.challenge_rating === "number"
+			? String(Anomaly.stats.challenge_rating)
+			: RANK_CR_MAP[Anomaly.rank || "D"] || "1";
+	const hitPoints = toNumber(Anomaly.hp ?? Anomaly.hit_points, 1);
 
 	return {
-		id: monster.id,
-		name: monster.name,
-		display_name: monster.name,
-		description: monster.description || "",
+		id: Anomaly.id,
+		name: Anomaly.name,
+		display_name: Anomaly.display_name || Anomaly.name,
+		description: Anomaly.description || "",
 		flavor: null,
-		lore: monster.lore || null,
-		image_url: monster.image || null,
+		lore: (Anomaly.lore as string) || null,
+		image_url: Anomaly.image || Anomaly.image_url || null,
 		mechanics: null,
 		created_at: new Date().toISOString(),
 		cr: crValue,
 		xp: getCRXP(crValue),
-		gate_rank: monster.rank || null,
-		is_boss: monster.rank === "S" || monster.rank === "A",
-		creature_type: monster.type || "Unknown",
-		armor_class: toNumber(monster.stats?.armorClass, 10),
+		gate_rank: Anomaly.rank || null,
+		is_boss: Anomaly.rank === "S" || Anomaly.rank === "A",
+		creature_type: Anomaly.type || "Unknown",
+		armor_class: toNumber(Anomaly.ac ?? Anomaly.armor_class, 10),
 		hit_points_average: hitPoints,
 		hit_points_formula: "1d8",
-		size: monster.size || "Medium",
+		size: "Medium",
 		str: toNumber(abilities.strength, 10),
-		agi: toNumber(abilities.dexterity, 10),
-		vit: toNumber(abilities.constitution, 10),
+		agi: toNumber(abilities.agility, 10),
+		vit: toNumber(abilities.vitality, 10),
 		int: toNumber(abilities.intelligence, 10),
-		sense: toNumber(abilities.wisdom, 10),
-		pre: toNumber(abilities.charisma, 10),
-		skills: monster.skills ?? null,
-		saving_throws: monster.stats?.savingThrows ?? null,
-		senses: monster.senses ?? null,
-		languages: toStringArray(monster.languages),
-		damage_resistances: toStringArray(monster.damageResistances),
-		damage_immunities: toStringArray(monster.damageImmunities),
-		damage_vulnerabilities: toStringArray(monster.damageVulnerabilities),
-		condition_immunities: toStringArray(monster.conditionImmunities),
+		sense: toNumber(abilities.sense, 10),
+		pre: toNumber(abilities.presence, 10),
+		skills: null,
+		saving_throws: Anomaly.stats?.saving_throws ?? null,
+		senses: Anomaly.senses ?? null,
+		languages: toStringArray(Anomaly.languages),
+		damage_resistances: toStringArray(Anomaly.damage_resistances),
+		damage_immunities: toStringArray(Anomaly.damage_immunities),
+		damage_vulnerabilities: toStringArray(Anomaly.damage_vulnerabilities),
+		condition_immunities: toStringArray(Anomaly.condition_immunities),
 		armor_type: null,
 		alignment: null,
 		aliases: null,
@@ -158,25 +121,30 @@ const mapStaticMonster = (monster: StaticMonster): Monster => {
 		speed_fly: null,
 		speed_swim: null,
 		speed_walk: null,
-		tags: [monster.type, monster.rank].filter(Boolean),
+		tags: [Anomaly.type, Anomaly.rank].filter(Boolean) as string[],
 		theme_tags: null,
 	};
 };
 
-const buildFallbackMonsters = (searchQuery: string) => {
+const buildFallbackAnomalies = (searchQuery: string) => {
 	const query = normalizeRegentSearch(searchQuery.trim().toLowerCase());
+	const staticList = getStaticAnomalies();
 	const filtered = query
-		? staticMonstersList.filter((monster) => {
-				const description = monster.description || "";
+		? staticList.filter((Anomaly) => {
+				const description = Anomaly.description || "";
 				return (
-					normalizeRegentSearch(monster.name.toLowerCase()).includes(query) ||
-					normalizeRegentSearch(monster.type.toLowerCase()).includes(query) ||
-					normalizeRegentSearch(monster.rank.toLowerCase()).includes(query) ||
+					normalizeRegentSearch(Anomaly.name.toLowerCase()).includes(query) ||
+					normalizeRegentSearch((Anomaly.type || "").toLowerCase()).includes(
+						query,
+					) ||
+					normalizeRegentSearch((Anomaly.rank || "").toLowerCase()).includes(
+						query,
+					) ||
 					normalizeRegentSearch(description.toLowerCase()).includes(query)
 				);
 			})
-		: staticMonstersList;
-	return filtered.slice(0, 50).map(mapStaticMonster);
+		: staticList;
+	return filtered.slice(0, 50).map(mapStaticAnomaly);
 };
 
 // --- Component ---
@@ -202,8 +170,8 @@ export function EncounterBuilder({
 	const [searchQuery, setSearchQuery] = useState("");
 	const [hunterLevel, setHunterLevel] = useState(1);
 	const [hunterCount, setHunterCount] = useState(4);
-	const [encounterMonsters, setEncounterMonsters] = useState<
-		EncounterMonster[]
+	const [encounterAnomalies, setEncounterAnomalies] = useState<
+		EncounterAnomaly[]
 	>([]);
 
 	const encounterStorageKey = campaignId
@@ -216,11 +184,11 @@ export function EncounterBuilder({
 	const userToolState = useUserToolState<{
 		hunterLevel: number;
 		hunterCount: number;
-		encounterMonsters: EncounterMonster[];
+		encounterAnomalies: EncounterAnomaly[];
 		version?: number;
 		savedAt?: string;
 	}>("encounter_builder", {
-		initialState: { hunterLevel: 1, hunterCount: 4, encounterMonsters: [] },
+		initialState: { hunterLevel: 1, hunterCount: 4, encounterAnomalies: [] },
 		storageKey: ENCOUNTER_STORAGE_KEY,
 		enabled: !isCampaignScoped,
 	});
@@ -228,11 +196,11 @@ export function EncounterBuilder({
 	const campaignToolState = useCampaignToolState<{
 		hunterLevel: number;
 		hunterCount: number;
-		encounterMonsters: EncounterMonster[];
+		encounterAnomalies: EncounterAnomaly[];
 		version?: number;
 		savedAt?: string;
 	}>(campaignId ?? null, "encounter_builder", {
-		initialState: { hunterLevel: 1, hunterCount: 4, encounterMonsters: [] },
+		initialState: { hunterLevel: 1, hunterCount: 4, encounterAnomalies: [] },
 		storageKey: encounterStorageKey,
 		enabled: isCampaignScoped,
 	});
@@ -254,14 +222,14 @@ export function EncounterBuilder({
 				setHunterLevel(storedState.hunterLevel);
 			if (typeof storedState.hunterCount === "number")
 				setHunterCount(storedState.hunterCount);
-			if (Array.isArray(storedState.encounterMonsters))
-				setEncounterMonsters(storedState.encounterMonsters);
+			if (Array.isArray(storedState.encounterAnomalies))
+				setEncounterAnomalies(storedState.encounterAnomalies);
 		}
 		hydratedContextRef.current = persistenceContext;
 	}, [isToolStateLoading, persistenceContext, storedState]);
 
 	const debouncedState = useDebounce(
-		{ hunterLevel, hunterCount, encounterMonsters },
+		{ hunterLevel, hunterCount, encounterAnomalies },
 		600,
 	);
 	useEffect(() => {
@@ -273,33 +241,34 @@ export function EncounterBuilder({
 		});
 	}, [debouncedState, persistenceContext, saveNow]);
 
-	const { data: monsters = [], isLoading } = useQuery({
-		queryKey: ["monsters", campaignId ?? "none", searchQuery],
+	const { data: anomalies = [], isLoading } = useQuery({
+		queryKey: ["anomalies", campaignId ?? "none", searchQuery],
 		queryFn: async () => {
-			const fallbackMonsters = buildFallbackMonsters(searchQuery);
-			if (!isSupabaseConfigured) return fallbackMonsters;
+			const fallbackAnomalies = buildFallbackAnomalies(searchQuery);
+			if (!isSupabaseConfigured) return fallbackAnomalies;
 
 			const canonicalQuery = normalizeRegentSearch(searchQuery);
-			let query = supabase.from("compendium_monsters").select("*").limit(50);
+			let query = supabase.from("compendium_Anomalies").select("*").limit(50);
 			if (canonicalQuery) query = query.ilike("name", `%${canonicalQuery}%`);
 
 			try {
 				const { data, error } = await query;
-				if (error || !data || data.length === 0) return fallbackMonsters;
+				if (error || !data || data.length === 0) return fallbackAnomalies;
 				const filtered = await filterRowsBySourcebookAccess(
-					data as Monster[],
+					data as Anomaly[],
 					(m) => m.source_book,
 					{ campaignId: campaignId ?? null },
 				);
-				return filtered.length > 0 ? filtered : fallbackMonsters;
+				return filtered.length > 0 ? filtered : fallbackAnomalies;
 			} catch {
-				return fallbackMonsters;
+				return fallbackAnomalies;
 			}
 		},
 	});
 
-	const totalXP = encounterMonsters.reduce(
-		(sum, em) => sum + calculateXP(em.monster, em.quantity),
+	const totalXP = encounterAnomalies.reduce(
+		(sum: number, em: EncounterAnomaly) =>
+			sum + calculateXP(em.Anomaly, em.quantity),
 		0,
 	);
 	const difficulty = calculateDifficulty(totalXP, hunterLevel, hunterCount);
@@ -314,58 +283,58 @@ export function EncounterBuilder({
 		}
 	}, [totalXP]);
 
-	const addMonster = (monster: Monster) => {
+	const addAnomaly = (Anomaly: Anomaly) => {
 		hasUserInteractedRef.current = true;
-		const existing = encounterMonsters.find(
-			(em) => em.monster.id === monster.id,
+		const existing = encounterAnomalies.find(
+			(em) => em.Anomaly.id === Anomaly.id,
 		);
 		if (existing) {
-			setEncounterMonsters(
-				encounterMonsters.map((em) =>
+			setEncounterAnomalies(
+				encounterAnomalies.map((em) =>
 					em.id === existing.id ? { ...em, quantity: em.quantity + 1 } : em,
 				),
 			);
 		} else {
-			setEncounterMonsters([
-				...encounterMonsters,
-				{ id: `${monster.id}-${Date.now()}`, monster, quantity: 1 },
+			setEncounterAnomalies([
+				...encounterAnomalies,
+				{ id: `${Anomaly.id}-${Date.now()}`, Anomaly, quantity: 1 },
 			]);
 		}
 	};
 
-	const removeMonster = (id: string) => {
+	const removeAnomaly = (id: string) => {
 		hasUserInteractedRef.current = true;
-		setEncounterMonsters(encounterMonsters.filter((em) => em.id !== id));
+		setEncounterAnomalies(encounterAnomalies.filter((em) => em.id !== id));
 	};
 
 	const updateQuantity = (id: string, quantity: number) => {
 		hasUserInteractedRef.current = true;
 		if (quantity <= 0) {
-			removeMonster(id);
+			removeAnomaly(id);
 			return;
 		}
-		setEncounterMonsters(
-			encounterMonsters.map((em) => (em.id === id ? { ...em, quantity } : em)),
+		setEncounterAnomalies(
+			encounterAnomalies.map((em) => (em.id === id ? { ...em, quantity } : em)),
 		);
 	};
 
 	const handleRandomize = async () => {
 		const rank = "C"; // Default to C-Rank for random
-		const m = await getRandomMonster(rank);
-		if (m) addMonster(m as Monster);
+		const m = await getRandomAnomaly(rank);
+		if (m) addAnomaly(m as Anomaly);
 	};
 
 	const sendToInitiativeTracker = async () => {
-		if (encounterMonsters.length === 0) return;
-		const combatants = encounterMonsters.flatMap((em) => {
+		if (encounterAnomalies.length === 0) return;
+		const combatants = encounterAnomalies.flatMap((em) => {
 			const qty = Math.max(1, em.quantity || 1);
 			return Array.from({ length: qty }, (_, i) => ({
-				id: `${em.monster.id}-${Date.now()}-${Math.random()}-${i}`,
-				name: qty > 1 ? `${em.monster.name} #${i + 1}` : em.monster.name,
+				id: `${em.Anomaly.id}-${Date.now()}-${Math.random()}-${i}`,
+				name: qty > 1 ? `${em.Anomaly.name} #${i + 1}` : em.Anomaly.name,
 				initiative: 0,
-				hp: em.monster.hit_points_average || undefined,
-				maxHp: em.monster.hit_points_average || undefined,
-				ac: em.monster.armor_class || undefined,
+				hp: em.Anomaly.hit_points_average || undefined,
+				maxHp: em.Anomaly.hit_points_average || undefined,
+				ac: em.Anomaly.armor_class || undefined,
 				conditions: [],
 				isHunter: false,
 			}));
@@ -382,7 +351,7 @@ export function EncounterBuilder({
 
 		toast({
 			title: "Injected to Tracker",
-			description: "Encounter entities loaded into the initiative matrix.",
+			description: "Encounter entities loaded into the initiative Lattice.",
 		});
 		navigate(
 			campaignId
@@ -393,7 +362,7 @@ export function EncounterBuilder({
 
 	return (
 		<div className={cn("grid grid-cols-1 lg:grid-cols-12 gap-6", className)}>
-			{/* Left Column: Build & Monsters */}
+			{/* Left Column: Build & Anomalys */}
 			<div className="lg:col-span-8 space-y-6">
 				<SystemWindow title="MODEL SYNTHESIS: CONSTRUCTS">
 					<div className="space-y-4">
@@ -413,22 +382,22 @@ export function EncounterBuilder({
 									<Loader2 className="w-8 h-8 animate-spin mx-auto text-primary/40" />
 								</div>
 							) : (
-								monsters.map((monster) => (
+								anomalies.map((Anomaly) => (
 									<div
-										key={monster.id}
+										key={Anomaly.id}
 										className="group p-3 rounded-lg border border-primary/10 bg-primary/5 hover:bg-primary/10 transition-colors flex justify-between items-center"
 									>
 										<div>
-											<p className="font-heading text-sm">{monster.name}</p>
+											<p className="font-heading text-sm">{Anomaly.name}</p>
 											<div className="flex gap-2 mt-1">
 												<Badge
 													variant="outline"
 													className="text-[10px] h-4 uppercase"
 												>
-													{monster.creature_type}
+													{Anomaly.creature_type}
 												</Badge>
 												<Badge className="text-[10px] h-4">
-													CR {monster.cr}
+													CR {Anomaly.cr}
 												</Badge>
 											</div>
 										</div>
@@ -436,7 +405,7 @@ export function EncounterBuilder({
 											type="button"
 											variant="ghost"
 											size="sm"
-											onClick={() => addMonster(monster)}
+											onClick={() => addAnomaly(Anomaly)}
 											className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
 										>
 											<Plus className="w-4 h-4" />
@@ -514,25 +483,25 @@ export function EncounterBuilder({
 
 						<div className="space-y-3">
 							<p className="text-[10px] uppercase tracking-widest text-primary/60 px-1 font-bold">
-								Active Matrix Entities
+								Active Lattice Entities
 							</p>
 							<div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
-								{encounterMonsters.length === 0 ? (
+								{encounterAnomalies.length === 0 ? (
 									<p className="text-xs text-center py-8 text-muted-foreground italic opacity-50">
-										Matrix Empty
+										Lattice Empty
 									</p>
 								) : (
-									encounterMonsters.map((em) => (
+									encounterAnomalies.map((em) => (
 										<div
 											key={em.id}
 											className="flex items-center justify-between p-2 rounded bg-primary/5 border border-primary/10"
 										>
 											<div className="truncate pr-2">
 												<p className="text-xs font-bold truncate">
-													{em.monster.name}
+													{em.Anomaly.name}
 												</p>
 												<p className="text-[10px] opacity-60">
-													XP {calculateXP(em.monster, 1)}
+													XP {calculateXP(em.Anomaly, 1)}
 												</p>
 											</div>
 											<div className="flex items-center gap-2">
@@ -551,7 +520,7 @@ export function EncounterBuilder({
 													type="button"
 													variant="ghost"
 													size="sm"
-													onClick={() => removeMonster(em.id)}
+													onClick={() => removeAnomaly(em.id)}
 													className="h-7 w-7 p-0 text-destructive/40 hover:text-destructive"
 												>
 													×
@@ -568,7 +537,7 @@ export function EncounterBuilder({
 								type="button"
 								onClick={sendToInitiativeTracker}
 								className="w-full h-11 gap-2"
-								disabled={encounterMonsters.length === 0}
+								disabled={encounterAnomalies.length === 0}
 							>
 								<Sword className="w-4 h-4" />
 								Commence Combat Sync

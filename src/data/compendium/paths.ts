@@ -1,4 +1,4 @@
-// Job Paths Compendium - System Ascendant Canonical 84 Paths
+// Job Paths Compendium - Ascendant Compendium (84 Paths)
 // 14 Jobs × 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
 
 interface Path {
@@ -41,20 +41,20 @@ interface Path {
 export const paths: Path[] = [
 	// ── DESTROYER PATHS ── features at 3,7,10,15,18 ──
 	{
-		id: "destroyer--champion",
+		id: "destroyer--apex-predator",
 		name: "Path of the Apex Predator",
 		jobId: "destroyer",
 		jobName: "Destroyer",
 		tier: 2,
-		pathType: "champion",
+		pathType: "apex-predator",
 		requirements: { level: 3, skills: ["Athletics"] },
 		description:
-			"Former Olympic athletes, pro fighters, and CrossFit champions who pushed their System-enhanced bodies toward physical perfection. In the ascendant world, they dominate competitive gate-clearance rankings and sponsor deals. Every muscle fiber is optimized, every strike calibrated for maximum lethality — they are the poster children of the Ascendant Bureau's recruitment campaigns.",
+			"The Apex Predator is the ultimate physical mandate of the Destroyer lineage — a recursive refinement of the Awakened’s biological vessel into a tool of absolute lethality. In the modern era of Absolute containment, they are the supreme front-line anchors of high-rank guilds, their every movement a masterclass in optimized destructive intent. To walk this path is to accept that your muscles are no longer purely biological, but a perfected conductor for the Absolute's force.",
 		features: [
 			{
-				name: "Optimized Lethality",
+				name: "Absolute Lethality",
 				description:
-					"Your System targeting widens the kill zone. Weapon attacks crit on 19-20.",
+					"The Absolute's clarity widens your kill zone. Weapon attacks crit on 19-20.",
 				level: 3,
 			},
 			{
@@ -66,19 +66,19 @@ export const paths: Path[] = [
 			{
 				name: "Secondary Discipline",
 				description:
-					"The System unlocks a second combat discipline slot. Choose another Combat Discipline.",
+					"The Mandate unlocks a second combat discipline slot. Choose another Combat Discipline.",
 				level: 10,
 			},
 			{
 				name: "Expanded Kill Zone",
 				description:
-					"Your targeting HUD highlights deeper vulnerabilities. Weapon attacks crit on 18-20.",
+					"Your Aetheric Sight highlights deeper vulnerabilities. Weapon attacks crit on 18-20.",
 				level: 15,
 			},
 			{
-				name: "Auto-Repair Protocol",
+				name: "Auto-Repair Rite",
 				description:
-					"Start of each turn, the System channels restorative mana: regain 5+VIT mod HP if at ≤ half HP and at least 1 HP.",
+					"Start of each turn, the Absolute channels restorative mana: regain 5+VIT mod HP if at ≤ half HP and at least 1 HP.",
 				level: 18,
 			},
 		],
@@ -95,11 +95,11 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { strength: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "destroyer--battle-master",
+		id: "destroyer--tactician",
 		name: "Path of the Tactician",
 		jobId: "destroyer",
 		jobName: "Destroyer",
@@ -107,7 +107,7 @@ export const paths: Path[] = [
 		pathType: "tactician",
 		requirements: { level: 3, skills: ["Athletics", "Insight"] },
 		description:
-			"Ex-military strategists, chess grandmasters, and esports coaches who process combat data at superhuman speed. Many work as raid commanders for top guilds or consult for the Ascendant Bureau's tactical division. The System grants them tactical charge dice — bursts of calculated energy that fuel devastating maneuvers. They treat every gate like a real-time strategy game, and they never lose.",
+			"The Tactician mandate is granted to those whose cognitive resonances can process battlefield echoes at speeds that defy conventional analysis. These are the Mandate architects of top-tier guilds and the strategic specialists of the Ascendant Bureau, treating every gate-boundary as a structural zone of calculated dominance. They do not just fight; they harmonize the local weave into a blueprint for victory, ensuring that no variable remains unaccounted for.",
 		features: [
 			{
 				name: "Tactical Charge",
@@ -118,25 +118,25 @@ export const paths: Path[] = [
 			{
 				name: "Field Analysis",
 				description:
-					"Gain proficiency with one artisan's tools. Your System HUD analyzes construction and materials.",
+					"Gain proficiency with one artisan's tools. Your Aetheric Vista analyzes construction and materials.",
 				level: 3,
 			},
 			{
 				name: "Threat Assessment",
 				description:
-					"1 minute observing outside combat: learn if equal/superior/inferior in two characteristics. Your HUD compiles a threat profile.",
+					"1 minute observing outside combat: learn if equal/superior/inferior in two characteristics. Your Aetheric Sight compiles a threat profile.",
 				level: 7,
 			},
 			{
 				name: "Enhanced Tactical Dice",
 				description:
-					"Tactical dice upgrade to d10. Your combat algorithms grow more precise.",
+					"Tactical dice upgrade to d10. Your combat patterns grow more precise.",
 				level: 10,
 			},
 			{
 				name: "Relentless Analysis",
 				description:
-					"Roll initiative with 0 tactical dice → regain 1. Your System never stops calculating.",
+					"Roll initiative with 0 tactical dice → regain 1. The Absolute never stops observing.",
 				level: 15,
 			},
 		],
@@ -154,36 +154,36 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { strength: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "destroyer--eldritch-knight",
+		id: "destroyer--spell-breaker",
 		name: "Path of the Spell Breaker",
 		jobId: "destroyer",
 		jobName: "Destroyer",
 		tier: 2,
-		pathType: "arcane-warrior",
+		pathType: "spell-breaker",
 		requirements: { level: 3, skills: ["Arcana"] },
 		description:
-			"SWAT officers, bomb disposal techs, and anti-mage specialists who discovered they can channel the System's spell matrix through their weapons. In a world where gate bosses cast devastating magic, Spell Breakers are the ones who walk through the fire and hit back. They're recruited by counter-terrorism units and guilds that specialize in magic-heavy gates. The nightmare of every enemy caster.",
+			"The Spell Breaker mandate designates an Ascendant as the ultimate deterrent against hostile mana-manifestations. They have integrated the primordial threads of the Absolute directly into their weapon bonds, allowing them to channel anti-resonance frequencies through physical strikes. Often recruited by high-stakes containment units, they are the ones who traverse resonant storms to deliver the final, crushing blow to reality-warping entities.",
 		features: [
 			{
-				name: "Matrix Combat Casting",
+				name: "Weave-Combat Attunement",
 				description:
 					"Learn 2 Mage cantrips and 3 Mage spells (abjuration/evocation). INT casting, third-caster slots.",
 				level: 3,
 			},
 			{
-				name: "Mana Weapon Bond",
+				name: "Aetheric Weapon Bond",
 				description:
-					"Bond 2 weapons with your System signature. Can't be disarmed; summon to hand as bonus action from same plane.",
+					"Bond 2 weapons with your soul-signature. Can't be disarmed; summon to hand as bonus action from same plane.",
 				level: 3,
 			},
 			{
-				name: "Spell-Strike Integration",
+				name: "Aetheric-Strike Integration",
 				description:
-					"Cast a cantrip → make one weapon attack as bonus action. Your System syncs the two actions.",
+					"Cast a cantrip → make one weapon attack as bonus action. Your Mandate syncs the two actions.",
 				level: 7,
 			},
 			{
@@ -195,13 +195,13 @@ export const paths: Path[] = [
 			{
 				name: "Burst Blink",
 				description:
-					"When you use Burst Protocol, teleport up to 30 ft before or after the extra action.",
+					"When you use Burst Rite, teleport up to 30 ft before or after the extra action.",
 				level: 15,
 			},
 			{
-				name: "Full Integration",
+				name: "Absolute Integration",
 				description:
-					"Cast a spell → make one weapon attack as bonus action. Spell and blade become one system.",
+					"Cast a spell → make one weapon attack as bonus action. Spell and blade become one harmonic resonance.",
 				level: 18,
 			},
 		],
@@ -219,19 +219,19 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { strength: 1, intelligence: 2 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "destroyer--vanguard",
+		id: "destroyer--bulwark",
 		name: "Path of the Bulwark",
 		jobId: "destroyer",
 		jobName: "Destroyer",
 		tier: 2,
-		pathType: "defender",
+		pathType: "bulwark",
 		requirements: { level: 3, skills: ["Athletics", "Intimidation"] },
 		description:
-			"Bodyguards, Secret Service agents, riot police, and bouncers whose System-reinforced frames generate localized threat fields. In modern society, Bulwarks protect VIPs, hold choke points during gate breaks in populated areas, and serve as the human shields that let evacuation happen. Every guild wants one on the frontline — ignoring a Bulwark is physically impossible when they have you marked.",
+			"The Bulwark is a living bastion of the Destroyer lineage, an Ascendant whose very presence generates a localized threat field anchored by Absolute-reinforced frames. In modern containment zones, they serve as the physical barriers that allow civilians to escape unstable gate boundaries. To face a Bulwark is to engage with an immovable force of nature that punishes any attempt to bypass its defensive perimeter.",
 		features: [
 			{
 				name: "Threat Lock",
@@ -278,24 +278,24 @@ export const paths: Path[] = [
 			secondaryAttribute: "Strength",
 			bonusStats: { constitution: 2, strength: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "destroyer--ronin",
+		id: "destroyer--last-stand",
 		name: "Path of the Last Stand",
 		jobId: "destroyer",
 		jobName: "Destroyer",
 		tier: 2,
-		pathType: "precision",
+		pathType: "last-stand",
 		requirements: { level: 3, skills: ["Athletics", "Perception"] },
 		description:
-			"Combat veterans, extreme sports athletes, and survivors of near-fatal gate incidents whose iron will lets them override the System's safety limiters. They're the ascendants you send into gates that have already killed the first team. Many are famous for viral clips of impossible last-second victories. They fight with perfect focus even when their bodies should have failed — the System's emergency reserves fuel moments of transcendent precision.",
+			"The Last Stand mandate is granted to survivors of catastrophic gate incidents who have learned to override their body's inherent mortal limiters. They fight with a transcendent, near-supernatural focus that fuels impossible last-second victories. These Destroyers do not recognize the concept of defeat; they simply channel the Absolute's emergency reserves to maintain lethality long after their physical forms should have failed.",
 		features: [
 			{
 				name: "Limit Break",
 				description:
-					"Bonus action: override System limiters. Advantage on all weapon attacks + 5 temp HP until end of turn (10 at 10th, 15 at 15th). 3 uses/long rest.",
+					"Bonus action: override mortal limiters. Advantage on all weapon attacks + 5 temp HP until end of turn (10 at 10th, 15 at 15th). 3 uses/long rest.",
 				level: 3,
 			},
 			{
@@ -307,7 +307,7 @@ export const paths: Path[] = [
 			{
 				name: "Emergency Reserves",
 				description:
-					"Roll initiative with 0 Limit Break uses → regain 1. The System always has one more in reserve.",
+					"Roll initiative with 0 Limit Break uses → regain 1. The Absolute always has one more in reserve.",
 				level: 10,
 			},
 			{
@@ -319,7 +319,7 @@ export const paths: Path[] = [
 			{
 				name: "Final Override",
 				description:
-					"At 0 HP, the System grants one final burst. Take an entire extra turn immediately. Once/long rest.",
+					"At 0 HP, the Absolute grants one final burst. Take an entire extra turn immediately. Once/long rest.",
 				level: 18,
 			},
 		],
@@ -337,7 +337,7 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { strength: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
@@ -349,7 +349,7 @@ export const paths: Path[] = [
 		pathType: "echo",
 		requirements: { level: 3, skills: ["Athletics", "Arcana"] },
 		description:
-			"Demolition experts, power lifters, and heavy weapons specialists who hit so hard the System generates residual force projections — holographic replays of their strikes from different angles. In the field, it looks like two of them attacking at once. Gate-clearance footage of Aftershock Destroyers consistently goes viral for the sheer visual spectacle of doubled impacts tearing through boss monsters.",
+			"The Path of the Aftershock is held by those whose strikes resonate with such intensity that the Absolute generates residual force iterations — temporal echoes of their movements from adjacent reflections. In the field, it manifests as multiple strikes resolving simultaneously from ghostly iterations. Footage of Aftershock Destroyers highlights the sheer visual overload of doubled impacts tearing through gate entities with absolute recursive power.",
 		features: [
 			{
 				name: "Residual Strike",
@@ -358,9 +358,9 @@ export const paths: Path[] = [
 				level: 3,
 			},
 			{
-				name: "Impact Echo",
+				name: "Recursive Strike",
 				description:
-					"On Attack action, one extra melee attack resolves from the hologram's position — the System replays your strike. VIT mod uses/long rest.",
+					"On Attack action, one extra melee attack resolves from the iteration's position — the Absolute repeats your movement. VIT mod uses/long rest.",
 				level: 3,
 			},
 			{
@@ -392,7 +392,7 @@ export const paths: Path[] = [
 			{
 				name: "Kinetic Replay",
 				description:
-					"Teleport to hologram's position and deliver an opportunity attack against an adjacent creature. The System replays you at maximum velocity.",
+					"Teleport to an iteration's position and deliver an opportunistic strike against an adjacent entity. The Absolute manifests you at maximum resonance.",
 				cooldown: 1,
 				cost: "Reaction",
 			},
@@ -402,51 +402,51 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { strength: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── BERSERKER PATHS ── features at 3,6,10,14 ──
 	{
-		id: "berserker--primal-fury",
-		name: "Path of the Feedback Loop",
+		id: "berserker--escalating-resonance",
+		name: "Path of the Escalating Resonance",
 		jobId: "berserker",
 		jobName: "Berserker",
 		tier: 2,
-		pathType: "frenzy",
+		pathType: "escalating-resonance",
 		requirements: { level: 3, skills: ["Athletics", "Intimidation"] },
 		description:
-			"Underground fighters, adrenaline addicts, and rage-prone individuals with the most unstable mana connections. In underground ascendant fight clubs and viral gate-clearance challenges, Feedback Loopers are the headliners — pain feeds back as damage, each hit amplifies the next. The loop burns out eventually, leaving them collapsed in a crater of their own making while chat spams emotes.",
+			"The Path of the Escalating Resonance is walked by those whose spirits vibrate with the most unstable aetheric frequencies. In the modern world, they are the high-octane headliners of underground fight clubs and elite gate-clearance units, where pain is not an obstacle but a catalyst. Each drop of blood spilled acts as a conductor for their internal mana, fueling a recursive cycle of violence that ends only when the enemy—or the Ascendant themselves—is thoroughly spent. They are living batteries of escalating fury, held together only by the Absolute's merciless mandate.",
 		features: [
 			{
-				name: "Escalating Loop",
+				name: "Escalating Harmony",
 				description:
-					"While in Overload, your mana loop accelerates with each heartbeat — cardiac monitors show your BPM doubling. Make a melee weapon attack as bonus action each turn. One exhaustion level when Overload ends — field medics keep adrenaline shots ready.",
+					"While in Overload, your internal mana accelerates with each strike. Make a melee weapon attack as bonus action each turn. One exhaustion level when Overload ends as the physical vessel pays the price of the Absolute's favor.",
 				level: 3,
 			},
 			{
-				name: "Signal Noise",
+				name: "Aetheric Static",
 				description:
-					"In Overload, the mana static in your body jams all external signals — phones nearby lose reception, Bluetooth disconnects, and psychic influence can't penetrate the noise. Can't be charmed or frightened. Existing effects suspended.",
+					"In Overload, the mana static in your body disruptions all external manipulation—psychic influences and supernatural charms can't penetrate the noise of your inner storm. Can't be charmed or frightened; existing effects suspended.",
 				level: 6,
 			},
 			{
-				name: "Mana Pressure",
+				name: "Aetheric Pressure",
 				description:
-					"Action: your mana field pulses outward like a pressure wave — bystanders describe feeling like they're underwater. Frighten one creature within 30 ft (SENSE save 8+prof+STR). Extend each turn with action. Viral clips of this effect get labeled 'the Pressure.'",
+					"Action: your mana field pulses outward like a gravity well—bystanders describe a weight that threatens to crush their souls. Frighten one creature within 30 ft (SENSE save 8+prof+STR). Extend each turn with action.",
 				level: 10,
 			},
 			{
-				name: "Damage Feedback",
+				name: "Recursive Feedback",
 				description:
-					"Reaction: when damaged by creature within 5 ft, the System converts pain into a counterstrike. Make melee attack against it.",
+					"Reaction: when damaged by creature within 5 ft, the Absolute converts that kinetic energy into a counterstrike. Make melee attack against it.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Runaway Loop",
+				name: "Runaway Resonance",
 				description:
-					"1 min: each time you take damage, next melee deals bonus = Overload damage. Once/long rest.",
+					"1 min: each time you take damage, your next melee strike deals bonus damage equal to your current Overload damage bonus. Once/long rest.",
 				cooldown: 3,
 				cost: "Free (while in Overload)",
 			},
@@ -456,7 +456,7 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { strength: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
@@ -465,31 +465,31 @@ export const paths: Path[] = [
 		jobId: "berserker",
 		jobName: "Berserker",
 		tier: 2,
-		pathType: "totem",
+		pathType: "gate-beast",
 		requirements: { level: 3, skills: ["Nature", "Survival"] },
 		description:
-			"Animal trainers, wildlife researchers, and zoo workers who formed mana bonds with apex predators inside gates. In a world where gate fauna is a growing field of study, Gate Beasts blur the line between ascendant and animal. Many work with the Ascendant Bureau's Wildlife Division or star in nature documentaries about gate ecosystems. In Overload, they channel bonded creatures — tank-beast endurance, raptor evasion, or pack-leader coordination.",
+			"The Gate Beast represents an Awakened who has harmonized their essence with the primal aetheric fauna found within the shadows of the Gates. They do not merely observe nature; they consume its most violent aspects to fuel their own ascendant power. In modern tactical guilds, they are the trackers and frontline skirmishers who can transition from human strategist to mindless predator in a heartbeat, channeling the echoes of ancient beasts to protect or destroy with animalistic clarity.",
 		features: [
 			{
-				name: "Bonded Aspect",
+				name: "Primal Aspect",
 				description:
 					"Tank-beast: resist all damage except psychic in Overload. Raptor: OAs have disadvantage vs you, Dash as bonus in Overload. Pack-leader: allies have advantage on melee vs creatures within 5 ft of you in Overload.",
 				level: 3,
 			},
 			{
-				name: "Physical Adaptation",
+				name: "Biological Adaptation",
 				description:
 					"Tank-beast: double carry, advantage on STR push/pull. Raptor: see 1 mile, dim light no Perception penalty. Pack-leader: track at fast pace, stealth at normal.",
 				level: 6,
 			},
 			{
-				name: "Spirit Commune",
+				name: "Aetheric Commune",
 				description:
-					"Cast Commune with Nature as ritual; your bonded gate beast's spirit conveys environmental information.",
+					"Cast Commune with Nature as ritual; your resonance with the aetheric environment allows you to sense the absolute flow of the local area.",
 				level: 10,
 			},
 			{
-				name: "Apex Bond",
+				name: "Apex Mandate",
 				description:
 					"Tank-beast: in Overload, enemies within 5 ft have disadvantage on attacks vs allies. Raptor: in Overload, fly speed = walk speed. Pack-leader: in Overload, bonus action knock Large-or-smaller prone on hit.",
 				level: 14,
@@ -499,7 +499,7 @@ export const paths: Path[] = [
 			{
 				name: "Territorial Roar",
 				description:
-					"All enemies in 30 ft: SENSE save or frightened 1 min. Your bonded beast spirit manifests. Once/long rest.",
+					"All enemies in 30 ft: SENSE save or frightened 1 min. A minor manifestation of a primal gate beast spirit erupts from your soul. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -509,42 +509,42 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { strength: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "berserker--shadow-lineage",
+		id: "berserker--mana-scars",
 		name: "Path of the Mana Scars",
 		jobId: "berserker",
 		jobName: "Berserker",
 		tier: 2,
-		pathType: "ancestral",
+		pathType: "mana-scars",
 		requirements: { level: 3, skills: ["Athletics", "History"] },
 		description:
-			"Veteran ascendants, retired soldiers, and survivors of multiple gate disasters whose bodies are covered in luminous scar tissue from repeated Overloads. In modern guilds, they're the grizzled veterans — the ones who've been through it all and whose scars literally glow in the dark. Instagram influencers have tried to replicate the look; it doesn't work without nearly dying a dozen times first.",
+			"Those who walk the Path of the Mana Scars are living testaments to the Absolute's traumatic touch. Their bodies are maps of ancient gate-breaks and survived overloads, the luminous scar tissue acting as high-capacity conductors for defensive mana. While the modern world might see them as grizzled survivors of the first gate-age, their true purpose is to serve as the unbreakable anchors of a guild resonance, turning the pain of their history into the armor of the present.",
 		features: [
 			{
-				name: "Scar Aggro",
+				name: "Erupting Scars",
 				description:
-					"In Overload, first creature you hit each turn: your mana scars flare aggressively. Target has disadvantage on attacks not targeting you, and others resist its damage until start of your next turn.",
+					"In Overload, the first creature you strike each turn finds its hostile intent suppressed by the flare of your scars. Target has disadvantage on attacks not targeting you.",
 				level: 3,
 			},
 			{
-				name: "Scar Shield",
+				name: "Luminous Barrier",
 				description:
-					"In Overload, ally within 30 ft takes damage → reaction: your scars project a mana barrier, reducing damage by 2d6 (3d6 at 10th, 4d6 at 14th).",
+					"In Overload, ally within 30 ft takes damage → reaction: your scars project an aetheric barrier, reducing damage by 2d6 (3d6 at 10th, 4d6 at 14th).",
 				level: 6,
 			},
 			{
-				name: "Scar Memory",
+				name: "Primal Recall",
 				description:
-					"Your scars record everything you've survived like biological dashcam footage. Cast Clairvoyance as ritual without components — your scars replay environmental data from locations you've been injured. The Ascendant Bureau's forensics division sometimes asks Mana Scar veterans to 'read' old battlefields.",
+					"Your scars record every aetheric disturbance you've survived. Cast Clairvoyance as ritual—your scars resonate with the local weave to anchor environmental echoes from prior engagements.",
 				level: 10,
 			},
 			{
-				name: "Retaliatory Scars",
+				name: "Retaliatory Discharge",
 				description:
-					"When your Scar Shield activates, the mana barrier discharges back: attacker takes force damage equal to the amount prevented.",
+					"When your Luminous Barrier activates, the aetheric discharge feeds back: the attacker takes force damage equal to the amount prevented.",
 				level: 14,
 			},
 		],
@@ -552,7 +552,7 @@ export const paths: Path[] = [
 			{
 				name: "Scar Eruption",
 				description:
-					"All your mana scars discharge simultaneously: 20-ft radius, 3d8 force damage (VIT half). Allies in range gain temp HP = damage dealt to nearest enemy. Once/long rest.",
+					"All your mana scars discharge simultaneously: 20-ft radius, 3d8 force damage (VIT half). Allies in range gain temp HP equal to the damage dealt. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -562,7 +562,7 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { strength: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
@@ -571,15 +571,15 @@ export const paths: Path[] = [
 		jobId: "berserker",
 		jobName: "Berserker",
 		tier: 2,
-		pathType: "elemental",
+		pathType: "rift-storm",
 		requirements: { level: 3, skills: ["Athletics", "Nature"] },
 		description:
-			"Survivors of catastrophic gate breaches — power plant workers, storm chasers, and disaster survivors who absorbed raw elemental energy during the event. When they enter Overload, their mana vents as environmental destruction — fire, lightning, or freezing cold radiating from their body. The Ascendant Bureau deploys them carefully; Rift Storms are as dangerous to city infrastructure as they are to gate monsters.",
+			"The Rift Storm represents an Ascendant who has survived the epicenter of a catastrophic gate-collapse and emerged saturated with raw, elemental mana. When they enter Overload, their internal energy vents as pure environmental turbulence—fire, lightning, or freezing cold radiating from their very pores. They are volatile assets, often deployed by elite containment units as a 'scorched earth' deterrent against massive gate-swarms where collateral damage is a secondary concern to survival.",
 		features: [
 			{
-				name: "Elemental Vent",
+				name: "Aetheric Vent",
 				description:
-					"In Overload, your body vents elemental energy — car paint blisters near Inferno types, Tempest types trip circuit breakers, and Glacial types frost over nearby windows. 10-ft aura. Inferno: 2 fire/turn (scales). Tempest: bonus action 1d6 lightning, AGI half. Glacial: 2 temp HP/turn (scales).",
+					"In Overload, your body vents primordial energy—car paint blisters near Inferno types, Tempest types trip circuit breakers, and Glacial types frost over nearby windows. 10-ft aura. Inferno: 2 fire/turn (scales). Tempest: bonus action 1d6 lightning, AGI half. Glacial: 2 temp HP/turn (scales).",
 				level: 3,
 			},
 			{
@@ -591,11 +591,11 @@ export const paths: Path[] = [
 			{
 				name: "Radiant Field",
 				description:
-					"Chosen creatures in aura gain your Elemental Saturation resistance.",
+					"Chosen creatures in aura gain your Elemental Saturation resistance. Your storm becomes a safe harbor for your allies.",
 				level: 10,
 			},
 			{
-				name: "Volatile Vent",
+				name: "Volatile Discharge",
 				description:
 					"Inferno: reaction when hit, fire = half level. Tempest: reaction, AGI save or prone. Glacial: bonus action, STR save or speed 0.",
 				level: 14,
@@ -603,9 +603,9 @@ export const paths: Path[] = [
 		],
 		abilities: [
 			{
-				name: "Elemental Detonation",
+				name: "Storm Detonation",
 				description:
-					"30-ft radius, 4d8 damage (aura type), AGI half. Once/long rest.",
+					"30-ft radius, 4d8 damage (aura type), AGI half. The Absolute unleashed in a single, devastating burst. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -615,36 +615,36 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { strength: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "berserker--system-fanatic",
-		name: "Path of the System Zealot",
+		id: "berserker--absolute-zealot",
+		name: "Path of the Absolute Zealot",
 		jobId: "berserker",
 		jobName: "Berserker",
 		tier: 2,
-		pathType: "zealot",
+		pathType: "absolute-zealot",
 		requirements: { level: 3, skills: ["Athletics", "Religion"] },
 		description:
-			"Religious extremists, true believers, and fanatical System worshippers who believe their unstable awakening is divine providence. In modern society, System Zealots form cult-like guilds, broadcast gate raids as religious ceremonies on streaming platforms, and have disturbing resurrection rates — hospital morgues have documented Zealots sitting up on the table hours after being declared dead.",
+			"The Absolute Zealot is an Ascendant whose devotion to the primordial force transcended mere faith and became a physical anchor. They do not see their power as a 'connection' but as a divine mandate to be executed. Often seen leading extremist fellowships or streaming their gate-raids as grand aetheric sermons, they possess a terrifying resilience, as the Absolute itself seems to refuse their passing until their work is finished. To them, every strike is a prayer, and every kill is an offering.",
 		features: [
 			{
-				name: "System's Wrath",
+				name: "Absolute Wrath",
 				description:
-					"In Overload: first hit each turn deals extra 1d6+half Berserker level radiant or necrotic. The System punishes through you.",
+					"In Overload: your first hit each turn deals extra 1d6+half Berserker level radiant or necrotic damage. The Absolute punishes the unworthy through your vessel.",
 				level: 3,
 			},
 			{
-				name: "System's Chosen",
+				name: "Chosen Vessel",
 				description:
-					"Spells restoring you to life don't require material components. The System waives the cost.",
+					"Spells restoring you to life don't require material components. The Absolute waives the cost of your return.",
 				level: 3,
 			},
 			{
 				name: "Unwavering Devotion",
 				description:
-					"Fail a save while in Overload → reroll, must use new result. Your faith overrides failure. Once per Overload.",
+					"Fail a save while in Overload → reroll, must use new result. Your focus on the Absolute overrides failure. Once per Overload.",
 				level: 6,
 			},
 			{
@@ -656,7 +656,7 @@ export const paths: Path[] = [
 			{
 				name: "Overload Beyond Death",
 				description:
-					"In Overload at 0 HP: don't fall unconscious. Die only on 3 failed death saves, massive damage, or Overload ending at 0 HP. The System refuses to let you stop.",
+					"In Overload at 0 HP: don't fall unconscious. Die only on 3 failed death saves, massive damage, or Overload ending at 0 HP. The Absolute refuses to let you stop.",
 				level: 14,
 			},
 		],
@@ -674,56 +674,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { strength: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "berserker--rift-touched",
-		name: "Path of the Mana Glitch",
+		id: "berserker--aetheric-anomaly",
+		name: "Path of the Aetheric Anomaly",
 		jobId: "berserker",
 		jobName: "Berserker",
 		tier: 2,
-		pathType: "wild-magic",
+		pathType: "aetheric-anomaly",
 		requirements: { level: 3, skills: ["Athletics", "Arcana"] },
 		description:
-			"People who were standing too close to a gate breach when it detonated — their System connection is permanently corrupted. In modern society, Mana Glitches are walking chaos engines. Their Overload triggers random mana discharges that have variously destroyed a parking garage, turned a bus stop invisible, and accidentally cured a bystander's cancer. The Ascendant Bureau classifies them as anomalous threats, but their unpredictability makes them terrifyingly effective.",
+			"The Aetheric Anomaly is an Ascendant whose connection to the Absolute was shattered and reformed during a violent gate-collapse. They are walking anchors of instability whose every Overload triggers random, reality-warping discharges. While guilds often fear their unpredictability, they are prized for their ability to bypass conventional defensive measures and turn any battlefield into a chaotic domain where only they can truly thrive.",
 		features: [
 			{
-				name: "Mana Detection",
+				name: "Aetheric Detection",
 				description:
-					"Action: sense spells/magic items within 60 ft, identify school. Your glitched connection reads ambient mana. Prof uses/long rest.",
+					"Action: sense aetheric disturbancs, spells, or artifacts within 60 ft, identifying the fundamental resonance. Your anomalous connection reads ambient mana like a radar. Prof uses/long rest.",
 				level: 3,
 			},
 			{
-				name: "Glitch Surge",
+				name: "Anomaly Surge",
 				description:
-					"Enter Overload → roll Mana Glitch table. Effects: shadow tendrils (1d12 force), teleport 30 ft, mana explosion, force weapon, or size increase.",
+					"Enter Overload → consult the Anomaly Surge Chart. Manifestations: shadow tendrils (1d12 force), teleport 30 ft, mana explosion, crystallized force weapon, or size increase.",
 				level: 3,
 			},
 			{
 				name: "Mana Transfusion",
 				description:
-					"Action touch: +1d3 to attacks/checks for 10 min, OR restore a spell slot ≤ d3 level. Prof uses/long rest.",
+					"Action touch: +1d3 to attacks/checks for 10 min, OR restore a spell slot ≤ d3 level. Your unstable core leaks utility. Prof uses/long rest.",
 				level: 6,
 			},
 			{
-				name: "Cascade Reroll",
+				name: "Cascade Resonance",
 				description:
-					"Take damage or fail save while in Overload → reaction to reroll Glitch Surge, replacing current effect with new one.",
+					"Take damage or fail save while in Overload → reaction to reroll the Anomaly Surge, replacing the current distortion with a new one.",
 				level: 10,
 			},
 			{
-				name: "Controlled Glitch",
+				name: "Controlled Distortion",
 				description:
-					"Roll Glitch Surge twice, choose which. Same number = choose any effect from the table.",
+					"Identify local Anomaly Surge variables twice, choose which manifestation to anchor. On a harmonic match, choose any effect from the chart.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Mana Detonation",
+				name: "Anomalous Detonation",
 				description:
-					"20-ft radius: 3d10 force, VIT half, random Glitch Surge on each failure. Once/long rest.",
+					"20-ft radius: 3d10 force, VIT half, random Anomaly Surge on each failure. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -733,49 +733,49 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { strength: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── ASSASSIN PATHS ── features at 3,9,13,17 ──
 	{
-		id: "assassin--shadow-thief",
+		id: "assassin--gate-runner",
 		name: "Path of the Gate Runner",
 		jobId: "assassin",
 		jobName: "Assassin",
 		tier: 2,
-		pathType: "thief",
+		pathType: "gate-runner",
 		requirements: { level: 3, skills: ["Stealth", "Sleight of Hand"] },
 		description:
-			'Ex-shoplifters, parkour YouTubers, and escape room champions whose phase-shifted hands can reach through locked doors and security cases. In the ascendant economy, Gate Runners are the fastest looters alive — they strip a cleared gate of valuables before the raid party finishes their post-combat selfies. Many fence gate artifacts on the dark web or run "speed-clear" streams.',
+			"A Gate Runner is an Ascendant whose essence has been tuned to the phase-spaces between the physical world and the Gates. They possess a fluidity of movement that allows them to slip through barriers—both physical and aetheric—as if they were nothing more than mist. In the modern world, they are the specialized assets recruited for high-stakes recovery operations and urgent scouting, moving through hostile territory with a grace that defies the Absolute's own laws of permanence.",
 		features: [
 			{
-				name: "Phase Hands",
+				name: "Aetheric Phase",
 				description:
-					"Phase Shift bonus action can also: Sleight of Hand check, use thieves' tools, or Use an Object. Your hands phase through pockets and locks.",
+					"Phase Shift bonus action can also: Sleight of Hand check, use tools, or Use an Object. Your hands phase through pockets and locks via the primordial weave.",
 				level: 3,
 			},
 			{
-				name: "Wall Runner",
+				name: "Veil Runner",
 				description:
-					"Climbing costs no extra movement. Running jump distance +AGI mod feet. You phase-grip surfaces.",
+					"Climbing costs no extra movement. Running jump distance +AGI mod feet. You maintain a harmonic grip on any surface.",
 				level: 3,
 			},
 			{
-				name: "Perfect Stealth",
+				name: "Unseen Resonance",
 				description:
-					"Advantage on Stealth if you move no more than half speed that turn. You become nearly invisible.",
+					"Advantage on Stealth if you move no more than half speed that turn. You become a literal shadow in the Absolute's eye.",
 				level: 9,
 			},
 			{
-				name: "System Bypass",
+				name: "Mandate Bypass",
 				description:
-					"Ignore all class, race, and level requirements on magic items. Your phase-shifted hands interface with any System construct.",
+					"Ignore all class, race, and level requirements on aetheric artifacts. Your phase-shifted hands interface with the core resonance of any object.",
 				level: 13,
 			},
 			{
-				name: "Temporal Split",
+				name: "Continuity Split",
 				description:
-					"Two turns in the first round of combat: normal initiative and initiative minus 10. You phase through time itself.",
+					"The Absolute allows you two turns in the first round of combat: normal initiative and initiative minus 10. You exist in two moments simultaneously.",
 				level: 17,
 			},
 		],
@@ -793,56 +793,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { dexterity: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "assassin--silent-knife",
+		id: "assassin--terminus",
 		name: "Path of the Terminus",
 		jobId: "assassin",
 		jobName: "Assassin",
 		tier: 2,
-		pathType: "assassin",
+		pathType: "terminus",
 		requirements: { level: 3, skills: ["Stealth", "Deception"] },
 		description:
-			"Former hitmen, special forces snipers, and surgical professionals whose kills are clinically perfect. They phase into striking range, deliver one impossible blow, and phase out before security footage captures a single frame. Intelligence agencies worldwide maintain classified dossiers on known Terminus operatives. The System designates their kills as [TERMINATED] — clean, final, inevitable.",
+			"The Terminus mandate is reserved for those who embody the absolute finality of the reaper. They are the surgical edge of the Absolute, capable of delivering a clinical end to any existence with a single, unanswerable strike. In the modern world, they are the ghosts of the battlefield, their presence known only by the sudden, absolute silence they leave in their wake. When a Terminus marks a target, the Absolute itself acknowledges the inevitability of their transition.",
 		features: [
 			{
-				name: "Covert Proficiencies",
+				name: "Mandated Tools",
 				description:
-					"Proficiency with disguise kit and poisoner's kit. Tools of the trade.",
+					"Proficiency with disguise kits and alchemical tools. The fundamental assets of an inevitable end.",
 				level: 3,
 			},
 			{
-				name: "First Strike Protocol",
+				name: "Initial Strike Rite",
 				description:
 					"Advantage on attacks vs creatures that haven't acted yet. Hits on surprised creatures are automatic critical hits.",
 				level: 3,
 			},
 			{
-				name: "Identity Fabrication",
+				name: "Identity Weave",
 				description:
-					"Spend 7 days to create a false System-registered identity with documentation and disguises.",
+					"Spend 7 days to create a false resonance—a fabricated identity recognized by the Absolute's weave, complete with documented history.",
 				level: 9,
 			},
 			{
-				name: "Perfect Mimicry",
+				name: "Deep Mimicry",
 				description:
-					"Mimic another person's speech, writing, and behavior after 3 hours of study. Suspicious creatures have disadvantage on Insight to detect.",
+					"Mimic another person's speech, behavior, and aetheric resonance after 3 hours of study. Suspicious creatures have disadvantage on Insight to detect the facade.",
 				level: 13,
 			},
 			{
-				name: "Execution Protocol",
+				name: "The Final Rite",
 				description:
-					"Hit a surprised creature → VIT save (8+AGI mod+prof) or damage is doubled. The System confirms the kill.",
+					"Hit a surprised creature → VIT save (8+AGI mod+prof) or damage is doubled. The Absolute confirms the termination.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Phase Kill",
+				name: "Phase Termination",
 				description:
-					"After melee hit, phase between dimensions — become invisible until end of next turn or until you attack/cast. Once/short rest.",
+					"After a successful strike, phase into the aether—become invisible until the end of your next turn or until you attack. Once/short rest.",
 				cooldown: 1,
 				cost: "Free",
 			},
@@ -852,56 +852,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { dexterity: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "assassin--spell-thief",
-		name: "Path of the Matrix Thief",
+		id: "assassin--weave-infiltrator",
+		name: "Path of the Weave Infiltrator",
 		jobId: "assassin",
 		jobName: "Assassin",
 		tier: 2,
-		pathType: "arcane-trickster",
+		pathType: "weave-infiltrator",
 		requirements: { level: 3, skills: ["Stealth", "Arcana"] },
 		description:
-			"Hackers, identity thieves, and corporate spies who discovered they can phase into the System's spell matrix and steal spell routines mid-cast — the magical equivalent of intercepting encrypted network traffic. They project invisible force-hands for impossible larceny. Cybersecurity firms hire them to test defenses; intelligence agencies hire them for everything else.",
+			"The Weave Infiltrator mandate allows an Ascendant to harmonize their phase-shifted essence with the primordial weave of the Absolute. They do not just hide; they exist within the static of the local mana-field, capable of intercepting aetheric flows and stealing the resonances of other casters mid-manifestation. In a world of complex gate-wards and magical defenses, they are the ultimate locksmiths of reality.",
 		features: [
 			{
-				name: "Matrix Intrusion",
+				name: "Weave Intrusion",
 				description:
-					"Invisible Force Hand + 2 Mage cantrips + 3 spells (enchantment/illusion). INT casting, third-caster slots.",
+					"Harmonic Hand + 2 Mage cantrips + 3 spells (enchantment/illusion). INT casting, third-caster slots.",
 				level: 3,
 			},
 			{
-				name: "Force Hand Legerdemain",
+				name: "Harmonic Hand Mastery",
 				description:
-					"Invisible Force Hand can stow/retrieve objects, pick locks, disarm traps at range via Sleight of Hand.",
+					"Your aetheric hand can stow/retrieve objects, pick locks, and disarm traps at range via Sleight of Hand.",
 				level: 3,
 			},
 			{
 				name: "Phase Ambush",
 				description:
-					"Hidden when you cast → target has disadvantage on saves vs that spell. You cast from between dimensions.",
+					"Hidden when you cast → target has disadvantage on saves vs that spell. You manifest your resonance from between dimensions.",
 				level: 9,
 			},
 			{
-				name: "Force Distraction",
+				name: "Harmonic Distraction",
 				description:
-					"Bonus action: Force Hand distracts creature within 5 ft of it → advantage on attacks vs that creature until end of turn.",
+					"Bonus action: Aetheric hand distracts creature within 5 ft of it → advantage on attacks vs that creature until end of turn.",
 				level: 13,
 			},
 			{
-				name: "Spell Reclamation",
+				name: "Resonance Reclamation",
 				description:
-					"Reaction when targeted by spell: force INT save. Fail → negate effect on you, steal spell routine for 8 hours. Once/long rest.",
+					"Reaction when targeted by spell: force INT save. Fail → negate effect, steal the aetheric routine for 8 hours. Once/long rest.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Shadow Cast",
+				name: "Shadow Casting",
 				description:
-					"Cast cantrip while hidden without revealing position. Add Exploit Weakness if it deals damage. Once/short rest.",
+					"Cast a cantrip while hidden without revealing position. Add Exploit Weakness if it deals damage. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -911,48 +911,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { dexterity: 1, intelligence: 2 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "assassin--shadow-broker",
-		name: "Path of the Shadow Broker",
+		id: "assassin--shadow-herald",
+		name: "Path of the Shadow Herald",
 		jobId: "assassin",
 		jobName: "Assassin",
 		tier: 2,
-		pathType: "mastermind",
+		pathType: "shadow-herald",
 		requirements: { level: 3, skills: ["Insight", "Deception"] },
 		description:
-			"Former intelligence analysts, political fixers, investigative journalists, and corporate lobbyists who operate from the spaces between dimensions. They gather intelligence through dimensional eavesdropping — listening through walls, reading screens from another plane, attending meetings as invisible observers. In the ascendant world, Shadow Brokers ARE the information economy.",
+			"The Shadow Herald mandate is granted to those whose aetheric resonance allows them to perceive the 'echoes' of intent before they even manifest. They are the master strategists and information brokers of the high-tier guilds, weaving networks of intelligence from the fundamental static of the Absolute. In a world where a single secret can topple a corporation or clear a Gate, the Herald is the most valuable asset on any tactical roster.",
 		features: [
 			{
-				name: "Intelligence Network",
+				name: "Mandated Network",
 				description:
-					"Prof in disguise kit, forgery kit, one gaming set. Learn 2 languages. Mimic accents unerringly through phase-shifted vocal cords.",
+					"Prof in disguise kits, forgery kits, and gaming sets. Learn 2 languages. Your phase-shifted vocal cords can mimic any frequency.",
 				level: 3,
 			},
 			{
-				name: "Remote Coordination",
+				name: "Aetheric Coordination",
 				description:
-					"Help as bonus action. Help an ally attack → target can be within 30 ft. You whisper tactical data through dimensional cracks.",
+					"Help as bonus action. Help an ally attack → target can be within 30 ft. You whisper tactical echoes through the primordial weave.",
 				level: 3,
 			},
 			{
-				name: "System Profiling",
+				name: "Mandate Profiling",
 				description:
-					"Observe 1 min outside combat: learn if equal/superior/inferior in two of INT/SENSE/PRE/class levels. Your HUD compiles a dossier.",
+					"Observe 1 min: learn if equal/superior/inferior in two of INT/SENSE/PRE/class levels. Your Aetheric Sight compiles an unmasking dossier.",
 				level: 9,
 			},
 			{
-				name: "Deflection Protocol",
+				name: "Echo Deflection",
 				description:
-					"Reaction when targeted while a creature gives you cover: attack targets that creature instead. You phase behind them.",
+					"Reaction when targeted while a creature gives cover: attack targets that creature instead. You phase into their shadow.",
 				level: 13,
 			},
 			{
-				name: "Phase-Locked Mind",
+				name: "Sealed Resonance",
 				description:
-					"Thoughts unreadable by telepathy. Present false thoughts. Can't be compelled to truth. Advantage on Deception vs magical discernment.",
+					"Thoughts unreadable by telepathy. Present false echoes. Advantage on Deception vs sensory discernment.",
 				level: 17,
 			},
 		],
@@ -970,54 +970,54 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { charisma: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "assassin--duellist",
+		id: "assassin--blade-dancer",
 		name: "Path of the Blade Dancer",
 		jobId: "assassin",
 		jobName: "Assassin",
 		tier: 2,
-		pathType: "swashbuckler",
+		pathType: "blade-dancer",
 		requirements: { level: 3, skills: ["Acrobatics", "Persuasion"] },
 		description:
-			"Fencers, ballet dancers, stunt performers, and competitive martial artists who fight with one foot in the shadow dimension. Their gate-raid highlight reels look like choreographed action movies — phase-stepping through combat with impossible grace. Many have modeling contracts, sponsorship deals, and fan clubs. Never where you expect, always where it hurts.",
+			"The Blade Dancer mandate designates an Ascendant who has mastered the lethal fluidity of phase-step combat. They do not merely fight; they move with an impossible, aetheric grace that makes every encounter look like a choreographed display of violence. In modern high-society duels and televised gate-raids, only the most skilled Dancers can maintain the frequency of the Absolute while moving through a sea of blades without a single scratch.",
 		features: [
 			{
-				name: "Phase Footwork",
+				name: "Aetheric Footwork",
 				description:
-					"Melee attack a creature → it can't make OAs against you for the rest of your turn. You phase-step past their guard.",
+					"Melee attack a creature → it can't make OAs against you for the rest of your turn. You phase-step past their guard effortlessly.",
 				level: 3,
 			},
 			{
-				name: "Dimensional Audacity",
+				name: "Mandated Audacity",
 				description:
 					"Add PRE mod to initiative. Exploit Weakness without advantage if no other creature within 5 ft of you (no disadvantage required).",
 				level: 3,
 			},
 			{
-				name: "Mesmerizing Presence",
+				name: "Mesmerizing Resonance",
 				description:
-					"Action: Persuasion vs Insight. Win: hostile = charmed (won't attack you), or friendly target has disadvantage attacking anyone but you. 1 min.",
+					"Action: Persuasion vs Insight. Win: hostile target is charmed (won't attack you), or friendly target has disadvantage attacking anyone but you. 1 min.",
 				level: 9,
 			},
 			{
-				name: "Graceful Recovery",
+				name: "Graceful Realignment",
 				description:
-					"Bonus action: advantage on next Acrobatics or Athletics check this turn.",
+					"Bonus action: advantage on next Acrobatics or Athletics check this turn. Your essence corrects your form.",
 				level: 13,
 			},
 			{
-				name: "Perfect Counter",
+				name: "Harmonic Counter",
 				description:
-					"Miss with attack → reroll with advantage. Your phase-sight shows you the correct angle. Once/short rest.",
+					"Miss with attack → reroll with advantage. Your Aetheric Sight shows you the correct angle of insertion. Once/short rest.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Riposte",
+				name: "Aetheric Riposte",
 				description:
 					"Reaction when creature misses you: phase-strike with Exploit Weakness damage. Once/short rest.",
 				cooldown: 1,
@@ -1029,54 +1029,54 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { dexterity: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "assassin--outrider",
-		name: "Path of the Vanguard Scout",
+		id: "assassin--vanguard-outrider",
+		name: "Path of the Vanguard Outrider",
 		jobId: "assassin",
 		jobName: "Assassin",
 		tier: 2,
-		pathType: "scout",
+		pathType: "vanguard-outrider",
 		requirements: { level: 3, skills: ["Stealth", "Survival"] },
 		description:
-			"Ex-military recon specialists, urban explorers, and search-and-rescue volunteers who serve as the advance force in gate operations. They phase-step past monsters, map corridors using dimensional sight that works like built-in sonar, and relay intel via encrypted comms before the main raid party arrives. The Ascendant Bureau's Gate Mapping Division is staffed almost entirely by Vanguard Scouts.",
+			"The Vanguard Outrider is the advance resonance of the mandate—the first to enter a Gate and the last to leave. They have mastered aetheric recon, using phase-shifted sonar to map hostile terrain and relay vital intel through the weave. In the modern world of gate containment, they are the indispensable scouts whose ability to survive behind enemy resonances ensures the success of every mission.",
 		features: [
 			{
-				name: "Phase Skirmish",
+				name: "Aetheric Skirmish",
 				description:
 					"Enemy ends turn within 5 ft → reaction: phase-step half speed without provoking OAs.",
 				level: 3,
 			},
 			{
-				name: "Gate Survivalist",
+				name: "Gate Specialist",
 				description:
-					"Prof in Nature and Survival with double proficiency bonus. Your dimensional sight reads environments instantly.",
+					"Prof in Nature and Survival with double proficiency bonus. Your Aetheric insight reads environment resonances instantly.",
 				level: 3,
 			},
 			{
-				name: "Enhanced Mobility",
+				name: "Mandated Mobility",
 				description:
-					"Walking speed +10 ft. Climbing/swimming speed +10 ft if you have them. Phase-stepping augments all movement.",
+					"Walking speed +10 ft. Climbing/swimming speed +10 ft. Your phase-stepping augments all physical travel.",
 				level: 9,
 			},
 			{
-				name: "Dimensional Ambush",
+				name: "Aetheric Ambush",
 				description:
-					"Advantage on initiative. First creature you hit round 1 has disadvantage on attacks vs you until start of your next turn.",
+					"Advantage on initiative. First creature you hit in round 1 has disadvantage on attacks vs you until start of your next turn.",
 				level: 13,
 			},
 			{
-				name: "Dual Phase Strike",
+				name: "Recursive Phase Strike",
 				description:
-					"Bonus action: one additional attack from a phase-shifted angle. Can apply Exploit Weakness to a different target even if already used this turn.",
+					"Bonus action: deliver one additional attack from a phase-shifted angle. Can apply Exploit Weakness to a different target even if already used this turn.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Phase Recon",
+				name: "Phase Reconnaissance",
 				description:
 					"Phase-scout at triple speed for 10 min while hidden. Auto-succeed Stealth vs passive Perception. Once/short rest.",
 				cooldown: 1,
@@ -1088,53 +1088,53 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── STRIKER PATHS ── features at 3,6,11,17 ──
 	{
-		id: "striker--iron-fist",
-		name: "Path of the Kinetic Fist",
+		id: "striker--kinetic-core",
+		name: "Path of the Kinetic Core",
 		jobId: "striker",
 		jobName: "Striker",
 		tier: 2,
-		pathType: "open-hand",
+		pathType: "kinetic-core",
 		requirements: { level: 3, skills: ["Athletics", "Acrobatics"] },
 		description:
-			"Boxing champions, MMA title holders, and bare-knuckle fighters who optimized their impulse gates for pure unarmed devastation. They headline ascendant fight leagues broadcast on pay-per-view and their highlight reels crash servers. Every strike carries focused kinetic force that can shatter concrete, hurl enemies through walls, or lock a nervous system with a touch.",
+			"The Path of the Kinetic Core is for those who treat their own body as a high-velocity conductor for the Absolute's power. They do not just strike; they release focused bursts of kinetic resonance that can shatter reinforced gates and liquefy the internals of the most durable entities. In the high-stakes world of gate suppression, they are the undisputed masters of frontline engagement, moving with a speed that leaves afterimages of aetheric fire in their wake.",
 		features: [
 			{
-				name: "Impact Technique",
+				name: "Kinetic Technique",
 				description:
-					"When you use Gate of Force (Rapid Barrage), each hit can impose one: AGI save or prone; STR save or pushed 15 ft; or target can't take reactions until end of your next turn.",
+					"When you use Aetheric Pulse (Rapid Barrage), each strike can impose one: AGI save or prone; STR save or pushed 15 ft; or target can't take reactions until end of your next turn.",
 				level: 3,
 			},
 			{
-				name: "Neural Repair",
+				name: "Harmonic Repair",
 				description:
-					"Action: channel impulse energy inward to repair tissue. Regain HP = 3 × Striker level. Once/long rest.",
+					"Action: channel aetheric energy inward to realign your physical vessel. Regain HP = 3 × Striker level. Once/long rest.",
 				level: 6,
 			},
 			{
-				name: "Passive Deterrence",
+				name: "Aetheric Deterrence",
 				description:
-					"Your impulse field passively deters attacks. End of long rest: gain Sanctuary effect until next long rest (save DC 8+SENSE mod+prof).",
+					"Your internal resonance passively deters aggression. End of long rest: gain Sanctuary effect until next long rest (save DC 8+SENSE mod+prof).",
 				level: 11,
 			},
 			{
 				name: "Resonance Palm",
 				description:
-					"Unarmed hit implants a kinetic vibration in the target lasting Striker level days. Action to detonate: VIT save or reduced to 0 HP, success = 10d10 force damage.",
+					"Unarmed hit implants a kinetic vibration in the target's essence. Action to detonate: VIT save or reduced to 0 HP, success = 10d10 force damage.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Nerve Lockdown",
+				name: "Essence Lockdown",
 				description:
-					"VIT save or stunned until end of your next turn. 3 impulse points.",
+					"VIT save or stunned until end of your next turn. 3 Mandate-Flux.",
 				cooldown: 0,
-				cost: "3 impulse points",
+				cost: "3 Mandate-Flux",
 			},
 		],
 		stats: {
@@ -1142,7 +1142,7 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
@@ -1151,15 +1151,15 @@ export const paths: Path[] = [
 		jobId: "striker",
 		jobName: "Striker",
 		tier: 2,
-		pathType: "shadow",
+		pathType: "phantom-step",
 		requirements: { level: 3, skills: ["Stealth", "Acrobatics"] },
 		description:
-			"Parkour athletes, nightclub bouncers, and covert operatives who route impulse energy through shadow-frequency nerve clusters. In the modern ascendant world, Phantom Steps are urban legends — security cameras capture a flicker in a dark alley, then a gate monster collapses with shattered ribs and no visible attacker. Many work night shifts for private security firms or as off-the-books assets for intelligence agencies.",
+			"The Phantom Step mandate allows an Ascendant to route their physical existence through the low-frequency shadows of the local aether. They are the spectral legends of the gate-wars—flickers in a dark alley followed by the absolute collapse of a high-tier entity. They move not with speed, but with a displacement of reality, stepping through the darkness as if it were a physical gateway.",
 		features: [
 			{
-				name: "Shadow Impulse",
+				name: "Shadow Resonance",
 				description:
-					"2 impulse points: cast Darkness, Darkvision, Pass without Trace, or Silence through your nerve network. Learn Minor Illusion cantrip.",
+					"2 Mandate-Flux: cast Darkness, Darkvision, Pass without Trace, or Silence through your aetheric network. Learn Minor Illusion cantrip.",
 				level: 3,
 			},
 			{
@@ -1169,7 +1169,7 @@ export const paths: Path[] = [
 				level: 6,
 			},
 			{
-				name: "Shadow Cloak",
+				name: "Shroud of the Absolute",
 				description:
 					"In dim light/darkness, action: your body phases to near-invisibility. Invisible until you attack, cast, or enter bright light.",
 				level: 11,
@@ -1177,7 +1177,7 @@ export const paths: Path[] = [
 			{
 				name: "Exploit Opening",
 				description:
-					"Reaction when creature within 5 ft is hit by someone else: deliver a free unarmed strike against it while its guard is broken.",
+					"Reaction when creature within 5 ft is hit by someone else: deliver a free unarmed strike against it while its guard is shattered.",
 				level: 17,
 			},
 		],
@@ -1185,9 +1185,9 @@ export const paths: Path[] = [
 			{
 				name: "Phantom Barrage",
 				description:
-					"Teleport between up to 3 creatures within 60 ft, unarmed strike each. Start/end in dim light/darkness. 3 impulse points.",
+					"Teleport between up to 3 creatures within 60 ft, unarmed strike each. Start/end in dim light/darkness. 3 Mandate-Flux.",
 				cooldown: 0,
-				cost: "3 impulse points",
+				cost: "3 Mandate-Flux",
 			},
 		],
 		stats: {
@@ -1195,42 +1195,42 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "striker--essence-channeler",
-		name: "Path of the Force Channeler",
+		id: "striker--aetheric-channeler",
+		name: "Path of the Aetheric Channeler",
 		jobId: "striker",
 		jobName: "Striker",
 		tier: 2,
-		pathType: "four-elements",
+		pathType: "aetheric-channeler",
 		requirements: { level: 3, skills: ["Acrobatics", "Nature"] },
 		description:
-			"Electrical engineers, firefighters, and demolition workers who discovered their impulse gates convert ambient energy into elemental force. In the field, they are living weapons platforms — punching with fists that burn at 500°C, discharge like industrial tasers, or hit with gravitational force that cracks pavement. The military classifies them as tactical assets; insurance companies classify them as natural disasters.",
+			"The Aetheric Channeler mandate transforms an Ascendant into a living environmental conductor. They do not just strike; they convert ambient aetheric energy into fundamental elemental forces—concussive gravity, thermal discharges, or high-intensity lightning. In the containment of a high-tier gate, they are the ultimate multi-role assets, capable of adapting their physical strikes to the specific weaknesses of any anomaly.",
 		features: [
 			{
 				name: "Elemental Conversion",
 				description:
-					"Learn Force Attunement + 1 elemental discipline. More at 6,11,17. Max impulse per discipline = half Striker level (round up).",
+					"Learn Aetheric Attunement + 1 elemental discipline. More at 6,11,17. Max spirit per discipline = half Striker level (round up).",
 				level: 3,
 			},
 			{
 				name: "Discipline Library",
 				description:
-					"Options: Thermal Fists (fire reach +10 ft), Concussive Blast (30 ft 3d10 force), Gravity Whip (30 ft pull 3d10), Thermal Wave (15-ft cone 3d6 fire, 2 impulse), etc.",
+					"Options: Thermal Fists (fire reach +10 ft), Concussive Blast (30 ft 3d10 force), Gravity Whip (30 ft pull 3d10), Thermal Wave (15-ft cone 3d6 fire, 2 spirit), etc.",
 				level: 3,
 			},
 			{
 				name: "Advanced Conversions",
 				description:
-					"6th: Nerve Lock 3 impulse, Sonic Shatter 3 impulse. 11th: Thermal Detonation 4 impulse, Gravity Flight 4 impulse. 17th: Cryo Blast 6 impulse, Force Wall 5 impulse.",
+					"6th: Essence Lock 3 spirit, Sonic Shatter 3 spirit. 11th: Thermal Detonation 4 spirit, Gravity Flight 4 spirit. 17th: Cryo Blast 6 spirit, Force Wall 5 spirit.",
 				level: 6,
 			},
 			{
 				name: "Conversion Mastery",
 				description:
-					"Spend 1 extra impulse point on a discipline to increase its save DC by 2. Your elemental output has been perfected.",
+					"Spend 1 extra spirit point on a discipline to increase its save DC by 2. Your elemental output has been perfected.",
 				level: 17,
 			},
 		],
@@ -1238,9 +1238,9 @@ export const paths: Path[] = [
 			{
 				name: "Omni-Burst",
 				description:
-					"30-ft cone: 2d6 fire+2d6 cold+2d6 lightning+2d6 force. 5 impulse points.",
+					"30-ft cone: 2d6 fire+2d6 cold+2d6 lightning+2d6 force. 5 Mandate-Flux.",
 				cooldown: 0,
-				cost: "5 impulse points",
+				cost: "5 Mandate-Flux",
 			},
 		],
 		stats: {
@@ -1248,50 +1248,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 1, wisdom: 2 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "striker--chaos-style",
-		name: "Path of the Glitch Step",
+		id: "striker--entropic-flow",
+		name: "Path of the Entropic Flow",
 		jobId: "striker",
 		jobName: "Striker",
 		tier: 2,
-		pathType: "drunken-master",
+		pathType: "entropic-flow",
 		requirements: { level: 3, skills: ["Acrobatics", "Performance"] },
 		description:
-			"Street performers, skateboarders, and people with unusual neurological conditions whose impulse networks fire in seemingly random patterns. CCTV footage of Glitch Steps in combat looks like a video buffering — they stumble into perfect dodges, trip into devastating counters, and sway out of gunfire. Fight analysts can't predict their movements because the movements aren't consciously planned.",
+			"The Entropic Flow is walked by those whose internal aetheric gates fire in seemingly chaotic, unpredictable patterns. They do not fight with discipline, but with a fluidity that disregards the Absolute's logic. To an observer, they appear to be stumbling, tripping, and swaying through combat—yet every movement somehow lands a devastating blow or evades an impossible strike. They are the living embodiment of the 'unlucky' hit that always finds its mark.",
 		features: [
 			{
-				name: "Erratic Movement",
+				name: "Erratic Resonance",
 				description:
-					"When you use Gate of Force (Rapid Barrage): gain Disengage and +10 ft speed until end of turn. Your chaotic movement confuses defenders.",
+					"When you use Aetheric Pulse (Rapid Barrage): gain Disengage and +10 ft speed until end of turn. Your chaotic movement confuses all defenses.",
 				level: 3,
 			},
 			{
-				name: "Glitch Redirect",
+				name: "Entropic Realignment",
 				description:
-					"Stand from prone = 5 ft. When missed with melee, spend 1 impulse to redirect the attack to another creature within 5 ft. Your body glitches out of the way.",
+					"Stand from prone = 5 ft. When missed with melee, spend 1 spirit point to redirect the attack to another creature within 5 ft. Your essence displaces the impact.",
 				level: 6,
 			},
 			{
-				name: "Error Correction",
+				name: "Harmonic Correction",
 				description:
-					"When you have disadvantage on check/attack/save, spend 2 impulse to cancel disadvantage. Your system auto-corrects the glitch.",
+					"When you have disadvantage on check/attack/save, spend 2 Mandate-Flux to cancel it. The Absolute realigns to favor your chaos.",
 				level: 11,
 			},
 			{
 				name: "Cascade Assault",
 				description:
-					"Gate of Force (Rapid Barrage): up to 3 additional attacks (5 total), each must target a different creature. Your glitching body appears everywhere at once.",
+					"Aetheric Pulse (Rapid Barrage): up to 3 additional attacks (5 total), each must target a different creature. Your displace body appears everywhere at once.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Glitch Counter",
+				name: "Entropic Counter",
 				description:
-					"Reaction when missed within 5 ft: unarmed strike with advantage as your body glitches into a counterattack. Prof uses/short rest.",
+					"Reaction when missed within 5 ft: unarmed strike with advantage as your essence lunges into an unscripted counterattack. Prof uses/short rest.",
 				cooldown: 0,
 				cost: "Reaction",
 			},
@@ -1301,42 +1301,42 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { dexterity: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "striker--weapon-saint",
+		id: "striker--blade-conductor",
 		name: "Path of the Blade Conductor",
 		jobId: "striker",
 		jobName: "Striker",
 		tier: 2,
-		pathType: "kensei",
+		pathType: "blade-conductor",
 		requirements: { level: 3, skills: ["Athletics", "Acrobatics"] },
 		description:
-			"Fencers, kendo champions, knife makers, and weapons collectors who discovered their impulse gates extend through held weapons. Their bonded weapons move faster than the eye can track, vibrating at frequencies that cut through gate-monster armor like butter. Many teach at prestigious ascendant academies or appear in luxury weapon brand commercials.",
+			"The Blade Conductor mandate allows an Ascendant to extend their internal aetheric gates into physical steel. They do not just carry weapons; they bond with them, turning a simple blade into a high-frequency conductor for the Absolute's destructive frequency. In the elite academies of the modern world, Conductors are praised for their lethal precision and the harmonic 'hum' of their steel as it carves through reality.",
 		features: [
 			{
-				name: "Neural Weapon Bond",
+				name: "Aetheric Weapon Bond",
 				description:
-					"Choose 2 weapons (1 melee, 1 ranged, no heavy/special). They connect to your impulse network and count as Striker weapons. Melee bonded weapon + unarmed in same turn = +2 AC. Ranged: 1 impulse for +1d4+SENSE mod damage.",
+					"Choose 2 weapons (1 melee, 1 ranged, no heavy/special). They connect to your aetheric network and count as Striker weapons. Melee bonded weapon + unarmed in same turn = +2 AC. Ranged: 1 spirit point for +1d4+SENSE mod damage.",
 				level: 3,
 			},
 			{
-				name: "Mana-Laced Edge",
+				name: "Harmonic Edge",
 				description:
-					"Bonded weapons count as magical and deal force damage. Keen Strike: 1 impulse on bonded weapon hit = extra Impulse Combat die damage.",
+					"Bonded weapons count as magical and deal force damage. Keen Strike: 1 spirit point on bonded weapon hit = extra Spirit Combat die damage.",
 				level: 6,
 			},
 			{
-				name: "Force Honing",
+				name: "Resonance Honing",
 				description:
-					"Bonus action: spend 1-3 impulse, grant nonmagical bonded weapon equal bonus to attack/damage for 1 min. Your nerve network vibrates the blade at a molecular level.",
+					"Bonus action: spend 1-3 Mandate-Flux, granting your nonmagical bonded weapon an equal bonus to attack/damage for 1 min. You vibrate the blade at a molecular level.",
 				level: 11,
 			},
 			{
-				name: "Auto-Correction",
+				name: "Aetheric Alignment",
 				description:
-					"Miss with a bonded weapon on your turn → your impulse network auto-adjusts. Reroll the attack. Once/turn.",
+					"Miss with a bonded weapon on your turn → your essence auto-adjusts. Reroll the attack. Once/turn.",
 				level: 17,
 			},
 		],
@@ -1344,9 +1344,9 @@ export const paths: Path[] = [
 			{
 				name: "Blade Tempest",
 				description:
-					"Attack every creature within 10 ft with bonded weapon. Each hit: weapon + 2 Impulse Combat dice. 4 impulse points.",
+					"Attack every creature within 10 ft with bonded weapon. Each hit: weapon + 2 Spirit Combat dice. 4 Mandate-Flux.",
 				cooldown: 0,
-				cost: "4 impulse points",
+				cost: "4 Mandate-Flux",
 			},
 		],
 		stats: {
@@ -1354,63 +1354,63 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "striker--vital-strike",
-		name: "Path of the Nerve Surgeon",
+		id: "striker--harmonic-surgeon",
+		name: "Path of the Harmonic Surgeon",
 		jobId: "striker",
 		jobName: "Striker",
 		tier: 2,
-		pathType: "mercy",
+		pathType: "harmonic-surgeon",
 		requirements: { level: 3, skills: ["Medicine", "Insight"] },
 		description:
-			"Surgeons, physical therapists, acupuncturists, and combat medics who understand impulse pathways intimately. In the modern ascendant world, Nerve Surgeons are the most sought-after raid members — they heal teammates mid-combat with a touch and shut down enemy motor functions with precisely placed strikes. Many run rehabilitation clinics for gate-injured ascendants by day and clear gates by night.",
+			"The Harmonic Surgeon mandate is granted to those whose understanding of aetheric pathways allows them to repair the physical vessel with a touch. In the modern world, they are the most critical members of any high-tier raid team, capable of shutting down enemy motor functions with clinical precision or realigning the broken essences of their allies mid-combat. They move with a cold, calculated efficiency that treats the battlefield as a triage unit.",
 		features: [
 			{
-				name: "Medical Training",
-				description: "Prof in Insight, Medicine, herbalism kit.",
+				name: "Mandated Insight",
+				description: "Prof in Insight, Medicine, and alchemical kits.",
 				level: 3,
 			},
 			{
 				name: "Restorative Touch",
 				description:
-					"During Rapid Barrage: replace one attack with a healing touch = 1 Impulse Combat die + SENSE mod HP restored. 1 impulse to also end disease or blinded/deafened/paralyzed/poisoned/stunned.",
+					"During Rapid Barrage: replace one strike with a restorative touch = 1 Spirit Combat die + SENSE mod HP restored. 1 spirit point to also end disease or debilitating conditions (blinded/deafened/paralyzed/poisoned/stunned).",
 				level: 3,
 			},
 			{
-				name: "Nerve Shutdown",
+				name: "Essence Shutdown",
 				description:
-					"During Rapid Barrage hit: spend 1 impulse to deal extra necrotic = 1 Impulse Combat die + SENSE mod. Target's motor functions seize — poisoned until end of your next turn.",
+					"During Rapid Barrage hit: spend 1 spirit point to deal extra necrotic damage = 1 Spirit Combat die + SENSE mod. Target's motor pathways seize—poisoned until the end of your next turn.",
 				level: 3,
 			},
 			{
-				name: "Advanced Nerve Surgery",
+				name: "Advanced Harmonic Surgery",
 				description:
-					"Restorative Touch also ends frightened or charmed. Nerve Shutdown: the motor seizure requires no save.",
+					"Restorative Touch also ends frightened or charmed. Essence Shutdown: the motor seizure requires no save from the victim.",
 				level: 6,
 			},
 			{
 				name: "Surgical Barrage",
 				description:
-					"Replace each Rapid Barrage attack with Restorative Touch (no impulse cost for heal). Nerve Shutdown once per turn without spending impulse.",
+					"Replace each Rapid Barrage strike with Restorative Touch (no spirit cost for heal). Essence Shutdown once per turn without spending spirit.",
 				level: 11,
 			},
 			{
-				name: "Neural Resurrection",
+				name: "Aetheric Resurrection",
 				description:
-					"Touch a creature that died within 24 hours: spend 5 impulse points to restart its nervous system. Returns to life with 4d10+SENSE mod HP, cured of all conditions. Once/long rest.",
+					"Touch a creature that died within 24 hours: spend 5 Mandate-Flux to restart its internal resonance. Returns to life with 4d10+SENSE mod HP, cured of all physical conditions. Once/long rest.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Impulse Heal",
+				name: "Aetheric Heal",
 				description:
-					"Touch an ally: restore 2d8+SENSE mod HP and purge one condition by resetting their nerve pathways. 2 impulse points.",
+					"Touch an ally: restore 2d8+SENSE mod HP and purge one condition by realigning their aetheric pathways. 2 Mandate-Flux.",
 				cooldown: 0,
-				cost: "2 impulse points",
+				cost: "2 Mandate-Flux",
 			},
 		],
 		stats: {
@@ -1418,51 +1418,51 @@ export const paths: Path[] = [
 			secondaryAttribute: "Dexterity",
 			bonusStats: { wisdom: 2, dexterity: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── MAGE PATHS ── features at 2,6,10,14 ──
 	{
-		id: "mage--evocation",
+		id: "mage--detonation-specialist",
 		name: "Path of the Detonation Specialist",
 		jobId: "mage",
 		jobName: "Mage",
 		tier: 2,
-		pathType: "evocation",
+		pathType: "detonation-specialist",
 		requirements: { level: 2, skills: ["Arcana"] },
 		description:
-			"Military demolitions experts, pyrotechnicians, and controlled-detonation engineers who compile the System's most destructive spell routines with surgical precision. Defense contractors pay them obscene consulting fees. They shape blast radii around allies like a surgeon shapes an incision and overload spells to deal maximum theoretical damage — the heavy artillery of any gate raid.",
+			"The Detonation Specialist mandate is walked by those who treat aetheric energy as a raw, explosive substrate. They are the architects of controlled destruction, capable of weaving destructive mantras that bypass friendly resonances with surgical precision. In the high-stakes world of gate clearance, they serve as the heavy artillery, turning the local weave into a localized supernova of calculated fury.",
 		features: [
 			{
 				name: "Precision Targeting",
 				description:
-					"When you cast a damage spell affecting an area, choose up to 1+spell level creatures. They auto-succeed on saves and take no damage. Your System HUD excludes friendly targets.",
+					"When you cast a damage spell affecting an area, choose up to 1+spell level creatures. They auto-succeed on saves and take no damage. Your Aetheric Sight excludes friendly resonances.",
 				level: 2,
 			},
 			{
-				name: "Residual Damage",
+				name: "Residual Discharge",
 				description:
-					"When a creature succeeds on a save against your cantrip, your compiled routine still deals half damage. The System ensures partial detonation.",
+					"When a creature succeeds on a save against your cantrip, your weave still deals half damage. The Absolute ensures partial manifestation of your intent.",
 				level: 6,
 			},
 			{
-				name: "Output Amplification",
+				name: "Harmonic Amplification",
 				description:
-					"Add INT mod to the damage of any evocation spell you cast. Your compilations are optimized for maximum yield.",
+					"Add INT mod to the damage of any destructive spell you cast. Your mantras are optimized for maximum yield.",
 				level: 10,
 			},
 			{
-				name: "Overclock Compilation",
+				name: "Overloaded Mantras",
 				description:
-					"When you cast a 5th-level or lower damage spell, deal maximum damage (no rolling). Use again before long rest: System strain deals 2d12 necrotic per spell level to you (increases each use).",
+					"When you cast a 5th-level or lower damage spell, deal maximum damage. Use again before long rest: Absolute strain deals 2d12 necrotic per spell level to you (increases each use).",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Maximum Yield",
+				name: "Absolute Yield",
 				description:
-					"Next damage spell deals maximum damage. Once/long rest (additional uses cause 2d12 necrotic per level from System strain).",
+					"Next damage spell deals maximum damage. Once/long rest (additional uses cause 2d12 necrotic per level from Absolute strain).",
 				cooldown: 3,
 				cost: "Free",
 			},
@@ -1472,42 +1472,42 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "mage--abjuration",
-		name: "Path of the Shield Compiler",
+		id: "mage--shield-compiler",
+		name: "Path of the Shield Architect",
 		jobId: "mage",
 		jobName: "Mage",
 		tier: 2,
-		pathType: "abjuration",
+		pathType: "shield-architect",
 		requirements: { level: 2, skills: ["Arcana"] },
 		description:
-			"Cybersecurity analysts, network architects, and IT security consultants who specialize in defensive spell routines. They generate persistent mana barriers like firewalls — absorbing damage and rejecting hostile magic. Every serious guild runs a Shield Compiler the way every corporation runs a security team. Their protection subroutines run continuously in the background, keeping raid parties alive.",
+			"The Shield Architect mandate is for those who view the weave of the Absolute as a protective barrier to be reinforced. They generate persistent aetheric shields that absorb damage and reject hostile manifestations. In a world where a single error can mean total annihilation, the Architect is the foundation of any successful suppression mission—the one whose continuous protection harmonics ensure the survival of the party.",
 		features: [
 			{
-				name: "Mana Barrier",
+				name: "Aetheric Barrier",
 				description:
-					"When you compile an abjuration spell of 1st+, generate a barrier with HP = 2×Mage level+INT mod. Damage to you hits the barrier first. Compiling abjuration spells restores 2×spell level HP to the barrier.",
+					"When you manifest a protective spell of 1st+, generate a barrier with HP = 2×Mage level+INT mod. Damage to you hits the barrier first. Protective spells restore 2×spell level HP to the barrier.",
 				level: 2,
 			},
 			{
-				name: "Projected Barrier",
+				name: "Projected Shield",
 				description:
-					"Reaction: when a creature within 30 ft takes damage, your Mana Barrier absorbs it instead. You redirect your shield remotely.",
+					"Reaction: when a creature within 30 ft takes damage, your Aetheric Barrier absorbs it instead. You redirect your mandate remotely.",
 				level: 6,
 			},
 			{
-				name: "Optimized Countermeasures",
+				name: "Optimized Wards",
 				description:
-					"Add prof bonus to ability checks for counter-spell routines (Counterspell, Dispel Magic). Your counter-compilation is highly optimized.",
+					"Add prof bonus to ability checks for counter-manifestations (Counterspell, Dispel Magic). Your defensive weave is highly optimized.",
 				level: 10,
 			},
 			{
-				name: "Spell Immunity Matrix",
+				name: "Immunity Resonance",
 				description:
-					"Advantage on saves against spells. Resistance to spell damage. Your defensive matrix auto-filters hostile magic.",
+					"Advantage on saves against spells. Resistance to spell damage. Your defensive resonance auto-filters hostile manifestations.",
 				level: 14,
 			},
 		],
@@ -1515,7 +1515,7 @@ export const paths: Path[] = [
 			{
 				name: "Barrier Restoration",
 				description:
-					"Restore your Mana Barrier to full HP by channeling ambient System energy. Once/long rest.",
+					"Restore your Aetheric Barrier to full HP by channeling ambient mana. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -1525,50 +1525,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "mage--divination",
-		name: "Path of the Probability Engine",
+		id: "mage--probability-mandate",
+		name: "Path of the Probability Mandate",
 		jobId: "mage",
 		jobName: "Mage",
 		tier: 2,
-		pathType: "divination",
+		pathType: "probability-mandate",
 		requirements: { level: 2, skills: ["Arcana", "Insight"] },
 		description:
-			"Statisticians, quant traders, actuaries, and data scientists who tap into the System's predictive algorithms. Wall Street firms and government intelligence agencies fight to recruit them. They pre-compute future outcomes and overwrite them with preferred results — they don't see the future, they calculate it, then choose which branch of reality to actualize.",
+			"The Probability Mandate designates an Ascendant who has learned to perceive the underlying variables of the Absolute. They do not see the future as a vision, but as a series of calculated outcomes that can be anchored into reality. In the modern world, they are the indispensable strategists of any high-tier guild, capable of overriding unfavorable resonance-branches and ensuring the 'unlucky' moment never comes to pass.",
 		features: [
 			{
-				name: "Pre-Computation",
+				name: "Aetheric Alignment",
 				description:
-					"After long rest, run 2 probability simulations (roll 2d20, record results). You can substitute any attack/save/check made by you or a visible creature with a pre-computed result. Results refresh on long rest.",
+					"After long rest, run 2 resonance calibrations (roll 2d20). You can substitute any attack/save/check made by you or a visible creature with one of these results.",
 				level: 2,
 			},
 			{
-				name: "Efficient Scanning",
+				name: "Efficient Insight",
 				description:
-					"When you compile a divination spell of 2nd+, the efficient routine refunds energy: regain one spell slot of lower level (max 5th).",
+					"When you manifest a divination spell of 2nd+, the efficient resonance refunds essence: regain one spell slot of lower level (max 5th).",
 				level: 6,
 			},
 			{
-				name: "Expanded Perception",
+				name: "Oracle's Perception",
 				description:
-					"Action: activate one enhanced sensor until rest: darkvision 60 ft, see ethereal 60 ft, decode any language, or detect invisible within 10 ft.",
+					"Action: activate one enhanced sensor until rest: darkvision 60 ft, see ethereal 60 ft, decipher any language, or detect invisible within 10 ft.",
 				level: 10,
 			},
 			{
-				name: "Enhanced Pre-Computation",
+				name: "Master Computation",
 				description:
-					"Run 3 probability simulations (roll 3d20) instead of 2. Your predictive algorithms are more powerful.",
+					"Calculate 3 probabilities (roll 3d20) instead of 2. Your ability to anchor favorable outcomes is unsurpassed.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Probability Override",
+				name: "Mandate Override",
 				description:
-					"Force a creature to reroll any d20 and take the lower result. You override the probability branch. Once/short rest.",
+					"Force a creature to reroll any d20 and take the lower result. You override the local probability branch. Once/short rest.",
 				cooldown: 1,
 				cost: "Reaction",
 			},
@@ -1578,50 +1578,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { intelligence: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "mage--illusion",
-		name: "Path of the Reality Faker",
+		id: "mage--phantasmist",
+		name: "Path of the Phantasmist",
 		jobId: "mage",
 		jobName: "Mage",
 		tier: 2,
-		pathType: "illusion",
+		pathType: "phantasmist",
 		requirements: { level: 2, skills: ["Arcana", "Deception"] },
 		description:
-			"Special effects artists, deepfake specialists, VFX engineers, and con artists who compile illusion routines so sophisticated the System itself can't tell them from real data. Hollywood studios and intelligence agencies both recruit them. Their constructs fool all senses simultaneously, and at peak power, their fakes become genuinely real — they hack reality by making the System believe the illusion IS reality.",
+			"The Phantasmist mandate is walked by those who have mastered the art of weaving aetheric fakes so sophisticated that the Absolute itself accepts them as genuine resonance. They do not just create illusions; they inject false realities into the world, bypassing all senses to fool both sentient and anomalous threats. At their peak, their phantasms can manifest physical presence, proving that in the Absolute's eye, perception IS reality.",
 		features: [
 			{
-				name: "Enhanced Projection",
+				name: "Refined Projection",
 				description:
-					"Learn Minor Illusion cantrip (free). Can project both sound and image simultaneously in a single compilation.",
+					"Learn Minor Illusion cantrip. Can project both sound and image simultaneously in a single phantasm.",
 				level: 2,
 			},
 			{
-				name: "Live Editing",
+				name: "Phantasmal Editing",
 				description:
-					"When you cast an illusion with 1+ min duration, use an action to dynamically alter the illusion's properties in real-time.",
+					"When you manifest an illusion with 1+ min duration, use an action to dynamically alter its properties in real-time.",
 				level: 6,
 			},
 			{
-				name: "Decoy Protocol",
+				name: "Echo Displacement",
 				description:
-					"Reaction when attacked: project a decoy that causes the attack to miss. Your body was never where they thought. Once/short rest.",
+					"Reaction when attacked: project an aetheric duplicate that causes the attack to miss. Your body was never where it seemed. Once/short rest.",
 				level: 10,
 			},
 			{
-				name: "Reality Injection",
+				name: "Reality Anchoring",
 				description:
-					"When you cast a 1st+ illusion spell, choose one inanimate object in the illusion — it becomes genuinely real for 1 minute as the System accepts the fake data. Cannot deal damage directly.",
+					"When you manifest a 1st+ illusion, choose one inanimate object within it—it becomes genuinely real for 1 minute as the Absolute accepts the aetheric reflection.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Fake Terrain",
+				name: "Phantasmal Terrain",
 				description:
-					"Compile a 30-ft cube of illusory difficult terrain that feels real. INT save to disbelieve. 1 min.",
+					"Weave a 30-ft cube of illusory difficult terrain that feels real to all who enter. INT save to disbelieve. 1 min.",
 				cooldown: 2,
 				cost: "Action",
 			},
@@ -1631,42 +1631,42 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { intelligence: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "mage--conjuration",
+		id: "mage--rift-caller",
 		name: "Path of the Rift Caller",
 		jobId: "mage",
 		jobName: "Mage",
 		tier: 2,
-		pathType: "conjuration",
+		pathType: "rift-caller",
 		requirements: { level: 2, skills: ["Arcana"] },
 		description:
-			"Logistics managers, shipping engineers, and quantum physics researchers who specialize in tearing open micro-gates. They pull matter from other dimensions, teleport through dimensional shortcuts, and summon reinforcements from the spaces between gates. Amazon's R&D division tried to recruit one for 'instant delivery' — she declined. They treat space as a suggestion.",
+			"The Rift Caller mandate is for those who treat physical space as a mere suggestion. They specialize in tearing open micro-gates to pull matter from distant reaches or summon reinforcements from the Absolute's many reflections. In the modern world of gate-containment, they are the masters of logistics and tactical displacement, moving through reality via dimensional shortcuts that bypass all conventional defenses.",
 		features: [
 			{
-				name: "Micro-Gate Fabrication",
+				name: "Aetheric Rift",
 				description:
-					"Action: open a tiny rift and pull an inanimate object through (3 ft per side, 10 lbs max). Lasts until you use this again, take damage, or 1 hour passes.",
+					"Action: open a tiny rift and pull an inanimate object through. Lasts until you use this again or 1 hour passes.",
 				level: 2,
 			},
 			{
 				name: "Rift Step",
 				description:
-					"Action: teleport 30 ft, or swap positions with a willing Small/Medium creature within 30 ft. Once/long rest or until you cast a conjuration spell.",
+					"Action: teleport 30 ft, or swap positions with a willing Small/Medium creature within 30 ft. Once/long rest or until you manifest a conjuration spell.",
 				level: 6,
 			},
 			{
 				name: "Stabilized Rifts",
 				description:
-					"Your concentration on a conjuration spell can't be broken by damage. Your rifts are structurally reinforced.",
+					"Your concentration on a rift-based spell can't be broken by physical damage. Your rifts are structurally reinforced by the Absolute.",
 				level: 10,
 			},
 			{
 				name: "Reinforced Summons",
 				description:
-					"Creatures pulled through your rifts arrive bolstered: conjuration summons gain 30 temp HP from rift energy.",
+					"Creatures pulled through your rifts arrive bolstered by 30 temp HP of raw aetheric energy.",
 				level: 14,
 			},
 		],
@@ -1674,7 +1674,7 @@ export const paths: Path[] = [
 			{
 				name: "Emergency Rift",
 				description:
-					"Teleport up to 60 ft as a bonus action via micro-gate. Prof uses/long rest.",
+					"Teleport up to 60 ft as a bonus action via a micro-gate. Prof uses/long rest.",
 				cooldown: 0,
 				cost: "Bonus action",
 			},
@@ -1684,42 +1684,42 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "mage--transmutation",
-		name: "Path of the Matter Hacker",
+		id: "mage--matter-weaver",
+		name: "Path of the Matter Weaver",
 		jobId: "mage",
 		jobName: "Mage",
 		tier: 2,
-		pathType: "transmutation",
+		pathType: "matter-weaver",
 		requirements: { level: 2, skills: ["Arcana", "Investigation"] },
 		description:
-			"Materials scientists, chemists, 3D-printing engineers, and nanotechnology researchers who exploit the System's material data layer. They rewrite physical properties at the molecular level — turning steel to glass, lead to gold, concrete to water. Pharmaceutical companies and mining corporations pay fortunes for their consulting. At peak power, they create Mana Cores — crystallized sources of permanent transmutation energy.",
+			"The Matter Weaver mandate allows an Ascendant to rewrite the fundamental physical properties of the local substrate. They treat the world as a programmable weave, capable of turning steel to glass or concrete to water with a single aetheric command. In the modern world of advanced alchemy and essence-cultivation, the Weaver is a priceless asset for both guild construction and tactical environmental manipulation.",
 		features: [
 			{
-				name: "Material Rewrite",
+				name: "Material Realignment",
 				description:
-					"Spend 10 min to rewrite one material into another (wood→stone, metal→crystal, etc.). Reverts after 1 hour or if you use this again.",
+					"Spend 10 min to rewrite one material into another (wood→stone, etc.). Reverts after 1 hour or if you use this again.",
 				level: 2,
 			},
 			{
-				name: "Mana Core",
+				name: "Aetheric Core",
 				description:
-					"Spend 8 hours to crystallize ambient mana into a core granting one of: darkvision 60 ft, +10 ft speed, proficiency in VIT saves, or resistance to acid/cold/fire/lightning/thunder. Rewrite the core's effect when you cast a transmutation spell.",
+					"Spend 8 hours to crystallize ambient mana into a core granting various buffs. Realignment of the core occurs when you manifest a transmutation spell.",
 				level: 6,
 			},
 			{
-				name: "Bio-Transmutation",
+				name: "Aetheric Bio-Transmutation",
 				description:
-					"Add Polymorph to your grimoire (free). Cast it without a slot to assume a beast form of CR 1 or lower. Once/short rest. Your body temporarily rewrites itself.",
+					"Assume an animal form of CR 1 or lower. Once/short rest. Your body temporarily rewrites itself via the Absolute's mandate.",
 				level: 10,
 			},
 			{
-				name: "Master Rewrite",
+				name: "Master Weaver's Rite",
 				description:
-					"Destroy your Mana Core for one: transmute any nonmagical object into another of similar size/mass, purge all curses/diseases/poisons from a creature, compile Raise Dead without a slot, or reverse a creature's aging by 3d10 years.",
+					"Destroy your Aetheric Core to trigger a grand realignment: purge conditions, raise the fallen, or reverse the aging of a vessel.",
 				level: 14,
 			},
 		],
@@ -1727,7 +1727,7 @@ export const paths: Path[] = [
 			{
 				name: "Molecular Override",
 				description:
-					"Touch an object and rewrite its material composition for 1 hour. Once/short rest.",
+					"Touch an object and rewrite its composition for 1 hour. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -1737,49 +1737,49 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { intelligence: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── ESPER PATHS ── features at 1,6,14,18 ──
 	{
-		id: "esper--draconic-bloodline",
-		name: "Path of the Gate Dragon Lineage",
+		id: "esper--draconic-lineage",
+		name: "Path of the Aetheric Dragon",
 		jobId: "esper",
 		jobName: "Esper",
 		tier: 2,
-		pathType: "draconic",
+		pathType: "aetheric-dragon",
 		requirements: { level: 1, skills: ["Arcana"] },
 		description:
-			"Espers whose anomalous mana carries the essence of ancient gate dragons — creatures that existed before the System itself. Their awakening was explosive; many destroyed their apartment, office, or school gym during the event. Their flux manifests as elemental fury, their bodies toughening with crystallized draconic scales visible under their skin. Dermatologists are baffled.",
+			"The Aetheric Dragon mandate awakens in those whose anomalous resonance carries the signature of the primordial gate dragons—ancient masters of the Absolute who predated even the current cycle of Gates. Their spirit manifests as elemental fury, their very cells crystallizing into draconic mana-scales that hum with the power of a dying star. They are not merely casters; they are living manifestations of the Absolute's primal rage.",
 		features: [
 			{
-				name: "Draconic Imprint",
+				name: "Draconic Resonance",
 				description:
-					"Choose a gate dragon type. Double prof bonus on PRE checks with draconic creatures. Instinctively understand Draconic language.",
+					"Choose an aetheric dragon type. Double prof bonus on PRE checks with draconic beings. Instinctively understand the ancient Primordial tongue.",
 				level: 1,
 			},
 			{
-				name: "Mana Scale Armor",
+				name: "Aetheric Scale Armor",
 				description:
-					"Draconic mana reinforces your body. HP +1 per Esper level. Unarmored AC = 13+AGI mod.",
+					"Aetheric mana reinforces your physical vessel. HP +1 per Esper level. Unarmored AC = 13+AGI mod.",
 				level: 1,
 			},
 			{
-				name: "Elemental Resonance",
+				name: "Elemental Affinity",
 				description:
-					"When you cast a spell matching your dragon's element, add PRE mod to one damage roll. Spend 1 flux for resistance to that element for 1 hour.",
+					"When you manifest a spell matching your dragon's resonance, add PRE mod to the effect. Spend 1 Mandate-Flux for resistance to that element for 1 hour.",
 				level: 6,
 			},
 			{
-				name: "Mana Wings",
+				name: "Wings of the Absolute",
 				description:
 					"Bonus action: manifest wings of crystallized mana. Fly speed = walking speed. Last until dismissed.",
 				level: 14,
 			},
 			{
-				name: "Draconic Authority",
+				name: "Draconic Mandate",
 				description:
-					"Action: 60-ft aura of draconic pressure. PRE save or charmed/frightened. 1 min, concentration. 5 flux.",
+					"Action: 60-ft aura of draconic pressure. PRE save or charmed/frightened. 1 min, concentration. 5 Mandate-Flux.",
 				level: 18,
 			},
 		],
@@ -1787,9 +1787,9 @@ export const paths: Path[] = [
 			{
 				name: "Dragon Breath",
 				description:
-					"30-ft cone or 60-ft line: 4d8 damage of your lineage type, AGI save for half. 3 flux.",
+					"30-ft cone or 60-ft line: 4d8 damage of your resonance type, AGI save for half. 3 Mandate-Flux.",
 				cooldown: 0,
-				cost: "3 flux",
+				cost: "3 Mandate-Flux",
 			},
 		],
 		stats: {
@@ -1797,48 +1797,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { charisma: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "esper--wild-magic",
-		name: "Path of the Mana Cascade",
+		id: "esper--aetheric-cascade",
+		name: "Path of the Aetheric Cascade",
 		jobId: "esper",
 		jobName: "Esper",
 		tier: 2,
-		pathType: "wild-magic",
+		pathType: "aetheric-cascade",
 		requirements: { level: 1, skills: ["Arcana"] },
 		description:
-			"Espers with the most volatile anomalous connections — the ones whose awakening caused a blackout, a freak hailstorm, or turned their dorm room ceiling into glass. Their flux reactor occasionally overflows, triggering random cascading effects that have variously healed bystanders, set fire to dumpsters, and turned a traffic light into a bird. The Ascendant Bureau flags them as unstable assets.",
+			"The Aetheric Cascade mandate is granted to those whose connection to the Absolute was shattered and reformed into a volatile reactive core. They do not just cast; they trigger cascading aetheric events that baffle traditional understanding. Each manifestation is a harmonic anomaly, a reality-warping discharge that can heal an ally or incinerate a foe with the same unpredictable fervor.",
 		features: [
 			{
 				name: "Cascade Trigger",
 				description:
-					"After casting 1st+ spell, Protocol Warden (PW) can have you roll d20. On 1, roll on Mana Cascade table for a random magical discharge.",
+					"After manifesting a 1st+ spell, the local Absolute weave may trigger a Cascade (d20). On 1, roll on the Aetheric Cascade table for a random discharge.",
 				level: 1,
 			},
 			{
 				name: "Riding the Cascade",
 				description:
-					"Lean into your instability. Gain advantage on one attack/check/save. Before regaining, Protocol Warden (PW) can trigger a Cascade after your next spell (no d20 roll).",
+					"Lean into your instability. Gain advantage on one attack or check. The Absolute will demand a Cascade in return for this favor.",
 				level: 1,
 			},
 			{
-				name: "Probability Nudge",
+				name: "Probability Realignment",
 				description:
-					"Reaction: when a visible creature makes attack/check/save, spend 2 flux to roll 1d4 and add or subtract from their roll. You nudge the probability.",
+					"Reaction: when a visible creature makes an attack or save, spend 2 Mandate-Flux to roll 1d4 and adjust their result. You nudge the local fate-branch.",
 				level: 6,
 			},
 			{
 				name: "Selective Cascade",
 				description:
-					"When you roll on Cascade table, roll twice and choose which result manifests.",
+					"When you roll on the Cascade table, roll twice and choose which manifestation to anchor into reality.",
 				level: 14,
 			},
 			{
-				name: "Chain Reaction",
+				name: "Absolute Chain Reaction",
 				description:
-					"When you roll max on a damage die for a spell, reroll that die and add to total. Your flux chain-reacts. Once per turn.",
+					"When you roll max on a damage die for a spell, reroll that die and add to the total. Your internal reactor is chain-reacting.",
 				level: 18,
 			},
 		],
@@ -1846,7 +1846,7 @@ export const paths: Path[] = [
 			{
 				name: "Cascade Bolt",
 				description:
-					"Hurl raw unstable mana: 2d8+1d6, damage type random. If both d8s match, the bolt cascades to another target.",
+					"Hurlraw unstable mana: 2d8+1d6, damage type random. If the d8s match, the bolt cascades to another target.",
 				cooldown: 0,
 				cost: "1st-level slot",
 			},
@@ -1856,7 +1856,7 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { charisma: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
@@ -1868,7 +1868,7 @@ export const paths: Path[] = [
 		pathType: "shadow",
 		requirements: { level: 1, skills: ["Stealth", "Arcana"] },
 		description:
-			"Espers who draw power from the empty space between gate dimensions — the void that separates realities. They tend to be quiet, withdrawn people who were already comfortable in the dark before awakening. Streetlights flicker when they pass, shadows move wrong around them, and pets avoid them. They command absolute darkness, summon void hounds, and can dissolve their physical form into pure shadow-mana.",
+			"Espers who draw power from the empty space between gate dimensions — the void that separates realities. They tend to be quiet, withdrawn individuals whose internal resonance focuses on the silence behind the Absolute's weave. Environmental fluctuations are common when they pass, and the shadows around them often seem to detach from their physical anchors. They command absolute darkness, summon void-born entities, and can dissolve their physical form into pure shadow-resonance.",
 		features: [
 			{
 				name: "Void Sight",
@@ -1915,7 +1915,7 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { charisma: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
@@ -1927,7 +1927,7 @@ export const paths: Path[] = [
 		pathType: "storm",
 		requirements: { level: 1, skills: ["Arcana", "Nature"] },
 		description:
-			"Storm chasers, electrical linesmen, and surfers whose anomalous connection manifests as electromagnetic fury. Lightning arcs from their skin during emotional moments, wind shifts when they gesture, and weather apps glitch within a block of them. Power companies hate them; the military loves them. Their flux reactor runs on storm energy.",
+			"The Path of the Tempest Core is for those whose anomalous resonance is synchronized with absolute atmospheric pressure. Lightning arcs from their skin during moments of high resonance-flux, wind shifts when they move, and environmental sensors fluctuate wildly in their presence. They are the living conduits of the Absolute's storms, their internal resonance-field powered by the very energy that structures a gate's atmosphere.",
 		features: [
 			{
 				name: "Atmospheric Sense",
@@ -1980,30 +1980,30 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { charisma: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "esper--divine-soul",
-		name: "Path of the System Spark",
+		id: "esper--absolute-spark",
+		name: "Path of the Absolute Spark",
 		jobId: "esper",
 		jobName: "Esper",
 		tier: 2,
-		pathType: "divine-soul",
+		pathType: "absolute-spark",
 		requirements: { level: 1, skills: ["Arcana", "Religion"] },
 		description:
-			"Espers who carry a fragment of the System's core energy — not gate mana, but the System itself. Often former caregivers, teachers, or medical students whose empathy somehow resonated with the System's restorative layer during awakening. They access both destructive Esper frequencies and Herald healing transmissions, making them the rarest anomaly type. Hospitals and guilds fight over their contracts.",
+			"Espers who carry a fragment of the Absolute's core energy — not mere gate mana, but the fundamental force itself. Often individuals whose innate empathy resonated with the restorative layers of the Absolute during their awakening, they access both destructive Esper resonance-flux and Herald restorative transmissions. They are the rarest anomaly type, serving as the ultimate stabilizers for high-tier containment missions.",
 		features: [
 			{
-				name: "Dual Frequency Access",
+				name: "Dual Manifestation Access",
 				description:
-					"Learn one Herald transmission based on affinity (Restoration: Cure Wounds, Entropy: Inflict Wounds, Order: Bless, Chaos: Bane, Balance: Protection from Evil and Good). Access both Esper and Herald spell lists.",
+					"Learn one Herald transmission based on affinity (Restoration: Cure Wounds, Entropy: Inflict Wounds, Order: Bless, Chaos: Bane, Balance: Protection from Evil and Good). Access both Esper and Herald manifestation lists.",
 				level: 1,
 			},
 			{
-				name: "System Favor",
+				name: "Absolute Favor",
 				description:
-					"When you fail a save or miss an attack, the System nudges reality. Add 2d4 to the roll. Once/short rest.",
+					"When you fail a save or miss an attack, the Absolute nudges reality. Add 2d4 to the roll. Once/short rest.",
 				level: 1,
 			},
 			{
@@ -2013,23 +2013,23 @@ export const paths: Path[] = [
 				level: 6,
 			},
 			{
-				name: "Mana Wings",
+				name: "Aetheric Wings",
 				description:
-					"Bonus action: manifest spectral wings of System energy. 30-ft fly speed. Last until dismissed.",
+					"Bonus action: manifest spectral wings of Absolute energy. 30-ft fly speed. Last until dismissed.",
 				level: 14,
 			},
 			{
 				name: "Emergency Restoration",
 				description:
-					"When below half HP, bonus action: the System floods you with restorative energy. Regain HP = half your HP max. Once/long rest.",
+					"When below half HP, bonus action: the Absolute floods you with restorative energy. Regain HP = half your HP max. Once/long rest.",
 				level: 18,
 			},
 		],
 		abilities: [
 			{
-				name: "System Healing Surge",
+				name: "Absolute Healing Surge",
 				description:
-					"Cast a healing spell and add PRE mod to each die of healing. The System amplifies your output. 2 flux.",
+					"Manifest a healing rite and add PRE mod to each die of restorative resonance. The Absolute amplifies your output. 2 flux.",
 				cooldown: 0,
 				cost: "2 flux",
 			},
@@ -2039,7 +2039,7 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { charisma: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
@@ -2051,7 +2051,7 @@ export const paths: Path[] = [
 		pathType: "aberrant",
 		requirements: { level: 1, skills: ["Arcana", "Insight"] },
 		description:
-			"Espers touched by entities from beyond the known gate network — alien intelligences whose psionic imprint rewired their brains during awakening. Many report hearing whispers in languages that don't exist, seeing geometric patterns in their peripheral vision, and dreaming of places no human has visited. They cast with thought alone, their minds alien and impenetrable. Psychiatrists can't help them; neurologists can't explain them.",
+			"Espers touched by entities from beyond the known gate network — alien intelligences whose psionic imprint rewired their resonance during awakening. These Ascendants often perceive the Absolute not as a network of laws, but as a collective of interconnected consciousnesses that exist outside of traditional time. They cast with thought alone, their minds becoming an impenetrably alien echo of the Absolute's deepest layers.",
 		features: [
 			{
 				name: "Psionic Imprint Spells",
@@ -2104,49 +2104,49 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { charisma: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── REVENANT PATHS ── features at 2,6,10,14 ──
 	{
-		id: "revenant--grave-lord",
-		name: "Path of the Decay Master",
+		id: "revenant--void-lord",
+		name: "Path of the Void Lord",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "necromancy",
+		pathType: "void-lord",
 		requirements: { level: 2, skills: ["Arcana", "Medicine"] },
 		description:
-			"Former morticians, forensic pathologists, and biohazard cleanup workers who push offensive entropy to its most destructive extreme. In gate raids, every kill accelerates the chain reaction — necrotic energy cascades outward from corpses, withering nearby enemies. The Ascendant Bureau deploys them against high-density gate infestations. The longer a fight goes, the more bodies fuel their power.",
+			"The Void Lord mandate is for those who treat offensive entropy as a fundamental cosmic law. They do not just kill; they accelerate the chain reaction of the Absolute's decay, turning every fallen foe into a resonator for necrotic fury. In the containment of high-density gates, they are the indispensable reapers who ensure that the longer a fight persists, the more the environment itself rebels against the living.",
 		features: [
 			{
 				name: "Efficient Entropy",
 				description:
-					"Half gold and time to copy necromancy spells. Your Death Harvest restores additional HP = 2× spell level when you kill with a 1st+ spell (3× for necromancy). Not on constructs or undead.",
+					"Absolute insight into the cessation of resonance. Your Essence Harvest restores additional HP = 2× spell level when you destroy with a 1st+ spell (3× for necrotic).",
 				level: 2,
 			},
 			{
 				name: "Cascading Decay",
 				description:
-					"When you kill a creature with a spell, entropy chain-reacts: all creatures within 10 ft of the corpse take necrotic damage = spell level + INT mod. If this kills another creature, it chains again.",
+					"When you destroy a creature with a spell, entropy chain-reacts: all creatures within 10 ft of the remains take necrotic damage = spell level + INT mod. If this kills another, it chains again.",
 				level: 2,
 			},
 			{
-				name: "Accelerated Rot",
+				name: "Absolute Rot",
 				description:
-					"Your necrotic spells eat through defenses. When you deal necrotic damage to a creature, its AC is reduced by 1 until end of your next turn (doesn't stack).",
+					"Your necrotic manifestations eat through physical and aetheric defenses. When you deal necrotic damage, the target's AC is reduced by 1 until the end of your next turn.",
 				level: 6,
 			},
 			{
-				name: "Corpse Detonation",
+				name: "Remnant Detonation",
 				description:
-					"Action: target a corpse within 60 ft. It detonates in a 15-ft radius as stored entropy explodes outward. Creatures take necrotic damage = 2d8 + your Revenant level (VIT half). Prof bonus uses/long rest.",
+					"Action: target a fallen remnant within 60 ft. It detonates in a 15-ft radius as stored entropy explodes outward. Creatures take necrotic damage = 2d8 + Revenant level. Prof uses/long rest.",
 				level: 10,
 			},
 			{
-				name: "Entropy Cascade",
+				name: "Void Cascade",
 				description:
-					"When your Cascading Decay chains to a third or subsequent creature, the damage increases by 1d8 per chain link. Your decay is exponential.",
+					"When your Cascading Decay chains to a third or subsequent target, the damage increases by 1d8 per link. Your decay is exponential.",
 				level: 14,
 			},
 		],
@@ -2154,7 +2154,7 @@ export const paths: Path[] = [
 			{
 				name: "Mass Detonation",
 				description:
-					"Detonate up to 3 corpses simultaneously within 120 ft. Each explodes for 3d8+INT mod necrotic in 15 ft (VIT half). Overlapping areas stack. Once/long rest.",
+					"Detonate up to 3 fallen remnants simultaneously. Each explodes for 3d8+INT mod necrotic in 15 ft. Overlapping areas stack. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2164,56 +2164,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "revenant--soul-reaper",
+		id: "revenant--entropy-drinker",
 		name: "Path of the Entropy Drinker",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "enchantment",
+		pathType: "entropy-drinker",
 		requirements: { level: 2, skills: ["Arcana", "Persuasion"] },
 		description:
-			"Former energy healers, yoga instructors, and wellness gurus whose death-gate experience inverted their connection to vitality. Now they feed on the living — siphoning life force through their decay field. Teammates describe feeling slightly tired around them; enemies describe feeling like they're aging decades in seconds. Many work night shifts to avoid public spaces where their passive drain unsettles people.",
+			"The Entropy Drinker mandate is held by those who have learned to siphon the Absolute's decaying frequency to sustain their own physical vessel. They do not just damage their foes; they feed upon them, converting the local entropic field into a source of personal vitality. In the elite guilds, they are often seen as unsettling but necessary assets who can endure and thrive in environments that would wither any other Ascendant.",
 		features: [
 			{
 				name: "Vitality Siphon",
 				description:
-					"When you deal necrotic damage with a spell, gain temp HP = half the damage dealt (once per turn). Your entropy field passively converts enemy life force into sustenance.",
+					"When you deal necrotic damage with a spell, gain temp HP = half the damage dealt. Your entropic field passively converts enemy life force into sustenance.",
 				level: 2,
 			},
 			{
-				name: "Weakening Aura",
+				name: "Absolute Weakening",
 				description:
-					"Creatures that start their turn within 10 ft of you have disadvantage on their next STR or VIT check/save until the start of their next turn. Your presence saps physical vitality.",
+					"Creatures that start their turn within 10 ft of you have disadvantage on their next physical check/save. Your presence saps the local resonance.",
 				level: 2,
 			},
 			{
 				name: "Entropic Leech",
 				description:
-					"When a creature within 30 ft regains HP (from any source), you can use your reaction to steal half the healing — they gain half, you gain the other half as temp HP. Prof bonus uses/long rest.",
+					"Reaction when a creature within 30 ft regains HP: you steal half the healing for yourself as temp HP. Prof uses/long rest.",
 				level: 6,
 			},
 			{
-				name: "Drain Resistance",
+				name: "Resonance Adaptation",
 				description:
-					"When you have temp HP from any Revenant feature, you have resistance to the damage type of the last spell you cast. Your stolen vitality adapts.",
+					"While you have temp HP from a Revenant feature, you have resistance to the damage type of the last spell you manifested.",
 				level: 10,
 			},
 			{
 				name: "Total Consumption",
 				description:
-					"Action: target one creature within 30 ft. For 1 minute (concentration), at the start of each of its turns it takes 3d6 necrotic and you regain HP equal to the damage dealt. VIT save ends. Once/long rest.",
+					"Action: target one creature within 30 ft. For 1 minute, it takes 3d6 necrotic at the start of its turn and you regain HP. VIT save ends. Once/long rest.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Life Drain Burst",
+				name: "Essence Drain Burst",
 				description:
-					"All creatures within 15 ft: VIT save or take 3d8 necrotic. You regain HP = total damage dealt across all targets. Once/short rest.",
+					"All creatures within 15 ft: VIT save or take 3d8 necrotic. You regain HP = total damage dealt. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -2223,48 +2223,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { intelligence: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "revenant--war-necromancer",
+		id: "revenant--wither-guard",
 		name: "Path of the Wither Guard",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "war-magic",
+		pathType: "wither-guard",
 		requirements: { level: 2, skills: ["Arcana", "Athletics"] },
 		description:
-			"Former riot police, bodyguards, and defensive driving instructors who weaponize entropy defensively. Their armor corrodes incoming attacks, enemy weapons rust mid-swing, and zones around them become no-man's-lands of accelerated decay. The Ascendant Bureau assigns them as VIP protection — nothing hostile survives long near a Wither Guard.",
+			"The Wither Guard mandate elevates an Ascendant to the position of an entropic bulwark. They weave defensive fields of decay that corrode incoming manifestations and weaponize the Absolute's cessation as a barrier. While other Revenants seek to harvest, the Guard seeks to contain—ensuring that nothing hostile can survive the concentrated entropic pressure of their presence.",
 		features: [
 			{
-				name: "Entropic Deflection",
+				name: "Absolute Deflection",
 				description:
-					"Reaction when hit or fail save: entropy corrodes the attack. +2 AC vs that attack or +4 to that save. Until end of next turn, can only cast cantrips. No uses limit.",
+					"Reaction when targeted: entropy corrodes the manifestation. +2 AC or +4 to save. Until end of next turn, can only manifest cantrips.",
 				level: 2,
 			},
 			{
-				name: "Decay Reflexes",
+				name: "Entropic Reflexes",
 				description:
-					"Your reconstructed body processes entropy data rapidly. Add INT mod to initiative rolls.",
+					"Your reconstructed vessel processes entropic data as pure instinct. Add INT mod to initiative.",
 				level: 2,
 			},
 			{
-				name: "Corrode Magic",
+				name: "Corrosive Counter",
 				description:
-					"When you successfully counter or dispel a spell, the entropy absorbs it as a charge (max stored = INT mod). Spend a charge on any Revenant spell to add +half Revenant level necrotic damage.",
+					"When you successfully counter a spell, the Absolute absorbs it as a charge. Spend to add 1/2 Revenant level necrotic damage to any Revenant manifestation.",
 				level: 6,
 			},
 			{
-				name: "Entropy Concentration",
+				name: "Focus of Decay",
 				description:
-					"While concentrating on a spell, your Decay Field reinforces your focus: +2 AC and +2 to all saves.",
+					"While concentrating on a mandate, your entropic field reinforces your focus: +2 AC and +2 to all saves.",
 				level: 10,
 			},
 			{
-				name: "Withering Retaliation",
+				name: "Withering Retribution",
 				description:
-					"When you use Entropic Deflection, entropy lashes back: up to 3 creatures of your choice within 60 ft take half Revenant level necrotic damage and have their speed reduced by 10 ft until end of their next turn.",
+					"When you use Absolute Deflection, raw entropy lashes back: up to 3 creatures take half Revenant level necrotic damage and have speed reduced by 10 ft.",
 				level: 14,
 			},
 		],
@@ -2272,7 +2272,7 @@ export const paths: Path[] = [
 			{
 				name: "Entropy Carapace",
 				description:
-					"Encase yourself in crystallized decay: +3 AC for 1 min. Melee attackers take 1d8 necrotic and have disadvantage on their next attack (their weapon corrodes). Once/long rest.",
+					"Encase yourself in crystallized decay: +3 AC for 1 min. Melee attackers take 1d8 necrotic and have disadvantage on attacks. Once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -2282,50 +2282,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "revenant--blade-wraith",
+		id: "revenant--entropy-blade",
 		name: "Path of the Entropy Blade",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "bladesinging",
+		pathType: "entropy-blade",
 		requirements: { level: 2, skills: ["Arcana", "Acrobatics"] },
 		description:
-			"Former fencers, dancers, and martial artists who channel decay through their weapons in a lethal close-range dance. Every strike ages matter on contact — steel rusts, flesh withers, stone crumbles. Their sparring videos go viral because the training dummies visibly decompose mid-fight. The most mobile Revenant path, phasing through their own decay field to strike from impossible angles.",
+			"The Entropy Blade mandate allows an Ascendant to channel the Absolute's decay through physical steel. They do not just fight; they perform a lethal close-range dance where every strike ages matter on contact. Steel rusts, flesh withers, and the very air around their blade turns to a freezing entropic mist. They are the most mobile of the Revenant lineages, phasing through their own decay field to deliver strikes from impossible angles.",
 		features: [
 			{
-				name: "Decay Dance",
+				name: "Absolute Dance",
 				description:
-					"Bonus action: activate Decay Dance (1 min, ends if 2-handing weapon, medium/heavy armor, or incapacitated). Effects: +INT mod AC, +10 ft speed, advantage on Acrobatics, +INT mod to VIT concentration saves. 2 uses/short rest.",
+					"Bonus action: activate Absolute Dance (1 min). +INT mod AC, +10 ft speed, advantage on Acrobatics, +INT mod to VIT concentration saves. 2 uses/short rest.",
 				level: 2,
 			},
 			{
-				name: "Corroding Strike",
+				name: "Corroding Manifestation",
 				description:
-					"Attack twice per Attack action. One attack can be replaced with casting a cantrip. On hit, the target's nonmagical armor/shield loses 1 AC permanently (cumulative, repaired during long rest).",
+					"Attack twice per Attack action. One attack can be replaced with a cantrip. On hit, the target's nonmagical equipment loses 1 structural AC permanently.",
 				level: 6,
 			},
 			{
-				name: "Entropy Guard",
+				name: "Entropic Guard",
 				description:
-					"While Decay Dance active, reaction when you take damage: expend a spell slot, reduce damage by 5× slot level as entropy absorbs the kinetic energy and converts it to decay.",
+					"While dancing, reaction when damaged: expend a spell slot, reduce damage by 5× slot level as entropy absorbs the impact.",
 				level: 10,
 			},
 			{
-				name: "Lethal Entropy",
+				name: "Lethal Termination",
 				description:
-					"While Decay Dance active, add INT mod to melee weapon damage as necrotic. Creatures you hit cannot regain HP until the start of your next turn — your blade prevents cellular repair.",
+					"While dancing, add INT mod to melee damage as necrotic. Targets hit cannot regain HP until the start of your next turn. You have severed their cellular repair.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Withering Dance",
+				name: "Void Dance",
 				description:
-					"While Decay Dance active: teleport 15 ft before each melee attack through your own decay field. Each hit deals 1d6 extra necrotic and ages nonmagical equipment. 1 min, once/long rest.",
+					"While active: teleport 15 ft before each strike through your own entropic field. Each hit deals 1d6 extra necrotic. 1 min, once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -2335,48 +2335,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Dexterity",
 			bonusStats: { intelligence: 2, dexterity: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "revenant--chronurgist",
+		id: "revenant--plague-weaver",
 		name: "Path of the Plague Weaver",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "chronurgy",
+		pathType: "plague-weaver",
 		requirements: { level: 2, skills: ["Arcana", "Medicine"] },
 		description:
-			"Former epidemiologists, CDC researchers, and bioweapons analysts who weaponize entropy as contagion. Their spells carry decaying conditions that spread between creatures like a virus — the WHO has classified their abilities as a potential pandemic vector. They don't just damage one target; they infect it, and the infection jumps to the next. Entire gate encounters unravel as their entropic plague cascades through enemy ranks.",
+			"The Plague Weaver mandate elevates entropy to the level of a virulent contagion. They do not just target individuals; they manifest entropic plagues that cascade through enemy ranks, jumping from one host to another like a sentient virus. In the containment mandates of the modern world, the Weaver is often seen as a walking pandemic vector, though their ability to dissolve entire gate encounters into decaying sludge is unsurpassed.",
 		features: [
 			{
 				name: "Entropic Contagion",
 				description:
-					"When you deal necrotic damage to a creature with a spell, you can mark it as a carrier (INT mod marks active at once). At the start of a carrier's turn, one creature within 5 ft of it takes necrotic damage = your INT mod. Mark lasts 1 minute.",
+					"When you deal necrotic damage, you can mark a carrier. At the start of its turn, those within 5 ft take necrotic damage = INT mod. Mark lasts 1 min.",
 				level: 2,
 			},
 			{
-				name: "Accelerated Infection",
+				name: "Contagious Insight",
 				description:
-					"Your entropic conditions spread faster. Add INT mod to initiative. When you inflict a condition with a spell (poisoned, frightened, etc.), the save DC increases by 1.",
+					"Your entropic manifestations spread with surgical efficiency. Add INT mod to initiative. Save DC for your conditions increases by 1.",
 				level: 2,
 			},
 			{
 				name: "Plague Burst",
 				description:
-					"Action: detonate all active Entropic Contagion marks simultaneously. Each carrier and all creatures within 10 ft of a carrier take 2d6 necrotic (VIT half). Marks are consumed. INT mod uses/long rest.",
+					"Action: detonate all active Contagion marks. Each carrier and those within 10 ft take 2d6 necrotic. Marks are consumed. INT uses/long rest.",
 				level: 6,
 			},
 			{
-				name: "Viral Entropy",
+				name: "Viral Realignment",
 				description:
-					"When a creature fails a save against your spell while marked by Entropic Contagion, the mark jumps to one additional creature within 30 ft (no save). Your plague is self-replicating.",
+					"When a creature fails a save against your mandate while marked, the mark jumps to one additional target within 30 ft. Your plague is self-replicating.",
 				level: 10,
 			},
 			{
-				name: "Pandemic Protocol",
+				name: "Total Contagion",
 				description:
-					"Once/long rest, your next necrotic spell automatically marks every creature it damages as a carrier. Additionally, carriers have disadvantage on saves against your spells.",
+					"Once/long rest, your next necrotic manifestation automáticamente marks every recipient. Carriers have disadvantage on saves against your mandates.",
 				level: 14,
 			},
 		],
@@ -2384,7 +2384,7 @@ export const paths: Path[] = [
 			{
 				name: "Patient Zero",
 				description:
-					"Touch a creature: it becomes a super-carrier for 1 min. All creatures within 15 ft of it at the start of its turn take 2d8 necrotic (VIT half) and are marked as carriers. Once/long rest.",
+					"Touch a creature: it becomes a central carrier for 1 min. Those within 15 ft take 2d8 necrotic and are marked. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2394,48 +2394,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { intelligence: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "revenant--graviturgist",
+		id: "revenant--threshold-walker",
 		name: "Path of the Threshold Walker",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "graviturgy",
+		pathType: "threshold-walker",
 		requirements: { level: 2, skills: ["Arcana", "Insight"] },
 		description:
-			"Former hospice workers, trauma counselors, and near-death experience researchers who stand on the exact boundary between life and death. They pull allies back from the brink and shove enemies over it — the only Revenants who can heal. Emergency rooms request them by name. Entropy flows both ways for them: reverse decay to heal, or accelerate it to kill. The ultimate life-death arbiter.",
+			"The Threshold Walker mandate is a rare and heavy burden, granted to those who stand on the exact boundary between existence and the void. They alone among the Revenants have learned to reverse the Absolute's entropic flow, pulling allies back from the brink or shoving enemies over it with equal conviction. They are the supreme arbiters of life and death, treated with equal parts reverence and fear by all who understand the cold logic of the threshold.",
 		features: [
 			{
 				name: "Reverse Entropy",
 				description:
-					"When you cast a necromancy spell, you can choose to reverse its entropy: the spell heals for the same amount it would have damaged (necrotic becomes healing). This costs the spell slot as normal. You are the only Revenant who can heal.",
+					"When you manifest a necrotic mandate, you can choose to reverse its flow: the effect heals instead of damaging. You are the only Revenant capable of such realignment.",
 				level: 2,
 			},
 			{
-				name: "Death Sense",
+				name: "Aetheric Sight (Death)",
 				description:
-					"You can see a creature's exact HP total (not just percentage). You know when any creature within 120 ft drops below half HP, reaches 0 HP, or dies. Your connection to the threshold is absolute.",
+					"You see the exact HP and mortality variable of all creatures within 120 ft. Your connection to the threshold is absolute.",
 				level: 2,
 			},
 			{
-				name: "Pull from the Threshold",
+				name: "Pull from the Brink",
 				description:
-					"When an ally within 30 ft drops to 0 HP, reaction: they drop to 1 HP instead and gain temp HP = your INT mod + Revenant level. You pull them back from the death-gate. Prof bonus uses/long rest.",
+					"Reaction when ally drops to 0 HP: they drop to 1 HP instead and gain temp HP. You have physically dragged them back. Prof uses/long rest.",
 				level: 6,
 			},
 			{
-				name: "Push Past the Threshold",
+				name: "Absolute Cessation",
 				description:
-					"When you deal necrotic damage to a creature that is below half HP, deal extra necrotic = your Revenant level. You accelerate their journey toward death.",
+					"When you deal necrotic damage to a creature below half HP, deal extra damage = Revenant level. You accelerate their transition to the void.",
 				level: 10,
 			},
 			{
-				name: "Arbiter of Entropy",
+				name: "Arbiter's Decree",
 				description:
-					"Once/long rest, touch a creature that has died within the last minute. It returns to life with HP = your Revenant level + INT mod, cured of all conditions. OR touch a living creature: VIT save or it takes 10d6 necrotic as you drag it toward the threshold. You choose life or death.",
+					"Touch a dead creature: return it to life with HP + INT mod. OR touch a living creature: 10d6 necrotic as you shove it through the gate. You choose resonance or void.",
 				level: 14,
 			},
 		],
@@ -2443,7 +2443,7 @@ export const paths: Path[] = [
 			{
 				name: "Threshold Pulse",
 				description:
-					"30-ft radius: all allies regain 2d8 HP, all enemies take 2d8 necrotic (VIT half). You stand at the center of life and death. Once/long rest.",
+					"30-ft radius: all allies regain 2d8 HP, all enemies take 2d8 necrotic. You are the center of the life-death axis. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2453,55 +2453,55 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { intelligence: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── SUMMONER PATHS ── features at 2,6,10,14 ──
 	{
-		id: "summoner--circle-of-the-land",
-		name: "Path of the Biome Specialist",
+		id: "summoner--biome-architect",
+		name: "Path of the Biome Architect",
 		jobId: "summoner",
 		jobName: "Summoner",
 		tier: 2,
-		pathType: "land",
+		pathType: "biome-architect",
 		requirements: { level: 2, skills: ["Nature"] },
 		description:
-			"Park rangers, botanists, and environmental scientists who attune to a specific gate ecosystem type. They recover mana by absorbing ambient gate energy more efficiently than any other Summoner — literally photosynthesizing in gate biomes. The Ascendant Bureau's Ecology Division relies on them for biome-specific gate assessments.",
+			"The Biome Architect mandate is held by those who have attained a perfect resonance with a specific gate ecosystem. They do not just survive; they recover their internal essence by absorbing ambient gate energy with an efficiency that borders on the miraculous. In the containment protocols of the modern world, the Architect is indispensable for identifying and stabilizing the volatile environments that bleed into our reality.",
 		features: [
 			{
-				name: "Biome Cantrip",
+				name: "Biome Insight",
 				description:
-					"Learn one additional Summoner cantrip from your bonded biome.",
+					"Learn one additional Summoner mantra from your bonded biome.",
 				level: 2,
 			},
 			{
 				name: "Biome Absorption",
 				description:
-					"During short rest, absorb ambient gate energy: recover spell slots with combined level ≤ half Summoner level (round up). No 6th+. Once/long rest.",
+					"During a moment of stillness, absorb ambient gate energy: recover internal essence equivalent to half Summoner level. Once/long rest.",
 				level: 2,
 			},
 			{
-				name: "Biome Spells",
+				name: "Biome Mantras",
 				description:
-					"Gain bonus always-prepared spells at 3rd, 5th, 7th, and 9th level based on your bonded gate biome (Arctic Gate, Coastal Gate, Desert Gate, Forest Gate, Grassland Gate, Mountain Gate, Swamp Gate, or Subterranean Gate).",
+					"Gain bonus always-prepared manifestations at 3rd, 5th, 7th, and 9th level based on your bonded gate biome (Arctic, Coastal, Desert, Forest, Grassland, Mountain, Swamp, or Subterranean).",
 				level: 3,
 			},
 			{
 				name: "Terrain Fluidity",
 				description:
-					"Moving through nonmagical difficult terrain costs no extra movement. No damage from nonmagical plants. Advantage on saves vs magically created/manipulated flora.",
+					"Moving through difficult terrain within a gate costs no extra effort. No damage from aetheric plants. Advantage on saves against magically manipulated flora.",
 				level: 6,
 			},
 			{
-				name: "Biome Immunity",
+				name: "Biome Adaptation",
 				description:
-					"Immune to poison and disease. Can't be charmed or frightened by elementals or fey. Your body has fully adapted to gate environments.",
+					"Immune to poison and environmental disease. Your body has fully adapted to the Absolute's gate habitats.",
 				level: 10,
 			},
 			{
 				name: "Biome Sanctuary",
 				description:
-					"When a beast or plant creature attacks you, it must make a SENSE save or choose a different target/miss. Your biome attunement marks you as part of the ecosystem.",
+					"Manifesting part of the Absolute's ecosystem around you, beasts and plant entities choice another target. Your resonance marks you as part of the environment.",
 				level: 14,
 			},
 		],
@@ -2509,7 +2509,7 @@ export const paths: Path[] = [
 			{
 				name: "Biome Surge",
 				description:
-					"Channel the gate biome's energy: regain one spell slot up to 5th level and gain advantage on all Nature/Survival checks for 1 hour. Once/long rest.",
+					"Channel the local gate energy: regain internal essence and gain advantage on environmental checks for 1 hour. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2519,56 +2519,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { wisdom: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "summoner--circle-of-the-moon",
+		id: "summoner--apex-shifter",
 		name: "Path of the Apex Shifter",
 		jobId: "summoner",
 		jobName: "Summoner",
 		tier: 2,
-		pathType: "moon",
+		pathType: "apex-shifter",
 		requirements: { level: 2, skills: ["Nature", "Survival"] },
 		description:
-			"Zoo keepers, wildlife rehabilitators, and extreme sports athletes who are combat-focused Entity Shift specialists. They assume powerful gate creature forms far beyond what other Summoners can manage — becoming the front-line tank by literally transforming into the apex predators of gate ecosystems. Nature documentaries film them; children's toy lines are based on their forms.",
+			"The Apex Shifter mandate is for those who seek to dominate their environment by assuming the physical vessels of the Absolute's apex predators. They do not merely shift; they undergo a total biological restructuring into powerful gate creatures that exceed all earthly limits. In the modern world, they are the front-line tanks who lead every raid, their very existence a bridge between human consciousness and absolute fury.",
 		features: [
 			{
-				name: "Combat Entity Shift",
+				name: "Absolute Entity Shift",
 				description:
-					"Entity Shift as bonus action. While in gate creature form, spend a spell slot to regain 1d8 per slot level HP.",
+					"Entity Shift as bonus action. While in gate creature form, spend aetheric essence to regain 1d8 HP per level.",
 				level: 2,
 			},
 			{
-				name: "Advanced Forms",
+				name: "Advanced Primordial Forms",
 				description:
-					"Entity Shift into gate creatures of CR 1 (CR = Summoner level / 3 at higher levels). At 6th level, attacks in entity form count as magical.",
+					"Entity Shift into gate creatures of CR 1 (CR = Summoner level / 3 at higher levels). At 6th level, attacks in entity form count as aetheric.",
 				level: 2,
 			},
 			{
-				name: "Mana-Laced Attacks",
+				name: "Aetheric-Laced Strikes",
 				description:
-					"Attacks in entity form count as magical for overcoming resistance and immunity. Your shifted body channels mana through every strike.",
+					"Attacks in shifted form count as physical aether for overcoming resistance. Your vessel channels the Absolute through every blow.",
 				level: 6,
 			},
 			{
-				name: "Elemental Entity Shift",
+				name: "Elemental Integration",
 				description:
-					"Expend 2 Entity Shift uses to assume the form of an air, earth, fire, or water elemental from gate ecosystems.",
+					"Assume the form of an elemental entity from the Absolute's reflection (Air, Earth, Fire, or Water).",
 				level: 10,
 			},
 			{
 				name: "Adaptive Physiology",
 				description:
-					"Cast Alter Self at will. Your body retains the ability to make minor biological shifts between full Entity Shifts.",
+					"Manifest minor biological shifts at will. Your body retains the ability to optimize its vessel even between full Entity Shifts.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Apex Entity Form",
+				name: "Apex Manifestation",
 				description:
-					"Entity Shift into a CR = Summoner level gate creature or elemental for 1 hour. Retain all spellcasting. Once/long rest.",
+					"Shift into an apex gate entity for 1 hour. Retain all mandate access. Once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -2578,50 +2578,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { wisdom: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "summoner--circle-of-dreams",
-		name: "Path of the Dream Gate",
+		id: "summoner--dream-weaver",
+		name: "Path of the Dream Weaver",
 		jobId: "summoner",
 		jobName: "Summoner",
 		tier: 2,
-		pathType: "dreams",
+		pathType: "dream-weaver",
 		requirements: { level: 2, skills: ["Nature", "Insight"] },
 		description:
-			"Sleep researchers, lucid dreamers, and therapists who connect to the fey-frequency energies that bleed through certain gate boundaries. They heal with restorative biome magic, create hidden rest shelters in the middle of hostile gates, and teleport through dreamlike dimensional paths. Raid parties with a Dream Gate Summoner report significantly lower PTSD rates.",
+			"The Dream Weaver mandate designates those who have forged a connection with the Lush-resonance—the restorative, semi-material reflections that drift along the boundaries of certain gates. They do not just heal; they manifest localized patches of aetheric stability that promote rapid biological repair. In the modern world, the Weaver is the emotional and physical anchor of any raid team, transforming a nightmare gate-break into a temporary sanctuary.",
 		features: [
 			{
-				name: "Balm of the Summer Court",
+				name: "Balm of the Absolute",
 				description:
-					"Pool of d6s = Summoner level. Bonus action: heal a creature within 120 ft by spending dice (up to half Summoner level dice at once) + 1 temp HP per die spent.",
+					"Pool of d6s = Summoner level. Bonus action: heal a creature within 120 ft by spending dice + 1 temp HP per die spent.",
 				level: 2,
 			},
 			{
-				name: "Hearth of Moonlight and Shadow",
+				name: "Sanctuary of Light and Shadow",
 				description:
-					"During a short/long rest, create a 30-ft sphere ward. Allies inside gain +5 to Stealth and Perception. Light becomes dim light inside.",
+					"During a moment of rest, create a 30-ft sphere ward. Allies inside gain +5 to Stealth and Perception. All within the Absolute's rest.",
 				level: 6,
 			},
 			{
-				name: "Hidden Paths",
+				name: "Phantasmal Path",
 				description:
-					"Bonus action: teleport yourself or a willing creature within 30 ft up to 60 ft to a visible unoccupied space. SENSE mod uses/long rest.",
+					"Bonus action: teleport yourself or an ally within 30 ft to a visible location. SENSE mod uses/long rest.",
 				level: 10,
 			},
 			{
-				name: "Walker in Dreams",
+				name: "Walker in Reflections",
 				description:
-					"After a short rest, cast Dream, Scrying, or Teleportation Circle (to last rest location) without a slot. Once per long rest.",
+					"After a rest, manifest Dream or Scrying without spending essence. Your connection to the Absolute allows for distant observation.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Fey Blessing",
+				name: "Lush Blessing",
 				description:
-					"All allies within 30 ft regain 2d8 HP and gain advantage on saves against charmed/frightened for 1 min. Once/long rest.",
+					"All allies within 30 ft regain 2d8 HP and gain advantage on saves against phantasm-effects for 1 min. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2631,55 +2631,55 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { wisdom: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "summoner--circle-of-the-shepherd",
-		name: "Path of the Pack Leader",
+		id: "summoner--pack-commander",
+		name: "Path of the Pack Commander",
 		jobId: "summoner",
 		jobName: "Summoner",
 		tier: 2,
-		pathType: "shepherd",
+		pathType: "pack-commander",
 		requirements: { level: 2, skills: ["Nature", "Animal Handling"] },
 		description:
-			"Dog trainers, animal rescue coordinators, and pack-animal handlers who command gate creatures and primal spirits. They call totemic guardians from gate biomes and reinforce summoned entities with their mana. In raid parties, they are masters of action economy — one Pack Leader with a full menagerie is a one-person army. Animal shelters staffed by Pack Leaders have zero adoption returns.",
+			"The Pack Commander mandate elevates a Summoner to the status of an absolute leader within the gate's predatory hierarchy. They do not just summon entities; they command them like a unified tactical unit, reinforcing their creatures with their own internal aetheric essence. In the modern world, one Commander with a full menagerie is a one-person tactical squad, turning a solo raid into a coordinated absolute assault.",
 		features: [
 			{
-				name: "Speech of the Woods",
-				description: "Speak with beasts. Learn Sylvan language.",
+				name: "Voice of the Absolute",
+				description: "Manifest communication with all beasts of the Absolute.",
 				level: 2,
 			},
 			{
-				name: "Spirit Totem",
+				name: "Aetheric Totem",
 				description:
-					"Bonus action: summon an incorporeal spirit to a point within 60 ft (60-ft aura, 1 min, concentration). Bear Spirit: allies gain temp HP = 5 + Summoner level, advantage on STR checks/saves. Hawk Spirit: allies have advantage on Perception and you give advantage on attack rolls as reaction. Unicorn Spirit: allies have advantage on detecting creatures in aura, healing spells in aura heal each creature in it for your Summoner level HP.",
+					"Bonus action: manifest a totemic guardian (60-ft aura). Bear: allies gain temp HP and STR advantage. Hawk: allies gain Perception advantage. Unicorn: allies gain advantage on detection and enhanced restorative output.",
 				level: 2,
 			},
 			{
-				name: "Mighty Summoner",
+				name: "Mighty Manifestation",
 				description:
-					"Beasts/fey you conjure gain +2 HP per hit die and their natural weapons count as magical.",
+					"Entities you conjure gain +2 HP per hit die and their natural strikes count as aetheric.",
 				level: 6,
 			},
 			{
-				name: "Guardian Spirit",
+				name: "Absolute Guardian",
 				description:
-					"Beasts/fey you summon that drop to 0 HP in Spirit Totem aura instead regain half their HP max.",
+					"Entities you summon that drop to 0 HP in your Totem aura instead regain half their HP max. The resonance refuses to let them fall.",
 				level: 10,
 			},
 			{
-				name: "Faithful Summons",
+				name: "Faithful Call",
 				description:
-					"When you drop to 0 HP or are incapacitated, immediately conjure 4 beasts of CR 2 or lower within 20 ft. They last 1 hour and defend you. Once/long rest.",
+					"When you drop to 0 HP, immediately conjure 4 gate predators of CR 2 or lower to defend you. Once/long rest.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Pack Alpha",
+				name: "Absolute Alpha",
 				description:
-					"All summoned/conjured creatures within 60 ft gain +2 to attack rolls and deal extra 1d4 damage for 1 min. Once/short rest.",
+					"All summoned entities within 60 ft gain +2 to attack and deal extra 1d4 damage. Once/short rest.",
 				cooldown: 1,
 				cost: "Bonus action",
 			},
@@ -2689,56 +2689,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { wisdom: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "summoner--circle-of-spores",
-		name: "Path of the Symbiote Network",
+		id: "summoner--symbiotic-host",
+		name: "Path of the Symbiotic Host",
 		jobId: "summoner",
 		jobName: "Summoner",
 		tier: 2,
-		pathType: "spores",
+		pathType: "symbiotic-host",
 		requirements: { level: 2, skills: ["Nature", "Medicine"] },
 		description:
-			"Mycologists, microbiologists, and fermentation specialists who bonded with microscopic organisms from deep gate ecosystems. Their bodies host mutualistic colonies that enhance their biology and form a living cloud of protective spores. Pharmaceutical companies study their symbiotes for drug development. They are a walking ecosystem — everything within their spore radius becomes part of it.",
+			"The Symbiotic Host mandate is given to those who have allowed their physical vessel to become a living ecosystem for mutualistic gate-organisms. They do not just host these symbiotes; they fuse with them to gain terrifying biological efficiencies and project a defensive field of aetheric spores. In the Absolute's cycle of life and death, the Host is the bridge where both processes occur simultaneously within the same body.",
 		features: [
 			{
-				name: "Spore Cloud",
+				name: "Absolute Spore Cloud",
 				description:
-					"Reaction: creature you see within 10 ft takes VIT save or poison damage = 1d4 (scales: 1d6 at 6th, 1d8 at 10th, 1d10 at 14th). Your symbiotic organisms attack intruders.",
+					"Reaction: creature within 10 ft must save or take necrotic damage. Your symbiotic colony reacts to perceived threats.",
 				level: 2,
 			},
 			{
-				name: "Symbiotic Fusion",
+				name: "Host Fusion",
 				description:
-					"Expend Entity Shift use: fuse with your symbiote colony. Gain 4 × Summoner level temp HP. While temp HP remains, Spore Cloud damage doubles and melee attacks deal extra 1d6 poison. Lasts 10 min.",
+					"Expend Entity Shift to fuse with your colony. Gain temp HP = 4 × Summoner level. While fused, spore damage is absolute and strikes deal extra poison.",
 				level: 2,
 			},
 			{
 				name: "Colony Expansion",
 				description:
-					"Reaction when a Small/Medium creature drops to 0 HP within 10 ft: your symbiotes colonize the body. It rises as a symbiote drone with 1 HP at start of your next turn, obeying you for 1 hour. SENSE mod uses/long rest.",
+					"Reaction when a creature falls within 10 ft: your symbiotes colonize the remnant. It rises to serve you for 1 hour. SENSE uses/long rest.",
 				level: 6,
 			},
 			{
-				name: "Mobile Spore Zone",
+				name: "Projected Spore Zone",
 				description:
-					"While Symbiotic Fusion active, bonus action: project your Spore Cloud to a point within 30 ft as a 10-ft cube. Creatures entering/starting turn there take Spore Cloud damage (VIT save).",
+					"While fused, bonus action: project your spore cloud as a mobile zone of entropic destruction.",
 				level: 10,
 			},
 			{
-				name: "Fully Symbiotic",
+				name: "Perfect Symbiosis",
 				description:
-					"Your symbiote colony protects all your senses. Can't be blinded, deafened, frightened, or poisoned. Crits against you become normal hits (unless incapacitated) — your colony absorbs the extra impact.",
+					"Your colony protects all physical senses. Immune to blind, deaf, frighten, and poison. Crits against you are normalized by the colony's absorption.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Spore Burst",
+				name: "Spore Eruption",
 				description:
-					"All creatures within 20 ft: VIT save or 4d8 poison + poisoned 1 min. Your symbiote colony erupts outward in a living cloud. Once/long rest.",
+					"All creatures within 20 ft: VIT save or take 4d8 poison and become poisoned. Your colony erupts in a reality-warping discharge. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2748,56 +2748,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { wisdom: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "summoner--circle-of-stars",
-		name: "Path of the Star Map",
+		id: "summoner--cosmic-conduit",
+		name: "Path of the Cosmic Conduit",
 		jobId: "summoner",
 		jobName: "Summoner",
 		tier: 2,
-		pathType: "stars",
+		pathType: "cosmic-conduit",
 		requirements: { level: 2, skills: ["Arcana", "Nature"] },
 		description:
-			"Astronomers, astrophysicists, and astrologers who draw power from the cosmic frequencies that permeate high-rank gates. They channel celestial energy into healing, destruction, or prophetic guidance. NASA consults them about anomalous deep-space signals that correlate with gate activity. The most mystical of all Summoner paths.",
+			"The Cosmic Conduit mandate is for those who draw power from the massive, distant aetheric vibrations that resonate through high-rank gates. They do not just see stars; they channel the fundamental cosmic energy of the Absolute into manifestations of healing, destruction, and prophetic anchoring. In the modern world, they are the supreme mystics of the gate-age, their every action informed by a variable cosmic map only they can perceive.",
 		features: [
 			{
-				name: "Star Map",
+				name: "Absolute Cosmic Map",
 				description:
-					"Learn Guidance cantrip (free). Cast Guiding Bolt without a slot prof bonus times/long rest. Free focus for Summoner spells.",
+					"Learn one additional Summoner guidance. Cast Guiding Resonance without spending essence prof times/long rest.",
 				level: 2,
 			},
 			{
-				name: "Starry Form",
+				name: "Aetheric Starlight Form",
 				description:
-					"Expend Wild Shape use, bonus action: take a starry form (10 min). Archer: ranged spell attack 60 ft, 1d8+SENSE radiant (bonus action each turn). Chalice: when you cast healing spell, one creature within 30 ft regains 1d8+SENSE HP. Dragon: treat any d20 roll below 10 as 10 on concentration checks and INT/SENSE checks.",
+					"Expend Shift use to assume a starry form. Archer: bonus action ranged strike. Chalice: enhance all restorative manifestations. Dragon: stabilize internal focus for absolute precision.",
 				level: 2,
 			},
 			{
-				name: "Cosmic Omen",
+				name: "Cosmic Prophecy",
 				description:
-					"After long rest, roll a die. Even (Weal): reaction to add 1d6 to a creature's d20 roll. Odd (Woe): reaction to subtract 1d6. Prof bonus uses/long rest.",
+					"Reaction: adjust a creature's result with a d6 (add or subtract). You nudge the local fate-variable. Prof uses/long rest.",
 				level: 6,
 			},
 			{
-				name: "Twinkling Constellations",
+				name: "Universal Alignment",
 				description:
-					"Starry Form: Archer becomes 2d8. Chalice becomes 2d8. Dragon also grants 20 ft fly speed (hover). At start of each turn, switch between forms.",
+					"Starry Form effects are doubled. At the start of each turn, you can switch between forms as the Absolute realigns.",
 				level: 10,
 			},
 			{
-				name: "Full of Stars",
+				name: "Star-Forged Vessel",
 				description:
-					"While in Starry Form, resistance to bludgeoning, piercing, and slashing damage.",
+					"While in starry form, resistance to all physical damage from non-aetheric sources.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Starfall",
+				name: "Starfall Manifestation",
 				description:
-					"30-ft radius within 120 ft: 4d10 radiant, SENSE save for half, blinded until end of your next turn on fail. Once/long rest.",
+					"30-ft radius: 4d10 radiant, blind victims in a reality-warping discharge. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2807,54 +2807,54 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { wisdom: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── HERALD PATHS ── features at 1,2,6,8,17 ──
 	{
-		id: "herald--life-domain",
-		name: "Path of the Restoration Protocol",
+		id: "herald--restoration-mandate",
+		name: "Path of the Restoration Mandate",
 		jobId: "herald",
 		jobName: "Herald",
 		tier: 2,
-		pathType: "life",
+		pathType: "restoration-mandate",
 		requirements: { level: 1, skills: ["Medicine"] },
 		description:
-			"Emergency room doctors, trauma surgeons, and battlefield medics who channel the System's most potent healing frequencies. Hospitals with Restoration Protocol Heralds on staff have the lowest mortality rates in the world. Their restorative transmissions are unmatched, keeping entire raid parties alive through the worst gate encounters.",
+			"The Restoration Mandate designates those who channel the Absolute's most potent restorative resonance. They do not just heal; they stabilize the local reality-variable, ensuring that the physical vessel of their allies remains anchored in its most optimal state. In the modern world, the Restoration Herald is the supreme asset of any raid, their mere presence raising the survival probability of the entire collective.",
 		features: [
 			{
-				name: "Bonus Proficiency",
-				description: "Gain proficiency with heavy armor.",
+				name: "Absolute Proficiency",
+				description: "Manifest proficiency with heavy armor.",
 				level: 1,
 			},
 			{
-				name: "Disciple of Life",
+				name: "Anchor of Life",
 				description:
-					"When you cast a healing spell of 1st+, the target regains additional HP = 2 + spell level.",
+					"When you manifest a restorative mandate, the recipient regains additional HP = 2 + spell level.",
 				level: 1,
 			},
 			{
-				name: "Channel Divinity: Preserve Life",
+				name: "Absolute Resonance: Preserve Life",
 				description:
-					"Action: distribute HP = 5× Herald level among creatures within 30 ft (can't exceed half their max). No effect on undead or constructs.",
+					"Action: distribute HP = 5× Herald level among creatures within 30 ft. You stabilize their local resonance.",
 				level: 2,
 			},
 			{
-				name: "Blessed Healer",
+				name: "Blessed Anchor",
 				description:
-					"When you cast a healing spell of 1st+ on another creature, you regain HP = 2 + spell level.",
+					"When you manifest restorative energy on another, your own vessel regains HP = 2 + spell level.",
 				level: 6,
 			},
 			{
-				name: "Divine Strike",
+				name: "Aetheric Strike",
 				description:
-					"Once per turn, weapon attacks deal extra 1d8 radiant (2d8 at 14th).",
+					"Once per turn, weapon strikes deal extra 1d8 radiant damage.",
 				level: 8,
 			},
 			{
-				name: "Supreme Healing",
+				name: "Supreme Manifestation",
 				description:
-					"When you roll dice to restore HP with a healing spell, use the maximum value for each die.",
+					"When you heal, usage of the Absolute's essence is normalized to its maximum efficiency for each die.",
 				level: 17,
 			},
 		],
@@ -2862,7 +2862,7 @@ export const paths: Path[] = [
 			{
 				name: "Mass Restoration",
 				description:
-					"All allies within 30 ft regain 3d8+SENSE mod HP and are cured of one condition each. Once/long rest.",
+					"All allies within 30 ft regain 3d8+SENSE mod HP and are cured of one condition. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -2872,61 +2872,61 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { wisdom: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "herald--light-domain",
-		name: "Path of the Radiance Protocol",
+		id: "herald--radiance-mandate",
+		name: "Path of the Radiance Mandate",
 		jobId: "herald",
 		jobName: "Herald",
 		tier: 2,
-		pathType: "light",
+		pathType: "radiance-mandate",
 		requirements: { level: 1, skills: ["Religion"] },
 		description:
-			"Former lighthouse keepers, solar engineers, and stage lighting technicians who broadcast the System's most destructive light frequencies. Their radiant overloads have been captured on news footage — blinding flares visible from miles away during gate raids. They incinerate undead and shield allies in protective luminance.",
+			"The Radiance Mandate grants an Ascendant the ability to broadcast the Absolute's most destructive light resonance. Their presence is a beacon of pure aetheric energy, incinerating the void-remnants of the gates and shielding their allies in a protective luminance. In the modern world, a Radiance Herald is often the vanguard of any high-rank gate suppression, their radiant overloads visible from miles around.",
 		features: [
 			{
-				name: "Bonus Cantrip",
-				description:
-					"Learn the Light cantrip (doesn't count against cantrips known).",
+				name: "Absolute Light",
+				description: "Learn one additional radiant mantra.",
 				level: 1,
 			},
 			{
-				name: "Warding Flare",
+				name: "Warding Spark",
 				description:
-					"Reaction when attacked by creature within 30 ft: impose disadvantage on the attack. SENSE mod uses/long rest.",
+					"Reaction when targeted: manifest an aetheric flash to impose disadvantage. SENSE uses/long rest.",
 				level: 1,
 			},
 			{
-				name: "Channel Divinity: Radiance of the Dawn",
+				name: "Absolute Resonance: Radiance",
 				description:
-					"Action: 30-ft radius — dispel magical darkness, hostile creatures take 2d10+Herald level radiant (VIT half). No damage to allies.",
+					"Action: 30-ft radius — cleanse magical darkness, hostile entities take 2d10+Herald level radiant damage.",
 				level: 2,
 			},
 			{
-				name: "Improved Flare",
+				name: "Improved Spark",
 				description:
-					"Warding Flare can protect others within 30 ft, not just yourself.",
+					"Warding Spark can protect allies within 30 ft, not just your own vessel.",
 				level: 6,
 			},
 			{
-				name: "Potent Spellcasting",
-				description: "Add SENSE mod to the damage of Herald cantrips.",
+				name: "Potent Resonance",
+				description:
+					"Add SENSE mod to the damage of your basic radiant mantras.",
 				level: 8,
 			},
 			{
-				name: "Corona of Light",
+				name: "Corona of the Absolute",
 				description:
-					"Action: 60-ft bright light aura. Enemies in aura have disadvantage on saves vs fire/radiant spells. Lasts 1 min.",
+					"Action: 60-ft absolute light aura. Enemies have disadvantage on saves against your fire/radiant manifestations for 1 min.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Solar Flare",
+				name: "Solar Burst",
 				description:
-					"30-ft cone: 4d8 radiant, VIT save for half, blinded 1 round on fail. Once/short rest.",
+					"30-ft cone: 4d8 radiant, blind failers for 1 round. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -2936,61 +2936,61 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { wisdom: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "herald--war-domain",
-		name: "Path of the Combat Protocol",
+		id: "herald--combat-mandate",
+		name: "Path of the Combat Mandate",
 		jobId: "herald",
 		jobName: "Herald",
 		tier: 2,
-		pathType: "war",
+		pathType: "combat-mandate",
 		requirements: { level: 1, skills: ["Athletics", "Religion"] },
 		description:
-			"Former military chaplains, police officers, and firefighter-paramedics who serve as frontline conduits of ascendant guilds — armored, armed, and broadcasting System combat transmissions alongside Destroyers and Berserkers. They stream their gate raids in full plate armor while healing teammates mid-swing.",
+			"The Combat Mandate is given to those who serve as the physical conduit for the Absolute's offensive transmissions. Armored, lethal, and broadcasting the martial directives of the Zenith lineage, they fight at the forefront of every gate eruption. They do not just support; they lead the charge, their weapon strikes resonating with the pure destructive intent of the Absolute.",
 		features: [
 			{
-				name: "Bonus Proficiencies",
+				name: "Absolute Proficiencies",
 				description: "Proficiency with martial weapons and heavy armor.",
 				level: 1,
 			},
 			{
-				name: "War Priest",
+				name: "Combat Herald",
 				description:
-					"When you take the Attack action, make one weapon attack as a bonus action. SENSE mod uses/long rest.",
+					"When you take the Attack action, make one weapon strike as a bonus action. SENSE uses/long rest.",
 				level: 1,
 			},
 			{
-				name: "Channel Divinity: Guided Strike",
+				name: "Absolute Resonance: Guided Strike",
 				description:
-					"When you make an attack roll, +10 to the roll. Declare after roll but before result.",
+					"When you strike, +10 to the roll. Declare your intent after the roll.",
 				level: 2,
 			},
 			{
-				name: "Channel Divinity: War God's Blessing",
+				name: "Absolute Resonance: Allied Blessing",
 				description:
-					"Reaction: creature within 30 ft makes an attack → +10 to their roll.",
+					"Reaction: ally within 30 ft strikes → +10 to their roll as you realign their path.",
 				level: 6,
 			},
 			{
-				name: "Divine Strike",
+				name: "Absolute Strike",
 				description:
-					"Once per turn, weapon attacks deal extra 1d8 damage of your weapon type (2d8 at 14th).",
+					"Once per turn, weapon strikes deal extra 1d8 damage of your weapon's type.",
 				level: 8,
 			},
 			{
-				name: "Avatar of Battle",
+				name: "Avatar of the Absolute",
 				description:
-					"Resistance to bludgeoning, piercing, and slashing damage from nonmagical weapons.",
+					"Resistance to all physical damage from non-aetheric sources.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Holy Weapon",
+				name: "Refined Weapon",
 				description:
-					"Touch a weapon: it deals extra 2d8 radiant for 1 hour. When effect ends, 30-ft burst: 4d8 radiant, VIT save for half + blinded. Once/long rest.",
+					"Touch a weapon: it deals extra 2d8 radiant for 1 hour. Once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -3000,55 +3000,55 @@ export const paths: Path[] = [
 			secondaryAttribute: "Strength",
 			bonusStats: { wisdom: 2, strength: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "herald--knowledge-domain",
-		name: "Path of the Data Protocol",
+		id: "herald--knowledge-mandate",
+		name: "Path of the Knowledge Mandate",
 		jobId: "herald",
 		jobName: "Herald",
 		tier: 2,
-		pathType: "knowledge",
+		pathType: "knowledge-mandate",
 		requirements: { level: 1, skills: ["History", "Religion"] },
 		description:
-			"Librarians, professors, intelligence analysts, and archivists who have the deepest System uplink access. They download encrypted knowledge directly — like having Google hardwired into their brain, but for classified System data. Universities and think tanks compete for their expertise. They read minds through data streams and their transmissions reveal all hidden information.",
+			"The Knowledge Mandate provides an Ascendant with a direct uplink to the Absolute's primordial records. They do not just learn; they download encrypted knowledge that bypasses all mortal limitations, allowing them to read the aetheric signatures of enemies and objects with near-perfect accuracy. In the modern world, they are the supreme archivists and analysts, their transmissions revealing everything the gates seek to hide.",
 		features: [
 			{
-				name: "Blessings of Knowledge",
+				name: "Blessings of the Absolute",
 				description:
-					"Learn two languages. Prof in two of: Arcana, History, Nature, Religion (double prof bonus).",
+					"Learn two additional languages. Double proficiency in two intelligence-based fields.",
 				level: 1,
 			},
 			{
-				name: "Channel Divinity: Knowledge of the Ages",
+				name: "Absolute Resonance: Ancient Insight",
 				description:
-					"Action: gain proficiency with one tool or skill for 10 minutes.",
+					"Action: gain proficiency with one tool or skill for 10 minutes as the Absolute realigns your vessel.",
 				level: 2,
 			},
 			{
-				name: "Channel Divinity: Read Thoughts",
+				name: "Absolute Resonance: Aetheric Reader",
 				description:
-					"Action: one creature within 60 ft, SENSE save or you read its surface thoughts for 1 min. Fail by 5+: you can also cast Suggestion on it without a slot.",
+					"Action: read the surface thoughts of a creature within 60 ft. If successful, you can also implant a minor directive.",
 				level: 6,
 			},
 			{
-				name: "Potent Spellcasting",
-				description: "Add SENSE mod to Herald cantrip damage.",
+				name: "Potent Manifestation",
+				description: "Add SENSE mod to basic Herald mantra damage.",
 				level: 8,
 			},
 			{
-				name: "Visions of the Past",
+				name: "Visions of the Absolute",
 				description:
-					"Meditate 1 min on an object or area to receive visions of recent events (up to a number of days = SENSE mod).",
+					"Meditate to receive aetheric echoes of the past within an object or area.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "System Query",
+				name: "Aetheric Query",
 				description:
-					"Ask the System one question about any creature, object, or location. Receive a truthful answer (short phrase or image). Once/long rest.",
+					"Request one specific detail from the Absolute about any creature, object, or location. Receive a truthful image or phrase. Once/long rest.",
 				cooldown: 3,
 				cost: "Action (1 min)",
 			},
@@ -3058,61 +3058,61 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { wisdom: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "herald--tempest-domain",
-		name: "Path of the Storm Protocol",
+		id: "herald--storm-mandate",
+		name: "Path of the Storm Mandate",
 		jobId: "herald",
 		jobName: "Herald",
 		tier: 2,
-		pathType: "tempest",
+		pathType: "storm-mandate",
 		requirements: { level: 1, skills: ["Nature", "Religion"] },
 		description:
-			"Storm chasers, meteorologists, and naval officers who broadcast the System's most violent atmospheric frequencies. Their gate-raid footage looks like natural disaster footage — lightning strikes on demand, thunder that shatters windows. The most offensively powerful Herald path; power grids in their neighborhood need surge protectors.",
+			"The Storm Mandate empowers an Ascendant to broadcast the Absolute's most violent atmospheric resonance. They are walking thunderheads, their every gesture capable of summoning lightning and shattering the resolve of their foes. In the modern world, a Storm Herald is the ultimate deterrent, their radiant and electrical overloads enough to power entire city blocks or level them with equal ease.",
 		features: [
 			{
-				name: "Bonus Proficiencies",
+				name: "Absolute Proficiencies",
 				description: "Proficiency with martial weapons and heavy armor.",
 				level: 1,
 			},
 			{
-				name: "Wrath of the Storm",
+				name: "Wrath of the Absolute",
 				description:
-					"Reaction when hit by melee: attacker takes 2d8 lightning or thunder (AGI half). SENSE mod uses/long rest.",
+					"Reaction when targeted in melee: manifest a lightning discharge for 2d8 damage. SENSE uses/long rest.",
 				level: 1,
 			},
 			{
-				name: "Channel Divinity: Destructive Wrath",
+				name: "Absolute Resonance: Destructive Wrath",
 				description:
-					"When you deal lightning or thunder damage, maximize the damage dice instead of rolling.",
+					"When you manifest lightning or thunder, normalize the effect to its absolute maximum intensity.",
 				level: 2,
 			},
 			{
 				name: "Thunderbolt Strike",
 				description:
-					"When you deal lightning damage to a Large or smaller creature, push it up to 10 ft.",
+					"When you deal lightning damage, you can physically push the recipient up to 10 ft.",
 				level: 6,
 			},
 			{
-				name: "Divine Strike",
+				name: "Absolute Strike (Storm)",
 				description:
-					"Once per turn, weapon deals extra 1d8 thunder (2d8 at 14th).",
+					"Once per turn, weapon strikes deal extra 1d8 thunder damage.",
 				level: 8,
 			},
 			{
 				name: "Stormborn",
 				description:
-					"When outdoors, gain a flying speed equal to your walking speed.",
+					"When outdoors, gain a flying speed equal to your walking speed as the Absolute lifts your vessel.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "Call Lightning",
+				name: "Call Lightning Manifestation",
 				description:
-					"30-ft radius within 120 ft: 3d10 lightning, AGI save for half. Maximize with Channel Divinity. Once/short rest.",
+					"30-ft radius: 3d10 lightning. Maximize with Absolute Resonance. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -3122,62 +3122,61 @@ export const paths: Path[] = [
 			secondaryAttribute: "Strength",
 			bonusStats: { wisdom: 2, strength: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "herald--grave-domain",
-		name: "Path of the Triage Protocol",
+		id: "herald--triage-mandate",
+		name: "Path of the Triage Mandate",
 		jobId: "herald",
 		jobName: "Herald",
 		tier: 2,
-		pathType: "grave",
+		pathType: "triage-mandate",
 		requirements: { level: 1, skills: ["Medicine", "Religion"] },
 		description:
-			"Emergency dispatchers, triage nurses, and disaster response coordinators who specialize in battlefield crisis management. They operate on the System's emergency medical frequency — maximizing healing on critical patients, marking targets for elimination, and canceling lethal blows through System intervention. Every field hospital and frontline guild wants a Triage Protocol Herald on speed dial.",
+			"The Triage Mandate is for those who specialize in the Absolute's emergency field calibrations. They operate on a unique restorative resonance that maximizes output on critical vessels, marking targets for absolute elimination while canceling lethal blows through aetheric realignment. In the modern world, a Triage Herald's presence is the difference between a total wipe and an absolute victory.",
 		features: [
 			{
-				name: "Emergency Triage",
+				name: "Absolute Triage",
 				description:
-					"When you cast a healing spell on a creature at 0 HP, the System prioritizes maximum output: treat all healing dice as maximum value. Spare the Dying cantrip has 30-ft range and is a bonus action.",
+					"When you manifest restorative energy on a creature at 0 HP, the Absolute normalize output to its maximum intensity.",
 				level: 1,
 			},
 			{
-				name: "Threat Scanner",
+				name: "Aetheric Scanner",
 				description:
-					"Action: scan for undead and critically wounded creatures within 60 ft (not behind total cover). SENSE mod uses/long rest.",
+					"Identify void-entities and critically damaged vessels within 60 ft. SENSE uses/long rest.",
 				level: 1,
 			},
 			{
-				name: "Protocol Activation: Priority Target",
+				name: "Absolute Resonance: Essential Target",
 				description:
-					"Action: mark a creature within 30 ft as priority elimination. The next attack against it deals double damage (all types). Mark ends after one attack.",
+					"Action: mark a creature for absolute elimination. The next attack against it deals double damage.",
 				level: 2,
 			},
 			{
-				name: "Critical Intervention",
+				name: "Realignment Intervention",
 				description:
-					"Reaction: when you or ally within 30 ft suffers a critical hit, the System intervenes — downgrade it to a normal hit. SENSE mod uses/long rest.",
+					"Reaction: when an ally suffers an absolute strike (crit), the Absolute intervenes — downgrade it to a normal strike. SENSE uses/long rest.",
 				level: 6,
 			},
 			{
 				name: "Enhanced Transmissions",
-				description:
-					"Add SENSE mod to Herald cantrip damage. Your transmissions carry more power.",
+				description: "Add SENSE mod to the damage of basic Herald mantras.",
 				level: 8,
 			},
 			{
-				name: "Mana Recycling",
+				name: "Aetheric Recycling",
 				description:
-					"When an enemy you can see dies within 60 ft, the System recycles its residual mana: you or an ally within 60 ft regains HP = the creature's CR (minimum 1). Once per round.",
+					"When an enemy falls, the Absolute recycles its residual resonance. You or an ally regain HP. Once per round.",
 				level: 17,
 			},
 		],
 		abilities: [
 			{
-				name: "System Safeguard",
+				name: "Absolute Safeguard",
 				description:
-					"Touch: for 8 hours, first time target drops to 0 HP, the System catches them at 1 HP instead. Once/long rest without slot.",
+					"Touch: for 8 hours, the first time the recipient falls, the Absolute catches them at 1 HP instead. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -3187,53 +3186,53 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { wisdom: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── CONTRACTOR PATHS ── features at 1,6,10,14 ──
 	{
-		id: "contractor--archfey",
-		name: "Path of the Fey Lord",
+		id: "contractor--glamour-weaver",
+		name: "Path of the Glamour Weaver",
 		jobId: "contractor",
 		jobName: "Contractor",
 		tier: 2,
-		pathType: "archfey",
+		pathType: "glamour-weaver",
 		requirements: { level: 1, skills: ["Arcana", "Deception"] },
 		description:
-			"Fashion designers, social media managers, and PR consultants who bargained with ancient fey entities ruling enchanted gate ecosystems. Their glamour magic makes them terrifyingly effective manipulators — in boardrooms and on battlefields alike. Several high-profile political scandals have involved Fey Lord Contractors. Their contracts grant charms, terrors, and illusions that ensnare the unwary.",
+			"The Glamour Weaver bargain is forged with the ethereal reflections that rule the Absolute's most vibrant gate ecosystems. They do not just deceive; they rewrite the sensory reality of those around them, weaving illusions of absolute beauty or terrifying despair. In the modern world, the Glamour Weaver is a master of social and physical manipulation, their presence alone enough to ensnare the unwary.",
 		features: [
 			{
-				name: "Fey Presence",
+				name: "Absolute Presence",
 				description:
-					"Action: each creature in 10-ft cube originating from you makes SENSE save or is charmed or frightened until end of your next turn. Once per short rest.",
+					"Action: creatures in a 10-ft cube must save or become charmed or frightened. Once/short rest.",
 				level: 1,
 			},
 			{
-				name: "Misty Escape",
+				name: "Aetheric Escape",
 				description:
-					"Reaction when you take damage: become invisible and teleport up to 60 ft. Invisible until start of next turn or until you attack/cast. Once per short rest.",
+					"Reaction when targeted: become invisible and teleport 60 ft as you dissolve into a mist of pure aether. Once/short rest.",
 				level: 6,
 			},
 			{
-				name: "Beguiling Defenses",
+				name: "Beguiling Resonance",
 				description:
-					"Immune to being charmed. When a creature tries to charm you, use reaction to turn the charm back on it (SENSE save).",
+					"Absolute immunity to charm. When a creature attempts to influence you, you can redirect the resonance back upon them.",
 				level: 10,
 			},
 			{
-				name: "Dark Delirium",
+				name: "Phantasmal Delirium",
 				description:
-					"Action: one creature within 60 ft, SENSE save or charmed/frightened for 1 min (you choose). Target perceives itself lost in a misty realm. Concentration. Once per short rest.",
+					"Action: trap a creature's consciousness in a misty reflection for 1 min. It perceives a reality of your choosing. Once/short rest.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Faerie Fire",
+				name: "Absolute Glow",
 				description:
-					"20-ft cube: creatures AGI save or outlined in light (advantage on attacks against them, can't be invisible). 1 min concentration.",
-				cooldown: 0,
-				cost: "Spell slot",
+					"Manifest a 20-ft cube of aetheric light: reveal all hidden entities and grant advantage on strikes against them.",
+				cooldown: 1,
+				cost: "Action",
 			},
 		],
 		stats: {
@@ -3241,50 +3240,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Dexterity",
 			bonusStats: { charisma: 2, dexterity: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "contractor--fiend",
-		name: "Path of the Infernal",
+		id: "contractor--infernal-conduit",
+		name: "Path of the Infernal Conduit",
 		jobId: "contractor",
 		jobName: "Contractor",
 		tier: 2,
-		pathType: "fiend",
+		pathType: "infernal-conduit",
 		requirements: { level: 1, skills: ["Arcana", "Intimidation"] },
 		description:
-			"Desperate gamblers, disgraced executives, and power-hungry individuals who negotiated pacts with demonic entities dwelling in the deepest gate layers. Their contract burns with hellfire — literally; their body temperature runs 3 degrees hot. Every kill feeds their patron, and the bond strengthens. Several true-crime podcasts have covered Infernal Contractors who went too far.",
+			"The Infernal Conduit bargain is forged with the destructive entities that dwell within the deepest entropic layers of the gates. Their physical vessel burns with a literal internal heat, every kill feeding the insatiable hunger of their patron. In the modern world, the Infernal is a walking force of destruction, their aetheric bargain granting them the power to hurl foes through the void itself.",
 		features: [
 			{
-				name: "Dark One's Blessing",
+				name: "Aetheric Siphon",
 				description:
-					"When you reduce a hostile creature to 0 HP, gain temp HP = PRE mod + Contractor level.",
+					"When you reduce an entity to 0 HP, siphon their residual resonance into temp HP.",
 				level: 1,
 			},
 			{
-				name: "Dark One's Own Luck",
+				name: "Absolute Luck",
 				description:
-					"When you make an ability check or save, add 1d10 to the roll. Once per short rest.",
+					"Realign your local fate-variable: add 1d10 to an ability check or save. Once/short rest.",
 				level: 6,
 			},
 			{
-				name: "Fiendish Resilience",
+				name: "Infernal Resilience",
 				description:
-					"At the end of a short/long rest, choose one damage type (not force, radiant, or magical bludgeoning/piercing/slashing). You have resistance to that type until you choose another.",
+					"Adapt your vessel to resist one specific damage type after each rest.",
 				level: 10,
 			},
 			{
-				name: "Hurl Through Hell",
+				name: "Hurl Through the Void",
 				description:
-					"When you hit with an attack, banish the creature through hell. It takes 10d10 psychic damage when it returns at end of your next turn. Once per long rest.",
+					"On a successful strike, banish the recipient through a temporary entropic rift for 10d10 damage. Once/long rest.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Hellfire Blast",
+				name: "Entropic Blast",
 				description:
-					"Eldritch Blast deals fire instead of force and ignites the target: 1d6 fire at start of each of its turns for 1 min (VIT save ends). Once/short rest.",
+					"Channel a concentrated beam of void-energy: deal fire damage and ignite the recipient with aetheric flames. Once/short rest.",
 				cooldown: 1,
 				cost: "Free",
 			},
@@ -3294,50 +3293,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { charisma: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "contractor--great-old-one",
-		name: "Path of the Void Entity",
+		id: "contractor--void-whisperer",
+		name: "Path of the Void Whisperer",
 		jobId: "contractor",
 		jobName: "Contractor",
 		tier: 2,
-		pathType: "great-old-one",
+		pathType: "void-whisperer",
 		requirements: { level: 1, skills: ["Arcana", "Investigation"] },
 		description:
-			"Conspiracy theorists, deep-web researchers, and amateur astronomers who stumbled into contact with alien intelligences from beyond the known gate network. Their patrons are so vast and ancient that fragments of their consciousness shatter mortal minds. Intelligence agencies monitor them closely. Their contracts grant psionic abilities no other ascendant can access.",
+			"The Void Whisperer bargain is forged with the vast, ancient intelligences that drift beyond the Absolute's primary resonance-layers. They do not just see the gates; they perceive the alien geometry of the multiverse, granting them psionic capabilities that shatter the fragile minds of their enemies. In the modern world, the Void Whisperer is a master of mental dominance and informational warfare.",
 		features: [
 			{
-				name: "Awakened Mind",
+				name: "Absolute Resonance",
 				description:
-					"Telepathically communicate with any creature within 30 ft. No shared language needed. The creature can respond telepathically.",
+					"Telepathically communicate with any creature within 30 ft. No shared interface required.",
 				level: 1,
 			},
 			{
 				name: "Entropic Ward",
 				description:
-					"Reaction when attacked: impose disadvantage. If the attack misses, gain advantage on your next attack vs that creature before end of your next turn. Once per short rest.",
+					"Reaction when targeted: impose disadvantage via a mental feedback loop. If they miss, your next strike gains advantage.",
 				level: 6,
 			},
 			{
-				name: "Thought Shield",
+				name: "Aetheric Shield",
 				description:
-					"Resistance to psychic damage. Your thoughts can't be read unless you allow it. Creatures that deal psychic damage to you take the same amount.",
+					"Immunity to mental intrusion and resistance to psychic damage. Any attempt to read your resonance results in a harmful backlash.",
 				level: 10,
 			},
 			{
-				name: "Create Thrall",
+				name: "Absolute Thrall",
 				description:
-					"Touch an incapacitated humanoid: it is charmed by you indefinitely. You can communicate telepathically across any distance (same plane). It follows your commands.",
+					"Subjugated a incapacitated entity to your will indefinitely. You maintain a permanent telepathic link regardless of distance.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Psychic Scream",
+				name: "Void Scream",
 				description:
-					"60-ft range: creature makes INT save or takes 3d10 psychic and is stunned until end of your next turn. Once/short rest.",
+					"60-ft range: crush the target's consciousness with a burst of void-energy: 3d10 psychic + stun. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -3347,56 +3346,55 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { charisma: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "contractor--celestial",
-		name: "Path of the Radiant Entity",
+		id: "contractor--radiant-vessel",
+		name: "Path of the Radiant Vessel",
 		jobId: "contractor",
 		jobName: "Contractor",
 		tier: 2,
-		pathType: "celestial",
+		pathType: "radiant-vessel",
 		requirements: { level: 1, skills: ["Arcana", "Religion"] },
 		description:
-			"Chaplains, hospice volunteers, and humanitarian workers who forged pacts with benevolent gate entities — luminous beings who grant restorative light alongside destructive power. The rarest contract type; churches debate whether these entities are angels. A rare contract that heals as much as it destroys.",
+			"The Radiant Vessel bargain is forged with the luminous entities of the Zenith lineage — beings of pure restorative and destructive light. They are the rarest of all Contractors, their physical vessel a conduit for aetheric energy that heals and incinerates with equal intensity. In the modern world, they are often seen as modern saints or supreme gate-raid anchors.",
 		features: [
 			{
-				name: "Bonus Cantrips",
-				description:
-					"Learn Light and Sacred Flame cantrips (don't count against cantrips known).",
+				name: "Absolute Light",
+				description: "Learn two additional radiant mantras.",
 				level: 1,
 			},
 			{
-				name: "Healing Light",
+				name: "Aetheric Radiance",
 				description:
-					"Pool of d6s = 1 + Contractor level. Bonus action: heal a creature within 60 ft by spending dice (up to PRE mod at once).",
+					"Pool of restorative energy = 1 + Contractor level. Bonus action: heal an ally within 60 ft.",
 				level: 1,
 			},
 			{
-				name: "Radiant Soul",
+				name: "Radiant Essence",
 				description:
-					"Resistance to radiant damage. When you deal fire or radiant damage with a spell, add PRE mod to one roll.",
+					"Resistance to radiant damage. Add your presence toward fire and radiant manifestations.",
 				level: 6,
 			},
 			{
-				name: "Celestial Resilience",
+				name: "Absolute Resilience",
 				description:
-					"You gain temp HP = Contractor level + PRE mod at end of short/long rest. Choose up to 5 creatures: they gain temp HP = half Contractor level + PRE mod.",
+					"Grant temporary resonance/HP to yourself and up to 5 allies after every rest.",
 				level: 10,
 			},
 			{
-				name: "Searing Vengeance",
+				name: "Searing Rebirth",
 				description:
-					"When you make a death save at start of your turn, you can instead spring up (no HP cost) with half HP max, and each creature within 30 ft takes 2d8+PRE mod radiant and is blinded until end of turn. Once per long rest.",
+					"When your vessel is compromised (0 HP), immediately realign at half HP and blind all nearby foes with a radiant discharge. Once/long rest.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Radiant Burst",
+				name: "Radiant Discharge",
 				description:
-					"30-ft radius: 3d8 radiant, VIT save for half. You and allies in range heal for half damage dealt. Once/long rest.",
+					"30-ft radius: 3d8 radiant damage + restorative output for all allies in range. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -3406,58 +3404,58 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { charisma: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "contractor--hexblade",
+		id: "contractor--cursed-blade",
 		name: "Path of the Cursed Blade",
 		jobId: "contractor",
 		jobName: "Contractor",
 		tier: 2,
-		pathType: "hexblade",
+		pathType: "cursed-blade",
 		requirements: { level: 1, skills: ["Arcana", "Athletics"] },
 		description:
-			"Antique weapons dealers, museum curators, and collectors who forged pacts with sentient weapons bound inside gates — shadow-forged armaments that hunger for blood. The most martial Contractor path; they literally wield their patron as a weapon. Auction houses have flagged several gate-recovered blades as 'anomalous items requiring Contractor clearance.'",
+			"The Cursed Blade bargain is forged with the sentient, shadow-forged armaments found deep within the Absolute's highest-rank gates. They do not just wield a weapon; they are bonded to a physical manifestation of their patron's hunger. In the modern world, the Cursed Blade is a lethal martial specialist, their every strike fueled by an ancient aetheric curse that consumes the resonance of their victims.",
 		features: [
 			{
-				name: "Hexblade's Curse",
+				name: "Absolute Curse",
 				description:
-					"Bonus action: curse a creature within 30 ft for 1 min. You gain: +prof bonus to damage vs it, crit on 19-20 vs it, regain HP = Contractor level + PRE mod if it dies. Once per short rest.",
+					"Bonus action: curse a creature for 1 min. You gain extra damage and critical focus against them.",
 				level: 1,
 			},
 			{
-				name: "Hex Warrior",
+				name: "Aetheric Duelist",
 				description:
-					"Prof with medium armor, shields, and martial weapons. Use PRE for attack/damage with one weapon you touch (changes on long rest). Pact weapons always use PRE.",
+					"Proficiency with all martial armaments. Your offensive output is governed by your sheer presence alone.",
 				level: 1,
 			},
 			{
-				name: "Accursed Specter",
+				name: "Aetheric Remnant",
 				description:
-					"When you slay a humanoid, raise it as a specter under your control. It gains temp HP = half Contractor level and adds your PRE mod to attack rolls. One at a time, once per long rest.",
+					"When you slay an entity, manifest its residual resonance as a spectral sentinel under your command. Once/long rest.",
 				level: 6,
 			},
 			{
-				name: "Armor of Hexes",
+				name: "Absolute Deflection",
 				description:
-					"If the creature cursed by your Hexblade's Curse hits you, roll d6. On 4+, the attack misses regardless of roll.",
+					"If your cursed target strikes you, the Absolute realigns the blow to miss. 50% probability.",
 				level: 10,
 			},
 			{
-				name: "Master of Hexes",
+				name: "Cycle of the Curse",
 				description:
-					"When a creature cursed by your Hexblade's Curse dies, apply the curse to a different creature within 30 ft (no bonus action needed).",
+					"When your cursed target falls, the Absolute immediately transfers the curse to another nearby entity.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Shadow Blade",
+				name: "Shadow Manifest",
 				description:
-					"Conjure a blade of shadow: 2d8 psychic, finesse, light, thrown (20/60). Advantage on attacks in dim light/darkness. 1 min concentration.",
+					"Conjure a physical blade of pure void-essence for 1 min. It deals psychic damage and grants advantage in shadow.",
 				cooldown: 0,
-				cost: "Spell slot",
+				cost: "Aetheric slot",
 			},
 		],
 		stats: {
@@ -3465,61 +3463,61 @@ export const paths: Path[] = [
 			secondaryAttribute: "Strength",
 			bonusStats: { charisma: 2, strength: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "contractor--fathomless",
-		name: "Path of the Deep Gate",
+		id: "contractor--deep-dweller",
+		name: "Path of the Deep Dweller",
 		jobId: "contractor",
 		jobName: "Contractor",
 		tier: 2,
-		pathType: "fathomless",
+		pathType: "deep-dweller",
 		requirements: { level: 1, skills: ["Arcana", "Nature"] },
 		description:
-			"Marine biologists, deep-sea divers, and offshore oil workers who bargained with kraken-like horrors from submerged gates. Coastal cities with underwater gate activity are their territory. Spectral tentacles manifest from the deep-gate dimension, and the crushing pressure of their patron's domain empowers their magic. Surfers give them a wide berth.",
+			"The Deep Dweller bargain is forged with the colossal, kraken-like entities that rule the Absolute's submerged gate dimensions. They are masters of the crushing pressure and freezing cold found at the boundaries of the aetheric abyss, manifesting spectral tentacles and dimensional rifts at will. In the modern world, they are the undisputed masters of coastal and underwater gate containment.",
 		features: [
 			{
-				name: "Tentacle of the Deeps",
+				name: "Tentacle of the Absolute",
 				description:
-					"Bonus action: summon a 10-ft spectral tentacle within 60 ft. On creation and as bonus action each turn: melee spell attack, 1d8 cold, -10 ft speed until start of your next turn. Lasts 1 min. PRE mod uses/long rest.",
+					"Bonus action: summon a spectral tentacle to strike foes and reduce their movement. Once/short rest.",
 				level: 1,
 			},
 			{
-				name: "Gift of the Sea",
-				description: "40-ft swim speed. Breathe underwater.",
+				name: "Deep Adaptation",
+				description:
+					"Manifest a 40-ft swim speed and absolute breath stability.",
 				level: 1,
 			},
 			{
-				name: "Oceanic Soul",
-				description:
-					"Resistance to cold. Breathe underwater. You and creatures you choose within 30 ft can be understood when speaking underwater.",
+				name: "Aetheric Soul (Deep)",
+				description: "Resistance to cold and absolute clarity underwater.",
 				level: 6,
 			},
 			{
-				name: "Guardian Coil",
+				name: "Absolute Coil",
 				description:
-					"Reaction when you or creature within 10 ft of your tentacle takes damage: reduce damage by 1d8.",
+					"Reaction: your tentacles reduce the impact of incoming strikes for yourself and nearby allies.",
 				level: 6,
 			},
 			{
-				name: "Grasping Tentacles",
+				name: "Void Tentacles",
 				description:
-					"Cast Evard's Black Tentacles once/long rest without a slot or components. When you cast it, your Tentacle of the Deeps can't be damaged while in the spell's area.",
+					"Manifest a massive field of aetheric tentacles to restrain and consume all entities in the area. Once/long rest.",
 				level: 10,
 			},
 			{
-				name: "Fathomless Plunge",
+				name: "Abyssal Plunge",
 				description:
-					"Action: teleport yourself and up to 5 willing creatures within 30 ft up to 1 mile to a body of water you've seen. Once per short rest.",
+					"Teleport several entities through a body of water within 1 mile.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Crushing Depths",
+				name: "Crushing Resonance",
 				description:
-					"60-ft radius: creatures make STR save or take 3d8 cold + restrained 1 round. Success: half, not restrained. Once/long rest.",
+					"60-ft radius: creatures are restrained by absolute pressure and take 3d8 cold damage. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -3529,51 +3527,51 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { charisma: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── STALKER PATHS ── features at 3,7,11,15 ──
 	{
-		id: "stalker--ascendant",
-		name: "Path of the Specialist Ascendant",
+		id: "stalker--apex-hunter",
+		name: "Path of the Apex Hunter",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
-		pathType: "ascendant",
+		pathType: "apex-hunter",
 		requirements: { level: 3, skills: ["Survival", "Perception"] },
 		description:
-			"Former pest control professionals, game wardens, and police tactical officers who adapt their tactics to exploit specific prey types. The Ascendant Bureau assigns them to gate-specific threat categories. They choose specialized kill techniques at each tier — anti-large, anti-horde, or anti-boss — making them the most versatile Stalker path.",
+			"The Apex Hunter mandate is held by those who have mastered the art of exploiting the physical vulnerabilities of the Absolute's most dangerous entities. They do not just hunt; they analyze the aetheric structure of their prey, adapting their strikes to counteract specific threat profiles. In the modern world, the Apex Hunter is the supreme field operative, capable of neutralizing entities that ignore conventional force.",
 		features: [
 			{
-				name: "Ascendant's Prey",
+				name: "Hunter's Resonance",
 				description:
-					"Choose one: Colossus Slayer (1d8 extra on hit vs creature below max HP, once/turn), Giant Killer (reaction attack when Large+ creature within 5 ft attacks you), or Horde Breaker (additional attack on a different creature within 5 ft of original target).",
+					"Choose one specialty: Giant Slayer (extra damage vs large entities), Horde Breaker (additional strikes vs multiple targets), or Absolute Will (advantage against mental intrusion).",
 				level: 3,
 			},
 			{
-				name: "Defensive Tactics",
+				name: "Evasive Resilience",
 				description:
-					"Choose one: Escape the Horde (OAs vs you have disadvantage), Multiattack Defense (+4 AC after being hit, until end of turn), or Steel Will (advantage on saves vs frightened).",
+					"Choose a defensive adaptation: Multi-target Defense (+4 AC after being hit) or Aetheric Escape (disadvantage on strikes against you).",
 				level: 7,
 			},
 			{
-				name: "Multiattack",
+				name: "Absolute Multi-strike",
 				description:
-					"Choose one: Volley (ranged attack every creature within 10 ft of a point in range), or Whirlwind Attack (melee attack every creature within 5 ft).",
+					"Choose an offensive manifestation: Volley (ranged aether-burst) or Whirlwind (melee aether-burst).",
 				level: 11,
 			},
 			{
-				name: "Superior Ascendant's Defense",
+				name: "Apex Defense",
 				description:
-					"Choose one: Evasion (AGI saves: success = no damage, fail = half), Stand Against the Tide (reaction: redirect missed melee to another creature), or Uncanny Dodge (reaction: halve damage from attack you can see).",
+					"Choose a supreme adaptation: Evasion (negate aetheric saves), Redirect (return missed strikes), or Uncanny Reflexes (halve incoming force).",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Prey Designation",
+				name: "Prey Manifest",
 				description:
-					"Mark a creature: advantage on all attacks and Survival checks against it for 1 hour. Once/short rest.",
+					"Mark an entity for absolute elimination: gain advantage on all strikes and detection for 1 hour. Once/short rest.",
 				cooldown: 1,
 				cost: "Bonus action",
 			},
@@ -3583,50 +3581,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "stalker--beast-master",
-		name: "Path of the Bonded Predator",
+		id: "stalker--pack-leader",
+		name: "Path of the Pack Leader",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
-		pathType: "beast-master",
+		pathType: "pack-leader",
 		requirements: { level: 3, skills: ["Animal Handling", "Nature"] },
 		description:
-			"Dog handlers, falconers, and exotic animal trainers who form deep mana-bonds with gate-spawned creatures. Their bonded companions are registered with the Ascendant Bureau's Wildlife Division and have their own social media followings. Two predators sharing one hunting instinct — coordinated well enough to clear gates that would require a full party.",
+			"The Pack Leader mandate is for those who forge deep aetheric bonds with the Absolute's apex predators. They do not just hunt alongside their companion; they fuse their hunting instincts into a single, coordinated absolute strikes that dominate the battlefield. In the modern world, the Pack Leader is a one-person tactical unit, their bonded entity often as famous and lethal as the Stalker themselves.",
 		features: [
 			{
-				name: "Primal Companion",
+				name: "Absolute Companion",
 				description:
-					"Gain a beast companion (Beast of the Land, Sea, or Sky). It obeys your commands, acts on your initiative, and you can command it to attack as a bonus action. It uses your prof bonus for AC, attacks, saves, and skills.",
+					"Bond with a high-resonance entity (Predator of the Land, Sea, or Sky). It shares your initiative and acts as an extension of your own will.",
 				level: 3,
 			},
 			{
-				name: "Exceptional Training",
+				name: "Advanced Resonance",
 				description:
-					"Your companion's attacks count as magical. When you command it to take an action, it can also Dash, Disengage, or Help.",
+					"Your companion's natural strikes count as aetheric. It can Dash, Disengage, or Support as part of your offensive manifestations.",
 				level: 7,
 			},
 			{
-				name: "Bestial Fury",
+				name: "Primal Fury",
 				description:
-					"When you command your companion to Attack, it makes two attacks.",
+					"When you command your companion to strike, it unleashes two absolute attacks.",
 				level: 11,
 			},
 			{
-				name: "Share Spells",
+				name: "Shared Resonance",
 				description:
-					"When you cast a spell targeting yourself, your companion also benefits if it's within 30 ft.",
+					"When you manifest a personal adaptation, your companion also benefits from the Absolute's blessing.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Coordinated Assault",
+				name: "Coordinated Strike",
 				description:
-					"You and your companion both attack the same target with advantage. If both hit, the target must VIT save or be stunned until end of your next turn. Once/short rest.",
+					"You and your companion both strike the same target with absolute precision. If both hit, the target is stunned. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -3636,56 +3634,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "stalker--gloom-stalker",
-		name: "Path of the Shadow Ascendant",
+		id: "stalker--umbral-hunter",
+		name: "Path of the Umbral Hunter",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
-		pathType: "gloom-stalker",
+		pathType: "umbral-hunter",
 		requirements: { level: 3, skills: ["Stealth", "Perception"] },
 		description:
-			"Night-shift security guards, cave divers, and blackout rescue specialists who thrive in absolute darkness. They become invisible in shadow and strike with devastating ambush tactics. The Ascendant Bureau sends them into unknown zero-light gate zones where other ascendants can't operate — their helmet cams capture footage that looks like found-footage horror films.",
+			"The Umbral Hunter mandate is for those who have mastered the zero-light resonance of the highest-rank gates. They do not just hide in shadow; they become one with the void, manifesting as an invisible predator that strikes with absolute lethality from the darkness. In the modern world, the Umbral Hunter is the supreme assassin of the Stalker lineage, their very existence a ghost story in the halls of the Absolute.",
 		features: [
 			{
-				name: "Dread Ambusher",
+				name: "Absolute Ambush",
 				description:
-					"First turn of combat: +SENSE mod to initiative, walking speed +10 ft, and one extra attack (deals additional 1d8 damage).",
+					"First round: +SENSE to initiative, walking speed +10 ft, and one additional strike for extra damage.",
 				level: 3,
 			},
 			{
 				name: "Umbral Sight",
 				description:
-					"Darkvision 60 ft (or +30 ft if you already have it). While in darkness, you are invisible to creatures that rely on darkvision to see you.",
+					"Mastery of darkness. While in shadow, you are invisible to all creatures that rely on aetheric or physical sight.",
 				level: 3,
 			},
 			{
-				name: "Iron Mind",
+				name: "Void-Minded",
 				description:
-					"Prof in SENSE saves. If already proficient, choose INT or PRE saves instead.",
+					"Proficiency in SENSE saves. Your vessel is hardened against mental instability.",
 				level: 7,
 			},
 			{
-				name: "Stalker's Flurry",
+				name: "Hunter's Flurry",
 				description:
-					"When you miss with a weapon attack, make another weapon attack as part of the same action. Once per turn.",
+					"If your strike misses, the Absolute realigns your path for an immediate follow-up strike.",
 				level: 11,
 			},
 			{
-				name: "Shadowy Dodge",
+				name: "Umbral Reflex",
 				description:
-					"Reaction when attacked (no advantage): impose disadvantage on the attack.",
+					"Reaction when targeted: impose disadvantage via a momentary lapse into the void.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Shadow Ambush",
+				name: "Shadow Strike",
 				description:
-					"Become invisible for 1 round. Your first attack from invisibility deals extra 2d8 damage and the target must SENSE save or be frightened. Once/short rest.",
+					"Become invisible for 1 round. Your next strike deals extra 2d8 damage and terrifies the recipient. Once/short rest.",
 				cooldown: 1,
 				cost: "Bonus action",
 			},
@@ -3695,56 +3693,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "stalker--horizon-walker",
-		name: "Path of the Rift Walker",
+		id: "stalker--rift-strider",
+		name: "Path of the Rift Strider",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
-		pathType: "horizon-walker",
+		pathType: "rift-strider",
 		requirements: { level: 3, skills: ["Arcana", "Survival"] },
 		description:
-			"Border patrol agents, customs officers, and immigration lawyers (ironically) who patrol the boundaries between gate dimensions. They sense dimensional portals the way dogs sense earthquakes and teleport through combat via micro-rifts. The Ascendant Bureau's Containment Division employs them to seal unauthorized gate crossings.",
+			"The Rift Strider mandate empowers a Stalker to navigate the precarious boundaries between gate dimensions. They do not just track prey; they step through micro-rifts in reality, manifesting across the battlefield with a frightening fluidity. In the modern world, the Rift Strider is the supreme interceptor, their ability to seal dimensional crossings and strike through space making them an indispensable asset.",
 		features: [
 			{
-				name: "Detect Portal",
+				name: "Detect Rift",
 				description:
-					"Action: sense the distance and direction to the closest planar portal within 1 mile. Once per short rest.",
+					"Sense the distance and direction to the closest aetheric rift within 1 mile.",
 				level: 3,
 			},
 			{
-				name: "Planar Warrior",
+				name: "Aetheric Striker",
 				description:
-					"Bonus action: choose one creature within 30 ft. Next hit this turn deals extra 1d8 force (2d8 at 11th) and all damage becomes force.",
+					"Bonus action: your strikes deal extra force damage as you channel the Absolute's primal energy.",
 				level: 3,
 			},
 			{
 				name: "Ethereal Step",
 				description:
-					"Bonus action: step into the Ethereal Plane until end of turn. You can see/be seen as ghostly. Move through creatures/objects. Once per short rest.",
+					"Bonus action: step into the aetheric reflection for 1 round. Move through objects and entities. Once/short rest.",
 				level: 7,
 			},
 			{
 				name: "Distant Strike",
 				description:
-					"When you take the Attack action, teleport 10 ft before each attack. If you attack at least two different creatures, make one additional attack against a third.",
+					"When you strike, teleport 10 ft before each manifestation. If you strike multiple foes, gain one additional strike.",
 				level: 11,
 			},
 			{
-				name: "Spectral Defense",
+				name: "Absolute Defense (Rift)",
 				description:
-					"Reaction when you take damage: gain resistance to all of that attack's damage.",
+					"Reaction when targeted: gain resistance to the incoming force as you partially transition between planes.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Planar Rift",
+				name: "Planar Collapse",
 				description:
-					"Open a 20-ft radius rift at a point within 120 ft: creatures make AGI save or 4d10 force + banished to another plane until end of your next turn. Once/long rest.",
+					"Open a 20-ft radius collapse: entities are banished to another plane and take 4d10 force damage. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -3754,56 +3752,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "stalker--monster-slayer",
-		name: "Path of the Boss Killer",
+		id: "stalker--apex-slayer",
+		name: "Path of the Apex Slayer",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
-		pathType: "monster-slayer",
+		pathType: "apex-slayer",
 		requirements: { level: 3, skills: ["Investigation", "Survival"] },
 		description:
-			"Former detectives, forensic analysts, and competitive gamers who study their prey obsessively — learning to counter every ability and exploit every vulnerability. The Ascendant Bureau calls them for S-Rank gate boss encounters where standard tactics have failed. They watch boss-fight footage the way football coaches watch game tape.",
+			"The Apex Slayer mandate is given to those who obsessively study the absolute weaknesses of their prey. They do not just hunt; they deconstruct, learning to counter every aetheric ability and exploit every biological flaw of high-rank gate entities. In the modern world, the Apex Slayer is the ultimate boss-killer, their analytical focus turning a nightmare encounter into a systematic elimination.",
 		features: [
 			{
-				name: "Ascendant's Sense",
+				name: "Absolute Sense",
 				description:
-					"Action: learn one creature's immunities, resistances, and vulnerabilities. SENSE mod uses/long rest.",
+					"Action: learn an entity's resistances, vulnerabilities, and immunities. SENSE uses/long rest.",
 				level: 3,
 			},
 			{
-				name: "Slayer's Prey",
+				name: "Slayer's Focus",
 				description:
-					"Bonus action: designate a creature within 60 ft. First hit each turn deals extra 1d6 damage. Until the creature dies, you choose a new target, or you short/long rest.",
+					"Bonus action: designate a target. Your first strike each turn deals additional damage until it falls.",
 				level: 3,
 			},
 			{
-				name: "Supernatural Defense",
+				name: "Supernatural Adaptation",
 				description:
-					"When your Slayer's Prey target forces you to make a save, add 1d6 to your save.",
+					"When your target forces a save, add 1d6 to your result via aetheric prediction.",
 				level: 7,
 			},
 			{
-				name: "Magic-User's Nemesis",
+				name: "Entity's Nemesis",
 				description:
-					"Reaction when a creature within 60 ft casts a spell or teleports: SENSE save or the spell/teleport fails and is wasted. Once per short rest.",
+					"Reaction when an entity manifests power or teleports: SENSE save or the effect is negated. Once/short rest.",
 				level: 11,
 			},
 			{
 				name: "Slayer's Counter",
 				description:
-					"Reaction when your Slayer's Prey target forces you to make a save: make a weapon attack. If it hits, your save auto-succeeds.",
+					"Reaction when your target forces a save: make an immediate strike. If successful, you auto-succeed on the save.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Exploit Weakness",
+				name: "Exploit Vulnerability",
 				description:
-					"After using Ascendant's Sense, your attacks against that creature ignore resistances and treat immunities as resistance for 1 min. Once/long rest.",
+					"After sensing a target, your strikes ignore all resistances and treat immunities as resistance for 1 min. Once/long rest.",
 				cooldown: 3,
 				cost: "Free",
 			},
@@ -3813,56 +3811,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "stalker--swarm-keeper",
-		name: "Path of the Hive Controller",
+		id: "stalker--hive-synchronist",
+		name: "Path of the Hive Synchronist",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
-		pathType: "swarmkeeper",
+		pathType: "hive-synchronist",
 		requirements: { level: 3, skills: ["Nature", "Survival"] },
 		description:
-			"Beekeepers, entomologists, and drone operators who bonded with living swarms of gate organisms — parasitic insects, micro-spirits, or nano-constructs that inhabit their body. Pest control companies won't service their homes (the swarm eats conventional pesticides). The swarm enhances every attack and provides mobility; bystanders describe it as 'being near a cloud of angry static.'",
+			"The Hive Synchronist mandate designates those who have bonded with a living swarm of gate-microorganisms. They do not just carry a hive; they are a walking ecosystem, their swarm enhancing every offensive manifestation and providing absolute mobility via aethertic levitation. In the modern world, the Synchronist is a terrifyingly efficient field operative, their presence denoted by a permanent cloud of aetheric static.",
 		features: [
 			{
-				name: "Gathered Swarm",
+				name: "Gathered Hive",
 				description:
-					"Once per turn on hit: swarm deals extra 1d6 piercing, or pushes target 15 ft horizontally (STR save), or moves you 5 ft (no OA). Damage becomes 1d8 at 11th.",
+					"Once per turn on a strike: your hive deals extra damage, pushes the target, or realigns your own position.",
 				level: 3,
 			},
 			{
-				name: "Swarmkeeper Magic",
+				name: "Hive Manifestations",
 				description:
-					"Learn bonus spells: Faerie Fire (3rd), Web (5th), Gaseous Form (9th), Arcane Eye (13th), Insect Plague (17th).",
+					"Learn bonus absolute mandates: Aetheric Glow, Web, Gaseous Form, Aetheric Eye, and Hive Plague.",
 				level: 3,
 			},
 			{
 				name: "Writhing Tide",
 				description:
-					"Bonus action: swarm lifts you, giving 10-ft fly speed (hover) for 1 min. Prof bonus uses/long rest.",
+					"Bonus action: the hive lifts you, granting an aetheric fly speed (hover) for 1 min.",
 				level: 7,
 			},
 			{
-				name: "Mighty Swarm",
+				name: "Apex Hive",
 				description:
-					"Gathered Swarm: damage becomes 1d8 piercing. Push: target also knocked prone on failed STR save. Move: you also gain half cover until start of next turn.",
+					"Your gathered hive damage is normalized to its maximum efficiency. Pushed targets are knocked prone.",
 				level: 11,
 			},
 			{
-				name: "Swarming Dispersal",
+				name: "Hive Dispersal",
 				description:
-					"Reaction when you take damage: gain resistance and teleport up to 30 ft as your body dissolves into the swarm. Prof bonus uses/long rest.",
+					"Reaction when targeted: dissolve into the hive, granting resistance and teleporting to a safe reflection. Once/long rest.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Swarm Eruption",
+				name: "Hive Eruption",
 				description:
-					"Release the swarm: all creatures within 15 ft take 3d8 piercing (AGI half) and are blinded until end of your next turn. Once/short rest.",
+					"Release the hive: all nearby entities take piercing damage and are blinded by absolute static. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -3872,57 +3870,57 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { dexterity: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── HOLY KNIGHT PATHS ── features at 3,7,15,20 ──
 	{
-		id: "holy-knight--devotion",
-		name: "Path of the Sacred Oath",
+		id: "holy-knight--absolute-devotion",
+		name: "Path of the Absolute Devotion",
 		jobId: "holy-knight",
 		jobName: "Holy Knight",
 		tier: 2,
-		pathType: "devotion",
+		pathType: "absolute-devotion",
 		requirements: { level: 3, skills: ["Religion"] },
 		description:
-			"Police captains, firefighter chiefs, and military officers who are paragons of System virtue. They appear at press conferences in gleaming covenant armor and their community approval ratings are astronomical. Their absolute faith grants unparalleled defensive auras and the ability to manifest weapons of pure radiant System energy.",
+			"The Absolute Devotion mandate designates those who are the physical paragons of the Absolute's primary resonance. They do not just follow a code; they become a walking anchor for the restorative and protective frequencies of the Zenith lineage, their presence alone stabilizing the local reality of their allies. In the modern world, the Devotion Knight is the ultimate frontline leader, their absolute faith manifesting as physical aetheric armaments.",
 		features: [
 			{
-				name: "Channel Divinity: Sacred Weapon",
+				name: "Absolute Resonance: Sacred Armament",
 				description:
-					"Action: for 1 min, add PRE mod to attack rolls with one weapon (min +1). Weapon emits bright light 20 ft. Counts as magical.",
+					"Bonus action: manifest your weapon as an extension of the Absolute for 1 min. Add your presence toward its strikes.",
 				level: 3,
 			},
 			{
-				name: "Channel Divinity: Turn the Unholy",
+				name: "Absolute Resonance: Purge Entropic",
 				description:
-					"Action: fiends and undead within 30 ft make SENSE save or are turned for 1 min.",
+					"Action: entities of the void and entropic remnants must save or be banished from your presence for 1 min.",
 				level: 3,
 			},
 			{
 				name: "Aura of Devotion",
 				description:
-					"You and allies within 10 ft can't be charmed while conscious. 30 ft at 18th.",
+					"You and allies within 10 ft are anchored against mental intrusion while your vessel is active.",
 				level: 7,
 			},
 			{
-				name: "Purity of Spirit",
+				name: "Purity of the Absolute",
 				description:
-					"You are always under the effect of Protection from Evil and Good.",
+					"Your vessel is permanently anchored against all harmful planar influences.",
 				level: 15,
 			},
 			{
-				name: "Holy Nimbus",
+				name: "Absolute Nimbus",
 				description:
-					"Action: 30-ft bright light aura for 1 min. Enemies starting turn in aura take 10 radiant. Advantage on saves vs fiend/undead spells. Once/long rest.",
+					"Action: manifest a 30-ft aura of absolute light for 1 min. Enemies take 10 radiant damage at the start of their turn. Once/long rest.",
 				level: 20,
 			},
 		],
 		abilities: [
 			{
-				name: "Sacred Smite",
+				name: "Absolute Smite",
 				description:
-					"Channel divine energy: next melee hit deals extra 3d8 radiant and target must SENSE save or be blinded for 1 round. Once/short rest.",
+					"Channel absolute energy into a strike: deal 3d8 extra radiant and blind the recipient. Once/short rest.",
 				cooldown: 1,
 				cost: "Bonus action",
 			},
@@ -3932,48 +3930,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { strength: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "holy-knight--vengeance",
-		name: "Path of the Retribution Oath",
+		id: "holy-knight--retribution-mandate",
+		name: "Path of the Retribution Mandate",
 		jobId: "holy-knight",
 		jobName: "Holy Knight",
 		tier: 2,
-		pathType: "vengeance",
+		pathType: "retribution-mandate",
 		requirements: { level: 3, skills: ["Intimidation"] },
 		description:
-			"Victims of gate disasters, bereaved family members, and wrongfully discharged soldiers who pursue the System's enemies with relentless fury. They are strike-team specialists recruited by the Ascendant Bureau for assassination missions — less defensive than Sacred Oath, but devastating against single high-value targets. Their covenant burns with righteous anger.",
+			"The Retribution Mandate is held by those who have sacrificed their defensive stability for the absolute destruction of their foes. They do not just strike; they exact a toll for every transgression against the Absolute, pursuing their targets with a relentless aetheric fury that cannot be outrun. In the modern world, the Retribution Knight is a lethal specialist, their covenant burning with the righteous hunger for absolute realignment.",
 		features: [
 			{
-				name: "Channel Divinity: Abjure Enemy",
+				name: "Absolute Resonance: Banish Foe",
 				description:
-					"Action: one creature within 60 ft makes SENSE save or is frightened and speed is 0 for 1 min (half speed on success). Fiends/undead have disadvantage.",
+					"Action: one entity within 60 ft must save or be terrified and rooted to its current reflection for 1 min.",
 				level: 3,
 			},
 			{
-				name: "Channel Divinity: Vow of Enmity",
+				name: "Absolute Resonance: Directive of Enmity",
 				description:
-					"Bonus action: gain advantage on attacks against one creature within 10 ft for 1 min.",
+					"Bonus action: gain absolute focus (advantage) on strikes against one entity within 10 ft for 1 min.",
 				level: 3,
 			},
 			{
 				name: "Relentless Avenger",
 				description:
-					"When you hit with OA, move up to half speed immediately after (no OA against you).",
+					"When you land an opportunistic strike, immediately realign your position by moving up to half your speed.",
 				level: 7,
 			},
 			{
-				name: "Soul of Vengeance",
+				name: "Soul of Retribution",
 				description:
-					"When creature under your Vow of Enmity attacks, reaction: make a melee weapon attack against it.",
+					"When your focused target strikes, react with an immediate absolute counter-manifestation.",
 				level: 15,
 			},
 			{
-				name: "Avenging Angel",
+				name: "Avenging Absolute",
 				description:
-					"Action: transform for 1 hour — 60-ft fly speed, 30-ft aura of menace (SENSE save or frightened 1 min on first seeing you). Once/long rest.",
+					"Action: transform into a winged manifestation of the Absolute for 1 hour. Gain a 60-ft fly speed and an aura of absolute menace.",
 				level: 20,
 			},
 		],
@@ -3981,7 +3979,7 @@ export const paths: Path[] = [
 			{
 				name: "Relentless Pursuit",
 				description:
-					"Designate a creature: for 1 min, you can't be slowed, restrained, or have your speed reduced while moving toward it. Advantage on saves vs its spells. Once/long rest.",
+					"Designate a target: for 1 min, your movement and offensive output cannot be hindered as you move toward them. Once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -3991,56 +3989,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { strength: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "holy-knight--ancients",
-		name: "Path of the Primal Oath",
+		id: "holy-knight--verdant-mandate",
+		name: "Path of the Verdant Mandate",
 		jobId: "holy-knight",
 		jobName: "Holy Knight",
 		tier: 2,
-		pathType: "ancients",
+		pathType: "verdant-mandate",
 		requirements: { level: 3, skills: ["Nature", "Religion"] },
 		description:
-			"Environmental activists, conservation officers, and indigenous community leaders who swear to protect life against the encroaching corruption of the gates. Their covenant predates the ascendant guilds — a primal pact with the System's original purpose. They chain themselves to threatened gate biomes the way others chain themselves to old-growth trees.",
+			"Those who walk the Path of the Verdant Mandate swear to protect the Absolute’s original intent against the encroaching resonance corruption of the gates. Their covenant is a primal pact with the world's original life-resonance, anchoring themselves to threatened gate biomes to serve as the ultimate custodians of aetheric diversity. In the modern world, they are the bulwark against total ecological collapse, their presence stabilizing the very fabric of reality.",
 		features: [
 			{
-				name: "Channel Divinity: Nature's Wrath",
+				name: "Absolute Resonance: Verdant Snare",
 				description:
 					"Action: spectral vines restrain a creature within 10 ft (STR or AGI save to escape, check each turn).",
 				level: 3,
 			},
 			{
-				name: "Channel Divinity: Turn the Faithless",
+				name: "Absolute Resonance: Turn the Entropic",
 				description:
-					"Action: fey and fiends within 30 ft make SENSE save or are turned for 1 min.",
+					"Action: entropic entities (fey/fiends) within 30 ft make SENSE save or are turned for 1 min.",
 				level: 3,
 			},
 			{
-				name: "Aura of Warding",
+				name: "Aura of the Weave Warding",
 				description:
-					"You and allies within 10 ft have resistance to spell damage. 30 ft at 18th.",
+					"You and allies within 10 ft have resistance to offensive resonance damage. 30 ft at 18th.",
 				level: 7,
 			},
 			{
-				name: "Undying Sentinel",
+				name: "Absolute Sentinel",
 				description:
-					"When reduced to 0 HP and not killed outright, drop to 1 HP instead. Once per long rest. Also, you suffer no drawbacks of old age and can't be aged magically.",
+					"When reduced to 0 HP and not killed outright, drop to 1 HP instead. Once per long rest. Also, you suffer no drawbacks of old age and can't be aged magically as the mandate preserves your vessel.",
 				level: 15,
 			},
 			{
-				name: "Elder Champion",
+				name: "Ancient Mandate Champion",
 				description:
-					"Action: transform for 1 min — regain 10 HP at start of each turn, cast Holy Knight spells as bonus action, enemies within 10 ft have disadvantage on saves vs your spells/Channel Divinity. Once/long rest.",
+					"Action: transform for 1 min — regain 10 HP at start of each turn, cast Holy Knight mantras as bonus action, enemies within 10 ft have disadvantage on saves vs your mantras and Resonance. Once/long rest.",
 				level: 20,
 			},
 		],
 		abilities: [
 			{
-				name: "Nature's Bulwark",
+				name: "Verdant Bulwark",
 				description:
-					"All allies within 30 ft gain resistance to all spell damage and advantage on saves vs spells for 1 min. Once/long rest.",
+					"All allies within 30 ft gain resistance to all resonance damage and advantage on saves vs mantras for 1 min. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -4050,56 +4048,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { strength: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "holy-knight--conquest",
-		name: "Path of the Dominion Oath",
+		id: "holy-knight--dominance-mandate",
+		name: "Path of the Dominance Mandate",
 		jobId: "holy-knight",
 		jobName: "Holy Knight",
 		tier: 2,
-		pathType: "conquest",
+		pathType: "dominance-mandate",
 		requirements: { level: 3, skills: ["Intimidation", "Athletics"] },
 		description:
-			"Corporate CEOs, drill sergeants, and authoritarian politicians who rule through overwhelming System authority. Their covenant radiates domination — boardrooms fall silent when they enter, and enemies freeze in place through sheer force of will. The Ascendant Bureau uses them to maintain order in lawless gate-adjacent zones.",
+			"The Dominance Mandate designates those who wield the Absolute's authority with uncompromising force. They do not just lead; they dominate, their aetheric presence frozen with a chill authority that renders enemies immobile. In the modern world, the Dominance Knight is the supreme arbiter of the Absolute's order, their very will enough to shatter the resolve of those who oppose them.",
 		features: [
 			{
-				name: "Channel Divinity: Conquering Presence",
+				name: "Absolute Resonance: Crushing Mandate",
 				description:
-					"Action: each creature of your choice within 30 ft makes SENSE save or is frightened for 1 min (save end of each turn).",
+					"Action: manifest an aura of absolute terror that renders nearby entities frightened for 1 min.",
 				level: 3,
 			},
 			{
-				name: "Channel Divinity: Guided Strike",
+				name: "Absolute Resonance: Guided Strike",
 				description:
-					"+10 to an attack roll. Declare after roll but before result.",
+					"Gain an absolute bonus to a strike's precision after the manifestation has begun.",
 				level: 3,
 			},
 			{
-				name: "Aura of Conquest",
+				name: "Aura of Dominance",
 				description:
-					"Frightened creatures within 10 ft have speed 0 and take psychic damage = half Holy Knight level at start of their turn. 30 ft at 18th.",
+					"Terrified entities within 10 ft have their movement completely suppressed and suffer mental backlash.",
 				level: 7,
 			},
 			{
-				name: "Scornful Rebuke",
+				name: "Scornful Backlash",
 				description:
-					"Whenever a creature hits you with an attack, it takes psychic damage = PRE mod.",
+					"Whenever your vessel is struck, the Absolute redirects a portion of the psychic force back at the aggressor.",
 				level: 15,
 			},
 			{
-				name: "Invincible Conqueror",
+				name: "Absolute Sovereign",
 				description:
-					"Action: transform for 1 min — resistance to all damage, Extra Attack becomes three attacks, crits on 19-20. Once/long rest.",
+					"Action: transform into a supreme vessel of authority for 1 min. Resistance to all force and triple offensive output. Once/long rest.",
 				level: 20,
 			},
 		],
 		abilities: [
 			{
-				name: "Crushing Presence",
+				name: "Absolute Presence",
 				description:
-					"All enemies within 30 ft: SENSE save or prone + frightened + speed 0 for 1 round. Once/long rest.",
+					"All enemies within 30 ft must save or be knocked prone and rooted by sheer pressure. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -4109,55 +4107,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { strength: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "holy-knight--redemption",
-		name: "Path of the Guardian Oath",
+		id: "holy-knight--atonement-mandate",
+		name: "Path of the Atonement Mandate",
 		jobId: "holy-knight",
 		jobName: "Holy Knight",
 		tier: 2,
-		pathType: "redemption",
+		pathType: "atonement-mandate",
 		requirements: { level: 3, skills: ["Persuasion", "Religion"] },
 		description:
-			"Social workers, public defenders, and pacifist activists who believe in protection above destruction. They absorb damage meant for allies and punish aggressors — the ultimate defensive covenant. Hostage negotiators with Guardian Oath training have a 100% survival rate. They try to end fights without killing, which makes them controversial in a world that rewards body counts.",
+			"The Atonement Mandate is held by those who prioritize the absolute preservation of life. They do not just defend; they absorb the suffering of their allies, manifesting as a living shield for the Absolute's most fragile resonance-layers. In the modern world, the Atonement Knight is the supreme guardian of peace, their covenant punishing those who choose violence with a radiant backlash.",
 		features: [
 			{
-				name: "Channel Divinity: Emissary of Peace",
-				description: "+5 to Persuasion checks for 10 min.",
+				name: "Absolute Resonance: Peacekeeper",
+				description:
+					"Grant yourself an absolute advantage in all diplomatic manifestations.",
 				level: 3,
 			},
 			{
-				name: "Channel Divinity: Rebuke the Violent",
+				name: "Absolute Resonance: Radiant Backlash",
 				description:
-					"Reaction: when a creature within 30 ft deals damage, it takes radiant damage equal to the damage dealt (SENSE save for half).",
+					"Reaction: when an entity deals damage, return the absolute equivalent in radiant output.",
 				level: 3,
 			},
 			{
-				name: "Aura of the Guardian",
+				name: "Aura of the Atonement",
 				description:
-					"Reaction: when a creature within 10 ft takes damage, magically take the damage instead (no reduction). 30 ft at 18th.",
+					"Reaction: absorb the offensive manifestations directed at your allies within 10 ft.",
 				level: 7,
 			},
 			{
-				name: "Protective Spirit",
+				name: "Protective Essence",
 				description:
-					"At end of each turn, if you have less than half HP max, regain 1d6+half Holy Knight level HP.",
+					"Automatically stabilize your vessel's HP when below half maximum.",
 				level: 15,
 			},
 			{
-				name: "Emissary of Redemption",
+				name: "Emissary of the Absolute",
 				description:
-					"Resistance to all damage from other creatures (not you). When a creature damages you, it takes radiant damage = half what it dealt. Both benefits lost vs a creature you attack/force a save against (until long rest).",
+					"Gain absolute resistance to all manifestations and redirect a portion of all incoming strikes back at their origin.",
 				level: 20,
 			},
 		],
 		abilities: [
 			{
-				name: "Shield of the Faithful",
+				name: "Harmonic Shield",
 				description:
-					"For 1 min, all damage dealt to allies within 30 ft is halved and you take the other half. Once/long rest.",
+					"For 1 min, all damage directed at nearby allies is shared by your vessel. Once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -4167,56 +4166,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { charisma: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "holy-knight--glory",
-		name: "Path of the Ascendant Oath",
+		id: "holy-knight--exaltation-mandate",
+		name: "Path of the Exaltation Mandate",
 		jobId: "holy-knight",
 		jobName: "Holy Knight",
 		tier: 2,
-		pathType: "glory",
+		pathType: "exaltation-mandate",
 		requirements: { level: 3, skills: ["Athletics", "Performance"] },
 		description:
-			"Olympic athletes, CrossFit champions, and stunt performers who strive for physical perfection and legendary deeds. Their covenant fuels superhuman athleticism — they break world records as a warm-up and their gate-raid highlight reels have more views than the Super Bowl. They inspire allies through feats of heroism and turn every battle into an epic display of System power.",
+			"The Exaltation Mandate is for those who strive for absolute physical and aetheric perfection. They do not just fight; they perform, their every strike a legendary feat that inspires those around them to reach their own absolute potential. In the modern world, the Exaltation Knight is the supreme hero, their covenant fueling superhuman manifestations that turn every struggle into an epic victory.",
 		features: [
 			{
-				name: "Channel Divinity: Peerless Athlete",
+				name: "Absolute Resonance: Peerless Form",
 				description:
-					"10 min: advantage on Athletics and Acrobatics. Carry/push/pull/lift capacity doubled. +10 ft to running long and high jumps.",
+					"Grant yourself absolute advantage in all physical manifestations for 10 min.",
 				level: 3,
 			},
 			{
-				name: "Channel Divinity: Inspiring Smite",
+				name: "Absolute Resonance: Inspiring Smite",
 				description:
-					"After Divine Smite, distribute temp HP = 2d8+Holy Knight level among creatures within 30 ft (including yourself).",
+					"After an absolute strike, distribute restorative resonance to all nearby allies.",
 				level: 3,
 			},
 			{
 				name: "Aura of Alacrity",
 				description:
-					"Your speed +10 ft. Allies starting turn within 5 ft gain +10 ft speed until end of their turn. 10 ft at 18th.",
+					"Your physical speed is permanently enhanced, and allies who stand within your presence are granted similar acceleration.",
 				level: 7,
 			},
 			{
-				name: "Glorious Defense",
+				name: "Exalted Defense",
 				description:
-					"Reaction: when a creature you can see within 10 ft is hit, add PRE mod to its AC. If the attack misses, make one weapon attack against the attacker. PRE mod uses/long rest.",
+					"Reaction: when an ally is targeted, realign the Absolute to grant them protection and return the strike.",
 				level: 15,
 			},
 			{
 				name: "Living Legend",
 				description:
-					"Bonus action for 1 min: advantage on PRE checks, once per turn turn a miss into a hit, reroll a failed save (once). Once/long rest.",
+					"Bonus action: become a legend incarnate for 1 min. Once per turn, turn any failure into an absolute success. Once/long rest.",
 				level: 20,
 			},
 		],
 		abilities: [
 			{
-				name: "Heroic Charge",
+				name: "Heroic Manifestation",
 				description:
-					"Move up to double speed in a straight line. Each creature you pass within 5 ft: STR save or prone + 2d8 radiant. Once/short rest.",
+					"Move at double speed in a direct line, rending all entities in your path with absolute radiance. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -4226,62 +4225,62 @@ export const paths: Path[] = [
 			secondaryAttribute: "Charisma",
 			bonusStats: { strength: 2, charisma: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── TECHNOMANCER PATHS ── features at 3,5,9,15 ──
 	{
-		id: "technomancer--alchemist",
-		name: "Path of the Mana Chemist",
+		id: "technomancer--aether-chemist-design",
+		name: "Design: The Aether Chemist",
 		jobId: "technomancer",
 		jobName: "Technomancer",
 		tier: 2,
-		pathType: "alchemist",
+		pathType: "aether-chemist-design",
 		requirements: { level: 3, skills: ["Arcana", "Medicine"] },
 		description:
-			"Pharmacists, biochemists, and craft brewers who brew potent elixirs from gate-harvested reagents. Their home labs look like Breaking Bad sets crossed with medieval apothecaries. They synthesize healing draughts, explosive compounds, and transformative potions that enhance their raid party's capabilities. The FDA has an entire department dedicated to regulating their output.",
+			"The Aether Chemist designs are for those who synthesize aetheric reagents harvested directly from the gates. They do not just brew potions; they architecture complex somatic sequences that heal, transform, and incinerate with absolute precision. In the modern world, the Aether Chemist is the supreme specialist in restorative and entropic resonance dynamics, their presence stabilizing the party's biological integrity.",
 		features: [
 			{
-				name: "Tool Proficiency",
-				description: "Prof with alchemist's supplies.",
+				name: "Aetheric Tool Mastery",
+				description: "Absolute proficiency with chemical supplies.",
 				level: 3,
 			},
 			{
-				name: "Alchemist Spells",
+				name: "Architect's Mandates",
 				description:
-					"Always prepared: Healing Word, Ray of Sickness (3rd), Flaming Sphere, Melf's Acid Arrow (5th), Gaseous Form, Mass Healing Word (9th), Blight, Death Ward (13th), Cloudkill, Raise Dead (17th).",
+					"A list of always-available absolute mandates for restoration and entropy.",
 				level: 3,
 			},
 			{
-				name: "Experimental Elixir",
+				name: "Aetheric Infusion",
 				description:
-					"After long rest, create one free elixir (more by spending spell slots). Roll d6 for type: healing (2d4+INT), swiftness (+10 ft speed), resilience (+1 AC), boldness (1d4 to attacks/saves), flight (10 ft fly), or transformation (alter self). Lasts until next long rest or drunk.",
+					"Synthesize one free aetheric infusion after each rest. Choose from: Restoration, Speed, Resilience, Boldness, Flight, or Transformation.",
 				level: 3,
 			},
 			{
 				name: "Alchemical Savant",
 				description:
-					"When you use alchemist's supplies as focus for a spell that restores HP or deals acid/fire/necrotic/poison damage, add INT mod to one roll.",
+					"When you use your supplies as an absolute focus, enhance the efficiency of all restorative and destructive manifestations.",
 				level: 5,
 			},
 			{
-				name: "Restorative Reagents",
+				name: "Restorative Synthesis",
 				description:
-					"Experimental Elixirs also grant 2d6+INT mod temp HP. Cast Lesser Restoration INT mod times/long rest without a slot.",
+					"All infusions now grant temporary resonance. Manifest restorative mandates at will.",
 				level: 9,
 			},
 			{
-				name: "Chemical Mastery",
+				name: "Absolute Synthesis Mastery",
 				description:
-					"Resistance to acid and poison damage, immune to poisoned condition. Cast Greater Restoration and Heal once each/long rest without a slot (using alchemist's supplies).",
+					"Absolute immunity to entropic chemicals. Manifest supreme restoration and greater stabilization once per long rest.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Volatile Concoction",
+				name: "Volatile Burst",
 				description:
-					"Throw an alchemical bomb: 20-ft radius, 4d6 acid + 4d6 fire, AGI save for half. Once/long rest.",
+					"Synthesize a massive entropic burst: 20-ft radius, dealing acid and fire damage. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -4291,60 +4290,62 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { intelligence: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "technomancer--armorer",
-		name: "Path of the Exo-Frame",
+		id: "technomancer--aether-vessel-design",
+		name: "Design: The Aether Vessel",
 		jobId: "technomancer",
 		jobName: "Technomancer",
 		tier: 2,
-		pathType: "armorer",
+		pathType: "aether-vessel-design",
 		requirements: { level: 3, skills: ["Arcana", "Athletics"] },
 		description:
-			"Mechanical engineers, prosthetics designers, and power-armor hobbyists who infuse armor with System blueprints. Their exoskeletons look like Iron Man suits built in a garage — because that's literally what they are. Defense contractors bid billions for their designs. The powered frames grant superhuman strength, integrated weapons, and impenetrable mana-reinforced defenses.",
+			"The Aether Vessel designs are for those who infuse physical armaments with the Absolute's blueprints. They do not just wear armor; they manifest localized power-frames that grant superhuman strength and impenetrable defensive auras, turning the Technomancer into a walking force of aetheric might. In the modern world, the Aether Vessel is the supreme martial-architect, their designs representing the peak of ascendant warfare.",
 		features: [
 			{
-				name: "Tools of the Trade",
-				description: "Prof with heavy armor and smith's tools.",
-				level: 3,
-			},
-			{
-				name: "Armorer Spells",
+				name: "Vessel Architect Mastery",
 				description:
-					"Always prepared: Magic Missile, Thunderwave (3rd), Mirror Image, Shatter (5th), Hypnotic Pattern, Lightning Bolt (9th), Fire Shield, Greater Invisibility (13th), Passwall, Wall of Force (17th).",
+					"Absolute proficiency with heavy armaments and smith's tools.",
 				level: 3,
 			},
 			{
-				name: "Arcane Armor",
+				name: "Vessel Mandates",
 				description:
-					"Action: turn a suit of armor into Arcane Armor. It replaces missing limbs, can't be removed against your will, covers/replaces your fists. Choose model: Guardian (thunder gauntlets: 1d8 thunder melee, target has disadvantage on attacks vs others; defensive field: temp HP = Technomancer level as bonus action) or Infiltrator (lightning launcher: 1d6 lightning ranged 90 ft + 1d6 once/turn, +5 ft speed, advantage on Stealth).",
+					"A list of always-available absolute mandates for offensive and defensive power.",
 				level: 3,
 			},
 			{
-				name: "Extra Attack",
-				description: "Attack twice when you take the Attack action.",
+				name: "Aether-Frame Integration",
+				description:
+					"Transform a suit of armor into an Absolute Aether-Frame. Choose model: Arbiter (thunder-resonant melee) or Outrider (lightning-resonant ranged).",
+				level: 3,
+			},
+			{
+				name: "Absolute Multi-strike",
+				description:
+					"Manifest strikes twice when you take the offensive action.",
 				level: 5,
 			},
 			{
-				name: "Armor Modifications",
+				name: "Aetheric Conduits",
 				description:
-					"Your Arcane Armor now counts as separate items for infusion purposes: armor (chest), boots, helmet, and weapon (each can hold one infusion). Max infusions increases by 2.",
+					"Your vessel counts as four separate aetheric conduits, each capable of holding its own mandate manifestation.",
 				level: 9,
 			},
 			{
-				name: "Perfected Armor",
+				name: "Perfected Aether-Frame",
 				description:
-					"Guardian: reaction when a creature you can see within 30 ft is hit — pull it up to 30 ft toward you, and if it ends within 5 ft, make a melee attack with thunder gauntlets. Infiltrator: any creature that takes lightning damage from you glows with light, and next attack against it has advantage; if that attack hits, it deals extra 1d6 lightning.",
+					"Arbiter: reaction to pull entities toward you and strike. Outrider: strikes deal extra lightning damage and reveal all nearby aetheric hidden entities.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Overdrive",
+				name: "Pulse Overdrive",
 				description:
-					"Bonus action: Arcane Armor overcharges for 1 min. Guardian: thunder gauntlets deal 2d8. Infiltrator: lightning launcher deals 2d6+1d6 bonus. Once/long rest.",
+					"Bonus action: overcharge your aether-frame for 1 min, dealing massive thunder or lightning resonance. Once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -4354,61 +4355,62 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "technomancer--artillerist",
-		name: "Path of the Siege Engineer",
+		id: "technomancer--resonance-siege-design",
+		name: "Design: Resonance Siege",
 		jobId: "technomancer",
 		jobName: "Technomancer",
 		tier: 2,
-		pathType: "artillerist",
+		pathType: "resonance-siege-design",
 		requirements: { level: 3, skills: ["Arcana"] },
 		description:
-			"Artillery officers, weapons engineers, and competitive paintball champions who specialize in destructive magic channeled through mana turrets. Their construct weapons platforms lay suppressive fire, project shield barriers, or burn enemies from maximum range. Military bases license their turret designs; they're the reason gate-adjacent cities have 'no unauthorized turret deployment' ordinances.",
+			"The Resonance Siege designs represent the peak of offensive aetheric manifestations. They do not just build platforms; they architecture localized resonators that project destructive harmonics or protective fields across the battlefield. In the modern world, the Resonance Siege architect is the supreme heavy resonance specialist, their constructs capable of breaking any gate-defense with absolute power.",
 		features: [
 			{
-				name: "Tool Proficiency",
-				description: "Prof with woodcarver's tools.",
+				name: "Siege Architect Mastery",
+				description:
+					"Absolute proficiency with woodcarving tools and aetheric resonance.",
 				level: 3,
 			},
 			{
-				name: "Artillerist Spells",
+				name: "Siege Mandates",
 				description:
-					"Always prepared: Shield, Thunderwave (3rd), Scorching Ray, Shatter (5th), Fireball, Wind Wall (9th), Ice Storm, Wall of Fire (13th), Cone of Cold, Wall of Force (17th).",
+					"A list of always-available absolute mandates for destructive and protective resonances.",
 				level: 3,
 			},
 			{
-				name: "Eldritch Cannon",
+				name: "Aetheric Resonator",
 				description:
-					"Action: create a Small or Tiny eldritch cannon in an unoccupied space within 5 ft. HP = 5× Technomancer level, AC 18. Choose type: Flamethrower (15-ft cone, 2d8 fire, AGI half), Force Ballista (ranged 120 ft, 2d8 force, push 5 ft), or Protector (10-ft radius, 1d8+INT mod temp HP to each creature you choose). Bonus action to fire. One at a time (two at 15th).",
+					"Action: manifest a Tiny aetheric resonator. Choose type: Incinerator (fire cone), Ballista (force strike), or Bulwark (restorative field).",
 				level: 3,
 			},
 			{
-				name: "Arcane Firearm",
+				name: "Absolute Resonance Alignment",
 				description:
-					"Use a wand, staff, or rod as spellcasting focus. +1d8 to one damage roll of Technomancer spell damage through it.",
+					"Enhance the efficiency of all manifestations through an absolute aetheric focus.",
 				level: 5,
 			},
 			{
-				name: "Explosive Cannon",
+				name: "Aetheric Detonation",
 				description:
-					"Eldritch Cannon damage increases by 1d8. As an action, command cannon to self-destruct: creatures within 20 ft take 3d8 force (AGI half).",
+					"Increase resonator efficiency and trigger a self-destructive burst for massive force resonance output.",
 				level: 9,
 			},
 			{
-				name: "Fortified Position",
+				name: "Siege Specialist",
 				description:
-					"You can create two cannons. You and allies within 10 ft of a cannon have half cover.",
+					"Manifest two resonators simultaneously and grant protection to all nearby allies.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Barrage",
+				name: "Absolute Salvo",
 				description:
-					"All your cannons fire simultaneously at full damage. Each cannon can target a different creature. Once/short rest.",
+					"All resonators manifest their power simultaneously at maximum efficiency. Once/short rest.",
 				cooldown: 1,
 				cost: "Bonus action",
 			},
@@ -4418,66 +4420,62 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "technomancer--battle-smith",
-		name: "Path of the Construct Partner",
+		id: "technomancer--synchronist-binary-design",
+		name: "Design: Synchronist Binary",
 		jobId: "technomancer",
 		jobName: "Technomancer",
 		tier: 2,
-		pathType: "battle-smith",
+		pathType: "synchronist-binary-design",
 		requirements: { level: 3, skills: ["Arcana", "Athletics"] },
 		description:
-			"Roboticists, AI researchers, and veterinary prosthetics engineers who build System Defenders — loyal mana-construct companions that fight alongside them. Their workshops are full of half-finished robot dogs and prototype combat drones. They calibrate their own weapons via neural interface, using INT for attacks, making them formidable melee combatants who think faster than they swing.",
+			"The Synchronist Binary designs are for those who bond with a primary aetheric defender. They do not just build a companion; they fuse their own neural resonance with a physical construct, creating a perfect binary fighting unit. In the modern world, the Synchronist is a formidable frontline combatant, their attacks fueled by aetheric compilations that outpace physical reflex.",
 		features: [
 			{
-				name: "Tool Proficiency",
-				description: "Prof with smith's tools.",
-				level: 3,
-			},
-			{
-				name: "Battle Smith Spells",
+				name: "Binary Architect Mastery",
 				description:
-					"Always prepared: Heroism, Shield (3rd), Branding Smite, Warding Bond (5th), Aura of Vitality, Conjure Barrage (9th), Aura of Purity, Fire Shield (13th), Banishing Smite, Mass Cure Wounds (17th).",
+					"Absolute proficiency with smith's tools and neural resonance.",
 				level: 3,
 			},
 			{
-				name: "Battle Ready",
+				name: "Synchronist Mandates",
 				description:
-					"Prof with martial weapons. Use INT instead of STR or AGI for magic weapon attack/damage rolls.",
+					"A list of always-available absolute mandates for partnership and coordination.",
 				level: 3,
 			},
 			{
-				name: "Steel Defender",
+				name: "Absolute Defender",
 				description:
-					"Create a construct companion. HP = 2 + INT mod + 5× Technomancer level. AC = 15, uses your prof bonus. Takes its turn after yours; you command it (Dodge default). Reaction: impose disadvantage on attack vs creature within 5 ft of it. If destroyed, spend a spell slot during short/long rest to rebuild.",
+					"Manifest a primary construct defender that obeys your every directive. Gain absolute resonance-combat proficiency using your intelligence mod.",
 				level: 3,
 			},
 			{
-				name: "Extra Attack",
-				description: "Attack twice when you take the Attack action.",
+				name: "Absolute Multi-strike",
+				description:
+					"Manifest strikes twice when you take the offensive action.",
 				level: 5,
 			},
 			{
-				name: "Arcane Jolt",
+				name: "Aetheric Feedback",
 				description:
-					"When you or your Steel Defender hit with a magic weapon attack, deal extra 2d6 force damage OR heal a creature within 30 ft for 2d6 HP. INT mod uses/long rest.",
+					"Channel extra force or restorative output through your strikes or your defender's manifestations. Once/short rest.",
 				level: 9,
 			},
 			{
-				name: "Improved Defender",
+				name: "Supreme Binary Command",
 				description:
-					"Steel Defender's Deflect Attack now deals 1d4+INT mod force to the attacker. Arcane Jolt damage/healing increases to 4d6.",
+					"Your defender's feedback deals extra force to aggressors, and your synchronization output is doubled.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Construct Overdrive",
+				name: "Absolute Overdrive",
 				description:
-					"Steel Defender gains +2 AC, double speed, and its attacks deal extra 2d6 force for 1 min. Once/long rest.",
+					"Your defender gains absolute speed and power for 1 min. Once/long rest.",
 				cooldown: 3,
 				cost: "Bonus action",
 			},
@@ -4487,55 +4485,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Constitution",
 			bonusStats: { intelligence: 2, constitution: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "technomancer--drone-master",
-		name: "Path of the Drone Swarm",
+		id: "technomancer--swarm-conduit-design",
+		name: "Design: Swarm Conduit",
 		jobId: "technomancer",
 		jobName: "Technomancer",
 		tier: 2,
-		pathType: "drone-master",
+		pathType: "swarm-conduit-design",
 		requirements: { level: 3, skills: ["Arcana", "Investigation"] },
 		description:
-			"Drone hobbyists, surveillance technicians, and Amazon delivery engineers who deploy System-enhanced micro-constructs. Their apartments sound like server farms — constant buzzing from dozens of tiny drones charging on every surface. They scout gate corridors, relay tactical intel via swarm networks, and converge their drones for devastating kamikaze strike runs.",
+			"The Swarm Conduit designs are for those who deploy aetheric micro-conspicuous to blanket the battlefield. They do not just control drones; they weave a living surveillance and offensive weave that provides absolute oversight and precision strikes. In the modern world, the Swarm Conduit is the supreme tactical specialist, their micro-conduits capable of relaying information and force across any distance.",
 		features: [
 			{
-				name: "Tool Proficiency",
-				description: "Prof with tinker's tools.",
+				name: "Swarm Architect Mastery",
+				description:
+					"Absolute proficiency with artisan's tools and micro-conduits.",
 				level: 3,
 			},
 			{
-				name: "Drone Swarm",
+				name: "Absolute Swarm",
 				description:
-					"Create up to INT mod Tiny drones (AC 13, 1 HP, 30 ft fly). They share your senses (you can see/hear through any drone within 1 mile). Bonus action: command all drones. Rebuild destroyed drones during short rest.",
+					"Manifest a network of micro-conduits that share your sight and hearing. Command the swarm as an extension of your own absolute will.",
 				level: 3,
 			},
 			{
-				name: "Combat Protocols",
+				name: "Tactical Manifestation",
 				description:
-					"Bonus action: command a drone within 60 ft to deliver a spell with range of touch. Drones can also take the Help action to give advantage on attacks.",
+					"Channel mandates through your swarm conduits and use them to support allies with absolute precision.",
 				level: 5,
 			},
 			{
-				name: "Surveillance Network",
+				name: "Aetheric Surveillance Web",
 				description:
-					"Drones within 120 ft of each other form a network. You have advantage on Perception and Investigation in the network area. Creatures can't surprise you or allies while in the network.",
+					"Your swarm forms a permanent surveillance web, granting advantage on all analytical manifestations and preventing surprise.",
 				level: 9,
 			},
 			{
-				name: "Advanced Drone Systems",
+				name: "Supreme Swarm Command",
 				description:
-					"Drones gain: 30 HP, AC 15, 60 ft fly speed. They can carry and use items. You can see through all drones simultaneously. Command up to 3 drones with a single bonus action.",
+					"Your conduits are hardened against destruction and can manifest complex physical interactions. Command multiple swarms simultaneously.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "Drone Strike",
+				name: "Absolute Convergence",
 				description:
-					"All drones within 60 ft converge on a point: 20-ft radius, 1d6 force per drone (max 6d6), AGI save for half. Drones are destroyed. Once/short rest.",
+					"All swarm conduits converge for a massive force discharge. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -4545,55 +4544,56 @@ export const paths: Path[] = [
 			secondaryAttribute: "Dexterity",
 			bonusStats: { intelligence: 2, dexterity: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "technomancer--system-hacker",
-		name: "Path of the System Exploit",
+		id: "technomancer--aether-breacher-design",
+		name: "Design: Aether Breacher",
 		jobId: "technomancer",
 		jobName: "Technomancer",
 		tier: 2,
-		pathType: "system-hacker",
+		pathType: "aether-breacher-design",
 		requirements: { level: 3, skills: ["Arcana", "Investigation"] },
 		description:
-			"Ethical hackers, penetration testers, and jailbreak enthusiasts who interface directly with the System's core architecture. They treat reality like software — finding exploits, suppressing enemy abilities, and rewriting the laws of magic in a localized area. The Ascendant Bureau officially condemns their methods while quietly hiring them for classified operations.",
+			"The Aetheric Breacher designs are for those who interface directly with the Absolute's core resonance. They treat reality like a malleable sequence — finding vulnerabilities, suppressing enemy manifestations, and realigning the laws of local aetheric flow. In the modern world, the Breacher is the supreme infiltration specialist, their ability to bypass any defensive mandate making them the ultimate asset for high-rank gate raids.",
 		features: [
 			{
-				name: "Tool Proficiency",
-				description: "Prof with hacker's tools (thieves' tools variant).",
+				name: "Breacher Architect Mastery",
+				description:
+					"Absolute proficiency with infiltration supplies and resonance analysis.",
 				level: 3,
 			},
 			{
-				name: "System Override",
+				name: "Absolute Suppression",
 				description:
-					"As an action, target one creature within 60 ft. INT save or one of its resistances, immunities, or condition immunities is suppressed for 1 min (concentration). INT mod uses/long rest.",
+					"Action: target an entity's internal resonance to suppress its resistances or immunities for 1 min.",
 				level: 3,
 			},
 			{
-				name: "Debug Protocol",
+				name: "Mandate Realignment",
 				description:
-					"When you or an ally within 30 ft fails a save against a spell or magical effect, reaction: force a reroll with advantage. Prof bonus uses/long rest.",
+					"Reaction: when an ally fails to resist a manifestation, force a total realignment of the local fate-variable. Once/short rest.",
 				level: 5,
 			},
 			{
-				name: "Exploit Vulnerability",
+				name: "Exploit Resonance Instability",
 				description:
-					"When a creature fails your System Override save, choose an additional effect: disadvantage on attacks for 1 round, speed halved, or vulnerability to one damage type you choose.",
+					"When you suppress an entity, choose an additional effect: disadvantage, halved speed, or total aetheric vulnerability.",
 				level: 9,
 			},
 			{
-				name: "Root Access",
+				name: "Resonance Collapse",
 				description:
-					"As an action, create a 30-ft radius zone for 1 min (concentration). In the zone: your allies have advantage on saves vs spells, and enemies have disadvantage on concentration checks and their spell save DCs are reduced by your prof bonus. Once/long rest.",
+					"Completely suppress a target's ability to manifest for 1 round. Once/long rest.",
 				level: 15,
 			},
 		],
 		abilities: [
 			{
-				name: "System Crash",
+				name: "Absolute Lockdown",
 				description:
-					"Target creature within 60 ft: INT save or all its magical effects are suppressed and it can't cast spells for 1 round. Once/long rest.",
+					"Target entity's internal resonance is completely frozen for 1 round. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -4603,50 +4603,50 @@ export const paths: Path[] = [
 			secondaryAttribute: "Wisdom",
 			bonusStats: { intelligence: 2, wisdom: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	// ── IDOL PATHS ── features at 3,6,14 ──
 	{
-		id: "idol--college-of-lore",
-		name: "Path of the Knowledge Resonance",
+		id: "idol--lore-resonance",
+		name: "Path of the Lore Resonance",
 		jobId: "idol",
 		jobName: "Idol",
 		tier: 2,
-		pathType: "lore",
+		pathType: "lore-resonance",
 		requirements: { level: 3, skills: ["History", "Performance"] },
 		description:
-			"Trivia champions, podcast hosts, and investigative journalists who absorb data from every System frequency, knowing fragments of everything. They weaponize information itself — disrupting enemies at critical moments with Dissonant Words that exploit psychological vulnerabilities. Quiz show producers have banned them from competing.",
+			"Those who walk the Path of the Lore Resonance are collectors of the Absolute's recursive data-manifolds. They do not just record; they weaponize information itself, disrupting enemy manifestations by echoing their own psychological vulnerabilities back at them in a tidal wave of dissonant data. In the modern world, the Lore Idol is the supreme analytical strategist, their mastery of the Absolute's secrets making them feared by any entity with a hidden variable.",
 		features: [
 			{
-				name: "Bonus Proficiencies",
-				description: "Prof in 3 skills of your choice.",
+				name: "Mandated Proficiencies",
+				description: "Mastery of 3 fields (skills) of your choice.",
 				level: 3,
 			},
 			{
-				name: "Cutting Words",
+				name: "Cutting Remarks",
 				description:
-					"Reaction when a creature within 60 ft makes an attack, ability check, or damage roll: expend a Hype die and subtract it from the roll. After the creature rolls but before the Protocol Warden (PW) declares success/failure.",
+					"Reaction when an entity within 60 ft makes a check or damage roll: expend a Hype die and subtract it from the result. Act before the Absolute declares the outcome.",
 				level: 3,
 			},
 			{
-				name: "Additional Magical Secrets",
+				name: "Arcane Secrets",
 				description:
-					"Learn 2 spells from any class's spell list. They count as Idol spells.",
+					"Learn 2 mantras from any lineage's list. They count as Idol resonance mantras.",
 				level: 6,
 			},
 			{
-				name: "Peerless Skill",
+				name: "Peerless Insight",
 				description:
-					"When you make an ability check, expend one Hype die and add it to the roll. After you roll but before the Protocol Warden (PW) declares success/failure.",
+					"When you make an ability check, expend one Hype die and add it to the roll. Act before the Absolute declares the outcome.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Words of Power",
+				name: "Words of Absolute Truth",
 				description:
-					"Speak a devastating truth to a creature within 60 ft: SENSE save or 3d8 psychic + disadvantage on next attack. Once/short rest.",
+					"Speak a devastating truth to a creature within 60 ft: SENSE save or 3d8 psychic + disadvantage on next manifestation. Once/short rest.",
 				cooldown: 1,
 				cost: "Action",
 			},
@@ -4656,48 +4656,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { charisma: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "idol--college-of-valor",
+		id: "idol--war-anthem",
 		name: "Path of the War Anthem",
 		jobId: "idol",
 		jobName: "Idol",
 		tier: 2,
-		pathType: "valor",
+		pathType: "war-anthem",
 		requirements: { level: 3, skills: ["Athletics", "Performance"] },
 		description:
-			"Military drummers, sports hype-men, and heavy metal vocalists who are frontline frequency fighters. They broadcast combat-amplifying harmonics while wielding weapons and wearing armor — imagine a guitarist soloing while swinging a longsword. Their raid-party livestreams get the highest viewership because the combat footage has a built-in soundtrack.",
+			"The War Anthem mandate designates those who broadcast combat-amplifying harmonics as their primary offensive layer. They are the frontline resonance conductors, their very presence realigning the morale and physical output of their allies into a cohesive nexus of destruction. In the heat of a gate-eruption, the War Anthem Idol turns the chaos of battle into a systematic, rhytmic elimination of the threat.",
 		features: [
 			{
-				name: "Bonus Proficiencies",
+				name: "Tactical Proficiencies",
 				description: "Prof with medium armor, shields, and martial weapons.",
 				level: 3,
 			},
 			{
 				name: "Combat Inspiration",
 				description:
-					"When a creature uses your Hype die on an attack roll, it can also add the die to a damage roll. Or it can add the die to AC against one attack (reaction, after seeing roll but before knowing if hit).",
+					"When a creature uses your Hype die on an attack roll, it can also add the die to a damage roll. Or it can add the die to AC against one attack (reaction, after seeing the strike but before knowing if it connects).",
 				level: 3,
 			},
 			{
-				name: "Extra Attack",
+				name: "Vanguards Strike",
 				description: "Attack twice when you take the Attack action.",
 				level: 6,
 			},
 			{
-				name: "Battle Magic",
+				name: "Harmonic Integration",
 				description:
-					"When you use your action to cast an Idol spell, make one weapon attack as a bonus action.",
+					"When you use your action to manifest an Idol mantra, make one weapon attack as a bonus action.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "War Anthem",
+				name: "Absolute War Anthem",
 				description:
-					"All allies within 30 ft gain +2 to attack rolls and saving throws for 1 min. Concentration. Once/long rest.",
+					"All allies within 30 ft gain +2 to strike rolls and saving throws for 1 min. Concentration. Once/long rest.",
 				cooldown: 3,
 				cost: "Action",
 			},
@@ -4707,48 +4707,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Strength",
 			bonusStats: { charisma: 2, strength: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "idol--college-of-glamour",
-		name: "Path of the Hypnotic Frequency",
+		id: "idol--hypnotic-resonance",
+		name: "Path of the Hypnotic Resonance",
 		jobId: "idol",
 		jobName: "Idol",
 		tier: 2,
-		pathType: "glamour",
+		pathType: "hypnotic-resonance",
 		requirements: { level: 3, skills: ["Performance", "Persuasion"] },
 		description:
-			"K-pop choreographers, hypnotherapists, and cult deprogrammers (turned re-programmers) who broadcast on the fey-resonance band. Their TikTok videos have been flagged for 'anomalous engagement metrics' — viewers can't stop watching. They charm entire crowds with irresistible harmonic patterns, and their presence is supernaturally amplified. Nightclub owners pay them not to perform near competing venues.",
+			"The Path of the Hypnotic Resonance designates an Idol who broadcasts on the fey-resonance bands of the Absolute. They do not just perform; they project irresistible harmonic patterns that override the common consensus of those who witness them. In the high-stakes world of social and political containment, they are the supreme influencers, their absolute charm capable of turning an entire city-block into a unified collective of their choosing.",
 		features: [
 			{
-				name: "Mantle of Inspiration",
+				name: "Mantle of Awe",
 				description:
 					"Bonus action: expend one Hype die. Up to PRE mod creatures within 60 ft gain temp HP = 2× Hype die roll + Idol level and can use reaction to move up to their speed without provoking OAs.",
 				level: 3,
 			},
 			{
-				name: "Enthralling Performance",
+				name: "Absolute Enthrallment",
 				description:
-					"After 1+ min performance, PRE mod creatures that watched make SENSE save or are charmed for 1 hour. Charmed creatures idolize you, hinder those who oppose you, and don't know they were charmed when it ends.",
+					"After 1+ min performance, PRE mod creatures that watched make SENSE save or are charmed for 1 hour. Charmed entities idolize you, hinder those who oppose you, and don't know they were charmed when it ends.",
 				level: 3,
 			},
 			{
-				name: "Mantle of Majesty",
+				name: "Mantle of the Absolute",
 				description:
-					"Bonus action: take on an appearance of unearthly beauty for 1 min (concentration). Each turn, bonus action Command spell (no slot) against a creature charmed by you. Once/long rest.",
+					"Bonus action: take on an appearance of unearthly beauty for 1 min (concentration). Each turn, bonus action use a Command mantra (no slot) against a creature charmed by you. Once/long rest.",
 				level: 6,
 			},
 			{
-				name: "Unbreakable Majesty",
+				name: "Unbreakable Presence",
 				description:
-					"Bonus action: for 1 min, any creature that attacks you for the first time on a turn must make a PRE save. Fail: attack is wasted (can't attack you this turn). Success: disadvantage on saves vs your spells until end of your next turn. Once per short rest.",
+					"Bonus action: for 1 min, any creature that attacks you for the first time on a turn must make a PRE save. Fail: attack is wasted (can't attack you this turn). Success: disadvantage on saves vs your mantras until end of your next turn. Once per short rest.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Fey Charm",
+				name: "Absolute Charm",
 				description:
 					"All creatures within 30 ft: SENSE save or charmed by you for 1 min. Charmed creatures will follow one reasonable suggestion. Once/long rest.",
 				cooldown: 3,
@@ -4760,28 +4760,28 @@ export const paths: Path[] = [
 			secondaryAttribute: "Dexterity",
 			bonusStats: { charisma: 2, dexterity: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "idol--college-of-swords",
+		id: "idol--blade-resonance",
 		name: "Path of the Blade Resonance",
 		jobId: "idol",
 		jobName: "Idol",
 		tier: 2,
-		pathType: "swords",
+		pathType: "blade-resonance",
 		requirements: { level: 3, skills: ["Acrobatics", "Performance"] },
 		description:
-			"Competitive fencers, circus sword-swallowers, and stunt coordinators who channel harmonic frequencies through their weapons. Their combat footage looks like choreographed action movies — because to them, fighting IS a performance. They use Hype dice to fuel devastating blade flourishes that deal extra damage, boost defense, or cut through multiple foes. Weapons manufacturers sponsor them.",
+			"Those who walk the Path of the Blade Resonance channel their harmonic frequencies through physical armaments. They treat the battlefield as a lethal performance, their every strike a precision-weighted aetheric flourish that maximizes destruction while ensuring their own physical integrity. In the elite academies, they are the supreme martial specialists, their combat style a perfect bridge between physical perfection and aetheric art.",
 		features: [
 			{
-				name: "Bonus Proficiencies",
+				name: "Mandated Martial Mastery",
 				description:
-					"Prof with medium armor and the scimitar. Use a weapon as spellcasting focus.",
+					"Prof with medium armor and the scimitar. Use a weapon as a focus for your resonance.",
 				level: 3,
 			},
 			{
-				name: "Fighting Style",
+				name: "Combat Discipline",
 				description:
 					"Choose Dueling (+2 damage with one-handed melee) or Two-Weapon Fighting (add ability mod to off-hand damage).",
 				level: 3,
@@ -4793,7 +4793,7 @@ export const paths: Path[] = [
 				level: 3,
 			},
 			{
-				name: "Extra Attack",
+				name: "Echo Attack",
 				description: "Attack twice when you take the Attack action.",
 				level: 6,
 			},
@@ -4806,7 +4806,7 @@ export const paths: Path[] = [
 		],
 		abilities: [
 			{
-				name: "Dance of Blades",
+				name: "Dance of a Thousand Blades",
 				description:
 					"Make a melee attack against every creature within 10 ft. Each hit uses a free Blade Flourish (d6, no Hype die expended). Once/short rest.",
 				cooldown: 1,
@@ -4818,19 +4818,19 @@ export const paths: Path[] = [
 			secondaryAttribute: "Dexterity",
 			bonusStats: { charisma: 2, dexterity: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "idol--college-of-whispers",
-		name: "Path of the Shadow Frequency",
+		id: "idol--shadow-resonance",
+		name: "Path of the Shadow Resonance",
 		jobId: "idol",
 		jobName: "Idol",
 		tier: 2,
-		pathType: "whispers",
+		pathType: "shadow-resonance",
 		requirements: { level: 3, skills: ["Deception", "Performance"] },
 		description:
-			"Former intelligence operatives, true-crime podcasters, and corporate espionage specialists who broadcast on hidden subsonic channels. They appear as normal performers but are actually gathering intel — planting fear, extracting secrets, and assuming stolen identities. Several high-profile identity theft rings have turned out to be Shadow Frequency Idols running side hustles.",
+			"The Shadow Resonance mandate is walked by those who broadcast on the hidden, subsonic layers of the Absolute's dark architecture. They are the supreme ghosts of the Idol lineage, gathered intel from the very static of the world around them. They do not just hide; they weave fear into the aetheric signatures of their enemies, planting suggestions and extracting secrets with a surgical, undetectable precision.",
 		features: [
 			{
 				name: "Psychic Blades",
@@ -4847,11 +4847,11 @@ export const paths: Path[] = [
 			{
 				name: "Mantle of Whispers",
 				description:
-					"Reaction when a humanoid dies within 30 ft: capture its shadow. As an action, take on its appearance for 1 hour (or until dismissed). You gain access to its general knowledge and memories. Deception checks to pass as it have +5. Once per short rest.",
+					"Reaction when a living vessel’s cycle ends within 30 ft: capture its shadow. As an action, take on its appearance for 1 hour (or until dismissed). You gain access to its general knowledge and memories. Deception checks to pass as it have +5. Once per short rest.",
 				level: 6,
 			},
 			{
-				name: "Shadow Lore",
+				name: "Absolute Shadow Lore",
 				description:
 					"Action: creature within 30 ft, SENSE save or it is charmed for 8 hours. It believes you know its deepest secret (even if you don't) and obeys your commands to avoid the secret being revealed. Once per long rest.",
 				level: 14,
@@ -4859,7 +4859,7 @@ export const paths: Path[] = [
 		],
 		abilities: [
 			{
-				name: "Psychic Assault",
+				name: "Psychic Overload",
 				description:
 					"60 ft: creature makes SENSE save or takes 4d8 psychic and is frightened of you for 1 min. Once/long rest.",
 				cooldown: 3,
@@ -4871,48 +4871,48 @@ export const paths: Path[] = [
 			secondaryAttribute: "Dexterity",
 			bonusStats: { charisma: 2, dexterity: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 
 	{
-		id: "idol--college-of-creation",
-		name: "Path of the Genesis Frequency",
+		id: "idol--genesis-resonance",
+		name: "Path of the Genesis Resonance",
 		jobId: "idol",
 		jobName: "Idol",
 		tier: 2,
-		pathType: "creation",
+		pathType: "genesis-resonance",
 		requirements: { level: 3, skills: ["Arcana", "Performance"] },
 		description:
-			"3D printing enthusiasts, sculptors, and special effects artists who tap into the System's foundational harmonic — the frequency that structures matter itself. They animate objects, fabricate items from raw mana, and bring performances to physical life. Manufacturing companies have tried to patent their abilities; the courts ruled you can't patent a person. Their workshops look like Willy Wonka factories.",
+			"The Path of the Genesis Resonance designates an Idol who taps into the Absolute's foundational harmonic—the vibration that structures matter itself. They do not just imagine; they manifest, fabricating physical items and animating objects from raw mana as a physical manifestation of their art. In the modern world, they are the supreme architects of the material weave, their presence turning any location into a factory of absolute creation.",
 		features: [
 			{
 				name: "Mote of Potential",
 				description:
-					"When you give a Hype die, the creature also gains a mote. Attack roll: mote explodes in 5-ft radius thunder (VIT save = Hype die roll). Ability check: roll Hype die twice, use either. Save: gains temp HP = Hype die roll + PRE mod.",
+					"When you give a Hype die, the creature also gains a mote. Strike roll: mote explodes in 5-ft radius thunder (VIT save = Hype die roll). Ability check: roll Hype die twice, use either. Save: gains temp HP = Hype die roll + PRE mod.",
 				level: 3,
 			},
 			{
-				name: "Performance of Creation",
+				name: "Resonance of Creation",
 				description:
-					"Action: create one nonmagical item (Medium or smaller, worth ≤ 20× Idol level gp). Lasts for hours = prof bonus. One at a time. Once per long rest (or 2nd+ level slot).",
+					"Action: create one nonmagical item (Medium or smaller, worth ≤ 20× Idol level gp). Lasts for hours = prof bonus. One at a time. Once per long rest.",
 				level: 3,
 			},
 			{
-				name: "Animating Performance",
+				name: "Animating Rite",
 				description:
-					"Action: animate a Large or smaller nonmagical item within 30 ft. It becomes a construct (HP = 10+5× Idol level, AC = 16, +prof to attack, 1d10+PRE force slam, 30 ft speed). Bonus action to command. Lasts 1 hour. Once per long rest (or 3rd+ level slot).",
+					"Action: animate a Large or smaller nonmagical item within 30 ft. It becomes a construct (HP = 10+5× Idol level, AC = 16, +prof to attack, 1d10+PRE force slam, 30 ft speed). Bonus action to command. Lasts 1 hour. Once per long rest.",
 				level: 6,
 			},
 			{
-				name: "Creative Crescendo",
+				name: "Absolute Resonance Crescendo",
 				description:
-					"Performance of Creation: create a number of items = PRE mod simultaneously. One can be Large, and any can be worth more (up to 200× Idol level gp). None require concentration or have the duration limit.",
+					"Resonance of Creation: create a number of items = PRE mod simultaneously. One can be Large, and any can be worth more (up to 200× Idol level gp). None require concentration or have the duration limit.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Magnum Opus",
+				name: "Absolute Magnum Opus",
 				description:
 					"Create a Large animated construct (HP = 50, AC 18, +8 attack, 2d10+5 force slam). It lasts 1 hour and obeys your commands. Once/long rest.",
 				cooldown: 3,
@@ -4924,6 +4924,6 @@ export const paths: Path[] = [
 			secondaryAttribute: "Intelligence",
 			bonusStats: { charisma: 2, intelligence: 1 },
 		},
-		source: "System Ascendant Canon",
+		source: "Ascendant Compendium",
 	},
 ];

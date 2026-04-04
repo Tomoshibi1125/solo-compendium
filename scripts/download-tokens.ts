@@ -1,11 +1,15 @@
+import fs from "node:fs";
+import path from "node:path";
 import axios from "axios";
-import fs from "fs";
-import path from "path";
 import sharp from "sharp";
-import { monsters } from "../src/data/compendium/monsters";
+import { anomalies } from "../src/data/compendium/anomalies";
 import { allItems as rawItems } from "../src/data/compendium/items-index";
 
-const vehicles = rawItems.filter(x => (x as any).item_type === "vehicle");
+import type { CompendiumItem } from "../src/types/compendium";
+
+const vehicles = (rawItems as CompendiumItem[]).filter(
+	(x) => x.item_type === "vehicle",
+);
 
 const PUBLIC_DIR = path.resolve(process.cwd(), "public");
 
@@ -60,7 +64,7 @@ async function searchWikimedia(query: string): Promise<string | null> {
 
 	try {
 		const res = await axios.get(
-			`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(coreTerm + " art|drawing|illustration")}&gsrnamespace=6&gsrlimit=1&prop=imageinfo&iiprop=url&format=json`,
+			`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(`${coreTerm} art|drawing|illustration`)}&gsrnamespace=6&gsrlimit=1&prop=imageinfo&iiprop=url&format=json`,
 		);
 
 		const pages = res.data?.query?.pages;
@@ -69,7 +73,7 @@ async function searchWikimedia(query: string): Promise<string | null> {
 		const firstPageId = Object.keys(pages)[0];
 		const url = pages[firstPageId]?.imageinfo?.[0]?.url;
 		return url || null;
-	} catch (e) {
+	} catch {
 		return null;
 	}
 }
@@ -90,7 +94,7 @@ async function downloadImage(url: string, outPath: string): Promise<boolean> {
 			.webp({ quality: 80 })
 			.toFile(outPath);
 		return true;
-	} catch (e) {
+	} catch {
 		return false;
 	}
 }
@@ -119,15 +123,15 @@ async function processEntry(entryName: string, imagePathStr: string) {
 async function main() {
 	console.log("Scanning vehicles...");
 	for (const v of vehicles) {
-		if ((v as any).image) await processEntry(v.name, (v as any).image);
+		if (v.image) await processEntry(v.name, v.image);
 	}
 
-	console.log("Scanning monsters/companions/mounts...");
-	for (const m of monsters) {
-		if ((m as any).image) await processEntry(m.name, (m as any).image);
+	console.log("Scanning anomalies/companions/mounts...");
+	for (const m of anomalies) {
+		if (m.image) await processEntry(m.name, m.image);
 	}
 
-	console.log("Finished processing all 65 tokens.");
+	console.log("Finished processing tokens.");
 }
 
 main().catch(console.error);

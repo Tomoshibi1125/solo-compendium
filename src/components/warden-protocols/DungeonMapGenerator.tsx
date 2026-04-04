@@ -672,7 +672,7 @@ Room Layout: ${roomSummary}`;
 							<LayoutGrid className="w-12 h-12 opacity-20" />
 							<div className="text-center space-y-1">
 								<p className="font-heading uppercase tracking-widest text-xs">
-									Topology Matrix Offline
+									Topology Lattice Offline
 								</p>
 								<p className="text-[10px] opacity-60">
 									Initialize parameters to visualize Rift architecture.

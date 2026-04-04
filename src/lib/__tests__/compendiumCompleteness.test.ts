@@ -37,35 +37,35 @@ describe("compendium completeness (static packs)", () => {
 		}
 	});
 
-	it("monsters have complete statblock and embedded actions/traits", async () => {
-		const monsters = await staticDataProvider.getMonsters("");
+	it("anomalies have complete statblock and embedded actions/traits", async () => {
+		const anomalies = await staticDataProvider.getAnomalies("");
 
-		for (const monster of monsters) {
-			expect(typeof monster.id).toBe("string");
-			expect(typeof monster.name).toBe("string");
-			expect(typeof monster.description).toBe("string");
+		for (const anomaly of anomalies) {
+			expect(typeof anomaly.id).toBe("string");
+			expect(typeof anomaly.name).toBe("string");
+			expect(typeof anomaly.description).toBe("string");
 
-			expect(typeof monster.armor_class).toBe("number");
-			expect(typeof monster.hit_points_average).toBe("number");
+			expect(typeof anomaly.armor_class).toBe("number");
+			expect(typeof anomaly.hit_points_average).toBe("number");
 
-			expect(typeof monster.str).toBe("number");
-			expect(typeof monster.agi).toBe("number");
-			expect(typeof monster.vit).toBe("number");
-			expect(typeof monster.int).toBe("number");
-			expect(typeof monster.sense).toBe("number");
-			expect(typeof monster.pre).toBe("number");
+			expect(typeof anomaly.str).toBe("number");
+			expect(typeof anomaly.agi).toBe("number");
+			expect(typeof anomaly.vit).toBe("number");
+			expect(typeof anomaly.int).toBe("number");
+			expect(typeof anomaly.sense).toBe("number");
+			expect(typeof anomaly.pre).toBe("number");
 
-			expect(Array.isArray(monster.monster_actions)).toBe(true);
-			expect((monster.monster_actions || []).length).toBeGreaterThan(0);
+			expect(Array.isArray(anomaly.Anomaly_actions)).toBe(true);
+			expect((anomaly.Anomaly_actions || []).length).toBeGreaterThan(0);
 
-			expect(Array.isArray(monster.monster_traits)).toBe(true);
-			expect((monster.monster_traits || []).length).toBeGreaterThan(0);
+			expect(Array.isArray(anomaly.Anomaly_traits)).toBe(true);
+			expect((anomaly.Anomaly_traits || []).length).toBeGreaterThan(0);
 		}
 	});
 
 	it("no duplicate IDs within any compendium category", async () => {
 		const categories = [
-			{ name: "monsters", loader: () => staticDataProvider.getMonsters("") },
+			{ name: "anomalies", loader: () => staticDataProvider.getAnomalies("") },
 			{ name: "spells", loader: () => staticDataProvider.getSpells("") },
 			{ name: "jobs", loader: () => staticDataProvider.getJobs("") },
 			{ name: "paths", loader: () => staticDataProvider.getPaths("") },

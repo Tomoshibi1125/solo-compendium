@@ -18,16 +18,16 @@ export const ABILITY_DISPLAY_NAMES: Record<AbilityScore, string> = {
 // Legacy 5e → System Ascendant mapping (for importing external data only)
 export const LEGACY_5E_TO_SA: Record<string, AbilityScore> = {
 	STR: "STR",
-	DEX: "AGI",
-	CON: "VIT",
-	INT: "INT",
-	WIS: "SENSE",
-	CHA: "PRE",
-	// Pass-through for already-converted data
 	AGI: "AGI",
 	VIT: "VIT",
+	INT: "INT",
 	SENSE: "SENSE",
 	PRE: "PRE",
+	// Legacy mapping
+	DEX: "AGI",
+	CON: "VIT",
+	WIS: "SENSE",
+	CHA: "PRE",
 };
 
 export interface Skill {

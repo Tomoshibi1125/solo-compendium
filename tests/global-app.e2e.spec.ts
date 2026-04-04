@@ -2,7 +2,6 @@ import { type BrowserContext, expect, type Page, test } from "@playwright/test";
 import { AuthPage } from "./pages/AuthPage";
 import { CompendiumPage } from "./pages/CompendiumPage";
 import { DiceRollerPage } from "./pages/DiceRollerPage";
-import { DMPage } from "./pages/DMPage";
 import { DMToolsPage } from "./pages/DMToolsPage";
 import { PlayerPage } from "./pages/PlayerPage";
 import { SharedPage } from "./pages/SharedPage";

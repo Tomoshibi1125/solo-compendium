@@ -121,7 +121,7 @@ export interface EncounterCreateEvent extends CorePayloadFields {
 	type: "encounter:create";
 	encounterId: string;
 	encounterName: string;
-	monsterCount: number;
+	AnomalyCount: number;
 	totalXP: number;
 	difficulty: string;
 }

@@ -20,8 +20,8 @@ const DEFAULT_FALLBACKS = {
 
 // Type → folder mapping
 const TYPE_FOLDER_MAP: Record<string, string> = {
-	monster: "monsters",
-	monsters: "monsters",
+	Anomaly: "Anomalies",
+	Anomalies: "Anomalies",
 	item: "items",
 	items: "items",
 	spell: "spells",

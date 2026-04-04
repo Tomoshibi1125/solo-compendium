@@ -2,14 +2,16 @@
 // All images are project-owned assets in /public/generated/
 // Total: 400+ images across all Roll20-equivalent categories
 
-import { items } from "@/data/compendium/items";
-import { locations } from "@/data/compendium/locations";
-import { monsters } from "@/data/compendium/monsters";
-import { spells } from "@/data/compendium/spells";
+import {
+	getStaticAnomalies,
+	getStaticItems,
+	getStaticLocations,
+	getStaticSpells,
+} from "@/lib/ProtocolDataManager";
 
 export type VTTAssetCategory =
 	| "map"
-	| "monster"
+	| "Anomaly"
 	| "portrait"
 	| "location"
 	| "effect"
@@ -643,11 +645,11 @@ const TOKEN_TEMPLATES: VTTAsset[] = [
 		tags: ["token", "merchant", "npc", "frame"],
 	},
 	{
-		id: "tpl-monster",
-		name: "Monster Token Frame",
+		id: "tpl-Anomaly",
+		name: "Anomaly Token Frame",
 		category: "token",
-		imageUrl: "/generated/tokens/monster-token.webp",
-		tags: ["token", "monster", "frame"],
+		imageUrl: "/generated/tokens/Anomaly-token.webp",
+		tags: ["token", "Anomaly", "frame"],
 	},
 	{
 		id: "tpl-npc",
@@ -665,41 +667,45 @@ const TOKEN_TEMPLATES: VTTAsset[] = [
 	},
 ];
 
-// ── Monster Portraits (from compendium) ──────────────────────────────────
-const MONSTER_ASSETS: VTTAsset[] = monsters.map((m) => ({
-	id: `vtt-${m.id}`,
-	name: m.name,
-	category: "monster" as VTTAssetCategory,
-	imageUrl: m.image ?? "",
-	tags: [
-		"monster",
-		(m.rank || "").toLowerCase(),
-		(m.type || "").toLowerCase(),
-	].filter(Boolean),
-	rank: m.rank,
-	description: m.description,
-}));
+// ── Anomaly Portraits (from compendium) ──────────────────────────────────
+export function getAnomalyVTTAssets(): VTTAsset[] {
+	return getStaticAnomalies().map((m) => ({
+		id: `vtt-${m.id}`,
+		name: m.name,
+		category: "Anomaly" as VTTAssetCategory,
+		imageUrl: m.image ?? "",
+		tags: [
+			"Anomaly",
+			(m.rank || "").toLowerCase(),
+			(m.type || "").toLowerCase(),
+		].filter(Boolean),
+		rank: m.rank ?? undefined,
+		description: m.description,
+	}));
+}
 
 // ── Location Portraits (from compendium — usable as scene art) ───────────
-const LOCATION_ASSETS: VTTAsset[] = locations.map((l) => ({
-	id: `vtt-${l.id}`,
-	name: l.name,
-	category: "location" as VTTAssetCategory,
-	imageUrl: l.image ?? "",
-	tags: [
-		"location",
-		(l.rank || "").toLowerCase(),
-		(l.type || "").toLowerCase(),
-	].filter(Boolean),
-	rank: l.rank,
-	description: l.description,
-}));
+export function getLocationVTTAssets(): VTTAsset[] {
+	return getStaticLocations().map((l) => ({
+		id: `vtt-${l.id}`,
+		name: l.name,
+		category: "location" as VTTAssetCategory,
+		imageUrl: l.image ?? "",
+		tags: [
+			"location",
+			(l.rank || "").toLowerCase(),
+			(l.type || "").toLowerCase(),
+		].filter(Boolean),
+		rank: l.rank ?? undefined,
+		description: l.description,
+	}));
+}
 
 // ── Portraits — Regents (boss NPC tokens) ───────────────────────────────
 const toTitleCase = (s: string) =>
 	s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-const REGENT_PORTRAITS: VTTAsset[] = [
+export const REGENT_PORTRAITS: VTTAsset[] = [
 	"berserker-regent",
 	"blood-regent",
 	"destruction-regent",
@@ -736,16 +742,18 @@ const JOB_PORTRAIT_MAP: { file: string; display: string }[] = [
 	{ file: "warlock", display: "Contractor" },
 	{ file: "warrior", display: "Esper" },
 ];
-const JOB_PORTRAITS: VTTAsset[] = JOB_PORTRAIT_MAP.map(({ file, display }) => ({
-	id: `portrait-job-${file}`,
-	name: display,
-	category: "portrait" as VTTAssetCategory,
-	imageUrl: `/generated/compendium/jobs/${file}.webp`,
-	tags: ["portrait", "job", "ascendant", "player", display.toLowerCase()],
-}));
+export const JOB_PORTRAITS: VTTAsset[] = JOB_PORTRAIT_MAP.map(
+	({ file, display }) => ({
+		id: `portrait-job-${file}`,
+		name: display,
+		category: "portrait" as VTTAssetCategory,
+		imageUrl: `/generated/compendium/jobs/${file}.webp`,
+		tags: ["portrait", "job", "ascendant", "player", display.toLowerCase()],
+	}),
+);
 
 // ── Portraits — Backgrounds (character archetype tokens) ─────────────────
-const BACKGROUND_PORTRAITS: VTTAsset[] = [
+export const BACKGROUND_PORTRAITS: VTTAsset[] = [
 	"ancient-guardian",
 	"artifact-keeper",
 	"bringer-of-dawn",
@@ -777,51 +785,37 @@ const BACKGROUND_PORTRAITS: VTTAsset[] = [
 }));
 
 // ── Spell Effects (from compendium — usable as spell overlays) ───────────
-const SPELL_ASSETS: VTTAsset[] = (
-	spells as {
-		id: string;
-		name: string;
-		image: string;
-		type?: string;
-		rank?: string;
-		description?: string;
-	}[]
-).map((s) => ({
-	id: `vtt-${s.id}`,
-	name: s.name,
-	category: "spell" as VTTAssetCategory,
-	imageUrl: s.image ?? "",
-	tags: [
-		"spell",
-		(s.type || "").toLowerCase(),
-		(s.rank || "").toLowerCase(),
-	].filter(Boolean),
-	rank: s.rank,
-	description: s.description,
-}));
+export function getSpellVTTAssets(): VTTAsset[] {
+	return getStaticSpells().map((s) => ({
+		id: `vtt-${s.id}`,
+		name: s.name,
+		category: "spell" as VTTAssetCategory,
+		imageUrl: s.image ?? "",
+		tags: [
+			"spell",
+			(s.type || "").toLowerCase(),
+			(s.rank || "").toLowerCase(),
+		].filter(Boolean),
+		rank: s.rank ?? undefined,
+		description: s.description,
+	}));
+}
 
-// ── Compendium Items (weapons, armor, consumables — handout art) ─────────
-const COMPENDIUM_ITEMS: VTTAsset[] = (
-	items as {
-		id: string;
-		name: string;
-		image: string;
-		rarity?: string;
-		type?: string;
-		description?: string;
-	}[]
-).map((i) => ({
-	id: `vtt-${i.id}`,
-	name: i.name,
-	category: "item" as VTTAssetCategory,
-	imageUrl: i.image ?? "",
-	tags: [
-		"item",
-		(i.rarity || "").toLowerCase(),
-		(i.type || "").toLowerCase(),
-	].filter(Boolean),
-	description: i.description,
-}));
+export function getCompendiumItemVTTAssets(): VTTAsset[] {
+	return getStaticItems().map((i) => ({
+		id: `vtt-${i.id}`,
+		name: i.name,
+		category: "item" as VTTAssetCategory,
+		imageUrl: i.image ?? "",
+		tags: [
+			"item",
+			(i.rarity || "").toLowerCase(),
+			(i.type || "").toLowerCase(),
+		].filter(Boolean),
+		rank: i.rarity ?? undefined,
+		description: i.description,
+	}));
+}
 
 // ── Artifacts (legendary item handout art) ───────────────────────────────
 const ARTIFACT_ITEMS: VTTAsset[] = [
@@ -860,11 +854,11 @@ const RELIC_ITEMS: VTTAsset[] = [
 	"boots-of-winter-wolf",
 	"bracers-of-archery",
 	"bracers-of-defense",
-	"bracers-of-dexterity",
+	"bracers-of-agility",
 	"bracers-of-mountaineering",
 	"bracers-of-weapon-throwing",
 	"chime-of-opening",
-	"circlet-of-wisdom",
+	"circlet-of-sense",
 	"cloak-of-displacement",
 	"cloak-of-elvenkind",
 	"cloak-of-protection",
@@ -1610,7 +1604,7 @@ const SHADOW_ASSETS: VTTAsset[] = [
 		name: "Dark Tentacle",
 		category: "shadow",
 		imageUrl: "/generated/shadow/dark-tentacle.webp",
-		tags: ["tentacle", "shadow", "monster", "reaching"],
+		tags: ["tentacle", "shadow", "Anomaly", "reaching"],
 	},
 	{
 		id: "shadow-creature-formless",
@@ -1753,108 +1747,116 @@ const MAGICAL_ASSETS: VTTAsset[] = [
 ];
 
 // ── Combined Library ─────────────────────────────────────────────────────
-export const VTT_ASSET_LIBRARY: VTTAsset[] = [
-	...PREMADE_MAPS,
-	...MONSTER_ASSETS,
-	...LOCATION_ASSETS,
-	...REGENT_PORTRAITS,
-	...JOB_PORTRAITS,
-	...BACKGROUND_PORTRAITS,
-	...SPELL_ASSETS,
-	...EFFECTS,
-	...POWER_EFFECTS,
-	...RUNE_EFFECTS,
-	...PROPS,
-	...CONDITIONS,
-	...COMPENDIUM_ITEMS,
-	...ARTIFACT_ITEMS,
-	...RELIC_ITEMS,
-	...TECHNIQUE_ASSETS,
-	...COMPENDIUM_RUNE_ASSETS,
-	...STANDALONE_SPELL_EFFECTS,
-	...ITEMS,
-	...TOKEN_TEMPLATES,
-	// New comprehensive categories
-	...ENVIRONMENT_ASSETS,
-	...WEAPON_ASSETS,
-	...ARMOR_ASSETS,
-	...CREATURE_ASSETS,
-	...NPC_ASSETS,
-	...BUILDING_ASSETS,
-	...VEHICLE_ASSETS,
-	...ELEMENTAL_ASSETS,
-	...DIVINE_ASSETS,
-	...SHADOW_ASSETS,
-	...COSMIC_ASSETS,
-	...MECHANICAL_ASSETS,
-	...MAGICAL_ASSETS,
-];
+export function getVTTAssetLibrary(): VTTAsset[] {
+	return [
+		...PREMADE_MAPS,
+		...getAnomalyVTTAssets(),
+		...getLocationVTTAssets(),
+		...REGENT_PORTRAITS,
+		...JOB_PORTRAITS,
+		...BACKGROUND_PORTRAITS,
+		...getSpellVTTAssets(),
+		...EFFECTS,
+		...POWER_EFFECTS,
+		...RUNE_EFFECTS,
+		...PROPS,
+		...CONDITIONS,
+		...getCompendiumItemVTTAssets(),
+		...ARTIFACT_ITEMS,
+		...RELIC_ITEMS,
+		...TECHNIQUE_ASSETS,
+		...COMPENDIUM_RUNE_ASSETS,
+		...STANDALONE_SPELL_EFFECTS,
+		...ITEMS,
+		...TOKEN_TEMPLATES,
+		// New comprehensive categories
+		...ENVIRONMENT_ASSETS,
+		...WEAPON_ASSETS,
+		...ARMOR_ASSETS,
+		...CREATURE_ASSETS,
+		...NPC_ASSETS,
+		...BUILDING_ASSETS,
+		...VEHICLE_ASSETS,
+		...ELEMENTAL_ASSETS,
+		...DIVINE_ASSETS,
+		...SHADOW_ASSETS,
+		...COSMIC_ASSETS,
+		...MECHANICAL_ASSETS,
+		...MAGICAL_ASSETS,
+	];
+}
 
-export const VTT_ASSET_CATEGORIES: {
-	id: VTTAssetCategory;
-	label: string;
-	count: number;
-}[] = [
-	{ id: "map", label: "Battle Maps", count: PREMADE_MAPS.length },
-	{ id: "monster", label: "Monsters", count: MONSTER_ASSETS.length },
-	{
-		id: "portrait",
-		label: "Portraits",
-		count:
-			REGENT_PORTRAITS.length +
-			JOB_PORTRAITS.length +
-			BACKGROUND_PORTRAITS.length,
-	},
-	{ id: "location", label: "Locations", count: LOCATION_ASSETS.length },
-	{ id: "spell", label: "Spells", count: SPELL_ASSETS.length },
-	{
-		id: "effect",
-		label: "Effects",
-		count:
-			EFFECTS.length +
-			POWER_EFFECTS.length +
-			RUNE_EFFECTS.length +
-			STANDALONE_SPELL_EFFECTS.length,
-	},
-	{ id: "prop", label: "Props", count: PROPS.length },
-	{ id: "item", label: "Items", count: COMPENDIUM_ITEMS.length + ITEMS.length },
-	{
-		id: "handout",
-		label: "Handouts",
-		count:
-			ARTIFACT_ITEMS.length +
-			RELIC_ITEMS.length +
-			COMPENDIUM_RUNE_ASSETS.length,
-	},
-	{ id: "technique", label: "Techniques", count: TECHNIQUE_ASSETS.length },
-	{ id: "condition", label: "Conditions", count: CONDITIONS.length },
-	{ id: "token", label: "Token Frames", count: TOKEN_TEMPLATES.length },
-	// New comprehensive categories
-	{
-		id: "environment",
-		label: "Environments",
-		count: ENVIRONMENT_ASSETS.length,
-	},
-	{ id: "weapon", label: "Weapons", count: WEAPON_ASSETS.length },
-	{ id: "armor", label: "Armor", count: ARMOR_ASSETS.length },
-	{ id: "creature", label: "Creatures", count: CREATURE_ASSETS.length },
-	{ id: "npc", label: "NPCs", count: NPC_ASSETS.length },
-	{ id: "building", label: "Buildings", count: BUILDING_ASSETS.length },
-	{ id: "vehicle", label: "Vehicles", count: VEHICLE_ASSETS.length },
-	{ id: "elemental", label: "Elementals", count: ELEMENTAL_ASSETS.length },
-	{ id: "divine", label: "Divine", count: DIVINE_ASSETS.length },
-	{ id: "shadow", label: "Shadow", count: SHADOW_ASSETS.length },
-	{ id: "cosmic", label: "Cosmic", count: COSMIC_ASSETS.length },
-	{ id: "mechanical", label: "Mechanical", count: MECHANICAL_ASSETS.length },
-	{ id: "magical", label: "Magical", count: MAGICAL_ASSETS.length },
-];
+export function getVTTAssetCategories() {
+	return [
+		{ id: "map", label: "Battle Maps", count: PREMADE_MAPS.length },
+		{ id: "Anomaly", label: "Anomalies", count: getAnomalyVTTAssets().length },
+		{
+			id: "portrait",
+			label: "Portraits",
+			count:
+				REGENT_PORTRAITS.length +
+				JOB_PORTRAITS.length +
+				BACKGROUND_PORTRAITS.length,
+		},
+		{
+			id: "location",
+			label: "Locations",
+			count: getLocationVTTAssets().length,
+		},
+		{ id: "spell", label: "Spells", count: getSpellVTTAssets().length },
+		{
+			id: "effect",
+			label: "Effects",
+			count:
+				EFFECTS.length +
+				POWER_EFFECTS.length +
+				RUNE_EFFECTS.length +
+				STANDALONE_SPELL_EFFECTS.length,
+		},
+		{ id: "prop", label: "Props", count: PROPS.length },
+		{
+			id: "item",
+			label: "Items",
+			count: getCompendiumItemVTTAssets().length + ITEMS.length,
+		},
+		{
+			id: "handout",
+			label: "Handouts",
+			count:
+				ARTIFACT_ITEMS.length +
+				RELIC_ITEMS.length +
+				COMPENDIUM_RUNE_ASSETS.length,
+		},
+		{ id: "technique", label: "Techniques", count: TECHNIQUE_ASSETS.length },
+		{ id: "condition", label: "Conditions", count: CONDITIONS.length },
+		{ id: "token", label: "Token Frames", count: TOKEN_TEMPLATES.length },
+		// New comprehensive categories
+		{
+			id: "environment",
+			label: "Environments",
+			count: ENVIRONMENT_ASSETS.length,
+		},
+		{ id: "weapon", label: "Weapons", count: WEAPON_ASSETS.length },
+		{ id: "armor", label: "Armor", count: ARMOR_ASSETS.length },
+		{ id: "creature", label: "Creatures", count: CREATURE_ASSETS.length },
+		{ id: "npc", label: "NPCs", count: NPC_ASSETS.length },
+		{ id: "building", label: "Buildings", count: BUILDING_ASSETS.length },
+		{ id: "vehicle", label: "Vehicles", count: VEHICLE_ASSETS.length },
+		{ id: "elemental", label: "Elementals", count: ELEMENTAL_ASSETS.length },
+		{ id: "divine", label: "Divine", count: DIVINE_ASSETS.length },
+		{ id: "shadow", label: "Shadow", count: SHADOW_ASSETS.length },
+		{ id: "cosmic", label: "Cosmic", count: COSMIC_ASSETS.length },
+		{ id: "mechanical", label: "Mechanical", count: MECHANICAL_ASSETS.length },
+		{ id: "magical", label: "Magical", count: MAGICAL_ASSETS.length },
+	] as { id: VTTAssetCategory; label: string; count: number }[];
+}
 
 export function searchAssets(
 	query: string,
 	category?: VTTAssetCategory,
 ): VTTAsset[] {
 	const q = query.toLowerCase().trim();
-	let results = VTT_ASSET_LIBRARY;
+	let results = getVTTAssetLibrary();
 	if (category) {
 		results = results.filter((a) => a.category === category);
 	}

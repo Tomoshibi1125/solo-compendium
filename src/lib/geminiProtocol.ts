@@ -1,8 +1,9 @@
 // Gemini Protocol - Unified Sovereign Fusion Generator
-// System Ascendant Post-Reset Timeline - Prime Architect Setting
+// System Ascendant Post-Reset Timeline - The Absolute Setting
 // Unified Fusion System - Single comprehensive fusion approach
 
 import type { Tables } from "@/integrations/supabase/types";
+import { aiService } from "@/lib/ai/aiService";
 import {
 	formatRegentVernacular,
 	REGENT_LABEL,
@@ -68,8 +69,8 @@ export function generateFusionName(regentA: Regent, regentB: Regent): string {
 	return generateUnifiedFusionName(nameA, nameB);
 }
 
-// Fusion Theme Matrix with Dual Class-style power combinations
-const themeMatrix: Record<
+// Fusion Theme Lattice with Dual Class-style power combinations
+const themeLattice: Record<
 	string,
 	Record<string, { theme: string; element: string; concept: string }>
 > = {
@@ -186,7 +187,7 @@ const themeMatrix: Record<
 		Beast: {
 			theme: "Pandemic Swarm",
 			element: "plague-beast",
-			concept: "infected horde of monsters",
+			concept: "infected anomaly swarm",
 		},
 		Iron: {
 			theme: "Corroding Arsenal",
@@ -275,7 +276,7 @@ const themeMatrix: Record<
 		Plague: {
 			theme: "Pandemic Swarm",
 			element: "plague-beast",
-			concept: "infected monster horde",
+			concept: "infected anomaly swarm",
 		},
 		Stone: {
 			theme: "Primordial Behemoth",
@@ -295,7 +296,7 @@ const themeMatrix: Record<
 		"White Flames": {
 			theme: "Phoenix Chimera",
 			element: "fire-beast",
-			concept: "flame-born monsters",
+			concept: "flame-born anomalies",
 		},
 		Transfiguration: {
 			theme: "Shapeshifter Alpha",
@@ -505,7 +506,8 @@ export function getFusionTheme(
 	const themeA = regentA.theme;
 	const themeB = regentB.theme;
 
-	const result = themeMatrix[themeA]?.[themeB] || themeMatrix[themeB]?.[themeA];
+	const result =
+		themeLattice[themeA]?.[themeB] || themeLattice[themeB]?.[themeA];
 	if (result) return result;
 
 	return {
@@ -548,7 +550,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
 	// LEVEL 5: Defensive Resonance
 	defensiveResonance: {
 		name: "{fusionName} Aegis",
-		desc: "[BARRIER FUSION] Create a defensive matrix combining {themeA} and {themeB} energies. Gain resistance to both {damageA} and {damageB} damage. Additionally, when you take damage of either type, the barrier absorbs half and converts it to temporary HP. The two powers protect what neither could alone.",
+		desc: "[BARRIER FUSION] Create a defensive lattice combining {themeA} and {themeB} energies. Gain resistance to both {damageA} and {damageB} damage. Additionally, when you take damage of either type, the barrier absorbs half and converts it to temporary HP. The two powers protect what neither could alone.",
 		action: "1 bonus action",
 		recharge: "Long Rest",
 	},
@@ -588,7 +590,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
 	// LEVEL 20: Sovereign Transcendence - Ultimate power
 	sovereignTranscendence: {
 		name: "Sovereign Transcendence: {fusionName}",
-		desc: "[BEYOND FUSION] Under the Prime Architect's blessing, transcend the Gemini Protocol itself. You have become a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power.",
+		desc: "[BEYOND FUSION] Under the The Absolute's blessing, transcend the Gemini Protocol itself. You have become a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power.",
 		action: "Passive",
 		isCapstone: true,
 	},
@@ -801,13 +803,15 @@ export async function generateSovereignWithAI(
 	regentB: Regent,
 ): Promise<GeneratedSovereign> {
 	try {
-		const { aiService } = await import("@/lib/ai/aiService");
 		const config = aiService.getConfiguration();
 
 		const pathShortName = path.name
 			.replace(/^Path of the\s*/i, "")
 			.replace(/\s*Path$/i, "");
 		const prompt = `You are the Gemini Protocol — the sovereign fusion engine of System Ascendant. Generate a UNIQUE and CREATIVE sovereign class overlay by fusing two Regents with a Job and Path.
+
+FUSION PHILOSOPHY:
+This is a TRUE ZENITH FUSION. The components do not just "work together"—they CEASE TO EXIST as individuals and MERGE into a FULLY NEW hybrid entity. The Sovereign's name, title, and every single ability MUST reflect this transformative synthesis. Every ability should feel like a perfectly balanced, inseparable hybrid of Job, Path, and both Regents. This is the highest expression of the System Ascendant's power.
 
 FUSION INPUTS:
 - Job: ${job.name} (${job.hit_die} hit die, ${(job.primary_abilities || []).join("/")} primary)
@@ -817,23 +821,23 @@ FUSION INPUTS:
 
 Generate a COMPLETE sovereign with these EXACT sections. Be creative — every sovereign must feel unique:
 
-1. FUSION NAME: A creative, evocative name (NOT just splicing the two regent names mechanically)
-2. TITLE: "Sovereign of [theme]" — a dramatic title
-3. FUSION THEME: The combined elemental/conceptual theme (e.g., "Eclipse Flame", "Cryogenic Plague")
-4. FUSION ORIGIN: 2-3 paragraphs describing how this fusion occurred, the experience of merging, and what the sovereign became
-5. COMBAT DOCTRINE: How this sovereign fights — their strategic philosophy, signature moves, battlefield role
-6. POWER MULTIPLIER: Narrative description of their power scale relative to standard ascendants
-7. FUSION STABILITY: Assessment of fusion stability (Stable/Unstable/Volatile) and why
+1. FUSION NAME: A creative, evocative name. It should feel like the name of a new species or a legendary hero that is a TRUE HYBRID of the inputs.
+2. TITLE: "Sovereign of [theme]" — a dramatic, high-prestige title that defines the essence of the new being.
+3. FUSION THEME: The combined elemental/conceptual theme, expressed as a single unified concept (e.g., "Singularity Frost", "Ashen Void", "Supernova Iron").
+4. FUSION ORIGIN: 2-3 paragraphs describing the "Ascendant Event" where the Protocol triggered—the moment of merging where Job, Path, and Regents dissolved into one. Describe the new perspective and power this Sovereign now wields.
+5. COMBAT DOCTRINE: The "Fused Martial Style"—how the Sovereign's combat techniques have evolved into something neither Job nor Regent could achieve alone.
+6. POWER MULTIPLIER: A description of the Sovereign's "Post-Reset" power level (e.g., "Zenith-Tier", "Timeline-Anchored", "Prime-Architect Scale").
+7. FUSION STABILITY: The structural integrity of the merger.
 
 8. ABILITIES (exactly 8, one per level milestone):
 For EACH ability provide ALL of these fields:
-- Name: Creative ability name
+- Name: A fully unique name for the fused ability.
 - Level: (use levels 1, 3, 5, 7, 10, 14, 17, 20)
 - Action Type: (1 action / 1 bonus action / 1 reaction / Passive)
 - Recharge: (At will / Short Rest / Long Rest / null)
 - Is Capstone: (true for levels 17 and 20 only)
-- Description: 2-3 sentences with SPECIFIC mechanical effects (damage dice, DCs, durations, ranges, conditions)
-- Origin Sources: Which inputs (job name, path name, regent names) contributed to this ability
+- Description: 2-3 sentences. Every description MUST describe a merged effect. (e.g., instead of "fire and ice damage", say "Frostfire plasma that crystallizes targets while incinerating them"). Include specific mechanical effects (dice, DCs, ranges).
+- Origin Sources: Which inputs contributed (e.g., "Job+Path+RegentA").
 
 Return as plain text with clear section headers. Do NOT use JSON or code fences.`;
 

@@ -96,7 +96,7 @@ export function calculateTotalWeight(
  * - Light: 34-66% of capacity
  * - Medium: 67-100% of capacity
  * - Heavy: 101-200% of capacity (speed reduced by 10)
- * - Overloaded: >200% of capacity (speed reduced by 20, disadvantage on STR/DEX/AGI checks)
+ * - Overloaded: >200% of capacity (speed reduced by 20, disadvantage on STR/AGI/AGI checks)
  */
 export function calculateEncumbrance(
 	totalWeight: number,

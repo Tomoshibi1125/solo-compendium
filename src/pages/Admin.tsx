@@ -143,8 +143,8 @@ const Admin = () => {
 			<div className="container mx-auto px-4 py-8 max-w-6xl">
 				<div className="mb-8">
 					<div className="flex items-center gap-3 mb-2">
-						<div className="w-12 h-12 rounded-xl bg-gradient-to-br from-arise/20 to-shadow-purple/20 border border-arise/30 flex items-center justify-center">
-							<Database className="w-6 h-6 text-arise" />
+						<div className="w-12 h-12 rounded-xl bg-gradient-to-br from-resurge/20 to-shadow-purple/20 border border-resurge/30 flex items-center justify-center">
+							<Database className="w-6 h-6 text-resurge" />
 						</div>
 						<div className="flex-1">
 							<SystemHeading
@@ -168,7 +168,7 @@ const Admin = () => {
 							<Link to="/warden-protocols/content-audit">
 								<Button
 									variant="outline"
-									className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
+									className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
 								>
 									<BarChart3 className="w-4 h-4" />
 									Content Audit
@@ -177,7 +177,7 @@ const Admin = () => {
 							<Link to="/warden-protocols/selection-protocols">
 								<Button
 									variant="outline"
-									className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
+									className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
 								>
 									<Shield className="w-4 h-4" />
 									Selection Protocols
@@ -186,7 +186,7 @@ const Admin = () => {
 							<Link to="/warden-protocols/art-generation">
 								<Button
 									variant="outline"
-									className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
+									className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
 								>
 									<Image className="w-4 h-4" />
 									Art Generation
@@ -199,14 +199,14 @@ const Admin = () => {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 					{/* Input Section */}
 					<div className="space-y-6">
-						<SystemWindow title="IMPORT CONTENT" className="border-arise/30">
+						<SystemWindow title="IMPORT CONTENT" className="border-resurge/30">
 							<div className="space-y-4">
 								<div>
 									<Label
 										htmlFor="file-upload"
 										className="font-heading flex items-center gap-2"
 									>
-										<Upload className="w-4 h-4 text-arise" />
+										<Upload className="w-4 h-4 text-resurge" />
 										Upload JSON File
 									</Label>
 									<div className="mt-2">
@@ -223,7 +223,7 @@ const Admin = () => {
 											onClick={() =>
 												document.getElementById("file-upload")?.click()
 											}
-											className="w-full gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
+											className="w-full gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
 										>
 											<Upload className="w-4 h-4" />
 											Choose File
@@ -236,7 +236,7 @@ const Admin = () => {
 										htmlFor="content"
 										className="font-heading flex items-center gap-2"
 									>
-										<FileText className="w-4 h-4 text-arise" />
+										<FileText className="w-4 h-4 text-resurge" />
 										Or Paste JSON Content
 									</Label>
 									<Textarea
@@ -248,17 +248,17 @@ const Admin = () => {
 											setImportResult(null);
 										}}
 										placeholder='{"jobs": [...], "powers": [...], ...}'
-										className="mt-2 font-mono text-sm min-h-[300px] border-arise/20 focus:border-arise/50"
+										className="mt-2 font-mono text-sm min-h-[300px] border-resurge/20 focus:border-resurge/50"
 									/>
 								</div>
 
-								<div className="p-3 rounded-lg bg-arise/5 border border-arise/20 space-y-3">
+								<div className="p-3 rounded-lg bg-resurge/5 border border-resurge/20 space-y-3">
 									<div className="flex items-center space-x-2">
 										<Checkbox
 											id="dry-run"
 											checked={dryRun}
 											onCheckedChange={(checked) => setDryRun(checked === true)}
-											className="border-arise/50 data-[state=checked]:bg-arise data-[state=checked]:border-arise"
+											className="border-resurge/50 data-[state=checked]:bg-resurge data-[state=checked]:border-resurge"
 										/>
 										<Label
 											htmlFor="dry-run"
@@ -275,7 +275,7 @@ const Admin = () => {
 											onCheckedChange={(checked) =>
 												setOverwrite(checked === true)
 											}
-											className="border-arise/50 data-[state=checked]:bg-arise data-[state=checked]:border-arise"
+											className="border-resurge/50 data-[state=checked]:bg-resurge data-[state=checked]:border-resurge"
 										/>
 										<Label
 											htmlFor="overwrite"
@@ -290,7 +290,7 @@ const Admin = () => {
 									<Button
 										onClick={handleValidate}
 										variant="outline"
-										className="flex-1 gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
+										className="flex-1 gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
 										disabled={!content.trim()}
 									>
 										<Shield className="w-4 h-4" />
@@ -298,7 +298,7 @@ const Admin = () => {
 									</Button>
 									<Button
 										onClick={handleImport}
-										className="flex-1 gap-2 bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all"
+										className="flex-1 gap-2 bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
 										disabled={
 											!content.trim() ||
 											loading ||
@@ -384,7 +384,7 @@ const Admin = () => {
 											<>
 												<CheckCircle className="w-6 h-6 text-green-400" />
 												<div>
-													<span className="font-arise font-semibold text-green-400 tracking-wide">
+													<span className="font-resurge font-semibold text-green-400 tracking-wide">
 														VALID
 													</span>
 													<SystemText className="block text-xs text-muted-foreground">
@@ -396,7 +396,7 @@ const Admin = () => {
 											<>
 												<AlertCircle className="w-6 h-6 text-destructive" />
 												<div>
-													<span className="font-arise font-semibold text-destructive tracking-wide">
+													<span className="font-resurge font-semibold text-destructive tracking-wide">
 														INVALID
 													</span>
 													<SystemText className="block text-xs text-muted-foreground">
@@ -409,7 +409,7 @@ const Admin = () => {
 
 									{validationResult.errors.length > 0 && (
 										<div>
-											<h4 className="font-arise font-semibold text-destructive mb-2 tracking-wide">
+											<h4 className="font-resurge font-semibold text-destructive mb-2 tracking-wide">
 												ERRORS ({validationResult.errors.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
@@ -430,7 +430,7 @@ const Admin = () => {
 
 									{validationResult.warnings.length > 0 && (
 										<div>
-											<h4 className="font-arise font-semibold text-amber-400 mb-2 tracking-wide">
+											<h4 className="font-resurge font-semibold text-amber-400 mb-2 tracking-wide">
 												WARNINGS ({validationResult.warnings.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
@@ -477,7 +477,7 @@ const Admin = () => {
 											<>
 												<CheckCircle className="w-6 h-6 text-green-400" />
 												<div>
-													<span className="font-arise font-semibold text-green-400 tracking-wide">
+													<span className="font-resurge font-semibold text-green-400 tracking-wide">
 														{dryRun ? "DRY RUN COMPLETE" : "IMPORT SUCCESSFUL"}
 													</span>
 													<SystemText className="block text-xs text-muted-foreground">
@@ -489,7 +489,7 @@ const Admin = () => {
 											<>
 												<AlertCircle className="w-6 h-6 text-destructive" />
 												<div>
-													<span className="font-arise font-semibold text-destructive tracking-wide">
+													<span className="font-resurge font-semibold text-destructive tracking-wide">
 														IMPORT FAILED
 													</span>
 													<SystemText className="block text-xs text-muted-foreground">
@@ -501,7 +501,7 @@ const Admin = () => {
 									</div>
 
 									<div>
-										<h4 className="font-arise font-semibold mb-3 text-arise tracking-wide">
+										<h4 className="font-resurge font-semibold mb-3 text-resurge tracking-wide">
 											IMPORTED ITEMS
 										</h4>
 										<div className="grid grid-cols-2 gap-2">
@@ -524,8 +524,8 @@ const Admin = () => {
 													value: importResult.imported.relics,
 												},
 												{
-													label: "Monsters",
-													value: importResult.imported.monsters,
+													label: "Anomalies",
+													value: importResult.imported.Anomalies,
 												},
 												{
 													label: "Backgrounds",
@@ -534,16 +534,16 @@ const Admin = () => {
 											].map((item) => (
 												<div
 													key={item.label}
-													className="flex justify-between items-center p-2 rounded bg-arise/5 border border-arise/20"
+													className="flex justify-between items-center p-2 rounded bg-resurge/5 border border-resurge/20"
 												>
 													<span className="text-sm text-muted-foreground font-heading">
 														{item.label}
 													</span>
 													<Badge
 														className={cn(
-															"font-arise",
+															"font-resurge",
 															item.value > 0
-																? "bg-arise/20 text-arise border-arise/30"
+																? "bg-resurge/20 text-resurge border-resurge/30"
 																: "bg-muted",
 														)}
 													>
@@ -556,7 +556,7 @@ const Admin = () => {
 
 									{importResult.errors.length > 0 && (
 										<div>
-											<h4 className="font-arise font-semibold text-destructive mb-2 tracking-wide">
+											<h4 className="font-resurge font-semibold text-destructive mb-2 tracking-wide">
 												ERRORS ({importResult.errors.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
@@ -574,7 +574,7 @@ const Admin = () => {
 
 									{importResult.warnings.length > 0 && (
 										<div>
-											<h4 className="font-arise font-semibold text-amber-400 mb-2 tracking-wide">
+											<h4 className="font-resurge font-semibold text-amber-400 mb-2 tracking-wide">
 												WARNINGS ({importResult.warnings.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">

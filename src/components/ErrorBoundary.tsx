@@ -1,8 +1,8 @@
 import { AlertTriangle } from "lucide-react";
-import type React from "react";
 import type { ReactNode } from "react";
 import {
 	type FallbackProps,
+	type OnErrorCallback,
 	ErrorBoundary as ReactErrorBoundary,
 } from "react-error-boundary";
 import { error as logError } from "@/lib/logger";
@@ -61,12 +61,13 @@ const DefaultErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 	);
 };
 
-const handleError = (error: unknown, info: React.ErrorInfo) => {
+const handleError: OnErrorCallback = (error, info) => {
 	// Log error for debugging
 	logError("ErrorBoundary caught an error:", error, info);
 
 	// Report to Sentry
-	captureException(error as Error, {
+	const err = error instanceof Error ? error : new Error(String(error));
+	captureException(err, {
 		react: {
 			componentStack: info.componentStack,
 		},

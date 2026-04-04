@@ -151,7 +151,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 			case "session":
 				return "bg-primary/20 text-primary";
 			case "npc":
-				return "bg-arise/20 text-arise";
+				return "bg-resurge/20 text-resurge";
 			case "location":
 				return "bg-green-500/20 text-green-400";
 			case "quest":

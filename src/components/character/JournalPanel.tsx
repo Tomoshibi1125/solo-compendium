@@ -170,17 +170,17 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 
 	return (
 		<div className="space-y-4">
-			<Card className="border-arise/30 bg-arise/5">
+			<Card className="border-resurge/30 bg-resurge/5">
 				<CardHeader className="pb-3">
 					<div className="flex items-center justify-between">
-						<CardTitle className="text-lg font-arise flex items-center gap-2">
-							<BookOpen className="w-5 h-5 text-arise" />
+						<CardTitle className="text-lg font-resurge flex items-center gap-2">
+							<BookOpen className="w-5 h-5 text-resurge" />
 							Ascendant's Journal
 						</CardTitle>
 						<Button
 							onClick={() => setIsCreating(true)}
 							size="sm"
-							className="bg-arise hover:bg-arise/80 text-white border-arise/30"
+							className="bg-resurge hover:bg-resurge/80 text-white border-resurge/30"
 						>
 							<Plus className="h-4 w-4 mr-1" />
 							New Entry
@@ -189,7 +189,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 				</CardHeader>
 				<CardContent>
 					{isCreating && (
-						<Card className="border-arise/30 bg-arise/5">
+						<Card className="border-resurge/30 bg-resurge/5">
 							<CardContent className="p-4 space-y-3">
 								<Input
 									aria-label="Entry Title"
@@ -218,7 +218,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 										size="sm"
 										onClick={handleCreate}
 										disabled={!newTitle.trim() || createEntry.isPending}
-										className="bg-arise hover:bg-arise/80"
+										className="bg-resurge hover:bg-resurge/80"
 									>
 										<Save className="h-4 w-4 mr-1" />
 										Save Entry
@@ -283,7 +283,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 														disabled={
 															!editTitle.trim() || updateEntry.isPending
 														}
-														className="bg-arise hover:bg-arise/80"
+														className="bg-resurge hover:bg-resurge/80"
 													>
 														<Save className="h-4 w-4 mr-1" />
 														Update

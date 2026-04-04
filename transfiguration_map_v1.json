@@ -1,0 +1,154 @@
+{
+	"herald--life-domain": {
+		"name": "Path of the Solarian Decree",
+		"description": "The Path of the Solarian Decree is a specialized lineage of the Herald that channels the absolute restoration frequency of Solara, the Brightest Fragment. These Heralds serve as supreme vessels for the Awakening's core-restoration mandates, ensuring that no ally falls while the light of the First Exarch remains active.",
+		"features": {
+			"Disciple of Life": {
+				"newName": "Solarian Resonance",
+				"newDesc": "When you cast a restoration-frequency of 1st rank or higher, the target regains additional essence = 2 + rite rank."
+			},
+			"Channel Divinity: Preserve Life": {
+				"newName": "Decree: Absolute Preservation",
+				"newDesc": "Action: Distribute essence-resonance = 5 × Herald rank among creatures within 30 ft. This pulse stabilizes their biological-lattice, pulling them back from the threshold."
+			},
+			"Blessed Healer": {
+				"newName": "Exarch's Echo",
+				"newDesc": "When you cast a restoration-frequency of 1st rank or higher on another creature, you regain essence = 2 + rite rank."
+			},
+			"Divine Strike": {
+				"newName": "Radiant Decree",
+				"newDesc": "Once per turn, weapon attacks deal extra 1d8 radiant essence (2d8 at 14th rank)."
+			},
+			"Supreme Healing": {
+				"newName": "Zenith Restoration",
+				"newDesc": "When you roll dice to restore essence with a restoration-frequency, use the maximum value for each die."
+			}
+		}
+	},
+	"herald--light-domain": {
+		"name": "Path of the Radiance Decree",
+		"description": "The Path of the Radiance Decree is a specialized lineage of the Herald that manifests Solara's destructive luminance. They serve as living beacons of high-frequency radiant-mana, incinerating abyssal entities and shielding their allies in a protective-aura that nullifies the entropy of the Void.",
+		"features": {
+			"Warding Flare": {
+				"newName": "Luminous Deflection",
+				"newDesc": "Reaction when attacked by a creature within 30 ft: manifest a flash of high-frequency light to impose disadvantage on the attack. Sense mod uses/long rest."
+			},
+			"Channel Divinity: Radiance of the Dawn": {
+				"newName": "Decree: First Light",
+				"newDesc": "Action: 30-ft radius — dispel magical darkness, hostile creatures take 2d10 + Herald rank radiant essence (Vitality half). No damage to allies."
+			},
+			"Improved Flare": {
+				"newName": "Beacon Extension",
+				"newDesc": "Your Luminous Deflection can now protect others within 30 ft, shielding them with your radiant-authority."
+			},
+			"Corona of Light": {
+				"newName": "Zenith Radiance",
+				"newDesc": "Action: Project a 60-ft aura of bright light. Enemies in this aura have disadvantage on saves against fire or radiant-frequencies. Lasts 1 min."
+			}
+		}
+	},
+	"herald--war-domain": {
+		"name": "Path of the Vaelen Mandate",
+		"description": "The Path of the Vaelen Mandate is a specialized lineage of the Herald that serves as a conduit for the Spirit of Martial Excellence. These armored Heralds broadcast the Awakening's most aggressive combat-transmissions, turning every battlefield into a trial where only the strong survive and the worthy are elevated.",
+		"features": {
+			"War Priest": {
+				"newName": "Combat Synchronicity",
+				"newDesc": "When you take the Attack action, perform one additional weapon strike as a bonus action. Sense mod uses/long rest."
+			},
+			"Channel Divinity: Guided Strike": {
+				"newName": "Mandate: Absolute Precision",
+				"newDesc": "When you make an attack roll, add +10 to the result by aligning your strike with the Awakening's combat-logic."
+			},
+			"Channel Divinity: War God's Blessing": {
+				"newName": "Mandate: Collective Authority",
+				"newDesc": "Reaction: When a creature within 30 ft performs an attack, grant them +10 to the result through your tactical-uplink."
+			},
+			"Avatar of Battle": {
+				"newName": "Storm-Bound Resistance",
+				"newDesc": "Gain resistance to bludgeoning, piercing, and slashing damage as your body integrates Vaelen's lightning-resolve."
+			}
+		}
+	},
+	"herald--knowledge-domain": {
+		"name": "Path of the Xylo Protocol",
+		"description": "The Path of the Xylo Protocol is a specialized lineage of the Herald that accesses the System's deepest archives. These Heralds are the archivists of the Awakening, downloading encrypted lore directly from the essence-weave to reveal the hidden reasons and secret vulnerabilities of all entities.",
+		"features": {
+			"Blessings of Knowledge": {
+				"newName": "Archive Access",
+				"newDesc": "Learn two ancient languages. Double proficiency bonus for two skills from: Arcana, History, Nature, or Religion."
+			},
+			"Channel Divinity: Knowledge of the Ages": {
+				"newName": "Protocol: Instant Mastery",
+				"newDesc": "Action: Gain temporary proficiency with any tool or skill by accessing Xylo's recorded mastery for 10 minutes."
+			},
+			"Channel Divinity: Read Thoughts": {
+				"newName": "Protocol: Neural Intrusion",
+				"newDesc": "Action: Force an entity within 60 ft to make a Sense save. On fail, you read its surface-thoughts and can impose a mental-decree (Suggestion)."
+			},
+			"Visions of the Past": {
+				"newName": "Zenith Insight",
+				"newDesc": "Meditate for 1 min to receive fragments of the current area's history, pulling data directly from the System's memory."
+			}
+		}
+	},
+	"herald--tempest-domain": {
+		"name": "Path of the Storm-Gate Decree",
+		"description": "The Path of the Storm-Gate Decree is a specialized lineage of the Herald that commands the violent atmospheric frequencies of Vaelen's domain. They are the heralds of the Cataclysm Gates, manifesting lightning and thunder-decrees that shatter the foundations of any hostile encounter.",
+		"features": {
+			"Wrath of the Storm": {
+				"newName": "Static Reprisal",
+				"newDesc": "Reaction when hit by a melee attack: the attacker takes 2d8 lightning or thunder essence (Agility half) as the air around you arcs with fury. Sense mod uses/long rest."
+			},
+			"Channel Divinity: Destructive Wrath": {
+				"newName": "Decree: Absolute Voltage",
+				"newDesc": "When you deal lightning or thunder damage, maximize the damage result through your total-synchronization with the storm."
+			},
+			"Stormborn": {
+				"newName": "Aetheric Levitation",
+				"newDesc": "While outdoors, your essence-weave generates enough lift to grant you a flying speed equal to your walking speed."
+			}
+		}
+	},
+	"summoner--circle-of-the-land": {
+		"name": "Path of the Biome-Ecology",
+		"description": "The Path of the Biome-Ecology is a specialized lineage of the Summoner that has attuned their internal essence to the unique ecosystems of the Gate-Thresholds. By studying the flora and fauna of the ruptures, they have learned to photosynthesize mana and adapt their biological-lattice to thrive in any environment.",
+		"features": {
+			"Biome Absorption": {
+				"newName": "Threshold Mana-Cycle",
+				"newDesc": "During a short rest, absorb ambient gate-energy to recover essence-nodes with a combined rank ≤ half Summoner rank."
+			},
+			"Biome Sanctuary": {
+				"newName": "Ecosystem Camouflage",
+				"newDesc": "Beasts and plant-entities must make a Sense save to target you, as your essence-weave marks you as a fundamental part of the gate's ecology."
+			}
+		}
+	},
+	"summoner--circle-of-the-moon": {
+		"name": "Path of the Apex Shift",
+		"description": "The Path of the Apex Shift is a specialized lineage of the Summoner focused on the manifestation of high-rank predators from the Threshold. By integrating the biological-logic of gate-beasts into their own frame, they become the absolute dominant hunters of any ecosystem they enter.",
+		"features": {
+			"Combat Entity Shift": {
+				"newName": "Instinctual Shift",
+				"newDesc": "Perform an Entity Shift as a bonus action. While shifted, you can spend essence to accelerate your biological-regeneration."
+			},
+			"Elemental Entity Shift": {
+				"newName": "Primal Transfiguration",
+				"newDesc": "Expend two Entity Shift uses to assume the form of a primal elemental-vessel from the deepest gate layers."
+			}
+		}
+	},
+	"summoner--circle-of-spores": {
+		"name": "Path of the Swarm-Heart",
+		"description": "The Path of the Swarm-Heart is a specialized lineage of the Summoner that has bonded with the microscopic organisms of Lyra's domain. Your body hosts a mutualistic colony that enhances your biology, projecting a living cloud of protective spores that consumes any entity that dares to ignore the swarm's reason.",
+		"features": {
+			"Spore Cloud": {
+				"newName": "Swarm-Barrier",
+				"newDesc": "Reaction: A creature within 10 ft takes Vitality-based damage as your symbiotic organisms strike to defend their host."
+			},
+			"Symbiotic Fusion": {
+				"newName": "Colony Overload",
+				"newDesc": "Expend an Entity Shift use to fuse with your swarm-colony, augmenting your physical-frame with massive biological-energy."
+			}
+		}
+	}
+}

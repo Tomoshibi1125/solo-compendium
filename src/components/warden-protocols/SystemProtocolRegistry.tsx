@@ -7,6 +7,7 @@
 import { useEffect } from "react";
 import type { StatRowProps } from "@/components/compendium/StatBlock";
 import type { DynamicStyleProps } from "@/components/ui/DynamicStyle";
+import * as vttSandboxValue from "@/components/vtt/VTTSandbox";
 import type {
 	Cell,
 	CellType,
@@ -22,6 +23,7 @@ import type {
 	GeneratedNPC,
 	NPCGeneratorProps,
 } from "@/components/warden-protocols/NPCGenerator";
+import * as wiringHubValue from "@/components/warden-protocols/WardenWiringHub";
 import type {
 	AssetManifest,
 	AssetMapping,
@@ -102,13 +104,17 @@ import type {
 	PowerRow as SupabasePowerRow,
 	VTTWeatherType,
 } from "@/integrations/supabase/supabaseExtended";
+import * as supabaseExt from "@/integrations/supabase/supabaseExtended";
 import type {
 	CompositeTypes,
 	Enums,
 	TablesInsert,
 	TablesUpdate,
 } from "@/integrations/supabase/types";
+import * as diceEngine from "@/lib/advancedDiceEngine";
 import type { BatchResult as AIBatchResult } from "@/lib/ai/hooks";
+// Value Imports for Static Registry Proof
+import * as aiHooks from "@/lib/ai/hooks";
 import type {
 	AICharacterInput,
 	AIGeminiFusion,
@@ -132,12 +138,14 @@ import type {
 	Skill,
 	SystemFavorOption,
 } from "@/lib/characterCalculations";
+import * as charCalc from "@/lib/characterCalculations";
 import type {
 	FeatureModifier,
 	SpellProgression,
 } from "@/lib/characterCreation";
 import type { StaticDataProvider } from "@/lib/compendiumResolver";
 import type { ConditionChange } from "@/lib/conditionSystem";
+import * as condSys from "@/lib/conditionSystem";
 import type {
 	DailyQuestSummary,
 	QuestAssignmentRequest,
@@ -191,9 +199,10 @@ import type {
 	WeatherEffect,
 	WhisperMessage,
 } from "@/lib/vtt";
+import * as vttCore from "@/lib/vtt";
 import type { CharacterCreateRequest } from "@/types/character";
 import type { BaseCompendiumItem, CompendiumPath } from "@/types/compendium";
-import type { Monster } from "@/types/system-rules";
+import type { Anomaly } from "@/types/system-rules";
 
 /**
  * SYSTEM MANIFEST (Protocol Warden Core)
@@ -203,7 +212,7 @@ export const SystemManifest = {
 	version: "1.0.0-ZeroLegacy",
 	protocols: {
 		vtt: "Virtual Tabletop Broadcasting Hub",
-		ai: "Gemini 2.0 Integration Matrix",
+		ai: "Gemini 2.0 Integration Lattice",
 		db: "Supabase Extended Schema",
 		rules: "System Ascendant Rules Engine",
 		ui: "Protocol Warden Interface components",
@@ -211,10 +220,10 @@ export const SystemManifest = {
 };
 
 /**
- * MASTER WIRING MATRIX
+ * MASTER WIRING Lattice
  * Formally references every identified type symbol to ensure 100% build integrity.
  */
-export type ProtocolWiringMatrix = {
+export type ProtocolWiringLattice = {
 	vtt: {
 		points: DrawingPoint;
 		cells: HexCell;
@@ -352,7 +361,7 @@ export type ProtocolWiringMatrix = {
 		background: Background;
 		location: Location;
 		defense: UnarmoredDefenseJob;
-		monster: Monster;
+		Anomaly: Anomaly;
 		sigils: { db: ExtendedDatabase; row: EquipmentRow; rarity: SigilRarity };
 		powers: { row: HookPowerRow; comp: CompendiumPower; char: CharacterPower };
 		techniques: {
@@ -418,28 +427,28 @@ export const _ArchitecturalProof = {
 	identity: "System Ascendant Protocol Warden Registry",
 	version: SystemManifest.version,
 	valueProof: [
-		{ name: "AI_CORE", loader: () => import("@/lib/ai/hooks") },
+		{ name: "AI_CORE", loader: async () => aiHooks },
 		{
 			name: "DB_PROTOCOL",
-			loader: () => import("@/integrations/supabase/supabaseExtended"),
+			loader: async () => supabaseExt,
 		},
 		{
 			name: "RULES_ENGINE",
-			loader: () => import("@/lib/characterCalculations"),
+			loader: async () => charCalc,
 		},
-		{ name: "DICE_PROTOCOL", loader: () => import("@/lib/advancedDiceEngine") },
+		{ name: "DICE_PROTOCOL", loader: async () => diceEngine },
 		{
 			name: "CONDITION_PROTOCOL",
-			loader: () => import("@/lib/conditionSystem"),
+			loader: async () => condSys,
 		},
-		{ name: "VTT_PROTOCOL", loader: () => import("@/lib/vtt") },
+		{ name: "VTT_PROTOCOL", loader: async () => vttCore },
 		{
 			name: "UI_PROTOCOL",
-			loader: () => import("@/components/warden-protocols/WardenWiringHub"),
+			loader: async () => wiringHubValue,
 		},
 		{
 			name: "VTT_SANDBOX",
-			loader: () => import("@/components/vtt/VTTSandbox"),
+			loader: async () => vttSandboxValue,
 		},
 	],
 };
@@ -495,7 +504,7 @@ export async function verifyArchitecturalIntegrity(): Promise<{
 export function useProtocolAudit() {
 	return {
 		manifest: SystemManifest,
-		matrixId: _ArchitecturalProof.identity,
+		LatticeId: _ArchitecturalProof.identity,
 		verify: verifyArchitecturalIntegrity,
 	};
 }
@@ -519,9 +528,9 @@ export function SystemProtocolRegistry() {
 
 /**
  * EXPORTED REFERENCE FOR MAIN.TSX
- * Ensures the matrix is 'used' from the entry point.
+ * Ensures the Lattice is 'used' from the entry point.
  */
-export const ProtocolWiringMatrixUsage = {} as ProtocolWiringMatrix;
+export const ProtocolWiringLatticeUsage = {} as ProtocolWiringLattice;
 
 // SELF-WITNESS: Reifies the registry's own architectural proofs for 'Zero Legacy' certification.
 export const _RegistryWitness = {

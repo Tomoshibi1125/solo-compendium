@@ -235,8 +235,8 @@ function enrichItem(item) {
 	// Add properties if missing for weapons
 	if (item.type === "weapon" && !item.properties?.weapon) {
 		const base = getWeaponBase(item.name);
-		const dmgDice = base.damage.replace(/\d+d/, (m) => {
-			const sides = parseInt(m);
+		const _dmgDice = base.damage.replace(/\d+d/, (m) => {
+			const _sides = parseInt(m, 10);
 			return m; // keep base dice, add bonus
 		});
 		item.properties = {
@@ -264,7 +264,7 @@ function enrichItem(item) {
 
 	// Add properties if missing for armor
 	if (item.type === "armor" && !item.properties?.magical) {
-		const base = getArmorBase(item.name);
+		const _base = getArmorBase(item.name);
 		if (bonus > 0) {
 			item.properties = {
 				...item.properties,
@@ -367,7 +367,7 @@ for (const partFile of PARTS) {
 		header +
 		"export const items: Item[] = [\n" +
 		entries
-			.map((e) => "  " + JSON.stringify(e, null, 2).split("\n").join("\n  "))
+			.map((e) => `  ${JSON.stringify(e, null, 2).split("\n").join("\n  ")}`)
 			.join(",\n") +
 		"\n];\n";
 

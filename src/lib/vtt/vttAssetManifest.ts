@@ -362,20 +362,20 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		format: "webp",
 	},
 	{
-		id: "token-monster",
-		name: "Monster (Generic)",
+		id: "token-Anomaly",
+		name: "Anomaly (Generic)",
 		category: "token",
-		path: "/generated/tokens/monster-token.webp",
-		tags: ["monster", "enemy", "generic"],
+		path: "/generated/tokens/Anomaly-token.webp",
+		tags: ["Anomaly", "enemy", "generic"],
 		format: "webp",
 	},
 
-	// Monster tokens (game-icons.net, CC BY 3.0, credit: Lorc/Delapouite)
+	// Anomaly tokens (game-icons.net, CC BY 3.0, credit: Lorc/Delapouite)
 	{
 		id: "token-shadow-follower",
 		name: "Shadow Soldier",
 		category: "token",
-		path: "/generated/tokens/monsters/shadow-follower.svg",
+		path: "/generated/tokens/Anomalies/shadow-follower.svg",
 		tags: ["shadow", "undead", "soldier", "minion"],
 		tier: "E",
 		format: "svg",
@@ -385,7 +385,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-magic-beast",
 		name: "Magic Beast",
 		category: "token",
-		path: "/generated/tokens/monsters/magic-beast.svg",
+		path: "/generated/tokens/Anomalies/magic-beast.svg",
 		tags: ["beast", "wolf", "magic", "animal"],
 		tier: "D",
 		format: "svg",
@@ -395,7 +395,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-goblin",
 		name: "Goblin",
 		category: "token",
-		path: "/generated/tokens/monsters/goblin.svg",
+		path: "/generated/tokens/Anomalies/goblin.svg",
 		tags: ["goblin", "humanoid", "minion"],
 		tier: "E",
 		format: "svg",
@@ -405,7 +405,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-orc-warrior",
 		name: "Orc Warrior",
 		category: "token",
-		path: "/generated/tokens/monsters/orc-warrior.svg",
+		path: "/generated/tokens/Anomalies/orc-warrior.svg",
 		tags: ["orc", "humanoid", "warrior"],
 		tier: "D",
 		format: "svg",
@@ -415,7 +415,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-fire-elemental",
 		name: "Fire Elemental",
 		category: "token",
-		path: "/generated/tokens/monsters/fire-elemental.svg",
+		path: "/generated/tokens/Anomalies/fire-elemental.svg",
 		tags: ["elemental", "fire", "magic"],
 		tier: "C",
 		format: "svg",
@@ -425,7 +425,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-demon-lord",
 		name: "Demon / Gate Boss",
 		category: "token",
-		path: "/generated/tokens/monsters/demon-lord.svg",
+		path: "/generated/tokens/Anomalies/demon-lord.svg",
 		tags: ["demon", "boss", "gate", "final"],
 		tier: "S",
 		format: "svg",
@@ -1030,11 +1030,11 @@ export function getMapsForTier(tier: VTTAsset["tier"]): VTTAsset[] {
 	return MAP_ASSETS.filter((a) => a.tier === tier);
 }
 
-/** Get monster tokens filtered by tier */
-export function getMonsterTokensForTier(tier: VTTAsset["tier"]): VTTAsset[] {
+/** Get Anomaly tokens filtered by tier */
+export function getAnomalyTokensForTier(tier: VTTAsset["tier"]): VTTAsset[] {
 	return TOKEN_ASSETS.filter(
 		(a) =>
-			(a.tier === tier && a.tags.includes("monster")) ||
+			(a.tier === tier && a.tags.includes("Anomaly")) ||
 			a.tags.includes("enemy"),
 	);
 }

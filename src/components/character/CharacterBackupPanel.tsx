@@ -28,6 +28,7 @@ import {
 	useCharacterBackups,
 } from "@/hooks/useCharacterBackup";
 import { useCharacter } from "@/hooks/useCharacters";
+import type { Json } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 
 function BackupRow({
@@ -41,7 +42,7 @@ function BackupRow({
 	onDelete: (id: string) => void;
 	onExport: (b: CharacterBackup) => void;
 }) {
-	const data = backup.backup_data as Record<string, unknown> | null;
+	const data = backup.backup_data as Record<string, Json> | null;
 	const level = typeof data?.level === "number" ? data.level : "?";
 	const hp = typeof data?.hp_current === "number" ? data.hp_current : "?";
 	const hpMax = typeof data?.hp_max === "number" ? data.hp_max : "?";

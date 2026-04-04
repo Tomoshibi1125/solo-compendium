@@ -46,13 +46,13 @@ async function applyMigration() {
         CREATE INDEX IF NOT EXISTS compendium_artifacts_rarity_idx ON public.compendium_artifacts (rarity);
     `;
 
-    const { error } = await supabase.rpc("exec_sql", { sql_string: sql });
+	const { error } = await supabase.rpc("exec_sql", { sql_string: sql });
 
-    if (error) {
-        console.error("Error applying artifacts migration:", error.message);
-    } else {
-        console.log("Successfully created compendium_artifacts table.");
-    }
+	if (error) {
+		console.error("Error applying artifacts migration:", error.message);
+	} else {
+		console.log("Successfully created compendium_artifacts table.");
+	}
 
 	console.log("=== Migration Complete ===");
 }

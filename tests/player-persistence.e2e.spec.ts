@@ -1,7 +1,7 @@
 import { type BrowserContext, expect, type Page, test } from "@playwright/test";
 import { AuthPage } from "./pages/AuthPage";
 
-const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
+const _PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
 
 test.describe
 	.serial("Player persistence: reload restores state", () => {

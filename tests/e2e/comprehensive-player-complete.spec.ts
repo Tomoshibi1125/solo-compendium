@@ -12,7 +12,7 @@ import { AuthPage } from "../pages/AuthPage";
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
-const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
+const _PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
 
 test.describe("Comprehensive Player Complete Test", () => {
 	let context: BrowserContext;
@@ -166,7 +166,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 					}
 					break;
 				}
-			} catch (error) {}
+			} catch (_error) {}
 		}
 
 		if (navigationFound) {
@@ -360,7 +360,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 						try {
 							await buttons.nth(i).hover();
 							await page.waitForTimeout(100);
-						} catch (buttonError) {
+						} catch (_buttonError) {
 							// Ignore button errors
 						}
 					}
@@ -482,7 +482,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 							await page.waitForTimeout(500);
 						}
 					}
-				} catch (vttError) {}
+				} catch (_vttError) {}
 			}
 
 			if (vttFound) {
@@ -583,7 +583,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 			await page.keyboard.press("Tab");
 			await page.waitForTimeout(500);
 
-			const focusedElement = await page.locator(":focus");
+			const _focusedElement = await page.locator(":focus");
 			console.log("  ✅ Keyboard navigation functional");
 
 			// Test ARIA attributes
@@ -605,7 +605,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 						const tagName = await element.evaluate((el) => el.tagName);
 						console.log(`    ⚠️ ${tagName} missing accessibility attributes`);
 					}
-				} catch (ariaError) {
+				} catch (_ariaError) {
 					ariaPassed = false;
 				}
 			}
@@ -628,7 +628,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 					console.log(
 						`    Text color: ${styles.color}, Background: ${styles.backgroundColor}`,
 					);
-				} catch (colorError) {
+				} catch (_colorError) {
 					// Ignore color errors
 				}
 			}
@@ -881,7 +881,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 			}
 		}
 
-		console.log("\n" + "=".repeat(60));
+		console.log(`\n${"=".repeat(60)}`);
 		console.log(`📈 FINAL SCORE: ${passedTests}/${totalTests} tests passed`);
 		console.log(
 			`📊 SUCCESS RATE: ${Math.round((passedTests / totalTests) * 100)}%`,

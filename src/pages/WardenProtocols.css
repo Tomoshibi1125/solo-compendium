@@ -110,11 +110,11 @@
 .step-contract {
 	background: linear-gradient(
 		135deg,
-		hsl(var(--arise) / 0.3),
+		hsl(var(--resurge) / 0.3),
 		hsl(var(--shadow-purple) / 0.2)
 	);
-	border-color: hsl(var(--arise) / 0.3);
-	color: hsl(var(--arise));
+	border-color: hsl(var(--resurge) / 0.3);
+	color: hsl(var(--resurge));
 }
 
 .step-rift {

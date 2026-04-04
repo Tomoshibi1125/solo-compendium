@@ -92,7 +92,7 @@ const categories = [
 	{ id: "all", name: "All", icon: Grid3X3 },
 
 	// World & Entities
-	{ id: "monsters", name: "Monsters", icon: Skull },
+	{ id: "anomalies", name: "Anomalies", icon: Skull },
 	{ id: "backgrounds", name: "Backgrounds", icon: Users },
 	{ id: "jobs", name: "Jobs", icon: Swords },
 	{ id: "paths", name: "Paths", icon: GitBranch },
@@ -251,7 +251,7 @@ const Compendium = () => {
 				"relics",
 				"artifacts",
 				"equipment",
-				"monsters",
+				"anomalies",
 				"locations",
 				"conditions",
 				"shadow-soldiers",
@@ -312,8 +312,8 @@ const Compendium = () => {
 							case "artifacts":
 								data = await staticDataProvider.getArtifacts(parsedQuery.text);
 								break;
-							case "monsters":
-								data = await staticDataProvider.getMonsters(parsedQuery.text);
+							case "anomalies":
+								data = await staticDataProvider.getAnomalies(parsedQuery.text);
 								break;
 							case "locations":
 								data = await staticDataProvider.getLocations(parsedQuery.text);
@@ -366,7 +366,7 @@ const Compendium = () => {
 									isFavorite:
 										favorites.has(`${displayType}:${item.id}`) || false,
 									// Include type-specific fields
-									...(category === "monsters" && {
+									...(category === "anomalies" && {
 										cr: item.cr ?? undefined,
 										gate_rank: item.gate_rank ?? undefined,
 										is_boss: item.is_boss,
@@ -525,7 +525,7 @@ const Compendium = () => {
 			);
 		}
 
-		// Filter by gate ranks (for monsters)
+		// Filter by gate ranks (for anomalies)
 		if (selectedGateRanksSet) {
 			filtered = filtered.filter(
 				(e) => e.gate_rank && selectedGateRanksSet.has(e.gate_rank),
@@ -1340,7 +1340,7 @@ const Compendium = () => {
 																jobs: Swords,
 																powers: Wand2,
 																relics: Gem,
-																monsters: Skull,
+																Anomalies: Skull,
 																equipment: Swords,
 															};
 															const Icon = IconMap[entry.type] || Swords;
@@ -1403,7 +1403,7 @@ const Compendium = () => {
 															jobs: Swords,
 															powers: Wand2,
 															relics: Gem,
-															monsters: Skull,
+															Anomalies: Skull,
 															equipment: Swords,
 														};
 														const Icon = IconMap[entry.type] || Swords;

@@ -52,7 +52,7 @@ const PERSONALITIES = [
 const MOTIVATIONS = [
 	"Seeking power through Rifts",
 	"Protecting loved ones",
-	"Revenge against monsters",
+	"Revenge against Anomalies",
 	"Researching Rift phenomena",
 	"Building an ascendant organization",
 	"Seeking the Umbral Regent",
@@ -69,19 +69,19 @@ const SECRETS = [
 	"Working for a Regent",
 	"Has a cursed relic",
 	"Knows about the reset",
-	"Is actually a monster",
+	"Is actually a Anomaly",
 	"Has System favor debt",
 	"Betrayed their ascendant team",
 	"Seeking forbidden knowledge",
 	"Has a hidden Rift",
 	"Is being hunted",
-	"Knows the Prime Architect personally",
+	"Knows the The Absolute personally",
 	"Has a duplicate identity",
 ] as const;
 
 const QUIRKS = [
 	"Always checks for traps",
-	"Collects monster cores obsessively",
+	"Collects Anomaly cores obsessively",
 	"Speaks in riddles",
 	"Has a telltale scar",
 	"Never removes their mask",

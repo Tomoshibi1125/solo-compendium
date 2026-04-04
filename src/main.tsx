@@ -11,7 +11,7 @@ import "./styles/sa-theme.css";
 import "./styles/dropdown-opacity-fix.css";
 import { lazy, Suspense } from "react";
 
-import { ProtocolWiringMatrixUsage } from "./components/warden-protocols/SystemProtocolRegistry";
+import { ProtocolWiringLatticeUsage } from "./components/warden-protocols/SystemProtocolRegistry";
 import { WardenWiringHub } from "./components/warden-protocols/WardenWiringHub";
 
 const SystemProtocolRegistry = lazy(() =>
@@ -20,14 +20,14 @@ const SystemProtocolRegistry = lazy(() =>
 	})),
 );
 
-// Explicitly reference the wiring matrix usage to seal the architectural proof
-if (ProtocolWiringMatrixUsage) {
+// Explicitly reference the wiring Lattice usage to seal the architectural proof
+if (ProtocolWiringLatticeUsage) {
 	/* Protocol Warden Sealing logic */
 }
 
 // Fully wired architectural reference (Type-only, No runtime cost)
 export type _FinalWiring =
-	import("./components/warden-protocols/SystemProtocolRegistry").ProtocolWiringMatrix;
+	import("./components/warden-protocols/SystemProtocolRegistry").ProtocolWiringLattice;
 
 import {
 	createLogger,
@@ -43,9 +43,16 @@ const logger = createLogger({ mode: "production" });
 // Initialize Sentry before anything else
 initSentry();
 
+import { initializeProtocolData } from "./lib/ProtocolDataManager";
+
 // Wait for DOM to be ready
-function initApp() {
+async function initApp() {
 	const rootElement = document.getElementById("root");
+
+	// Start loading compendium data in the background early
+	initializeProtocolData().catch((err) => {
+		logError("Failed to pre-load protocol data:", err);
+	});
 
 	if (!rootElement) {
 		logError(

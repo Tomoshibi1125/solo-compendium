@@ -62,7 +62,7 @@ export function WardenChatbot() {
 				.slice(-6)
 				.map(
 					(m) =>
-						`${m.role === "user" ? "Protocol Warden" : "Warden Matrix"}: ${m.content}`,
+						`${m.role === "user" ? "Protocol Warden" : "Warden Lattice"}: ${m.content}`,
 				)
 				.join("\n");
 

@@ -66,7 +66,7 @@ const wardenProtocols = [
 		id: "encounter-builder",
 		name: "Encounter Builder",
 		description:
-			"Create balanced encounters by adding monsters and calculating difficulty.",
+			"Create balanced encounters by adding anomalies and calculating difficulty.",
 		icon: Sword,
 		status: "available",
 		color:
@@ -148,8 +148,8 @@ const wardenProtocols = [
 		priority: 6,
 	},
 	{
-		id: "directive-matrix",
-		name: "Directive Matrix",
+		id: "directive-lattice",
+		name: "Directive Lattice",
 		description:
 			"Synthesize operational directives, localized contracts, and mission parameters.",
 		icon: Scroll,
@@ -436,7 +436,7 @@ const WardenProtocols = () => {
 				<div className="eternal-loop-container relative z-10">
 					<SystemWindow
 						title="THE ETERNAL LOOP"
-						className="border-arise/30 hud-brackets"
+						className="border-resurge/30 hud-brackets"
 					>
 						<div className="flex flex-col items-center gap-6">
 							<div className="flex flex-col md:flex-row items-center gap-6 w-full">
@@ -447,7 +447,7 @@ const WardenProtocols = () => {
 										<p className="step-description">Accept the mission</p>
 									</div>
 								</div>
-								<ChevronRight className="w-6 h-6 text-arise/50 hidden md:block" />
+								<ChevronRight className="w-6 h-6 text-resurge/50 hidden md:block" />
 								<div className="loop-step">
 									<div className="step-number step-rift">2</div>
 									<div className="step-content">
@@ -455,7 +455,7 @@ const WardenProtocols = () => {
 										<p className="step-description">Enter the rift</p>
 									</div>
 								</div>
-								<ChevronRight className="w-6 h-6 text-arise/50 hidden md:block" />
+								<ChevronRight className="w-6 h-6 text-resurge/50 hidden md:block" />
 								<div className="loop-step">
 									<div className="step-number step-aftermath">3</div>
 									<div className="step-content">
@@ -617,7 +617,9 @@ const WardenProtocols = () => {
 								<Button
 									variant="outline"
 									className="justify-start"
-									onClick={() => navigate("/warden-protocols/directive-matrix")}
+									onClick={() =>
+										navigate("/warden-protocols/directive-lattice")
+									}
 								>
 									<Scroll className="w-4 h-4 mr-2" />
 									Directive Synthesis

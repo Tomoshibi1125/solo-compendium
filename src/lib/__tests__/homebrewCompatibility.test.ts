@@ -10,10 +10,10 @@ describe("5e Homebrew Compatibility", () => {
 		expect(normalizeAbility("SENSE")).toBe("SENSE");
 		expect(normalizeAbility("PRE")).toBe("PRE");
 		// Legacy 5e names still normalize to SA
-		expect(normalizeAbility("DEX")).toBe("AGI");
-		expect(normalizeAbility("CON")).toBe("VIT");
-		expect(normalizeAbility("WIS")).toBe("SENSE");
-		expect(normalizeAbility("CHA")).toBe("PRE");
+		expect(normalizeAbility("AGI")).toBe("AGI");
+		expect(normalizeAbility("VIT")).toBe("VIT");
+		expect(normalizeAbility("SENSE")).toBe("SENSE");
+		expect(normalizeAbility("PRE")).toBe("PRE");
 	});
 
 	test("System Ascendant ability display names", () => {

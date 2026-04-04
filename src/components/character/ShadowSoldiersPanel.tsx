@@ -34,7 +34,7 @@ import { Separator } from "@/components/ui/separator";
 import type { LibraryToken } from "@/data/tokenLibraryDefaults";
 import { useToast } from "@/hooks/use-toast";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
-import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
+import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import {
 	type ShadowSoldier,
@@ -46,23 +46,26 @@ import {
 	useUpdateSoldierHP,
 } from "@/hooks/useShadowSoldiers";
 import { useUserToolState } from "@/hooks/useToolState";
+import type { Json } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
 	REGENT_LABEL,
 } from "@/lib/vernacular";
+import type { DetailData } from "@/types/character";
 
 interface ShadowSoldiersPanelProps {
 	characterId: string;
 	characterLevel: number;
 	campaignId?: string;
+	onSelectDetail?: (detail: DetailData) => void;
 }
 
 // Enhanced rank colors with System Ascendant theme
 const rankColors: Record<string, string> = {
 	"General Grade":
-		"bg-arise-violet/20 text-arise-violet border-arise-violet/40 shadow-[0_0_10px_hsl(var(--arise-violet)/0.3)]",
+		"bg-resurge-violet/20 text-resurge-violet border-resurge-violet/40 shadow-[0_0_10px_hsl(var(--resurge-violet)/0.3)]",
 	"Marshal Grade":
 		"bg-shadow-purple/20 text-shadow-purple border-shadow-purple/40 shadow-[0_0_8px_hsl(var(--shadow-purple)/0.3)]",
 	"Elite Knight Grade":
@@ -86,21 +89,26 @@ const typeIcons: Record<string, { icon: React.ReactNode; color: string }> = {
 		icon: <Crosshair className="h-4 w-4" />,
 		color: "text-shadow-blue",
 	},
-	dragon: { icon: <Bird className="h-4 w-4" />, color: "text-arise-violet" },
+	dragon: { icon: <Bird className="h-4 w-4" />, color: "text-resurge-violet" },
 	giant: { icon: <Mountain className="h-4 w-4" />, color: "text-regent-gold" },
 };
+
+function isAbilityArray(value: Json): value is ShadowSoldierAbility[] {
+	return Array.isArray(value);
+}
 
 export function ShadowSoldiersPanel({
 	characterId,
 	characterLevel,
 	campaignId,
+	onSelectDetail,
 }: ShadowSoldiersPanelProps) {
 	const [selectedSoldier, setSelectedSoldier] = useState<ShadowSoldier | null>(
 		null,
 	);
 	const { data: mySoldiers = [] } = useCharacterShadowSoldiers(characterId);
 	const { data: allSoldiers = [] } = useCompendiumShadowSoldiers();
-	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(characterId);
+	const { unlocks: regentUnlocks } = useRegentUnlocks(characterId);
 	const extractSoldier = useExtractShadowSoldier();
 	const toggleSummon = useToggleSummon();
 	const updateHP = useUpdateSoldierHP();
@@ -137,7 +145,7 @@ export function ShadowSoldiersPanel({
 		const newToken: LibraryToken = {
 			id: tokenId,
 			name: `[Umbral] ${formatRegentVernacular(displayName)}`,
-			type: "monster",
+			type: "Anomaly",
 			category: "other",
 			emoji: "👻",
 			size: "medium",
@@ -156,19 +164,10 @@ export function ShadowSoldiersPanel({
 	};
 
 	// Check if character has Umbral Regent unlock
-	const hasUmbralRegent = regentUnlocks.some((unlock: unknown) => {
-		const theme =
-			(
-				unlock as { regent?: { theme?: string } }
-			).regent?.theme?.toLowerCase() || "";
-		const name = normalizeRegentSearch(
-			(unlock as { regent?: { name?: string } }).regent?.name || "",
-		).toLowerCase();
-		return (
-			theme.includes("umbral") ||
-			name.includes("umbral regent") ||
-			name.includes("umbral regent")
-		);
+	const hasUmbralRegent = (regentUnlocks as RegentUnlock[]).some((unlock) => {
+		const theme = unlock.regent?.theme?.toLowerCase() || "";
+		const name = normalizeRegentSearch(unlock.regent?.name || "").toLowerCase();
+		return theme.includes("umbral") || name.includes("umbral regent");
 	});
 	const umbralTitle = `Umbral ${REGENT_LABEL}`;
 
@@ -221,7 +220,7 @@ export function ShadowSoldiersPanel({
 	return (
 		<SystemWindow
 			title="UMBRAL LEGION - ASCEND"
-			variant="arise"
+			variant="resurge"
 			className="border-shadow-purple/40"
 		>
 			<div className="space-y-4">
@@ -242,7 +241,7 @@ export function ShadowSoldiersPanel({
 					</div>
 					<Badge
 						variant="outline"
-						className="bg-arise-violet/10 text-arise-violet border-arise-violet/40 font-display"
+						className="bg-resurge-violet/10 text-resurge-violet border-resurge-violet/40 font-display"
 					>
 						{summonedCount} Summoned
 					</Badge>
@@ -271,16 +270,31 @@ export function ShadowSoldiersPanel({
 										css.is_summoned
 											? "border-shadow-purple/50 bg-shadow-purple/5 shadow-[0_0_15px_hsl(var(--shadow-purple)/0.15)]"
 											: "border-border bg-background/50 hover:border-shadow-purple/30",
-										index < 3 && "animate-arise",
+										index < 3 && "animate-resurge",
 									)}
 								>
 									<div className="flex items-center justify-between mb-3">
 										<div className="flex items-center gap-3">
-											<div
-												className={cn("p-2 rounded-lg bg-card", typeData.color)}
+											<button
+												type="button"
+												className={cn(
+													"p-2 rounded-lg bg-card text-left flex-1",
+													typeData.color,
+												)}
+												onClick={() =>
+													onSelectDetail?.({
+														title: css.nickname || soldier.name,
+														description: soldier.description || "",
+														payload: {
+															type: "Shadow Soldier",
+															rank: soldier.rank,
+															icon: typeData.icon,
+														},
+													})
+												}
 											>
 												{typeData.icon}
-											</div>
+											</button>
 											<div>
 												<div className="flex items-center gap-2">
 													<span
@@ -356,7 +370,7 @@ export function ShadowSoldiersPanel({
 												});
 											}}
 											className={cn(
-												"font-arise tracking-wider",
+												"font-resurge tracking-wider",
 												css.is_summoned
 													? "bg-shadow-purple hover:bg-shadow-purple/80 shadow-[0_0_10px_hsl(var(--shadow-purple)/0.4)]"
 													: "border-shadow-purple/40 hover:border-shadow-purple hover:bg-shadow-purple/10",
@@ -464,15 +478,15 @@ export function ShadowSoldiersPanel({
 						<DialogTrigger asChild>
 							<Button
 								variant="outline"
-								className="w-full border-arise-violet/40 hover:border-arise-violet hover:bg-arise-violet/10 font-arise tracking-wider"
+								className="w-full border-resurge-violet/40 hover:border-resurge-violet hover:bg-resurge-violet/10 font-resurge tracking-wider"
 							>
-								<Skull className="h-4 w-4 mr-2 text-arise-violet" />
+								<Skull className="h-4 w-4 mr-2 text-resurge-violet" />
 								EXTRACT Umbral Legionnaire
 							</Button>
 						</DialogTrigger>
 						<DialogContent className="max-w-2xl bg-card border-shadow-purple/40">
 							<DialogHeader>
-								<DialogTitle className="font-arise text-xl gradient-text-arise">
+								<DialogTitle className="font-resurge text-xl gradient-text-resurge">
 									Available Shadows
 								</DialogTitle>
 							</DialogHeader>
@@ -490,14 +504,16 @@ export function ShadowSoldiersPanel({
 												className={cn(
 													"cursor-pointer transition-all duration-300 border-border hover:border-shadow-purple/50",
 													selectedSoldier?.id === soldier.id &&
-														"border-arise-violet shadow-[0_0_20px_hsl(var(--arise-violet)/0.2)]",
+														"border-resurge-violet shadow-[0_0_20px_hsl(var(--resurge-violet)/0.2)]",
 												)}
 												onClick={() => {
+													const abilities = isAbilityArray(soldier.abilities)
+														? soldier.abilities
+														: [];
+
 													const s: ShadowSoldier = {
 														...soldier,
-														abilities: Array.isArray(soldier.abilities)
-															? (soldier.abilities as unknown as ShadowSoldierAbility[])
-															: [],
+														abilities,
 														damage_immunities: soldier.damage_immunities || [],
 														condition_immunities:
 															soldier.condition_immunities || [],
@@ -582,7 +598,7 @@ export function ShadowSoldiersPanel({
 
 													{selectedSoldier?.id === soldier.id && (
 														<Button
-															className="w-full mt-4 font-arise tracking-wider bg-arise-violet hover:bg-arise-violet/80 shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]"
+															className="w-full mt-4 font-resurge tracking-wider bg-resurge-violet hover:bg-resurge-violet/80 shadow-[0_0_15px_hsl(var(--resurge-violet)/0.4)]"
 															onClick={(e) => {
 																e.stopPropagation();
 																extractSoldier.mutate({

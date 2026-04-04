@@ -1,3 +1,9 @@
+declare global {
+	interface Window {
+		webkitAudioContext?: typeof AudioContext;
+	}
+}
+
 type DiceAudioEvent =
 	| "roll"
 	| "impact"
@@ -41,10 +47,7 @@ export class DiceAudioEngine {
 	private ensureContext(): AudioContext | null {
 		if (!this.enabled || typeof window === "undefined") return null;
 		if (!this.context) {
-			const AudioCtor =
-				window.AudioContext ||
-				(window as unknown as { webkitAudioContext?: typeof AudioContext })
-					.webkitAudioContext;
+			const AudioCtor = window.AudioContext || window.webkitAudioContext;
 			if (!AudioCtor) return null;
 			this.context = new AudioCtor();
 			this.master = this.context.createGain();

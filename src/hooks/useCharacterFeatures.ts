@@ -28,6 +28,7 @@ export interface FeatureModifier {
 	die?: string;
 	target?: string;
 	source: string;
+	[key: string]: string | number | boolean | undefined;
 }
 
 const buildFeaturesCacheKey = (userId: string, characterId: string) => {

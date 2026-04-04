@@ -31,13 +31,14 @@ declare module "*.avif" {
 }
 
 declare module "*.json" {
-	const content: unknown;
+	const content: import("./integrations/supabase/types").Json;
 	export default content;
 }
 
 declare module "react-dom/client" {
+	import type { ReactNode } from "react";
 	export function createRoot(container: Element | DocumentFragment): {
-		render(children: unknown): void;
+		render(children: ReactNode): void;
 		unmount(): void;
 	};
 }

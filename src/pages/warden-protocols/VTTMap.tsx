@@ -517,7 +517,7 @@ const VTTMap = () => {
 											variant={drawMode === "ruler" ? "default" : "outline"}
 											size="sm"
 											onClick={() => setDrawMode("ruler")}
-											title="Ruler"
+											title="Measure Distance"
 										>
 											<Ruler className="w-4 h-4" />
 										</Button>

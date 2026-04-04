@@ -146,7 +146,7 @@ export function Auth() {
 			<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 				<div className="w-full max-w-md">
 					<SystemWindow
-						variant="arise"
+						variant="resurge"
 						title="AUTH (E2E)"
 						className="text-center"
 					>
@@ -155,7 +155,7 @@ export function Auth() {
 								<SystemSigilLogo size="md" variant="supreme" />
 							</div>
 							<div>
-								<h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
+								<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
 									Authentication in test mode
 								</h2>
 								<p className="text-muted-foreground font-heading text-sm">
@@ -184,7 +184,7 @@ export function Auth() {
 			<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 				<div className="w-full max-w-md">
 					<SystemWindow
-						variant="arise"
+						variant="resurge"
 						title="AUTH SETUP"
 						className="text-center"
 					>
@@ -193,7 +193,7 @@ export function Auth() {
 								<SystemSigilLogo size="md" variant="supreme" />
 							</div>
 							<div>
-								<h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
+								<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
 									Supabase configuration required
 								</h2>
 								<p className="text-muted-foreground font-heading text-sm">
@@ -225,12 +225,12 @@ export function Auth() {
 		return (
 			<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 				<div className="w-full max-w-md">
-					<SystemWindow variant="arise" className="text-center">
+					<SystemWindow variant="resurge" className="text-center">
 						<div className="p-8 space-y-6">
 							<div className="flex justify-center mb-4">
 								<SystemSigilLogo size="md" variant="supreme" />
 							</div>
-							<h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
+							<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
 								{isSignup
 									? "Choose Your Role"
 									: profile
@@ -327,7 +327,7 @@ export function Auth() {
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 			<div className="w-full max-w-md">
-				<SystemWindow variant="arise">
+				<SystemWindow variant="resurge">
 					<div className="p-6">
 						<div className="flex justify-center mb-6">
 							<SystemSigilLogo size="md" variant="supreme" />

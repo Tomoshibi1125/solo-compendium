@@ -41,7 +41,7 @@ export function CharacterArtPanel({
 	className,
 }: CharacterArtPanelProps) {
 	const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
-	const { asset, refresh } = useArtAsset("monster", characterId, "portrait");
+	const { asset, refresh } = useArtAsset("Anomaly", characterId, "portrait");
 	const currentArt = asset?.paths?.original || null;
 
 	const handleArtGenerated = (assetId: string) => {

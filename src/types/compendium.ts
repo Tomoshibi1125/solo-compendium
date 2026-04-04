@@ -8,26 +8,78 @@ export interface BaseCompendiumItem {
 	flavor?: string | Record<string, unknown> | null;
 	lore?: string | Record<string, unknown> | null;
 	source?: string | null;
+	source_book?: string | null;
 	tags?: string[] | null;
 	system_interaction?: string;
 	mechanics?: Record<string, unknown> | null;
+	rarity?: string | null;
+	level?: number | null;
+	cr?: string | null;
+	gate_rank?: string | null;
 }
 
-export interface CompendiumMonster extends BaseCompendiumItem {
+export interface CompendiumDeity extends BaseCompendiumItem {
+	rank: string; // e.g., "Grand Deity", "Lesser Deity", "Quasi-Deity"
+	directive: string; // Alignment equivalent
+	portfolio: string[];
+	sigil: string;
+	manifestation: string; // Favored weapon
+	specializations: string[]; // Domains
+	dogma: string[]; // Core tenets
+	worshippers: string; // Who follows them
+	temples: string; // Places of worship
+	home_realm: string; // Home plane equivalent
+	avatar_id?: string; // Reference to a Anomaly stat block
+	relationships?: Array<{
+		id: string;
+		name: string;
+		type: "ally" | "enemy" | "rival" | "servant" | "superior";
+		description: string;
+	}>;
+}
+
+export type CompendiumEntity =
+	| CompendiumJob
+	| CompendiumPath
+	| CompendiumRune
+	| CompendiumRelic
+	| CompendiumAnomaly
+	| CompendiumBackground
+	| CompendiumCondition
+	| CompendiumRegent
+	| CompendiumFeat
+	| CompendiumSkill
+	| CompendiumItem
+	| CompendiumSovereign
+	| CompendiumSpell
+	| CompendiumTechnique
+	| CompendiumLocation
+	| CompendiumTattoo
+	| CompendiumDeity;
+
+export interface CompendiumAnomaly extends BaseCompendiumItem {
 	type?: string;
 	rank?: string;
 	stats: {
 		ability_scores: {
 			strength: number;
-			dexterity: number;
-			constitution: number;
+			agility: number;
+			vitality: number;
 			intelligence: number;
-			wisdom: number;
-			charisma: number;
+			sense: number;
+			presence: number;
 		};
 		challenge_rating?: number;
 		proficiency_bonus?: number;
 		saving_throws?: Record<string, number>;
+	};
+	ability_scores?: {
+		strength: number;
+		agility: number;
+		vitality: number;
+		intelligence: number;
+		sense: number;
+		presence: number;
 	};
 	damage_resistances?: string[];
 	damage_immunities?: string[];
@@ -81,18 +133,11 @@ export interface CompendiumMonster extends BaseCompendiumItem {
 	armor_class?: number;
 	hit_points?: number;
 	speed?: string;
-	ability_scores?: {
-		strength: number;
-		dexterity: number;
-		constitution: number;
-		intelligence: number;
-		wisdom: number;
-		charisma: number;
-	};
+	size?: string;
+	challenge_rating?: string;
 }
 
 export interface CompendiumSpell extends BaseCompendiumItem {
-	level?: number;
 	school?: string;
 	castingTime?: string;
 	range?:
@@ -186,17 +231,18 @@ export interface CompendiumPower extends BaseCompendiumItem {
 	effects?: Record<string, unknown>;
 	limitations?: Record<string, unknown>;
 	higher_levels?: string;
-	source_book?: string;
 }
 
 export interface CompendiumTechnique extends BaseCompendiumItem {
 	type?: string;
 	style?: string;
 	level_requirement?: number;
-	activation?: {
-		type?: string;
-		cost?: string;
-	};
+	activation?:
+		| {
+				type?: string;
+				cost?: string;
+		  }
+		| string;
 	range?:
 		| {
 				type?: string;
@@ -231,7 +277,6 @@ export interface CompendiumRune extends BaseCompendiumItem {
 		| string;
 	rune_category: string;
 	rune_level: number;
-	rarity: "common" | "uncommon" | "rare" | "very_rare" | "legendary" | string;
 	effect_type: "active" | "passive" | "both" | string;
 	activation_action?: string | null;
 	activation_cost?: string | null;
@@ -250,12 +295,10 @@ export interface CompendiumRune extends BaseCompendiumItem {
 	can_inscribe_on?: string[] | null;
 	inscription_difficulty?: number | null;
 	discovery_lore?: string | null;
-	source_book?: string | null;
 }
 
 export interface CompendiumRelic extends BaseCompendiumItem {
 	type?: string;
-	rarity?: string;
 	attunement?: boolean;
 	properties?: string[] | Record<string, boolean | undefined>;
 	effects?: Record<string, unknown>;
@@ -276,7 +319,10 @@ export interface CompendiumRelic extends BaseCompendiumItem {
 }
 
 export interface CompendiumFeat extends BaseCompendiumItem {
-	prerequisites?: Record<string, unknown> | null;
+	prerequisites?:
+		| Record<string, string | number | string[] | undefined>
+		| string
+		| null;
 	benefits:
 		| string[]
 		| {
@@ -288,7 +334,6 @@ export interface CompendiumFeat extends BaseCompendiumItem {
 }
 
 export interface CompendiumTattoo extends BaseCompendiumItem {
-	rarity?: "common" | "uncommon" | "rare" | "very_rare" | "legendary" | string;
 	attunement?: boolean;
 	body_part?: string;
 	effects?: {
@@ -301,28 +346,36 @@ export interface CompendiumTattoo extends BaseCompendiumItem {
 
 export interface CompendiumItem extends BaseCompendiumItem {
 	type?: string;
-	rarity?: string;
+	item_type?: string;
 	attunement?: boolean | null;
-	properties?: Record<string, unknown> | null;
+	properties?: string[] | Record<string, unknown> | null;
+	simple_properties?: string[];
 	effects?: Record<string, unknown> | null;
 	limitations?: Record<string, unknown> | null;
 	stats?: Record<string, unknown> | null;
-	source_book?: string;
+	armor_class?: string | number;
+	armor_type?: string;
+	damage?: string;
+	damage_type?: string;
+	weapon_type?: string;
+	range?: string;
+	stealth_disadvantage?: boolean;
+	strength_requirement?: number;
+	weight?: string | number;
 }
 
 export interface CompendiumBackground extends BaseCompendiumItem {
 	skills?: string[];
-	rank?: string;
-	skill_proficiencies: string[];
-	tool_proficiencies: string[];
-	languages: string[];
-	equipment: string[];
-	features: Array<{
+	skill_proficiencies?: string[];
+	tool_proficiencies?: string[];
+	languages?: string[];
+	equipment?: string[];
+	features?: Array<{
 		name: string;
 		description: string;
 	}>;
 	limitations?: Record<string, unknown> | null;
-	type: string;
+	type?: string;
 }
 
 export interface CompendiumJob extends BaseCompendiumItem {
@@ -343,11 +396,11 @@ export interface CompendiumJob extends BaseCompendiumItem {
 	toolProficiencies?: string[];
 	armorProficiencies?: string[];
 	weaponProficiencies?: string[];
+	armor_proficiencies?: string[];
+	weapon_proficiencies?: string[];
 	skillChoices?: string[];
-	flavor?: string | Record<string, unknown> | null;
-	lore?: string | Record<string, unknown> | null;
 	system_interaction?: string;
-	type: string;
+	type?: string;
 	awakeningFeatures?: Array<{
 		name: string;
 		description: string;
@@ -356,48 +409,111 @@ export interface CompendiumJob extends BaseCompendiumItem {
 	jobTraits?: Array<{
 		name: string;
 		description: string;
-		type: string;
+		type?: string;
 		frequency?: string;
 		dc?: number;
 	}>;
 	classFeatures?: Array<{ level: number; name: string; description: string }>;
-	abilities?: string[];
+	abilities?: Array<{
+		name: string;
+		description: string;
+		level?: number;
+		type?: string;
+		frequency?: string;
+	}>;
 	stats?: {
 		strength: number;
-		dexterity: number;
-		constitution: number;
+		agility: number;
+		vitality: number;
 		intelligence: number;
-		wisdom: number;
-		charisma: number;
+		sense: number;
+		presence: number;
 	};
+	abilityScoreImprovements?:
+		| number[]
+		| {
+				strength?: number;
+				agility?: number;
+				vitality?: number;
+				intelligence?: number;
+				sense?: number;
+				presence?: number;
+		  };
 }
 
 export interface CompendiumPath extends BaseCompendiumItem {
 	job_id?: string;
+	features?: Array<{
+		level: number;
+		name: string;
+		description: string;
+		[key: string]: unknown;
+	}>;
+	type?: string;
 }
 
 export interface CompendiumRegent extends BaseCompendiumItem {
 	title?: string;
+	rank?: string;
+	type?: string;
+	hit_dice?: string;
+	primary_ability?: string[];
+	saving_throws?: string[];
+	skill_proficiencies?: string[];
+	armor_proficiencies?: string[];
+	weapon_proficiencies?: string[];
+	tool_proficiencies?: string[];
 	regent_requirements?: {
 		level?: number;
+		abilities?: Record<string, number>;
 		quest_completion?: string;
+		warden_approval?: boolean;
+	};
+	requirements?: {
+		quest_completion: string;
+		warden_verification: boolean;
+		level?: number;
 	};
 	class_features?: Array<{
+		level: number;
 		name: string;
 		description: string;
+		type?: string;
+		frequency?: string;
 	}>;
 	features?: Array<{
 		name: string;
 		description: string;
+		power_level?: number;
 	}>;
-	description?: string;
+	spellcasting?: {
+		ability: string;
+		spell_slots: Record<string, number[]>;
+		cantrips_known?: number[];
+		spells_known?: number[];
+		spell_preparation?: boolean;
+		additional_spells?: string[];
+	};
+	progression_table?: Record<
+		string,
+		{
+			features_gained: string[];
+			abilities_improved: string[];
+		}
+	>;
+	mechanics?: {
+		stat_bonuses?: Record<string, number>;
+		special_abilities?: string[];
+		restrictions?: string[];
+		[key: string]: unknown;
+	};
 }
 
 export interface CompendiumLocation extends BaseCompendiumItem {
 	type?: string;
-	encounters: string[];
-	treasures: string[];
-	rank: string;
+	encounters?: string[];
+	treasures?: string[];
+	rank?: string;
 }
 
 export interface CompendiumCondition extends BaseCompendiumItem {
@@ -413,4 +529,16 @@ export interface CompendiumSkill extends BaseCompendiumItem {
 		expert?: string[];
 		master?: string[];
 	};
+}
+
+export interface CompendiumSovereign extends BaseCompendiumItem {
+	job_id?: string;
+	path_id?: string;
+	regent_a_id?: string;
+	regent_b_id?: string;
+	fusion_theme?: string;
+	fusion_description?: string;
+	prerequisites?: string;
+	is_template?: boolean;
+	is_ai_generated?: boolean;
 }

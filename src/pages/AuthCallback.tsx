@@ -134,7 +134,7 @@ export default function AuthCallback() {
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 			<div className="w-full max-w-md">
-				<SystemWindow variant="arise">
+				<SystemWindow variant="resurge">
 					<div className="p-6">
 						<div className="flex justify-center mb-6">
 							<SystemSigilLogo size="md" variant="supreme" />

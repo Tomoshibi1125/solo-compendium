@@ -121,7 +121,7 @@ export function calculateCharacterStats(
 		skills[skill] = bonus;
 	});
 
-	// Calculate initiative (AGI modifier, equivalent to 5e DEX)
+	// Calculate initiative (AGI modifier, equivalent to 5e AGI)
 	const initiative = abilityModifiers.AGI;
 
 	// AC calculation (base 10 + AGI, can be modified by armor)
@@ -158,10 +158,10 @@ export function calculateHPMax(
 	hitDieSize: number,
 	conModifier: number,
 ): number {
-	// First level: full hit die + CON modifier (standard 5e)
+	// First level: full hit die + VIT modifier (standard 5e)
 	const firstLevelHP = hitDieSize + conModifier;
 
-	// Subsequent levels: average roll + CON modifier
+	// Subsequent levels: average roll + VIT modifier
 	const subsequentLevels = level - 1;
 	const averagePerLevel = Math.floor(hitDieSize / 2) + 1 + conModifier;
 	const subsequentHP = subsequentLevels * averagePerLevel;

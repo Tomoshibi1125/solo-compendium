@@ -87,7 +87,7 @@ export function RollHistoryPanel({
 										key={roll.id}
 										className={cn(
 											"flex items-center gap-3 p-3 rounded-lg bg-background/50 border border-muted/30",
-											nat20 && "border-arise/50 bg-arise/5",
+											nat20 && "border-resurge/50 bg-resurge/5",
 											nat1 && "border-destructive/50 bg-destructive/5",
 										)}
 									>
@@ -109,7 +109,7 @@ export function RollHistoryPanel({
 													{config.label}
 												</Badge>
 												{nat20 && (
-													<Badge className="bg-arise text-white text-xs">
+													<Badge className="bg-resurge text-white text-xs">
 														NAT 20!
 													</Badge>
 												)}
@@ -133,7 +133,7 @@ export function RollHistoryPanel({
 											<div
 												className={cn(
 													"text-xl font-bold",
-													nat20 && "text-arise",
+													nat20 && "text-resurge",
 													nat1 && "text-destructive",
 													!nat20 && !nat1 && "text-foreground",
 												)}

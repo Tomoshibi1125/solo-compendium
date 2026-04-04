@@ -5,7 +5,7 @@ export interface Token {
 	id: string;
 	name: string;
 	description: string;
-	type: "player" | "monster" | "boss" | "npc" | "merchant" | "guard";
+	type: "player" | "Anomaly" | "boss" | "npc" | "merchant" | "guard";
 	image: string;
 	stats?: {
 		health?: number;
@@ -30,12 +30,12 @@ const tokensCompendium: Token[] = [
 		friendly: true,
 	},
 	{
-		id: "monster-token",
+		id: "Anomaly-token",
 		name: "Veil Demon",
 		description:
 			"Malevolent creature born from raw veil energy. Highly aggressive and dangerous.",
-		type: "monster",
-		image: "/generated/tokens/monster-token.webp",
+		type: "Anomaly",
+		image: "/generated/tokens/Anomaly-token.webp",
 		stats: { health: 100, attack: 60, defense: 40, speed: 50 },
 		abilities: ["Umbral Claw", "Dark Vision", "Fear"],
 		friendly: false,

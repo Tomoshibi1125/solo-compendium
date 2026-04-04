@@ -731,12 +731,12 @@
 		gap: 1rem;
 	}
 
-	.encounter-builder-monsters {
+	.encounter-builder-Anomalies {
 		grid-template-columns: 1fr;
 		gap: 0.75rem;
 	}
 
-	.encounter-builder-monster-card {
+	.encounter-builder-Anomaly-card {
 		padding: 0.75rem;
 	}
 

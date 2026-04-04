@@ -1,1558 +1,910 @@
-// Items Compendium - Part 5
-// Generated with full admin privileges
-// System Ascendant themed items with images
-
 export const items = [
 	{
-		id: "item-0881",
-		name: "Shadow Bow of Supreme Power",
+		id: "item-p5-1",
+		name: "Chronos-Plate Cloak",
 		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0881.webp",
-		stats: {
-			attack: 63,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 64080,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["You gain +1 to initiative while carrying this weapon"],
-			value: 64080,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0882",
-		name: "Eternal Plate of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0882.webp",
-		stats: {
-			defense: 148,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 52459,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Reduces damage from critical hits by your proficiency bonus",
-				"You can cast Shield once per long rest while wearing this armor",
-			],
-			value: 52459,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0883",
-		name: "Void Elixir of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0883.webp",
-		stats: {
-			health: 591,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 10105,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Removes one condition affecting the user",
-				"Grants advantage on ability checks for 1 hour",
-				"Restores 2d4+2 hit points when consumed",
-			],
-			value: 10105,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0884",
-		name: "Abyssal Amulet of Supreme Power",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0884.webp",
-		stats: {
-			mana: 52,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 52872,
-		weight: 1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 52872,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0885",
-		name: "Demonic Protocol of Supreme Power",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
+			"A fragment of the original System code. This cloak pulses with aetheric resonance.",
 		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0885.webp",
-		stats: {
-			mana: 249,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 71135,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You gain proficiency in one saving throw while attuned",
-				"You can cast Detect Magic at will while wearing this",
-			],
-			value: 71135,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0886",
-		name: "Celestial Staff of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
 		type: "weapon",
-		image: "/generated/compendium/items/item-0886.webp",
-		stats: {
-			attack: 103,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 96226,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Deals an extra 1d6 elemental damage on a critical hit"],
-			value: 96226,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0887",
-		name: "Divine Cuirass of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0887.webp",
-		stats: {
-			defense: 108,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 47346,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p5-1.webp",
 		effects: {
 			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 47346,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0888",
-		name: "Ancient Essence of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0888.webp",
-		stats: {
-			health: 267,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 98101,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants advantage on ability checks for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Restores 2d4+2 hit points when consumed",
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of psychic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
 			],
-			value: 98101,
 		},
 		attunement: true,
+		weight: 4,
+		value: 45219,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0889",
-		name: "Forgotten Ring of Supreme Power",
+		id: "item-p5-2",
+		name: "Arctic-Shard Circlet",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
+			"Extracted from an S-Rank frost gate. This circlet pulses with glacial resonance.",
+		rarity: "rare",
+		type: "armor",
+		image: "/generated/compendium/items/item-p5-2.webp",
+		effects: {
+			passive: [
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Glacial Resonance Burst",
+					description:
+						"Unleash a wave of cold energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 5,
+		value: 10277,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
+		mechanics: {
+			system_interaction:
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-3",
+		name: "Radiant-Steel Plate",
+		description:
+			"Found in a solar-synchronized floating gate. This plate pulses with solar resonance.",
+		rarity: "very_rare",
 		type: "ring",
-		image: "/generated/compendium/items/item-0889.webp",
-		stats: {
-			mana: 106,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 82446,
-		weight: 1,
+		image: "/generated/compendium/items/item-p5-3.webp",
 		effects: {
 			passive: [
-				"Grants +1 to one ability score while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
 			],
-			value: 82446,
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 3,
+		value: 38138,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0890",
-		name: "Cursed Neural Chip of Supreme Power",
+		id: "item-p5-4",
+		name: "Basalt Plate",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0890.webp",
-		stats: {
-			mana: 236,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 86159,
-		weight: 0.1,
+			"Immune to all base-level kinetic force. This plate pulses with titanic resonance.",
+		rarity: "common",
+		type: "armor",
+		image: "/generated/compendium/items/item-p5-4.webp",
 		effects: {
 			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
-			value: 86159,
+			active: [],
 		},
-		attunement: true,
+		attunement: false,
+		weight: 3,
+		value: 30013,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0891",
-		name: "Blessed Warhammer of Supreme Power",
+		id: "item-p5-5",
+		name: "Thunder-Clap Circlet",
 		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
+			"Crackles with residual kinetic energy. This circlet pulses with storm resonance.",
+		rarity: "epic",
+		type: "armor",
+		image: "/generated/compendium/items/item-p5-5.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of thunder energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 4,
+		value: 18254,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-6",
+		name: "White-Hot Circlet",
+		description:
+			"Blinds those with unworthy souls. This circlet pulses with solar resonance.",
 		rarity: "common",
 		type: "weapon",
-		image: "/generated/compendium/items/item-0891.webp",
-		stats: {
-			attack: 152,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 46368,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
+		image: "/generated/compendium/items/item-p5-6.webp",
 		effects: {
-			passive: ["Glows faintly when enemies are within 60 feet"],
-			value: 46368,
+			passive: [
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [],
 		},
+		attunement: false,
+		weight: 2,
+		value: 46148,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0892",
-		name: "Sacred Shrouds of Supreme Power",
+		id: "item-p5-7",
+		name: "Solar-Forged Circlet",
 		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
+			"Blinds those with unworthy souls. This circlet pulses with solar resonance.",
 		rarity: "uncommon",
 		type: "armor",
-		image: "/generated/compendium/items/item-0892.webp",
-		stats: {
-			defense: 162,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 37269,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p5-7.webp",
 		effects: {
 			passive: [
-				"Grants advantage on saving throws against one damage type",
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
 			],
-			value: 37269,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0893",
-		name: "Profane Capsule of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0893.webp",
-		stats: {
-			health: 360,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 16234,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Grants advantage on ability checks for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-			],
-			value: 16234,
+			active: [],
 		},
 		attunement: true,
+		weight: 2,
+		value: 13540,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0894",
-		name: "Mystic Pendant of Supreme Power",
+		id: "item-p5-8",
+		name: "Light-Bringer Shield",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0894.webp",
-		stats: {
-			mana: 151,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 28643,
-		weight: 1,
-		effects: {
-			passive: [
-				"You can cast Detect Magic at will while wearing this",
-				"Grants darkvision 60 feet if you don't already have it",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 28643,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0895",
-		name: "Arcane Data Slate of Supreme Power",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0895.webp",
-		stats: {
-			mana: 206,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 99117,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 99117,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0896",
-		name: "Infernal Dagger of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
+			"Found in a solar-synchronized floating gate. This shield pulses with solar resonance.",
+		rarity: "very_rare",
 		type: "weapon",
-		image: "/generated/compendium/items/item-0896.webp",
-		stats: {
-			attack: 147,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 40709,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Deals an extra 1d6 elemental damage on a critical hit"],
-			value: 40709,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0897",
-		name: "Frozen Raiment of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0897.webp",
-		stats: {
-			defense: 189,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 93830,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p5-8.webp",
 		effects: {
 			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"You can cast Shield once per long rest while wearing this armor",
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
 			],
-			value: 93830,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0898",
-		name: "Thunder Core of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0898.webp",
-		stats: {
-			health: 213,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 60072,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Restores 2d4+2 hit points when consumed",
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
 			],
-			value: 60072,
 		},
 		attunement: true,
+		weight: 5,
+		value: 32054,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0899",
-		name: "Holy Earring of Supreme Power",
+		id: "item-p5-9",
+		name: "Ice-Veined Boots",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
+			"Cold enough to freeze the blood in mid-air. This boots pulses with glacial resonance.",
+		rarity: "common",
+		type: "armor",
+		image: "/generated/compendium/items/item-p5-9.webp",
+		effects: {
+			passive: [
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 4,
+		value: 4900,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
+		mechanics: {
+			system_interaction:
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-10",
+		name: "Core-Forged Plate",
+		description:
+			"Inscribed with the gravity-runes of a Titan. This plate pulses with titanic resonance.",
+		rarity: "common",
+		type: "consumable",
+		image: "/generated/compendium/items/item-p5-10.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 1,
+		value: 23425,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-11",
+		name: "Core-Forged Cloak",
+		description:
+			"Inscribed with the gravity-runes of a Titan. This cloak pulses with titanic resonance.",
+		rarity: "uncommon",
 		type: "ring",
-		image: "/generated/compendium/items/item-0899.webp",
-		stats: {
-			mana: 61,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 17695,
-		weight: 1,
+		image: "/generated/compendium/items/item-p5-11.webp",
 		effects: {
 			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Once per day, reroll a failed saving throw",
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
-			value: 17695,
+			active: [],
 		},
 		attunement: true,
+		weight: 2,
+		value: 30009,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0900",
-		name: "Dark Scroll of Supreme Power",
+		id: "item-p5-12",
+		name: "Aether-Bound Greatsword",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0900.webp",
-		stats: {
-			mana: 222,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 67825,
-		weight: 0.1,
+			"Discovered in a stable Rift fracture. This greatsword pulses with aetheric resonance.",
+		rarity: "uncommon",
+		type: "wand",
+		image: "/generated/compendium/items/item-p5-12.webp",
 		effects: {
 			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
-				"Grants +1 to one ability score while attuned",
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 67825,
+			active: [],
 		},
 		attunement: true,
+		weight: 5,
+		value: 2628,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0901",
-		name: "Shadow Saber of Supreme Power",
+		id: "item-p5-13",
+		name: "Nightfall Blade",
 		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
+			"Recovered from the depths of a Shadow Rift. This blade pulses with void resonance.",
+		rarity: "epic",
+		type: "consumable",
+		image: "/generated/compendium/items/item-p5-13.webp",
+		effects: {
+			passive: [
+				"You gain resistance to psychic damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Void Resonance Burst",
+					description:
+						"Unleash a wave of psychic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 4,
+		value: 21891,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Void.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-14",
+		name: "Solar-Forged Circlet",
+		description:
+			"Blinds those with unworthy souls. This circlet pulses with solar resonance.",
 		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0901.webp",
-		stats: {
-			attack: 196,
+		type: "accessory",
+		image: "/generated/compendium/items/item-p5-14.webp",
+		effects: {
+			passive: [
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [],
 		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 60046,
+		attunement: false,
 		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["You gain +1 to initiative while carrying this weapon"],
-			value: 60046,
-		},
+		value: 45802,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0902",
-		name: "Eternal Vest of Supreme Power",
+		id: "item-p5-15",
+		name: "Granite Rod",
 		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0902.webp",
-		stats: {
-			defense: 137,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 74100,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+			"Inscribed with the gravity-runes of a Titan. This rod pulses with titanic resonance.",
+		rarity: "very_rare",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p5-15.webp",
 		effects: {
 			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"You can cast Shield once per long rest while wearing this armor",
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
-			value: 74100,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0903",
-		name: "Void Stim of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0903.webp",
-		stats: {
-			health: 123,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 35706,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Removes one condition affecting the user",
-				"Grants advantage on ability checks for 1 hour",
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
 			],
-			value: 35706,
 		},
 		attunement: true,
+		weight: 2,
+		value: 14783,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0904",
-		name: "Abyssal Bracer of Supreme Power",
+		id: "item-p5-16",
+		name: "Static Cowl",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
+			"Crackles with residual kinetic energy. This cowl pulses with storm resonance.",
+		rarity: "common",
+		type: "wand",
+		image: "/generated/compendium/items/item-p5-16.webp",
+		effects: {
+			passive: [
+				"You gain resistance to lightning damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 4,
+		value: 5914,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-17",
+		name: "Mountain-Soul Greatsword",
+		description:
+			"Immune to all base-level kinetic force. This greatsword pulses with titanic resonance.",
+		rarity: "common",
+		type: "wand",
+		image: "/generated/compendium/items/item-p5-17.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 5,
+		value: 37294,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-18",
+		name: "White-Hot Cloak",
+		description:
+			"Blinds those with unworthy souls. This cloak pulses with solar resonance.",
+		rarity: "common",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p5-18.webp",
+		effects: {
+			passive: [
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 2,
+		value: 29737,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-19",
+		name: "Blood-Iron Circlet",
+		description:
+			"A dark soul-contract made in blood. This circlet pulses with blood resonance.",
+		rarity: "very_rare",
+		type: "armor",
+		image: "/generated/compendium/items/item-p5-19.webp",
+		effects: {
+			passive: [
+				"You gain resistance to slashing damage.",
+				"While using this item, your Strength increases by 1.",
+			],
+			active: [
+				{
+					name: "Blood Resonance Burst",
+					description:
+						"Unleash a wave of slashing energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 1,
+		value: 30742,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Blood.",
+		mechanics: {
+			system_interaction:
+				"Deals slashing damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-20",
+		name: "Light-Bringer Shield",
+		description:
+			"Blinds those with unworthy souls. This shield pulses with solar resonance.",
+		rarity: "rare",
 		type: "accessory",
-		image: "/generated/compendium/items/item-0904.webp",
-		stats: {
-			mana: 177,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 100567,
-		weight: 1,
+		image: "/generated/compendium/items/item-p5-20.webp",
 		effects: {
 			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"Once per day, reroll a failed saving throw",
-				"You can cast Detect Magic at will while wearing this",
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
 			],
-			value: 100567,
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 4,
+		value: 23883,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0905",
-		name: "Demonic Tablet of Supreme Power",
+		id: "item-p5-21",
+		name: "Core-Forged Plate",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0905.webp",
-		stats: {
-			mana: 117,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 74200,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Once per day, reroll a failed saving throw",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-			],
-			value: 74200,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0906",
-		name: "Celestial Blade of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0906.webp",
-		stats: {
-			attack: 95,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 58028,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Glows faintly when enemies are within 60 feet"],
-			value: 58028,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0907",
-		name: "Divine Mail of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0907.webp",
-		stats: {
-			defense: 51,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 71827,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
-				"Reduces damage from critical hits by your proficiency bonus",
-			],
-			value: 71827,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0908",
-		name: "Ancient Vial of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0908.webp",
-		stats: {
-			health: 437,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 63863,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Removes one condition affecting the user",
-			],
-			value: 63863,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0909",
-		name: "Forgotten Circlet of Supreme Power",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
+			"Inscribed with the gravity-runes of a Titan. This plate pulses with titanic resonance.",
 		rarity: "epic",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p5-21.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 5,
+		value: 47300,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-22",
+		name: "Solar-Forged Cloak",
+		description:
+			"Blinds those with unworthy souls. This cloak pulses with solar resonance.",
+		rarity: "common",
+		type: "scroll",
+		image: "/generated/compendium/items/item-p5-22.webp",
+		effects: {
+			passive: [
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 4,
+		value: 7412,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p5-23",
+		name: "Aether-Bound Vial",
+		description:
+			"Bypasses the dimensional divide entirely. This vial pulses with aetheric resonance.",
+		rarity: "uncommon",
 		type: "accessory",
-		image: "/generated/compendium/items/item-0909.webp",
-		stats: {
-			mana: 222,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 79602,
-		weight: 1,
+		image: "/generated/compendium/items/item-p5-23.webp",
 		effects: {
 			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 79602,
+			active: [],
 		},
 		attunement: true,
+		weight: 4,
+		value: 5770,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0910",
-		name: "Cursed Script of Supreme Power",
+		id: "item-p5-24",
+		name: "Granite Vial",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0910.webp",
-		stats: {
-			mana: 65,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 19446,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"Once per day, reroll a failed saving throw",
-				"You gain proficiency in one saving throw while attuned",
-			],
-			value: 19446,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0911",
-		name: "Blessed Bow of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0911.webp",
-		stats: {
-			attack: 59,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 10443,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Deals an extra 1d6 elemental damage on a critical hit"],
-			value: 10443,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0912",
-		name: "Sacred Plate of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0912.webp",
-		stats: {
-			defense: 108,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 91490,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
-				"Reduces damage from critical hits by your proficiency bonus",
-			],
-			value: 91490,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0913",
-		name: "Profane Elixir of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0913.webp",
-		stats: {
-			health: 568,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 3805,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Removes one condition affecting the user",
-			],
-			value: 3805,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0914",
-		name: "Mystic Amulet of Supreme Power",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
+			"Immune to all base-level kinetic force. This vial pulses with titanic resonance.",
 		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0914.webp",
-		stats: {
-			mana: 218,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 42449,
-		weight: 1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You gain proficiency in one saving throw while attuned",
-				"You can cast Detect Magic at will while wearing this",
-			],
-			value: 42449,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0915",
-		name: "Arcane Protocol of Supreme Power",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0915.webp",
-		stats: {
-			mana: 73,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 11806,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-			],
-			value: 11806,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0916",
-		name: "Infernal Staff of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0916.webp",
-		stats: {
-			attack: 55,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 58457,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["You gain +1 to initiative while carrying this weapon"],
-			value: 58457,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0917",
-		name: "Frozen Cuirass of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
 		type: "armor",
-		image: "/generated/compendium/items/item-0917.webp",
-		stats: {
-			defense: 166,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 43807,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p5-24.webp",
 		effects: {
 			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"Grants advantage on saving throws against one damage type",
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
-			value: 43807,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0918",
-		name: "Thunder Essence of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0918.webp",
-		stats: {
-			health: 538,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 46066,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Restores 2d4+2 hit points when consumed",
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
 			],
-			value: 46066,
 		},
 		attunement: true,
+		weight: 5,
+		value: 23197,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0919",
-		name: "Holy Ring of Supreme Power",
+		id: "item-p5-25",
+		name: "Blood-Iron Gauntlets",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "ring",
-		image: "/generated/compendium/items/item-0919.webp",
-		stats: {
-			mana: 87,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 14637,
-		weight: 1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"You gain proficiency in one saving throw while attuned",
-			],
-			value: 14637,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0920",
-		name: "Dark Neural Chip of Supreme Power",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
+			"Hungers for the life force of its wielder. This gauntlets pulses with blood resonance.",
 		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0920.webp",
-		stats: {
-			mana: 209,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 55639,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Once per day, reroll a failed saving throw",
-				"Grants +1 to one ability score while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-			],
-			value: 55639,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0921",
-		name: "Shadow Warhammer of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0921.webp",
-		stats: {
-			attack: 109,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 4326,
-		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["You gain +1 to initiative while carrying this weapon"],
-			value: 4326,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0922",
-		name: "Eternal Shrouds of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
 		type: "armor",
-		image: "/generated/compendium/items/item-0922.webp",
-		stats: {
-			defense: 141,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 93922,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p5-25.webp",
 		effects: {
 			passive: [
-				"Grants advantage on saving throws against one damage type",
-				"Grants resistance to one elemental damage type while attuned",
+				"You gain resistance to necrotic damage.",
+				"While using this item, your Strength increases by 1.",
 			],
-			value: 93922,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0923",
-		name: "Void Capsule of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0923.webp",
-		stats: {
-			health: 187,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 7287,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Restores 2d4+2 hit points when consumed",
-				"Removes one condition affecting the user",
-				"Grants temporary hit points equal to your level for 1 hour",
+			active: [
+				{
+					name: "Blood Resonance Burst",
+					description:
+						"Unleash a wave of necrotic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
 			],
-			value: 7287,
 		},
 		attunement: true,
+		weight: 5,
+		value: 27743,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Blood.",
+		mechanics: {
+			system_interaction:
+				"Deals necrotic damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0924",
-		name: "Abyssal Pendant of Supreme Power",
+		id: "item-p5-26",
+		name: "Mountain-Soul Cowl",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
+			"Immune to all base-level kinetic force. This cowl pulses with titanic resonance.",
 		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0924.webp",
-		stats: {
-			mana: 106,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 68245,
-		weight: 1,
+		type: "consumable",
+		image: "/generated/compendium/items/item-p5-26.webp",
 		effects: {
 			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Once per day, reroll a failed saving throw",
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
-			value: 68245,
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 4,
+		value: 46858,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0925",
-		name: "Demonic Data Slate of Supreme Power",
+		id: "item-p5-27",
+		name: "Bolt-Struck Cowl",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0925.webp",
-		stats: {
-			mana: 206,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 84060,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Once per day, reroll a failed saving throw",
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
-			],
-			value: 84060,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0926",
-		name: "Celestial Dagger of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0926.webp",
-		stats: {
-			attack: 77,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 90917,
-		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["The weapon returns to your hand when thrown (range 20/60)"],
-			value: 90917,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0927",
-		name: "Divine Raiment of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
+			"Fast as a blink of an eye. This cowl pulses with storm resonance.",
+		rarity: "epic",
 		type: "armor",
-		image: "/generated/compendium/items/item-0927.webp",
-		stats: {
-			defense: 133,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 23611,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p5-27.webp",
 		effects: {
 			passive: [
-				"Reduces damage from critical hits by your proficiency bonus",
-				"Grants resistance to one elemental damage type while attuned",
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
 			],
-			value: 23611,
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of thunder energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
+		attunement: true,
+		weight: 5,
+		value: 49586,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0928",
-		name: "Ancient Core of Supreme Power",
+		id: "item-p5-28",
+		name: "Chronos-Plate Cowl",
 		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
+			"A fragment of the original System code. This cowl pulses with aetheric resonance.",
+		rarity: "very_rare",
 		type: "consumable",
-		image: "/generated/compendium/items/item-0928.webp",
-		stats: {
-			health: 318,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 79178,
-		weight: 0.5,
+		image: "/generated/compendium/items/item-p5-28.webp",
 		effects: {
 			passive: [
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Grants advantage on ability checks for 1 hour",
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 79178,
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of force energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 2,
+		value: 24093,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0929",
-		name: "Forgotten Earring of Supreme Power",
+		id: "item-p5-29",
+		name: "Lightning-Carved Blade",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "ring",
-		image: "/generated/compendium/items/item-0929.webp",
-		stats: {
-			mana: 231,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 75896,
-		weight: 1,
-		effects: {
-			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"Grants +1 to one ability score while attuned",
-				"Once per day, reroll a failed saving throw",
-			],
-			value: 75896,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0930",
-		name: "Cursed Scroll of Supreme Power",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0930.webp",
-		stats: {
-			mana: 76,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 52803,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-			],
-			value: 52803,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0931",
-		name: "Blessed Saber of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
+			"Fast as a blink of an eye. This blade pulses with storm resonance.",
 		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0931.webp",
-		stats: {
-			attack: 168,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 100782,
-		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["Once per day, the weapon can cast a cantrip-level effect"],
-			value: 100782,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0932",
-		name: "Sacred Vest of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0932.webp",
-		stats: {
-			defense: 137,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 15223,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
-				"Reduces damage from critical hits by your proficiency bonus",
-			],
-			value: 15223,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0933",
-		name: "Profane Stim of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
 		type: "consumable",
-		image: "/generated/compendium/items/item-0933.webp",
-		stats: {
-			health: 542,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 61501,
-		weight: 0.5,
+		image: "/generated/compendium/items/item-p5-29.webp",
 		effects: {
 			passive: [
-				"Removes one condition affecting the user",
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Restores 2d4+2 hit points when consumed",
+				"You gain resistance to lightning damage.",
+				"While using this item, your Intelligence increases by 1.",
 			],
-			value: 61501,
+			active: [],
 		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0934",
-		name: "Mystic Bracer of Supreme Power",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0934.webp",
-		stats: {
-			mana: 58,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 16904,
+		attunement: false,
 		weight: 1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 16904,
-		},
-		attunement: true,
+		value: 21994,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0935",
-		name: "Arcane Tablet of Supreme Power",
+		id: "item-p5-30",
+		name: "Chronos-Plate Greatsword",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0935.webp",
-		stats: {
-			mana: 163,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 18095,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Once per day, reroll a failed saving throw",
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
-			],
-			value: 18095,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0936",
-		name: "Infernal Blade of Supreme Power",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
+			"Discovered in a stable Rift fracture. This greatsword pulses with aetheric resonance.",
+		rarity: "epic",
 		type: "weapon",
-		image: "/generated/compendium/items/item-0936.webp",
-		stats: {
-			attack: 126,
+		image: "/generated/compendium/items/item-p5-30.webp",
+		effects: {
+			passive: [
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of force energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 32948,
+		attunement: true,
 		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["The weapon returns to your hand when thrown (range 20/60)"],
-			value: 32948,
-		},
+		value: 45410,
 		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0937",
-		name: "Frozen Mail of Supreme Power",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0937.webp",
-		stats: {
-			defense: 159,
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
 		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 77369,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
-				"Grants resistance to one elemental damage type while attuned",
-			],
-			value: 77369,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0938",
-		name: "Thunder Vial of Supreme Power",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0938.webp",
-		stats: {
-			health: 245,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 91560,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants advantage on ability checks for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Removes one condition affecting the user",
-			],
-			value: 91560,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0939",
-		name: "Holy Circlet of Supreme Power",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0939.webp",
-		stats: {
-			mana: 113,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 16556,
-		weight: 1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Once per day, reroll a failed saving throw",
-			],
-			value: 16556,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0940",
-		name: "Dark Script of Supreme Power",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0940.webp",
-		stats: {
-			mana: 71,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 33538,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 33538,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
 	},
 ];

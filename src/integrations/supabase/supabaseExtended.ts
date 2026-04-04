@@ -67,7 +67,7 @@ export interface EquipmentProperties {
 
 /** Equipment with extended fields used by AddEquipmentDialog and stat computation */
 export interface EquipmentExtended extends EquipmentRow {
-	/** AC formula string (e.g. "13 + DEX" for chain shirt) */
+	/** AC formula string (e.g. "13 + AGI" for chain shirt) */
 	ac_formula?: string;
 	/** Generic type indicator (weapon, armor, etc.) */
 	type?: string;
@@ -87,7 +87,7 @@ export interface EquipmentExtended extends EquipmentRow {
 /** Character feature with homebrew support and formula fields */
 export interface FeatureExtended extends FeatureRow {
 	// homebrew_id and modifiers already in FeatureRow
-	/** Formula for computing uses (e.g. "PB + CHA") */
+	/** Formula for computing uses (e.g. "PB + PRE") */
 	uses_formula?: string;
 }
 

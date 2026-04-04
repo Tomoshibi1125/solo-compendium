@@ -10,7 +10,7 @@
 	--font-heading: "Rajdhani", sans-serif;
 	--font-body: "Space Grotesk", sans-serif;
 	--font-system: "Share Tech Mono", monospace;
-	--font-arise: "Orbitron", monospace;
+	--font-resurge: "Orbitron", monospace;
 
 	/* ── System Ascendant: Protocol Palette ────────────────── */
 	--color-shadow-blue: hsl(var(--shadow-blue));
@@ -42,7 +42,7 @@
 
 	--color-hunter-blue: hsl(var(--hunter-blue));
 	--color-mana-cyan: hsl(var(--mana-cyan));
-	--color-arise-violet: hsl(var(--arise-violet));
+	--color-resurge-violet: hsl(var(--resurge-violet));
 	--color-system-green: hsl(var(--system-green));
 	--color-system-glow: hsl(var(--system-glow));
 
@@ -197,10 +197,10 @@
 	/* Cool ascendant blue */
 	--mana-cyan: 195 95% 60%;
 	/* Arcane icy cyan */
-	--arise-violet: 280 85% 70%;
-	/* Arise / ascension violet */
+	--resurge-violet: 280 85% 70%;
+	/* Resurge / ascension violet */
 	--system-green: 160 85% 50%;
-	/* System matrix teal-green */
+	/* System Lattice teal-green */
 	--system-glow: 160 95% 60%;
 	/* Bright icy system pulse */
 	--void-black: 265 40% 2%;
@@ -414,7 +414,7 @@ h3 {
 	}
 }
 
-@keyframes arise-glow {
+@keyframes resurge-glow {
 	0%,
 	100% {
 		filter: drop-shadow(0 0 5px hsl(var(--primary) / 0.5));
@@ -492,7 +492,7 @@ h3 {
 	animation: digital-flicker 8s linear infinite;
 }
 
-.arise-text {
+.resurge-text {
 	font-family: "JetBrains Mono", monospace;
 	text-transform: uppercase;
 	letter-spacing: 0.3em;
@@ -500,7 +500,7 @@ h3 {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
-	animation: arise-glow 3s ease-in-out infinite;
+	animation: resurge-glow 3s ease-in-out infinite;
 }
 
 /* Print Styles - Chronicle of Ascendants */
@@ -582,7 +582,7 @@ h3 {
 	.gradient-text-shadow,
 	.gradient-text-system,
 	.gradient-text-regent,
-	.gradient-text-arise,
+	.gradient-text-resurge,
 	.gradient-text-supreme {
 		-webkit-text-fill-color: black;
 

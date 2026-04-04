@@ -509,7 +509,7 @@ export function useCharacterDerivedStats(
 			return acc;
 		}, {});
 
-		// System Protocol: Absolute Reification and Master Matrix Mapping
+		// System Protocol: Absolute Reification and Master Lattice Mapping
 		const protocolData: CharacterBaseData = {
 			id: character.id,
 			name: character.name,

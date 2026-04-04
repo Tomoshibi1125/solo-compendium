@@ -1,6 +1,17 @@
+import { useDrag } from "@use-gesture/react";
 import type { LucideIcon } from "lucide-react";
-import { Copy, Shield, Sun, Swords, Wand2, Zap } from "lucide-react";
-import { useMemo, useState } from "react";
+import {
+	Copy,
+	Crown,
+	Ghost,
+	Shield,
+	Sparkles,
+	Sun,
+	Swords,
+	Wand2,
+	Zap,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
 import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
@@ -49,6 +60,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCharacterPageModel } from "@/hooks/useCharacterPageModel";
+import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import type { Json } from "@/integrations/supabase/types";
 import { getAbilityModifier } from "@/lib/characterCalculations";
 import { calculateTotalTempHP } from "@/lib/characterResources";
@@ -57,10 +69,12 @@ import {
 	migrateLegacyConditions,
 } from "@/lib/conditionSystem";
 import { getXPProgress, type LevelingType } from "@/lib/experience";
+import { cn } from "@/lib/utils";
 import { QuestLog } from "@/pages/player-tools/QuestLog";
 import type { DetailData } from "@/types/character";
 import type { AbilityScore } from "@/types/system-rules";
 import { AbilityScoreStrip } from "./AbilityScoreStrip";
+import { CharacterScrollHeader } from "./CharacterScrollHeader";
 import { ProficiencySidebar } from "./ProficiencySidebar";
 import { StatusHeader } from "./StatusHeader";
 
@@ -105,10 +119,27 @@ export default function CharacterSheetV2() {
 	const activeMobileTab = activeTab || internalMobileTab;
 	const setActiveMobileTab = setActiveTab || setInternalMobileTab;
 
+	// Regent Unlocks for display
+	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(character?.id || "");
+	const primaryRegent =
+		regentUnlocks.find((u: RegentUnlock) => u.is_primary) || regentUnlocks[0];
+
 	// Detail Drawer State
 	const [selectedDetail, setSelectedDetail] = useState<
 		(DetailData & { icon?: LucideIcon; type: string }) | null
 	>(null);
+
+	// Scroll Header Visibility State
+	const [showScrollHeader, setShowScrollHeader] = useState(false);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			// Show header after scrolling past the main header (approx 400px)
+			setShowScrollHeader(window.scrollY > 400);
+		};
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
 
 	const onSelectDetail = (
 		detail: DetailData,
@@ -120,7 +151,7 @@ export default function CharacterSheetV2() {
 
 	const mobileTabs = ["actions", "powers", "inventory", "features", "stats"];
 	const bindMobileGestures = useDrag(
-		({ swipe: [swipeX] }) => {
+		({ swipe: [swipeX] }: { swipe: [number, number] }) => {
 			if (swipeX !== 0) {
 				const currentIndex = mobileTabs.indexOf(activeMobileTab);
 				if (swipeX < 0 && currentIndex < mobileTabs.length - 1) {
@@ -136,7 +167,10 @@ export default function CharacterSheetV2() {
 	);
 
 	const characterState = character
-		? (character.gemini_state as Record<string, unknown>) || {}
+		? (character.gemini_state as {
+				conditions?: ConditionEntry[];
+				leveling_type?: LevelingType;
+			} & Record<string, Json>) || {}
 		: {};
 	const levelingType: LevelingType =
 		(characterState.leveling_type as LevelingType) || "xp";
@@ -146,9 +180,7 @@ export default function CharacterSheetV2() {
 
 	const characterConditions = useMemo(() => {
 		if (!character) return [];
-		const structured = characterState.conditions as
-			| ConditionEntry[]
-			| undefined;
+		const structured = characterState.conditions;
 		if (structured && Array.isArray(structured) && structured.length > 0) {
 			return structured;
 		}
@@ -273,6 +305,24 @@ export default function CharacterSheetV2() {
 		delta: number,
 	) => handleResourceAdjust(field, delta);
 
+	function isConditionEntryArray(val: Json): val is ConditionEntry[] {
+		if (!Array.isArray(val)) return false;
+		if (val.length === 0) return true;
+		const first = val[0];
+		return (
+			typeof first === "object" &&
+			first !== null &&
+			!Array.isArray(first) &&
+			"conditionName" in (first as Record<string, Json>)
+		);
+	}
+
+	function isStringArray(val: Json): val is string[] {
+		if (!Array.isArray(val)) return false;
+		if (val.length === 0) return true;
+		return typeof val[0] === "string";
+	}
+
 	const onExhaustionChange = (delta: number) => {
 		const newLevel = Math.max(
 			0,
@@ -294,9 +344,13 @@ export default function CharacterSheetV2() {
 
 	const onAddCondition = (condition: string) => {
 		const currentRaw = character.conditions || [];
-		const current = Array.isArray(currentRaw)
-			? (currentRaw as unknown as ConditionEntry[])
-			: migrateLegacyConditions(currentRaw as string[]);
+		let current: ConditionEntry[] = [];
+
+		if (isConditionEntryArray(currentRaw)) {
+			current = currentRaw;
+		} else if (isStringArray(currentRaw)) {
+			current = migrateLegacyConditions(currentRaw);
+		}
 
 		const entry: ConditionEntry = {
 			id: crypto.randomUUID(),
@@ -316,8 +370,22 @@ export default function CharacterSheetV2() {
 				conditions: [...current, entry].map((c) => c.conditionName),
 				gemini_state: {
 					...characterState,
-					conditions: [...current, entry],
-				} as unknown as Json,
+					conditions: [...current, entry].map(
+						(c): Json => ({
+							id: c.id,
+							conditionName: c.conditionName,
+							sourceType: c.sourceType,
+							sourceId: c.sourceId,
+							sourceName: c.sourceName,
+							appliedAt: c.appliedAt,
+							durationRounds: c.durationRounds,
+							remainingRounds: c.remainingRounds,
+							concentrationSpellId: c.concentrationSpellId,
+							isActive: c.isActive,
+							notes: c.notes || null,
+						}),
+					),
+				},
 			},
 		});
 		ascendantTools
@@ -327,9 +395,13 @@ export default function CharacterSheetV2() {
 
 	const onRemoveCondition = (conditionId: string) => {
 		const currentRaw = character.conditions || [];
-		const current = Array.isArray(currentRaw)
-			? (currentRaw as unknown as ConditionEntry[])
-			: migrateLegacyConditions(currentRaw as string[]);
+		let current: ConditionEntry[] = [];
+
+		if (isConditionEntryArray(currentRaw)) {
+			current = currentRaw;
+		} else if (isStringArray(currentRaw)) {
+			current = migrateLegacyConditions(currentRaw);
+		}
 
 		const updated = current.filter((c) => c.id !== conditionId);
 		const removed = current.find((c) => c.id === conditionId);
@@ -339,8 +411,23 @@ export default function CharacterSheetV2() {
 				conditions: updated.map((c) => c.conditionName),
 				gemini_state: {
 					...characterState,
-					conditions: updated,
-				} as unknown as Json,
+					conditions: updated.map(
+						(c) =>
+							({
+								id: c.id,
+								conditionName: c.conditionName,
+								sourceType: c.sourceType,
+								sourceId: c.sourceId,
+								sourceName: c.sourceName,
+								appliedAt: c.appliedAt,
+								durationRounds: c.durationRounds,
+								remainingRounds: c.remainingRounds,
+								concentrationSpellId: c.concentrationSpellId,
+								isActive: c.isActive,
+								notes: c.notes,
+							}) as { [key: string]: Json | undefined },
+					),
+				} as Json,
 			},
 		});
 		if (removed)
@@ -385,12 +472,21 @@ export default function CharacterSheetV2() {
 			<RegentFeaturesDisplay
 				characterId={character.id}
 				characterLevel={character.level || 1}
+				regentId={primaryRegent?.regent_id}
+				regentLevel={1}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Regent", Crown)}
 			/>
 			<RegentUnlocksPanel characterId={character.id} />
-			<RunesList characterId={character.id} />
+			<RunesList
+				characterId={character.id}
+				campaignId={campaignId ?? undefined}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Rune", Sparkles)}
+			/>
 			<ShadowSoldiersPanel
 				characterId={character.id}
 				characterLevel={character.level || 1}
+				campaignId={campaignId ?? undefined}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Shadow", Ghost)}
 			/>
 		</div>
 	);
@@ -582,6 +678,19 @@ export default function CharacterSheetV2() {
 
 	return (
 		<Layout>
+			<CharacterScrollHeader
+				name={character.name}
+				level={character.level}
+				portraitUrl={character.portrait_url}
+				hp={{ current: character.hp_current, max: character.hp_max }}
+				tempHp={calculateTotalTempHP(characterResources)}
+				ac={stats.calculatedStats.armorClass}
+				initiative={stats.finalInitiative}
+				className={cn(
+					"fixed top-16 left-0 right-0 z-50 transform transition-transform duration-300",
+					showScrollHeader ? "translate-y-0" : "-translate-y-full",
+				)}
+			/>
 			<div className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8">
 				{/* Unified Header */}
 				{characterHeader}

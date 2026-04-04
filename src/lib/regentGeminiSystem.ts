@@ -557,23 +557,23 @@ export class RegentGeminiSystem {
 			return {
 				STR: characterAbilities.strength ?? characterAbilities.STR ?? 10,
 				AGI:
-					characterAbilities.dexterity ??
+					characterAbilities.agility ??
 					characterAbilities.AGI ??
 					characterAbilities.agility ??
 					10,
 				VIT:
-					characterAbilities.constitution ??
+					characterAbilities.vitality ??
 					characterAbilities.VIT ??
 					characterAbilities.vitality ??
 					10,
 				INT: characterAbilities.intelligence ?? characterAbilities.INT ?? 10,
 				SENSE:
-					characterAbilities.wisdom ??
+					characterAbilities.sense ??
 					characterAbilities.SENSE ??
 					characterAbilities.sense ??
 					10,
 				PRE:
-					characterAbilities.charisma ??
+					characterAbilities.presence ??
 					characterAbilities.PRE ??
 					characterAbilities.presence ??
 					10,
@@ -589,11 +589,11 @@ export class RegentGeminiSystem {
 				: undefined;
 		return {
 			STR: abilityScores?.strength ?? 10,
-			AGI: abilityScores?.dexterity ?? abilityScores?.agility ?? 10,
-			VIT: abilityScores?.constitution ?? abilityScores?.vitality ?? 10,
+			AGI: abilityScores?.agility ?? abilityScores?.agility ?? 10,
+			VIT: abilityScores?.vitality ?? abilityScores?.vitality ?? 10,
 			INT: abilityScores?.intelligence ?? 10,
-			SENSE: abilityScores?.wisdom ?? abilityScores?.sense ?? 10,
-			PRE: abilityScores?.charisma ?? abilityScores?.presence ?? 10,
+			SENSE: abilityScores?.sense ?? abilityScores?.sense ?? 10,
+			PRE: abilityScores?.presence ?? abilityScores?.presence ?? 10,
 		};
 	}
 }

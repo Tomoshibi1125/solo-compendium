@@ -484,13 +484,10 @@ export function PowersList({
 							<div className="text-sm font-heading text-muted-foreground">
 								{level}
 							</div>
-							<SortableList
-								items={levelPowers as { id: string }[]}
-								onReorder={(newOrder) =>
-									handleReorderGroup(level, newOrder as never)
-								}
-								renderItem={(item) => {
-									const power = item as unknown as Power;
+							<SortableList<Power>
+								items={levelPowers}
+								onReorder={(newOrder) => handleReorderGroup(level, newOrder)}
+								renderItem={(power) => {
 									const displayName = formatRegentVernacular(power.name);
 									const displayDescription = power.description
 										? formatRegentVernacular(power.description)
@@ -570,7 +567,7 @@ export function PowersList({
 													<div className="flex items-center gap-2">
 														<Checkbox
 															id={`prepared-${power.id}`}
-															checked={power.is_prepared}
+															checked={power.is_prepared ?? false}
 															onCheckedChange={() =>
 																handleTogglePrepared(power)
 															}

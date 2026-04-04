@@ -157,7 +157,7 @@ const Characters = () => {
 							<span className="sm:hidden">Import</span>
 						</Button>
 						<Link to="/characters/new">
-							<Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple min-h-[44px]">
+							<Button className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple min-h-[44px]">
 								<Plus className="w-4 h-4" />
 								<span className="hidden sm:inline">Awaken Ascendant</span>
 								<span className="sm:hidden">Create</span>
@@ -192,8 +192,8 @@ const Characters = () => {
 				{isLoading ? (
 					<div className="flex flex-col items-center justify-center py-12 gap-4">
 						<div className="relative">
-							<div className="w-16 h-16 border-4 border-arise/20 rounded-full" />
-							<div className="absolute inset-0 w-16 h-16 border-4 border-t-arise rounded-full animate-spin" />
+							<div className="w-16 h-16 border-4 border-resurge/20 rounded-full" />
+							<div className="absolute inset-0 w-16 h-16 border-4 border-t-resurge rounded-full animate-spin" />
 						</div>
 						<SystemText className="block text-muted-foreground font-heading animate-pulse">
 							Scanning Ascendant Database...
@@ -209,11 +209,11 @@ const Characters = () => {
 							<Skull className="w-16 h-16 mx-auto text-muted-foreground mb-4 opacity-50" />
 							<SystemText className="block text-muted-foreground">
 								No awakened Ascendants in the System registry. Begin your
-								journey in the Prime Architect's domain.
+								journey in the The Absolute's domain.
 							</SystemText>
 						</div>
 						<Link to="/characters/new">
-							<Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple">
+							<Button className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple">
 								<Zap className="w-4 h-4" />
 								Awaken Your First Ascendant
 							</Button>
@@ -282,8 +282,8 @@ const Characters = () => {
 											<div
 												className={cn(
 													"w-14 h-14 rounded-xl flex items-center justify-center relative",
-													"bg-gradient-to-br from-arise/20 to-shadow-purple/20",
-													"border border-arise/30",
+													"bg-gradient-to-br from-resurge/20 to-shadow-purple/20",
+													"border border-resurge/30",
 												)}
 											>
 												{character.portrait_url ? (
@@ -294,11 +294,11 @@ const Characters = () => {
 														size="thumbnail"
 													/>
 												) : (
-													<User className="w-7 h-7 text-arise" />
+													<User className="w-7 h-7 text-resurge" />
 												)}
 												{/* Level indicator */}
-												<div className="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-background border border-arise/50 flex items-center justify-center">
-													<span className="text-xs font-arise font-bold text-arise">
+												<div className="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-background border border-resurge/50 flex items-center justify-center">
+													<span className="text-xs font-resurge font-bold text-resurge">
 														{character.level}
 													</span>
 												</div>
@@ -307,7 +307,7 @@ const Characters = () => {
 												<Button
 													variant="ghost"
 													size="icon"
-													className="hover:bg-arise/20 hover:text-arise"
+													className="hover:bg-resurge/20 hover:text-resurge"
 													onClick={(e) => {
 														e.preventDefault();
 														navigate(`/characters/${character.id}`);
@@ -336,7 +336,7 @@ const Characters = () => {
 											data-testid="character-card"
 											className="block"
 										>
-											<h3 className="font-system text-xl font-bold uppercase tracking-widest mb-1 group-hover:text-arise transition-colors drop-shadow-[0_0_8px_currentColor]">
+											<h3 className="font-system text-xl font-bold uppercase tracking-widest mb-1 group-hover:text-resurge transition-colors drop-shadow-[0_0_8px_currentColor]">
 												{character.name}
 											</h3>
 											<SystemText className="block text-xs font-mono tracking-wider text-muted-foreground mb-4 uppercase">
@@ -404,7 +404,7 @@ const Characters = () => {
 													</span>
 												</div>
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
-													<Crown className="w-3 h-3 mx-auto mb-1 text-arise opacity-80 group-hover/stat:text-arise-light transition-colors" />
+													<Crown className="w-3 h-3 mx-auto mb-1 text-resurge opacity-80 group-hover/stat:text-resurge-light transition-colors" />
 													<span className="font-system font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
 														{character.proficiency_bonus}
 													</span>
@@ -423,25 +423,25 @@ const Characters = () => {
 								to="/characters/new"
 								data-testid="create-character"
 								className={cn(
-									"rounded-[2px] border-dashed border-2 border-arise/50 bg-black/40 shadow-[inset_0_0_20px_hsl(var(--arise)/0.1)] p-6",
-									"hover:border-arise hover:bg-arise/10 hover:shadow-[0_0_30px_hsl(var(--arise)/0.2),inset_0_0_20px_hsl(var(--arise)/0.2)] transition-all duration-300",
+									"rounded-[2px] border-dashed border-2 border-resurge/50 bg-black/40 shadow-[inset_0_0_20px_hsl(var(--resurge)/0.1)] p-6",
+									"hover:border-resurge hover:bg-resurge/10 hover:shadow-[0_0_30px_hsl(var(--resurge)/0.2),inset_0_0_20px_hsl(var(--resurge)/0.2)] transition-all duration-300",
 									"flex flex-col items-center justify-center min-h-[280px] group relative overflow-hidden backdrop-blur-md",
 								)}
 							>
-								<div className="absolute inset-0 bg-gradient-to-b from-transparent to-arise/5 pointer-events-none" />
+								<div className="absolute inset-0 bg-gradient-to-b from-transparent to-resurge/5 pointer-events-none" />
 								<div
 									className={cn(
-										"w-16 h-16 rounded-[2px] border-2 border-dashed border-arise/40 bg-black/60",
+										"w-16 h-16 rounded-[2px] border-2 border-dashed border-resurge/40 bg-black/60",
 										"flex items-center justify-center mb-4 relative",
-										"group-hover:border-arise group-hover:bg-arise/20 group-hover:shadow-[0_0_15px_hsl(var(--arise)/0.5)] transition-all duration-300",
+										"group-hover:border-resurge group-hover:bg-resurge/20 group-hover:shadow-[0_0_15px_hsl(var(--resurge)/0.5)] transition-all duration-300",
 									)}
 								>
-									<Plus className="w-8 h-8 text-arise/60 group-hover:text-arise transition-colors" />
+									<Plus className="w-8 h-8 text-resurge/60 group-hover:text-resurge transition-colors" />
 								</div>
-								<p className="font-system font-bold text-lg text-arise/70 tracking-widest uppercase group-hover:text-arise group-hover:drop-shadow-[0_0_8px_currentColor] transition-all">
+								<p className="font-system font-bold text-lg text-resurge/70 tracking-widest uppercase group-hover:text-resurge group-hover:drop-shadow-[0_0_8px_currentColor] transition-all">
 									AWAKEN ASCENDANT
 								</p>
-								<p className="text-xs font-mono tracking-widest text-arise/40 mt-2 uppercase">
+								<p className="text-xs font-mono tracking-widest text-resurge/40 mt-2 uppercase">
 									Begin your journey
 								</p>
 							</Link>
@@ -466,14 +466,14 @@ const Characters = () => {
 										<div key={step} className="text-center group">
 											<div
 												className={cn(
-													"w-10 h-10 mx-auto rounded-full flex items-center justify-center font-arise text-sm mb-2",
-													"bg-gradient-to-br from-arise/20 to-shadow-purple/20 border border-arise/30",
-													"group-hover:from-arise/30 group-hover:to-shadow-purple/30 transition-all",
+													"w-10 h-10 mx-auto rounded-full flex items-center justify-center font-resurge text-sm mb-2",
+													"bg-gradient-to-br from-resurge/20 to-shadow-purple/20 border border-resurge/30",
+													"group-hover:from-resurge/30 group-hover:to-shadow-purple/30 transition-all",
 												)}
 											>
 												{i + 1}
 											</div>
-											<span className="text-xs font-heading text-muted-foreground group-hover:text-arise transition-colors">
+											<span className="text-xs font-heading text-muted-foreground group-hover:text-resurge transition-colors">
 												{step}
 											</span>
 										</div>
@@ -481,10 +481,10 @@ const Characters = () => {
 								</div>
 								<SystemText className="block text-sm text-muted-foreground mt-6">
 									The System guides you through each awakening step, validating
-									your choices against the Prime Architect's laws.
+									your choices against the The Absolute's laws.
 								</SystemText>
 								<Link to="/characters/new" className="inline-block mt-4">
-									<Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple">
+									<Button className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple">
 										<Zap className="w-4 h-4" />
 										Begin Awakening
 									</Button>
@@ -509,7 +509,7 @@ const Characters = () => {
 				>
 					<AlertDialogContent className="border-destructive/50">
 						<AlertDialogHeader>
-							<AlertDialogTitle className="font-arise text-destructive flex items-center gap-2">
+							<AlertDialogTitle className="font-resurge text-destructive flex items-center gap-2">
 								<Skull className="w-5 h-5" />
 								DELETE ASCENDANT?
 							</AlertDialogTitle>

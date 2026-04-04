@@ -31,7 +31,7 @@ import { VTTInitiativePanel } from "@/components/vtt/VTTInitiativePanel";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import { WardenToolsPanel as ProtocolWardenTools } from "@/components/vtt/WardenToolsPanel";
-import { DirectiveMatrix } from "@/components/warden-protocols/DirectiveMatrix";
+import { DirectiveLattice } from "@/components/warden-protocols/DirectiveMatrix";
 import { SystemProtocolRegistry } from "@/components/warden-protocols/SystemProtocolRegistry";
 import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
@@ -195,8 +195,8 @@ const VTTSubEngineProcessor: React.FC<{
 
 	// satisfy knip/biome without constant condition
 	useEffect(() => {
-		const isMatrixActive = () => false;
-		if (isMatrixActive()) {
+		const isLatticeActive = () => false;
+		if (isLatticeActive()) {
 			createAmbientSoundZone({ x: 0, y: 0, audioUrl: "test" });
 			createTerrainZone("normal", []);
 		}
@@ -4248,7 +4248,7 @@ const VTTEnhanced = () => {
 															<div className="flex items-center gap-2 flex-1 min-w-0">
 																<span
 																	className={cn(
-																		"font-arise text-lg w-6 text-center",
+																		"font-resurge text-lg w-6 text-center",
 																		isCurrentTurn && "text-amber-400",
 																	)}
 																>
@@ -4769,7 +4769,7 @@ const VTTEnhanced = () => {
 									</TabsContent>
 
 									<TabsContent value="ai" className="space-y-2">
-										<DirectiveMatrix />
+										<DirectiveLattice />
 									</TabsContent>
 								</Tabs>
 							</div>
@@ -5219,7 +5219,7 @@ const VTTEnhanced = () => {
 							aria-label="Shared handout"
 						>
 							<div className="flex items-center justify-between mb-4">
-								<h3 className="font-arise text-lg font-bold gradient-text-shadow">
+								<h3 className="font-resurge text-lg font-bold gradient-text-shadow">
 									{vttRealtime.sharedHandout.title}
 								</h3>
 								<button

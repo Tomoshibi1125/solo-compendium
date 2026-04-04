@@ -119,11 +119,11 @@ Path: ${char.path || "None"}
 ABILITY SCORES
 ==============
 Strength: ${Number(char.strength) || 10} (${Math.floor(((Number(char.strength) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.strength) || 10) - 10) / 2)})
-Dexterity: ${Number(char.dexterity) || 10} (${Math.floor(((Number(char.dexterity) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.dexterity) || 10) - 10) / 2)})
-Constitution: ${Number(char.constitution) || 10} (${Math.floor(((Number(char.constitution) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.constitution) || 10) - 10) / 2)})
+Agility: ${Number(char.agility) || 10} (${Math.floor(((Number(char.agility) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.agility) || 10) - 10) / 2)})
+Vitality: ${Number(char.vitality) || 10} (${Math.floor(((Number(char.vitality) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.vitality) || 10) - 10) / 2)})
 Intelligence: ${Number(char.intelligence) || 10} (${Math.floor(((Number(char.intelligence) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.intelligence) || 10) - 10) / 2)})
-Wisdom: ${Number(char.wisdom) || 10} (${Math.floor(((Number(char.wisdom) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.wisdom) || 10) - 10) / 2)})
-Charisma: ${Number(char.charisma) || 10} (${Math.floor(((Number(char.charisma) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.charisma) || 10) - 10) / 2)})
+Sense: ${Number(char.sense) || 10} (${Math.floor(((Number(char.sense) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.sense) || 10) - 10) / 2)})
+Presence: ${Number(char.presence) || 10} (${Math.floor(((Number(char.presence) || 10) - 10) / 2) >= 0 ? "+" : ""}${Math.floor(((Number(char.presence) || 10) - 10) / 2)})
 
 COMBAT STATS
 ============
@@ -135,11 +135,11 @@ Speed: ${char.speed || 30}
 SAVING THROWS
 =============
 STR: ${(char.saving_throw_proficiencies as string[])?.includes("strength") ? "Proficient" : "Not proficient"}
-DEX: ${(char.saving_throw_proficiencies as string[])?.includes("dexterity") ? "Proficient" : "Not proficient"}
-CON: ${(char.saving_throw_proficiencies as string[])?.includes("constitution") ? "Proficient" : "Not proficient"}
+AGI: ${(char.saving_throw_proficiencies as string[])?.includes("agility") ? "Proficient" : "Not proficient"}
+VIT: ${(char.saving_throw_proficiencies as string[])?.includes("vitality") ? "Proficient" : "Not proficient"}
 INT: ${(char.saving_throw_proficiencies as string[])?.includes("intelligence") ? "Proficient" : "Not proficient"}
-WIS: ${(char.saving_throw_proficiencies as string[])?.includes("wisdom") ? "Proficient" : "Not proficient"}
-CHA: ${(char.saving_throw_proficiencies as string[])?.includes("charisma") ? "Proficient" : "Not proficient"}
+SENSE: ${(char.saving_throw_proficiencies as string[])?.includes("sense") ? "Proficient" : "Not proficient"}
+PRE: ${(char.saving_throw_proficiencies as string[])?.includes("presence") ? "Proficient" : "Not proficient"}
 
 Generated: ${new Date().toLocaleDateString()}
       `.trim();
@@ -201,11 +201,11 @@ Generated: ${new Date().toLocaleDateString()}
 					job: charData.job,
 					path: charData.path,
 					strength: charData.strength || 10,
-					dexterity: charData.dexterity || 10,
-					constitution: charData.constitution || 10,
+					agility: charData.agility || 10,
+					vitality: charData.vitality || 10,
 					intelligence: charData.intelligence || 10,
-					wisdom: charData.wisdom || 10,
-					charisma: charData.charisma || 10,
+					sense: charData.sense || 10,
+					presence: charData.presence || 10,
 					hp_max: charData.max_hp || 10,
 					hp_current: charData.current_hp || charData.max_hp || 10,
 					armor_class: charData.armor_class || 10,
@@ -335,11 +335,11 @@ export function useCharacterImport() {
 					job: charData.job,
 					path: charData.path,
 					strength: charData.strength || 10,
-					dexterity: charData.dexterity || 10,
-					constitution: charData.constitution || 10,
+					agility: charData.agility || 10,
+					vitality: charData.vitality || 10,
 					intelligence: charData.intelligence || 10,
-					wisdom: charData.wisdom || 10,
-					charisma: charData.charisma || 10,
+					sense: charData.sense || 10,
+					presence: charData.presence || 10,
 					hp_max: charData.max_hp || 10,
 					hp_current: charData.current_hp || charData.max_hp || 10,
 					armor_class: charData.armor_class || 10,

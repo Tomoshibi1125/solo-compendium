@@ -8,7 +8,7 @@ import { expect, test } from "@playwright/test";
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
-const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
+const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
 test.describe("Focused DM UI Test", () => {
 	test.beforeEach(async ({ page }) => {
@@ -172,7 +172,7 @@ test.describe("Focused DM UI Test", () => {
 
 				// Check if page loaded successfully
 				const pageTitle = await page.title();
-				const hasContent = (await page.locator("body").textContent()) || "";
+				const _hasContent = (await page.locator("body").textContent()) || "";
 
 				if (
 					pageTitle &&
@@ -324,7 +324,7 @@ test.describe("Focused DM UI Test", () => {
 			if (await errorElements.first().isVisible()) {
 				console.log("✅ Error page displayed correctly");
 			}
-		} catch (error) {
+		} catch (_error) {
 			console.log("Error handling test completed");
 		}
 

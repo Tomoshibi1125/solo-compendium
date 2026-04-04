@@ -66,7 +66,7 @@ const CR_XP_MAP: Record<string, number> = {
 	"30": 155000,
 };
 
-// Encounter multipliers based on number of monsters
+// Encounter multipliers based on number of Anomalies
 export const ENCOUNTER_MULTIPLIERS: Record<string, number> = {
 	"1": 1,
 	"2": 1.5,
@@ -142,34 +142,34 @@ export function getCRXP(cr: string): number {
 	return CR_XP_MAP[cr] || 0;
 }
 
-export function getEncounterMultiplier(monsterCount: number): number {
-	if (monsterCount === 1) return 1;
-	if (monsterCount === 2) return 1.5;
-	if (monsterCount <= 6) return 2;
-	if (monsterCount <= 10) return 2.5;
-	if (monsterCount <= 14) return 3;
+export function getEncounterMultiplier(AnomalyCount: number): number {
+	if (AnomalyCount === 1) return 1;
+	if (AnomalyCount === 2) return 1.5;
+	if (AnomalyCount <= 6) return 2;
+	if (AnomalyCount <= 10) return 2.5;
+	if (AnomalyCount <= 14) return 3;
 	return 4;
 }
 
 export function calculateEncounterXP(
-	monsters: { cr: string; count: number }[],
+	Anomalies: { cr: string; count: number }[],
 ): {
 	baseXP: number;
 	adjustedXP: number;
-	totalMonsters: number;
+	totalAnomalies: number;
 } {
 	let baseXP = 0;
-	let totalMonsters = 0;
+	let totalAnomalies = 0;
 
-	monsters.forEach((m) => {
+	Anomalies.forEach((m) => {
 		baseXP += getCRXP(m.cr) * m.count;
-		totalMonsters += m.count;
+		totalAnomalies += m.count;
 	});
 
-	const multiplier = getEncounterMultiplier(totalMonsters);
+	const multiplier = getEncounterMultiplier(totalAnomalies);
 	const adjustedXP = Math.floor(baseXP * multiplier);
 
-	return { baseXP, adjustedXP, totalMonsters };
+	return { baseXP, adjustedXP, totalAnomalies };
 }
 
 export function getEncounterDifficulty(

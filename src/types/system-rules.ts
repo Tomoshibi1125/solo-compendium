@@ -44,7 +44,7 @@ export const SKILLS: Skill[] = [
 		id: "stealth",
 		name: "Stealth",
 		defaultAbility: "AGI",
-		description: "Moving quietly, hiding from sensors or monsters",
+		description: "Moving quietly, hiding from sensors or Anomalies",
 	},
 	{
 		id: "arcana",
@@ -247,8 +247,8 @@ export interface Relic {
 	tags: string[];
 }
 
-// Monster/Creature
-export interface Monster {
+// Anomaly/Creature
+export interface Anomaly {
 	id: string;
 	name: string;
 	size: "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
@@ -269,19 +269,19 @@ export interface Monster {
 	conditionImmunities?: string[];
 	senses: Record<string, number | string>;
 	languages?: string[];
-	traits: MonsterTrait[];
-	actions: MonsterAction[];
-	legendaryActions?: MonsterAction[];
-	lairActions?: MonsterAction[];
+	traits: AnomalyTrait[];
+	actions: AnomalyAction[];
+	legendaryActions?: AnomalyAction[];
+	lairActions?: AnomalyAction[];
 	tags: string[]; // Rift tags, faction tags, etc.
 }
 
-interface MonsterTrait {
+interface AnomalyTrait {
 	name: string;
 	description: string;
 }
 
-interface MonsterAction {
+interface AnomalyAction {
 	name: string;
 	description: string;
 	attackBonus?: number;

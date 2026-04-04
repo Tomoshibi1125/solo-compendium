@@ -134,7 +134,9 @@ async function applyAuthoritativeFixes() {
 	if (error) {
 		console.error("Error applying authoritative schema fixes:", error.message);
 	} else {
-		console.log("Successfully unified all compendium schemas for the 'Zero Legacy' production sync.");
+		console.log(
+			"Successfully unified all compendium schemas for the 'Zero Legacy' production sync.",
+		);
 	}
 
 	console.log("=== Authoritative Fixes Complete ===");

@@ -847,8 +847,8 @@ export class PlayerPage {
 	 * Player claims rewards after combat victory.
 	 */
 	async claimCombatRewards(
-		sessionId: string,
-		rewards: {
+		_sessionId: string,
+		_rewards: {
 			xp?: number;
 			items?: string[];
 		},
@@ -880,8 +880,8 @@ export class PlayerPage {
 	 * Player receives quest completion rewards.
 	 */
 	async receiveQuestRewards(
-		sessionId: string,
-		questInfo: {
+		_sessionId: string,
+		_questInfo: {
 			questTitle: string;
 			rewards: string[];
 		},
@@ -974,7 +974,7 @@ export class PlayerPage {
 					await abilityInput.isVisible({ timeout: 3_000 }).catch(() => false)
 				) {
 					const currentValue = await abilityInput.inputValue();
-					const newValue = (parseInt(currentValue) || 0) + increase;
+					const newValue = (parseInt(currentValue, 10) || 0) + increase;
 					await abilityInput.fill(newValue.toString());
 				}
 			}

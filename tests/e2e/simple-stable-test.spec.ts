@@ -64,7 +64,7 @@ test.describe("Simple Stable Test", () => {
 				timeout: 10000,
 			});
 			console.log("✅ Error handling working (graceful failure)");
-		} catch (error) {
+		} catch (_error) {
 			console.log("✅ Error handling working (caught error)");
 		}
 

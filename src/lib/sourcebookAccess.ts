@@ -1,4 +1,5 @@
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { logger } from "@/lib/logger";
 
 type SourcebookAccessContext = {
@@ -7,13 +8,6 @@ type SourcebookAccessContext = {
 
 type AccessibleSourcebookRow = {
 	sourcebook_id?: string | null;
-};
-
-type SupabaseRpcClient = {
-	rpc: (
-		fn: string,
-		args?: Record<string, unknown>,
-	) => Promise<{ data: unknown; error: { message?: string } | null }>;
 };
 
 type AccessCacheRecord = {
@@ -26,7 +20,7 @@ type RpcError = {
 };
 
 type RpcResponse = {
-	data: unknown;
+	data: Json;
 	error: RpcError | null;
 };
 

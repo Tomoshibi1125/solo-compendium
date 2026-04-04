@@ -349,7 +349,7 @@ test.describe("Optimized DM Complete Test", () => {
 							testResults.vtt = true;
 							break;
 						}
-					} catch (error) {}
+					} catch (_error) {}
 				}
 			}
 
@@ -368,7 +368,7 @@ test.describe("Optimized DM Complete Test", () => {
 					// If we get here without crashing, error handling is working
 					errorHandlingWorking = true;
 					console.log(`✅ Error handling working for: ${url}`);
-				} catch (error) {
+				} catch (_error) {
 					// Expected behavior - should handle gracefully
 					errorHandlingWorking = true;
 					console.log(`✅ Error handling caught: ${url}`);
@@ -394,7 +394,7 @@ test.describe("Optimized DM Complete Test", () => {
 				);
 			}
 
-			console.log("\n" + "=".repeat(50));
+			console.log(`\n${"=".repeat(50)}`);
 			console.log(`📈 FINAL SCORE: ${passedTests}/${totalTests} tests passed`);
 			console.log(
 				`📊 SUCCESS RATE: ${Math.round((passedTests / totalTests) * 100)}%`,

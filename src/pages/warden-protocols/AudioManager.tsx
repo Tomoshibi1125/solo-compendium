@@ -338,17 +338,17 @@ export default function AcousticResonanceManager() {
 										className="w-full justify-start"
 										onClick={() =>
 											playEffect(
-												"Monster Roars",
+												"Anomaly Roars",
 												(track) =>
-													track.title.toLowerCase().includes("monster") ||
+													track.title.toLowerCase().includes("Anomaly") ||
 													track.tags.some((tag) =>
-														tag.toLowerCase().includes("monster"),
+														tag.toLowerCase().includes("Anomaly"),
 													),
 											)
 										}
 									>
 										<Volume2 className="w-4 h-4 mr-2" />
-										Monster Roars
+										Anomaly Roars
 									</Button>
 								</CardContent>
 							</Card>

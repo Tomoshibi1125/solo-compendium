@@ -1,5 +1,5 @@
-import { jobs as staticJobs } from "@/data/compendium/jobs";
 import { supabase } from "@/integrations/supabase/client";
+import { getStaticJobs } from "@/lib/ProtocolDataManager";
 import type { StaticJob } from "@/types/character";
 
 /**
@@ -32,7 +32,7 @@ export const runProficiencyPatch = async () => {
 		const needsArmor = !char.armor_proficiencies;
 
 		if (needsWeapon || needsArmor) {
-			const jobData = (staticJobs as StaticJob[]).find(
+			const jobData = (getStaticJobs() as StaticJob[]).find(
 				(j) => j.name === char.job,
 			);
 

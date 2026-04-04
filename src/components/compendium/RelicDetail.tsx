@@ -48,7 +48,7 @@ interface RelicData {
 		origin?: string;
 		history?: string;
 		currentOwner?: string;
-		previousOwners?: string[];
+		priorOwners?: string[];
 	} | null;
 	mechanics?: {
 		bonus?: {
@@ -443,15 +443,12 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<AutoLinkText text={data.lore.currentOwner} />
 							</p>
 						)}
-						{data.lore.previousOwners &&
-							data.lore.previousOwners.length > 0 && (
-								<p className="text-muted-foreground">
-									<span className="text-foreground">Previous Owners:</span>{" "}
-									{data.lore.previousOwners
-										.map(formatRegentVernacular)
-										.join(", ")}
-								</p>
-							)}
+						{data.lore.priorOwners && data.lore.priorOwners.length > 0 && (
+							<p className="text-muted-foreground">
+								<span className="text-foreground">Prior Lineage:</span>{" "}
+								{data.lore.priorOwners.map(formatRegentVernacular).join(", ")}
+							</p>
+						)}
 					</div>
 				</SystemWindow>
 			)}

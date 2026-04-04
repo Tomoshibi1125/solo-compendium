@@ -92,7 +92,7 @@ export function SpellSlotsDisplay({
 						className="flex items-center justify-between p-2 rounded border border-border bg-muted/20"
 					>
 						<div className="flex items-center gap-2">
-							<Badge variant="outline" className="font-arise">
+							<Badge variant="outline" className="font-resurge">
 								Tier {slot.level}
 							</Badge>
 							<span className="text-sm text-muted-foreground">

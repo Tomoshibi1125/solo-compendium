@@ -227,7 +227,7 @@ export const expandedBackgrounds = [
 			"Before the System chose you, you were a Corporate Ascendant. Your skills translated surprisingly well to the brutal reality of dimensional rifts.",
 		dangers: ["Past debts", "Rival organizations"],
 		source: "System Ascendant Canon",
-		lore: "Originating from the aftermath of the Eclipse Protocol, this technique was pioneered by a Sovereign of the Void. Utilizing it resonates with the hum of raw magical energy.",
+		lore: "Originating from the aftermath of the Eclipse Decree, this technique was pioneered by a Regent of the Void. Utilizing it resonates with the hum of raw magical energy.",
 		flavor:
 			"Shatters the flow of time itself. An overwhelming testament to absolute power.",
 		mechanics: {
@@ -274,7 +274,7 @@ export const expandedBackgrounds = [
 			"Before the System chose you, you were a Relic Appraiser. Your skills translated surprisingly well to the brutal reality of dimensional rifts.",
 		dangers: ["Past debts", "Rival organizations"],
 		source: "System Ascendant Canon",
-		lore: "First recorded during the First Void Fracture, this phenomenon is often linked to the presence of Rogue Protocol entities. Activating it overrides basic physics within a 30-foot radius.",
+		lore: "First recorded during the First Void Fracture, this phenomenon is often linked to the presence of Rogue Decree entities. Activating it overrides basic physics within a 30-foot radius.",
 		flavor:
 			"Overrides the arrogant and the mighty. A relentless whisper in the shadows.",
 		mechanics: {
@@ -508,7 +508,7 @@ export const expandedBackgrounds = [
 			"Before the System chose you, you were a Void Engineer. Your skills translated surprisingly well to the brutal reality of dimensional rifts.",
 		dangers: ["Past debts", "Rival organizations"],
 		source: "System Ascendant Canon",
-		lore: "Translated from the combat data of a Sovereign of the Void who perished in the Crimson Incursion, this power causes the user's eyes to glow with unnatural light.",
+		lore: "Translated from the combat data of a Regent of the Void who perished in the Crimson Incursion, this power causes the user's eyes to glow with unnatural light.",
 		flavor: "Ignores the dimensional divide. An absolute symphony of violence.",
 		mechanics: {
 			system_interaction:

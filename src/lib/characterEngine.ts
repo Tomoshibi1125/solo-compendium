@@ -16,7 +16,7 @@
  * - "Paths" = D&D Subclasses
  * - "Powers" = D&D Spells
  * - "Relics" = D&D Magic Items
- * - Abilities: STR, AGI (DEX), VIT (CON), INT, SENSE (WIS), PRE (CHA)
+ * - Abilities: STR, AGI (AGI), VIT (VIT), INT, SENSE (SENSE), PRE (PRE)
  */
 
 import {
@@ -105,7 +105,10 @@ export interface Effect {
 	priority?: number;
 }
 
-import { jobs as JOBS_DATABASE } from "@/data/compendium/jobs";
+import { getStaticJobs } from "@/lib/ProtocolDataManager";
+
+const JOBS_DATABASE = getStaticJobs();
+
 import { RegentGeminiSystem } from "@/lib/regentGeminiSystem";
 import {
 	getEffectiveHPMax,
@@ -522,7 +525,7 @@ export function aggregateJobTraits(
 					(t: {
 						name: string;
 						description: string;
-						type: string;
+						type?: string;
 						frequency?: string;
 					}) => ({
 						id: `${charJob.job}-trait-${t.name.toLowerCase().replace(/\s+/g, "-")}`,
@@ -567,7 +570,7 @@ export function parseJobTraitEffects(
 	trait: {
 		name: string;
 		description: string;
-		type: string;
+		type?: string;
 		frequency?: string;
 	},
 	_jobLevel: number,
@@ -1178,7 +1181,7 @@ export function computeSkills(
 
 /**
  * Compute armor class
- * Handles unarmored, light/medium/heavy armor, shields, and effects
+ * Handles unarmored, light/medium/Heavy Carapace Armor, shields, and effects
  */
 export function computeArmorClass(
 	_baseAbilities: Record<AbilityScore, number>,
@@ -1295,11 +1298,11 @@ export function getSpellcastingAbilityForJob(job: string): AbilityScore | null {
 		Mage: "INT",
 		Revenant: "INT",
 		Technomancer: "INT",
-		// SENSE (Wisdom) casters
+		// SENSE (Sense) casters
 		Herald: "SENSE",
 		Summoner: "SENSE",
 		Stalker: "SENSE",
-		// PRE (Charisma) casters
+		// PRE (Presence) casters
 		Esper: "PRE",
 		Contractor: "PRE",
 		"Holy Knight": "PRE",

@@ -489,7 +489,7 @@ export class DMPage {
 	/**
 	 * Start an active session for players to join.
 	 */
-	async startSession(sessionId: string, campaignId?: string): Promise<void> {
+	async startSession(_sessionId: string, campaignId?: string): Promise<void> {
 		await this.page.goto(`/campaigns/${campaignId || "unknown"}`);
 		await this.page.waitForTimeout(2_000);
 	}
@@ -498,7 +498,7 @@ export class DMPage {
 	 * Initiate combat encounter within the session.
 	 */
 	async initiateCombat(
-		sessionId: string,
+		_sessionId: string,
 		opts: {
 			encounterName: string;
 			combatants: Array<{
@@ -574,8 +574,8 @@ export class DMPage {
 	 * Execute a combat round, advancing initiative.
 	 */
 	async executeCombatRound(
-		sessionId: string,
-		roundNumber: number,
+		_sessionId: string,
+		_roundNumber: number,
 	): Promise<void> {
 		// Advance to next turn in initiative tracker
 		const nextTurnBtn = this.page.getByTestId("initiative-next-turn").first();
@@ -598,7 +598,7 @@ export class DMPage {
 	 * Control monster actions during combat.
 	 */
 	async performMonsterAction(
-		sessionId: string,
+		_sessionId: string,
 		opts: {
 			monster: string;
 			action: string;
@@ -635,9 +635,9 @@ export class DMPage {
 	 * Roll dice for monster actions.
 	 */
 	async rollForMonster(
-		sessionId: string,
+		_sessionId: string,
 		rollType: string,
-		modifier: number,
+		_modifier: number,
 	): Promise<void> {
 		// Use dice roller for monster rolls
 		const rollBtn = this.page
@@ -697,7 +697,7 @@ export class DMPage {
 	 * Mark a quest as completed and distribute rewards.
 	 */
 	async completeQuest(
-		sessionId: string,
+		_sessionId: string,
 		opts: {
 			questId: string;
 			completion: string;
@@ -745,7 +745,7 @@ export class DMPage {
 	 * End the session and save final state.
 	 */
 	async endSession(
-		sessionId: string,
+		_sessionId: string,
 		summary: {
 			summary: string;
 			notes: string;

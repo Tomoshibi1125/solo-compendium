@@ -14,8 +14,8 @@ interface RelicInsertFixed extends Omit<RelicInsert, "relic_tier"> {
 	requires_attunement?: boolean;
 	relic_tier?: Database["public"]["Enums"]["relic_tier"] | null;
 }
-type MonsterInsert =
-	Database["public"]["Tables"]["compendium_monsters"]["Insert"];
+type AnomalyInsert =
+	Database["public"]["Tables"]["compendium_Anomalies"]["Insert"];
 type BackgroundInsert =
 	Database["public"]["Tables"]["compendium_backgrounds"]["Insert"];
 
@@ -27,7 +27,7 @@ export interface ImportResult {
 		job_features: number;
 		powers: number;
 		relics: number;
-		monsters: number;
+		Anomalies: number;
 		backgrounds: number;
 	};
 	errors: string[];
@@ -47,7 +47,7 @@ export async function importContentBundle(
 			job_features: 0,
 			powers: 0,
 			relics: 0,
-			monsters: 0,
+			Anomalies: 0,
 			backgrounds: 0,
 		},
 		errors: [],
@@ -71,7 +71,7 @@ export async function importContentBundle(
 			result.imported.job_features = bundle.job_features?.length || 0;
 			result.imported.powers = bundle.powers?.length || 0;
 			result.imported.relics = bundle.relics?.length || 0;
-			result.imported.monsters = bundle.monsters?.length || 0;
+			result.imported.Anomalies = bundle.Anomalies?.length || 0;
 			result.imported.backgrounds = bundle.backgrounds?.length || 0;
 			return result;
 		}
@@ -403,80 +403,80 @@ export async function importContentBundle(
 			}
 		}
 
-		// Import monsters
-		if (bundle.monsters) {
-			for (const monsterData of bundle.monsters) {
+		// Import Anomalies
+		if (bundle.Anomalies) {
+			for (const AnomalyData of bundle.Anomalies) {
 				try {
 					const { data: existing } = await supabase
-						.from("compendium_monsters")
+						.from("compendium_Anomalies")
 						.select("id")
-						.eq("name", monsterData.name)
+						.eq("name", AnomalyData.name)
 						.maybeSingle();
 
 					if (existing && !options.overwrite) {
 						result.warnings.push(
-							`Monster "${monsterData.name}" already exists, skipping`,
+							`Anomaly "${AnomalyData.name}" already exists, skipping`,
 						);
 						continue;
 					}
 
-					const monsterInsert: MonsterInsert = {
-						name: monsterData.name,
-						display_name: monsterData.display_name,
-						aliases: monsterData.aliases || [],
-						size: monsterData.size,
-						creature_type: monsterData.creature_type,
-						alignment: monsterData.alignment,
-						cr: monsterData.cr,
-						armor_class: monsterData.armor_class,
-						armor_type: monsterData.armor_type,
-						hit_points_average: monsterData.hit_points_average,
-						hit_points_formula: monsterData.hit_points_formula,
-						speed_walk: monsterData.speed_walk,
-						speed_fly: monsterData.speed_fly,
-						speed_swim: monsterData.speed_swim,
-						speed_climb: monsterData.speed_climb,
-						speed_burrow: monsterData.speed_burrow,
-						str: monsterData.str,
-						agi: monsterData.agi,
-						vit: monsterData.vit,
-						int: monsterData.int,
-						sense: monsterData.sense,
-						pre: monsterData.pre,
-						saving_throws: monsterData.saving_throws,
-						skills: monsterData.skills,
-						damage_resistances: monsterData.damage_resistances || [],
-						damage_immunities: monsterData.damage_immunities || [],
-						damage_vulnerabilities: monsterData.damage_vulnerabilities || [],
-						condition_immunities: monsterData.condition_immunities || [],
-						senses: monsterData.senses,
-						languages: monsterData.languages || [],
-						description: monsterData.description,
-						lore: monsterData.lore,
-						gate_rank: monsterData.gate_rank,
-						is_boss: monsterData.is_boss,
-						xp: monsterData.xp,
-						source_book: monsterData.source_book,
-						tags: monsterData.tags || [],
-						source_kind: monsterData.source_kind,
-						source_name: monsterData.source_name,
-						license_note: monsterData.license_note,
-						generated_reason: monsterData.generated_reason,
-						theme_tags: monsterData.theme_tags,
+					const AnomalyInsert: AnomalyInsert = {
+						name: AnomalyData.name,
+						display_name: AnomalyData.display_name,
+						aliases: AnomalyData.aliases || [],
+						size: AnomalyData.size,
+						creature_type: AnomalyData.creature_type,
+						alignment: AnomalyData.alignment,
+						cr: AnomalyData.cr,
+						armor_class: AnomalyData.armor_class,
+						armor_type: AnomalyData.armor_type,
+						hit_points_average: AnomalyData.hit_points_average,
+						hit_points_formula: AnomalyData.hit_points_formula,
+						speed_walk: AnomalyData.speed_walk,
+						speed_fly: AnomalyData.speed_fly,
+						speed_swim: AnomalyData.speed_swim,
+						speed_climb: AnomalyData.speed_climb,
+						speed_burrow: AnomalyData.speed_burrow,
+						str: AnomalyData.str,
+						agi: AnomalyData.agi,
+						vit: AnomalyData.vit,
+						int: AnomalyData.int,
+						sense: AnomalyData.sense,
+						pre: AnomalyData.pre,
+						saving_throws: AnomalyData.saving_throws,
+						skills: AnomalyData.skills,
+						damage_resistances: AnomalyData.damage_resistances || [],
+						damage_immunities: AnomalyData.damage_immunities || [],
+						damage_vulnerabilities: AnomalyData.damage_vulnerabilities || [],
+						condition_immunities: AnomalyData.condition_immunities || [],
+						senses: AnomalyData.senses,
+						languages: AnomalyData.languages || [],
+						description: AnomalyData.description,
+						lore: AnomalyData.lore,
+						gate_rank: AnomalyData.gate_rank,
+						is_boss: AnomalyData.is_boss,
+						xp: AnomalyData.xp,
+						source_book: AnomalyData.source_book,
+						tags: AnomalyData.tags || [],
+						source_kind: AnomalyData.source_kind,
+						source_name: AnomalyData.source_name,
+						license_note: AnomalyData.license_note,
+						generated_reason: AnomalyData.generated_reason,
+						theme_tags: AnomalyData.theme_tags,
 					};
 
 					if (existing && options.overwrite) {
 						await supabase
-							.from("compendium_monsters")
-							.update(monsterInsert)
+							.from("compendium_Anomalies")
+							.update(AnomalyInsert)
 							.eq("id", existing.id);
 					} else {
-						await supabase.from("compendium_monsters").insert(monsterInsert);
+						await supabase.from("compendium_Anomalies").insert(AnomalyInsert);
 					}
-					result.imported.monsters++;
+					result.imported.Anomalies++;
 				} catch (error) {
 					result.errors.push(
-						`Failed to import monster "${monsterData.name}": ${error instanceof Error ? error.message : "Unknown error"}`,
+						`Failed to import Anomaly "${AnomalyData.name}": ${error instanceof Error ? error.message : "Unknown error"}`,
 					);
 					result.success = false;
 				}

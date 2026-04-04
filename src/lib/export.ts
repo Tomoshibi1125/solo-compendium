@@ -6,6 +6,11 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import {
+	getTableName,
+	isValidEntryType,
+	listStaticEntries,
+} from "@/lib/compendiumResolver";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
@@ -132,10 +137,6 @@ export async function exportCompendiumEntries(
 	entryIds: string[],
 	entryType: string,
 ): Promise<string> {
-	const { getTableName, isValidEntryType, listStaticEntries } = await import(
-		"@/lib/compendiumResolver"
-	);
-
 	// Validate entry type
 	if (!isValidEntryType(entryType)) {
 		throw new AppError(`Unknown entry type: ${entryType}`, "INVALID_INPUT");

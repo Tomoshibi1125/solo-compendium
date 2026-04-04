@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import {
 	BookOpen,
 	Dice6,
@@ -14,7 +15,7 @@ type NavSubItem = {
 	title: string;
 	href: string;
 	description?: string;
-	icon?: unknown;
+	icon?: LucideIcon;
 };
 
 type NavItemConfig = {

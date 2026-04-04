@@ -339,7 +339,7 @@ const CampaignDetail = () => {
 											Token Management
 										</h3>
 										<SystemText className="block text-xs text-muted-foreground">
-											Place character tokens, monsters, and NPCs. Drag, rotate,
+											Place character tokens, Anomalies, and NPCs. Drag, rotate,
 											and manage HP directly on tokens.
 										</SystemText>
 									</div>

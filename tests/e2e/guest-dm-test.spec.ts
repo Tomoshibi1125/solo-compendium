@@ -70,7 +70,7 @@ test.describe("Guest DM Test", () => {
 							break;
 						}
 					}
-				} catch (error) {}
+				} catch (_error) {}
 			}
 
 			testResults.navigation = navigationWorking;
@@ -212,7 +212,7 @@ test.describe("Guest DM Test", () => {
 						console.log(`✅ Error handling working for: ${url}`);
 						errorHandlingWorking++;
 					}
-				} catch (error) {
+				} catch (_error) {
 					// Browser error is also acceptable error handling
 					console.log(`✅ Error handling caught for: ${url}`);
 					errorHandlingWorking++;
@@ -299,7 +299,7 @@ test.describe("Guest DM Test", () => {
 				);
 			}
 
-			console.log("\n" + "=".repeat(50));
+			console.log(`\n${"=".repeat(50)}`);
 			console.log(`📈 FINAL SCORE: ${passedTests}/${totalTests} tests passed`);
 			console.log(
 				`📊 SUCCESS RATE: ${Math.round((passedTests / totalTests) * 100)}%`,

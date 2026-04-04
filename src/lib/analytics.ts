@@ -12,11 +12,12 @@
  */
 
 import { getConsentStatus } from "@/hooks/useAnalyticsConsent";
+import type { Json } from "@/integrations/supabase/types";
 import { logger } from "@/lib/logger";
 
 type AnalyticsEvent = {
 	name: string;
-	properties?: Record<string, unknown>;
+	properties?: Record<string, Json | undefined>;
 	userId?: string;
 };
 
@@ -163,7 +164,7 @@ export function trackPageView(page: AnalyticsPageView): void {
  */
 export function identifyUser(
 	userId: string,
-	traits?: Record<string, unknown>,
+	traits?: Record<string, Json | undefined>,
 ): void {
 	const config = getAnalyticsConfig();
 	if (!shouldTrack(config)) return;
@@ -198,6 +199,18 @@ export function resetUser(): void {
 	}
 }
 
+import type { PostHog } from "posthog-js";
+
+declare global {
+	interface Window {
+		posthog?: PostHog;
+		plausible?: (
+			eventName: string,
+			options?: { props?: Record<string, Json | undefined> },
+		) => void;
+	}
+}
+
 /**
  * Initialize analytics providers (only if consented)
  */
@@ -227,15 +240,16 @@ export function initAnalytics(): void {
 	// Initialize PostHog
 	if (config.posthogKey && typeof window !== "undefined" && !window.posthog) {
 		import("posthog-js").then((posthog) => {
-			posthog.default.init(config.posthogKey as string, {
+			const ph = posthog.default;
+			ph.init(config.posthogKey as string, {
 				api_host: config.posthogHost,
-				loaded: (ph) => {
+				loaded: (loadedPh) => {
 					if (import.meta.env.DEV) {
-						ph.debug(); // Enable debug mode in development
+						loadedPh.debug(); // Enable debug mode in development
 					}
 				},
 			});
-			window.posthog = posthog.default as unknown as Window["posthog"];
+			window.posthog = ph;
 		});
 	}
 }

@@ -14,7 +14,7 @@ import { normalizeRegentSearch } from "@/lib/vernacular";
 type DataLoader<T> = () => Promise<T[]>;
 
 const dataLoaders = {
-	monsters: () => import("./monsters").then((module) => module.monsters),
+	anomalies: () => import("./anomalies").then((module) => module.anomalies),
 	items: () => import("./items-index").then((module) => module.allItems),
 	jobs: () => import("./jobs").then((module) => module.jobs),
 	spells: () => import("./spells").then((module) => module.spells),
@@ -123,7 +123,7 @@ export interface StaticCompendiumEntry {
 	role?: string | null;
 	value?: number | null;
 	weight?: number | null;
-	// Monster detail support (static fallback)
+	// Anomaly detail support (static fallback)
 	size?: string | null;
 	creature_type?: string | null;
 	alignment?: string | null;
@@ -151,8 +151,8 @@ export interface StaticCompendiumEntry {
 	senses?: string[] | Record<string, string> | null;
 	languages?: string[] | null;
 	xp?: number | null;
-	monster_actions?: Record<string, unknown>[] | null;
-	monster_traits?: Record<string, unknown>[] | null;
+	Anomaly_actions?: Record<string, unknown>[] | null;
+	Anomaly_traits?: Record<string, unknown>[] | null;
 	saving_throw?: Record<string, unknown> | null;
 	attack?: Record<string, unknown> | null;
 	movement?: Record<string, unknown> | null;
@@ -283,7 +283,7 @@ export interface StaticCompendiumEntry {
 interface StaticDataProvider {
 	getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getAnomalies: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getItems: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSpells: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -323,7 +323,7 @@ function filterBySearch<T extends Record<string, unknown>>(
 	);
 }
 
-type StaticMonsterSource = {
+type StaticAnomaliesource = {
 	id?: string;
 	name: string;
 	description: string;
@@ -660,13 +660,15 @@ type StaticRegentSource = {
 };
 
 // Transform static data to match UI interface
-function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
-	const rawRank = typeof monster.rank === "string" ? monster.rank : undefined;
+function transformAnomaly(
+	Anomaly: StaticAnomaliesource,
+): StaticCompendiumEntry {
+	const rawRank = typeof Anomaly.rank === "string" ? Anomaly.rank : undefined;
 	const rank = rawRank && rawRank.length > 0 ? rawRank : undefined;
 
 	const statsObj =
-		monster.stats && typeof monster.stats === "object"
-			? (monster.stats as Record<string, unknown>)
+		Anomaly.stats && typeof Anomaly.stats === "object"
+			? (Anomaly.stats as Record<string, unknown>)
 			: null;
 	const abilityScores =
 		(statsObj?.abilityScores || statsObj?.ability_scores) &&
@@ -678,14 +680,14 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 			: null;
 
 	const armorClass =
-		typeof monster.ac === "number"
-			? monster.ac
+		typeof Anomaly.ac === "number"
+			? Anomaly.ac
 			: typeof (statsObj?.armorClass || statsObj?.ac) === "number"
 				? ((statsObj?.armorClass || statsObj?.ac) as number)
 				: null;
 	const hitPoints =
-		typeof monster.hp === "number"
-			? monster.hp
+		typeof Anomaly.hp === "number"
+			? Anomaly.hp
 			: typeof (statsObj?.hitPoints || statsObj?.hp) === "number"
 				? ((statsObj?.hitPoints || statsObj?.hp) as number)
 				: null;
@@ -701,7 +703,7 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 	const proficiencyBonus =
 		typeof statsObj?.proficiencyBonus === "number"
 			? (statsObj.proficiencyBonus as number)
-			: 2; // Default for Rank D monsters
+			: 2; // Default for Rank D entities
 	const savingThrows =
 		(statsObj?.savingThrows || statsObj?.saving_throws) &&
 		typeof (statsObj?.savingThrows || statsObj?.saving_throws) === "object"
@@ -724,14 +726,14 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 		return null;
 	};
 
-	const traits = Array.isArray(monster.traits)
-		? (monster.traits as Record<string, unknown>[])
+	const traits = Array.isArray(Anomaly.traits)
+		? (Anomaly.traits as Record<string, unknown>[])
 		: null;
-	const actions = Array.isArray(monster.actions)
-		? (monster.actions as Record<string, unknown>[])
+	const actions = Array.isArray(Anomaly.actions)
+		? (Anomaly.actions as Record<string, unknown>[])
 		: null;
 
-	const skillNames = normalizeStringArray(monster.skills);
+	const skillNames = normalizeStringArray(Anomaly.skills);
 	const skillMap = skillNames
 		? Object.fromEntries(
 				skillNames.map((name) => [name, proficiencyBonus ?? 0]),
@@ -739,16 +741,16 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 		: null;
 
 	return {
-		id: monster.id || monster.name.toLowerCase().replace(/\s+/g, "-"),
-		name: monster.name,
-		display_name: monster.name,
-		description: monster.description,
+		id: Anomaly.id || Anomaly.name.toLowerCase().replace(/\s+/g, "-"),
+		name: Anomaly.name,
+		display_name: Anomaly.name,
+		description: Anomaly.description,
 		created_at:
-			(monster as { created_at?: string }).created_at ||
+			(Anomaly as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
-		tags: [monster.type, rank].filter(Boolean) as string[],
+		tags: [Anomaly.type, rank].filter(Boolean) as string[],
 		source_book: "System Ascendant Homebrew",
-		image_url: monster.image,
+		image_url: Anomaly.image,
 		cr: crNumber !== null ? String(crNumber) : (rank ?? null),
 		gate_rank: rank ?? null,
 		is_boss: rank === "S" || rank === "A",
@@ -763,9 +765,9 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 							? "uncommon"
 							: "common",
 
-		size: typeof monster.size === "string" ? monster.size : "Medium",
-		creature_type: monster.type ?? null,
-		alignment: typeof monster.alignment === "string" ? monster.alignment : null,
+		size: typeof Anomaly.size === "string" ? Anomaly.size : "Medium",
+		creature_type: Anomaly.type ?? null,
+		alignment: typeof Anomaly.alignment === "string" ? Anomaly.alignment : null,
 		armor_class: armorClass,
 		hit_points_average: hitPoints,
 		hit_points_formula: null,
@@ -775,24 +777,24 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 				? (abilityScores.strength as number)
 				: null,
 		agi:
-			typeof abilityScores?.dexterity === "number"
-				? (abilityScores.dexterity as number)
+			typeof abilityScores?.agility === "number"
+				? (abilityScores.agility as number)
 				: null,
 		vit:
-			typeof abilityScores?.constitution === "number"
-				? (abilityScores.constitution as number)
+			typeof abilityScores?.vitality === "number"
+				? (abilityScores.vitality as number)
 				: null,
 		int:
 			typeof abilityScores?.intelligence === "number"
 				? (abilityScores.intelligence as number)
 				: null,
 		sense:
-			typeof abilityScores?.wisdom === "number"
-				? (abilityScores.wisdom as number)
+			typeof abilityScores?.sense === "number"
+				? (abilityScores.sense as number)
 				: null,
 		pre:
-			typeof abilityScores?.charisma === "number"
-				? (abilityScores.charisma as number)
+			typeof abilityScores?.presence === "number"
+				? (abilityScores.presence as number)
 				: null,
 		saving_throws: savingThrows
 			? (Object.fromEntries(
@@ -802,18 +804,18 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
 				) as Record<string, number>)
 			: null,
 		skills: skillMap,
-		damage_resistances: normalizeStringArray(monster.damageResistances) ?? null,
-		damage_immunities: normalizeStringArray(monster.damageImmunities) ?? null,
+		damage_resistances: normalizeStringArray(Anomaly.damageResistances) ?? null,
+		damage_immunities: normalizeStringArray(Anomaly.damageImmunities) ?? null,
 		damage_vulnerabilities:
-			normalizeStringArray(monster.damageVulnerabilities) ?? null,
+			normalizeStringArray(Anomaly.damageVulnerabilities) ?? null,
 		condition_immunities:
-			normalizeStringArray(monster.conditionImmunities) ?? null,
+			normalizeStringArray(Anomaly.conditionImmunities) ?? null,
 		senses:
-			typeof monster.senses === "string" ? { text: monster.senses } : null,
-		languages: normalizeStringArray(monster.languages) ?? null,
-		xp: typeof monster.xp === "number" ? monster.xp : null,
-		monster_traits: traits,
-		monster_actions: actions,
+			typeof Anomaly.senses === "string" ? { text: Anomaly.senses } : null,
+		languages: normalizeStringArray(Anomaly.languages) ?? null,
+		xp: typeof Anomaly.xp === "number" ? Anomaly.xp : null,
+		Anomaly_traits: traits,
+		Anomaly_actions: actions,
 	};
 }
 
@@ -1025,7 +1027,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 			: (spell as Record<string, unknown>).spellAttack
 				? { attack: (spell as Record<string, unknown>).spellAttack }
 				: {
-						saving_throw: { ability: "dexterity", effect: "half damage" },
+						saving_throw: { ability: "agility", effect: "half damage" },
 					}) as Record<string, unknown>,
 		limitations: (spell.limitations && typeof spell.limitations === "object"
 			? {
@@ -1349,15 +1351,15 @@ export const staticDataProvider: StaticDataProvider = {
 		}));
 	},
 
-	getMonsters: async (search?: string) => {
-		const monsters = await loadData<StaticMonsterSource>("monsters");
-		const filtered = filterBySearch(monsters, search, [
+	getAnomalies: async (search?: string) => {
+		const anomalies = await loadData<StaticAnomaliesource>("anomalies");
+		const filtered = filterBySearch(anomalies, search, [
 			"name",
 			"description",
 			"type",
 			"rank",
 		]);
-		return filtered.map(transformMonster);
+		return filtered.map(transformAnomaly);
 	},
 
 	getItems: async (search?: string) => {
@@ -1796,7 +1798,7 @@ export const staticDataProvider: StaticDataProvider = {
 				id: "bulwark-soldier",
 				name: "Umbral Bulwark",
 				description:
-					"Heavy armored legionnaire specialized in defense and crowd control.",
+					"Heavy Carapace Armored legionnaire specialized in defense and crowd control.",
 				rank: "A",
 				role: "Tank",
 			},
@@ -1947,10 +1949,14 @@ export const staticDataProvider: StaticDataProvider = {
 	},
 };
 
+declare global {
+	interface Window {
+		supabaseConfigured?: boolean;
+	}
+}
+
 // Export a hook to check if we should use static data
 export const useStaticDataFallback = () => {
 	// Use static data when Supabase is not configured or fails
-	return (
-		!(window as unknown as Record<string, unknown>).supabaseConfigured || false
-	);
+	return !window.supabaseConfigured;
 };

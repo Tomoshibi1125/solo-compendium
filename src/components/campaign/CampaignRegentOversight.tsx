@@ -1,6 +1,5 @@
 import { Plus, Trash2, User } from "lucide-react";
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import {
+	type RegentUnlock,
 	useAvailableRegents,
 	useCampaignRegentUnlocks,
 	useRegentUnlocks,
@@ -108,10 +108,8 @@ export function CampaignRegentOversight({
 						const char = share.characters;
 						if (!char) return null;
 
-						const charUnlocks = campaignUnlocks.filter(
-							(u) =>
-								(u as unknown as { character_id: string }).character_id ===
-								char.id,
+						const charUnlocks = (campaignUnlocks as RegentUnlock[]).filter(
+							(u) => u.character_id === char.id,
 						);
 
 						return (
@@ -128,12 +126,7 @@ export function CampaignRegentOversight({
 										</p>
 									) : (
 										<div className="space-y-2">
-											{charUnlocks.map((rawUnlock) => {
-												const unlock = rawUnlock as unknown as {
-													id: string;
-													quest_name: string;
-													regent?: { name: string; rank?: string };
-												};
+											{charUnlocks.map((unlock) => {
 												return (
 													<div
 														key={unlock.id}
@@ -144,14 +137,6 @@ export function CampaignRegentOversight({
 																<span className="font-semibold text-sm">
 																	{unlock.regent?.name}
 																</span>
-																{unlock.regent?.rank && (
-																	<Badge
-																		variant="outline"
-																		className="text-[10px]"
-																	>
-																		Rank {unlock.regent.rank}
-																	</Badge>
-																)}
 															</div>
 															<span className="text-[10px] text-muted-foreground">
 																via: {unlock.quest_name}
@@ -226,7 +211,6 @@ export function CampaignRegentOversight({
 								<SelectContent>
 									{availableRegents.map((regent) => (
 										<SelectItem key={regent.id} value={regent.id}>
-											[{(regent as unknown as { rank?: string }).rank || "NR"}]{" "}
 											{regent.name} - {regent.title}
 										</SelectItem>
 									))}

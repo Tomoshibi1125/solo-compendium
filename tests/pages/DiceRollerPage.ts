@@ -119,7 +119,7 @@ export class DiceRollerPage {
 			if (!visible) {
 				// Try quick-roll test IDs
 				const quickRoll = this.page.getByTestId(`quick-roll-1${die}`);
-				const qrVisible = await quickRoll
+				const _qrVisible = await quickRoll
 					.isVisible({ timeout: 2_000 })
 					.catch(() => false);
 				// It's OK if not all exist as separate buttons

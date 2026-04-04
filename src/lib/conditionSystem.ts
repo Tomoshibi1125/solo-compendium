@@ -1,9 +1,4 @@
-/**
- * Enhanced Condition System
- *
- * Upgrades the flat `conditions: string[]` to a structured system with
- * source tracking, duration, concentration linking, and round-based expiry.
- */
+import type { Json } from "@/integrations/supabase/types";
 
 // ─── Types ──────────────────────────────────────────────────
 export interface ConditionEntry {
@@ -24,6 +19,7 @@ export interface ConditionEntry {
 	concentrationSpellId: string | null;
 	isActive: boolean;
 	notes?: string;
+	[key: string]: Json | undefined;
 }
 
 export interface ConditionChange {

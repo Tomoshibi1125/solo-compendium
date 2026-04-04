@@ -22,6 +22,7 @@ import { useAbsorbRune, useCharacterRuneKnowledge } from "@/hooks/useRunes";
 import { resolveRuneAbsorption } from "@/lib/runeAutomation";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { DetailData } from "@/types/character";
 import { getProficiencyBonus } from "@/types/system-rules";
 
 const RUNE_TYPE_COLORS: Record<string, string> = {
@@ -48,9 +49,11 @@ const RUNE_TYPE_ICONS: Record<
 export function RunesList({
 	characterId,
 	campaignId,
+	onSelectDetail,
 }: {
 	characterId: string;
 	campaignId?: string;
+	onSelectDetail?: (detail: DetailData) => void;
 }) {
 	const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
 	const { data: character } = useCharacter(characterId);
@@ -61,7 +64,6 @@ export function RunesList({
 	const ascendantTools = useAscendantTools();
 	const { rollInCampaign } = ascendantTools;
 
-	// Split runes into unabsorbed (available to consume) and absorbed (mastery_level 5)
 	const unabsorbedRunes = runeKnowledge.filter(
 		(rk) => (rk.mastery_level || 0) < 5,
 	);
@@ -69,7 +71,6 @@ export function RunesList({
 		f.source?.startsWith("Rune:"),
 	);
 
-	// Pre-calculate absorption previews for each unabsorbed rune
 	const absorptionPreviews = useMemo(() => {
 		if (!character) return {};
 		const level = character.level ?? 1;
@@ -94,7 +95,6 @@ export function RunesList({
 		const displayName = formatRegentVernacular(runeName);
 		try {
 			const result = await absorbRune.mutateAsync({ characterId, runeId });
-
 			const successMessage = `${displayName} permanently learned. ${result.absorption.adaptationNote}`;
 
 			if (campaignId) {
@@ -142,9 +142,8 @@ export function RunesList({
 	};
 
 	return (
-		<SystemWindow title="RUNES" variant="arise">
+		<SystemWindow title="RUNES" variant="resurge">
 			<div className="space-y-4">
-				{/* Unabsorbed Runes — available to consume */}
 				{unabsorbedRunes.length > 0 && (
 					<div>
 						<h3 className="text-sm font-heading text-muted-foreground mb-2">
@@ -157,9 +156,17 @@ export function RunesList({
 								const runeDescription =
 									rk.rune.effect_description || rk.rune.description || "";
 								return (
-									<div
+									<button
 										key={rk.id}
-										className="border border-primary/20 rounded-lg p-3 space-y-2"
+										type="button"
+										className="w-full text-left border border-primary/20 rounded-lg p-3 space-y-2 cursor-pointer hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50"
+										onClick={() =>
+											onSelectDetail?.({
+												title: rk.rune.name,
+												description: runeDescription,
+												payload: { type: "Rune", icon: Icon },
+											})
+										}
 									>
 										<div className="flex items-start justify-between gap-3">
 											<div className="flex items-start gap-2 flex-1">
@@ -194,7 +201,6 @@ export function RunesList({
 															<AutoLinkText text={runeDescription} />
 														</div>
 													)}
-													{/* Cross-type absorption preview */}
 													{absorptionPreviews[rk.rune_id]?.isCrossType && (
 														<div className="flex items-center gap-1.5 mt-1.5">
 															<AlertTriangle className="w-3 h-3 text-amber-400 flex-shrink-0" />
@@ -219,22 +225,24 @@ export function RunesList({
 											<Button
 												size="sm"
 												variant="default"
-												onClick={() => handleAbsorb(rk.rune_id, rk.rune.name)}
+												onClick={(e) => {
+													e.stopPropagation();
+													handleAbsorb(rk.rune_id, rk.rune.name);
+												}}
 												disabled={absorbRune.isPending}
-												className="font-arise tracking-wider bg-arise-violet hover:bg-arise-violet/80 shadow-[0_0_10px_hsl(var(--arise-violet)/0.3)]"
+												className="font-resurge tracking-wider bg-resurge-violet hover:bg-resurge-violet/80 shadow-[0_0_10px_hsl(var(--resurge-violet)/0.3)]"
 											>
 												<Flame className="w-3 h-3 mr-1" />
 												Absorb
 											</Button>
 										</div>
-									</div>
+									</button>
 								);
 							})}
 						</div>
 					</div>
 				)}
 
-				{/* Absorbed Rune Abilities — permanent features */}
 				{absorbedFeatures.length > 0 && (
 					<div>
 						<h3 className="text-sm font-heading text-muted-foreground mb-2">
@@ -244,15 +252,25 @@ export function RunesList({
 							{absorbedFeatures.map((feature) => (
 								<div
 									key={feature.id}
-									className="border border-arise-violet/20 rounded-lg p-3 bg-arise-violet/5"
+									className="border border-resurge-violet/20 rounded-lg p-3 bg-resurge-violet/5"
 								>
 									<div className="flex items-center justify-between">
-										<div className="flex items-center gap-2">
-											<CheckCircle className="w-4 h-4 text-arise-violet" />
+										<button
+											type="button"
+											className="flex-1 text-left flex items-center gap-2 cursor-pointer hover:text-resurge-violet transition-colors focus-visible:outline-none focus-visible:text-resurge-violet"
+											onClick={() =>
+												onSelectDetail?.({
+													title: feature.name,
+													description: feature.description || "",
+													payload: { type: "Absorbed Rune", icon: CheckCircle },
+												})
+											}
+										>
+											<CheckCircle className="w-4 h-4 text-resurge-violet" />
 											<span className="font-heading font-semibold text-sm">
 												{formatRegentVernacular(feature.name)}
 											</span>
-										</div>
+										</button>
 										<div className="flex items-center gap-2">
 											{feature.uses_max !== null &&
 												feature.uses_max !== undefined && (
@@ -287,7 +305,6 @@ export function RunesList({
 					</div>
 				)}
 
-				{/* Empty state */}
 				{unabsorbedRunes.length === 0 && absorbedFeatures.length === 0 && (
 					<div className="text-center py-8 text-muted-foreground">
 						<BookOpen className="w-12 h-12 mx-auto mb-2 opacity-50" />

@@ -36,7 +36,7 @@ import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 
 interface ArtGeneratorProps {
-	entityType?: "character" | "npc" | "item" | "monster" | "location";
+	entityType?: "character" | "npc" | "item" | "Anomaly" | "location";
 	entityId?: string;
 	existingData?: {
 		name?: string;
@@ -63,7 +63,7 @@ export function ArtGenerator({
 			? "item"
 			: entityType === "location"
 				? "location"
-				: "monster";
+				: "Anomaly";
 	useArtAsset(pipelineEntityType, entityId || "temp");
 
 	// --- AI Hooks ---
@@ -211,7 +211,7 @@ export function ArtGenerator({
 		switch (entityType) {
 			case "character":
 			case "npc":
-			case "monster":
+			case "Anomaly":
 				return [
 					{ value: "portrait", label: "Portrait (Square)" },
 					{ value: "token", label: "Token (Circle)" },
@@ -244,7 +244,7 @@ export function ArtGenerator({
 					<div className="flex items-center justify-between">
 						<CardTitle className="flex items-center gap-2">
 							<Sparkles className="w-5 h-5 text-primary" />
-							Visualization Matrix
+							Visualization Lattice
 						</CardTitle>
 						<Tabs
 							value={genMode}

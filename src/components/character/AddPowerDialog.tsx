@@ -25,6 +25,7 @@ import {
 	getSpellsKnownLimit,
 } from "@/lib/characterCalculations";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
+import { getStaticSpells } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -72,13 +73,18 @@ export function AddPowerDialog({
 		queryKey: [
 			"compendium-powers",
 			characterId,
-			campaignId,
 			searchQuery,
 			character?.job,
 			character?.level,
 		],
 		queryFn: async () => {
 			if (!character?.job) return [];
+
+			// Calculate max power level for the job at current level
+			const maxPowerLevel = getMaxPowerLevelForJobAtLevel(
+				character.job,
+				character.level || 1,
+			);
 
 			const regentOverlayIds = Array.isArray(
 				(character as CharacterExtended).regent_overlays,
@@ -153,56 +159,68 @@ export function AddPowerDialog({
 				);
 			}
 
-			// Static fallback: use spells.ts which has proper level (0-9) and classes[] fields
-			const { spells } = await import("@/data/compendium/spells");
+			// Static fallback: use ProtocolDataManager which has the full spell pack
+			const spells = getStaticSpells();
 			const jobNameLower = (character?.job ?? "").toLowerCase();
 			const filtered = spells
 				.filter((spell) => {
 					// Level gate
 					if ((spell.level ?? 0) > maxPowerLevel) return false;
-					// Job filter: match classes array if present, otherwise show all
-					if (spell.classes && spell.classes.length > 0) {
-						const matches = spell.classes.some(
-							(c) => c.toLowerCase() === jobNameLower,
-						);
-						if (!matches) return false;
-					}
-					// Search filter
-					if (trimmedQuery) {
-						const q = trimmedQuery.toLowerCase();
-						return (
-							spell.name.toLowerCase().includes(q) ||
-							(spell.description || "").toLowerCase().includes(q)
-						);
-					}
+					// Job filter matches if job is in the classes list
+					const matches = (spell.classes || []).some(
+						(c) => c.toLowerCase() === jobNameLower,
+					);
+					if (!matches) return false;
+
 					return true;
 				})
 				.slice(0, 200);
 
-			return filtered.map((spell) => ({
+			return (filtered || []).map((spell) => ({
 				id: spell.id,
 				name: spell.name,
 				description: spell.description ?? "",
-				power_level: spell.level,
+				power_level: spell.level ?? 0,
 				school: spell.school ?? null,
-				casting_time: spell.castingTime ?? null,
-				range: typeof spell.range === "string" ? spell.range : null,
-				duration: typeof spell.duration === "string" ? spell.duration : null,
+				casting_time:
+					typeof spell.castingTime === "string"
+						? spell.castingTime
+						: "1 action",
+				range: typeof spell.range === "string" ? spell.range : "Self",
+				duration:
+					typeof spell.duration === "string" ? spell.duration : "Instantaneous",
 				concentration: spell.concentration ?? false,
 				higher_levels: spell.atHigherLevels ?? null,
 				source_book: "System Ascendant Canon",
 				source_name: null,
 				source_kind: null,
+				display_name: spell.name,
 				job_names: character?.job ? [character.job] : [],
 				path_names: character?.path ? [character.path] : [],
 				regent_names: [],
 				created_at: new Date().toISOString(),
-				display_name: spell.name,
-				aliases: null,
-				license_note: null,
-				tags: [spell.school, spell.type].filter(Boolean) as string[],
+				updated_at: new Date().toISOString(),
+				tags: Array.isArray(spell.tags) ? spell.tags : [],
 				theme_tags: null,
-			})) as unknown as NonNullable<typeof data>;
+				activation_time: null,
+				aliases: null,
+				components: null,
+				damage_roll: null,
+				damage_type: null,
+				flavor: null,
+				generated_reason: null,
+				has_attack_roll: false,
+				has_save: false,
+				image: null,
+				image_url: null,
+				license_note: null,
+				lore: null,
+				mechanics: null,
+				power_type: spell.type ?? null,
+				ritual: false,
+				save_ability: null,
+				target: null,
+			})) as NonNullable<typeof data>;
 		},
 		enabled: open && !!character?.job,
 	});

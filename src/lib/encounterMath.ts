@@ -1,6 +1,6 @@
 import type { Database } from "@/integrations/supabase/types";
 
-type Monster = Database["public"]["Tables"]["compendium_monsters"]["Row"];
+type Anomaly = Database["public"]["Tables"]["compendium_Anomalies"]["Row"];
 
 const DIFFICULTY_THRESHOLDS = {
 	easy: {
@@ -95,8 +95,8 @@ const DIFFICULTY_THRESHOLDS = {
 
 type EncounterDifficulty = "easy" | "medium" | "hard" | "deadly";
 
-export function calculateXP(monster: Monster, quantity: number): number {
-	const xp = monster.xp || 0;
+export function calculateXP(Anomaly: Anomaly, quantity: number): number {
+	const xp = Anomaly.xp || 0;
 	return xp * quantity;
 }
 

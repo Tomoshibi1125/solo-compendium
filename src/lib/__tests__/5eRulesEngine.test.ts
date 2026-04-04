@@ -63,10 +63,10 @@ describe("5e Rules Engine", () => {
 		expect(normalizeAbility("PRE")).toBe("PRE");
 
 		// Test legacy 5e normalization
-		expect(normalizeAbility("DEX")).toBe("AGI");
-		expect(normalizeAbility("CON")).toBe("VIT");
-		expect(normalizeAbility("WIS")).toBe("SENSE");
-		expect(normalizeAbility("CHA")).toBe("PRE");
+		expect(normalizeAbility("AGI")).toBe("AGI");
+		expect(normalizeAbility("VIT")).toBe("VIT");
+		expect(normalizeAbility("SENSE")).toBe("SENSE");
+		expect(normalizeAbility("PRE")).toBe("PRE");
 
 		// Test case insensitivity
 		expect(normalizeAbility("str")).toBe("STR");

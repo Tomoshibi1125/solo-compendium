@@ -48,7 +48,7 @@ type Token = LibraryToken;
 const TOKEN_CATEGORIES = [
 	{ value: "all", label: "All", icon: ImageIcon },
 	{ value: "custom", label: "Custom", icon: Plus },
-	{ value: "monster", label: "Monsters", icon: Trash2 },
+	{ value: "Anomaly", label: "Anomalies", icon: Trash2 },
 	{ value: "npc", label: "NPCs", icon: ImageIcon },
 	{ value: "object", label: "Objects", icon: ImageIcon },
 	{ value: "effect", label: "Effects", icon: ImageIcon },
@@ -448,7 +448,7 @@ const TokenLibrary = () => {
 												</SelectTrigger>
 												<SelectContent>
 													<SelectItem value="custom">Custom</SelectItem>
-													<SelectItem value="monster">Monster</SelectItem>
+													<SelectItem value="Anomaly">Anomaly</SelectItem>
 													<SelectItem value="npc">NPC</SelectItem>
 													<SelectItem value="object">Object</SelectItem>
 													<SelectItem value="effect">Effect</SelectItem>

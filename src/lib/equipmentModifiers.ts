@@ -102,22 +102,18 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 		> = {
 			strength: "str",
 			str: "str",
-			dexterity: "agi",
-			dex: "agi",
 			agility: "agi",
+			dex: "agi",
 			agi: "agi",
-			constitution: "vit",
-			con: "vit",
 			vitality: "vit",
+			con: "vit",
 			vit: "vit",
 			intelligence: "int",
 			int: "int",
-			wisdom: "sense",
-			wis: "sense",
 			sense: "sense",
-			charisma: "pre",
-			cha: "pre",
+			wis: "sense",
 			presence: "pre",
+			cha: "pre",
 			pre: "pre",
 		};
 
@@ -156,24 +152,24 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			}
 		}
 
-		// Per-save modifiers: "+1 to STR saves", "+2 to dexterity saving throws"
+		// Per-save modifiers: "+1 to STR saves", "+2 to agility saving throws"
 		const saveAliases: Array<[string, string]> = [
 			["strength", "STR"],
 			["str", "STR"],
-			["dexterity", "AGI"],
+			["agility", "AGI"],
 			["dex", "AGI"],
 			["agility", "AGI"],
 			["agi", "AGI"],
-			["constitution", "VIT"],
+			["vitality", "VIT"],
 			["con", "VIT"],
 			["vitality", "VIT"],
 			["vit", "VIT"],
 			["intelligence", "INT"],
 			["int", "INT"],
-			["wisdom", "SENSE"],
+			["sense", "SENSE"],
 			["wis", "SENSE"],
 			["sense", "SENSE"],
-			["charisma", "PRE"],
+			["presence", "PRE"],
 			["cha", "PRE"],
 			["presence", "PRE"],
 			["pre", "PRE"],

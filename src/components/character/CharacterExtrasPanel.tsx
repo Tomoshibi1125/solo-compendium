@@ -49,7 +49,7 @@ export function CharacterExtrasPanel({
 			hp_max: Number(draftHp) || 1,
 			ac: Number(draftAc) || 10,
 			speed: Number(draftSpeed) || 30,
-			monster_id: null,
+			Anomaly_id: null,
 			notes: null,
 			is_active: false,
 		});
@@ -193,9 +193,9 @@ export function CharacterExtrasPanel({
 									<Badge variant="outline" className="text-[10px] uppercase">
 										{formatRegentVernacular(extra.extra_type)}
 									</Badge>
-									{extra.monster_id && (
+									{extra.Anomaly_id && (
 										<div className="text-xs text-muted-foreground">
-											Linked to Monster Statblock
+											Linked to Anomaly Statblock
 										</div>
 									)}
 									<div className="flex gap-2 text-xs text-muted-foreground mt-1">

@@ -15,7 +15,7 @@ export type ActionResolutionPayload = {
 	source: {
 		type:
 			| "spell"
-			| "monster_action"
+			| "Anomaly_action"
 			| "technique"
 			| "item"
 			| "artifact"

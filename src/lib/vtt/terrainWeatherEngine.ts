@@ -17,7 +17,7 @@ export type TerrainType =
 	| "water_shallow" // difficult terrain
 	| "water_deep" // swim speed required
 	| "lava" // extreme damage
-	| "ice" // DEX save or fall prone
+	| "ice" // AGI save or fall prone
 	| "mud" // half speed + STR save
 	| "magical" // PW-defined effect
 	| "elevated" // height advantage

@@ -1,5 +1,5 @@
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { logger } from "@/lib/logger";
 import type { SyncQueueItem } from "@/lib/offlineStorage";
 import {
@@ -24,13 +24,12 @@ const ensureUserContext = async (): Promise<string> => {
 
 const handleHomebrewCreate = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const payload = { ...item.data };
-	delete (payload as Record<string, unknown>).id;
+	const { id: _removedId, ...payload } = item.data as Record<string, Json>;
 
 	const { error } = await supabase
 		.from("homebrew_content")
 		.insert(
-			payload as unknown as Database["public"]["Tables"]["homebrew_content"]["Insert"],
+			payload as Database["public"]["Tables"]["homebrew_content"]["Insert"],
 		);
 
 	if (error) throw error;
@@ -38,11 +37,12 @@ const handleHomebrewCreate = async (item: SyncQueueItem) => {
 
 const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const mode = typeof item.data.mode === "string" ? item.data.mode : "session";
+	const data = item.data as Record<string, Json>;
+	const mode = typeof data.mode === "string" ? data.mode : "session";
 	const campaignId =
-		typeof item.data.campaign_id === "string" ? item.data.campaign_id : null;
+		typeof data.campaign_id === "string" ? data.campaign_id : null;
 	const sessionId =
-		typeof item.data.session_id === "string" ? item.data.session_id : null;
+		typeof data.session_id === "string" ? data.session_id : null;
 
 	if (!sessionId) {
 		throw new Error("COMBAT_SESSION_ID_REQUIRED");
@@ -50,22 +50,21 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 
 	if (mode === "session") {
 		const updates =
-			typeof item.data.updates === "object" && item.data.updates !== null
-				? (item.data.updates as Record<string, unknown>)
+			typeof data.updates === "object" && data.updates !== null
+				? (data.updates as Record<string, Json>)
 				: {};
 
-		const payload: Record<string, unknown> = {};
+		const payload: Record<string, Json> = {};
 		if (typeof updates.status === "string") {
 			payload.status = updates.status;
 		}
-		if (typeof updates.round === "number" && Number.isFinite(updates.round)) {
-			payload.round = updates.round;
+		const roundValue = updates.round;
+		if (typeof roundValue === "number" && Number.isFinite(roundValue)) {
+			payload.round = roundValue;
 		}
-		if (
-			typeof updates.current_turn === "number" &&
-			Number.isFinite(updates.current_turn)
-		) {
-			payload.current_turn = updates.current_turn;
+		const turnValue = updates.current_turn;
+		if (typeof turnValue === "number" && Number.isFinite(turnValue)) {
+			payload.current_turn = turnValue;
 		}
 
 		if (Object.keys(payload).length === 0) {
@@ -74,7 +73,9 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 
 		let query = supabase
 			.from("campaign_combat_sessions")
-			.update(payload as never)
+			.update(
+				payload as Database["public"]["Tables"]["campaign_combat_sessions"]["Update"],
+			)
 			.eq("id", sessionId);
 
 		if (campaignId) {
@@ -91,16 +92,14 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 			throw new Error("CAMPAIGN_ID_REQUIRED");
 		}
 
-		const rawCombatants = Array.isArray(item.data.combatants)
-			? item.data.combatants
-			: [];
+		const rawCombatants = Array.isArray(data.combatants) ? data.combatants : [];
 		const payload = rawCombatants
 			.map((entry, index) => {
 				if (typeof entry !== "object" || entry === null) {
 					return null;
 				}
 
-				const combatant = entry as Record<string, unknown>;
+				const combatant = entry as Record<string, Json>;
 				const combatantId =
 					typeof combatant.id === "string" ? combatant.id : null;
 				const name =
@@ -115,16 +114,21 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 					session_id: sessionId,
 					name,
 					initiative: Number.isFinite(initiativeValue) ? initiativeValue : 0,
-					stats: combatant.stats ?? {},
-					conditions: combatant.conditions ?? [],
-					flags: combatant.flags ?? {},
+					stats: (combatant.stats as Json) ?? {},
+					conditions: (combatant.conditions as Json) ?? [],
+					flags: (combatant.flags as Json) ?? {},
 					member_id:
 						typeof combatant.member_id === "string"
 							? combatant.member_id
 							: null,
-				};
+				} as Database["public"]["Tables"]["campaign_combatants"]["Insert"];
 			})
-			.filter((combatant) => combatant !== null);
+			.filter(
+				(
+					combatant,
+				): combatant is Database["public"]["Tables"]["campaign_combatants"]["Insert"] =>
+					combatant !== null,
+			);
 
 		const { error: clearError } = await supabase
 			.from("campaign_combatants")
@@ -142,7 +146,7 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 
 		const { error } = await supabase
 			.from("campaign_combatants")
-			.upsert(payload as never, { onConflict: "id" });
+			.upsert(payload, { onConflict: "id" });
 
 		if (error) throw error;
 		return;
@@ -153,31 +157,32 @@ const handleCampaignCombatUpdate = async (item: SyncQueueItem) => {
 
 const handleHomebrewUpdate = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const id = typeof item.data.id === "string" ? item.data.id : null;
+	const data = item.data as Record<string, Json>;
+	const id = typeof data.id === "string" ? data.id : null;
 	if (!id) throw new Error("HOMEBREW_ID_REQUIRED");
 
-	if (typeof item.data.status === "string") {
+	if (typeof data.status === "string") {
 		const { error } = await supabase.rpc("set_homebrew_content_status", {
 			p_homebrew_id: id,
-			p_status: item.data.status,
-			p_visibility_scope: (typeof item.data.visibility_scope === "string"
-				? item.data.visibility_scope
-				: undefined) as string | undefined,
-			p_campaign_id: (typeof item.data.campaign_id === "string" &&
-			UUID_PATTERN.test(item.data.campaign_id)
-				? item.data.campaign_id
-				: undefined) as string | undefined,
-		} as never);
+			p_status: data.status,
+			p_visibility_scope: String(data.visibility_scope ?? ""),
+			p_campaign_id:
+				typeof data.campaign_id === "string" &&
+				UUID_PATTERN.test(data.campaign_id)
+					? data.campaign_id
+					: undefined,
+		});
 		if (error) throw error;
 		return;
 	}
 
-	const payload = { ...item.data } as Record<string, unknown>;
-	delete payload.id;
+	const { id: _remId, ...payload } = data;
 
 	const { error } = await supabase
 		.from("homebrew_content")
-		.update(payload)
+		.update(
+			payload as Database["public"]["Tables"]["homebrew_content"]["Update"],
+		)
 		.eq("id", id);
 
 	if (error) throw error;
@@ -185,7 +190,8 @@ const handleHomebrewUpdate = async (item: SyncQueueItem) => {
 
 const handleHomebrewDelete = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const id = typeof item.data.id === "string" ? item.data.id : null;
+	const data = item.data as Record<string, Json>;
+	const id = typeof data.id === "string" ? data.id : null;
 	if (!id) throw new Error("HOMEBREW_ID_REQUIRED");
 
 	const { error } = await supabase
@@ -198,13 +204,12 @@ const handleHomebrewDelete = async (item: SyncQueueItem) => {
 
 const handleMarketplaceCreate = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const payload = { ...item.data };
-	delete (payload as Record<string, unknown>).id;
+	const { id: _remId, ...payload } = item.data as Record<string, Json>;
 
 	const { error } = await supabase
 		.from("marketplace_items")
 		.insert(
-			payload as unknown as Database["public"]["Tables"]["marketplace_items"]["Insert"],
+			payload as Database["public"]["Tables"]["marketplace_items"]["Insert"],
 		);
 
 	if (error) throw error;
@@ -212,48 +217,47 @@ const handleMarketplaceCreate = async (item: SyncQueueItem) => {
 
 const handleMarketplaceUpdate = async (item: SyncQueueItem) => {
 	const userId = await ensureUserContext();
-	const mode = typeof item.data.mode === "string" ? item.data.mode : null;
+	const data = item.data as Record<string, Json>;
+	const mode = typeof data.mode === "string" ? data.mode : null;
 
 	if (mode === "download") {
-		const itemId =
-			typeof item.data.item_id === "string" ? item.data.item_id : null;
+		const itemId = typeof data.item_id === "string" ? data.item_id : null;
 		if (!itemId) throw new Error("MARKETPLACE_ITEM_REQUIRED");
 
 		const { error } = await supabase.rpc("record_marketplace_download", {
 			p_item_id: itemId,
-			puser_id: userId,
+			p_user_id: userId,
 		});
 		if (error) throw error;
 		return;
 	}
 
 	if (mode === "review") {
-		const itemId =
-			typeof item.data.item_id === "string" ? item.data.item_id : null;
+		const itemId = typeof data.item_id === "string" ? data.item_id : null;
 		if (!itemId) throw new Error("MARKETPLACE_ITEM_REQUIRED");
 
-		const rating = Number(item.data.rating);
+		const ratingValue = data.rating;
+		const rating =
+			typeof ratingValue === "number" ? ratingValue : Number(ratingValue || 0);
 		const { error } = await supabase.rpc("upsert_marketplace_review", {
 			p_item_id: itemId,
 			p_rating: Number.isFinite(rating) ? rating : 5,
-			p_comment:
-				typeof item.data.comment === "string" ? item.data.comment : undefined,
-			puser_id: userId,
+			p_comment: typeof data.comment === "string" ? data.comment : undefined,
+			p_user_id: userId,
 		});
 		if (error) throw error;
 		return;
 	}
 
-	const id = typeof item.data.id === "string" ? item.data.id : null;
+	const id = typeof data.id === "string" ? data.id : null;
 	if (!id) throw new Error("MARKETPLACE_ID_REQUIRED");
 
-	const payload = { ...item.data } as Record<string, unknown>;
-	delete payload.id;
+	const { id: _remId, ...payload } = data;
 
 	const { error } = await supabase
 		.from("marketplace_items")
 		.update(
-			payload as unknown as Database["public"]["Tables"]["marketplace_items"]["Update"],
+			payload as Database["public"]["Tables"]["marketplace_items"]["Update"],
 		)
 		.eq("id", id);
 
@@ -262,7 +266,8 @@ const handleMarketplaceUpdate = async (item: SyncQueueItem) => {
 
 const handleMarketplaceDelete = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const id = typeof item.data.id === "string" ? item.data.id : null;
+	const data = item.data as Record<string, Json>;
+	const id = typeof data.id === "string" ? data.id : null;
 	if (!id) throw new Error("MARKETPLACE_ID_REQUIRED");
 
 	const { error } = await supabase
@@ -275,41 +280,45 @@ const handleMarketplaceDelete = async (item: SyncQueueItem) => {
 
 const handleCampaignSessionCreate = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const mode = typeof item.data.mode === "string" ? item.data.mode : "session";
+	const data = item.data as Record<string, Json>;
+	const mode = typeof data.mode === "string" ? data.mode : "session";
 
 	if (mode === "log") {
 		const { error } = await supabase.rpc("add_campaign_session_log", {
-			p_campaign_id: item.data.campaign_id as string,
-			p_session_id: (item.data.session_id as string) ?? null,
+			p_campaign_id: String(data.campaign_id ?? ""),
+			p_session_id:
+				typeof data.session_id === "string" ? data.session_id : undefined,
 			p_log_type:
-				(item.data.log_type as "session" | "combat" | "milestone") ?? "session",
-			p_title: item.data.title as string,
-			p_content: item.data.content as string,
-			p_metadata: (item.data.metadata as Record<string, unknown>) ?? {},
-			p_is_player_visible: (item.data.is_player_visible as boolean) ?? true,
-		} as never);
+				(data.log_type as "session" | "combat" | "milestone") ?? "session",
+			p_title: String(data.title ?? ""),
+			p_content: String(data.content ?? ""),
+			p_metadata: (data.metadata as Record<string, Json>) ?? {},
+			p_is_player_visible: Boolean(data.is_player_visible ?? true),
+		});
 		if (error) throw error;
 		return;
 	}
 
 	const { error } = await supabase.rpc("upsert_campaign_session", {
-		p_campaign_id: item.data.campaign_id as string,
+		p_campaign_id: String(data.campaign_id ?? ""),
 		p_session_id:
-			typeof item.data.session_id === "string" &&
-			UUID_PATTERN.test(item.data.session_id)
-				? item.data.session_id
-				: null,
-		p_title: (item.data.title as string) ?? null,
-		p_description: (item.data.description as string) ?? null,
-		p_scheduled_for: (item.data.scheduled_for as string) ?? null,
+			typeof data.session_id === "string" && UUID_PATTERN.test(data.session_id)
+				? data.session_id
+				: undefined,
+		p_title: typeof data.title === "string" ? data.title : undefined,
+		p_description:
+			typeof data.description === "string" ? data.description : undefined,
+		p_scheduled_for:
+			typeof data.scheduled_for === "string" ? data.scheduled_for : undefined,
 		p_status:
-			(item.data.status as
+			(data.status as
 				| "scheduled"
 				| "active"
 				| "completed"
-				| "cancelled") ?? null,
-		p_location: (item.data.location as string) ?? null,
-	} as never);
+				| "cancelled"
+				| undefined) ?? undefined,
+		p_location: typeof data.location === "string" ? data.location : undefined,
+	});
 
 	if (error) throw error;
 };
@@ -320,13 +329,14 @@ const handleCampaignSessionUpdate = async (item: SyncQueueItem) => {
 
 const handleCampaignSessionDelete = async (item: SyncQueueItem) => {
 	await ensureUserContext();
-	const mode = typeof item.data.mode === "string" ? item.data.mode : "session";
+	const data = item.data as Record<string, Json>;
+	const mode = typeof data.mode === "string" ? data.mode : "session";
 	if (mode !== "session") {
 		return;
 	}
 
 	const sessionId =
-		typeof item.data.session_id === "string" ? item.data.session_id : null;
+		typeof data.session_id === "string" ? data.session_id : null;
 	if (!sessionId) throw new Error("SESSION_ID_REQUIRED");
 
 	const { error } = await supabase

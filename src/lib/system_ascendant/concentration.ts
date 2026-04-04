@@ -75,7 +75,7 @@ export function maintainConcentration(
 	};
 }
 
-// Take damage while concentrating (SRD 5e: sets the DC for a required Constitution save)
+// Take damage while concentrating (SRD 5e: sets the DC for a required Vitality save)
 export function takeConcentrationDamage(
 	state: ConcentrationState,
 	damage: number,

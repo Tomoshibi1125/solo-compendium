@@ -16,8 +16,6 @@ import { PathStep } from "@/components/character-engine/PathStep";
 import { ReviewStep } from "@/components/character-engine/ReviewStep";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { backgrounds as staticBackgrounds } from "@/data/compendium/backgrounds";
-import { jobs as staticJobs } from "@/data/compendium/jobs";
 import { useToast } from "@/hooks/use-toast";
 import { useCreateCharacter } from "@/hooks/useCharacters";
 import {
@@ -30,9 +28,16 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import { calculateHPMax } from "@/lib/characterCalculations";
-import { getJobASI } from "@/lib/characterCreation";
+import {
+	addJobAwakeningBenefitsForLevel,
+	addLevel1Features,
+	addStartingEquipment,
+	addStartingPowers,
+	getJobASI,
+} from "@/lib/characterCreation";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
+import { getStaticBackgrounds, getStaticJobs } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import type {
 	Background,
@@ -130,48 +135,50 @@ const CharacterNew = () => {
 	const { data: jobs = [] } = useQuery({
 		queryKey: ["jobs"],
 		queryFn: async () => {
-			const staticJobsData: Job[] = (staticJobs as StaticJob[]).map((job) => ({
-				id: job.id,
-				name: job.name,
-				display_name: job.name,
-				description: job.description,
-				hit_die: Number.parseInt(job.hitDie?.replace("1d", "") || "8", 10),
-				primary_abilities: (job.primary_abilities ||
-					(job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
-				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
-					job.savingThrows ||
-					[]) as AbilityScore[],
-				armor_proficiencies: (job.armor_proficiencies ||
-					job.armorProficiencies ||
-					[]) as string[],
-				weapon_proficiencies: (job.weapon_proficiencies ||
-					job.weaponProficiencies ||
-					[]) as string[],
-				tool_proficiencies: (job.tool_proficiencies ||
-					job.toolProficiencies ||
-					[]) as string[],
-				skill_choices: (job.skillChoices || []) as string[],
-				skill_choice_count: 2,
-				source_book: job.source || "System Ascendant Canon",
-				class_features: (job.classFeatures || null) as Json,
-				spellcasting: (job.spellcasting || null) as Json,
-				starting_equipment: (job.startingEquipment || null) as Json,
-				hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
-				hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
-				regent_prerequisites: null,
-				aliases: [],
-				flavor_text: null,
-				generated_reason: null,
-				image_url: job.image || null,
-				tags: [],
-				license_note: null,
-				secondary_abilities: [],
-				source_kind: "canon",
-				source_name: job.source || "System Ascendant Canon",
-				theme_tags: [],
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-			}));
+			const staticJobsData: Job[] = (getStaticJobs() as StaticJob[]).map(
+				(job) => ({
+					id: job.id,
+					name: job.name,
+					display_name: job.name,
+					description: job.description,
+					hit_die: Number.parseInt(job.hitDie?.replace("1d", "") || "8", 10),
+					primary_abilities: (job.primary_abilities ||
+						(job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
+					saving_throw_proficiencies: (job.saving_throw_proficiencies ||
+						job.savingThrows ||
+						[]) as AbilityScore[],
+					armor_proficiencies: (job.armor_proficiencies ||
+						job.armorProficiencies ||
+						[]) as string[],
+					weapon_proficiencies: (job.weapon_proficiencies ||
+						job.weaponProficiencies ||
+						[]) as string[],
+					tool_proficiencies: (job.tool_proficiencies ||
+						job.toolProficiencies ||
+						[]) as string[],
+					skill_choices: (job.skillChoices || []) as string[],
+					skill_choice_count: 2,
+					source_book: job.source || "System Ascendant Canon",
+					class_features: (job.classFeatures || null) as Json,
+					spellcasting: (job.spellcasting || null) as Json,
+					starting_equipment: (job.startingEquipment || null) as Json,
+					hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
+					hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
+					regent_prerequisites: null,
+					aliases: [],
+					flavor_text: null,
+					generated_reason: null,
+					image_url: job.image || null,
+					tags: [],
+					license_note: null,
+					secondary_abilities: [],
+					source_kind: "canon",
+					source_name: job.source || "System Ascendant Canon",
+					theme_tags: [],
+					created_at: new Date().toISOString(),
+					updated_at: new Date().toISOString(),
+				}),
+			);
 
 			try {
 				const { data: dbJobs, error } = await supabase
@@ -212,7 +219,7 @@ const CharacterNew = () => {
 		if (!selectedJob) return undefined;
 		const jobName = jobs.find((j) => j.id === selectedJob)?.name;
 		if (!jobName) return undefined;
-		return (staticJobs as StaticJob[]).find((j) => j.name === jobName);
+		return (getStaticJobs() as StaticJob[]).find((j) => j.name === jobName);
 	}, [selectedJob, jobs]);
 
 	const jobAwakeningAtCreation = useMemo(() => {
@@ -476,10 +483,10 @@ const CharacterNew = () => {
 			if (!dbJob || !dbBg) throw new Error("Job or Background missing");
 
 			// Ensure we use the enriched static data for mapping
-			const job = (staticJobs as StaticJob[]).find(
+			const job = (getStaticJobs() as StaticJob[]).find(
 				(j: StaticJob) => j.name === dbJob.name,
 			);
-			const bgData = (staticBackgrounds as StaticBackground[]).find(
+			const bgData = (getStaticBackgrounds() as StaticBackground[]).find(
 				(b: StaticBackground) => b.name === dbBg.name,
 			);
 
@@ -525,13 +532,6 @@ const CharacterNew = () => {
 				],
 				speed: job.speed ?? 30,
 			});
-
-			const {
-				addLevel1Features,
-				addStartingEquipment,
-				addStartingPowers,
-				addJobAwakeningBenefitsForLevel,
-			} = await import("@/lib/characterCreation");
 
 			const finalAbilities = { ...abilities };
 			for (const [k, v] of Object.entries(jobASI)) {

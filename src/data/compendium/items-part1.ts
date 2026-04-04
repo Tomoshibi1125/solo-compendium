@@ -1,1802 +1,958 @@
-// Items Compendium - Part 1
-// Generated with full admin privileges
-// System Ascendant themed items with images
-
 export const items = [
 	{
-		id: "item-0001",
-		name: "Shadow Saber of Kael",
+		id: "item-p1-1",
+		name: "Grave-Walker Boots",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This weapon was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0001.webp",
-		requirements: {
-			class: ["Warrior", "Assassin", "Shadow Reaver"],
-		},
-		properties: {
-			weapon: {
-				damage: "1d8 + 2",
-				damage_type: "slashing",
-				versatile: "1d10 + 2",
-				finesse: true,
-			},
-			protocol_enhanced: {
-				bonus: {
-					attack: 2,
-					damage: 2,
-				},
-				resistance: ["necrotic", "psychic"],
-				immunity: ["frightened"],
-			},
-		},
+			"Recovered from the depths of a Shadow Rift. This boots pulses with void resonance.",
+		rarity: "common",
+		type: "armor",
+		image: "/generated/compendium/items/item-p1-1.webp",
 		effects: {
 			passive: [
-				"You gain advantage on attack rolls against creatures in dim light or darkness",
-				"The weapon deals an additional 1d6 necrotic damage on hit",
-				"You can use your reaction to teleport up to 30 feet to an unoccupied space in dim light or darkness when targeted by an attack",
+				"You gain resistance to necrotic damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 1,
+		value: 31416,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Void.",
+		mechanics: {
+			system_interaction:
+				"Deals necrotic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-2",
+		name: "Thunder-Clap Vial",
+		description:
+			"Crackles with residual kinetic energy. This vial pulses with storm resonance.",
+		rarity: "legendary",
+		type: "consumable",
+		image: "/generated/compendium/items/item-p1-2.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
 			],
 			active: [
 				{
-					name: "Shadow Strike",
+					name: "Storm Resonance Burst",
 					description:
-						"As an action, the blade releases a wave of shadow energy. All creatures in a 15-foot cone must make a DC 18 Constitution saving throw or take 4d8 necrotic damage and be frightened for 1 minute.",
+						"Unleash a wave of thunder energy dealing 4d8 damage in a 15ft cone.",
 					action: "action",
-					frequency: "once-per-day",
+					frequency: "once-per-rest",
 				},
 			],
-			value: 65285,
 		},
 		attunement: true,
-		charges: {
-			max: 3,
-			current: 3,
-			recharge: "dawn",
-		},
-		weight: 3,
-		value: 65285,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0002",
-		name: "Eternal Vest of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0002.webp",
-		stats: {
-			defense: 134,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 78255,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Grants advantage on saving throws against one damage type",
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
-			],
-			value: 78255,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0003",
-		name: "Void Stim of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0003.webp",
-		stats: {
-			health: 496,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 90290,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants advantage on ability checks for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Restores 2d4+2 hit points when consumed",
-			],
-			value: 90290,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0004",
-		name: "Abyssal Bracer of Kael",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0004.webp",
-		stats: {
-			mana: 206,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 8454,
 		weight: 1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Grants darkvision 60 feet if you don't already have it",
-			],
-			value: 8454,
-		},
-		attunement: true,
+		value: 10910,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0005",
-		name: "Demonic Tablet of Kael",
+		id: "item-p1-3",
+		name: "Storm-Caller Boots",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0005.webp",
-		stats: {
-			mana: 194,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 100287,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 100287,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0006",
-		name: "Celestial Blade of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0006.webp",
-		stats: {
-			attack: 108,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 68235,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Glows faintly when enemies are within 60 feet"],
-			value: 68235,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0007",
-		name: "Divine Mail of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0007.webp",
-		stats: {
-			defense: 190,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 36836,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
-				"You can cast Shield once per long rest while wearing this armor",
-			],
-			value: 36836,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0008",
-		name: "Ancient Vial of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
+			"Fast as a blink of an eye. This boots pulses with storm resonance.",
 		rarity: "rare",
 		type: "consumable",
-		image: "/generated/compendium/items/item-0008.webp",
-		stats: {
-			health: 302,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 86734,
-		weight: 0.5,
+		image: "/generated/compendium/items/item-p1-3.webp",
 		effects: {
 			passive: [
-				"Grants advantage on ability checks for 1 hour",
-				"Removes one condition affecting the user",
-				"Restores 2d4+2 hit points when consumed",
+				"You gain resistance to lightning damage.",
+				"While using this item, your Intelligence increases by 1.",
 			],
-			value: 86734,
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of lightning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 2,
+		value: 32453,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0009",
-		name: "Forgotten Circlet of Kael",
+		id: "item-p1-4",
+		name: "Storm-Caller Greatsword",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0009.webp",
-		stats: {
-			mana: 108,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 3571,
-		weight: 1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"Grants +1 to one ability score while attuned",
-				"You gain proficiency in one saving throw while attuned",
-			],
-			value: 3571,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0010",
-		name: "Cursed Script of Kael",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
+			"Crackles with residual kinetic energy. This greatsword pulses with storm resonance.",
 		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0010.webp",
-		stats: {
-			mana: 234,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 42455,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You gain proficiency in one saving throw while attuned",
-				"Once per day, reroll a failed saving throw",
-			],
-			value: 42455,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0011",
-		name: "Blessed Bow of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0011.webp",
-		stats: {
-			attack: 79,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 64016,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["You gain +1 to initiative while carrying this weapon"],
-			value: 64016,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0012",
-		name: "Sacred Plate of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0012.webp",
-		stats: {
-			defense: 148,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 10313,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Reduces damage from critical hits by your proficiency bonus",
-				"You can cast Shield once per long rest while wearing this armor",
-			],
-			value: 10313,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0013",
-		name: "Profane Elixir of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0013.webp",
-		stats: {
-			health: 524,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 80589,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Restores 2d4+2 hit points when consumed",
-			],
-			value: 80589,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0014",
-		name: "Mystic Amulet of Kael",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0014.webp",
-		stats: {
-			mana: 153,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 57376,
-		weight: 1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-			],
-			value: 57376,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0015",
-		name: "Arcane Protocol of Kael",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0015.webp",
-		stats: {
-			mana: 137,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 86376,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
-				"You gain proficiency in one saving throw while attuned",
-			],
-			value: 86376,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0016",
-		name: "Infernal Staff of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0016.webp",
-		stats: {
-			attack: 188,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 35100,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Glows faintly when enemies are within 60 feet"],
-			value: 35100,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0017",
-		name: "Frozen Cuirass of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0017.webp",
-		stats: {
-			defense: 117,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 5925,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Reduces damage from critical hits by your proficiency bonus",
-				"Grants advantage on saving throws against one damage type",
-			],
-			value: 5925,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0018",
-		name: "Thunder Essence of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0018.webp",
-		stats: {
-			health: 264,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 88613,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Grants advantage on ability checks for 1 hour",
-				"Restores 2d4+2 hit points when consumed",
-			],
-			value: 88613,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0019",
-		name: "Holy Ring of Kael",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
 		type: "ring",
-		image: "/generated/compendium/items/item-0019.webp",
-		stats: {
-			mana: 51,
+		image: "/generated/compendium/items/item-p1-4.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of thunder energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 56647,
+		attunement: true,
 		weight: 1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"Once per day, reroll a failed saving throw",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 56647,
-		},
-		attunement: true,
+		value: 42491,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0020",
-		name: "Dark Neural Chip of Kael",
+		id: "item-p1-5",
+		name: "Chronos-Plate Blade",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0020.webp",
-		stats: {
-			mana: 161,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 59943,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"You can cast Detect Magic at will while wearing this",
-				"Grants +1 to one ability score while attuned",
-				"Once per day, reroll a failed saving throw",
-			],
-			value: 59943,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0021",
-		name: "Shadow Warhammer of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0021.webp",
-		stats: {
-			attack: 82,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 85846,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Glows faintly when enemies are within 60 feet"],
-			value: 85846,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0022",
-		name: "Eternal Shrouds of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0022.webp",
-		stats: {
-			defense: 94,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 13792,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"You can cast Shield once per long rest while wearing this armor",
-				"Grants resistance to one elemental damage type while attuned",
-			],
-			value: 13792,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0023",
-		name: "Void Capsule of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0023.webp",
-		stats: {
-			health: 478,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 64937,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Removes one condition affecting the user",
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-			],
-			value: 64937,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0024",
-		name: "Abyssal Pendant of Kael",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
+			"A fragment of the original System code. This blade pulses with aetheric resonance.",
 		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0024.webp",
-		stats: {
-			mana: 234,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 2888,
-		weight: 1,
+		type: "wand",
+		image: "/generated/compendium/items/item-p1-5.webp",
 		effects: {
 			passive: [
-				"You can cast Detect Magic at will while wearing this",
-				"Grants darkvision 60 feet if you don't already have it",
-				"You gain proficiency in one saving throw while attuned",
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 2888,
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of psychic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 4,
+		value: 9803,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0025",
-		name: "Demonic Data Slate of Kael",
+		id: "item-p1-6",
+		name: "Mana-Flow Rod",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0025.webp",
-		stats: {
-			mana: 81,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 3629,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Once per day, reroll a failed saving throw",
-			],
-			value: 3629,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0026",
-		name: "Celestial Dagger of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0026.webp",
-		stats: {
-			attack: 85,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 43318,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["You gain +1 to initiative while carrying this weapon"],
-			value: 43318,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0027",
-		name: "Divine Raiment of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
+			"A fragment of the original System code. This rod pulses with aetheric resonance.",
 		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0027.webp",
-		stats: {
-			defense: 88,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 9224,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Reduces damage from critical hits by your proficiency bonus",
-				"The armor adjusts to fit perfectly, imposing no stealth disadvantage",
-			],
-			value: 9224,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0028",
-		name: "Ancient Core of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
 		type: "consumable",
-		image: "/generated/compendium/items/item-0028.webp",
-		stats: {
-			health: 357,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 51211,
-		weight: 0.5,
+		image: "/generated/compendium/items/item-p1-6.webp",
 		effects: {
 			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Restores 2d4+2 hit points when consumed",
-				"Grants advantage on ability checks for 1 hour",
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 51211,
+			active: [],
 		},
 		attunement: true,
+		weight: 2,
+		value: 40152,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0029",
-		name: "Forgotten Earring of Kael",
+		id: "item-p1-7",
+		name: "Spatial-Shard Necklace",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
+			"A fragment of the original System code. This necklace pulses with aetheric resonance.",
+		rarity: "legendary",
+		type: "armor",
+		image: "/generated/compendium/items/item-p1-7.webp",
+		effects: {
+			passive: [
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of force energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 3,
+		value: 48603,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-8",
+		name: "Stone-Skin Gauntlets",
+		description:
+			"Heavy enough to level a city block. This gauntlets pulses with titanic resonance.",
+		rarity: "rare",
 		type: "ring",
-		image: "/generated/compendium/items/item-0029.webp",
-		stats: {
-			mana: 230,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 13993,
-		weight: 1,
+		image: "/generated/compendium/items/item-p1-8.webp",
 		effects: {
 			passive: [
-				"You can cast Detect Magic at will while wearing this",
-				"You gain proficiency in one saving throw while attuned",
-				"Once per day, reroll a failed saving throw",
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
-			value: 13993,
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 5,
+		value: 32370,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0030",
-		name: "Cursed Scroll of Kael",
+		id: "item-p1-9",
+		name: "Spatial-Shard Vial",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0030.webp",
-		stats: {
-			mana: 115,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 4632,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Once per day, reroll a failed saving throw",
-			],
-			value: 4632,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0031",
-		name: "Blessed Saber of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
+			"Bypasses the dimensional divide entirely. This vial pulses with aetheric resonance.",
+		rarity: "very_rare",
 		type: "weapon",
-		image: "/generated/compendium/items/item-0031.webp",
-		stats: {
-			attack: 152,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 10804,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
+		image: "/generated/compendium/items/item-p1-9.webp",
 		effects: {
-			passive: ["Once per day, the weapon can cast a cantrip-level effect"],
-			value: 10804,
+			passive: [
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of force energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
+		attunement: true,
+		weight: 4,
+		value: 28814,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0032",
-		name: "Sacred Vest of Kael",
+		id: "item-p1-10",
+		name: "Thunder-Clap Greatsword",
 		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
+			"Crackles with residual kinetic energy. This greatsword pulses with storm resonance.",
+		rarity: "common",
+		type: "scroll",
+		image: "/generated/compendium/items/item-p1-10.webp",
+		effects: {
+			passive: [
+				"You gain resistance to lightning damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 5,
+		value: 6565,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-11",
+		name: "Rift-Walker Tome",
+		description:
+			"A fragment of the original System code. This tome pulses with aetheric resonance.",
+		rarity: "very_rare",
+		type: "wand",
+		image: "/generated/compendium/items/item-p1-11.webp",
+		effects: {
+			passive: [
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of force energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 3,
+		value: 43736,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-12",
+		name: "Dawn-Guard Cowl",
+		description:
+			"Found in a solar-synchronized floating gate. This cowl pulses with solar resonance.",
+		rarity: "epic",
+		type: "armor",
+		image: "/generated/compendium/items/item-p1-12.webp",
+		effects: {
+			passive: [
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
+			],
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of fire energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 4,
+		value: 46594,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-13",
+		name: "Tempest-Core Vial",
+		description:
+			"Recovered during a Mana-Resonance event. This vial pulses with storm resonance.",
+		rarity: "epic",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p1-13.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of thunder energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 1,
+		value: 21267,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-14",
+		name: "Frozen Shield",
+		description:
+			"Cold enough to freeze the blood in mid-air. This shield pulses with glacial resonance.",
+		rarity: "very_rare",
+		type: "consumable",
+		image: "/generated/compendium/items/item-p1-14.webp",
+		effects: {
+			passive: [
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Glacial Resonance Burst",
+					description:
+						"Unleash a wave of cold energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 2,
+		value: 27599,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
+		mechanics: {
+			system_interaction:
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-15",
+		name: "Mountain-Soul Tome",
+		description:
+			"Inscribed with the gravity-runes of a Titan. This tome pulses with titanic resonance.",
+		rarity: "epic",
+		type: "consumable",
+		image: "/generated/compendium/items/item-p1-15.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 3,
+		value: 7304,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-16",
+		name: "White-Hot Band",
+		description:
+			"Blinds those with unworthy souls. This band pulses with solar resonance.",
 		rarity: "uncommon",
 		type: "armor",
-		image: "/generated/compendium/items/item-0032.webp",
-		stats: {
-			defense: 228,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 73474,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p1-16.webp",
 		effects: {
 			passive: [
-				"Reduces damage from critical hits by your proficiency bonus",
-				"You can cast Shield once per long rest while wearing this armor",
+				"You gain resistance to fire damage.",
+				"While using this item, your Presence increases by 1.",
 			],
-			value: 73474,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0033",
-		name: "Profane Stim of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0033.webp",
-		stats: {
-			health: 357,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 7693,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Restores 2d4+2 hit points when consumed",
-				"Removes one condition affecting the user",
-			],
-			value: 7693,
+			active: [],
 		},
 		attunement: true,
+		weight: 1,
+		value: 49065,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0034",
-		name: "Mystic Bracer of Kael",
+		id: "item-p1-17",
+		name: "Core-Forged Band",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
+			"Inscribed with the gravity-runes of a Titan. This band pulses with titanic resonance.",
 		rarity: "epic",
+		type: "wand",
+		image: "/generated/compendium/items/item-p1-17.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 3,
+		value: 15093,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-18",
+		name: "Flesh-Stitcher Necklace",
+		description:
+			"A dark soul-contract made in blood. This necklace pulses with blood resonance.",
+		rarity: "epic",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p1-18.webp",
+		effects: {
+			passive: [
+				"You gain resistance to slashing damage.",
+				"While using this item, your Strength increases by 1.",
+			],
+			active: [
+				{
+					name: "Blood Resonance Burst",
+					description:
+						"Unleash a wave of slashing energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 5,
+		value: 7344,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Blood.",
+		mechanics: {
+			system_interaction:
+				"Deals slashing damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-19",
+		name: "Aether-Bound Shield",
+		description:
+			"Bypasses the dimensional divide entirely. This shield pulses with aetheric resonance.",
+		rarity: "rare",
 		type: "accessory",
-		image: "/generated/compendium/items/item-0034.webp",
-		stats: {
-			mana: 223,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 21758,
-		weight: 1,
+		image: "/generated/compendium/items/item-p1-19.webp",
 		effects: {
 			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 21758,
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of psychic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 1,
+		value: 46375,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0035",
-		name: "Arcane Tablet of Kael",
+		id: "item-p1-20",
+		name: "Chronos-Plate Plate",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
+			"A fragment of the original System code. This plate pulses with aetheric resonance.",
+		rarity: "rare",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p1-20.webp",
+		effects: {
+			passive: [
+				"You gain resistance to force damage.",
+				"While using this item, your Sense increases by 1.",
+			],
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of force energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 3,
+		value: 45982,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-21",
+		name: "Core-Forged Necklace",
+		description:
+			"Heavy enough to level a city block. This necklace pulses with titanic resonance.",
+		rarity: "rare",
+		type: "scroll",
+		image: "/generated/compendium/items/item-p1-21.webp",
+		effects: {
+			passive: [
+				"You gain resistance to bludgeoning damage.",
+				"While using this item, your Vitality increases by 1.",
+			],
+			active: [
+				{
+					name: "Titanic Resonance Burst",
+					description:
+						"Unleash a wave of bludgeoning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
+		},
+		attunement: true,
+		weight: 4,
+		value: 24108,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Titanic.",
+		mechanics: {
+			system_interaction:
+				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-22",
+		name: "Tempest-Core Gauntlets",
+		description:
+			"Recovered during a Mana-Resonance event. This gauntlets pulses with storm resonance.",
 		rarity: "legendary",
 		type: "scroll",
-		image: "/generated/compendium/items/item-0035.webp",
-		stats: {
-			mana: 111,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 26161,
-		weight: 0.1,
+		image: "/generated/compendium/items/item-p1-22.webp",
 		effects: {
 			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Once per day, reroll a failed saving throw",
+				"You gain resistance to lightning damage.",
+				"While using this item, your Intelligence increases by 1.",
 			],
-			value: 26161,
+			active: [
+				{
+					name: "Storm Resonance Burst",
+					description:
+						"Unleash a wave of lightning energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 4,
+		value: 46124,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0036",
-		name: "Infernal Blade of Kael",
+		id: "item-p1-23",
+		name: "Chronos-Plate Rod",
 		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0036.webp",
-		stats: {
-			attack: 244,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 22250,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Once per day, the weapon can cast a cantrip-level effect"],
-			value: 22250,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0037",
-		name: "Frozen Mail of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0037.webp",
-		stats: {
-			defense: 101,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 16867,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"Reduces damage from critical hits by your proficiency bonus",
-			],
-			value: 16867,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0038",
-		name: "Thunder Vial of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
+			"Discovered in a stable Rift fracture. This rod pulses with aetheric resonance.",
 		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0038.webp",
-		stats: {
-			health: 562,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 42018,
-		weight: 0.5,
+		type: "wand",
+		image: "/generated/compendium/items/item-p1-23.webp",
 		effects: {
 			passive: [
-				"Allows the user to see invisible creatures for 10 minutes",
-				"Removes one condition affecting the user",
-				"Grants advantage on ability checks for 1 hour",
+				"You gain resistance to psychic damage.",
+				"While using this item, your Sense increases by 1.",
 			],
-			value: 42018,
+			active: [
+				{
+					name: "Aetheric Resonance Burst",
+					description:
+						"Unleash a wave of psychic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 5,
+		value: 9658,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
+		mechanics: {
+			system_interaction:
+				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0039",
-		name: "Holy Circlet of Kael",
+		id: "item-p1-24",
+		name: "Thunder-Clap Circlet",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
+			"Crackles with residual kinetic energy. This circlet pulses with storm resonance.",
+		rarity: "uncommon",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p1-24.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: true,
+		weight: 2,
+		value: 21639,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-25",
+		name: "Thunder-Clap Vial",
+		description:
+			"Fast as a blink of an eye. This vial pulses with storm resonance.",
+		rarity: "uncommon",
+		type: "weapon",
+		image: "/generated/compendium/items/item-p1-25.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: true,
+		weight: 5,
+		value: 7380,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-26",
+		name: "Tempest-Core Tome",
+		description:
+			"Recovered during a Mana-Resonance event. This tome pulses with storm resonance.",
+		rarity: "common",
+		type: "scroll",
+		image: "/generated/compendium/items/item-p1-26.webp",
+		effects: {
+			passive: [
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
+			],
+			active: [],
+		},
+		attunement: false,
+		weight: 3,
+		value: 38373,
+		source: "System Ascendant Canon",
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
+		},
+	},
+	{
+		id: "item-p1-27",
+		name: "Dredge Shield",
+		description:
+			"Recovered from the depths of a Shadow Rift. This shield pulses with void resonance.",
+		rarity: "very_rare",
 		type: "accessory",
-		image: "/generated/compendium/items/item-0039.webp",
-		stats: {
-			mana: 69,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 49102,
-		weight: 1,
+		image: "/generated/compendium/items/item-p1-27.webp",
 		effects: {
 			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
+				"You gain resistance to necrotic damage.",
+				"While using this item, your Presence increases by 1.",
 			],
-			value: 49102,
+			active: [
+				{
+					name: "Void Resonance Burst",
+					description:
+						"Unleash a wave of necrotic energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
+		weight: 2,
+		value: 15436,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Void.",
+		mechanics: {
+			system_interaction:
+				"Deals necrotic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0040",
-		name: "Dark Script of Kael",
+		id: "item-p1-28",
+		name: "Aurelian Rod",
 		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0040.webp",
-		stats: {
-			mana: 121,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 76441,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"Once per day, reroll a failed saving throw",
-			],
-			value: 76441,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0041",
-		name: "Shadow Bow of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
+			"Blinds those with unworthy souls. This rod pulses with solar resonance.",
+		rarity: "very_rare",
 		type: "weapon",
-		image: "/generated/compendium/items/item-0041.webp",
-		stats: {
-			attack: 63,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 61004,
-		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["The weapon returns to your hand when thrown (range 20/60)"],
-			value: 61004,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0042",
-		name: "Eternal Plate of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0042.webp",
-		stats: {
-			defense: 242,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 35278,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		image: "/generated/compendium/items/item-p1-28.webp",
 		effects: {
 			passive: [
-				"Reduces damage from critical hits by your proficiency bonus",
-				"Grants resistance to one elemental damage type while attuned",
+				"You gain resistance to radiant damage.",
+				"While using this item, your Presence increases by 1.",
 			],
-			value: 35278,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0043",
-		name: "Void Elixir of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0043.webp",
-		stats: {
-			health: 437,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 30303,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Removes one condition affecting the user",
-				"Grants advantage on ability checks for 1 hour",
-				"Grants temporary hit points equal to your level for 1 hour",
+			active: [
+				{
+					name: "Solar Resonance Burst",
+					description:
+						"Unleash a wave of radiant energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
 			],
-			value: 30303,
 		},
 		attunement: true,
+		weight: 2,
+		value: 42822,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Solar.",
+		mechanics: {
+			system_interaction:
+				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0044",
-		name: "Abyssal Amulet of Kael",
+		id: "item-p1-29",
+		name: "Frost-Bound Boots",
 		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
+			"Solid water that never melts. This boots pulses with glacial resonance.",
 		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0044.webp",
-		stats: {
-			mana: 161,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 72622,
-		weight: 1,
+		type: "wand",
+		image: "/generated/compendium/items/item-p1-29.webp",
 		effects: {
 			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
+				"You gain resistance to cold damage.",
+				"While using this item, your Vitality increases by 1.",
 			],
-			value: 72622,
+			active: [
+				{
+					name: "Glacial Resonance Burst",
+					description:
+						"Unleash a wave of cold energy dealing 4d8 damage in a 15ft cone.",
+					action: "action",
+					frequency: "once-per-rest",
+				},
+			],
 		},
 		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0045",
-		name: "Demonic Protocol of Kael",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0045.webp",
-		stats: {
-			mana: 163,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 6999,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"You can cast Detect Magic at will while wearing this",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 6999,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0046",
-		name: "Celestial Staff of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0046.webp",
-		stats: {
-			attack: 104,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 34067,
-		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["Deals an extra 1d6 elemental damage on a critical hit"],
-			value: 34067,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0047",
-		name: "Divine Cuirass of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0047.webp",
-		stats: {
-			defense: 223,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 57406,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"You can cast Shield once per long rest while wearing this armor",
-			],
-			value: 57406,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0048",
-		name: "Ancient Essence of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0048.webp",
-		stats: {
-			health: 412,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 41241,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Removes one condition affecting the user",
-				"Restores 2d4+2 hit points when consumed",
-				"Grants advantage on ability checks for 1 hour",
-			],
-			value: 41241,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0049",
-		name: "Forgotten Ring of Kael",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "ring",
-		image: "/generated/compendium/items/item-0049.webp",
-		stats: {
-			mana: 181,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 77456,
-		weight: 1,
-		effects: {
-			passive: [
-				"You gain proficiency in one saving throw while attuned",
-				"Once per day, reroll a failed saving throw",
-				"You can cast Detect Magic at will while wearing this",
-			],
-			value: 77456,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0050",
-		name: "Cursed Neural Chip of Kael",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0050.webp",
-		stats: {
-			mana: 208,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 32883,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants darkvision 60 feet if you don't already have it",
-			],
-			value: 32883,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0051",
-		name: "Blessed Warhammer of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0051.webp",
-		stats: {
-			attack: 162,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 75837,
-		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["Deals an extra 1d6 elemental damage on a critical hit"],
-			value: 75837,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0052",
-		name: "Sacred Shrouds of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0052.webp",
-		stats: {
-			defense: 212,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 25151,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"Reduces damage from critical hits by your proficiency bonus",
-			],
-			value: 25151,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0053",
-		name: "Profane Capsule of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0053.webp",
-		stats: {
-			health: 379,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 23639,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Removes one condition affecting the user",
-				"Restores 2d4+2 hit points when consumed",
-			],
-			value: 23639,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0054",
-		name: "Mystic Pendant of Kael",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "accessory",
-		image: "/generated/compendium/items/item-0054.webp",
-		stats: {
-			mana: 81,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 10255,
-		weight: 1,
-		effects: {
-			passive: [
-				"Grants +1 to one ability score while attuned",
-				"You can cast Detect Magic at will while wearing this",
-				"You gain proficiency in one saving throw while attuned",
-			],
-			value: 10255,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0055",
-		name: "Arcane Data Slate of Kael",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0055.webp",
-		stats: {
-			mana: 94,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 90026,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"You can cast Detect Magic at will while wearing this",
-				"You gain proficiency in one saving throw while attuned",
-			],
-			value: 90026,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0056",
-		name: "Infernal Dagger of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0056.webp",
-		stats: {
-			attack: 85,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 8160,
-		weight: 1,
-		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "piercing",
-				finesse: true,
-			},
-		},
-		effects: {
-			passive: ["Once per day, the weapon can cast a cantrip-level effect"],
-			value: 8160,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0057",
-		name: "Frozen Raiment of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0057.webp",
-		stats: {
-			defense: 232,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 38722,
-		weight: 20,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Grants resistance to one elemental damage type while attuned",
-				"You can cast Shield once per long rest while wearing this armor",
-			],
-			value: 38722,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0058",
-		name: "Thunder Core of Kael",
-		description:
-			"A specialized piece of gear recovered from a boss-tier construct. Exceptional craftsmanship. This consumable was recovered from the depths of the System.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0058.webp",
-		stats: {
-			health: 414,
-		},
-		effect: "Grants enhanced consumable abilities and shadow power.",
-		value: 42188,
-		weight: 0.5,
-		effects: {
-			passive: [
-				"Grants temporary hit points equal to your level for 1 hour",
-				"Grants advantage on ability checks for 1 hour",
-				"Allows the user to see invisible creatures for 10 minutes",
-			],
-			value: 42188,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0059",
-		name: "Holy Earring of Kael",
-		description:
-			"A legendary-class artifact with unique System signatures. Extremely rare outside of S-Rank gates. This accessory was recovered from the depths of the System.",
-		rarity: "epic",
-		type: "ring",
-		image: "/generated/compendium/items/item-0059.webp",
-		stats: {
-			mana: 50,
-		},
-		effect: "Grants enhanced accessory abilities and shadow power.",
-		value: 8707,
-		weight: 1,
-		effects: {
-			passive: [
-				"Once per day, reroll a failed saving throw",
-				"You gain proficiency in one saving throw while attuned",
-				"Grants +1 to one ability score while attuned",
-			],
-			value: 8707,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0060",
-		name: "Dark Scroll of Kael",
-		description:
-			"A unique System masterpiece. Only a handful exist in the known world, each bonded to historical events. This scroll was recovered from the depths of the System.",
-		rarity: "legendary",
-		type: "scroll",
-		image: "/generated/compendium/items/item-0060.webp",
-		stats: {
-			mana: 226,
-		},
-		effect: "Grants enhanced scroll abilities and shadow power.",
-		value: 42138,
-		weight: 0.1,
-		effects: {
-			passive: [
-				"Grants darkvision 60 feet if you don't already have it",
-				"Grants +1 to one ability score while attuned",
-				"You gain proficiency in one saving throw while attuned",
-			],
-			value: 42138,
-		},
-		attunement: true,
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0181",
-		name: "Shadow Shield of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0181.webp",
-		stats: {
-			attack: 133,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 11148,
 		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["The weapon returns to your hand when thrown (range 20/60)"],
-			value: 11148,
-		},
+		value: 29215,
 		source: "System Ascendant Canon",
+		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Glacial.",
+		mechanics: {
+			system_interaction:
+				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
+		},
 	},
 	{
-		id: "item-0182",
-		name: "Eternal Shield of Kael",
+		id: "item-p1-30",
+		name: "Thunder-Clap Necklace",
 		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
+			"Crackles with residual kinetic energy. This necklace pulses with storm resonance.",
 		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0182.webp",
-		stats: {
-			defense: 109,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 38234,
-		weight: 6,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
+		type: "wand",
+		image: "/generated/compendium/items/item-p1-30.webp",
 		effects: {
 			passive: [
-				"You can cast Shield once per long rest while wearing this armor",
-				"Grants advantage on saving throws against one damage type",
+				"You gain resistance to thunder damage.",
+				"While using this item, your Intelligence increases by 1.",
 			],
-			value: 38234,
+			active: [],
 		},
+		attunement: true,
+		weight: 1,
+		value: 29898,
 		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0186",
-		name: "Celestial Shield of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0186.webp",
-		stats: {
-			attack: 122,
+		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
+		flavor: "The dimensional divide shudders in the presence of the Storm.",
+		mechanics: {
+			system_interaction:
+				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
 		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 26430,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["Glows faintly when enemies are within 60 feet"],
-			value: 26430,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0187",
-		name: "Divine Shield of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0187.webp",
-		stats: {
-			defense: 220,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 88024,
-		weight: 6,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"Grants advantage on saving throws against one damage type",
-				"Reduces damage from critical hits by your proficiency bonus",
-			],
-			value: 88024,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0191",
-		name: "Blessed Shield of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0191.webp",
-		stats: {
-			attack: 103,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 40424,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["The weapon returns to your hand when thrown (range 20/60)"],
-			value: 40424,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0192",
-		name: "Sacred Shield of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0192.webp",
-		stats: {
-			defense: 230,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 91585,
-		weight: 6,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"You can cast Shield once per long rest while wearing this armor",
-				"Grants resistance to one elemental damage type while attuned",
-			],
-			value: 91585,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0196",
-		name: "Infernal Shield of Kael",
-		description:
-			"A standard-issue System construct often found in lower-rank gates. This weapon was recovered from the depths of the System.",
-		rarity: "common",
-		type: "weapon",
-		image: "/generated/compendium/items/item-0196.webp",
-		stats: {
-			attack: 168,
-		},
-		effect: "Grants enhanced weapon abilities and shadow power.",
-		value: 100479,
-		weight: 3,
-		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-			},
-		},
-		effects: {
-			passive: ["The weapon returns to your hand when thrown (range 20/60)"],
-			value: 100479,
-		},
-		source: "System Ascendant Canon",
-	},
-	{
-		id: "item-0197",
-		name: "Frozen Shield of Kael",
-		description:
-			"An enhanced item resonating with moderate gate energy. Reliable and efficient. This armor was recovered from the depths of the System.",
-		rarity: "uncommon",
-		type: "armor",
-		image: "/generated/compendium/items/item-0197.webp",
-		stats: {
-			defense: 197,
-		},
-		effect: "Grants enhanced armor abilities and shadow power.",
-		value: 58442,
-		weight: 6,
-		properties: {
-			protocol_enhanced: {
-				bonus: {},
-			},
-		},
-		effects: {
-			passive: [
-				"You can cast Shield once per long rest while wearing this armor",
-				"Grants resistance to one elemental damage type while attuned",
-			],
-			value: 58442,
-		},
-		source: "System Ascendant Canon",
 	},
 ];

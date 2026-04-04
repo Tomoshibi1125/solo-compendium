@@ -64,7 +64,7 @@ const ArtGeneratorPage = () => {
 							dimensional
 							className="text-3xl"
 						>
-							Visualization Matrix
+							Visualization Lattice
 						</SystemHeading>
 						<DataStreamText variant="system" speed="slow">
 							Synthesize dimensional visual records for your localized domains.
@@ -91,7 +91,7 @@ const ArtGeneratorPage = () => {
 				</div>
 
 				<div className="bg-card/30 backdrop-blur-sm border border-primary/10 rounded-xl p-6 shadow-2xl">
-					<AIEnhancedArtGenerator entityType="monster" />
+					<AIEnhancedArtGenerator entityType="Anomaly" />
 				</div>
 			</div>
 		</Layout>

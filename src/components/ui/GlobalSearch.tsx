@@ -80,7 +80,11 @@ export function GlobalSearch({ className }: { className?: string }) {
 					type: "equipment",
 					hasSourceBook: true,
 				},
-				{ table: "compendium_monsters", type: "monsters", hasSourceBook: true },
+				{
+					table: "compendium_Anomalies",
+					type: "Anomalies",
+					hasSourceBook: true,
+				},
 				{ table: "compendium_regents", type: "regents", hasSourceBook: true },
 				{
 					table: "compendium_sovereigns",

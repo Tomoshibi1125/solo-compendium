@@ -20,7 +20,7 @@ import {
 } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface SpellData {
+export interface SpellData {
 	id: string;
 	name: string;
 	display_name?: string | null;

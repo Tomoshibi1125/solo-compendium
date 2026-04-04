@@ -4,9 +4,9 @@ import { DMPage } from "../pages/DMPage";
 import { PlayerPage } from "../pages/PlayerPage";
 import { SharedPage } from "../pages/SharedPage";
 
-const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
+const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
-const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
+const _PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
 
 let dmContext: any;
 let dmPage: any;

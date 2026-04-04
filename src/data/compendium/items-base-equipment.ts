@@ -631,7 +631,8 @@ const trident = baseItem({
 const warPick = baseItem({
 	id: "base-weapon-war-pick",
 	name: "War Pick",
-	description: "A pointed hammer designed to punch through heavy armor.",
+	description:
+		"A pointed hammer designed to punch through Heavy Carapace Armor.",
 	item_type: "weapon",
 	weapon_type: "martial melee",
 	damage: "1d8",

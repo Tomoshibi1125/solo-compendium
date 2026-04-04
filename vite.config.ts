@@ -1,7 +1,7 @@
+import path from "node:path";
 import { GoogleGenAI } from "@google/genai";
 import react from "@vitejs/plugin-react-swc";
 import { config as dotenvConfig } from "dotenv";
-import path from "path";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
@@ -158,9 +158,7 @@ export default defineConfig(({ mode: _mode }) => {
 			registerType: "autoUpdate",
 			workbox: {
 				maximumFileSizeToCacheInBytes: 15 * 1024 * 1024, // 15MB precache limit
-				globPatterns: [
-					"**/*.{js,css,html,ico,png,svg,webmanifest}",
-				],
+				globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
 				globIgnores: ["**/generated/**"],
 				runtimeCaching: [
 					{
@@ -283,6 +281,18 @@ export default defineConfig(({ mode: _mode }) => {
 						// Split vendor chunks for better caching while avoiding circular deps.
 						const normalizedId = normalizeId(id);
 
+						// ── VTT App (isolated to avoid circular pixi/three deps) ──
+						if (
+							normalizedId.includes(
+								"/src/pages/warden-protocols/VTTEnhanced",
+							) ||
+							normalizedId.includes("/src/pages/warden-protocols/VTTMap") ||
+							normalizedId.includes("/src/pages/warden-protocols/VTTJournal") ||
+							normalizedId.includes("/src/components/vtt/")
+						) {
+							return "vtt-app";
+						}
+
 						// ── Warden Protocols (Protocols for the Master) ──
 						if (normalizedId.includes("/src/pages/warden-protocols/")) {
 							return "warden-pages";
@@ -325,9 +335,7 @@ export default defineConfig(({ mode: _mode }) => {
 								return "validation-vendor";
 							if (normalizedId.includes("/node_modules/quill/"))
 								return "editor-vendor";
-							if (
-								normalizedId.includes("/node_modules/date-fns/")
-							) {
+							if (normalizedId.includes("/node_modules/date-fns/")) {
 								return "date-vendor";
 							}
 							if (normalizedId.includes("/node_modules/lucide-react/"))
@@ -354,13 +362,12 @@ export default defineConfig(({ mode: _mode }) => {
 								return "particles-vendor";
 							if (
 								normalizedId.includes("/node_modules/pixi.js/") ||
-								normalizedId.includes("/node_modules/pixi-filters/")
+								normalizedId.includes("/node_modules/pixi-filters/") ||
+								normalizedId.includes("/node_modules/@pixi/")
 							) {
 								return "pixi-vendor";
 							}
-							if (
-								normalizedId.includes("/node_modules/howler/")
-							) {
+							if (normalizedId.includes("/node_modules/howler/")) {
 								return "media-vendor";
 							}
 							if (normalizedId.includes("/node_modules/framer-motion/"))

@@ -5,7 +5,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { Badge } from "@/components/ui/badge";
 import { SystemWindow } from "@/components/ui/SystemWindow";
-import { jobs as staticJobs } from "@/data/compendium/jobs";
+import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import {
 	calculateTotalChoices,
@@ -87,6 +87,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 		}>
 	>([]);
 
+	const { data: staticJobs = [] } = useStaticJobs();
+
 	// Calculate total choices including awakening features
 	const totalChoices = useMemo(() => {
 		const staticJob = staticJobs.find((job) => job.name === data.name);
@@ -113,7 +115,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 		};
 
 		return calculateTotalChoices(enhancedJobData, null, [], 1);
-	}, [data]);
+	}, [data, staticJobs]);
 
 	// Get choice grant details for UI display
 	const _choiceGrantDetails = useMemo(() => {
@@ -129,7 +131,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 		};
 
 		return getChoiceGrantDetails(enhancedJobData, null, [], 1);
-	}, [data]);
+	}, [data, staticJobs]);
 
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 

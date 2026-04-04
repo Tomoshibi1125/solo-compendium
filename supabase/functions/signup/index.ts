@@ -10,7 +10,7 @@ type SignupRequestBody = {
 };
 
 const buildCorsHeaders = (origin: string | null) => {
-	const allowOrigin = origin && origin.trim() ? origin : "*";
+	const allowOrigin = origin?.trim() ? origin : "*";
 	return {
 		"Access-Control-Allow-Origin": allowOrigin,
 		"Access-Control-Allow-Headers":

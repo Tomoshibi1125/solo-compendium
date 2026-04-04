@@ -13,11 +13,11 @@ interface Condition {
 	save?: {
 		type:
 			| "Strength"
-			| "Dexterity"
-			| "Constitution"
+			| "Agility"
+			| "Vitality"
 			| "Intelligence"
-			| "Wisdom"
-			| "Charisma";
+			| "Sense"
+			| "Presence";
 		dc?: number;
 		description?: string;
 	};
@@ -108,10 +108,10 @@ export const conditions: Condition[] = [
 		],
 		removal: [
 			"The source of fear is no longer present",
-			"End of turn if creature makes successful Wisdom save",
+			"End of turn if creature makes successful Sense save",
 		],
 		save: {
-			type: "Wisdom",
+			type: "Sense",
 			description: "Can repeat save at end of each turn",
 		},
 		source: "SRD 5.1",
@@ -129,7 +129,7 @@ export const conditions: Condition[] = [
 			"The condition ends if an effect removes the grappled creature from the reach of the grappler",
 		],
 		removal: [
-			"Escape by succeeding on Strength (Athletics) or Dexterity (Acrobatics) check contested by grappler's Strength (Athletics)",
+			"Escape by succeeding on Strength (Athletics) or Agility (Acrobatics) check contested by grappler's Strength (Athletics)",
 			"Grappler becomes incapacitated",
 			"Effect removes grappled creature from grappler's reach",
 		],
@@ -171,7 +171,7 @@ export const conditions: Condition[] = [
 		effects: [
 			"Incapacitated (can't take actions or reactions)",
 			"Can't move or speak",
-			"Automatically fails Strength and Dexterity saving throws",
+			"Automatically fails Strength and Agility saving throws",
 			"Attack rolls against the creature have advantage",
 			"Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature",
 		],
@@ -188,7 +188,7 @@ export const conditions: Condition[] = [
 			"Is immune to poison and disease",
 			"Is incapacitated (can't take actions or reactions)",
 			"Can't move or speak",
-			"Automatically fails Strength and Dexterity saving throws",
+			"Automatically fails Strength and Agility saving throws",
 		],
 		removal: ["Greater restoration spell", "Wish spell"],
 		source: "SRD 5.1",
@@ -229,7 +229,7 @@ export const conditions: Condition[] = [
 			"The creature's attack rolls have disadvantage",
 		],
 		removal: [
-			"Escape by succeeding on Strength (Athletics) or Dexterity (Acrobatics) check",
+			"Escape by succeeding on Strength (Athletics) or Agility (Acrobatics) check",
 			"Effect ends",
 		],
 		source: "SRD 5.1",
@@ -244,7 +244,7 @@ export const conditions: Condition[] = [
 			"Incapacitated (can't take actions or reactions)",
 			"Can't move",
 			"Can speak only falteringly",
-			"Automatically fails Strength and Dexterity saving throws",
+			"Automatically fails Strength and Agility saving throws",
 		],
 		removal: ["End of stunned condition", "Lesser restoration spell"],
 		source: "SRD 5.1",
@@ -276,7 +276,7 @@ export const conditions: Condition[] = [
 		description:
 			"The creature has been corrupted by shadow energy, twisting their mind and body.",
 		effects: [
-			"Disadvantage on Wisdom saving throws",
+			"Disadvantage on Sense saving throws",
 			"Take 1d6 necrotic damage at the start of each turn",
 			"Cannot benefit from healing spells from light sources",
 			"Advantage on attacks against creatures in bright light",
@@ -288,7 +288,7 @@ export const conditions: Condition[] = [
 			"Exposure to bright light for 10 minutes",
 		],
 		save: {
-			type: "Wisdom",
+			type: "Sense",
 			description: "Can repeat save at end of each turn after taking damage",
 		},
 		source: "System Ascendant Canon",
@@ -323,7 +323,7 @@ export const conditions: Condition[] = [
 			"The creature's life essence has been drained by shadow magic or a powerful shadow being.",
 		effects: [
 			"Maximum hit points reduced by 10",
-			"Disadvantage on Constitution saving throws",
+			"Disadvantage on Vitality saving throws",
 			"Cannot regain hit points except through long rest",
 			"Shadow creatures have advantage on attacks against you",
 		],
@@ -355,7 +355,7 @@ export const conditions: Condition[] = [
 			"Breaking the binding ritual",
 		],
 		save: {
-			type: "Charisma",
+			type: "Presence",
 			description: "Can attempt to break free once per day",
 		},
 		source: "System Ascendant Canon",
@@ -390,16 +390,16 @@ export const conditions: Condition[] = [
 		description:
 			"Temporarily fused with shadow energy, gaining enhanced abilities but losing control.",
 		effects: [
-			"Advantage on Dexterity and Strength checks",
+			"Advantage on Agility and Strength checks",
 			"Resistance to necrotic damage",
 			"Can see in magical darkness",
-			"Disadvantage on Intelligence and Wisdom saving throws",
-			"Must make Wisdom save each turn or attack nearest creature",
+			"Disadvantage on Intelligence and Sense saving throws",
+			"Must make Sense save each turn or attack nearest creature",
 		],
 		duration: "1 minute",
 		removal: ["Duration expires", "Lose consciousness", "Remove curse spell"],
 		save: {
-			type: "Wisdom",
+			type: "Sense",
 			description: "Must save each turn to maintain control",
 		},
 		source: "System Ascendant Canon",

@@ -62,7 +62,7 @@ export interface Relic {
 		origin: string;
 		history: string;
 		currentOwner?: string;
-		previousOwners?: string[];
+		priorOwners?: string[];
 	};
 	mechanics: {
 		bonus?: {
@@ -91,12 +91,12 @@ export const comprehensiveRelics: Relic[] = [
 		id: "regents-shadow-dagger",
 		name: "Regent's Shadow Dagger",
 		description:
-			"A dagger forged from pure shadow energy, capable of piercing dimensional barriers and striking at the very essence of beings.",
+			"A jagged shard of the First Singularity, wreathed in flickering black mana. It does not cut flesh; it deletes the spatial coordinates of whatever it touches.",
 		type: "weapon",
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 17,
 		},
 		properties: {
@@ -141,7 +141,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Forged by the first Umbral Regent from the essence of a defeated god",
 			history:
 				"This dagger has served as the symbol of power for countless Umbral Regents throughout history. It is said to contain the collective will and power of all who have wielded it.",
-			previousOwners: [
+			priorOwners: [
 				"First Umbral Regent",
 				"First Regent",
 				"Various Umbral Regents",
@@ -151,7 +151,7 @@ export const comprehensiveRelics: Relic[] = [
 			bonus: {
 				type: "attack",
 				value: 3,
-				ability: "Dexterity",
+				ability: "Agility",
 			},
 			resistance: ["necrotic", "force"],
 			immunity: ["poison"],
@@ -162,7 +162,7 @@ export const comprehensiveRelics: Relic[] = [
 		id: "bloodthirsty-greatsword",
 		name: "Bloodthirsty Greatsword",
 		description:
-			"A massive greatsword that feeds on the blood of its victims, growing stronger with each kill.",
+			"A jagged black slab of iron that hums with the rhythm of a heartbeat. It does not just cut; it drinks.",
 		type: "weapon",
 		rarity: "very_rare",
 		attunement: true,
@@ -198,11 +198,11 @@ export const comprehensiveRelics: Relic[] = [
 			},
 		],
 		lore: {
-			origin: "Created by a demon lord from the blood of thousands of victims",
+			origin: "Created by a fiend lord from the blood of thousands of victims",
 			history:
 				"This cursed weapon grants immense power but slowly corrupts its wielder, driving them to seek ever greater carnage.",
-			previousOwners: [
-				"Demon Lord Malgorath",
+			priorOwners: [
+				"Fiend Lord Malgorath",
 				"Warlord Kael",
 				"Countless fallen warriors",
 			],
@@ -220,12 +220,12 @@ export const comprehensiveRelics: Relic[] = [
 		id: "lightning-blade",
 		name: "Lightning Blade",
 		description:
-			"A sword crackling with electrical energy that strikes with the speed of lightning.",
+			"A rapier forged from a solidified lightning strike, vibrating with ultra-high frequency mana.",
 		type: "weapon",
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			ability: "Dexterity",
+			ability: "Agility",
 			score: 16,
 		},
 		properties: {
@@ -260,7 +260,7 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Forged in the heart of a storm by a legendary weaponsmith",
 			history:
 				"This blade was wielded by the Storm King, who could command the very weather with its power.",
-			previousOwners: ["Storm King", "Lightning Warrior", "Tempest Knight"],
+			priorOwners: ["Storm King", "Lightning Warrior", "Tempest Knight"],
 		},
 		mechanics: {
 			bonus: {
@@ -275,7 +275,7 @@ export const comprehensiveRelics: Relic[] = [
 		id: "frost-axe",
 		name: "Frost Axe",
 		description:
-			"An axe imbued with eternal winter cold that freezes all it touches.",
+			"An axe carved from permafrost that radiates a field of absolute zero.",
 		type: "weapon",
 		rarity: "very_rare",
 		attunement: true,
@@ -315,7 +315,7 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Carved from the heart of an ancient glacier by frost giants",
 			history:
 				"This axe has been passed down through generations of winter warriors, each adding to its icy power.",
-			previousOwners: ["Frost Giant King", "Winter Warrior", "Ice Berserker"],
+			priorOwners: ["Frost Giant King", "Winter Warrior", "Ice Berserker"],
 		},
 		mechanics: {
 			bonus: {
@@ -366,7 +366,7 @@ export const comprehensiveRelics: Relic[] = [
 			{
 				name: "Regent's Protection",
 				description:
-					"You have resistance to all damage types and advantage on all saving throws.",
+					"You have resistance to all damage types and advantage on all Decree checks.",
 				type: "passive",
 			},
 			{
@@ -413,7 +413,7 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 16,
 		},
 		properties: {
@@ -448,7 +448,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Forged in the Abyss by shadow smiths using materials from defeated shadow lords",
 			history:
 				"This armor has protected many powerful shadow warriors throughout the ages, each adding their own essence to its power.",
-			previousOwners: [
+			priorOwners: [
 				"Shadow Knight Commander",
 				"Dark Herald Vorlag",
 				"Shadow Warlord Zara",
@@ -473,7 +473,7 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			ability: "Constitution",
+			ability: "Vitality",
 			score: 17,
 		},
 		properties: {
@@ -497,7 +497,7 @@ export const comprehensiveRelics: Relic[] = [
 			{
 				name: "Dragon Frightful Presence",
 				description:
-					"Creatures within 30 feet must make Wisdom save or be frightened.",
+					"Creatures within 30 feet must make Sense check or be frightened.",
 				type: "passive",
 			},
 		],
@@ -506,7 +506,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Crafted from the scales of the ancient dragon Ignis by master dwarven smiths",
 			history:
 				"This armor was worn by the Dragon Knight who defeated Ignis, inheriting its power.",
-			previousOwners: ["Dragon Knight", "Dragon Slayer", "Scale Lord"],
+			priorOwners: ["Dragon Knight", "Dragon Slayer", "Scale Lord"],
 		},
 		mechanics: {
 			bonus: {
@@ -528,7 +528,7 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
-			ability: "Charisma",
+			ability: "Presence",
 			score: 15,
 		},
 		properties: {
@@ -539,7 +539,7 @@ export const comprehensiveRelics: Relic[] = [
 			{
 				name: "Command Shadows",
 				description:
-					"As an action, issue a command to all shadow creatures within 60 feet. They must obey if they fail a Wisdom save.",
+					"As an action, issue a command to all shadow creatures within 60 feet. They must obey if they fail a Sense check.",
 				type: "command",
 				frequency: "long-rest",
 				action: "action",
@@ -554,7 +554,7 @@ export const comprehensiveRelics: Relic[] = [
 			{
 				name: "Inspire Loyalty",
 				description:
-					"Your allies within 30 feet gain +2 to saving throws and cannot be frightened.",
+					"Your allies within 30 feet gain +2 to Decree checks and cannot be frightened.",
 				type: "passive",
 			},
 			{
@@ -571,7 +571,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Created by the first Regent to establish authority over their growing shadow empire",
 			history:
 				"This artifact represents the right to rule, containing the essence of leadership and command that all Regents must possess.",
-			previousOwners: [
+			priorOwners: [
 				"First Umbral Regent",
 				"Queen of Shadows",
 				"Emperor of Night",
@@ -581,7 +581,7 @@ export const comprehensiveRelics: Relic[] = [
 			bonus: {
 				type: "saving-throws",
 				value: 2,
-				ability: "Charisma",
+				ability: "Presence",
 			},
 		},
 		source: "System Ascendant Canon",
@@ -595,7 +595,7 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "epic",
 		attunement: true,
 		requirements: {
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 14,
 		},
 		properties: {
@@ -632,7 +632,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Created by ancient shadow mages to protect against the corrupting influence of raw shadow energy",
 			history:
 				"This amulet has saved countless shadow users from falling to shadow madness, allowing them to harness shadow power safely.",
-			previousOwners: [
+			priorOwners: [
 				"Shadow Archmage Theron",
 				"Dark Sage Marina",
 				"Shadow Cultist Kael",
@@ -688,7 +688,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Forged by dimensional travelers who learned to navigate the spaces between worlds",
 			history:
 				"This compass has guided countless adventurers through dangerous dimensional journeys, its needle always pointing toward safety or adventure.",
-			previousOwners: [
+			priorOwners: [
 				"Dimensional Explorer Alara",
 				"Rift Tracker Marcus",
 				"Shadow Walker Lena",
@@ -700,8 +700,8 @@ export const comprehensiveRelics: Relic[] = [
 		source: "System Ascendant Canon",
 	},
 	{
-		id: "crown-of-wisdom",
-		name: "Crown of Wisdom",
+		id: "crown-of-sense",
+		name: "Crown of Sense",
 		description:
 			"A crown that grants the wearer immense knowledge and insight.",
 		type: "accessory",
@@ -730,7 +730,7 @@ export const comprehensiveRelics: Relic[] = [
 				type: "passive",
 			},
 			{
-				name: "Wisdom of Ages",
+				name: "Sense of Ages",
 				description:
 					"Once per day, can gain insight into any question by consulting the crown.",
 				type: "command",
@@ -740,7 +740,7 @@ export const comprehensiveRelics: Relic[] = [
 			{
 				name: "Mental Fortress",
 				description:
-					"Immunity to psychic damage and advantage on all mental saving throws.",
+					"Immunity to psychic damage and advantage on all mental Decree checks.",
 				type: "passive",
 			},
 		],
@@ -748,8 +748,8 @@ export const comprehensiveRelics: Relic[] = [
 			origin:
 				"Created by the first sage king who collected all knowledge in the realm",
 			history:
-				"This crown contains the accumulated wisdom of countless rulers and scholars who have worn it.",
-			previousOwners: [
+				"This crown contains the accumulated sense of countless rulers and scholars who have worn it.",
+			priorOwners: [
 				"Sage King Solomon",
 				"Wise Emperor Marcus",
 				"Oracle Queen Elena",
@@ -776,7 +776,7 @@ export const comprehensiveRelics: Relic[] = [
 		rarity: "epic",
 		attunement: true,
 		requirements: {
-			ability: "Wisdom",
+			ability: "Sense",
 			score: 15,
 		},
 		properties: {
@@ -814,7 +814,7 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Created by shadow mages as a portable source of shadow energy",
 			history:
 				"This orb has been used by countless shadow users who needed portable power.",
-			previousOwners: ["Shadow Archmage", "Dark Esper", "Shadow Warlock"],
+			priorOwners: ["Shadow Archmage", "Dark Esper", "Shadow Warlock"],
 		},
 		mechanics: {
 			resistance: ["necrotic"],
@@ -848,7 +848,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			{
 				name: "Precognition",
-				description: "Advantage on all attack rolls and saving throws.",
+				description: "Advantage on all attack rolls and Decree checks.",
 				type: "passive",
 			},
 			{
@@ -872,11 +872,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Created by a time mage who discovered the secrets of temporal manipulation",
 			history:
 				"This device is one of the few objects that can truly affect the flow of time.",
-			previousOwners: [
-				"Time Master Chronos",
-				"Temporal Mage",
-				"Hourglass Keeper",
-			],
+			priorOwners: ["Time Master Chronos", "Temporal Mage", "Hourglass Keeper"],
 		},
 		mechanics: {
 			immunity: ["time-based effects"],
@@ -1066,7 +1062,7 @@ export const comprehensiveRelics: Relic[] = [
 			bonus: {
 				type: "ability-checks",
 				value: 2,
-				ability: "Wisdom",
+				ability: "Sense",
 			},
 		},
 		source: "System Ascendant Canon",

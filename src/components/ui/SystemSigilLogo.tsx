@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 interface SystemSigilLogoProps {
 	className?: string;
 	size?: "sm" | "md" | "lg" | "xl";
-	variant?: "default" | "supreme" | "arise";
+	variant?: "default" | "supreme" | "resurge";
 }
 
 export function SystemSigilLogo({
@@ -30,7 +30,7 @@ export function SystemSigilLogo({
 			innerPulse: "animate-pulse-2s",
 			corePulse: "animate-pulse",
 		},
-		arise: {
+		resurge: {
 			outerGlow: "animate-spin-slow-15s",
 			innerPulse: "animate-pulse-3s",
 			corePulse: "animate-pulse-1-5s",
@@ -55,7 +55,7 @@ export function SystemSigilLogo({
 				xmlns="http://www.w3.org/2000/svg"
 			>
 				<title>System Sigil</title>
-				{/* Gradient Definitions - Prime Architect Palette */}
+				{/* Gradient Definitions - The Absolute Palette */}
 				<defs>
 					<linearGradient
 						id={regentGradientId}
@@ -137,7 +137,7 @@ export function SystemSigilLogo({
 					opacity="0.9"
 					className={styles.corePulse}
 				/>
-				{/* Central Core - Prime Architect's Eye */}
+				{/* Central Core - The Absolute's Eye */}
 				<circle
 					cx="50"
 					cy="50"
