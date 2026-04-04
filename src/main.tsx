@@ -9,21 +9,6 @@ verifyCoreDependencies();
 import "./styles/system-ui.css";
 import "./styles/sa-theme.css";
 import "./styles/dropdown-opacity-fix.css";
-import { lazy, Suspense } from "react";
-
-import { ProtocolWiringLatticeUsage } from "./components/warden-protocols/SystemProtocolRegistry";
-import { WardenWiringHub } from "./components/warden-protocols/WardenWiringHub";
-
-const SystemProtocolRegistry = lazy(() =>
-	import("./components/warden-protocols/SystemProtocolRegistry").then((m) => ({
-		default: m.SystemProtocolRegistry,
-	})),
-);
-
-// Explicitly reference the wiring Lattice usage to seal the architectural proof
-if (ProtocolWiringLatticeUsage) {
-	/* Protocol Warden Sealing logic */
-}
 
 // Fully wired architectural reference (Type-only, No runtime cost)
 export type _FinalWiring =
@@ -89,11 +74,7 @@ async function initApp() {
 		const root = createRoot(rootElement);
 		root.render(
 			<StrictMode>
-				<Suspense fallback={null}>
-					<SystemProtocolRegistry />
-					<WardenWiringHub />
-					<App />
-				</Suspense>
+				<App />
 			</StrictMode>,
 		);
 	} catch (error) {
