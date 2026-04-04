@@ -10,6 +10,7 @@
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
+import type { CompendiumDeity } from "@/types/compendium";
 
 type DataLoader<T> = () => Promise<T[]>;
 
@@ -45,6 +46,7 @@ const dataLoaders = {
 	artifacts: () => import("./artifacts").then((module) => module.artifacts),
 	sigils: () => import("./sigils").then((module) => module.sigils),
 	tattoos: () => import("./tattoos").then((module) => module.tattoos),
+	pantheon: () => import("./pantheon").then((module) => module.PRIME_PANTHEON),
 } satisfies Record<string, DataLoader<unknown>>;
 
 type DataKey = keyof typeof dataLoaders;
@@ -153,7 +155,6 @@ export interface StaticCompendiumEntry {
 	xp?: number | null;
 	Anomaly_actions?: Record<string, unknown>[] | null;
 	Anomaly_traits?: Record<string, unknown>[] | null;
-	saving_throw?: Record<string, unknown> | null;
 	attack?: Record<string, unknown> | null;
 	movement?: Record<string, unknown> | null;
 	// Background detail support (static fallback)
@@ -274,10 +275,40 @@ export interface StaticCompendiumEntry {
 	recharge?: string | null;
 	legendary_cost?: number | null;
 	attack_bonus?: number | null;
-	traits?: Record<string, unknown>[] | null;
-	actions?: Record<string, unknown>[] | null;
-	legendary_actions?: Record<string, unknown>[] | null;
 	special_abilities?: Record<string, unknown>[] | null;
+	// Pantheon detail support
+	directive?: string | null;
+	portfolio?: string[] | null;
+	sigil?: string | null;
+	manifestation?: string | null;
+	specializations?: string[] | null;
+	dogma?: string[] | null;
+	worshippers?: string | null;
+	temples?: string | null;
+	home_realm?: string | null;
+	relationships?: Array<{
+		id: string;
+		name: string;
+		type: "ally" | "enemy" | "rival" | "servant" | "superior";
+		description: string;
+	}> | null;
+	// Sync Parity additions
+	at_higher_levels?: string | null;
+	classes?: string[] | null;
+	spell_attack?: Record<string, unknown> | null;
+	area?: Record<string, unknown> | null;
+	hit_dice?: string | null;
+	progression_table?: Record<string, unknown> | null;
+	dangers?: string[] | null;
+	suggested_characteristics?: Record<string, unknown> | null;
+	actions?: Record<string, unknown>[] | null;
+	traits?: Record<string, unknown>[] | null;
+	reactions?: Record<string, unknown>[] | null;
+	legendary_actions?: Record<string, unknown>[] | null;
+	saving_throw?: Record<string, unknown> | null;
+	saving_throw_ability?: string | null;
+	has_attack_roll?: boolean | null;
+	area_of_effect?: Record<string, unknown> | null;
 }
 
 interface StaticDataProvider {
@@ -300,13 +331,14 @@ interface StaticDataProvider {
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
 
 // Helper function to filter by search query
-function filterBySearch<T extends Record<string, unknown>>(
+function filterBySearch<T>(
 	items: T[],
 	search?: string,
-	searchFields: (keyof T)[] = ["name", "description"],
+	searchFields: (keyof T)[] = ["name" as keyof T, "description" as keyof T],
 ): T[] {
 	if (!search?.trim()) return items;
 
@@ -1945,6 +1977,36 @@ export const staticDataProvider: StaticDataProvider = {
 			rarity: tattoo.rarity || "uncommon",
 			attunement: tattoo.attunement,
 			body_part: tattoo.body_part,
+		}));
+	},
+	getPantheon: async (search?: string) => {
+		const deities = await loadData<CompendiumDeity>("pantheon");
+		const filtered = filterBySearch<CompendiumDeity>(deities, search, [
+			"name",
+			"display_name",
+			"description",
+		]);
+		return filtered.map((deity) => ({
+			id: deity.id,
+			name: deity.name,
+			display_name: deity.display_name,
+			description: deity.description || "",
+			created_at: new Date().toISOString(),
+			tags: ["deity", "pantheon", deity.rank].filter(Boolean) as string[],
+			source_book: "System Ascendant Canon",
+			image_url: deity.image_url || deity.image,
+			rank: deity.rank,
+			directive: deity.directive,
+			portfolio: deity.portfolio || [],
+			sigil: deity.sigil,
+			manifestation: deity.manifestation,
+			specializations: deity.specializations || [],
+			lore: (deity.lore as string) || null,
+			dogma: deity.dogma || [],
+			worshippers: deity.worshippers,
+			temples: deity.temples,
+			home_realm: deity.home_realm,
+			relationships: deity.relationships || [],
 		}));
 	},
 };

@@ -167,6 +167,10 @@ async function syncAnomalies() {
 			source_book: m.source_book || "System Ascendant Canon",
 			tags: m.tags || [],
 			image_url: m.image_url || m.image || null,
+			actions: castToJson(m.actions || m.Anomaly_actions || []),
+			traits: castToJson(m.traits || m.Anomaly_traits || []),
+			reactions: castToJson(m.reactions || []),
+			legendary_actions: castToJson(m.legendary_actions || []),
 		});
 	}
 
@@ -219,6 +223,11 @@ async function syncSpells() {
 			concentration: !!m.concentration,
 			ritual: !!m.ritual,
 			spell_type: m.spell_type || "Utility",
+			at_higher_levels: m.at_higher_levels || m.atHigherLevels || m.higher_levels || null,
+			classes: castToStringArray(m.classes),
+			saving_throw_ability: m.saving_throw_ability || castToString(m.saving_throw?.ability),
+			has_attack_roll: m.has_attack_roll || !!m.spell_attack,
+			area_of_effect: castToJson(m.area_of_effect || m.area),
 		});
 	}
 
@@ -370,6 +379,21 @@ async function syncJobs() {
 			skill_choices: castToStringArray(m.skill_choices),
 			skill_choice_count: m.skill_choice_count || 2,
 			updated_at: new Date().toISOString(),
+			rank: m.rank || null,
+			image_url: m.image_url || m.image || null,
+			awakening_features: castToJson(m.awakening_features),
+			job_traits: castToJson(m.job_traits),
+			ability_score_improvements: castToJson(m.ability_score_improvements),
+			size: m.size || "Medium",
+			speed: m.speed_walk ? castToString(m.speed_walk) : m.speed ? castToString(m.speed) : "30 ft",
+			languages: castToStringArray(m.languages),
+			hit_points_first_level: m.hit_points_at_first_level || null,
+			hit_points_higher_levels: m.hit_points_at_higher_levels || null,
+			spellcasting: castToJson(m.spellcasting),
+			class_features: castToJson(m.class_features),
+			stats: castToJson(m.stats),
+			abilities: castToStringArray(m.abilities),
+			type: m.type || "Combat",
 		});
 	}
 
@@ -706,6 +730,9 @@ async function syncBackgrounds() {
 			bonds: castToStringArray(m.bonds),
 			flaws: castToStringArray(m.flaws),
 			source_book: m.source_book || "System Ascendant Canon",
+			suggested_characteristics: castToJson(m.suggested_characteristics),
+			dangers: castToStringArray(m.dangers),
+			abilities: castToStringArray(m.abilities),
 		});
 	}
 
@@ -731,6 +758,21 @@ async function syncRegents() {
 			unlock_level: m.level || m.unlock_level || 0,
 			theme: m.regent_theme || m.theme || "Generic",
 			damage_type: m.damage_type || null,
+			rank: m.rank || null,
+			image_url: m.image_url || m.image || null,
+			tags: m.tags || [],
+			source_book: m.source_book || "System Ascendant Canon",
+			hit_dice: m.hit_dice || null,
+			saving_throws: castToStringArray(m.saving_throws),
+			skill_proficiencies: castToStringArray(m.skill_proficiencies),
+			armor_proficiencies: castToStringArray(m.armor_proficiencies),
+			weapon_proficiencies: castToStringArray(m.weapon_proficiencies),
+			tool_proficiencies: castToStringArray(m.tool_proficiencies),
+			class_features: castToJson(m.regent_features || m.class_features),
+			spellcasting: castToJson(m.spellcasting),
+			progression_table: castToJson(m.progression_table),
+			regent_requirements: castToJson(m.regent_requirements),
+			mechanics: castToJson(m.regent_mechanics || m.mechanics),
 		}));
 
 	const names = rows.map((r) => r.name);
@@ -924,6 +966,56 @@ async function syncSigils() {
 	log(`  [Sigils] Synced ${rows.length} rows. Errors: ${errors}`);
 }
 
+async function syncPantheon() {
+	const data = await staticDataProvider.getPantheon("");
+	log(`Syncing ${data.length} deities...`);
+	const seen = new Set<string>();
+	const rows: Database["public"]["Tables"]["compendium_pantheon"]["Insert"][] =
+		[];
+
+	for (const m of data) {
+		if (seen.has(m.id)) continue;
+		seen.add(m.id);
+		rows.push({
+			id: m.id,
+			name: m.name,
+			display_name: m.display_name || m.name,
+			rank: m.rank || null,
+			directive: m.directive || null,
+			portfolio: m.portfolio || [],
+			sigil: m.sigil || null,
+			manifestation: m.manifestation || null,
+			specializations: m.specializations || [],
+			description: m.description || "",
+			lore: castToString(m.lore),
+			dogma: m.dogma || [],
+			worshippers: m.worshippers || null,
+			temples: m.temples || null,
+			home_realm: m.home_realm || null,
+			relationships: castToJson(m.relationships),
+		});
+	}
+
+	const ids = rows.map((r) => r.id);
+	for (let i = 0; i < ids.length; i += 500) {
+		await supabase
+			.from("compendium_pantheon")
+			.delete()
+			.in("id", ids.slice(i, i + 500));
+	}
+
+	let errors = 0;
+	for (let i = 0; i < rows.length; i += 100) {
+		const chunk = rows.slice(i, i + 100);
+		const { error } = await supabase.from("compendium_pantheon").insert(chunk);
+		if (error) {
+			log(`  [Pantheon] Error: ${error.message}`);
+			errors++;
+		}
+	}
+	log(`  [Pantheon] Synced ${rows.length} rows. Errors: ${errors}`);
+}
+
 async function main() {
 	log("--- Starting Authoritative Sync (Zero-Any) ---");
 	try {
@@ -947,6 +1039,7 @@ async function main() {
 		await syncRelics();
 		await syncTechniques();
 		await syncSigils();
+		await syncPantheon();
 		log("--- Sync Complete ---");
 	} catch (err: unknown) {
 		const e = err as Error;

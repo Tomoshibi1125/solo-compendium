@@ -3450,6 +3450,9 @@ export type Database = {
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
 					tool_proficiencies?: string[] | null;
+					suggested_characteristics?: Json | null;
+					dangers?: string[] | null;
+					abilities?: string[] | null;
 				};
 				Update: {
 					aliases?: string[] | null;
@@ -4134,6 +4137,21 @@ export type Database = {
 					tool_proficiencies?: string[] | null;
 					updated_at?: string;
 					weapon_proficiencies?: string[] | null;
+					rank?: string | null;
+					image_url?: string | null;
+					awakening_features?: Json | null;
+					job_traits?: Json | null;
+					ability_score_improvements?: Json | null;
+					size?: string | null;
+					speed?: string | null;
+					languages?: string[] | null;
+					hit_points_first_level?: string | null;
+					hit_points_higher_levels?: string | null;
+					spellcasting?: Json | null;
+					class_features?: Json | null;
+					stats?: Json | null;
+					abilities?: string[] | null;
+					type?: string | null;
 				};
 				Update: {
 					aliases?: string[] | null;
@@ -4585,6 +4603,10 @@ export type Database = {
 					theme_tags?: string[] | null;
 					vit?: number;
 					xp?: number | null;
+					actions?: Json | null;
+					traits?: Json | null;
+					reactions?: Json | null;
+					legendary_actions?: Json | null;
 				};
 				Update: {
 					agi?: number;
@@ -4633,6 +4655,69 @@ export type Database = {
 					theme_tags?: string[] | null;
 					vit?: number;
 					xp?: number | null;
+				};
+				Relationships: [];
+			};
+			compendium_pantheon: {
+				Row: {
+					created_at: string | null;
+					description: string | null;
+					directive: string | null;
+					display_name: string | null;
+					dogma: string[] | null;
+					home_realm: string | null;
+					id: string;
+					lore: string | null;
+					manifestation: string | null;
+					name: string;
+					portfolio: string[] | null;
+					rank: string | null;
+					relationships: Json | null;
+					sigil: string | null;
+					specializations: string[] | null;
+					temples: string | null;
+					updated_at: string | null;
+					worshippers: string | null;
+				};
+				Insert: {
+					created_at?: string | null;
+					description?: string | null;
+					directive?: string | null;
+					display_name?: string | null;
+					dogma?: string[] | null;
+					home_realm?: string | null;
+					id: string;
+					lore?: string | null;
+					manifestation?: string | null;
+					name: string;
+					portfolio?: string[] | null;
+					rank?: string | null;
+					relationships?: Json | null;
+					sigil?: string | null;
+					specializations?: string[] | null;
+					temples?: string | null;
+					updated_at?: string | null;
+					worshippers?: string | null;
+				};
+				Update: {
+					created_at?: string | null;
+					description?: string | null;
+					directive?: string | null;
+					display_name?: string | null;
+					dogma?: string[] | null;
+					home_realm?: string | null;
+					id?: string;
+					lore?: string | null;
+					manifestation?: string | null;
+					name?: string;
+					portfolio?: string[] | null;
+					rank?: string | null;
+					relationships?: Json | null;
+					sigil?: string | null;
+					specializations?: string[] | null;
+					temples?: string | null;
+					updated_at?: string | null;
+					worshippers?: string | null;
 				};
 				Relationships: [];
 			};
@@ -4969,6 +5054,19 @@ export type Database = {
 					title: string;
 					unlock_level?: number;
 					updated_at?: string;
+					rank?: string | null;
+					image_url?: string | null;
+					hit_dice?: string | null;
+					saving_throws?: string[] | null;
+					skill_proficiencies?: string[] | null;
+					armor_proficiencies?: string[] | null;
+					weapon_proficiencies?: string[] | null;
+					tool_proficiencies?: string[] | null;
+					class_features?: Json | null;
+					spellcasting?: Json | null;
+					progression_table?: Json | null;
+					regent_requirements?: Json | null;
+					mechanics?: Json | null;
 				};
 				Update: {
 					aliases?: string[] | null;
@@ -5813,7 +5911,7 @@ export type Database = {
 			compendium_spells: {
 				Row: {
 					activation: Json | null;
-					area: Json | null;
+					area_of_effect: Json | null;
 					at_higher_levels: string | null;
 					casting_time: string | null;
 					classes: string[] | null;
@@ -5838,6 +5936,8 @@ export type Database = {
 					rank: string | null;
 					ritual: boolean | null;
 					saving_throw: Json | null;
+					saving_throw_ability: string | null;
+					has_attack_roll: boolean | null;
 					school: string;
 					source_book: string | null;
 					source_kind: string | null;
@@ -5851,7 +5951,7 @@ export type Database = {
 				};
 				Insert: {
 					activation?: Json | null;
-					area?: Json | null;
+					area_of_effect?: Json | null;
 					at_higher_levels?: string | null;
 					casting_time?: string | null;
 					classes?: string[] | null;
@@ -5876,6 +5976,8 @@ export type Database = {
 					rank?: string | null;
 					ritual?: boolean | null;
 					saving_throw?: Json | null;
+					saving_throw_ability?: string | null;
+					has_attack_roll?: boolean | null;
 					school: string;
 					source_book?: string | null;
 					source_kind?: string | null;
