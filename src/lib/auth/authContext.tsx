@@ -99,7 +99,9 @@ const buildFallbackUser = (authUser: User): AuthUser => {
 	};
 };
 const toProfileRole = (role: UserRole): "dm" | "player" => {
-	return role === "warden" ? "dm" : "player";
+	if (role === "warden") return "dm";
+	if (role === "ascendant") return "player";
+	return "player"; // fallback
 };
 
 const isEmailRateLimitError = (error: unknown): boolean => {
