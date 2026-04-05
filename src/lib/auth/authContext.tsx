@@ -98,7 +98,9 @@ const buildFallbackUser = (authUser: User): AuthUser => {
 		user_metadata: metadata,
 	};
 };
-const toProfileRole = (role: UserRole): "warden" | "ascendant" => role;
+const toProfileRole = (role: UserRole): "dm" | "player" => {
+	return role === "warden" ? "dm" : "player";
+};
 
 const isEmailRateLimitError = (error: unknown): boolean => {
 	if (!error || typeof error !== "object") return false;

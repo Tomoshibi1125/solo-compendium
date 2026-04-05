@@ -82,11 +82,12 @@ export default function AuthCallback() {
 				}
 
 				if (pendingRole) {
+					const dbRole = pendingRole === "warden" ? "dm" : "player";
 					const { error: roleError } = await supabase.from("profiles").upsert(
 						{
 							id: user.id,
 							email: user.email ?? "",
-							role: pendingRole,
+							role: dbRole,
 							updated_at: new Date().toISOString(),
 						},
 						{ onConflict: "id" },
@@ -98,7 +99,7 @@ export default function AuthCallback() {
 						role = pendingRole;
 						
 						supabase.auth.updateUser({
-							data: { role: pendingRole }
+							data: { role: dbRole }
 						}).catch(err => logger.error("Error updating user metadata role:", err));
 					}
 				}
