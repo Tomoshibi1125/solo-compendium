@@ -338,7 +338,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 				if (upsertError) {
 					await supabase.auth.signOut();
-					return { error: "Unable to update account role" };
+					return { error: `Unable to update account role: ${upsertError.message || "Unknown db error"} ${upsertError.details || ""}` };
 				}
 
 				// Keep metadata updated so it stays in sync
