@@ -325,16 +325,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			if (data.user) {
 				const expectedRole = toProfileRole(role);
 
-				// Always update profile to the requested role at login to allow dynamic role selection
-				const { error: upsertError } = await supabase.from("profiles").upsert(
-					{
-						id: data.user.id,
-						email: data.user.email ?? email,
+				// Existing users logging in already have a profile due to the handle_new_user trigger.
+				// We use .update() instead of .upsert() to avoid strict INSERT RLS check violations for existing rows.
+				const { error: upsertError } = await supabase.from("profiles")
+					.update({
 						role: expectedRole,
 						updated_at: new Date().toISOString(),
-					},
-					{ onConflict: "id" },
-				);
+					})
+					.eq("id", data.user.id);
 
 				if (upsertError) {
 					await supabase.auth.signOut();

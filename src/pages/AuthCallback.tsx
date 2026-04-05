@@ -83,15 +83,12 @@ export default function AuthCallback() {
 
 				if (pendingRole) {
 					const dbRole = pendingRole === "warden" ? "dm" : "player";
-					const { error: roleError } = await supabase.from("profiles").upsert(
-						{
-							id: user.id,
-							email: user.email ?? "",
+					const { error: roleError } = await supabase.from("profiles")
+						.update({
 							role: dbRole,
 							updated_at: new Date().toISOString(),
-						},
-						{ onConflict: "id" },
-					);
+						})
+						.eq("id", user.id);
 
 					if (roleError) {
 						logger.error("Error setting role after OAuth sign-in:", roleError);
