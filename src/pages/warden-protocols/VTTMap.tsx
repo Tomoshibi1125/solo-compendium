@@ -787,7 +787,6 @@ const VTTMap = () => {
 
 					<div className="lg:col-span-3">
 						<SystemWindow title="MAP CANVAS">
-							{/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
 							<DynamicStyle
 								as="div"
 								ref={mapRef}

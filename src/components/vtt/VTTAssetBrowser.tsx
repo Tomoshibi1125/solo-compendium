@@ -149,13 +149,10 @@ export function VTTAssetBrowser({
 	);
 	const hasMore = visibleCount < allResults.length;
 
-	const recentAssets = useMemo(() => {
-		const ids = getRecentAssetIds();
-		return ids
-			.map((id) => getVTTAssetLibrary().find((a) => a.id === id))
-			.filter(Boolean) as VTTAsset[];
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+	const ids = getRecentAssetIds();
+	const recentAssets = ids
+		.map((id) => getVTTAssetLibrary().find((a) => a.id === id))
+		.filter(Boolean) as VTTAsset[];
 	const trackAndPreview = useCallback((asset: VTTAsset) => {
 		setPreviewAsset((prev) => (prev?.id === asset.id ? null : asset));
 	}, []);

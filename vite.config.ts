@@ -258,6 +258,9 @@ export default defineConfig(({ mode: _mode }) => {
 			host: "::",
 			port: 8080,
 		},
+		esbuild: {
+			drop: _mode === "production" ? ["console", "debugger"] : [],
+		},
 		plugins,
 		resolve: {
 			alias: {
@@ -281,22 +284,7 @@ export default defineConfig(({ mode: _mode }) => {
 						// Split vendor chunks for better caching while avoiding circular deps.
 						const normalizedId = normalizeId(id);
 
-						// ── VTT App (isolated to avoid circular pixi/three deps) ──
-						if (
-							normalizedId.includes(
-								"/src/pages/warden-protocols/VTTEnhanced",
-							) ||
-							normalizedId.includes("/src/pages/warden-protocols/VTTMap") ||
-							normalizedId.includes("/src/pages/warden-protocols/VTTJournal") ||
-							normalizedId.includes("/src/components/vtt/")
-						) {
-							return "vtt-app";
-						}
 
-						// ── Warden Protocols (Protocols for the Master) ──
-						if (normalizedId.includes("/src/pages/warden-protocols/")) {
-							return "warden-pages";
-						}
 
 						if (
 							normalizedId.includes("/src/components/dice/Dice3DScene") ||
@@ -386,14 +374,7 @@ export default defineConfig(({ mode: _mode }) => {
 								return "postprocessing-vendor";
 							if (normalizedId.includes("/node_modules/@monogrid/gainmap-js/"))
 								return "postprocessing-vendor";
-							if (
-								normalizedId.includes("/node_modules/@dimforge/rapier3d/") ||
-								normalizedId.includes(
-									"/node_modules/@dimforge/rapier3d-compat/",
-								)
-							) {
-								return "rapier-vendor";
-							}
+
 							return "vendor";
 						}
 					},

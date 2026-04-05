@@ -214,6 +214,29 @@
 }
 
 /* ============================================================
+   Global Optimizations for Mobile & PC
+   ============================================================ */
+html, body {
+	overflow-x: hidden;
+	touch-action: manipulation;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Safe area inset wrapper for iPhone notches & bottom bars */
+.safe-area-layout {
+	padding-top: env(safe-area-inset-top);
+	padding-right: env(safe-area-inset-right);
+	padding-bottom: env(safe-area-inset-bottom);
+	padding-left: env(safe-area-inset-left);
+}
+
+/* Performance hint for native images */
+img {
+	content-visibility: auto;
+}
+
+/* ============================================================
    Global SA Form Element Overrides
    Forces ALL inputs, selects, textareas to use SA glassmorphism
    ============================================================ */
