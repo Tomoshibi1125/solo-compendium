@@ -320,46 +320,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 			if (data.user) {
 				const expectedRole = toProfileRole(role);
-				const metadataRole =
-					typeof data.user.user_metadata?.role === "string"
-						? normalizeRole(data.user.user_metadata.role)
-						: undefined;
 
-				const { data: profileRows, error: profileError } = await supabase
-					.from("profiles")
-					.select("role")
-					.eq("id", data.user.id)
-					.limit(1);
+				// Always update profile to the requested role at login to allow dynamic role selection
+				const { error: upsertError } = await supabase.from("profiles").upsert(
+					{
+						id: data.user.id,
+						email: data.user.email ?? email,
+						role: expectedRole,
+						updated_at: new Date().toISOString(),
+					},
+					{ onConflict: "id" },
+				);
 
-				if (profileError) {
+				if (upsertError) {
 					await supabase.auth.signOut();
-					return { error: "Unable to verify account role" };
+					return { error: "Unable to update account role" };
 				}
 
-				let resolvedRole = profileRows?.[0]?.role
-					? normalizeRole(profileRows[0].role)
-					: undefined;
-
-				if (resolvedRole !== expectedRole && metadataRole === expectedRole) {
-					const { error: upsertError } = await supabase.from("profiles").upsert(
-						{
-							id: data.user.id,
-							email: data.user.email ?? email,
-							role: expectedRole,
-							updated_at: new Date().toISOString(),
-						},
-						{ onConflict: "id" },
-					);
-
-					if (!upsertError) {
-						resolvedRole = expectedRole;
-					}
-				}
-
-				if (resolvedRole !== expectedRole) {
-					await supabase.auth.signOut();
-					return { error: "Invalid role for this account" };
-				}
+				// Keep metadata updated so it stays in sync
+				await supabase.auth.updateUser({
+					data: { role: expectedRole }
+				});
 			}
 
 			return { success: true };

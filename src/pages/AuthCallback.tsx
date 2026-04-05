@@ -8,8 +8,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import { logger } from "@/lib/logger";
 
-const normalizeRole = (value: string | null): "PW" | "player" | null => {
-	if (value === "PW" || value === "player") return value;
+const normalizeRole = (value: string | null): "warden" | "ascendant" | null => {
+	if (value === "warden" || value === "PW" || value === "admin") return "warden";
+	if (value === "ascendant" || value === "player") return "ascendant";
 	return null;
 };
 
@@ -80,7 +81,7 @@ export default function AuthCallback() {
 					localStorage.removeItem("pending-oauth-role");
 				}
 
-				if (!role && pendingRole) {
+				if (pendingRole) {
 					const { error: roleError } = await supabase.from("profiles").upsert(
 						{
 							id: user.id,
@@ -95,6 +96,10 @@ export default function AuthCallback() {
 						logger.error("Error setting role after OAuth sign-in:", roleError);
 					} else {
 						role = pendingRole;
+						
+						supabase.auth.updateUser({
+							data: { role: pendingRole }
+						}).catch(err => logger.error("Error updating user metadata role:", err));
 					}
 				}
 
@@ -121,7 +126,7 @@ export default function AuthCallback() {
 					return;
 				}
 
-				navigate(role === "PW" ? "/warden-protocols" : "/player-tools");
+				navigate(role === "warden" ? "/warden-protocols" : "/player-tools");
 			} catch (error) {
 				logger.error("Error completing auth callback:", error);
 				navigate(`/login?error=${encodeURIComponent("Authentication failed")}`);
