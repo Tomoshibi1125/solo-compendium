@@ -216,7 +216,8 @@
 /* ============================================================
    Global Optimizations for Mobile & PC
    ============================================================ */
-html, body {
+html,
+body {
 	overflow-x: hidden;
 	touch-action: manipulation;
 	-webkit-font-smoothing: antialiased;

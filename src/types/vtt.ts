@@ -100,4 +100,31 @@ export interface VTTScene {
 	ambientSounds?: AmbientSoundZone[];
 }
 
+export interface VTTJournalEntry {
+	id: string;
+	title: string;
+	content: string;
+}
+
+export interface VTTCampaignExport {
+	manifestVersion: string;
+	campaign: {
+		id: string;
+		name: string;
+		system: string;
+		description: string;
+	};
+	scenes: VTTScene[];
+	assets: VTTAsset[];
+	tokens: VTTTokenInstance[];
+	journals: VTTJournalEntry[];
+	compendium: {
+		anomalies: import("./compendium").CompendiumAnomaly[];
+		items: Array<
+			| import("./compendium").CompendiumRelic
+			| import("./compendium").CompendiumItem
+		>;
+	};
+}
+
 export const VTT_TYPE_REGISTRY_CERTIFIED = true;

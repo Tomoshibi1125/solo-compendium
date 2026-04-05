@@ -223,9 +223,11 @@ async function syncSpells() {
 			concentration: !!m.concentration,
 			ritual: !!m.ritual,
 			spell_type: m.spell_type || "Utility",
-			at_higher_levels: m.at_higher_levels || m.atHigherLevels || m.higher_levels || null,
+			at_higher_levels:
+				m.at_higher_levels || m.atHigherLevels || m.higher_levels || null,
 			classes: castToStringArray(m.classes),
-			saving_throw_ability: m.saving_throw_ability || castToString(m.saving_throw?.ability),
+			saving_throw_ability:
+				m.saving_throw_ability || castToString(m.saving_throw?.ability),
 			has_attack_roll: m.has_attack_roll || !!m.spell_attack,
 			area_of_effect: castToJson(m.area_of_effect || m.area),
 		});
@@ -385,7 +387,11 @@ async function syncJobs() {
 			job_traits: castToJson(m.job_traits),
 			ability_score_improvements: castToJson(m.ability_score_improvements),
 			size: m.size || "Medium",
-			speed: m.speed_walk ? castToString(m.speed_walk) : m.speed ? castToString(m.speed) : "30 ft",
+			speed: m.speed_walk
+				? castToString(m.speed_walk)
+				: m.speed
+					? castToString(m.speed)
+					: "30 ft",
 			languages: castToStringArray(m.languages),
 			hit_points_first_level: m.hit_points_at_first_level || null,
 			hit_points_higher_levels: m.hit_points_at_higher_levels || null,
