@@ -22,7 +22,7 @@ const FONT_SIZES = [
 
 export default function Profile() {
 	const navigate = useNavigate();
-	const { user, signOut } = useAuth();
+	const { user, signOut, updateProfile } = useAuth();
 	const { toast } = useToast();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -118,6 +118,31 @@ export default function Profile() {
 	const handleSignOut = async () => {
 		await signOut();
 		navigate("/login");
+	};
+
+	const handleRoleToggle = async () => {
+		const newRole = user?.role === "warden" ? "ascendant" : "warden";
+		const { error } = await updateProfile({ role: newRole });
+		if (error) {
+			toast({
+				title: "Failed to switch role",
+				description: error,
+				variant: "destructive",
+			});
+		} else {
+			toast({
+				title: "Role updated",
+				description: `Successfully switched to ${newRole} mode.`,
+			});
+			// Navigate to the respective dashboard based on the new role
+			setTimeout(() => {
+				if (newRole === "warden") {
+					navigate("/warden-directives");
+				} else {
+					navigate("/player-tools");
+				}
+			}, 300);
+		}
 	};
 
 	return (
@@ -237,11 +262,11 @@ export default function Profile() {
 				<AscendantWindow title="ACCOUNT">
 					<div className="flex flex-col sm:flex-row gap-3">
 						<Button
-							onClick={() => navigate("/auth?changeRole=true")}
+							onClick={handleRoleToggle}
 							variant="outline"
 							className="font-heading tracking-widest uppercase"
 						>
-							Change Role
+							Switch to {user?.role === "warden" ? "Ascendant" : "Warden"} Mode
 						</Button>
 						<Button
 							variant="destructive"

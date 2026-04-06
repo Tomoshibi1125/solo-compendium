@@ -446,6 +446,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			if (updates.displayName)
 				metadataUpdates.display_name = updates.displayName;
 			if (updates.avatar) metadataUpdates.avatar = updates.avatar;
+			if (updates.role) metadataUpdates.role = updates.role;
 
 			if (Object.keys(metadataUpdates).length > 0) {
 				const { error: authError } = await supabase.auth.updateUser({
@@ -456,11 +457,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				}
 			}
 
+			const dbUpdates: Record<string, unknown> = {
+				updated_at: new Date().toISOString(),
+			};
+			if (updates.role) {
+				dbUpdates.role = toProfileRole(updates.role);
+			}
+
 			const { error } = await supabase
 				.from("profiles")
-				.update({
-					updated_at: new Date().toISOString(),
-				})
+				.update(dbUpdates)
 				.eq("id", user.id);
 
 			if (error) {

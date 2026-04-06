@@ -35,10 +35,14 @@ const AccessDenied = ({
 	title,
 	message,
 	icon: Icon,
+	actionLabel = "Go Back",
+	onAction,
 }: {
 	title: string;
 	message: string;
 	icon: React.ComponentType<{ className?: string }>;
+	actionLabel?: string;
+	onAction?: () => void;
 }) => (
 	<div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-destructive/10 to-background p-4">
 		<div className="text-center space-y-6 max-w-md w-full bg-background/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-destructive/20">
@@ -54,10 +58,10 @@ const AccessDenied = ({
 			<div className="pt-4 border-t border-border">
 				<button
 					type="button"
-					onClick={() => window.history.back()}
+					onClick={onAction || (() => window.history.back())}
 					className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2"
 				>
-					Go Back
+					{actionLabel}
 				</button>
 			</div>
 		</div>
@@ -71,7 +75,7 @@ export function ProtectedRoute({
 }: ProtectedRouteProps) {
 	const isE2E = import.meta.env.VITE_E2E === "true";
 	const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
-	const { user, loading, session } = useAuth();
+	const { user, loading, session, updateProfile } = useAuth();
 	const isAuthenticated = !!user;
 	const isWarden = user?.role === "warden";
 	const guestAllowed = allowGuest ?? guestEnabled;
@@ -133,12 +137,21 @@ export function ProtectedRoute({
 		);
 	}
 
+	const handleSwitchToWarden = async () => {
+		if (user && updateProfile) {
+			await updateProfile({ role: "warden" });
+			window.location.reload();
+		}
+	};
+
 	if (requireWarden && !isWarden) {
 		return (
 			<AccessDenied
 				title="Warden Access Required"
-				message="This area requires Warden privileges. Please login with a Warden account to continue."
+				message="This area requires Warden protocols. You are currently in Ascendant mode."
 				icon={Shield}
+				actionLabel="Switch to Warden Mode"
+				onAction={handleSwitchToWarden}
 			/>
 		);
 	}
