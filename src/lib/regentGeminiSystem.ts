@@ -46,7 +46,7 @@ interface RegentChoice {
 // 1. On quest unlock, AI presents 3 regent choices
 // 2. Choices are based on character's stats, job, playstyle
 // 3. Player picks ONE regent
-// 4. When Protocol Warden (PW) unlocks second quest, AI presents 3 NEW choices (cannot pick same regent twice)
+// 4. When Warden (Warden) unlocks second quest, AI presents 3 NEW choices (cannot pick same regent twice)
 // 5. Player picks ONE more regent (MAX 2 REGENTS TOTAL)
 // 6. If martial picks caster regent (or vice versa), AI adapts it for compatibility
 // 7. When player has 2 regents, they can fuse via Gemini Protocol
@@ -605,12 +605,12 @@ interface RegentQuest {
 	description: string;
 	regentUnlock: string;
 	requirements: {
-		/** @deprecated Regent quests are PW/Warden-gated — level is advisory only */
+		/** @deprecated Regent quests are Warden/Warden-gated — level is advisory only */
 		level?: number;
 		prerequisites: string[];
 	};
 	completed: boolean;
-	completedBy: string; // PW/Protocol Warden ID
+	completedBy: string; // Warden/Warden ID
 	completionDate?: Date;
 }
 
@@ -707,7 +707,7 @@ export class RegentQuestManager {
 		return Boolean(quest?.completed && quest.completedBy === characterId);
 	}
 
-	// Complete quest (PW/Protocol Warden action)
+	// Complete quest (Warden/Warden action)
 	static completeQuest(questId: string, wardenId: string): void {
 		const quest = RegentQuestManager.QUEST_DATABASE.find(
 			(q) => q.id === questId,

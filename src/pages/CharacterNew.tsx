@@ -46,7 +46,7 @@ import type {
 	StaticBackground,
 	StaticJob,
 } from "@/types/character";
-import type { AbilityScore } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
 
 type DbAbilityScore = Database["public"]["Enums"]["ability_score"];
 
@@ -158,7 +158,7 @@ const CharacterNew = () => {
 						[]) as string[],
 					skill_choices: (job.skillChoices || []) as string[],
 					skill_choice_count: 2,
-					source_book: job.source || "System Ascendant Canon",
+					source_book: job.source || "Rift Ascendant Canon",
 					class_features: (job.classFeatures || null) as Json,
 					spellcasting: (job.spellcasting || null) as Json,
 					starting_equipment: (job.startingEquipment || null) as Json,
@@ -173,7 +173,7 @@ const CharacterNew = () => {
 					license_note: null,
 					secondary_abilities: [],
 					source_kind: "canon",
-					source_name: job.source || "System Ascendant Canon",
+					source_name: job.source || "Rift Ascendant Canon",
 					theme_tags: [],
 					created_at: new Date().toISOString(),
 					updated_at: new Date().toISOString(),

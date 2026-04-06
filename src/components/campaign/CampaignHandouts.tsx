@@ -1,7 +1,7 @@
 import { FileText } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
@@ -144,7 +144,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 			<div className="lg:col-span-1">
-				<SystemWindow title="HANDOUTS & LORE">
+				<AscendantWindow title="HANDOUTS & LORE">
 					<div className="space-y-2 max-h-[520px] overflow-y-auto">
 						{isLoading ? (
 							<p className="text-xs text-muted-foreground text-center py-4">
@@ -186,12 +186,12 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 							))
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 
 			<div className="lg:col-span-2">
 				{selectedEntry ? (
-					<SystemWindow title={selectedEntry.title}>
+					<AscendantWindow title={selectedEntry.title}>
 						<div className="space-y-4">
 							<div className="flex items-center gap-2 pb-4 border-b border-border">
 								<Badge variant="outline">
@@ -221,16 +221,16 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 								)}
 							</div>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				) : (
-					<SystemWindow title="SELECT A HANDOUT">
+					<AscendantWindow title="SELECT A HANDOUT">
 						<div className="text-center py-12">
 							<FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
 							<p className="text-muted-foreground font-heading">
 								Select a handout to view it.
 							</p>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 		</div>

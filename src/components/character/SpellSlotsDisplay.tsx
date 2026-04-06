@@ -1,7 +1,7 @@
 import { Minus, Plus, Zap } from "lucide-react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
 import {
@@ -9,7 +9,7 @@ import {
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
 import { logger } from "@/lib/logger";
-import { getAbilityModifier, getProficiencyBonus } from "@/types/system-rules";
+import { getAbilityModifier, getProficiencyBonus } from "@/types/core-rules";
 
 interface SpellSlotsDisplayProps {
 	characterId: string;
@@ -45,9 +45,9 @@ export function SpellSlotsDisplay({
 
 	if (isLoading) {
 		return (
-			<SystemWindow title="POWER SLOTS" className={className}>
+			<AscendantWindow title="POWER SLOTS" className={className}>
 				<div className="text-sm text-muted-foreground">Loading...</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
@@ -84,7 +84,7 @@ export function SpellSlotsDisplay({
 	};
 
 	return (
-		<SystemWindow title="POWER SLOTS" className={className}>
+		<AscendantWindow title="POWER SLOTS" className={className}>
 			<div className="space-y-3">
 				{slots.map((slot) => (
 					<div
@@ -174,6 +174,6 @@ export function SpellSlotsDisplay({
 					</div>
 				)}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

@@ -2,8 +2,8 @@ import { Boxes, Sparkles } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumTattoo } from "@/types/compendium";
 
@@ -42,7 +42,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 				</div>
 			)}
 
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				actions={<ShareToVTTButton itemType="Tattoo" itemName={displayName} />}
 			>
@@ -72,11 +72,11 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 						)}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				{data.body_part && (
-					<SystemWindow
+					<AscendantWindow
 						title="PLACEMENT"
 						compact
 						className="bg-void border-cyan/20"
@@ -85,12 +85,12 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 							<Boxes className="w-5 h-5 text-cyan/70" />
 							<span className="font-heading text-cyan">{data.body_part}</span>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 
 			{data.effects && (
-				<SystemWindow
+				<AscendantWindow
 					id="tattoo-effects"
 					title="CIRCUIT EFFECTS"
 					className="border-amethyst/30 shadow-[0_0_15px_-5px_rgba(168,85,247,0.3)]"
@@ -117,11 +117,11 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.description && (
-				<SystemWindow id="tattoo-description" title="SYSTEM RECOGNITION">
+				<AscendantWindow id="tattoo-description" title="SYSTEM RECOGNITION">
 					{data.flavor && (
 						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
 							<AutoLinkText text={data.flavor as string} />
@@ -152,7 +152,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 							</pre>
 						</div>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

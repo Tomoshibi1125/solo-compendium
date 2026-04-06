@@ -205,7 +205,7 @@ export function useCharacterSheetEnhancements(
 }
 
 /**
- * Hook to provide Protocol Warden tools enhancements.
+ * Hook to provide Warden tools enhancements.
  * Call this at the top level of your component.
  */
 export function useWardenToolsEnhancements(
@@ -329,7 +329,7 @@ export function useAscendantTools(): AscendantTools {
 					(member.characters as Record<string, unknown>)?.name || "Someone";
 				await supabase.from("campaign_messages").insert({
 					campaign_id: member.campaign_id,
-					message_type: "system",
+					message_type: "rift",
 					content: `**${charName}**: ${content}`,
 					user_id: user.id,
 				});

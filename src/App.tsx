@@ -88,59 +88,60 @@ const FeatureChoicesAdmin = lazy(
 );
 const WardenProtocols = lazy(() => import("./pages/WardenProtocols"));
 const EncounterBuilder = lazy(
-	() => import("./pages/warden-protocols/EncounterBuilder"),
+	() => import("./pages/warden-directives/EncounterBuilder"),
 );
 const InitiativeTracker = lazy(
-	() => import("./pages/warden-protocols/InitiativeTracker"),
+	() => import("./pages/warden-directives/InitiativeTracker"),
 );
 const RollableTables = lazy(
-	() => import("./pages/warden-protocols/RollableTables"),
+	() => import("./pages/warden-directives/RollableTables"),
 );
 const GateGenerator = lazy(
-	() => import("./pages/warden-protocols/GateGenerator"),
+	() => import("./pages/warden-directives/GateGenerator"),
 );
 const NPCGenerator = lazy(
-	() => import("./pages/warden-protocols/NPCGenerator"),
+	() => import("./pages/warden-directives/NPCGenerator"),
 );
 const TreasureGenerator = lazy(
-	() => import("./pages/warden-protocols/TreasureGenerator"),
+	() => import("./pages/warden-directives/TreasureGenerator"),
 );
 const DirectiveLattice = lazy(
-	() => import("./pages/warden-protocols/DirectiveMatrix"),
+	() => import("./pages/warden-directives/DirectiveMatrix"),
 );
 const SessionPlanner = lazy(
-	() => import("./pages/warden-protocols/SessionPlanner"),
+	() => import("./pages/warden-directives/SessionPlanner"),
 );
 const RandomEventGenerator = lazy(
-	() => import("./pages/warden-protocols/RandomEventGenerator"),
+	() => import("./pages/warden-directives/RandomEventGenerator"),
 );
 const RelicWorkshop = lazy(
-	() => import("./pages/warden-protocols/RelicWorkshop"),
+	() => import("./pages/warden-directives/RelicWorkshop"),
 );
 const PartyTracker = lazy(
-	() => import("./pages/warden-protocols/PartyTracker"),
+	() => import("./pages/warden-directives/PartyTracker"),
 );
 const PartyStash = lazy(() => import("./pages/PartyStash"));
 const DungeonMapGenerator = lazy(
-	() => import("./pages/warden-protocols/DungeonMapGenerator"),
+	() => import("./pages/warden-directives/DungeonMapGenerator"),
 );
 const TokenLibrary = lazy(
-	() => import("./pages/warden-protocols/TokenLibrary"),
+	() => import("./pages/warden-directives/TokenLibrary"),
 );
 const ArtGeneratorWarden = lazy(
-	() => import("./pages/warden-protocols/ArtGenerator"),
+	() => import("./pages/warden-directives/ArtGenerator"),
 );
 const AudioManagerWarden = lazy(
-	() => import("./pages/warden-protocols/AudioManager"),
+	() => import("./pages/warden-directives/AudioManager"),
 );
-const VTTMap = lazy(() => import("./pages/warden-protocols/VTTMap"));
-const VTTEnhanced = lazy(() => import("./pages/warden-protocols/VTTEnhanced"));
-const VTTJournal = lazy(() => import("./pages/warden-protocols/VTTJournal"));
+const VTTMap = lazy(() => import("./pages/warden-directives/VTTMap"));
+const VTTEnhanced = lazy(() => import("./pages/warden-directives/VTTEnhanced"));
+const VTTJournal = lazy(() => import("./pages/warden-directives/VTTJournal"));
 const PlayerMapView = lazy(() => import("./pages/player-tools/PlayerMapView"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
+const CampaignBookView = lazy(() => import("./pages/CampaignBookView"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CampaignSessionPlay = lazy(() => import("./pages/CampaignSessionPlay"));
 const Profile = lazy(() => import("./pages/Profile"));
@@ -402,7 +403,7 @@ const AppContent = () => {
 				/>
 
 				<Route
-					path="/warden-protocols/system-console"
+					path="/warden-directives/rift-console"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
@@ -413,7 +414,7 @@ const AppContent = () => {
 				/>
 
 				<Route
-					path="/warden-protocols/selection-protocols"
+					path="/warden-directives/selection-protocols"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
@@ -423,7 +424,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/content-audit"
+					path="/warden-directives/content-audit"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
@@ -433,7 +434,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/art-generation"
+					path="/warden-directives/art-generation"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
 							<Suspense fallback={<PageLoader />}>
@@ -446,7 +447,7 @@ const AppContent = () => {
 					path="/admin"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
-							<Navigate to="/warden-protocols/system-console" replace />
+							<Navigate to="/warden-directives/rift-console" replace />
 						</ProtectedRoute>
 					}
 				/>
@@ -454,7 +455,7 @@ const AppContent = () => {
 					path="/admin/art-generation"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
-							<Navigate to="/warden-protocols/art-generation" replace />
+							<Navigate to="/warden-directives/art-generation" replace />
 						</ProtectedRoute>
 					}
 				/>
@@ -462,12 +463,12 @@ const AppContent = () => {
 					path="/admin/audit"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
-							<Navigate to="/warden-protocols/content-audit" replace />
+							<Navigate to="/warden-directives/content-audit" replace />
 						</ProtectedRoute>
 					}
 				/>
 				<Route
-					path="/warden-protocols"
+					path="/warden-directives"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -477,7 +478,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/encounter-builder"
+					path="/warden-directives/encounter-builder"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -487,7 +488,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/initiative-tracker"
+					path="/warden-directives/initiative-tracker"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -497,7 +498,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/rollable-tables"
+					path="/warden-directives/rollable-tables"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -507,7 +508,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/gate-generator"
+					path="/warden-directives/gate-generator"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -517,7 +518,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/npc-generator"
+					path="/warden-directives/npc-generator"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -527,7 +528,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/treasure-generator"
+					path="/warden-directives/treasure-generator"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -537,17 +538,17 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/quest-generator"
+					path="/warden-directives/quest-generator"
 					element={
-						<Navigate to="/warden-protocols/directive-Lattice" replace />
+						<Navigate to="/warden-directives/directive-Lattice" replace />
 					}
 				/>
 				<Route
-					path="/warden-protocols/campaign-manager"
-					element={<Navigate to="/warden-protocols" replace />}
+					path="/warden-directives/campaign-manager"
+					element={<Navigate to="/warden-directives" replace />}
 				/>
 				<Route
-					path="/warden-protocols/directive-Lattice"
+					path="/warden-directives/directive-Lattice"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -557,7 +558,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/session-planner"
+					path="/warden-directives/session-planner"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -567,7 +568,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/random-event-generator"
+					path="/warden-directives/random-event-generator"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -577,7 +578,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/relic-workshop"
+					path="/warden-directives/relic-workshop"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -587,7 +588,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/party-tracker"
+					path="/warden-directives/party-tracker"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -605,7 +606,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/dungeon-map-generator"
+					path="/warden-directives/dungeon-map-generator"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -615,7 +616,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/token-library"
+					path="/warden-directives/token-library"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -625,7 +626,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/art-generator"
+					path="/warden-directives/art-generator"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -635,7 +636,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/audio-manager"
+					path="/warden-directives/audio-manager"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -645,7 +646,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/vtt-map"
+					path="/warden-directives/vtt-map"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -655,19 +656,19 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-protocols/vtt"
+					path="/warden-directives/vtt"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route
-					path="/warden-protocols/journal"
+					path="/warden-directives/journal"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route
-					path="/warden-protocols/vtt-enhanced"
+					path="/warden-directives/vtt-enhanced"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route
-					path="/warden-protocols/vtt-journal"
+					path="/warden-directives/vtt-journal"
 					element={<Navigate to="/campaigns" replace />}
 				/>
 				<Route
@@ -749,6 +750,14 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<CampaignDetail />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/campaigns/:id/book"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<CampaignBookView />
 						</Suspense>
 					}
 				/>

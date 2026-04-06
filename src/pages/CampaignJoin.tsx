@@ -8,16 +8,16 @@ import {
 	useSearchParams,
 } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -162,29 +162,29 @@ const CampaignJoin = () => {
 					</Button>
 				</Link>
 
-				<SystemHeading
+				<RiftHeading
 					level={1}
 					variant="sovereign"
 					dimensional
 					className="mb-2 text-3xl sm:text-4xl"
 				>
 					Establish Nexus Link
-				</SystemHeading>
-				<DataStreamText variant="system" speed="slow" className="mb-8">
-					Implement an access cipher or localized token from a Protocol Warden
-					to merge with their domain.
-				</DataStreamText>
+				</RiftHeading>
+				<ManaFlowText variant="rift" speed="slow" className="mb-8">
+					Implement an access cipher or localized token from a Warden to merge
+					with their domain.
+				</ManaFlowText>
 
 				{isInviteFlow && !authLoading && !user && (
-					<SystemWindow
+					<AscendantWindow
 						title="SIGN IN REQUIRED"
 						variant="quest"
 						className="mb-6"
 					>
-						<SystemText className="block text-sm text-muted-foreground mb-4">
+						<AscendantText className="block text-sm text-muted-foreground mb-4">
 							Secure invite tokens require an authenticated account. Sign in to
 							redeem this invite.
-						</SystemText>
+						</AscendantText>
 						<Button
 							className="w-full"
 							onClick={() =>
@@ -193,11 +193,11 @@ const CampaignJoin = () => {
 						>
 							Sign in to Continue
 						</Button>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{!isInviteFlow && !campaign && (
-					<SystemWindow title="USE INVITE TOKEN" className="mb-6">
+					<AscendantWindow title="USE INVITE TOKEN" className="mb-6">
 						<form onSubmit={handleInviteSubmit} className="space-y-4">
 							<div>
 								<Label htmlFor="invite-token">Invite Token</Label>
@@ -208,10 +208,9 @@ const CampaignJoin = () => {
 									placeholder="Paste invite token"
 									className="mt-1 font-mono text-center"
 								/>
-								<SystemText className="block text-xs text-muted-foreground mt-2">
-									Tokens are included in invite links from your Protocol Warden
-									(System).
-								</SystemText>
+								<AscendantText className="block text-xs text-muted-foreground mt-2">
+									Tokens are included in invite links from your Warden (System).
+								</AscendantText>
 							</div>
 							<Button
 								type="submit"
@@ -231,12 +230,12 @@ const CampaignJoin = () => {
 								)}
 							</Button>
 						</form>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{/* Share Code Input */}
 				{!campaign && !isInviteFlow && (
-					<SystemWindow title="ENTER SHARE CODE" className="mb-6">
+					<AscendantWindow title="ENTER SHARE CODE" className="mb-6">
 						<form onSubmit={handleShareCodeSubmit} className="space-y-4">
 							<div>
 								<Label htmlFor="share-code">Share Code</Label>
@@ -250,10 +249,9 @@ const CampaignJoin = () => {
 									className="mt-1 font-mono text-center text-2xl tracking-widest"
 									maxLength={6}
 								/>
-								<SystemText className="block text-xs text-muted-foreground mt-2">
-									Enter the 6-character code your Protocol Warden (System)
-									provided
-								</SystemText>
+								<AscendantText className="block text-xs text-muted-foreground mt-2">
+									Enter the 6-character code your Warden provided
+								</AscendantText>
 							</div>
 							<Button
 								type="submit"
@@ -273,21 +271,25 @@ const CampaignJoin = () => {
 								)}
 							</Button>
 						</form>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{/* Campaign Found */}
 				{campaign && (
-					<SystemWindow title="CAMPAIGN FOUND" variant="quest" className="mb-6">
+					<AscendantWindow
+						title="CAMPAIGN FOUND"
+						variant="quest"
+						className="mb-6"
+					>
 						<div className="space-y-4">
 							<div>
 								<h3 className="font-heading text-xl font-semibold mb-2">
 									{campaign.name}
 								</h3>
 								{campaign.description && (
-									<SystemText className="block text-sm text-muted-foreground">
+									<AscendantText className="block text-sm text-muted-foreground">
 										{campaign.description}
-									</SystemText>
+									</AscendantText>
 								)}
 							</div>
 							<div className="flex items-center justify-between p-2 bg-muted/50 rounded">
@@ -299,20 +301,24 @@ const CampaignJoin = () => {
 								</span>
 							</div>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{isInviteFlow && invite && (
-					<SystemWindow title="INVITE FOUND" variant="quest" className="mb-6">
+					<AscendantWindow
+						title="INVITE FOUND"
+						variant="quest"
+						className="mb-6"
+					>
 						<div className="space-y-4">
 							<div>
 								<h3 className="font-heading text-xl font-semibold mb-2">
 									{invite.campaign_name}
 								</h3>
 								{invite.campaign_description && (
-									<SystemText className="block text-sm text-muted-foreground">
+									<AscendantText className="block text-sm text-muted-foreground">
 										{invite.campaign_description}
-									</SystemText>
+									</AscendantText>
 								)}
 							</div>
 							<div className="flex items-center justify-between p-2 bg-muted/50 rounded">
@@ -348,9 +354,9 @@ const CampaignJoin = () => {
 								</div>
 							)}
 							{inviteStatus && (
-								<SystemText className="block text-sm text-muted-foreground">
+								<AscendantText className="block text-sm text-muted-foreground">
 									{campaignInviteStatusMessage(inviteStatus)}
-								</SystemText>
+								</AscendantText>
 							)}
 							<Button
 								variant="ghost"
@@ -360,17 +366,17 @@ const CampaignJoin = () => {
 								Use Share Code Instead
 							</Button>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{/* Character Selection */}
 				{(campaign || invite) && characters.length > 0 && (
-					<SystemWindow title="SELECT ASCENDANT (OPTIONAL)" className="mb-6">
+					<AscendantWindow title="SELECT ASCENDANT (OPTIONAL)" className="mb-6">
 						<div className="space-y-4">
-							<SystemText className="block text-sm text-muted-foreground">
+							<AscendantText className="block text-sm text-muted-foreground">
 								Optionally link one of your Ascendants to this campaign. You can
 								change this later.
-							</SystemText>
+							</AscendantText>
 							<Select
 								value={selectedCharacter}
 								onValueChange={setSelectedCharacter}
@@ -389,17 +395,17 @@ const CampaignJoin = () => {
 								</SelectContent>
 							</Select>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{(campaign || invite) && user && characters.length === 0 && (
-					<SystemWindow title="NO ASCENDANTS FOUND" className="mb-6">
+					<AscendantWindow title="NO ASCENDANTS FOUND" className="mb-6">
 						<div className="space-y-3">
-							<SystemText className="block text-sm text-muted-foreground">
+							<AscendantText className="block text-sm text-muted-foreground">
 								You can join now without a linked Ascendant and attach one later
 								from the Campaign Dashboard, or create one now and return
 								automatically.
-							</SystemText>
+							</AscendantText>
 							<Button variant="outline" className="w-full" asChild>
 								<Link
 									to={`/characters/new?next=${encodeURIComponent(resumePath)}`}
@@ -408,7 +414,7 @@ const CampaignJoin = () => {
 								</Link>
 							</Button>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{/* Join Button */}
@@ -454,15 +460,19 @@ const CampaignJoin = () => {
 
 				{/* Error State */}
 				{campaignError && !isInviteFlow && (
-					<SystemWindow title="ERROR" variant="alert" className="mt-6">
+					<AscendantWindow title="ERROR" variant="alert" className="mt-6">
 						<p className="text-destructive">
 							Campaign not found. Please check the share code and try again.
 						</p>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{(inviteError || (isInviteFlow && !invite && !loadingInvite)) && (
-					<SystemWindow title="INVITE ERROR" variant="alert" className="mt-6">
+					<AscendantWindow
+						title="INVITE ERROR"
+						variant="alert"
+						className="mt-6"
+					>
 						<p className="text-destructive">
 							Invite token invalid or expired. Please check the invite and try
 							again.
@@ -470,7 +480,7 @@ const CampaignJoin = () => {
 						<Button variant="ghost" onClick={clearInviteToken} className="mt-3">
 							Use Share Code Instead
 						</Button>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 		</Layout>

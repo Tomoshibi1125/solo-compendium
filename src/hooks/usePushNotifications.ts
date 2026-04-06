@@ -46,7 +46,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 
 		if (permission === "granted") {
 			try {
-				// Try to use service worker to show notification (works on mobile PWA)
+				// Try to use service worker to show notification (works on mobile WardenA)
 				navigator.serviceWorker.ready
 					.then((registration) => {
 						registration.showNotification(title, {

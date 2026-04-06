@@ -66,7 +66,7 @@ export function AppSidebar() {
 											)}
 										/>
 										{!collapsed && (
-											<span className="font-system font-medium truncate">
+											<span className="font-heading font-medium truncate">
 												{item.title}
 											</span>
 										)}
@@ -160,7 +160,7 @@ export function AppSidebar() {
 						</div>
 						{!sidebarCollapsed && (
 							<span className="font-display font-bold tracking-widest text-sm uppercase truncate animate-in fade-in slide-in-from-left-2 duration-500">
-								Protocol Warden
+								Warden
 							</span>
 						)}
 					</div>

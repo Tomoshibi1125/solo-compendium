@@ -17,14 +17,14 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
 	type ContentAuditReport,
@@ -121,16 +121,16 @@ function SummaryCards({ report }: { report: ContentAuditReport }) {
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-			<SystemWindow title="TOTAL ENTRIES" className="text-center">
+			<AscendantWindow title="TOTAL ENTRIES" className="text-center">
 				<div className="text-3xl font-bold text-primary">
 					{summary.totalEntries.toLocaleString()}
 				</div>
 				<div className="text-sm text-muted-foreground mt-1">
 					Across {summary.tablesAudited} tables
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow title="COMPLETENESS" className="text-center">
+			<AscendantWindow title="COMPLETENESS" className="text-center">
 				<div
 					className={cn(
 						"text-3xl font-bold",
@@ -146,23 +146,23 @@ function SummaryCards({ report }: { report: ContentAuditReport }) {
 				<div className="text-sm text-muted-foreground mt-1">
 					Average across all tables
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow title="WITH IMAGES" className="text-center">
+			<AscendantWindow title="WITH IMAGES" className="text-center">
 				<div className="text-3xl font-bold text-blue-400">{imageCoverage}%</div>
 				<div className="text-sm text-muted-foreground mt-1">
 					{summary.totalWithImages.toLocaleString()} entries
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow title="WITH DESCRIPTIONS" className="text-center">
+			<AscendantWindow title="WITH DESCRIPTIONS" className="text-center">
 				<div className="text-3xl font-bold text-green-400">
 					{descriptionCoverage}%
 				</div>
 				<div className="text-sm text-muted-foreground mt-1">
 					{summary.totalWithDescriptions.toLocaleString()} entries
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 }
@@ -170,17 +170,17 @@ function SummaryCards({ report }: { report: ContentAuditReport }) {
 function Recommendations({ recommendations }: { recommendations: string[] }) {
 	if (recommendations.length === 0) {
 		return (
-			<SystemWindow title="RECOMMENDATIONS">
+			<AscendantWindow title="RECOMMENDATIONS">
 				<div className="flex items-center gap-2 text-green-400">
 					<CheckCircle2 className="w-5 h-5" />
 					<span>All content looks good! No recommendations at this time.</span>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	return (
-		<SystemWindow title="RECOMMENDATIONS">
+		<AscendantWindow title="RECOMMENDATIONS">
 			<div className="space-y-2">
 				{recommendations.map((rec, _index) => (
 					<div
@@ -192,7 +192,7 @@ function Recommendations({ recommendations }: { recommendations: string[] }) {
 					</div>
 				))}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }
 
@@ -223,13 +223,13 @@ function ContentAudit() {
 		return (
 			<Layout>
 				<div className="container mx-auto px-4 py-8 max-w-6xl">
-					<SystemWindow title="CONTENT AUDIT">
+					<AscendantWindow title="CONTENT AUDIT">
 						<div className="space-y-4">
 							<Skeleton className="h-32 w-full" />
 							<Skeleton className="h-64 w-full" />
 							<Skeleton className="h-48 w-full" />
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</Layout>
 		);
@@ -239,18 +239,18 @@ function ContentAudit() {
 		return (
 			<Layout>
 				<div className="container mx-auto px-4 py-8 max-w-6xl">
-					<SystemWindow title="CONTENT AUDIT" variant="alert">
+					<AscendantWindow title="CONTENT AUDIT" variant="alert">
 						<div className="text-center py-8">
 							<AlertTriangle className="w-12 h-12 text-destructive mx-auto mb-4" />
-							<SystemText className="block text-muted-foreground">
+							<AscendantText className="block text-muted-foreground">
 								Failed to load audit report. Please try again.
-							</SystemText>
+							</AscendantText>
 							<Button onClick={handleRefresh} className="mt-4">
 								<RefreshCw className="w-4 h-4 mr-2" />
 								Retry
 							</Button>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</Layout>
 		);
@@ -263,24 +263,24 @@ function ContentAudit() {
 					{/* Header */}
 					<div className="flex items-center justify-between">
 						<div>
-							<SystemHeading
+							<RiftHeading
 								level={1}
 								variant="sovereign"
 								dimensional
 								className="mb-2"
 							>
 								Content Audit
-							</SystemHeading>
-							<DataStreamText
-								variant="system"
+							</RiftHeading>
+							<ManaFlowText
+								variant="rift"
 								speed="slow"
 								className="text-muted-foreground"
 							>
 								Comprehensive database content analysis and quality metrics
-							</DataStreamText>
-							<SystemText className="block text-xs text-muted-foreground mt-1">
+							</ManaFlowText>
+							<AscendantText className="block text-xs text-muted-foreground mt-1">
 								Last updated: {new Date(report.timestamp).toLocaleString()}
-							</SystemText>
+							</AscendantText>
 						</div>
 						<div className="flex gap-2">
 							<Button onClick={handleRefresh} variant="outline" size="sm">
@@ -301,20 +301,20 @@ function ContentAudit() {
 					<Recommendations recommendations={report.recommendations} />
 
 					{/* Detailed Table Statistics */}
-					<SystemWindow title="DETAILED STATISTICS">
+					<AscendantWindow title="DETAILED STATISTICS">
 						<AuditTable report={report} />
-					</SystemWindow>
+					</AscendantWindow>
 
 					{/* Link Integrity Check */}
 					<LinkIntegritySection />
 
 					{/* Empty Tables */}
 					{report.tables.filter((t) => t.totalCount === 0).length > 0 && (
-						<SystemWindow title="EMPTY TABLES" variant="alert">
+						<AscendantWindow title="EMPTY TABLES" variant="alert">
 							<div className="space-y-2">
-								<SystemText className="block text-sm text-muted-foreground mb-2">
+								<AscendantText className="block text-sm text-muted-foreground mb-2">
 									The following tables have no entries:
-								</SystemText>
+								</AscendantText>
 								<div className="flex flex-wrap gap-2">
 									{report.tables
 										.filter((t) => t.totalCount === 0)
@@ -325,7 +325,7 @@ function ContentAudit() {
 										))}
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 				</div>
 			</div>
@@ -356,12 +356,12 @@ function LinkIntegritySection() {
 
 	if (!integrityReport) {
 		return (
-			<SystemWindow title="LINK INTEGRITY CHECK">
+			<AscendantWindow title="LINK INTEGRITY CHECK">
 				<div className="space-y-4">
-					<SystemText className="block text-sm text-muted-foreground">
+					<AscendantText className="block text-sm text-muted-foreground">
 						Check for broken compendium references in character data (job, path,
 						background, runes).
-					</SystemText>
+					</AscendantText>
 					<Button onClick={handleCheck} disabled={isChecking}>
 						{isChecking ? (
 							<>
@@ -376,14 +376,14 @@ function LinkIntegritySection() {
 						)}
 					</Button>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	const hasBrokenLinks = integrityReport.totalBrokenLinks > 0;
 
 	return (
-		<SystemWindow
+		<AscendantWindow
 			title="LINK INTEGRITY CHECK"
 			variant={hasBrokenLinks ? "alert" : "default"}
 		>
@@ -492,7 +492,7 @@ function LinkIntegritySection() {
 					</div>
 				)}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }
 

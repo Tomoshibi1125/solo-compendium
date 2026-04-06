@@ -3,12 +3,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Layers, Loader2, Plus, Search, Settings2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -372,7 +372,7 @@ export default function FeatureChoicesAdmin() {
 
 			toast({
 				title: "Choice group created",
-				description: "The System has registered a new selection protocol.",
+				description: "The Rift has registered a new selection protocol.",
 			});
 		} catch (error) {
 			toast({
@@ -425,7 +425,7 @@ export default function FeatureChoicesAdmin() {
 
 			toast({
 				title: "Option created",
-				description: "The System has bound a new option to this protocol.",
+				description: "The Rift has bound a new option to this protocol.",
 			});
 		} catch (error) {
 			toast({
@@ -445,21 +445,21 @@ export default function FeatureChoicesAdmin() {
 							<Layers className="w-6 h-6 text-resurge" />
 						</div>
 						<div className="flex-1">
-							<SystemHeading
+							<RiftHeading
 								level={1}
 								variant="sovereign"
 								dimensional
 								className="tracking-wider"
 							>
 								SELECTION PROTOCOLS
-							</SystemHeading>
-							<DataStreamText
-								variant="system"
+							</RiftHeading>
+							<ManaFlowText
+								variant="rift"
 								speed="slow"
 								className="text-muted-foreground"
 							>
 								Configure D&D Beyond-style class feature choice points
-							</DataStreamText>
+							</ManaFlowText>
 						</div>
 
 						<Button
@@ -479,7 +479,7 @@ export default function FeatureChoicesAdmin() {
 				</div>
 
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-					<SystemWindow
+					<AscendantWindow
 						title="CHOICE-POINT FEATURES"
 						className="border-resurge/30"
 					>
@@ -545,9 +545,12 @@ export default function FeatureChoicesAdmin() {
 								</div>
 							)}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
-					<SystemWindow title="PROTOCOL CONFIG" className="border-resurge/30">
+					<AscendantWindow
+						title="PROTOCOL CONFIG"
+						className="border-resurge/30"
+					>
 						{!selectedFeature ? (
 							<div className="text-sm text-muted-foreground">
 								Select a feature on the left to configure its choice protocol.
@@ -736,7 +739,7 @@ export default function FeatureChoicesAdmin() {
 								</div>
 							</div>
 						)}
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</div>
 		</Layout>

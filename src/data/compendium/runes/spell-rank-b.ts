@@ -13,7 +13,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-1.webp",
 		effect_description: "Teaches the skill: Entropy lance",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -31,7 +31,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-2.webp",
 		effect_description: "Teaches the skill: Ichor edge",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -49,7 +49,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-3.webp",
 		effect_description: "Teaches the skill: Glacial tomb",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -67,7 +67,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-4.webp",
 		effect_description: "Teaches the skill: Dawn spike",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -85,7 +85,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-5.webp",
 		effect_description: "Teaches the skill: Solar burst",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -103,7 +103,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-6.webp",
 		effect_description: "Teaches the skill: Void edge",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -121,7 +121,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-7.webp",
 		effect_description: "Teaches the skill: Pulse spike",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -139,7 +139,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-8.webp",
 		effect_description: "Teaches the skill: Tempest shackle",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -157,7 +157,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-9.webp",
 		effect_description: "Teaches the skill: Heart tear",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -175,7 +175,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-10.webp",
 		effect_description: "Teaches the skill: Arctic burst",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -193,7 +193,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-11.webp",
 		effect_description: "Teaches the skill: Void tomb",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -211,7 +211,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-12.webp",
 		effect_description: "Teaches the skill: Bolt pulse",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -229,7 +229,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-13.webp",
 		effect_description: "Teaches the skill: Sanguine burst",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -247,7 +247,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-14.webp",
 		effect_description: "Teaches the skill: Rime blast",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",
@@ -265,7 +265,7 @@ export const runes_b: CompendiumRune[] = [
 		image: "/generated/compendium/runes/spell-b-15.webp",
 		effect_description: "Teaches the skill: Void lance",
 		effect_type: "active",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		mechanics: {
 			usage:
 				"Consumable. Permanently adds the associated skill to the user's known techniques upon use.",

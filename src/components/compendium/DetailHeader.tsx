@@ -44,7 +44,7 @@ export const DetailHeader = ({
 	return (
 		<div className="flex items-start justify-between gap-4 mb-6">
 			<div className="flex-1">
-				<h1 className="font-display text-3xl sm:text-4xl font-bold mb-2 gradient-text-system">
+				<h1 className="font-display text-3xl sm:text-4xl font-bold mb-2 gradient-text-ascendant">
 					{title}
 				</h1>
 				{subtitle && (

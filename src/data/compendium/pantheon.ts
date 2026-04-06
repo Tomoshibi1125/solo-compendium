@@ -2,11 +2,11 @@ import type { CompendiumDeity } from "@/types/compendium";
 
 /**
  * THE ECHELON OF BALANCE
- * The Prime Pantheon of the System Ascendant universe.
+ * The Prime Pantheon of the Rift Ascendant universe.
  *
  * SYSTEM ASCENDANT GLOSSARY (Unique Terms):
  * - Ascendant = Awakened individual (our "Hunter")
- * - The System = The mysterious interface that governs power
+ * - The Rift = The mysterious interface that governs power
  * - Gates = Dimensional rifts leading to dungeons
  * - Ranks = E through S power classification
  * - Overload = A state of mana overflow, unique to certain Jobs
@@ -22,7 +22,7 @@ import type { CompendiumDeity } from "@/types/compendium";
  * - The Void = The entropy / destructive force beyond the gates
  * - The Absolute = The original creator entity
  * - Zenith = The pinnacle rank beyond S
- * - Mana = The raw energy of the System
+ * - Mana = The raw energy of the Rift
  * - Gate Break = When a gate overflows into the world
  * - Catalyst of Eras = The divine relic of time manipulation
  */
@@ -43,10 +43,10 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		manifestation: "Umbral-Forged Eternal Blade (Dagger of the Void)",
 		specializations: ["Death", "Umbral", "Time", "Creation"],
 		description:
-			"Kael Voss is the Umbral Eternal — a Zenith-class entity who transcended the System itself to become the absolute sovereign of all realms.",
-		lore: "Once an E-Rank ascendant who could barely survive a gate, Kael Voss clawed his way through every rank, every dungeon, and every trial the System threw at him. Where other ascendants plateaued, his power kept growing — the only one of his kind. He reached the Zenith, surpassed it, and used the Catalyst of Eras to reset the timeline itself. He spent decades fighting wars in the dimensional gap — the space between gates — before returning as the Weaver of the Absolute. He no longer follows the System's rules. He IS the System. He commands Resurge — the power to extract the umbral essence of the fallen and resurrect them as loyal, immortal Umbral Echoes. His legion is infinite, drawn from every enemy he has ever defeated across every timeline.",
+			"Kael Voss is the Umbral Eternal — a Zenith-class entity who transcended the Rift itself to become the absolute sovereign of all realms.",
+		lore: "Once an E-Rank ascendant who could barely survive a gate, Kael Voss clawed his way through every rank, every dungeon, and every trial the Rift threw at him. Where other ascendants plateaued, his power kept growing — the only one of his kind. He reached the Zenith, surpassed it, and used the Catalyst of Eras to reset the timeline itself. He spent decades fighting wars in the dimensional gap — the space between gates — before returning as the Weaver of the Absolute. He no longer follows the Rift's rules. He IS the Rift. He commands Resurge — the power to extract the umbral essence of the fallen and resurrect them as loyal, immortal Umbral Echoes. His legion is infinite, drawn from every enemy he has ever defeated across every timeline.",
 		dogma: [
-			"The System is a crucible — once you reach the Zenith, transcend it entirely.",
+			"The Rift is a crucible — once you reach the Zenith, transcend it entirely.",
 			"Resurge — the umbral echoes of your fallen enemies become the army of your future.",
 			"Protect the timeline at all costs; every sacrifice must lead to a stronger world.",
 		],
@@ -79,7 +79,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		rank: "Lesser Deity",
 		directive: "Eternal Vigilance",
 		portfolio: [
-			"The System's Memory",
+			"The Rift's Memory",
 			"Gates of Trial",
 			"Ancient Records",
 			"Awakening Rites",
@@ -89,14 +89,14 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		specializations: ["Knowledge", "Arcana", "Memory"],
 		description:
 			"Xylo is the Keeper of All Knowledge — the entity who remembers what the world has chosen to forget.",
-		lore: "Xylo serves as the living memory of the System. He records every gate cleared, every rank achieved, every ascendant who ever lived. While Kael Voss is the Prime Eternal, Xylo is the one who watches the growth of every ascendant — tracking their stats, their potential, their trajectory. He is the master of hidden gates and trial-based ascensions, the guardian of the System's deepest truths. It was Xylo who recorded the existence of the Catalyst of Eras, and it is Xylo who ensures that the knowledge of the previous timeline is never fully lost.",
+		lore: "Xylo serves as the living memory of the Rift. He records every gate cleared, every rank achieved, every ascendant who ever lived. While Kael Voss is the Prime Eternal, Xylo is the one who watches the growth of every ascendant — tracking their stats, their potential, their trajectory. He is the master of hidden gates and trial-based ascensions, the guardian of the Rift's deepest truths. It was Xylo who recorded the existence of the Catalyst of Eras, and it is Xylo who ensures that the knowledge of the previous timeline is never fully lost.",
 		dogma: [
 			"Knowledge hoarded is knowledge lost to the Void.",
-			"The System reveals its truths only to the worthy — earn your answers.",
+			"The Rift reveals its truths only to the worthy — earn your answers.",
 			"Record the truth, for the timeline is fragile and memory fades.",
 		],
 		worshippers:
-			"Scholars, mages, Ascendant Bureau researchers, and those who seek to understand the System's deeper workings.",
+			"Scholars, mages, Ascendant Bureau researchers, and those who seek to understand the Rift's deeper workings.",
 		temples:
 			"Archives of the Eternal — ancient libraries filled with mana-infused crystals that store the memories of past eras.",
 		home_realm: "The Great Archive",
@@ -200,7 +200,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 			"Vaelen is the Spirit of Martial Excellence — the eternal trial that separates the strong from the worthy.",
 		lore: "Vaelen was once a rival eternal who sought to overthrow Kael Voss and claim the supreme throne. After being defeated, he was bound as the ultimate challenge for ascendants who seek true combat mastery. He oversees the Cataclysm Gates — the most dangerous S-Rank dungeons — and the combat trials that push an ascendant beyond their limits. Vaelen embodies the sheer speed and devastating power of lightning-warfare. His approval is the mark of the strongest fighters in history. The Ascendant Bureau uses his trials as the final benchmark for Zenith-class certification.",
 		dogma: [
-			"Strength is the only currency the System respects.",
+			"Strength is the only currency the Rift respects.",
 			"Defeat is a wound — let it fuel your resolve until victory is yours.",
 			"The throne is earned through the crucible of combat, never given.",
 		],
@@ -334,9 +334,9 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		specializations: ["Beast", "Umbral", "Trickery"],
 		description:
 			"Nyx is the Essence of Instinctual Might — the primal force that reminds every ascendant that beneath all their System enhancements, they are still predator and prey.",
-		lore: "Nyx embodies the raw, animalistic survival instinct that the System cannot quantify. Stats, ranks, skills — none of it matters if your instincts are dull. He teaches that the hunter's gut is faster than any System notification, and that the kill comes not from power but from patience. He is the master of umbral-walking and beast-transformation, able to become one with the darkness and strike without warning. The Ascendant Bureau's most elite Stalkers revere Nyx. They say the best ascendants don't rely on their Aether-sight — they rely on the cold feeling at the back of their neck.",
+		lore: "Nyx embodies the raw, animalistic survival instinct that the Rift cannot quantify. Stats, ranks, skills — none of it matters if your instincts are dull. He teaches that the hunter's gut is faster than any System notification, and that the kill comes not from power but from patience. He is the master of umbral-walking and beast-transformation, able to become one with the darkness and strike without warning. The Ascendant Bureau's most elite Stalkers revere Nyx. They say the best ascendants don't rely on their Aether-sight — they rely on the cold feeling at the back of their neck.",
 		dogma: [
-			"Trust the instinct — your soul knows before the System alerts you.",
+			"Trust the instinct — your soul knows before the Rift alerts you.",
 			"The umbral darkness is the hunter's greatest ally; wait for the opening.",
 			"Be the apex predator of your domain — rank means nothing to fangs.",
 		],
@@ -432,7 +432,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		specializations: ["Knowledge", "Arcana", "Trickery"],
 		description:
 			"Cipher is the Embodiment of Cold Judgement — the force that strips away all illusion and reveals the truth frozen beneath.",
-		lore: "Cipher represents the absolute zero — the state where all mana ceases to flow and all truths are laid bare in crystalline clarity. He guards the Mystery Gates — dungeons that test the mind instead of the body, where brute strength means nothing and only intellect survives. His frozen mana can suspend time, space, and even thought within an instant of frost. The Ascendant Bureau's most difficult classification exams are rumored to be his creation. Mages and Espers who seek deeper understanding of the System's foundations make pilgrimage to his frozen sanctuaries — but many who enter are never seen again, preserved forever in perfect, silent ice.",
+		lore: "Cipher represents the absolute zero — the state where all mana ceases to flow and all truths are laid bare in crystalline clarity. He guards the Mystery Gates — dungeons that test the mind instead of the body, where brute strength means nothing and only intellect survives. His frozen mana can suspend time, space, and even thought within an instant of frost. The Ascendant Bureau's most difficult classification exams are rumored to be his creation. Mages and Espers who seek deeper understanding of the Rift's foundations make pilgrimage to his frozen sanctuaries — but many who enter are never seen again, preserved forever in perfect, silent ice.",
 		dogma: [
 			"Emotion clouds judgement — still the heart to find the truth.",
 			"The answer is hidden in the silence between heartbeats.",

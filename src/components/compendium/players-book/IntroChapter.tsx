@@ -1,7 +1,7 @@
 import { Activity, Sparkles, User } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { SourceBookPage } from "@/components/compendium/SourceBookPage";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { paths } from "@/data/compendium/paths";
 import { getStaticJobs } from "@/lib/ProtocolDataManager";
 
@@ -21,9 +21,9 @@ export const IntroChapter = () => {
 				<section>
 					<div className="flex items-center gap-3 mb-6 border-b border-cyan/20 pb-3">
 						<User className="w-6 h-6 text-cyan" />
-						<SystemHeading level={2} className="text-2xl text-white m-0">
+						<RiftHeading level={2} className="text-2xl text-white m-0">
 							The Awakening Event
-						</SystemHeading>
+						</RiftHeading>
 					</div>
 					<div className="prose prose-invert max-w-none text-muted-foreground leading-loose text-sm p-4 bg-cyan/5 border border-cyan/10 rounded-sm">
 						<p>
@@ -43,9 +43,9 @@ export const IntroChapter = () => {
 				<section>
 					<div className="flex items-center gap-3 mb-6 border-b border-amethyst/20 pb-3">
 						<Activity className="w-6 h-6 text-amethyst" />
-						<SystemHeading level={2} className="text-2xl text-white m-0">
+						<RiftHeading level={2} className="text-2xl text-white m-0">
 							Resonance Ranks & Distribution
-						</SystemHeading>
+						</RiftHeading>
 					</div>
 					<div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
 						{[
@@ -87,9 +87,9 @@ export const IntroChapter = () => {
 
 				<section>
 					<div className="flex items-center gap-3 mb-6 border-b border-white/20 pb-3">
-						<SystemHeading level={2} className="text-2xl text-white m-0">
+						<RiftHeading level={2} className="text-2xl text-white m-0">
 							Canonical Jobs
-						</SystemHeading>
+						</RiftHeading>
 					</div>
 					<div className="prose prose-invert max-w-none text-muted-foreground leading-loose text-sm mb-8">
 						<p>
@@ -129,12 +129,9 @@ export const IntroChapter = () => {
 
 				<section className="mt-12">
 					<div className="flex items-center gap-3 mb-6 border-b border-shadow-purple/20 pb-3">
-						<SystemHeading
-							level={2}
-							className="text-2xl text-shadow-purple m-0"
-						>
+						<RiftHeading level={2} className="text-2xl text-shadow-purple m-0">
 							Ascendant Paths
-						</SystemHeading>
+						</RiftHeading>
 					</div>
 					<div className="prose prose-invert max-w-none text-muted-foreground leading-loose text-sm mb-8">
 						<p>
@@ -180,9 +177,9 @@ export const IntroChapter = () => {
 				<section>
 					<div className="flex items-center gap-3 mb-6">
 						<Sparkles className="w-8 h-8 text-amber-500" />
-						<SystemHeading level={2} className="text-3xl text-amber-500 m-0">
+						<RiftHeading level={2} className="text-3xl text-amber-500 m-0">
 							Sovereign Ascension
-						</SystemHeading>
+						</RiftHeading>
 					</div>
 
 					<div className="grid xl:grid-cols-2 gap-8 items-start">

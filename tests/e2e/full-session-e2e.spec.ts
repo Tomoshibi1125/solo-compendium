@@ -85,7 +85,7 @@ test.describe
 
 		test.describe
 			.serial("Phase 1: DM Pre-Session Setup", () => {
-				test("1.1 DM signs in as Protocol Warden", async () => {
+				test("1.1 DM signs in as Warden", async () => {
 					const auth = new AuthPage(dmPage);
 					await auth.continueAsGuest("dm");
 					await expect(dmPage.getByTestId("dm-tools")).toBeVisible({
@@ -101,7 +101,7 @@ test.describe
 						description:
 							"Comprehensive 4-hour E2E session: combat, quests, VTT, rewards, level-up",
 						rules:
-							"System Ascendant rules — critical hits double dice, flanking = advantage",
+							"Rift Ascendant rules — critical hits double dice, flanking = advantage",
 						settings: {
 							difficulty: "Hard",
 							playerLevel: 1,
@@ -232,7 +232,7 @@ test.describe
 					await dt.testVTTMap();
 				});
 
-				test("2.18 System Console — admin page loads", async () => {
+				test("2.18 Rift Console — admin page loads", async () => {
 					const dt = new DMToolsPage(dmPage);
 					await dt.testSystemConsole();
 				});

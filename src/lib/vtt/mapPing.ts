@@ -1,7 +1,7 @@
 /**
  * VTT Map Ping System
  *
- * Allows players/Protocol Wardens to ping a location on the map with an animated indicator
+ * Allows players/Wardens to ping a location on the map with an animated indicator
  * that fades out after a short duration. Broadcasts via realtime channel.
  */
 

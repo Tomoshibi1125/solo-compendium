@@ -38,7 +38,7 @@ import {
 	ABILITY_NAMES,
 	type AbilityScore,
 	getAbilityModifier,
-} from "@/types/system-rules";
+} from "@/types/core-rules";
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
@@ -527,7 +527,7 @@ export function useCharacterDerivedStats(
 			hpTemp: character.hp_temp || 0,
 			hitDiceCurrent: character.hit_dice_current || 0,
 			hitDiceMax: character.hit_dice_max || 0,
-			systemFavorCurrent: character.system_favor_current || 0,
+			riftFavorCurrent: character.rift_favor_current || 0,
 			baseSpeed: character.speed || 30,
 			equippedItems: (equipment || []).map((item) => ({
 				id: item.id,

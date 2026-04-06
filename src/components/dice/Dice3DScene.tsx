@@ -1888,7 +1888,7 @@ export function Dice3DRoller({
 				<div className="dice-overlay-panel">
 					<p className="text-xs text-muted-foreground text-center font-heading">
 						{isRolling
-							? "The System is calculating your fate..."
+							? "The Rift is calculating your fate..."
 							: "Click and drag to rotate; scroll to zoom."}
 					</p>
 				</div>

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SystemWindow } from "@/components/ui/SystemWindow";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useFeatures } from "@/hooks/useFeatures";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -187,7 +187,7 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 	};
 
 	return (
-		<SystemWindow title="LIMITED USE" compact>
+		<AscendantWindow title="LIMITED USE" compact>
 			<div className="space-y-4 pt-4">
 				{limitedFeatures.map((feature) => (
 					<div
@@ -284,6 +284,6 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 					</div>
 				))}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

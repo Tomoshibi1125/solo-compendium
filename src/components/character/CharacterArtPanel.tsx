@@ -76,7 +76,7 @@ export function CharacterArtPanel({
 						<Image className="w-4 h-4" />
 						Character Art
 					</div>
-					<Badge variant="outline">System Ascendant Style</Badge>
+					<Badge variant="outline">Rift Ascendant Style</Badge>
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
@@ -147,7 +147,7 @@ export function CharacterArtPanel({
 				{/* Art Info */}
 				{currentArt && (
 					<div className="text-xs text-muted-foreground space-y-1">
-						<p>System Ascendant themed character portrait</p>
+						<p>Rift Ascendant themed character portrait</p>
 						<p>Generated with AI art pipeline</p>
 						<p>Click Regenerate to create new art</p>
 					</div>

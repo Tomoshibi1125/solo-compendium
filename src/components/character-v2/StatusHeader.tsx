@@ -10,13 +10,13 @@ interface StatusHeaderProps {
 	initiative: number;
 	speed: number;
 	hitDice: { current: number; max: number; size: number };
-	systemFavor: { current: number; max: number; die: number };
+	riftFavor: { current: number; max: number; die: number };
 	onRollInitiative: () => void;
 	onRollHitDice: () => void;
 	onHPClick: () => void;
 	onACClick: () => void;
 	onAdjustResource: (
-		field: "hit_dice_current" | "system_favor_current",
+		field: "hit_dice_current" | "rift_favor_current",
 		delta: number,
 	) => void;
 	deathSaves: {
@@ -36,7 +36,7 @@ export function StatusHeader({
 	initiative,
 	speed,
 	hitDice,
-	systemFavor,
+	riftFavor,
 	onRollInitiative,
 	onRollHitDice,
 	onHPClick,
@@ -131,7 +131,7 @@ export function StatusHeader({
 				/>
 			</button>
 
-			{/* Resources (Hit Dice & System Favor) */}
+			{/* Resources (Hit Dice & Rift Favor) */}
 			<div className="grid grid-cols-2 gap-2 h-full">
 				<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group">
 					<div className="flex items-center gap-1.5">
@@ -180,19 +180,19 @@ export function StatusHeader({
 					<div className="flex items-center gap-1.5">
 						<button
 							type="button"
-							onClick={() => onAdjustResource("system_favor_current", -1)}
-							aria-label="Decrease System Favor"
+							onClick={() => onAdjustResource("rift_favor_current", -1)}
+							aria-label="Decrease Rift Favor"
 							className="p-1 hover:bg-primary/10 rounded transition-colors"
 						>
 							<Minus className="w-3 h-3 text-primary/40" />
 						</button>
 						<span className="text-sm font-bold text-white">
-							{systemFavor.current}/{systemFavor.max}
+							{riftFavor.current}/{riftFavor.max}
 						</span>
 						<button
 							type="button"
-							onClick={() => onAdjustResource("system_favor_current", 1)}
-							aria-label="Increase System Favor"
+							onClick={() => onAdjustResource("rift_favor_current", 1)}
+							aria-label="Increase Rift Favor"
 							className="p-1 hover:bg-primary/10 rounded transition-colors"
 						>
 							<Plus className="w-3 h-3 text-primary/40" />
@@ -201,7 +201,7 @@ export function StatusHeader({
 					<span className="text-[8px] text-primary/50 uppercase truncate">
 						FAVOR
 					</span>
-					<span className="text-[9px] text-primary/40">d{systemFavor.die}</span>
+					<span className="text-[9px] text-primary/40">d{riftFavor.die}</span>
 				</div>
 			</div>
 

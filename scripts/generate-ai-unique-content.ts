@@ -12,9 +12,18 @@ if (!API_KEY) {
 
 const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
+interface CompendiumEntry {
+	id: string;
+	name: string;
+	description: string;
+	lore?: string;
+	flavor?: string;
+	mechanics?: { system_interaction?: string; [k: string]: string | undefined };
+}
+
 function arrayToTypeScriptExport(
 	arrayName: string,
-	data: any[],
+	data: CompendiumEntry[],
 	headerDocs: string,
 ) {
 	const jsonStr = JSON.stringify(data, null, "\t").replace(
@@ -25,9 +34,9 @@ function arrayToTypeScriptExport(
 }
 
 async function generateUniqueContent(
-	batch: any[],
+	batch: CompendiumEntry[],
 	type: string,
-): Promise<any[]> {
+): Promise<CompendiumEntry[]> {
 	const minifiedInput = batch.map((b) => ({
 		id: b.id,
 		name: b.name,
@@ -94,8 +103,11 @@ ${JSON.stringify(minifiedInput)}
 				batch[i].lore = aiData.lore || batch[i].lore;
 				batch[i].flavor = aiData.flavor || batch[i].flavor;
 				if (aiData.system) {
-					batch[i].mechanics = batch[i].mechanics || {};
-					batch[i].mechanics.system_interaction = aiData.system;
+					const entry = batch[i];
+					if (entry) {
+						entry.mechanics = entry.mechanics || {};
+						entry.mechanics.system_interaction = aiData.system;
+					}
 				}
 			}
 		}
@@ -115,7 +127,7 @@ async function processFile(
 	const absolutePath = path.resolve(process.cwd(), filePath);
 	console.log(`\nImporting ${absolutePath}...`);
 
-	let dataModule;
+	let dataModule: Record<string, CompendiumEntry[]>;
 	try {
 		dataModule = await import(`file:///${absolutePath.replace(/\\/g, "/")}`);
 	} catch (e) {

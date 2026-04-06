@@ -1,5 +1,5 @@
 // Comprehensive Tokens Compendium
-// System Ascendant themed character tokens with images
+// Rift Ascendant themed character tokens with images
 
 export interface Token {
 	id: string;

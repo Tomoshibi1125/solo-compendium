@@ -17,7 +17,7 @@ export interface Notification {
 	read: boolean;
 	createdAt: number;
 	expiresAt?: number;
-	category?: string; // e.g., 'character', 'campaign', 'system'
+	category?: string; // e.g., 'character', 'campaign', 'rift'
 }
 
 const STORAGE_KEY = "solo-compendium-notifications";

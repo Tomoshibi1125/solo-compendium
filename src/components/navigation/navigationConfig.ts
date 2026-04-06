@@ -83,7 +83,7 @@ export const navigationConfig: NavItemConfig[] = [
 			},
 			{
 				title: "Warden Tools",
-				href: "/warden-protocols",
+				href: "/warden-directives",
 				description: "Master the rifts with Warden tools.",
 				icon: Shield,
 			},

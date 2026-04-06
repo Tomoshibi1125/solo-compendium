@@ -16,7 +16,7 @@ export async function autoLearnRunes(
 	if (!runeIds && character) {
 		// Logic to determine runes based on character level/job
 		console.log(
-			`[Protocol Warden] Calculating auto-learned runes for Level ${character.level} ${String(character.job)}`,
+			`[Warden] Calculating auto-learned runes for Level ${character.level} ${String(character.job)}`,
 		);
 		return [];
 	}
@@ -295,7 +295,7 @@ export function applyRuneBonuses(
 }
 
 // ---------------------------------------------------------------------------
-// System Ascendant Rune Absorption — cross-type resolution
+// Rift Ascendant Rune Absorption — cross-type resolution
 // ---------------------------------------------------------------------------
 
 const FULL_CASTERS = [

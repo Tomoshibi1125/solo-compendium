@@ -1,12 +1,12 @@
 import type React from "react";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { ABILITY_NAMES, type AbilityScore } from "@/types/system-rules";
+import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
 
 interface AttributesStepProps {
 	abilityMethod: "standard" | "point-buy" | "manual";
@@ -70,7 +70,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-			<SystemWindow title="MODEL CALIBRATION: ATTRIBUTE ALLOCATION">
+			<AscendantWindow title="MODEL CALIBRATION: ATTRIBUTE ALLOCATION">
 				<div className="space-y-6">
 					<div className="flex flex-wrap gap-2">
 						<Button
@@ -160,10 +160,10 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 									))}
 								</div>
 							)}
-							<SystemText className="block text-[10px] text-muted-foreground italic">
+							<AscendantText className="block text-[10px] text-muted-foreground italic">
 								Allocate manual entries or roll to generate raw data packets.
 								Then assign to primary attributes below.
-							</SystemText>
+							</AscendantText>
 						</div>
 					)}
 
@@ -232,7 +232,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 						})}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

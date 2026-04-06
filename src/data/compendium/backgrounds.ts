@@ -2,14 +2,14 @@
 // Extracted from internal compendium data pack
 // This is the authoritative source for backgrounds data - FULL ADMIN PRIVILEGES INTEGRATION
 // Generated on: 2026-01-13T22:03:39.609Z
-// 22 Backgrounds from System Ascendant Canon
+// 22 Backgrounds from Rift Ascendant Canon
 
 export interface Background {
 	id: string;
 	name: string;
 	type: string;
 	rank: "D" | "C" | "B" | "A" | "S";
-	// System Ascendant background features
+	// Rift Ascendant background features
 	skill_proficiencies: string[];
 	toolProficiencies?: string[];
 	languages?: string[];
@@ -22,7 +22,7 @@ export interface Background {
 	ideals?: string[];
 	bonds?: string[];
 	flaws?: string[];
-	// System Ascendant specific
+	// Rift Ascendant specific
 	image: string;
 	description: string;
 	dangers: string[];
@@ -81,7 +81,7 @@ export const backgrounds = [
 		ideals: [
 			"Efficiency. Success is measured in extraction time and resource gain. (Neutral)",
 			"Sovereignty. No one should control the gates but those who clear them. (Chaotic)",
-			"Power. The System rewards those with the will to take it. (Evil)",
+			"Power. The Rift rewards those with the will to take it. (Evil)",
 			"Discovery. I am driven to find the source of the Great Cataclysm. (Neutral)",
 		],
 		bonds: [
@@ -111,7 +111,7 @@ export const backgrounds = [
 			"Aetheric Affinity",
 			"Essence Discernment",
 		],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-survivor",
@@ -173,7 +173,7 @@ export const backgrounds = [
 			"Survivor's Guilt",
 		],
 		image: "/generated/compendium/backgrounds/gate-survivor.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "ascendant-academy-graduate",
@@ -235,7 +235,7 @@ export const backgrounds = [
 			"Standardized Thinking",
 		],
 		image: "/generated/compendium/backgrounds/ascendant-academy-graduate.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "guild-master",
@@ -297,7 +297,7 @@ export const backgrounds = [
 			"Reputation Risks",
 		],
 		image: "/generated/compendium/backgrounds/guild-master.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "rift-scout",
@@ -359,7 +359,7 @@ export const backgrounds = [
 			"Memory Fragmentation",
 		],
 		image: "/generated/compendium/backgrounds/rift-scout.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "aetheric-pulse",
@@ -391,20 +391,20 @@ export const backgrounds = [
 		personalityTraits: [
 			"My pupils pulse with faint blue light when I'm near high concentrations of aether.",
 			"I instinctively touch objects to judge their essence-resonance.",
-			"I speak about the System as though it were a living, breathing machine.",
-			"I am deeply uncomfortable in the dead-zones where the System's presence is weak.",
+			"I speak about the Rift as though it were a living, breathing machine.",
+			"I am deeply uncomfortable in the dead-zones where the Rift's presence is weak.",
 		],
 		ideals: [
 			"Harmony. Aether is the lifeblood of the new world; we must respect its flow. (Good)",
 			"Control. Raw power is a curse without the discipline to focus it. (Lawful)",
-			"Freedom. The System should be accessible to all, not just the elite guilds. (Chaotic)",
+			"Freedom. The Rift should be accessible to all, not just the elite guilds. (Chaotic)",
 			"Ascension. I was awakened for a purpose, and I will fulfill it. (Neutral)",
 		],
 		bonds: [
 			"I lost my twin during our simultaneous awakening; I feel our resonance is still linked.",
 			"A high-rank researcher helped me stabilize my pulse; I owe them my life.",
 			"Special-interest guilds want to harvest my essence; I must stay ahead of them.",
-			"The source of my frequency holds the truth of the System's arrival.",
+			"The source of my frequency holds the truth of the Rift's arrival.",
 		],
 		flaws: [
 			"I lose fine motor control when my resonance is too high.",
@@ -413,7 +413,7 @@ export const backgrounds = [
 			"I disregard conventional technology, trusting only the aether's logic.",
 		],
 		description:
-			"You are an 'Aetheric Pulse'—one of the rare modern individuals whose body awakened with an exceptionally high resonance frequency. Without any formal training, the System's power flows through you like an electric current. You weren't a mage in a fantasy realm; you were a student, a gamer, or a clerk whose biology was rewritten by the cataclysm.",
+			"You are an 'Aetheric Pulse'—one of the rare modern individuals whose body awakened with an exceptionally high resonance frequency. Without any formal training, the Rift's power flows through you like an electric current. You weren't a mage in a fantasy realm; you were a student, a gamer, or a clerk whose biology was rewritten by the cataclysm.",
 		dangers: [
 			"Resonance Overload",
 			"Guild Kidnapping",
@@ -421,7 +421,7 @@ export const backgrounds = [
 			"Essence Burnout",
 		],
 		image: "/generated/compendium/backgrounds/aetheric-pulse.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "regent-chosen",
@@ -447,13 +447,13 @@ export const backgrounds = [
 			{
 				name: "Umbral Whisper",
 				description:
-					"Once per long rest, you can receive a Directives-flash—a cryptic sensation or vision from your Regent's domain. The Protocol Warden (PW) determines if this is a warning or an order.",
+					"Once per long rest, you can receive a Directives-flash—a cryptic sensation or vision from your Regent's domain. The Warden (Warden) determines if this is a warning or an order.",
 			},
 		],
 		personalityTraits: [
 			"I speak of my Regent as a force of nature, beyond human morality.",
 			"I carry a burden of absolute confidence that borders on the divine.",
-			"I test the 'spirit' of those I meet to see if they are worthy of the System's gaze.",
+			"I test the 'spirit' of those I meet to see if they are worthy of the Rift's gaze.",
 			"I am haunted by the scale of the world my Regent inhabits.",
 		],
 		ideals: [
@@ -483,7 +483,7 @@ export const backgrounds = [
 			"Obligation Branding",
 		],
 		image: "/generated/compendium/backgrounds/regents-chosen.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "guardian-legionnaire",
@@ -545,7 +545,7 @@ export const backgrounds = [
 			"System Desync",
 		],
 		image: "/generated/compendium/backgrounds/guardian-legionnaire.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-inscriber",
@@ -584,7 +584,7 @@ export const backgrounds = [
 			"Preservation. System-knowledge must be archived for the future. (Lawful)",
 			"Discovery. Ancient Decrees hold secrets that could stabilize the gates. (Neutral)",
 			"Access. Knowledge should be available to every Awakened soul. (Good)",
-			"Optimization. I will craft codes more efficient than the System itself. (Any)",
+			"Optimization. I will craft codes more efficient than the Rift itself. (Any)",
 		],
 		bonds: [
 			"I am searching for a legendary Decree said to grant dominion over a Gate-Lord's domain.",
@@ -607,7 +607,7 @@ export const backgrounds = [
 			"Code Addiction",
 		],
 		image: "/generated/compendium/backgrounds/system-inscriber.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "vault-warden",
@@ -669,7 +669,7 @@ export const backgrounds = [
 			"Signature Bonding",
 		],
 		image: "/generated/compendium/backgrounds/vault-warden.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "breach-tactician",
@@ -723,7 +723,7 @@ export const backgrounds = [
 			"The adrenaline of the breach has become my only focus.",
 		],
 		description:
-			"You are an Elite Breach-Tactician—a specialist who has successfully cleared high-rank gates and survived encounters with the Regents' generals. You weren't a medieval dragon slayer; you were a veteran hunter, a tactical lead, or a breach-specialist whose name is synonymous with survival. You know where to hit, when the System pulses, and how to use a Gate's own logic to bring it down.",
+			"You are an Elite Breach-Tactician—a specialist who has successfully cleared high-rank gates and survived encounters with the Regents' generals. You weren't a medieval dragon slayer; you were a veteran hunter, a tactical lead, or a breach-specialist whose name is synonymous with survival. You know where to hit, when the Rift pulses, and how to use a Gate's own logic to bring it down.",
 		dangers: [
 			"Target Assignment",
 			"Guild Espionage",
@@ -731,7 +731,7 @@ export const backgrounds = [
 			"Logic Overload",
 		],
 		image: "/generated/compendium/backgrounds/breach-tactician.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "occult-investigator",
@@ -752,7 +752,7 @@ export const backgrounds = [
 			{
 				name: "Umbral Lore",
 				description:
-					"You can identify umbral-beast types by their aether-residue, audio-prints, or the distortion they leave in the System. You have advantage on Intelligence checks related to spectral entities and Regent-servants.",
+					"You can identify umbral-beast types by their aether-residue, audio-prints, or the distortion they leave in the Rift. You have advantage on Intelligence checks related to spectral entities and Regent-servants.",
 			},
 			{
 				name: "Detection Mandate",
@@ -767,7 +767,7 @@ export const backgrounds = [
 			"I speak bluntly about the darkness—I've seen too much to play at hope.",
 		],
 		ideals: [
-			"Purification. The System-taint must be removed from our cities. (Good)",
+			"Purification. The Rift-taint must be removed from our cities. (Good)",
 			"Vigilance. The abyss never sleeps; its servants stay in our shadows. (Lawful)",
 			"Knowledge. Understanding the Anomaly is the first step to deleting it. (Neutral)",
 			"Vengeance. The Regents took my city; I will take their secrets. (Chaotic)",
@@ -785,7 +785,7 @@ export const backgrounds = [
 			"I struggle to trust other hunters, fearing they might be Regent-hollows.",
 		],
 		description:
-			"You are an Occult Investigator—a modern professional who specializes in hunting the things the System doesn't want you to see. You weren't a priest or a monk; you were a detective, a private investigator, or a tech-analyst whose awakening gave you the eyes to see the ghosts in the machine. You know how to track an umbral-beat, how to ward a modern apartment, and how to survive when the shadows start moving.",
+			"You are an Occult Investigator—a modern professional who specializes in hunting the things the Rift doesn't want you to see. You weren't a priest or a monk; you were a detective, a private investigator, or a tech-analyst whose awakening gave you the eyes to see the ghosts in the machine. You know how to track an umbral-beat, how to ward a modern apartment, and how to survive when the shadows start moving.",
 		dangers: [
 			"Spectral Retribution",
 			"Signature Erosion",
@@ -793,7 +793,7 @@ export const backgrounds = [
 			"Mental Corruption",
 		],
 		image: "/generated/compendium/backgrounds/occult-investigator.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "echo-synchronizer",
@@ -814,7 +814,7 @@ export const backgrounds = [
 			{
 				name: "Echo-Sense",
 				description:
-					"You can feel the ghosting of the System's timeline. You have advantage on Initiative rolls and cannot be surprised as long as you are conscious. You can perceive 'Echoes' of past and future breaches within a 60-foot radius.",
+					"You can feel the ghosting of the Rift's timeline. You have advantage on Initiative rolls and cannot be surprised as long as you are conscious. You can perceive 'Echoes' of past and future breaches within a 60-foot radius.",
 			},
 			{
 				name: "Temporal Buffer",
@@ -832,7 +832,7 @@ export const backgrounds = [
 			"Calibration. The timeline must be stabilized for the sake of the future. (Lawful)",
 			"Presence. All that matters is the Now; everything else is just data. (Neutral)",
 			"Warning. I will prevent the breaches I have already seen. (Good)",
-			"Causality. The System's logic is the only destiny I accept. (Any)",
+			"Causality. The Rift's logic is the only destiny I accept. (Any)",
 		],
 		bonds: [
 			"I am trying to find the specific temporal-gate that displaced me.",
@@ -847,7 +847,7 @@ export const backgrounds = [
 			"I ignore current risks because I'm focused on potential futures.",
 		],
 		description:
-			"You are an Echo-Synchronizer—one of the few modern people who survived a temporal-distortion gate. You weren't a time traveler in a fantasy ship; you were a regular person who got caught in a glitching rift and came back 'wrong'. You the see the ghosts of the System's calculations, giving you a terrifying edge in combat but leaving you forever out of sync with the world you are trying to save.",
+			"You are an Echo-Synchronizer—one of the few modern people who survived a temporal-distortion gate. You weren't a time traveler in a fantasy ship; you were a regular person who got caught in a glitching rift and came back 'wrong'. You the see the ghosts of the Rift's calculations, giving you a terrifying edge in combat but leaving you forever out of sync with the world you are trying to save.",
 		dangers: [
 			"Timeline Erosion",
 			"Echo Overlap",
@@ -855,7 +855,7 @@ export const backgrounds = [
 			"Reality Rejection",
 		],
 		image: "/generated/compendium/backgrounds/echo-synchronizer.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "reality-bender",
@@ -917,7 +917,7 @@ export const backgrounds = [
 			"Void Addiction",
 		],
 		image: "/generated/compendium/backgrounds/reality-bender.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "void-touched",
@@ -979,7 +979,7 @@ export const backgrounds = [
 			"Void Addiction",
 		],
 		image: "/generated/compendium/backgrounds/void-touched.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "star-born",
@@ -1041,7 +1041,7 @@ export const backgrounds = [
 			"Star Sickness",
 		],
 		image: "/generated/compendium/backgrounds/star-born.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "ancient-guardian",
@@ -1067,7 +1067,7 @@ export const backgrounds = [
 			{
 				name: "Timeless Lore",
 				description:
-					"You have advantage on Intelligence (History) checks, and when you encounter ancient ruins, artifacts, or inscriptions, the Decree Warden (PW) may provide you with additional information about their origin and purpose.",
+					"You have advantage on Intelligence (History) checks, and when you encounter ancient ruins, artifacts, or inscriptions, the Decree Warden (Warden) may provide you with additional information about their origin and purpose.",
 			},
 		],
 		personalityTraits: [
@@ -1103,7 +1103,7 @@ export const backgrounds = [
 			"Power Isolation",
 		],
 		image: "/generated/compendium/backgrounds/ancient-guardian.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "forgotten-king",
@@ -1165,7 +1165,7 @@ export const backgrounds = [
 			"Power Isolation",
 		],
 		image: "/generated/compendium/backgrounds/forgotten-king.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "champion-of-light",
@@ -1227,7 +1227,7 @@ export const backgrounds = [
 			"Target Status",
 		],
 		image: "/generated/compendium/backgrounds/champion-of-light.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "bringer-of-dawn",
@@ -1281,7 +1281,7 @@ export const backgrounds = [
 			"I am terrified of the dark and what it represents.",
 		],
 		description:
-			"You are a beacon of hope in a world increasingly consumed by umbral and dimensional horror. Whether through song, story, healing, or simply your unwavering presence, you bring light to dark places and courage to the despairing. The System may have given humanity power, but you remind them why that power is worth wielding.",
+			"You are a beacon of hope in a world increasingly consumed by umbral and dimensional horror. Whether through song, story, healing, or simply your unwavering presence, you bring light to dark places and courage to the despairing. The Rift may have given humanity power, but you remind them why that power is worth wielding.",
 		dangers: [
 			"Isolation",
 			"Information Overload",
@@ -1289,7 +1289,7 @@ export const backgrounds = [
 			"Memory Burden",
 		],
 		image: "/generated/compendium/backgrounds/bringer-of-dawn.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "eternal-watcher",
@@ -1351,7 +1351,7 @@ export const backgrounds = [
 			"Loneliness",
 		],
 		image: "/generated/compendium/backgrounds/eternal-watcher.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "cosmic-wanderer",
@@ -1413,7 +1413,7 @@ export const backgrounds = [
 			"Dimensional Sickness",
 		],
 		image: "/generated/compendium/backgrounds/cosmic-wanderer.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// ── MODERN-DAY BACKGROUNDS ───────────────────────────────────────────
@@ -1469,7 +1469,7 @@ export const backgrounds = [
 			"I overshare everything online and have no concept of operational security.",
 		],
 		description:
-			"Before the System chose you, you were already famous—or at least internet-famous. Your live streams, reaction videos, or documentary content had built an audience of thousands, maybe millions. When gates started opening and ascendants started awakening, you pointed your camera at the chaos and never looked away. Now that you've awakened yourself, your audience watches your ascension in real time.",
+			"Before the Rift chose you, you were already famous—or at least internet-famous. Your live streams, reaction videos, or documentary content had built an audience of thousands, maybe millions. When gates started opening and ascendants started awakening, you pointed your camera at the chaos and never looked away. Now that you've awakened yourself, your audience watches your ascension in real time.",
 		dangers: [
 			"Doxxing",
 			"Corporate Exploitation",
@@ -1477,7 +1477,7 @@ export const backgrounds = [
 			"Content Addiction",
 		],
 		image: "/generated/compendium/backgrounds/viral-streamer.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "kpop-idol",
@@ -1531,7 +1531,7 @@ export const backgrounds = [
 			"Years of strict dieting have left me with a complicated relationship with food and rest.",
 		],
 		description:
-			"You were one of the brightest stars in the entertainment industry—a trained performer whose face graced billboards, whose songs topped charts, and whose every movement was choreographed to perfection. Then the System awakened you, and suddenly your stage presence became something far more dangerous. Your fans now watch you fight Anomalies instead of performing, and somehow, you make even that look beautiful.",
+			"You were one of the brightest stars in the entertainment industry—a trained performer whose face graced billboards, whose songs topped charts, and whose every movement was choreographed to perfection. Then the Rift awakened you, and suddenly your stage presence became something far more dangerous. Your fans now watch you fight Anomalies instead of performing, and somehow, you make even that look beautiful.",
 		dangers: [
 			"Paparazzi Exposure",
 			"Agency Debt",
@@ -1539,7 +1539,7 @@ export const backgrounds = [
 			"Identity Crisis",
 		],
 		image: "/generated/compendium/backgrounds/kpop-idol.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "movie-star",
@@ -1593,7 +1593,7 @@ export const backgrounds = [
 			"I can't resist a dramatic entrance, even when stealth is critical.",
 		],
 		description:
-			"Hollywood royalty, box office gold, the face that launched a thousand franchises—that was your life before the gates. You had everything: mansions, private jets, adoring fans. Then the System chose you, and suddenly the action scenes weren't choreographed anymore. The Anomalies were real. The stakes were real. And for the first time in your career, no one was going to yell 'cut.'",
+			"Hollywood royalty, box office gold, the face that launched a thousand franchises—that was your life before the gates. You had everything: mansions, private jets, adoring fans. Then the Rift chose you, and suddenly the action scenes weren't choreographed anymore. The Anomalies were real. The stakes were real. And for the first time in your career, no one was going to yell 'cut.'",
 		dangers: [
 			"Tabloid Exposure",
 			"Stalker Fans",
@@ -1601,7 +1601,7 @@ export const backgrounds = [
 			"Reality Dissociation",
 		],
 		image: "/generated/compendium/backgrounds/movie-star.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "pro-athlete",
@@ -1655,7 +1655,7 @@ export const backgrounds = [
 			"I have a massive ego that makes cooperation with equals difficult.",
 		],
 		description:
-			"You were at the top of your game—a professional athlete whose name was synonymous with peak human performance. Your body was a finely tuned instrument, honed through years of brutal training and competition. When the System awakened you, it took that foundation and built something superhuman on top of it. Now you compete on a very different field, where the losers don't go home—they don't go anywhere at all.",
+			"You were at the top of your game—a professional athlete whose name was synonymous with peak human performance. Your body was a finely tuned instrument, honed through years of brutal training and competition. When the Rift awakened you, it took that foundation and built something superhuman on top of it. Now you compete on a very different field, where the losers don't go home—they don't go anywhere at all.",
 		dangers: [
 			"Career-Ending Injury",
 			"Performance-Enhancing Temptation",
@@ -1663,7 +1663,7 @@ export const backgrounds = [
 			"Burnout",
 		],
 		image: "/generated/compendium/backgrounds/pro-athlete.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "corporate-executive",
@@ -1701,7 +1701,7 @@ export const backgrounds = [
 		ideals: [
 			"Order. Systems and hierarchies exist for a reason—they create efficiency. (Lawful)",
 			"Ambition. Power flows to those who seize it. I intend to be at the top. (Neutral)",
-			"Innovation. The old world is dying. The System is the future, and I will shape it. (Any)",
+			"Innovation. The old world is dying. The Rift is the future, and I will shape it. (Any)",
 			"Responsibility. With great power comes great fiduciary responsibility to stakeholders. (Lawful)",
 		],
 		bonds: [
@@ -1717,7 +1717,7 @@ export const backgrounds = [
 			"I look down on people who lack ambition or education.",
 		],
 		description:
-			"Corner office, seven-figure salary, a name that made markets move—you were a titan of industry before the gates changed everything. You managed portfolios worth more than some countries' GDP and made decisions that affected millions. When the System awakened you, you treated it like any other hostile takeover: assess, strategize, dominate. The boardroom prepared you for battle better than anyone expected.",
+			"Corner office, seven-figure salary, a name that made markets move—you were a titan of industry before the gates changed everything. You managed portfolios worth more than some countries' GDP and made decisions that affected millions. When the Rift awakened you, you treated it like any other hostile takeover: assess, strategize, dominate. The boardroom prepared you for battle better than anyone expected.",
 		dangers: [
 			"Corporate Espionage",
 			"Hostile Takeover",
@@ -1725,7 +1725,7 @@ export const backgrounds = [
 			"Moral Compromise",
 		],
 		image: "/generated/compendium/backgrounds/corporate-executive.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "underground-hacker",
@@ -1769,7 +1769,7 @@ export const backgrounds = [
 		bonds: [
 			"My hacker collective was targeted by a ascendant guild for exposing their corruption.",
 			"I found something in the Ascendant Association's classified servers that terrified me.",
-			"The System's code structure reminds me of something I've seen before, and I need to find the connection.",
+			"The Rift's code structure reminds me of something I've seen before, and I need to find the connection.",
 			"A fellow hacker was forcibly recruited by a umbral organization—I'm going to get them out.",
 		],
 		flaws: [
@@ -1779,7 +1779,7 @@ export const backgrounds = [
 			"I've spent so long online that I have serious difficulty with face-to-face social interaction.",
 		],
 		description:
-			"In the digital umbrals, you were a ghost—a phantom who moved through firewalls like they were tissue paper. Governments feared your keystrokes, corporations trembled at your handle. When the System awakened you, you realized that reality itself was just another system to hack. The code that underlies gates, essence, and ascension looks hauntingly familiar to someone who's spent their whole life reading between the lines of code.",
+			"In the digital umbrals, you were a ghost—a phantom who moved through firewalls like they were tissue paper. Governments feared your keystrokes, corporations trembled at your handle. When the Rift awakened you, you realized that reality itself was just another system to hack. The code that underlies gates, essence, and ascension looks hauntingly familiar to someone who's spent their whole life reading between the lines of code.",
 		dangers: [
 			"Government Surveillance",
 			"Cyberattack Retaliation",
@@ -1787,7 +1787,7 @@ export const backgrounds = [
 			"Identity Erasure",
 		],
 		image: "/generated/compendium/backgrounds/underground-hacker.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "social-media-influencer",
@@ -1841,7 +1841,7 @@ export const backgrounds = [
 			"I present a perfect life online but I'm deeply insecure underneath it all.",
 		],
 		description:
-			"Likes, shares, followers, brand deals—that was your world. You built an empire of content, turning your personality into a product and your life into a performance. When the System chose you, your audience exploded overnight. Millions now watch an influencer fight actual Anomalies, and the engagement has never been better. But behind the filters and the curated feeds, you're starting to realize that the person your followers love might not be the person you actually are.",
+			"Likes, shares, followers, brand deals—that was your world. You built an empire of content, turning your personality into a product and your life into a performance. When the Rift chose you, your audience exploded overnight. Millions now watch an influencer fight actual Anomalies, and the engagement has never been better. But behind the filters and the curated feeds, you're starting to realize that the person your followers love might not be the person you actually are.",
 		dangers: [
 			"Cancel Culture",
 			"Brand Dependency",
@@ -1849,7 +1849,7 @@ export const backgrounds = [
 			"Doxxing",
 		],
 		image: "/generated/compendium/backgrounds/social-media-influencer.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "Rift-Leagues-champion",
@@ -1903,7 +1903,7 @@ export const backgrounds = [
 			"I've spent so many years indoors that I'm physically underdeveloped compared to other ascendants.",
 		],
 		description:
-			"You were the best—or close to it. Your reflexes were measured in milliseconds, your strategic thinking could dismantle world-class teams, and your name was known in every gaming community on the planet. When the System awakened you, it was like the ultimate game had finally begun. The Aether-Sight, the stats, the skill trees—it all felt terrifyingly familiar. As if the games you'd been playing your whole life were just training grounds for this moment.",
+			"You were the best—or close to it. Your reflexes were measured in milliseconds, your strategic thinking could dismantle world-class teams, and your name was known in every gaming community on the planet. When the Rift awakened you, it was like the ultimate game had finally begun. The Aether-Sight, the stats, the skill trees—it all felt terrifyingly familiar. As if the games you'd been playing your whole life were just training grounds for this moment.",
 		dangers: [
 			"Overconfidence",
 			"Gaming Addiction Relapse",
@@ -1911,6 +1911,6 @@ export const backgrounds = [
 			"Toxic Behavior",
 		],
 		image: "/generated/compendium/backgrounds/Rift-Leagues-champion.webp",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 ];

@@ -1,18 +1,18 @@
 import { ArrowRight, Shield, Sword, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
 import { Button } from "@/components/ui/button";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import EnhancedCard from "@/components/ui/EnhancedCard";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { RiftManifestation } from "@/components/ui/RiftManifestation";
 import { RiftStatusIndicator } from "@/components/ui/RiftStatusIndicator";
 import { SovereignAuthorityDisplay } from "@/components/ui/SovereignAuthorityDisplay";
-import { SystemHologram } from "@/components/ui/SystemHologram";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
 import { useAuth } from "@/lib/auth/authContext";
 
 const Landing = () => {
@@ -22,7 +22,7 @@ const Landing = () => {
 
 	const handleEnterSystem = () => {
 		if (user) {
-			navigate(user.role === "warden" ? "/warden-protocols" : "/player-tools");
+			navigate(user.role === "warden" ? "/warden-directives" : "/player-tools");
 		} else {
 			navigate("/login");
 		}
@@ -41,15 +41,15 @@ const Landing = () => {
 			{isInitializing && (
 				<div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
 					<div className="absolute inset-0 bg-[linear-gradient(rgba(155,109,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(155,109,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
-					<div className="relative z-10 font-system tracking-widest text-primary drop-shadow-[0_0_10px_currentColor] animate-pulse">
-						<SystemHeading
+					<div className="relative z-10 font-heading tracking-widest text-primary drop-shadow-[0_0_10px_currentColor] animate-pulse">
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="mb-4 text-center"
 						>
 							System Integration
-						</SystemHeading>
+						</RiftHeading>
 						<div className="h-1 w-64 bg-primary/20 rounded-full overflow-hidden border border-primary/40 relative">
 							<div className="absolute top-0 bottom-0 left-0 bg-primary sa-progress-bar-animated w-full" />
 						</div>
@@ -72,31 +72,35 @@ const Landing = () => {
 				<section className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-10 lg:flex-row lg:items-center">
 					<div className="flex-1">
 						<div className="mb-6">
-							<DataStreamText
-								variant="system"
+							<ManaFlowText
+								variant="rift"
 								speed="slow"
 								className="text-sm uppercase tracking-[0.3em] opacity-80"
 							>
 								System status: online
-							</DataStreamText>
+							</ManaFlowText>
 						</div>
-						<SystemHeading
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="leading-tight"
 						>
-							The System awaits your command.
-						</SystemHeading>
-						<SystemText variant="body" size="lg" className="mt-4 text-gray-300">
-							Access the complete System Ascendant compendium. Manage
-							ascendants, explore rifts, and master the shadows.
-						</SystemText>
+							The Rift awaits your command.
+						</RiftHeading>
+						<AscendantText
+							variant="body"
+							size="lg"
+							className="mt-4 text-gray-300"
+						>
+							Access the complete Rift Ascendant compendium. Manage ascendants,
+							explore rifts, and master the shadows.
+						</AscendantText>
 						<div className="mt-8 flex flex-col gap-4 sm:flex-row">
 							<Button
 								variant="resurge"
 								size="lg"
-								className="font-system tracking-widest uppercase font-bold text-base h-12 hover:shadow-[0_0_40px_hsl(var(--resurge-violet)/0.8)] shadow-[0_0_15px_hsl(var(--resurge-violet)/0.4)]"
+								className="font-heading tracking-widest uppercase font-bold text-base h-12 hover:shadow-[0_0_40px_hsl(var(--resurge-violet)/0.8)] shadow-[0_0_15px_hsl(var(--resurge-violet)/0.4)]"
 								onClick={handleEnterSystem}
 							>
 								Enter System
@@ -106,7 +110,7 @@ const Landing = () => {
 								<Button
 									variant="outline"
 									size="lg"
-									className="h-12 border-primary/50 text-accent font-system uppercase tracking-wider backdrop-blur-sm hover:bg-primary/20 hover:text-white shadow-[inset_0_0_10px_hsl(var(--primary)/0.2)]"
+									className="h-12 border-primary/50 text-accent font-heading uppercase tracking-wider backdrop-blur-sm hover:bg-primary/20 hover:text-white shadow-[inset_0_0_10px_hsl(var(--primary)/0.2)]"
 								>
 									Browse Compendium
 								</Button>
@@ -116,7 +120,7 @@ const Landing = () => {
 					<div className="flex-1">
 						<div className="relative">
 							{/* System Hologram Display */}
-							<SystemHologram
+							<RiftManifestation
 								variant="default"
 								title="SYSTEM CORE"
 								className="mb-8 relative shadow-[0_0_50px_hsl(var(--accent)/0.1)] group"
@@ -124,55 +128,55 @@ const Landing = () => {
 								<div className="absolute -inset-1 bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
 								<div className="space-y-4 font-mono">
 									<div className="flex justify-between items-center border-b border-primary/20 pb-2">
-										<SystemText
-											variant="system"
+										<AscendantText
+											variant="rift"
 											size="sm"
 											className="uppercase tracking-widest text-primary/70"
 										>
 											Rift Stability
-										</SystemText>
-										<SystemText
+										</AscendantText>
+										<AscendantText
 											variant="gate"
 											size="sm"
 											className="font-bold drop-shadow-[0_0_5px_currentColor]"
 										>
 											98.7%
-										</SystemText>
+										</AscendantText>
 									</div>
 									<div className="flex justify-between items-center border-b border-primary/20 pb-2">
-										<SystemText
-											variant="system"
+										<AscendantText
+											variant="rift"
 											size="sm"
 											className="uppercase tracking-widest text-primary/70"
 										>
 											Authority Level
-										</SystemText>
-										<SystemText
+										</AscendantText>
+										<AscendantText
 											variant="sovereign"
 											size="sm"
-											className="font-system font-bold tracking-widest drop-shadow-[0_0_8px_currentColor]"
+											className="font-heading font-bold tracking-widest drop-shadow-[0_0_8px_currentColor]"
 										>
 											SOVEREIGN
-										</SystemText>
+										</AscendantText>
 									</div>
 									<div className="flex justify-between items-center border-b border-primary/20 pb-2">
-										<SystemText
-											variant="system"
+										<AscendantText
+											variant="rift"
 											size="sm"
 											className="uppercase tracking-widest text-primary/70"
 										>
 											Active Ascendants
-										</SystemText>
-										<SystemText
+										</AscendantText>
+										<AscendantText
 											variant="rift"
 											size="sm"
 											className="font-bold drop-shadow-[0_0_5px_currentColor]"
 										>
 											1,247
-										</SystemText>
+										</AscendantText>
 									</div>
 								</div>
-							</SystemHologram>
+							</RiftManifestation>
 
 							{/* Enhanced Image Display */}
 							<div className="relative">
@@ -193,7 +197,7 @@ const Landing = () => {
 						<EnhancedCard
 							variant="gate"
 							title="3,218+ Assets"
-							description="Complete System Ascendant compendium with Anomalies, items, spells, and more."
+							description="Complete Rift Ascendant compendium with Anomalies, items, spells, and more."
 							icon={<Sword className="h-6 w-6" />}
 							interactive
 							onClick={() => navigate("/compendium")}
@@ -223,25 +227,25 @@ const Landing = () => {
 				{/* Sovereign Authority Showcase */}
 				<section className="mx-auto max-w-6xl px-6 pb-16">
 					<div className="text-center mb-12">
-						<SystemHeading level={2} variant="sovereign" dimensional>
+						<RiftHeading level={2} variant="sovereign" dimensional>
 							Ascendant Protocol: Active
-						</SystemHeading>
-						<SystemText
+						</RiftHeading>
+						<AscendantText
 							variant="body"
 							size="lg"
 							className="mt-4 text-gray-300 max-w-2xl mx-auto"
 						>
 							Ascend to sovereignty, master dimensional rifts, and command the
-							shadows. The System awaits those worthy of dominion.
-						</SystemText>
+							shadows. The Rift awaits those worthy of dominion.
+						</AscendantText>
 					</div>
 
 					<div className="grid gap-8 lg:grid-cols-2">
 						{/* Rift Status Display */}
 						<div className="space-y-4">
-							<SystemHeading level={3} variant="gate" className="text-center">
+							<RiftHeading level={3} variant="gate" className="text-center">
 								Dimensional Control
-							</SystemHeading>
+							</RiftHeading>
 							<RiftStatusIndicator
 								stability={87}
 								tier="s"
@@ -258,13 +262,13 @@ const Landing = () => {
 
 						{/* Sovereign Authority Display */}
 						<div className="space-y-4">
-							<SystemHeading
+							<RiftHeading
 								level={3}
 								variant="sovereign"
 								className="text-center"
 							>
 								Sovereign Dominion
-							</SystemHeading>
+							</RiftHeading>
 							<SovereignAuthorityDisplay
 								authority={94}
 								tier="sovereign"
@@ -278,10 +282,10 @@ const Landing = () => {
 
 					{/* Call to Action */}
 					<div className="text-center mt-12">
-						<SystemText variant="system" size="sm" className="mb-6 opacity-80">
+						<AscendantText variant="rift" size="sm" className="mb-6 opacity-80">
 							Awaken your potential — join the ranks of sovereigns and rift
 							masters
-						</SystemText>
+						</AscendantText>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<Link to="/login">
 								<Button

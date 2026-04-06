@@ -1,8 +1,8 @@
 import { Gem, MapPin, Skull } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface LocationData {
@@ -49,7 +49,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 				</div>
 			)}
 
-			<SystemWindow title={displayName.toUpperCase()}>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						{data.location_type && (
@@ -69,18 +69,18 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 						)}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{data.description && (
-				<SystemWindow id="location-details" title="DETAILS">
+				<AscendantWindow id="location-details" title="DETAILS">
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.encounters && data.encounters.length > 0 && (
-				<SystemWindow id="location-encounters" title="ENCOUNTERS">
+				<AscendantWindow id="location-encounters" title="ENCOUNTERS">
 					<ul className="space-y-2">
 						{data.encounters.map((encounter) => (
 							<li key={encounter} className="flex items-center gap-2">
@@ -91,11 +91,11 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.treasures && data.treasures.length > 0 && (
-				<SystemWindow id="location-treasures" title="TREASURES">
+				<AscendantWindow id="location-treasures" title="TREASURES">
 					<ul className="space-y-2">
 						{data.treasures.map((treasure) => (
 							<li key={treasure} className="flex items-center gap-2">
@@ -106,7 +106,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

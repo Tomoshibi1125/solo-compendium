@@ -32,6 +32,12 @@ import { GeminiProtocolGenerator } from "@/components/compendium/GeminiProtocolG
 import { SearchHistoryDropdown } from "@/components/compendium/SearchHistoryDropdown";
 import { SkeletonLoader } from "@/components/compendium/SkeletonLoader";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,12 +50,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Pagination } from "@/components/ui/pagination";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -117,7 +117,7 @@ const categories = [
 	{ id: "shadow-soldiers", name: "Umbral Legion", icon: Users },
 ];
 
-// Enhanced rarity colors with System Ascendant theme
+// Enhanced rarity colors with Rift Ascendant theme
 const rarityColors: Record<string, string> = {
 	common: "text-muted-foreground border-muted",
 	uncommon: "text-accent border-accent/40",
@@ -127,7 +127,7 @@ const rarityColors: Record<string, string> = {
 		"text-solar-glow border-solar-glow/40 shadow-[0_0_8px_hsl(var(--solar-glow)/0.3)]",
 };
 
-// Enhanced gate rank colors with System Ascendant theme
+// Enhanced gate rank colors with Rift Ascendant theme
 const gateRankColors: Record<string, string> = {
 	E: "text-gate-e border-gate-e/40",
 	D: "text-gate-d border-gate-d/40",
@@ -994,28 +994,28 @@ const Compendium = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 relative">
-				{/* System UI Background Effects */}
+				{/* Ascendant UI Background Effects */}
 				<div className="absolute inset-0 hex-grid-overlay opacity-30 pointer-events-none" />
 				<div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-transparent pointer-events-none" />
 
-				{/* Header with System UI styling */}
+				{/* Header with Ascendant UI styling */}
 				<div className="mb-6 sm:mb-8 relative z-10">
-					<SystemHeading
+					<RiftHeading
 						level={1}
 						variant="sovereign"
 						dimensional
 						className="mb-2 tracking-wider"
 					>
 						Compendium
-					</SystemHeading>
-					<DataStreamText
-						variant="system"
+					</RiftHeading>
+					<ManaFlowText
+						variant="rift"
 						speed="slow"
 						className="text-sm sm:text-base leading-relaxed block"
 					>
 						Browse the complete collection of System knowledge, from character
 						foundations to world entities.
-					</DataStreamText>
+					</ManaFlowText>
 				</div>
 
 				{/* Search and Controls */}
@@ -1037,7 +1037,7 @@ const Compendium = () => {
 									aria-label="Search compendium"
 									value={searchDraft || ""}
 									onChange={(e) => setSearchDraft(e.target.value)}
-									className="pl-12 h-14 bg-black/80 border-primary/50 text-primary font-mono tracking-widest focus:ring-1 focus:ring-primary focus:shadow-[0_0_15px_hsl(var(--primary)/0.2),inset_0_0_10px_hsl(var(--primary)/0.1)] rounded-[2px] transition-all duration-300 placeholder:text-primary/40 placeholder:font-system"
+									className="pl-12 h-14 bg-black/80 border-primary/50 text-primary font-mono tracking-widest focus:ring-1 focus:ring-primary focus:shadow-[0_0_15px_hsl(var(--primary)/0.2),inset_0_0_10px_hsl(var(--primary)/0.1)] rounded-[2px] transition-all duration-300 placeholder:text-primary/40 placeholder:font-heading"
 									autoComplete="off"
 									spellCheck="false"
 									title="Advanced search: type:jobs, level:>3, rarity:rare, school:evocation, cr:>5, tag:boss, source:core"
@@ -1160,11 +1160,11 @@ const Compendium = () => {
 					{/* Results Grid */}
 					<div className="flex-1 min-w-0">
 						<div className="mb-4 flex items-center justify-between flex-wrap gap-2">
-							<SystemText className="block text-sm text-muted-foreground font-heading">
+							<AscendantText className="block text-sm text-muted-foreground font-heading">
 								Showing {paginatedEntries.length} of{" "}
 								{filteredAndSortedEntries.length}{" "}
 								{filteredAndSortedEntries.length === 1 ? "result" : "results"}
-							</SystemText>
+							</AscendantText>
 							<div className="flex gap-2">
 								<Dialog
 									open={showGeminiProtocol}
@@ -1215,14 +1215,17 @@ const Compendium = () => {
 						</div>
 
 						{showSetup ? (
-							<SystemWindow title="SETUP REQUIRED" className="max-w-lg mx-auto">
+							<AscendantWindow
+								title="SETUP REQUIRED"
+								className="max-w-lg mx-auto"
+							>
 								<div className="p-4 space-y-2">
 									<p className="text-destructive font-heading">
 										Compendium data is unavailable
 									</p>
-									<SystemText className="block text-sm text-muted-foreground">
+									<AscendantText className="block text-sm text-muted-foreground">
 										Configure Supabase to load compendium content.
-									</SystemText>
+									</AscendantText>
 									<Button
 										variant="outline"
 										size="sm"
@@ -1232,7 +1235,7 @@ const Compendium = () => {
 										Go to Setup
 									</Button>
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						) : isLoading ? (
 							<div
 								className={cn(
@@ -1244,14 +1247,14 @@ const Compendium = () => {
 								<SkeletonLoader count={itemsPerPage} variant={viewMode} />
 							</div>
 						) : error ? (
-							<SystemWindow title="ERROR" className="max-w-lg mx-auto">
+							<AscendantWindow title="ERROR" className="max-w-lg mx-auto">
 								<div className="p-4 space-y-2">
 									<p className="text-destructive font-heading">
 										Failed to load compendium data
 									</p>
-									<SystemText className="block text-sm text-muted-foreground">
+									<AscendantText className="block text-sm text-muted-foreground">
 										Please try refreshing the page or check your connection.
-									</SystemText>
+									</AscendantText>
 									<Button
 										variant="outline"
 										size="sm"
@@ -1261,7 +1264,7 @@ const Compendium = () => {
 										Reload Page
 									</Button>
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						) : (
 							<div
 								className={cn(
@@ -1372,19 +1375,19 @@ const Compendium = () => {
 												</div>
 												<h3 className="font-heading text-lg font-semibold mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
 													{highlightText(entry.name, filters.searchQuery)}
-													{entry.source_book !== "System Ascendant Canon" &&
+													{entry.source_book !== "Rift Ascendant Canon" &&
 														!canAccessMarketplace && (
 															<span title="Premium Content">
 																<AlertTriangle className="w-4 h-4 text-amber-500" />
 															</span>
 														)}
 												</h3>
-												<SystemText className="block text-sm text-muted-foreground line-clamp-2">
+												<AscendantText className="block text-sm text-muted-foreground line-clamp-2">
 													{highlightText(
 														entry.description,
 														filters.searchQuery,
 													)}
-												</SystemText>
+												</AscendantText>
 												<div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
 													{entry.cr && <span>CR {entry.cr}</span>}
 													{entry.school && <span>• {entry.school}</span>}
@@ -1423,19 +1426,19 @@ const Compendium = () => {
 												<div className="flex-1 min-w-0">
 													<h3 className="font-heading font-semibold group-hover:text-primary transition-colors leading-tight flex items-center gap-2">
 														{highlightText(entry.name, filters.searchQuery)}
-														{entry.source_book !== "System Ascendant Canon" &&
+														{entry.source_book !== "Rift Ascendant Canon" &&
 															!canAccessMarketplace && (
 																<span title="Premium Content">
 																	<AlertTriangle className="w-3 h-3 text-amber-500" />
 																</span>
 															)}
 													</h3>
-													<SystemText className="block text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
+													<AscendantText className="block text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
 														{highlightText(
 															entry.description,
 															filters.searchQuery,
 														)}
-													</SystemText>
+													</AscendantText>
 												</div>
 												<div className="flex items-center gap-2 flex-shrink-0">
 													{entry.source_book && (

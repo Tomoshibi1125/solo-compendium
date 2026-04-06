@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -26,7 +26,7 @@ export function RelatedContent({
 	if (entries.length === 0) return null;
 
 	return (
-		<SystemWindow title={title.toUpperCase()} compact className={className}>
+		<AscendantWindow title={title.toUpperCase()} compact className={className}>
 			<div className="space-y-2">
 				{entries.slice(0, 5).map((entry) => (
 					<Link
@@ -56,6 +56,6 @@ export function RelatedContent({
 					</Link>
 				))}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

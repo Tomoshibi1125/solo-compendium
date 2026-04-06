@@ -12,11 +12,11 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -322,7 +322,7 @@ export function CampaignProtocolControls({
 			});
 			if (sessionId) {
 				navigate(
-					`/warden-protocols/initiative-tracker?campaignId=${encodeURIComponent(campaignId)}&sessionId=${encodeURIComponent(sessionId)}`,
+					`/warden-directives/initiative-tracker?campaignId=${encodeURIComponent(campaignId)}&sessionId=${encodeURIComponent(sessionId)}`,
 				);
 			}
 		} catch {
@@ -332,7 +332,7 @@ export function CampaignProtocolControls({
 
 	return (
 		<div className="space-y-6" data-testid="campaign-protocol-controls">
-			<SystemWindow
+			<AscendantWindow
 				title="INVITES & PERMISSIONS"
 				data-testid="campaign-invites-panel"
 			>
@@ -574,9 +574,9 @@ export function CampaignProtocolControls({
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow
+			<AscendantWindow
 				title="PROTOCOL RULES & ENFORCEMENT"
 				data-testid="campaign-rules-panel"
 			>
@@ -746,9 +746,9 @@ export function CampaignProtocolControls({
 						))}
 					</div>
 				)}
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow
+			<AscendantWindow
 				title="ENCOUNTER LIBRARY"
 				data-testid="campaign-encounters-panel"
 			>
@@ -822,9 +822,9 @@ export function CampaignProtocolControls({
 						))
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow
+			<AscendantWindow
 				title="LOOT & RELIC DISTRIBUTION"
 				data-testid="campaign-rewards-panel"
 			>
@@ -1088,9 +1088,12 @@ export function CampaignProtocolControls({
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow title="EXPORT CAMPAIGN" data-testid="campaign-export-panel">
+			<AscendantWindow
+				title="EXPORT CAMPAIGN"
+				data-testid="campaign-export-panel"
+			>
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 					<div>
 						<p className="font-heading font-semibold">Campaign Bundle</p>
@@ -1103,7 +1106,7 @@ export function CampaignProtocolControls({
 						Export Bundle
 					</Button>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 }

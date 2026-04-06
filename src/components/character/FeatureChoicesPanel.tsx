@@ -2,9 +2,9 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -20,7 +20,7 @@ import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended
 import type { Database, Json } from "@/integrations/supabase/types";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
-import type { AbilityScore } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
 
 type ChoiceGroupRow = {
 	id: string;
@@ -857,7 +857,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 			toast({
 				title: "Selection recorded",
-				description: "The System has bound your chosen protocol.",
+				description: "The Rift has bound your chosen protocol.",
 			});
 		} catch {
 			toast({
@@ -876,22 +876,22 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 	if (isLoading) {
 		return (
-			<SystemWindow title="SELECTION PROTOCOL">
+			<AscendantWindow title="SELECTION PROTOCOL">
 				<div className="flex items-center gap-2 text-sm text-muted-foreground">
 					<Loader2 className="w-4 h-4 animate-spin" />
 					Scanning for required selections...
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	if (!choiceData) return null;
 
 	return (
-		<SystemWindow title="SELECTION PROTOCOL">
+		<AscendantWindow title="SELECTION PROTOCOL">
 			<div className="space-y-4">
 				<div className="text-sm text-muted-foreground">
-					The System requires additional binding choices before your build is
+					The Rift requires additional binding choices before your build is
 					fully compliant.
 				</div>
 
@@ -962,6 +962,6 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 					</Button>
 				</div>
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

@@ -1,7 +1,7 @@
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface FeatData {
@@ -26,7 +26,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<SystemWindow title={displayName.toUpperCase()}>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					{data.flavor && (
 						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
@@ -57,23 +57,23 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Prerequisites */}
 			{data.prerequisites && (
-				<SystemWindow title="PREREQUISITES">
+				<AscendantWindow title="PREREQUISITES">
 					<div className="flex items-center gap-3">
 						<AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0" />
 						<p className="text-foreground">
 							<AutoLinkText text={data.prerequisites} />
 						</p>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Benefits */}
 			{data.benefits && data.benefits.length > 0 && (
-				<SystemWindow title="BENEFITS">
+				<AscendantWindow title="BENEFITS">
 					<ul className="space-y-3">
 						{data.benefits.map((benefit, _i) => (
 							<li key={benefit} className="flex items-start gap-3">
@@ -84,15 +84,15 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.mechanics && Object.keys(data.mechanics).length > 0 && (
-				<SystemWindow title="SYSTEM DIAGNOSTICS">
+				<AscendantWindow title="SYSTEM DIAGNOSTICS">
 					<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
 						{JSON.stringify(data.mechanics, null, 2)}
 					</pre>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.source_book && (

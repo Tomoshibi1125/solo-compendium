@@ -1,20 +1,20 @@
 /* ============================================================
-   SA Warden Command Center — Protocol Warden (PW) Tools
+   SA Warden Command Center — Warden (Warden) Tools
    Orange/red tactical HUD aesthetic
    ============================================================ */
 
-.warden-protocols-container {
+.warden-directives-container {
 	max-width: 1400px;
 	margin: 0 auto;
 	padding: 1rem;
 }
 
-.warden-protocols-container > * + * {
+.warden-directives-container > * + * {
 	margin-top: 2rem;
 }
 
 /* Header: Warden Command HUD */
-.warden-protocols-header {
+.warden-directives-header {
 	position: relative;
 	margin-bottom: 2rem;
 	background: linear-gradient(
@@ -29,7 +29,7 @@
 	overflow: hidden;
 }
 
-.warden-protocols-header::before {
+.warden-directives-header::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -57,7 +57,7 @@
 	}
 }
 
-.warden-protocols-title {
+.warden-directives-title {
 	font-size: 2.5rem;
 	font-weight: 700;
 	background: linear-gradient(135deg, #ea580c, #dc2626);
@@ -67,7 +67,7 @@
 	margin-bottom: 0.5rem;
 }
 
-.warden-protocols-subtitle {
+.warden-directives-subtitle {
 	font-size: 1.125rem;
 	color: hsl(var(--muted-foreground));
 	margin-bottom: 1.5rem;
@@ -164,7 +164,7 @@
 }
 
 /* Search and Filters */
-.warden-protocols-filters {
+.warden-directives-filters {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -172,7 +172,7 @@
 }
 
 @media (min-width: 768px) {
-	.warden-protocols-filters {
+	.warden-directives-filters {
 		flex-direction: row;
 		align-items: center;
 	}
@@ -223,7 +223,7 @@
 }
 
 /* Content Layout */
-.warden-protocols-content {
+.warden-directives-content {
 	margin-bottom: 2rem;
 }
 
@@ -243,7 +243,7 @@
 	color: hsl(var(--foreground));
 }
 
-/* Protocol Warden (PW) Tool Cards */
+/* Warden (Warden) Tool Cards */
 .tools-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
@@ -359,7 +359,7 @@
 }
 
 /* Quick Actions */
-.warden-protocols-quick-actions {
+.warden-directives-quick-actions {
 	margin-top: 2rem;
 }
 
@@ -825,7 +825,7 @@
 }
 
 /* Loading State */
-.warden-protocols-loading {
+.warden-directives-loading {
 	max-width: 1400px;
 	margin: 0 auto;
 	padding: 1rem;
@@ -833,15 +833,15 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-	.warden-protocols-container {
+	.warden-directives-container {
 		padding: 0.5rem;
 	}
 
-	.warden-protocols-title {
+	.warden-directives-title {
 		font-size: 2rem;
 	}
 
-	.warden-protocols-subtitle {
+	.warden-directives-subtitle {
 		font-size: 1rem;
 	}
 
@@ -879,11 +879,11 @@
 }
 
 @media (max-width: 640px) {
-	.warden-protocols-title {
+	.warden-directives-title {
 		font-size: 1.75rem;
 	}
 
-	.warden-protocols-subtitle {
+	.warden-directives-subtitle {
 		font-size: 0.875rem;
 	}
 
@@ -943,8 +943,8 @@
 
 /* Print Styles */
 @media print {
-	.warden-protocols-filters,
-	.warden-protocols-quick-actions {
+	.warden-directives-filters,
+	.warden-directives-quick-actions {
 		display: none;
 	}
 

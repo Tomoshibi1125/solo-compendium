@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { lazy, Suspense, useEffect, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +33,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -41,7 +41,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DirectiveLattice } from "@/components/warden-protocols/DirectiveMatrix";
+import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
 import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import { useToast } from "@/hooks/use-toast";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -57,28 +57,28 @@ import {
 } from "@/lib/vtt/rollMacros";
 
 const DungeonMapGenerator = lazy(
-	() => import("@/pages/warden-protocols/DungeonMapGenerator"),
+	() => import("@/pages/warden-directives/DungeonMapGenerator"),
 );
 const EncounterBuilder = lazy(
-	() => import("@/pages/warden-protocols/EncounterBuilder"),
+	() => import("@/pages/warden-directives/EncounterBuilder"),
 );
 const GateGenerator = lazy(
-	() => import("@/pages/warden-protocols/GateGenerator"),
+	() => import("@/pages/warden-directives/GateGenerator"),
 );
 const NPCGenerator = lazy(
-	() => import("@/pages/warden-protocols/NPCGenerator"),
+	() => import("@/pages/warden-directives/NPCGenerator"),
 );
 const RandomEventGenerator = lazy(
-	() => import("@/pages/warden-protocols/RandomEventGenerator"),
+	() => import("@/pages/warden-directives/RandomEventGenerator"),
 );
 const RelicWorkshop = lazy(
-	() => import("@/pages/warden-protocols/RelicWorkshop"),
+	() => import("@/pages/warden-directives/RelicWorkshop"),
 );
 const RollableTables = lazy(
-	() => import("@/pages/warden-protocols/RollableTables"),
+	() => import("@/pages/warden-directives/RollableTables"),
 );
 const TreasureGenerator = lazy(
-	() => import("@/pages/warden-protocols/TreasureGenerator"),
+	() => import("@/pages/warden-directives/TreasureGenerator"),
 );
 
 interface WardenToolsPanelProps {
@@ -206,7 +206,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 		<EmbeddedProvider>
 			<div className={cn("space-y-4", className)}>
 				{/* Quick Actions Bar */}
-				<SystemWindow title="QUICK ACTIONS" compact>
+				<AscendantWindow title="QUICK ACTIONS" compact>
 					<div className="grid grid-cols-2 gap-2">
 						{/* Quick Dice Roll */}
 						<div className="space-y-2">
@@ -297,10 +297,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							))}
 						</div>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
 				{/* Full Warden Tools */}
-				<SystemWindow title="WARDEN PROTOCOLS">
+				<AscendantWindow title="WARDEN PROTOCOLS">
 					<Suspense
 						fallback={
 							<div className="p-8 flex justify-center w-full min-h-[300px] items-center">
@@ -510,7 +510,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 							<TabsContent value="tools" className="space-y-4">
 								<div className="grid grid-cols-2 gap-4">
-									<SystemWindow title="SESSION NOTES" compact>
+									<AscendantWindow title="SESSION NOTES" compact>
 										<textarea
 											className="w-full h-32 p-2 text-xs bg-background border border-border rounded resize-none"
 											placeholder="Session notes..."
@@ -556,9 +556,9 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												Clear
 											</Button>
 										</div>
-									</SystemWindow>
+									</AscendantWindow>
 
-									<SystemWindow title="PARTY STATUS" compact>
+									<AscendantWindow title="PARTY STATUS" compact>
 										<div className="space-y-2">
 											<div className="flex justify-between items-center">
 												<span className="text-xs">Party Level</span>
@@ -587,10 +587,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												</Select>
 											</div>
 										</div>
-									</SystemWindow>
+									</AscendantWindow>
 								</div>
 
-								<SystemWindow title="ATMOSPHERE" compact>
+								<AscendantWindow title="ATMOSPHERE" compact>
 									<div className="space-y-3">
 										<div>
 											<Label className="text-xs">Lighting</Label>
@@ -739,11 +739,11 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 											</div>
 										</div>
 									</div>
-								</SystemWindow>
+								</AscendantWindow>
 							</TabsContent>
 						</Tabs>
 					</Suspense>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 		</EmbeddedProvider>
 	);

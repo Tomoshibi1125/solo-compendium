@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	type ActionResolutionPayload,
 	setPendingResolution,
@@ -188,7 +188,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 				</div>
 			)}
 
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				actions={<ShareToVTTButton itemType="Item" itemName={displayName} />}
 			>
@@ -236,7 +236,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 											if (!payload) return;
 											queueResolutionAndNavigate(
 												payload,
-												"/warden-protocols/initiative-tracker",
+												"/warden-directives/initiative-tracker",
 											);
 										}}
 									>
@@ -247,27 +247,27 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 				{data.value !== null && data.value !== undefined && (
-					<SystemWindow title="VALUE" compact>
+					<AscendantWindow title="VALUE" compact>
 						<div className="flex items-center gap-2">
 							<Coins className="w-5 h-5 text-yellow-400" />
 							<span className="font-heading">{data.value}</span>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 				{data.weight !== null && data.weight !== undefined && (
-					<SystemWindow title="WEIGHT" compact>
+					<AscendantWindow title="WEIGHT" compact>
 						<div className="flex items-center gap-2">
 							<Weight className="w-5 h-5 text-muted-foreground" />
 							<span className="font-heading">{data.weight} lbs</span>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 				{data.charges && (
-					<SystemWindow title="CHARGES" compact>
+					<AscendantWindow title="CHARGES" compact>
 						<div className="flex items-center gap-2">
 							<Zap className="w-5 h-5 text-blue-400" />
 							<span className="font-heading">
@@ -279,12 +279,12 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								{formatRegentVernacular(`${data.charges.recharge} recharge`)}
 							</span>
 						)}
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 
 			{data.requirements && (
-				<SystemWindow title="REQUIREMENTS">
+				<AscendantWindow title="REQUIREMENTS">
 					<ul className="space-y-2 text-sm">
 						{data.requirements.level !== undefined && (
 							<li className="flex items-center gap-2">
@@ -325,11 +325,11 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								</li>
 							)}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{(weapon || magical) && (
-				<SystemWindow id="item-properties" title="PROPERTIES">
+				<AscendantWindow id="item-properties" title="PROPERTIES">
 					<div className="space-y-4 text-sm">
 						{weapon && (
 							<div className="space-y-2">
@@ -415,11 +415,11 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{(data.effects || data.effect) && (
-				<SystemWindow id="item-effects" title="EFFECTS">
+				<AscendantWindow id="item-effects" title="EFFECTS">
 					<div className="space-y-4 text-sm">
 						{data.effects?.passive && data.effects.passive.length > 0 && (
 							<div>
@@ -482,7 +482,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 															if (!payload) return;
 															queueResolutionAndNavigate(
 																payload,
-																"/warden-protocols/initiative-tracker",
+																"/warden-directives/initiative-tracker",
 															);
 														}}
 													>
@@ -505,11 +505,11 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 							</p>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.description && (
-				<SystemWindow id="item-description" title="DESCRIPTION">
+				<AscendantWindow id="item-description" title="DESCRIPTION">
 					{data.flavor && (
 						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
 							<AutoLinkText text={data.flavor} />
@@ -538,7 +538,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 							</pre>
 						</div>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

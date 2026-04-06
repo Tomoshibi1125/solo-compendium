@@ -11,11 +11,11 @@ import {
 	Upload,
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -297,7 +297,7 @@ export function HomebrewWorkbench() {
 
 	return (
 		<div className="space-y-6" data-testid="homebrew-workbench">
-			<SystemWindow title="HOME BREW STUDIO">
+			<AscendantWindow title="HOME BREW STUDIO">
 				<div className="grid grid-cols-1 md:grid-cols-4 gap-3">
 					<div>
 						<Label htmlFor="homebrew-scope">Browse Scope</Label>
@@ -375,10 +375,10 @@ export function HomebrewWorkbench() {
 				{error instanceof Error && (
 					<p className="mt-4 text-sm text-destructive">{error.message}</p>
 				)}
-			</SystemWindow>
+			</AscendantWindow>
 
 			<div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-				<SystemWindow title="EDITOR" className="xl:col-span-2">
+				<AscendantWindow title="EDITOR" className="xl:col-span-2">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 						<div>
 							<Label htmlFor="homebrew-type">Type</Label>
@@ -520,10 +520,10 @@ export function HomebrewWorkbench() {
 							</>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
 				<div className="space-y-6">
-					<SystemWindow title="LIBRARY">
+					<AscendantWindow title="LIBRARY">
 						{isLoading ? (
 							<p className="text-sm text-muted-foreground">
 								Loading homebrew content...
@@ -571,10 +571,10 @@ export function HomebrewWorkbench() {
 								))}
 							</div>
 						)}
-					</SystemWindow>
+					</AscendantWindow>
 
 					{selectedRecord && (
-						<SystemWindow title="SELECTED ENTRY">
+						<AscendantWindow title="SELECTED ENTRY">
 							<div className="space-y-2 text-sm">
 								<p className="font-heading font-semibold">
 									{selectedRecord.name}
@@ -606,11 +606,11 @@ export function HomebrewWorkbench() {
 									</Button>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 
 					{editingId && (
-						<SystemWindow title="VERSION HISTORY">
+						<AscendantWindow title="VERSION HISTORY">
 							{versions.length === 0 ? (
 								<p className="text-sm text-muted-foreground">
 									No previous versions yet.
@@ -646,7 +646,7 @@ export function HomebrewWorkbench() {
 									))}
 								</div>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 				</div>
 			</div>

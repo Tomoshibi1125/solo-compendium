@@ -4,7 +4,7 @@ import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import { supabase } from "@/integrations/supabase/client";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
-import type { AbilityScore } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
 
 export const useUpdateCharacterAbilities = () => {
 	const queryClient = useQueryClient();

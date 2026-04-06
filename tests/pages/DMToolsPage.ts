@@ -57,7 +57,7 @@ export class DMToolsPage {
 			"Dungeon Map Generator",
 			"Token Library",
 			"VTT Map Viewer",
-			"System Console",
+			"Rift Console",
 			"Content Audit",
 		];
 		for (const tool of expectedTools) {
@@ -611,7 +611,7 @@ export class DMToolsPage {
 		}
 	}
 
-	// ─── System Console (Admin) ───────────────────────────────────
+	// ─── Rift Console (Admin) ───────────────────────────────────
 
 	async testSystemConsole() {
 		await this.page.goto("/dm-tools/system-console");

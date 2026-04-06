@@ -1,7 +1,7 @@
 import { Crown, Flame } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import type { Regent } from "@/lib/regentTypes";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
 
@@ -67,7 +67,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				className="border-amber-500/50 border-2"
 			>
@@ -75,7 +75,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 					<div className="flex items-center gap-3">
 						<Crown className="w-8 h-8 text-amber-400" />
 						<div>
-							<h2 className="font-display text-2xl gradient-text-system">
+							<h2 className="font-display text-2xl gradient-text-ascendant">
 								{displayTitle}
 							</h2>
 							<p className="text-muted-foreground">{displayTheme}</p>
@@ -107,7 +107,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 
 					<div className="flex flex-wrap gap-2">
 						<Badge className="bg-amber-600 text-white border-amber-400">
-							<Crown className="w-3 h-3 mr-1" /> PW VERIFIED ACCESS
+							<Crown className="w-3 h-3 mr-1" /> Warden VERIFIED ACCESS
 						</Badge>
 						{data.hit_dice && (
 							<Badge variant="secondary">Hit Die: {data.hit_dice}</Badge>
@@ -119,15 +119,16 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 						))}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Requirements & Ascension Logic */}
 			{(data.requirements || data.regent_requirements) && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<SystemWindow title="ASCENSION REQUIREMENTS">
+					<AscendantWindow title="ASCENSION REQUIREMENTS">
 						<div className="space-y-4">
 							<div className="flex items-center gap-2 text-amber-400 font-semibold">
-								<Crown className="w-4 h-4" /> PW MANUAL VERIFICATION REQUIRED
+								<Crown className="w-4 h-4" /> Warden MANUAL VERIFICATION
+								REQUIRED
 							</div>
 
 							<div className="space-y-2">
@@ -159,9 +160,9 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									)}
 							</div>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
-					<SystemWindow
+					<AscendantWindow
 						title="QUEST PROGRESSION LOGIC"
 						className="border-primary/30"
 					>
@@ -171,7 +172,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									The 3-Choice Protocol
 								</p>
 								<p className="text-muted-foreground leading-relaxed">
-									Upon initial quest completion, the System generates{" "}
+									Upon initial quest completion, the Rift generates{" "}
 									<span className="text-foreground font-bold italic">
 										3 automated choices
 									</span>{" "}
@@ -184,7 +185,8 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									<div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
 									<span>
 										<strong className="text-foreground">Initial Choice:</strong>{" "}
-										Select 1 of 3 initial options upon first PW verification.
+										Select 1 of 3 initial options upon first Warden
+										verification.
 									</span>
 								</li>
 								<li className="flex gap-2">
@@ -208,13 +210,13 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								</li>
 							</ul>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			)}
 
 			{/* Signature Features */}
 			{signatureFeatures.length > 0 && (
-				<SystemWindow
+				<AscendantWindow
 					title="ASCENDANT ABILITIES (LVL 11-20)"
 					className="border-amber-500/30"
 				>
@@ -249,12 +251,12 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 							</div>
 						))}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Regular Features (Level 1-10) */}
 			{regularFeatures.length > 0 && (
-				<SystemWindow
+				<AscendantWindow
 					title={`${REGENT_LABEL.toUpperCase()} FEATURES (LVL 1-10)`}
 				>
 					<div className="space-y-4">
@@ -284,13 +286,13 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 							</div>
 						))}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Mechanics & Special Traits */}
 			{data.mechanics && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<SystemWindow
+					<AscendantWindow
 						title="STATISTICAL ATTRIBUTES"
 						className="border-cyan-500/30"
 					>
@@ -332,9 +334,9 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									</div>
 								)}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
-					<SystemWindow
+					<AscendantWindow
 						title="SYSTEM OVERRIDES"
 						className="border-purple-500/30"
 					>
@@ -351,7 +353,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								</div>
 							))}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			)}
 

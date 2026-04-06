@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,7 +29,6 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import type { LibraryToken } from "@/data/tokenLibraryDefaults";
@@ -62,7 +62,7 @@ interface ShadowSoldiersPanelProps {
 	onSelectDetail?: (detail: DetailData) => void;
 }
 
-// Enhanced rank colors with System Ascendant theme
+// Enhanced rank colors with Rift Ascendant theme
 const rankColors: Record<string, string> = {
 	"General Grade":
 		"bg-resurge-violet/20 text-resurge-violet border-resurge-violet/40 shadow-[0_0_10px_hsl(var(--resurge-violet)/0.3)]",
@@ -202,7 +202,7 @@ export function ShadowSoldiersPanel({
 
 	if (!hasUmbralRegent) {
 		return (
-			<SystemWindow title="Umbral Legion" variant="regent">
+			<AscendantWindow title="Umbral Legion" variant="regent">
 				<div className="text-center py-8">
 					<Ghost className="h-12 w-12 text-shadow-purple/40 mx-auto mb-4" />
 					<p className="text-muted-foreground font-heading mb-2">
@@ -213,12 +213,12 @@ export function ShadowSoldiersPanel({
 						overlay through a quest to command the Umbral Legion.
 					</p>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	return (
-		<SystemWindow
+		<AscendantWindow
 			title="UMBRAL LEGION - ASCEND"
 			variant="resurge"
 			className="border-shadow-purple/40"
@@ -663,6 +663,6 @@ export function ShadowSoldiersPanel({
 					</Dialog>
 				)}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

@@ -34,7 +34,7 @@ import {
 } from "@/lib/vtt";
 
 /**
- * VTT SANDBOX (Protocol Warden Development tool)
+ * VTT SANDBOX (Warden Development tool)
  * This component demonstrates and wires the orphaned VTT exports
  * to ensure 100% architectural parity for Zero Legacy certification.
  */
@@ -88,7 +88,7 @@ export function VTTSandbox() {
 				{
 					id: "test",
 					senderId: "pw",
-					senderName: "Protocol Warden",
+					senderName: "Warden",
 					recipientIds: ["player"],
 					recipientNames: ["Player"],
 					content: "Hello",
@@ -100,7 +100,7 @@ export function VTTSandbox() {
 		};
 
 		setDiag(JSON.stringify(results, null, 2));
-		console.log("VTT System Protocol Seal active.", {
+		console.log("VTT Interface Protocol Seal active.", {
 			presets: PARTICLE_PRESETS,
 			manifest: {
 				ALL_ASSETS,

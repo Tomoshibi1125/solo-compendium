@@ -10,11 +10,11 @@ import {
 	Upload,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -283,7 +283,7 @@ export function MarketplaceWorkbench() {
 			</TabsList>
 
 			<TabsContent value="browse" className="space-y-4">
-				<SystemWindow title="MARKETPLACE BROWSE">
+				<AscendantWindow title="MARKETPLACE BROWSE">
 					<div className="grid grid-cols-1 md:grid-cols-4 gap-3">
 						<div>
 							<Label htmlFor="market-scope">Scope</Label>
@@ -344,9 +344,9 @@ export function MarketplaceWorkbench() {
 					{error instanceof Error && (
 						<p className="mt-4 text-sm text-destructive">{error.message}</p>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="LISTINGS">
+				<AscendantWindow title="LISTINGS">
 					{isLoading ? (
 						<p className="text-sm text-muted-foreground">
 							Loading marketplace...
@@ -511,11 +511,11 @@ export function MarketplaceWorkbench() {
 							})}
 						</div>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 			</TabsContent>
 
 			<TabsContent value="publish">
-				<SystemWindow title="PUBLISH / MANAGE">
+				<AscendantWindow title="PUBLISH / MANAGE">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 						<div>
 							<Label htmlFor="publish-title">Title</Label>
@@ -679,7 +679,7 @@ export function MarketplaceWorkbench() {
 							Reset Form
 						</Button>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</TabsContent>
 		</Tabs>
 	);

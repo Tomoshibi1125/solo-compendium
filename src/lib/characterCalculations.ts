@@ -16,11 +16,11 @@ export {
 	calculateHPMax,
 	getCantripsKnownLimit,
 	getCasterType,
+	getRiftFavorDie,
 	getSpellcastingAbility,
 	getSpellSlotsPerLevel,
 	getSpellsKnownLimit,
 	getSpellsPreparedLimit,
-	getSystemFavorDie,
 } from "./5eCharacterCalculations";
 export type {
 	AbilityScore,
@@ -32,8 +32,8 @@ export type {
 	Power,
 	Rarity,
 	Relic,
+	RiftFavorOption,
 	Skill,
-	SystemFavorOption,
 } from "./5eRulesEngine";
 // From 5eRulesEngine — core utility functions and types
 export {
@@ -42,7 +42,7 @@ export {
 	getAbilityModifier,
 	getAvailableFavorOptions,
 	getProficiencyBonus,
-	getSystemFavorMax,
+	getRiftFavorMax,
 	LEGACY_5E_TO_SA,
 	SKILLS,
 } from "./5eRulesEngine";

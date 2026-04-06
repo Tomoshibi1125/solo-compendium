@@ -1,13 +1,13 @@
 // Comprehensive Items Compendium - Digital Character Sheet Scale
 // Generated with full admin privileges
-// System Ascendant themed items with images
+// Rift Ascendant themed items with images
 
 export interface Item {
 	id: string;
 	name: string;
 	description: string;
 
-	// 5e Item Structure (System Ascendant Themed)
+	// 5e Item Structure (Rift Ascendant Themed)
 	item_type?: "weapon" | "armor" | "shield" | "consumable" | "tool" | "misc";
 	weapon_type?: string; // "martial melee", "simple ranged", etc.
 	damage?: string; // "1d8 slashing", "2d6 piercing", etc.
@@ -24,7 +24,7 @@ export interface Item {
 	strength_requirement?: number; // For certain armor/weapons
 	protocol_bonus?: number; // +1, +2, +3 for protocol-enhanced items
 
-	// System Ascendant compatibility (legacy)
+	// Rift Ascendant compatibility (legacy)
 	rarity: "common" | "uncommon" | "rare" | "epic" | "legendary";
 	type:
 		| "weapon"
@@ -46,15 +46,15 @@ export interface Item {
 		| "sigil";
 	image: string;
 
-	// 5e mechanics (System Ascendant themed)
+	// 5e mechanics (Rift Ascendant themed)
 	requires_attunement?: boolean;
 	weight: number; // In pounds
 	value: number; // In gold pieces
 
-	// System Ascendant specific fields
+	// Rift Ascendant specific fields
 	essence_cost?: number; // Essence cost to use/attune
 	ascendant_level_required?: number; // Minimum Ascendant level
-	system_awakening_required?: boolean; // Requires System Awakening
+	system_awakening_required?: boolean; // Requires Ascendant Awakening
 	shadow_soldier_compatible?: boolean; // Can be used by Shadow Soldiers (Umbral Regent only)
 	legendary_crafted?: boolean; // Legendary crafted item
 

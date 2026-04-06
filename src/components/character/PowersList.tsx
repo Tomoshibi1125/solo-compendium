@@ -1,10 +1,10 @@
 import { AlertTriangle, Plus, Trash2, Wand2 } from "lucide-react";
 import { useCallback, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SortableList } from "@/components/ui/SortableList";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -325,7 +325,7 @@ export function PowersList({
 	};
 
 	return (
-		<SystemWindow title="POWERS">
+		<AscendantWindow title="POWERS">
 			<div className="space-y-4">
 				{/* Spell Limits Display */}
 				{(spellsPreparedLimit !== null ||
@@ -625,6 +625,6 @@ export function PowersList({
 				onOpenChange={setAddDialogOpen}
 				characterId={characterId}
 			/>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

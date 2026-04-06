@@ -1,18 +1,18 @@
 import { ActivitySquare, AlertTriangle, ScrollText } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 
 export const GameRulesChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-emerald-400 mb-6">
+				<RiftHeading level={1} className="text-5xl text-emerald-400 mb-6">
 					Running The Urban Fantasy
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-					The Protocol Warden acts as the architect of the narrative,
-					controlling the flow of anomalies, the frequency of Gate Eruptions,
-					and the reactions of modern society. Below are the core guidelines for
-					arbitrating System Ascendant.
+					The Warden acts as the architect of the narrative, controlling the
+					flow of anomalies, the frequency of Gate Eruptions, and the reactions
+					of modern society. Below are the core guidelines for arbitrating Rift
+					Ascendant.
 				</p>
 			</section>
 
@@ -42,8 +42,8 @@ export const GameRulesChapter = () => {
 						into a permanent Rank (E through S). A D-Rank can never naturally
 						become a C-Rank. The only way to transcend this absolute limitation
 						is through a horrific and legendary event known as the "Double
-						Awakening," an incredibly rare occurrence the Protocol Warden can
-						trigger for narrative climaxes.
+						Awakening," an incredibly rare occurrence the Warden can trigger for
+						narrative climaxes.
 					</p>
 				</article>
 
@@ -54,7 +54,7 @@ export const GameRulesChapter = () => {
 					</h2>
 					<div className="text-sm text-slate-300 leading-relaxed columns-1 md:columns-2 gap-8 space-y-4">
 						<p>
-							System Ascendant takes place on modern Earth. Guns exist, but
+							Rift Ascendant takes place on modern Earth. Guns exist, but
 							conventional ballistics bounce off even C-Rank anomalous hide.
 							This forced humanity to adapt to "Mana-Tech."
 						</p>

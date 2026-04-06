@@ -1,8 +1,8 @@
 import { Check } from "lucide-react";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { cn } from "@/lib/utils";
 import type { StaticJob } from "@/types/character";
 
@@ -25,7 +25,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 	) {
 		return (
 			<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-				<SystemWindow title="MODEL EQUIPMENT: AUTOMATED PROVISIONING">
+				<AscendantWindow title="MODEL EQUIPMENT: AUTOMATED PROVISIONING">
 					<div className="text-center py-12 text-muted-foreground border border-dashed border-primary/10 rounded-lg">
 						<p className="font-heading text-sm uppercase tracking-widest text-primary/40">
 							No Manual Provisions Required
@@ -35,19 +35,19 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 							activation.
 						</p>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 		);
 	}
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-			<SystemWindow title="MODEL EQUIPMENT: LOADOUT SELECTION">
+			<AscendantWindow title="MODEL EQUIPMENT: LOADOUT SELECTION">
 				<div className="space-y-6">
-					<SystemText className="block text-sm text-muted-foreground italic pl-3 border-l-2 border-primary/30">
+					<AscendantText className="block text-sm text-muted-foreground italic pl-3 border-l-2 border-primary/30">
 						Select active equipment hardware for the current loadout. The first
 						configuration in each array is staged as default.
-					</SystemText>
+					</AscendantText>
 
 					<div className="space-y-4">
 						{staticJobData.startingEquipment.map(
@@ -153,7 +153,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 						</ul>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

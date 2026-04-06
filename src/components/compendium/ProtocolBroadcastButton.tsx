@@ -59,7 +59,7 @@ export const ProtocolBroadcastButton: React.FC<
 		};
 	}, [user]);
 
-	// Only render for authenticated users who are PW of at least one campaign
+	// Only render for authenticated users who are Warden of at least one campaign
 	if (!user || (!isLoading && activeCampaigns.length === 0)) {
 		return null;
 	}
@@ -69,8 +69,8 @@ export const ProtocolBroadcastButton: React.FC<
 			await sendMessage.mutateAsync({
 				campaignId,
 				content,
-				messageType: "system",
-				characterName: "Protocol Warden",
+				messageType: "rift",
+				characterName: "Warden",
 			});
 
 			toast({

@@ -167,7 +167,7 @@
 			"supabase/functions/*/index.ts",
 			"scripts/**/*.{ts,js,mjs}",
 			"src/index.ts",
-			"src/components/warden-protocols/WardenWiringHub.tsx"
+			"src/components/warden-directives/WardenWiringHub.tsx"
 		],
 		"project": [
 			"src/**/*.{ts,tsx}"

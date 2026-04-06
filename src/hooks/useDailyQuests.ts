@@ -14,7 +14,7 @@ import {
 } from "@/lib/dailyQuests/types";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { logger } from "@/lib/logger";
-import { getProficiencyBonus } from "@/types/system-rules";
+import { getProficiencyBonus } from "@/types/core-rules";
 
 type QuestConfigForm = Pick<
 	DailyQuestConfig,
@@ -96,8 +96,8 @@ const hashString = (input: string) => {
 };
 
 const normalizeReward = (reward: Record<string, unknown>): QuestReward => ({
-	system_favor:
-		typeof reward.system_favor === "number" ? reward.system_favor : undefined,
+	rift_favor:
+		typeof reward.rift_favor === "number" ? reward.rift_favor : undefined,
 	gold: typeof reward.gold === "number" ? reward.gold : undefined,
 	relic_shards:
 		typeof reward.relic_shards === "number" ? reward.relic_shards : undefined,

@@ -1,6 +1,6 @@
 /**
  * Login Page - Main Entry Point
- * System Ascendant styled authentication page
+ * Rift Ascendant styled authentication page
  */
 
 import { Eye, EyeOff, Shield, Sword, Users } from "lucide-react";
@@ -8,12 +8,12 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { OAuthButtons } from "@/components/auth/OAuthButton";
-import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { type OAuthProvider, useOAuth } from "@/hooks/useOAuth";
 import { useAuth } from "@/lib/auth/authContext";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
@@ -76,7 +76,7 @@ export default function Login() {
 				if (safeNext) {
 					navigate(safeNext);
 				} else {
-					navigate(role === "warden" ? "/warden-protocols" : "/player-tools");
+					navigate(role === "warden" ? "/warden-directives" : "/player-tools");
 				}
 			}
 		} catch {
@@ -107,7 +107,7 @@ export default function Login() {
 			localStorage.removeItem("pending-auth-next");
 		}
 		setLocalGuestRole(role);
-		navigate(role === "warden" ? "/warden-protocols" : "/player-tools");
+		navigate(role === "warden" ? "/warden-directives" : "/player-tools");
 	};
 
 	return (
@@ -135,7 +135,7 @@ export default function Login() {
 				<div className="mb-6 flex justify-start">
 					<Link
 						to="/landing"
-						className="text-sm text-muted-foreground hover:text-primary transition-colors font-system tracking-wider uppercase text-[0.7rem]"
+						className="text-sm text-muted-foreground hover:text-primary transition-colors font-heading tracking-wider uppercase text-[0.7rem]"
 					>
 						[ View Landing Page ]
 					</Link>
@@ -150,23 +150,23 @@ export default function Login() {
 							size="small"
 						/>
 					</div>
-					<SystemHeading
+					<RiftHeading
 						level={1}
 						variant="sovereign"
 						dimensional
 						className="mb-2"
 					>
-						System Ascendant
-					</SystemHeading>
-					<DataStreamText variant="system" speed="slow" className="text-lg">
+						Rift Ascendant
+					</RiftHeading>
+					<ManaFlowText variant="rift" speed="slow" className="text-lg">
 						{isSignUp
 							? "Initiate Awakening Protocol"
 							: "Restore System Connection"}
-					</DataStreamText>
+					</ManaFlowText>
 				</div>
 
 				{/* Login Form — SA glassmorphic card */}
-				<div className="sa-card p-8 system-materialize">
+				<div className="sa-card p-8 ascendant-materialize">
 					{oauthEnabled && (
 						<div className="mb-6 space-y-4">
 							<OAuthButtons
@@ -178,7 +178,7 @@ export default function Login() {
 									<div className="w-full sa-divider"></div>
 								</div>
 								<div className="relative flex justify-center text-xs">
-									<span className="bg-card/80 px-2 text-muted-foreground font-system tracking-wider uppercase text-[0.65rem]">
+									<span className="bg-card/80 px-2 text-muted-foreground font-heading tracking-wider uppercase text-[0.65rem]">
 										or continue with email
 									</span>
 								</div>
@@ -204,7 +204,7 @@ export default function Login() {
 							<button
 								type="button"
 								onClick={() => setRole("warden")}
-								aria-label="Select Protocol Warden role"
+								aria-label="Select Warden role"
 								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
 									role === "warden"
 										? "bg-shadow-purple text-white shadow-lg shadow-shadow-purple/50 border border-shadow-purple/60"
@@ -212,7 +212,7 @@ export default function Login() {
 								}`}
 							>
 								<Shield className="w-4 h-4" />
-								Protocol Warden
+								Warden
 							</button>
 						</div>
 
@@ -293,14 +293,14 @@ export default function Login() {
 
 						{/* Error Message */}
 						{error && (
-							<div className="bg-destructive/20 border border-destructive/50 text-destructive-foreground px-4 py-3 rounded-[2px] font-system text-sm">
+							<div className="bg-destructive/20 border border-destructive/50 text-destructive-foreground px-4 py-3 rounded-[2px] font-heading text-sm">
 								{error}
 							</div>
 						)}
 
 						{/* Notice Message */}
 						{notice && (
-							<div className="bg-success/20 border border-success/50 text-success-foreground px-4 py-3 rounded-[2px] font-system text-sm">
+							<div className="bg-success/20 border border-success/50 text-success-foreground px-4 py-3 rounded-[2px] font-heading text-sm">
 								{notice}
 							</div>
 						)}
@@ -319,7 +319,7 @@ export default function Login() {
 							) : (
 								<span className="flex items-center justify-center gap-2">
 									<Sword className="w-5 h-5" />
-									{isSignUp ? "Begin Ascension" : "Enter the System"}
+									{isSignUp ? "Begin Ascension" : "Enter the Rift"}
 								</span>
 							)}
 						</button>
@@ -331,7 +331,7 @@ export default function Login() {
 										<div className="w-full sa-divider"></div>
 									</div>
 									<div className="relative flex justify-center text-xs">
-										<span className="bg-card/80 px-2 text-muted-foreground font-system tracking-wider uppercase text-[0.65rem]">
+										<span className="bg-card/80 px-2 text-muted-foreground font-heading tracking-wider uppercase text-[0.65rem]">
 											or continue as guest
 										</span>
 									</div>
@@ -342,18 +342,18 @@ export default function Login() {
 									className="w-full border border-primary/30 text-foreground font-heading font-semibold py-3 px-4 rounded-[2px] hover:border-primary/50 hover:bg-primary/10 transition-all duration-200 tracking-wider uppercase sa-btn-glow"
 								>
 									Continue as Guest (
-									{role === "warden" ? "Protocol Warden" : "Ascendant"})
+									{role === "warden" ? "Warden" : "Ascendant"})
 								</button>
-								<SystemText className="block text-xs text-muted-foreground text-center font-system tracking-wider">
+								<AscendantText className="block text-xs text-muted-foreground text-center font-heading tracking-wider">
 									Guest mode saves data only in this browser.
-								</SystemText>
+								</AscendantText>
 							</div>
 						)}
 					</form>
 
 					{/* Toggle Sign Up/In */}
 					<div className="mt-6 text-center">
-						<SystemText className="block text-muted-foreground font-body">
+						<AscendantText className="block text-muted-foreground font-body">
 							{isSignUp ? "Already have an account?" : "Don't have an account?"}
 							<button
 								type="button"
@@ -365,16 +365,16 @@ export default function Login() {
 							>
 								{isSignUp ? "Sign In" : "Sign Up"}
 							</button>
-						</SystemText>
+						</AscendantText>
 					</div>
 				</div>
 
 				{/* Footer */}
-				<div className="mt-8 text-center text-muted-foreground text-sm font-system tracking-wider">
-					<p>System Ascendant Companion</p>
-					<SystemText className="block mt-1 text-muted-foreground/60">
+				<div className="mt-8 text-center text-muted-foreground text-sm font-heading tracking-wider">
+					<p>Rift Ascendant Companion</p>
+					<AscendantText className="block mt-1 text-muted-foreground/60">
 						Enter the shadows, become the ultimate ascendant
-					</SystemText>
+					</AscendantText>
 				</div>
 			</div>
 		</div>

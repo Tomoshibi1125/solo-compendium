@@ -65,7 +65,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 			const matchSearch =
 				article.title.toLowerCase().includes(search.toLowerCase()) ||
 				article.category.toLowerCase().includes(search.toLowerCase());
-			// Players can only see public articles, Protocol Warden (PW) sees all
+			// Players can only see public articles, Warden (Warden) sees all
 			const matchVisibility = hasWardenAccess ? true : article.is_public;
 			return matchSearch && matchVisibility;
 		});
@@ -338,7 +338,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 					<div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-hatching opacity-50">
 						<Globe className="w-16 h-16 text-muted-foreground mb-4 opacity-50" />
 						<h2 className="font-display text-xl text-foreground">
-							The System Lore Hub
+							The Rift Lore Hub
 						</h2>
 						<p className="text-sm text-muted-foreground max-w-md mt-2 font-heading">
 							Select an article from the index to read. Wrap titles in double
@@ -422,8 +422,7 @@ function WikiEditorDialog({
 						{article ? "EDIT ARCHIVE" : "NEW REGISTRY ENTRY"}
 					</DialogTitle>
 					<DialogDescription>
-						Log information into the System database. Use Markdown for
-						formatting.
+						Log information into the Rift database. Use Markdown for formatting.
 					</DialogDescription>
 				</DialogHeader>
 

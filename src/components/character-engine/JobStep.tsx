@@ -1,9 +1,9 @@
 import type React from "react";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -14,8 +14,8 @@ import {
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { Job, StaticJob } from "@/types/character";
 import { EARTH_LANGUAGES } from "@/types/character";
-import type { AbilityScore } from "@/types/system-rules";
-import { ABILITY_NAMES } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
+import { ABILITY_NAMES } from "@/types/core-rules";
 
 interface JobStepProps {
 	selectedJob: string;
@@ -56,7 +56,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-			<SystemWindow title="MODEL SELECTION: JOB ALIGNMENT">
+			<AscendantWindow title="MODEL SELECTION: JOB ALIGNMENT">
 				<div className="space-y-6">
 					<div className="space-y-3">
 						<Label className="text-[10px] uppercase tracking-widest text-primary/60">
@@ -105,9 +105,9 @@ export const JobStep: React.FC<JobStepProps> = ({
 									</Badge>
 								</div>
 
-								<SystemText className="block text-sm text-muted-foreground leading-relaxed italic">
+								<AscendantText className="block text-sm text-muted-foreground leading-relaxed italic">
 									{formatRegentVernacular(jobData.description)}
-								</SystemText>
+								</AscendantText>
 
 								<div className="grid grid-cols-2 gap-4 py-3 border-y border-primary/5">
 									<div className="space-y-1">
@@ -250,10 +250,10 @@ export const JobStep: React.FC<JobStepProps> = ({
 									</div>
 
 									<div className="space-y-3">
-										<SystemText className="text-[10px] text-muted-foreground">
+										<AscendantText className="text-[10px] text-muted-foreground">
 											Select an authorized Modern Earth language to append to
 											your neural linguistic Lattice.
-										</SystemText>
+										</AscendantText>
 										<Select
 											value={selectedLanguages[0] || ""}
 											onValueChange={(val) => onLanguagesChange([val])}
@@ -281,7 +281,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

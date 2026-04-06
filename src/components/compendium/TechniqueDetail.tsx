@@ -10,9 +10,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	type ActionResolutionPayload,
 	setPendingResolution,
@@ -57,7 +57,7 @@ interface TechniqueData {
 	} | null;
 	limitations?: {
 		uses?: string;
-		cooldown?: string;
+		recharge?: string;
 		conditions?: string[];
 		exhaustion?: string;
 	} | null;
@@ -176,7 +176,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 				</div>
 			)}
 
-			<SystemWindow title={displayName.toUpperCase()}>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						{data.technique_type && (
@@ -208,7 +208,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 								variant="outline"
 								onClick={() =>
 									queueResolutionAndNavigate(
-										"/warden-protocols/initiative-tracker",
+										"/warden-directives/initiative-tracker",
 									)
 								}
 							>
@@ -217,7 +217,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{(activation || duration || range || components) && (
 				<div
@@ -225,7 +225,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 					className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4"
 				>
 					{activation && (
-						<SystemWindow title="ACTIVATION" compact>
+						<AscendantWindow title="ACTIVATION" compact>
 							<div className="flex items-center gap-2">
 								<Zap className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
@@ -237,10 +237,10 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 									{formatRegentVernacular(activation.cost)}
 								</span>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 					{duration && (
-						<SystemWindow title="DURATION" compact>
+						<AscendantWindow title="DURATION" compact>
 							<div className="flex items-center gap-2">
 								<Timer className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
@@ -252,10 +252,10 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 									{formatRegentVernacular(duration.time)}
 								</span>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 					{range && (
-						<SystemWindow title="RANGE" compact>
+						<AscendantWindow title="RANGE" compact>
 							<div className="flex items-center gap-2">
 								<Target className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
@@ -267,10 +267,10 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 									{range.distance} ft
 								</span>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 					{components && (
-						<SystemWindow title="COMPONENTS" compact>
+						<AscendantWindow title="COMPONENTS" compact>
 							<div className="flex items-center gap-2">
 								<Sparkles className="w-5 h-5 text-primary" />
 								<span className="font-heading">
@@ -282,13 +282,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 									{formatRegentVernacular(components.material_desc)}
 								</span>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 				</div>
 			)}
 
 			{prereq && (
-				<SystemWindow title="PREREQUISITES">
+				<AscendantWindow title="PREREQUISITES">
 					<ul className="space-y-2 text-sm">
 						{prereq.level !== undefined && (
 							<li className="flex items-center gap-2">
@@ -329,11 +329,11 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							</li>
 						)}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{effects && (
-				<SystemWindow id="technique-effects" title="EFFECTS">
+				<AscendantWindow id="technique-effects" title="EFFECTS">
 					<div className="space-y-3">
 						{effects.primary && (
 							<p className="text-foreground leading-relaxed">
@@ -351,11 +351,11 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							</p>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{mechanics && (
-				<SystemWindow id="technique-mechanics" title="MECHANICS">
+				<AscendantWindow id="technique-mechanics" title="MECHANICS">
 					<div className="space-y-4">
 						{mechanics.attack && (
 							<div className="flex items-start gap-2">
@@ -435,11 +435,11 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{limitations && (
-				<SystemWindow title="LIMITATIONS">
+				<AscendantWindow title="LIMITATIONS">
 					<ul className="space-y-2 text-sm">
 						{limitations.uses && (
 							<li className="flex items-center gap-2">
@@ -447,11 +447,11 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 								<span>Uses: {formatRegentVernacular(limitations.uses)}</span>
 							</li>
 						)}
-						{limitations.cooldown && (
+						{limitations.recharge && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Cooldown: {formatRegentVernacular(limitations.cooldown)}
+									Recharge: {formatRegentVernacular(limitations.recharge)}
 								</span>
 							</li>
 						)}
@@ -475,11 +475,11 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							</li>
 						)}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{(data.description || data.flavor) && (
-				<SystemWindow id="technique-description" title="DESCRIPTION">
+				<AscendantWindow id="technique-description" title="DESCRIPTION">
 					<div className="space-y-3">
 						{data.flavor && (
 							<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
@@ -502,7 +502,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

@@ -36,7 +36,7 @@ test.describe("Comprehensive DM UI/UX Test", () => {
 		// Phase 1: Authentication & Dashboard
 		console.log("📝 Phase 1: Authentication & Dashboard");
 		await page.goto("/");
-		await expect(page).toHaveTitle(/System Ascendant/);
+		await expect(page).toHaveTitle(/Rift Ascendant/);
 
 		// Test landing page UI elements
 		await expect(page.locator("h1")).toBeVisible();
@@ -415,8 +415,8 @@ test.describe("Comprehensive DM UI/UX Test", () => {
 		await page.click('[data-testid="add-to-playlist"]');
 		await expect(page.locator('[data-testid="playlist-tracks"]')).toBeVisible();
 
-		// 3.17 System Console - All UI interactions
-		console.log("⚙️ Testing System Console UI");
+		// 3.17 Rift Console - All UI interactions
+		console.log("⚙️ Testing Rift Console UI");
 		await page.click('[data-testid="tool-system-console"]');
 		await expect(page.locator('[data-testid="system-console"]')).toBeVisible();
 

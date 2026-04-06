@@ -1,7 +1,7 @@
 import { BookOpen, Download, FileText, Heart, Share2 } from "lucide-react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { NotesManager } from "./NotesManager";
@@ -37,7 +37,7 @@ export function QuickReference({
 	return (
 		<div className={cn("space-y-4", className)}>
 			{/* Actions */}
-			<SystemWindow title="ACTIONS" compact>
+			<AscendantWindow title="ACTIONS" compact>
 				<div className="flex flex-col gap-2">
 					{onToggleFavorite && (
 						<Button
@@ -94,10 +94,10 @@ export function QuickReference({
 						View Notes
 					</Button>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Quick Stats */}
-			<SystemWindow title="QUICK REFERENCE" compact>
+			<AscendantWindow title="QUICK REFERENCE" compact>
 				<div className="space-y-3">
 					{entry.source_book && (
 						<div>
@@ -159,7 +159,7 @@ export function QuickReference({
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Notes Section */}
 			<div data-notes-section>

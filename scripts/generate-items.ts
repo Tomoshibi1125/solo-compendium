@@ -106,10 +106,10 @@ const rarities = ["common", "uncommon", "rare", "epic", "legendary"];
 // Lore Fragments
 const originStories = [
 	"Forged in the heart of a collapsing C-Rank dimensional rift.",
-	"A manifestation of pure System authority, designed to bypass mortal limitations.",
-	"Translated from an ancient Monarch's combat protocol during the First Awakening.",
+	"A manifestation of pure Arcane authority, designed to bypass mortal limitations.",
+	"Translated from an ancient Monarch's combat stance during the First Awakening.",
 	"Salvaged by an S-Rank hunter from the depths of the Abyssal gates.",
-	"An anomaly in the System's mana distribution network, crystallized over decades.",
+	"An anomaly in the local mana distribution network, crystallized over decades.",
 	"Refined from the crystallized essence of a fallen Regent of the Void.",
 	"A tactical asset optimized for modern urban awakening zones by rogue engineers.",
 	"Developed by top Guild researchers studying concentrated void energy.",
@@ -162,7 +162,7 @@ const armorMechanicsMap: Record<string, { ac: string; prop: string }> = {
 const buffs = [
 	"resistance to necrotic damage",
 	"resistance to fire damage",
-	"advantage on Protocol checks (saving throws) against illusions",
+	"advantage on saving throws against illusions",
 	"+1 bonus to attack and damage rolls",
 	"+2 bonus to attack and damage rolls",
 	"+1 bonus to AC",
@@ -217,14 +217,17 @@ function generateDetailedDescription(
 		const mech = armorMechanicsMap[base] || { ac: "+1", prop: "" };
 		desc += `This defensive gear provides Base AC/Bonus: **${mech.ac}**. Properties: *${mech.prop}*. `;
 	} else {
-		desc += `When equipped, the wearer feels an immediate surge of System Mana integrating into their neural network. `;
+		desc += `When equipped, the wearer feels an immediate surge of wild Mana integrating into their body. `;
 	}
 
-	desc += `As a ${rarity} artifact, the System has cataloged it as highly valuable for Hunters facing high-rank dungeon threats.`;
+	desc += `As a ${rarity} artifact, Guilds have cataloged it as highly valuable for Hunters facing high-rank dungeon threats.`;
 	return desc;
 }
 
-function generateEffect(rarity: string, _type: string) {
+interface ActiveAbility { name: string; description: string; action: string; frequency: string; }
+interface ItemEffect { passive: string[]; active?: ActiveAbility[]; }
+
+function generateEffect(rarity: string, _type: string): ItemEffect {
 	const passiveCount =
 		rarity === "common"
 			? 1
@@ -238,17 +241,17 @@ function generateEffect(rarity: string, _type: string) {
 	const passives: string[] = [];
 
 	for (let i = 0; i < passiveCount; i++) {
-		passives.push(`System Buff: Grants ${randomArray(buffs)}.`);
+		passives.push(`Passive Benefit: Grants ${randomArray(buffs)}.`);
 	}
 
-	const effect: any = { passive: passives };
+	const effect: ItemEffect = { passive: passives };
 	if (Math.random() > 0.5 && rarity !== "common") {
 		const cost =
-			rarity === "uncommon" ? "10 MP" : rarity === "rare" ? "25 MP" : "50 MP";
+			rarity === "uncommon" ? "10 Mana" : rarity === "rare" ? "25 Mana" : "50 Mana";
 		effect.active = [
 			{
-				name: "System Protocol Override",
-				description: `Expend ${cost} to unleash a violent burst of stored dimensional energy. Target must succeed on a DC ${12 + (rarity === "legendary" ? 6 : rarity === "epic" ? 4 : 2)} Protocol check or be stunned until the end of its next turn.`,
+				name: "Arcane Overchannel",
+				description: `Expend ${cost} to unleash a violent burst of stored dimensional energy. Target must succeed on a DC ${12 + (rarity === "legendary" ? 6 : rarity === "epic" ? 4 : 2)} saving throw or be stunned until the end of its next turn.`,
 				action: "action",
 				frequency: "once-per-day",
 			},
@@ -257,7 +260,13 @@ function generateEffect(rarity: string, _type: string) {
 	return effect;
 }
 
-const items: any[] = [];
+interface GeneratedItem {
+	id: string; name: string; description: string; rarity: string;
+	type: string; image: string; effects: ItemEffect; attunement: boolean;
+	weight: number; value: number; source: string; lore: string;
+}
+
+const items: GeneratedItem[] = [];
 const namesSet = new Set<string>();
 let idCounter = 1;
 

@@ -6,10 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useCharacter } from "@/hooks/useCharacters";
 import type { LevelingMode } from "@/lib/campaignSettings";
-import { getProficiencyBonus, getSystemFavorDie } from "@/types/system-rules";
+import { getProficiencyBonus, getRiftFavorDie } from "@/types/core-rules";
 import { LevelUpWizardModal } from "./character/LevelUpWizardModal";
 
-// System Ascendant experience thresholds by level (index = level, value = total XP needed)
+// Rift Ascendant experience thresholds by level (index = level, value = total XP needed)
 const XP_THRESHOLDS = [
 	0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
 	120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
@@ -43,7 +43,7 @@ export function CharacterLevelUp({
 	const xpNeeded = getXPForNextLevel(level);
 	const canLevelUp = level < 20 && (isMilestone || currentXP >= xpNeeded);
 	const profBonus = getProficiencyBonus(level);
-	const systemFavorDie = getSystemFavorDie(level);
+	const riftFavorDie = getRiftFavorDie(level);
 	const hitDieSize = character.hit_dice_size ?? 8;
 	const xpProgress = isMilestone
 		? 100
@@ -116,7 +116,7 @@ export function CharacterLevelUp({
 								<Zap className="w-4 h-4 text-yellow-400" />
 							</div>
 							<div className="text-lg font-display font-bold">
-								d{systemFavorDie}
+								d{riftFavorDie}
 							</div>
 							<div className="text-xs text-muted-foreground">Favor Die</div>
 						</div>

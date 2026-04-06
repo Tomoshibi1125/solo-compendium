@@ -64,7 +64,7 @@ export function Pagination({
 	return (
 		<div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
 			{itemsPerPage && totalItems && (
-				<div className="text-sm text-primary/70 font-system tracking-wide">
+				<div className="text-sm text-primary/70 font-heading tracking-wide">
 					DATA{" "}
 					<span className="text-primary">
 						[{startItem} - {endItem}]

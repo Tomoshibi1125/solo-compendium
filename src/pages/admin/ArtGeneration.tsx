@@ -12,16 +12,16 @@ import {
 	XCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	useArtPipeline,
@@ -287,16 +287,16 @@ export default function ArtGenerationAdmin() {
 		<div className="container mx-auto p-6 space-y-6">
 			<div className="flex items-center justify-between">
 				<div>
-					<SystemHeading level={1} variant="sovereign" dimensional>
+					<RiftHeading level={1} variant="sovereign" dimensional>
 						Art Generation
-					</SystemHeading>
-					<DataStreamText
-						variant="system"
+					</RiftHeading>
+					<ManaFlowText
+						variant="rift"
 						speed="slow"
 						className="text-muted-foreground"
 					>
 						Manage AI-assisted art generation
-					</DataStreamText>
+					</ManaFlowText>
 				</div>
 				<div className="flex items-center gap-2">
 					<Badge variant={enabled && isAvailable ? "default" : "secondary"}>
@@ -529,9 +529,9 @@ export default function ArtGenerationAdmin() {
 									)}
 								</div>
 							) : (
-								<SystemText className="block text-muted-foreground">
+								<AscendantText className="block text-muted-foreground">
 									Queue status not available
-								</SystemText>
+								</AscendantText>
 							)}
 						</CardContent>
 					</Card>

@@ -862,7 +862,7 @@ const systemFocus = baseItem({
 	id: "base-focus-system",
 	name: "System Focus",
 	description:
-		"A holy symbol or amulet that channels the System's healing protocols.",
+		"A holy symbol or amulet that channels the Rift's healing protocols.",
 	item_type: "misc",
 	weight: 1,
 	value: 5,

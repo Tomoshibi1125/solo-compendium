@@ -10,11 +10,11 @@ import {
 	Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { type BroadcastTheme, useVTTBroadcast } from "@/hooks/useVTTBroadcast";
 import { cn } from "@/lib/utils";
@@ -30,7 +30,7 @@ const THEME_OPTIONS: {
 	icon: LucideIcon;
 	color: string;
 }[] = [
-	{ id: "system", label: "System", icon: Terminal, color: "text-amethyst-500" },
+	{ id: "rift", label: "Rift", icon: Terminal, color: "text-amethyst-500" },
 	{
 		id: "warden",
 		label: "Warden",
@@ -83,7 +83,7 @@ export const WardenBroadcastPanel: React.FC<WardenBroadcastPanelProps> = ({
 	};
 
 	return (
-		<SystemWindow
+		<AscendantWindow
 			title="PROTOCOL WARDEN BROADCAST"
 			variant="regent"
 			className="max-h-[800px] overflow-y-auto"
@@ -121,7 +121,7 @@ export const WardenBroadcastPanel: React.FC<WardenBroadcastPanelProps> = ({
 					</Label>
 					<textarea
 						className="w-full h-32 bg-[#0a0619]/50 border-white/10 rounded-md p-3 text-sm font-mono focus:border-amethyst-500 focus:ring-1 focus:ring-amethyst-500 outline-none transition-all placeholder:opacity-30"
-						placeholder="Type your system announcement or narrative flavor here..."
+						placeholder="Type your rift announcement or narrative flavor here..."
 						value={message}
 						onChange={(e) => setMessage(e.target.value)}
 					/>
@@ -201,6 +201,6 @@ export const WardenBroadcastPanel: React.FC<WardenBroadcastPanelProps> = ({
 					</Button>
 				</div>
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 };

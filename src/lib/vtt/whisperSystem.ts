@@ -1,7 +1,7 @@
 /**
  * VTT Whisper / Private Message System
  *
- * Handles private messages between Protocol Warden (PW) and players in the VTT chat.
+ * Handles private messages between Warden (Warden) and players in the VTT chat.
  * Whispers are only visible to sender and recipient(s).
  */
 
@@ -25,7 +25,7 @@ export interface WhisperMessage {
 export interface ChatParticipant {
 	id: string;
 	name: string;
-	role: "PW" | "player" | "co-system";
+	role: "Warden" | "player" | "co-system";
 	characterName?: string;
 }
 
@@ -36,9 +36,9 @@ export interface ChatParticipant {
  * Supported formats:
  *   /w PlayerName message
  *   /whisper PlayerName message
- *   /PW message (whisper to PW only)
+ *   /Warden message (whisper to Warden only)
  *   /r formula (public roll)
- *   /wardenroll formula (Protocol Warden-only roll)
+ *   /wardenroll formula (Warden-only roll)
  */
 export function parseWhisperCommand(
 	input: string,
@@ -53,11 +53,11 @@ export function parseWhisperCommand(
 } | null {
 	const trimmed = input.trim();
 
-	// /PW message — whisper to PW
-	const gmMatch = trimmed.match(/^\/PW\s+(.+)/i);
+	// /Warden message — whisper to Warden
+	const gmMatch = trimmed.match(/^\/Warden\s+(.+)/i);
 	if (gmMatch) {
 		const gms = participants.filter(
-			(p) => p.role === "PW" || p.role === "co-system",
+			(p) => p.role === "Warden" || p.role === "co-system",
 		);
 		return {
 			isWhisper: true,
@@ -97,7 +97,7 @@ export function parseWhisperCommand(
 	const gmrollMatch = trimmed.match(/^\/wardenroll\s+(.+)/i);
 	if (gmrollMatch) {
 		const gms = participants.filter(
-			(p) => p.role === "PW" || p.role === "co-system",
+			(p) => p.role === "Warden" || p.role === "co-system",
 		);
 		return {
 			isWhisper: true,
@@ -157,7 +157,7 @@ export function formatWhisperLabel(
 ): string {
 	if (message.type === "warden_whisper") {
 		return message.senderId === currentUserId
-			? `Whisper to PW`
+			? `Whisper to Warden`
 			: `${message.senderName} whispers to you`;
 	}
 

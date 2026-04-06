@@ -2,7 +2,7 @@
  * VTT Initiative Panel — compact initiative tracker for VTT sidebar
  *
  * Reuses the campaign combat hooks for real-time persistence and sync.
- * Designed to fit in the left sidebar's SystemWindow pattern.
+ * Designed to fit in the left sidebar's AscendantWindow pattern.
  */
 
 import {
@@ -388,7 +388,7 @@ export function VTTInitiativePanel({
 				)}
 			</div>
 
-			{/* Quick-add form (PW only) */}
+			{/* Quick-add form (Warden only) */}
 			{isWarden && (
 				<div className="flex gap-1">
 					<Input

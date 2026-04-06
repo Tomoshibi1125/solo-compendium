@@ -2,9 +2,9 @@ import { AlertTriangle, Coins, Gem, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	type ActionResolutionPayload,
 	setPendingResolution,
@@ -194,7 +194,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			)}
 
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				className={`border-2 ${tierColors[data.relic_tier || ""] || "border-primary/50"}`}
 			>
@@ -229,11 +229,11 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						</p>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Stats */}
 			<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-				<SystemWindow title="RARITY" compact>
+				<AscendantWindow title="RARITY" compact>
 					<div className="flex items-center gap-2">
 						<Gem
 							className={`w-5 h-5 ${data.rarity === "legendary" ? "text-amber-500" : rarityColors[data.rarity] ? "text-white" : ""}`}
@@ -242,33 +242,33 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							{formatRegentVernacular(data.rarity.replace("_", " "))}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
 				{data.relic_tier && (
-					<SystemWindow title="TIER" compact>
+					<AscendantWindow title="TIER" compact>
 						<div className="flex items-center gap-2">
 							<Sparkles className="w-5 h-5 text-primary" />
 							<span className="font-heading capitalize">
 								{formatRegentVernacular(data.relic_tier)}
 							</span>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{data.value_credits && (
-					<SystemWindow title="VALUE" compact>
+					<AscendantWindow title="VALUE" compact>
 						<div className="flex items-center gap-2">
 							<Coins className="w-5 h-5 text-yellow-400" />
 							<span className="font-heading">
 								{data.value_credits.toLocaleString()} credits
 							</span>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 
 			{data.requirements && (
-				<SystemWindow title="REQUIREMENTS">
+				<AscendantWindow title="REQUIREMENTS">
 					<ul className="space-y-2 text-sm">
 						{data.requirements.level !== undefined && (
 							<li className="flex items-start gap-2">
@@ -321,19 +321,19 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							</li>
 						)}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Description */}
-			<SystemWindow title="DESCRIPTION">
+			<AscendantWindow title="DESCRIPTION">
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
 					<AutoLinkText text={data.description} />
 				</p>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Properties */}
 			{propertiesList.length > 0 && (
-				<SystemWindow title="PROPERTIES">
+				<AscendantWindow title="PROPERTIES">
 					<ul className="space-y-2">
 						{propertiesList.map((prop, _i) => (
 							<li key={prop} className="flex items-start gap-2">
@@ -344,11 +344,11 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{abilitiesList.length > 0 && (
-				<SystemWindow title="ABILITIES">
+				<AscendantWindow title="ABILITIES">
 					<div className="space-y-4">
 						{abilitiesList.map((ability, _i) => {
 							const payload = buildAbilityPayload(ability);
@@ -407,7 +407,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 												onClick={() =>
 													queueResolutionAndNavigate(
 														payload,
-														"/warden-protocols/initiative-tracker",
+														"/warden-directives/initiative-tracker",
 													)
 												}
 											>
@@ -419,11 +419,11 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							);
 						})}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.lore && (
-				<SystemWindow title="LORE">
+				<AscendantWindow title="LORE">
 					<div className="space-y-3 text-sm">
 						{data.lore.origin && (
 							<p className="text-muted-foreground">
@@ -450,11 +450,11 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							</p>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.mechanics && (
-				<SystemWindow title="MECHANICS">
+				<AscendantWindow title="MECHANICS">
 					<div className="space-y-3 text-sm">
 						{data.mechanics.bonus && (
 							<p className="text-muted-foreground">
@@ -488,12 +488,12 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								</p>
 							)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Quirks */}
 			{data.quirks && data.quirks.length > 0 && (
-				<SystemWindow title="QUIRKS">
+				<AscendantWindow title="QUIRKS">
 					<ul className="space-y-2">
 						{data.quirks.map((quirk, _i) => (
 							<li key={quirk} className="flex items-start gap-2">
@@ -504,19 +504,19 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Corruption Risk */}
 			{data.corruption_risk && (
-				<SystemWindow title="CORRUPTION RISK" className="border-red-500/30">
+				<AscendantWindow title="CORRUPTION RISK" className="border-red-500/30">
 					<div className="flex items-start gap-3">
 						<AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
 						<p className="text-foreground">
 							<AutoLinkText text={data.corruption_risk} />
 						</p>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Tags */}

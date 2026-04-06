@@ -7,13 +7,13 @@ import {
 	Zap,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -86,7 +86,7 @@ const formatRequirement = (template?: DailyQuestTemplate) => {
 
 const formatReward = (reward: QuestReward, showExperience: boolean) => {
 	const parts: string[] = [];
-	if (reward.system_favor) parts.push(`System Favor +${reward.system_favor}`);
+	if (reward.rift_favor) parts.push(`Rift Favor +${reward.rift_favor}`);
 	if (reward.gold) parts.push(`Gold +${reward.gold}`);
 	if (reward.relic_shards) parts.push(`Relic Shards +${reward.relic_shards}`);
 	if (showExperience && reward.experience)
@@ -243,10 +243,10 @@ export function QuestLog({ characterId }: { characterId: string }) {
 		if (existing?.applied) return;
 
 		const updates: Record<string, number> = {};
-		if (reward.system_favor) {
-			updates.system_favor_current = Math.min(
-				character.system_favor_max,
-				character.system_favor_current + reward.system_favor,
+		if (reward.rift_favor) {
+			updates.rift_favor_current = Math.min(
+				character.rift_favor_max,
+				character.rift_favor_current + reward.rift_favor,
 			);
 		}
 		if (allowExperienceRewards && reward.experience) {
@@ -260,14 +260,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
 					data: updates,
 				});
 
-				if (reward.system_favor) {
+				if (reward.rift_favor) {
 					ascendantTools
-						.trackCustomFeatureUsage(
-							characterId,
-							"System Favor",
-							"regain",
-							"SA",
-						)
+						.trackCustomFeatureUsage(characterId, "Rift Favor", "regain", "SA")
 						.catch(console.error);
 				}
 			}
@@ -406,9 +401,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
 								<Target className="w-4 h-4 text-accent" />
 								<span>{template?.name || "Daily Quest"}</span>
 							</div>
-							<SystemText className="block text-xs text-muted-foreground mt-1">
+							<AscendantText className="block text-xs text-muted-foreground mt-1">
 								{template?.description || "Complete the daily objective."}
-							</SystemText>
+							</AscendantText>
 						</div>
 						<Badge
 							variant={
@@ -439,9 +434,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
 						)}
 					</div>
 
-					<SystemText className="block text-xs text-muted-foreground">
+					<AscendantText className="block text-xs text-muted-foreground">
 						{formatRequirement(template)}
-					</SystemText>
+					</AscendantText>
 
 					<div className="space-y-2">
 						<div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -519,15 +514,18 @@ export function QuestLog({ characterId }: { characterId: string }) {
 
 	return (
 		<div className="space-y-6">
-			<SystemWindow title="DAILY QUEST SETTINGS" className="border-accent/30">
+			<AscendantWindow
+				title="DAILY QUEST SETTINGS"
+				className="border-accent/30"
+			>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					<div className="space-y-3">
 						<div className="flex items-center justify-between">
 							<div>
 								<h3 className="font-medium">Enable Daily Quests</h3>
-								<SystemText className="block text-xs text-muted-foreground">
+								<AscendantText className="block text-xs text-muted-foreground">
 									Assign new quests after long rest.
-								</SystemText>
+								</AscendantText>
 							</div>
 							<Switch
 								checked={configForm.enabled}
@@ -697,7 +695,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
 						</Button>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 				<Card>

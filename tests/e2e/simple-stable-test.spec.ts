@@ -15,7 +15,7 @@ test.describe("Simple Stable Test", () => {
 		// Test 1: Server is running
 		console.log("📡 Testing server connectivity...");
 		await page.goto("http://localhost:8080", { timeout: 30000 });
-		await expect(page).toHaveTitle(/System Ascendant/);
+		await expect(page).toHaveTitle(/Rift Ascendant/);
 		console.log("✅ Server is running and accessible");
 
 		// Test 2: Basic page elements load

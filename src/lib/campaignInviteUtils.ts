@@ -100,9 +100,9 @@ export const campaignInviteStatusMessage = (
 		case "active":
 			return "This invite is valid. You can join now.";
 		case "expired":
-			return "This invite has expired. Ask your Protocol Warden for a fresh invite.";
+			return "This invite has expired. Ask your Warden for a fresh invite.";
 		case "revoked":
-			return "This invite has been revoked by the Protocol Warden.";
+			return "This invite has been revoked by the Warden.";
 		case "used_up":
 			return "This invite reached its usage cap. Existing members can still re-open it to attach another character.";
 		default:

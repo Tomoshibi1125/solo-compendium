@@ -1,14 +1,14 @@
 import { Shield } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { allBackgrounds } from "@/data/compendium/backgrounds-index";
 
 export const BackgroundsChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-amethyst mb-6">
+				<RiftHeading level={1} className="text-5xl text-amethyst mb-6">
 					Ancestries & Origins
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
 					Before the Awakening, every Ascendant lived a mundane life. This
 					history fundamentally shapes how their mana core develops and provides

@@ -37,14 +37,14 @@ const selectedAnomalies = getRandom(anomalies, 60);
 const selectedRelics = getRandom(allItemsAndRelics, 75);
 
 // Formatters
-function formatRelic(relic: any) {
+function formatRelic(relic: { name: string; type?: string; rarity?: string; attunement?: boolean; description?: string; abilities?: Array<{ name: string; description: string }>; }) {
 	let md = `#### ${relic.name}\n`;
 	md += `*${relic.type ? relic.type.charAt(0).toUpperCase() + relic.type.slice(1) : "Item"}, ${relic.rarity || "Uncommon"}${relic.attunement ? " — Requires Attunement" : ""}*\n`;
 	md += `${relic.description || "A mysterious item of unknown provenance."}\n\n`;
 
 	if (relic.abilities && relic.abilities.length > 0) {
 		md += `**Abilities:**\n`;
-		relic.abilities.forEach((ab: any) => {
+		relic.abilities.forEach((ab) => {
 			md += `- ***${ab.name}.*** ${ab.description}\n`;
 		});
 		md += `\n`;
@@ -52,7 +52,7 @@ function formatRelic(relic: any) {
 	return md;
 }
 
-function formatAnomaly(anomaly: any) {
+function formatAnomaly(anomaly: { name: string; rank?: string; type?: string; ac?: number; hp?: number; description?: string; stats?: { ability_scores?: { strength: number; agility: number; vitality: number; intelligence: number; sense: number; presence: number }; challenge_rating?: number }; traits?: Array<{ name: string; description: string }>; actions?: Array<{ name: string; description: string }>; }) {
 	let md = `### ${anomaly.name} (${anomaly.rank}-Rank ${anomaly.type || "Anomaly"})\n`;
 	md += `*Medium Aberration, Unaligned*\n\n`;
 	md += `**AC:** ${anomaly.ac || 15} | **HP:** ${anomaly.hp || 50} | **Speed:** 30 ft.\n`;
@@ -71,12 +71,12 @@ function formatAnomaly(anomaly: any) {
 		`${val} (${mod(val) >= 0 ? "+" : ""}${mod(val)})`;
 
 	md += `| ${formatStat(s.strength)} | ${formatStat(s.agility)} | ${formatStat(s.vitality)} | ${formatStat(s.intelligence)} | ${formatStat(s.sense)} | ${formatStat(s.presence)} |\n\n`;
-	md += `**CR:** ${anomaly.stats?.challenge_rating || "Unknown"}\n`;
+	md += `**CR:** ${anomaly.stats?.challenge_rating || "Classified"}\n`;
 	md += `> ${anomaly.description || "A dangerous anomaly."}\n\n`;
 
 	if (anomaly.traits && anomaly.traits.length > 0) {
 		md += `**Traits:**\n`;
-		anomaly.traits.forEach((t: any) => {
+		anomaly.traits.forEach((t) => {
 			md += `- ***${t.name}.*** ${t.description}\n`;
 		});
 		md += `\n`;
@@ -84,7 +84,7 @@ function formatAnomaly(anomaly: any) {
 
 	if (anomaly.actions && anomaly.actions.length > 0) {
 		md += `**Actions:**\n`;
-		anomaly.actions.forEach((a: any) => {
+		anomaly.actions.forEach((a) => {
 			md += `- ***${a.name}.*** ${a.description}\n`;
 		});
 		md += `\n`;

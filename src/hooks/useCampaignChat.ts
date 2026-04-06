@@ -13,7 +13,7 @@ export interface CampaignMessage {
 	campaign_id: string;
 	user_id: string;
 	character_name: string | null;
-	message_type: "chat" | "roll" | "system" | "whisper";
+	message_type: "chat" | "roll" | "rift" | "whisper";
 	content: string;
 	metadata: Json | null;
 	created_at: string;
@@ -198,7 +198,7 @@ export const useSendCampaignMessage = () => {
 			campaignId: string;
 			content: string;
 			characterName?: string;
-			messageType?: "chat" | "roll" | "system" | "whisper";
+			messageType?: "chat" | "roll" | "rift" | "whisper";
 			metadata?: Json;
 		}) => {
 			const isOfflineMode =

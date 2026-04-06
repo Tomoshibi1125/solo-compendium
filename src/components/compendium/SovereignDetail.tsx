@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { supabase } from "@/integrations/supabase/client";
 import { resolveRef } from "@/lib/compendiumResolver";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
@@ -178,7 +178,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 	return (
 		<div className="space-y-6">
 			{/* Header - Gemini Protocol Title */}
-			<SystemWindow
+			<AscendantWindow
 				id="sovereign-overview"
 				title="GEMINI PROTOCOL"
 				className="border-violet-500/50 border-2 bg-gradient-to-br from-violet-950/20 to-background"
@@ -224,10 +224,10 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 						)}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Fusion Components */}
-			<SystemWindow
+			<AscendantWindow
 				id="sovereign-fusion"
 				title="FUSION COMPONENTS"
 				className="border-purple-500/30"
@@ -272,11 +272,11 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Fusion Manifestation */}
 			{data.fusion_description && (
-				<SystemWindow
+				<AscendantWindow
 					title="FUSION MANIFESTATION"
 					className="border-violet-500/30"
 				>
@@ -286,12 +286,12 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 							<AutoLinkText text={data.fusion_description} />
 						</p>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Prerequisites */}
 			{data.prerequisites && (
-				<SystemWindow
+				<AscendantWindow
 					title="GEMINI PROTOCOL REQUIREMENTS"
 					className="border-rose-500/30"
 				>
@@ -301,12 +301,12 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 							<AutoLinkText text={data.prerequisites} />
 						</p>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Core Fusion Features */}
 			{coreFeatures.length > 0 && (
-				<SystemWindow
+				<AscendantWindow
 					id="sovereign-features"
 					title="FUSION ABILITIES"
 					className="border-primary/30"
@@ -355,12 +355,12 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 							</div>
 						))}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Capstone Features */}
 			{capstoneFeatures.length > 0 && (
-				<SystemWindow
+				<AscendantWindow
 					id={coreFeatures.length === 0 ? "sovereign-features" : undefined}
 					title="CAPSTONE ABILITIES"
 					className="border-amber-500/50"
@@ -412,7 +412,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 							</div>
 						))}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Tags */}
@@ -427,7 +427,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			)}
 
 			{/* Lore Note */}
-			<SystemWindow
+			<AscendantWindow
 				title="THE The Absolute's SACRED PROCLAMATION"
 				className="border-cyan-500/30 bg-cyan-500/5"
 			>
@@ -440,9 +440,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					one unified force. This is not merely a tactical advantage; it is a
 					spiritual transformation. The overlay is an irreversible covenant, for
 					to become a Sovereign is to be recognized by the Prime Pantheon as a
-					true heir of the System Ascendant.
+					true heir of the Rift Ascendant.
 				</p>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

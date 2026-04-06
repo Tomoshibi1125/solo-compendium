@@ -2,9 +2,9 @@ import { BookOpen, Clock, Target, Timer, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { setPendingResolution } from "@/lib/actionResolution";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -102,7 +102,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				className={cn("border-2", tierColor)}
 			>
@@ -156,49 +156,49 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 						)}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Casting Properties */}
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-				<SystemWindow title="CASTING TIME" compact>
+				<AscendantWindow title="CASTING TIME" compact>
 					<div className="flex items-center gap-2">
 						<Clock className="w-5 h-5 text-primary" />
 						<span className="font-heading">
 							{formatRegentVernacular(data.casting_time || "1 action")}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="RANGE" compact>
+				<AscendantWindow title="RANGE" compact>
 					<div className="flex items-center gap-2">
 						<Target className="w-5 h-5 text-primary" />
 						<span className="font-heading">
 							{formatRegentVernacular(data.range || "Self")}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="DURATION" compact>
+				<AscendantWindow title="DURATION" compact>
 					<div className="flex items-center gap-2">
 						<Timer className="w-5 h-5 text-primary" />
 						<span className="font-heading">
 							{formatRegentVernacular(data.duration || "Instantaneous")}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="COMPONENTS" compact>
+				<AscendantWindow title="COMPONENTS" compact>
 					<div className="flex items-center gap-2">
 						<Zap className="w-5 h-5 text-primary" />
 						<span className="font-heading">
 							{formatRegentVernacular(data.components || "V, S")}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 
 			{/* Description */}
-			<SystemWindow title="DESCRIPTION">
+			<AscendantWindow title="DESCRIPTION">
 				{data.flavor && (
 					<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
 						<AutoLinkText text={data.flavor} />
@@ -217,27 +217,27 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 						</p>
 					</div>
 				)}
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Mechanics Raw Output if exists */}
 			{data.mechanics && Object.keys(data.mechanics).length > 0 && (
-				<SystemWindow title="SYSTEM DIAGNOSTICS">
+				<AscendantWindow title="SYSTEM DIAGNOSTICS">
 					<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
 						{JSON.stringify(data.mechanics, null, 2)}
 					</pre>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* At Higher Levels */}
 			{data.higher_levels && (
-				<SystemWindow title="AT HIGHER TIERS">
+				<AscendantWindow title="AT HIGHER TIERS">
 					<div className="flex items-start gap-3">
 						<BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
 						<p className="text-foreground leading-relaxed text-base">
 							<AutoLinkText text={data.higher_levels} />
 						</p>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Tags */}

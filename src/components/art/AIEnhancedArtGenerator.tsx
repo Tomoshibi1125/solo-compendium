@@ -121,9 +121,9 @@ export function AIEnhancedArtGenerator({
 
 		try {
 			const result = await enhancePrompt(originalPrompt, {
-				style: "dark manhwa anime cinematic fantasy, System Ascendant style",
+				style: "dark manhwa anime cinematic fantasy, Rift Ascendant style",
 				mood: "dramatic, high contrast, detailed",
-				universe: "System Ascendant",
+				universe: "Rift Ascendant",
 			});
 
 			if (result?.enhanced) {
@@ -162,7 +162,7 @@ export function AIEnhancedArtGenerator({
 
 		try {
 			await suggestStyles(
-				"dark manhwa anime cinematic fantasy, System Ascendant",
+				"dark manhwa anime cinematic fantasy, Rift Ascendant",
 			);
 		} catch (error) {
 			logger.error("Failed to suggest styles:", error);
@@ -323,7 +323,7 @@ export function AIEnhancedArtGenerator({
 						</div>
 						<div className="flex items-center gap-2">
 							<div className="w-3 h-3 rounded-full bg-purple-500" />
-							<span className="text-sm">System Ascendant Style</span>
+							<span className="text-sm">Rift Ascendant Style</span>
 						</div>
 					</div>
 				</CardContent>
@@ -400,7 +400,7 @@ export function AIEnhancedArtGenerator({
 									/>
 									{enhancement && (
 										<div className="text-xs text-muted-foreground">
-											<p>- AI enhanced with System Ascendant styling</p>
+											<p>- AI enhanced with Rift Ascendant styling</p>
 											<p>- Added dramatic lighting and contrast</p>
 											<p>- Included manhwa anime elements</p>
 										</div>

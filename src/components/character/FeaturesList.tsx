@@ -1,11 +1,11 @@
 import { Minus, Plus, Power, PowerOff, Star, Zap } from "lucide-react";
 import { useCallback, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { SortableList } from "@/components/ui/SortableList";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -160,7 +160,7 @@ export function FeaturesList({
 	};
 
 	return (
-		<SystemWindow title="FEATURES">
+		<AscendantWindow title="FEATURES">
 			<div className="space-y-4">
 				<div className="flex items-center gap-2">
 					<Select value={filterSource} onValueChange={setFilterSource}>
@@ -348,6 +348,6 @@ export function FeaturesList({
 					))
 				)}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

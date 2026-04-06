@@ -20,7 +20,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 2,
+			rift_favor: 2,
 			description: "Basic conditioning reward",
 			custom_rewards: {},
 		},
@@ -47,7 +47,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 2,
+			rift_favor: 2,
 			description: "Basic conditioning reward",
 			custom_rewards: {},
 		},
@@ -74,7 +74,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 3,
+			rift_favor: 3,
 			description: "Endurance building reward",
 			custom_rewards: {},
 		},
@@ -100,7 +100,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 5,
+			rift_favor: 5,
 			description: "Combat training reward",
 			custom_rewards: {},
 		},
@@ -126,7 +126,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 5,
+			rift_favor: 5,
 			description: "Spell combat practice reward",
 			custom_rewards: {},
 		},
@@ -153,7 +153,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 3,
+			rift_favor: 3,
 			description: "Exploration reward",
 			custom_rewards: {},
 		},
@@ -178,7 +178,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 2,
+			rift_favor: 2,
 			description: "Mana restoration reward",
 			custom_rewards: {},
 		},
@@ -204,7 +204,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 			offset: 0,
 		},
 		base_rewards: {
-			system_favor: 3,
+			rift_favor: 3,
 			description: "Crafting practice reward",
 			custom_rewards: {},
 		},

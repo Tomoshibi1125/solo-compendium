@@ -3,15 +3,15 @@ import { ArrowLeft, Coins, Package, Plus, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCampaignGold } from "@/hooks/useCampaignGold";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
 import { supabase } from "@/integrations/supabase/client";
@@ -66,23 +66,18 @@ export default function PartyStash() {
 		return (
 			<Layout>
 				<div className="container p-8 text-center max-w-2xl mx-auto">
-					<SystemWindow title="PARTY STASH">
-						<SystemHeading
-							level={2}
-							variant="gate"
-							dimensional
-							className="mb-4"
-						>
+					<AscendantWindow title="PARTY STASH">
+						<RiftHeading level={2} variant="gate" dimensional className="mb-4">
 							No Domain Selected
-						</SystemHeading>
-						<DataStreamText variant="system" speed="slow" className="mb-4">
-							Select a domain from your Protocol Warden interface or Ascendant
-							dashboard to access the shared dimensional stash.
-						</DataStreamText>
+						</RiftHeading>
+						<ManaFlowText variant="rift" speed="slow" className="mb-4">
+							Select a domain from your Warden interface or Ascendant dashboard
+							to access the shared dimensional stash.
+						</ManaFlowText>
 						<Button onClick={() => navigate("/campaigns")}>
 							Find Campaign
 						</Button>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</Layout>
 		);
@@ -109,21 +104,21 @@ export default function PartyStash() {
 						Back
 					</Button>
 					<div>
-						<SystemHeading
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="mb-1"
 						>
 							Dimensional Stash
-						</SystemHeading>
-						<DataStreamText variant="system" speed="fast">
+						</RiftHeading>
+						<ManaFlowText variant="rift" speed="fast">
 							Manage shared wealth, artifacts, and dimensional inventory bounds.
-						</DataStreamText>
+						</ManaFlowText>
 					</div>
 				</div>
 
-				<SystemWindow title="ADD LOOT">
+				<AscendantWindow title="ADD LOOT">
 					<div className="flex items-end gap-4">
 						<div className="flex-1 space-y-2">
 							<Label>Item Name</Label>
@@ -148,20 +143,20 @@ export default function PartyStash() {
 							<Plus className="w-4 h-4 mr-2" /> Add
 						</Button>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="PARTY WEALTH" className="relative">
+				<AscendantWindow title="PARTY WEALTH" className="relative">
 					{isGoldLoading ? (
-						<SystemText className="block text-muted-foreground p-4">
+						<AscendantText className="block text-muted-foreground p-4">
 							Counting coins...
-						</SystemText>
+						</AscendantText>
 					) : (
 						<div className="space-y-4">
 							<div className="grid grid-cols-5 gap-4 bg-black/40 p-4 rounded-[2px] border border-primary/20 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]">
 								{(["pp", "gp", "ep", "sp", "cp"] as const).map((coin) => (
 									<div key={coin} className="flex flex-col items-center gap-2">
 										<div
-											className={`w-10 h-10 rounded-[2px] flex items-center justify-center font-system font-bold tracking-widest text-xs border bg-black/80 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]
+											className={`w-10 h-10 rounded-[2px] flex items-center justify-center font-heading font-bold tracking-widest text-xs border bg-black/80 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]
                                             ${coin === "pp" ? "text-slate-300 border-slate-500 shadow-[0_0_8px_rgba(203,213,225,0.3)]" : ""}
                                             ${coin === "gp" ? "text-yellow-400 border-yellow-600 shadow-[0_0_8px_rgba(250,204,21,0.3)]" : ""}
                                             ${coin === "ep" ? "text-blue-300 border-blue-500 shadow-[0_0_8px_rgba(147,197,253,0.3)]" : ""}
@@ -184,7 +179,7 @@ export default function PartyStash() {
 												className="w-full text-center font-mono mt-2"
 											/>
 										) : (
-											<span className="text-xl font-system font-bold drop-shadow-[0_0_5px_currentColor] mt-2 block w-full text-center">
+											<span className="text-xl font-heading font-bold drop-shadow-[0_0_5px_currentColor] mt-2 block w-full text-center">
 												{partyGold[coin]}
 											</span>
 										)}
@@ -217,13 +212,13 @@ export default function PartyStash() {
 							</div>
 						</div>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="STASH INVENTORY">
+				<AscendantWindow title="STASH INVENTORY">
 					{isLoading ? (
-						<SystemText className="block text-muted-foreground p-4">
+						<AscendantText className="block text-muted-foreground p-4">
 							Loading stash...
-						</SystemText>
+						</AscendantText>
 					) : inventory.length === 0 ? (
 						<div className="text-center py-12 text-muted-foreground">
 							<Package className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -237,7 +232,7 @@ export default function PartyStash() {
 									className="flex items-center justify-between p-3 bg-black/60 border-l-2 border-y border-r border-primary/30 border-l-primary rounded-[2px] shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] hover:shadow-[0_0_10px_rgba(0,0,0,0.5),inset_0_0_8px_hsl(var(--primary)/0.2)] transition-all"
 								>
 									<div>
-										<span className="font-system font-bold text-lg tracking-widest uppercase drop-shadow-[0_0_5px_currentColor] text-primary/90">
+										<span className="font-heading font-bold text-lg tracking-widest uppercase drop-shadow-[0_0_5px_currentColor] text-primary/90">
 											{item.name}
 										</span>
 									</div>
@@ -285,7 +280,7 @@ export default function PartyStash() {
 							))}
 						</div>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 		</Layout>
 	);

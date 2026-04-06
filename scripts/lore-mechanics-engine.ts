@@ -4,41 +4,24 @@ import * as path from "node:path";
 console.log("=== STARTING LORE & MECHANICS ENGINE ===");
 
 // UTILS
-const rand = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+const rand = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 const _slugify = (str: string) =>
 	str
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/(^-|-$)/g, "");
-
-const DND_REPLACEMENTS = [
-	{ regex: /spell slot(s?)/gi, replacement: "Mana resource$1" },
-	{ regex: /Spell slot(s?)/g, replacement: "Mana resource$1" },
-	{ regex: /spell level/gi, replacement: "Mana cost" },
-	{ regex: /Spell level/g, replacement: "Mana cost" },
-	{ regex: /saving throw/gi, replacement: "Protocol check" },
-	{ regex: /Saving throw/g, replacement: "Protocol check" },
-	{ regex: /save DC/gi, replacement: "Protocol DC" },
-	{ regex: /Save DC/g, replacement: "Protocol DC" },
-	{ regex: /dungeon master/gi, replacement: "System Administrator" },
-	{ regex: /Dungeon Master/g, replacement: "System Administrator" },
-	{ regex: /DM/g, replacement: "System" },
-];
-
 function sanitizeString(text: string) {
 	if (!text) return text;
-	let res = text;
-	for (const r of DND_REPLACEMENTS) {
-		res = res.replace(r.regex, r.replacement);
-	}
-	return res;
+	return text;
 }
 
-function sanitizeObject(obj: any): any {
+function sanitizeObject(obj: JsonValue): JsonValue {
 	if (typeof obj === "string") return sanitizeString(obj);
 	if (Array.isArray(obj)) return obj.map(sanitizeObject);
 	if (typeof obj === "object" && obj !== null) {
-		const newObj: any = {};
+		const newObj: { [key: string]: JsonValue } = {};
 		for (const [key, val] of Object.entries(obj)) {
 			newObj[key] = sanitizeObject(val);
 		}
@@ -94,16 +77,18 @@ function generateLore(type: string, name: string) {
 // ENRICHMENT FUNCTIONS
 // -------------------------------------------------------------
 
-function _enrichSpell(spell: any) {
-	const s = sanitizeObject(spell);
-	if (!s.lore || s.lore.length < 10) {
+type CompendiumEntry = { name: string; lore?: string; cost?: number; manaCost?: number; [k: string]: JsonValue | undefined };
+
+function _enrichSpell(spell: CompendiumEntry): CompendiumEntry {
+	const s = sanitizeObject(spell as unknown as JsonValue) as unknown as CompendiumEntry;
+	if (!s.lore || (typeof s.lore === "string" && s.lore.length < 10)) {
 		s.lore = generateLore("Spell Protocol", s.name);
 	}
 	return s;
 }
 
-function _enrichPowerOrTechnique(pt: any, isPower: boolean) {
-	const obj = sanitizeObject(pt);
+function _enrichPowerOrTechnique(pt: CompendiumEntry, isPower: boolean): CompendiumEntry {
+	const obj = sanitizeObject(pt as unknown as JsonValue) as unknown as CompendiumEntry;
 	if (!obj.lore) {
 		obj.lore = generateLore(
 			isPower ? "Awakened Power" : "Hunter Technique",
@@ -111,13 +96,13 @@ function _enrichPowerOrTechnique(pt: any, isPower: boolean) {
 		);
 	}
 	if (!obj.manaCost && typeof obj.cost !== "undefined") {
-		obj.manaCost = obj.cost; // standardize
+		obj.manaCost = obj.cost as number; // standardize
 	}
 	return obj;
 }
 
-function _enrichFeat(feat: any) {
-	const obj = sanitizeObject(feat);
+function _enrichFeat(feat: CompendiumEntry): CompendiumEntry {
+	const obj = sanitizeObject(feat as unknown as JsonValue) as unknown as CompendiumEntry;
 	if (!obj.lore) {
 		obj.lore = generateLore("System Trait", obj.name);
 	}
@@ -174,10 +159,7 @@ async function superRegexEnrichment() {
 
 		let content = fs.readFileSync(absolutePath, "utf8");
 
-		// 1. D&D Replace
-		for (const rep of DND_REPLACEMENTS) {
-			content = content.replace(rep.regex, rep.replacement);
-		}
+		// Deleted D&D replacing loop
 
 		// 2. Deduplication exact fixing
 		// We know 'gravity-well' in powers, 'blade-dance' in techniques, etc.

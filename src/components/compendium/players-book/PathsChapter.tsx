@@ -1,5 +1,5 @@
 import { Shield } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { jobs } from "@/data/compendium/jobs";
 import { paths } from "@/data/compendium/paths";
 
@@ -7,9 +7,9 @@ export const PathsChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-cyan mb-6">
+				<RiftHeading level={1} className="text-5xl text-cyan mb-6">
 					Specialized Paths
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
 					As an Ascendant's mana core matures, they unlock deeper
 					specializations within their Job. These Paths dictate unique combat

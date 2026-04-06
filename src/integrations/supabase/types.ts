@@ -3126,9 +3126,9 @@ export type Database = {
 					speed: number;
 					stable: boolean | null;
 					str: number | null;
-					system_favor_current: number;
-					system_favor_die: number;
-					system_favor_max: number;
+					rift_favor_current: number;
+					rift_favor_die: number;
+					rift_favor_max: number;
 					tool_proficiencies: string[] | null;
 					updated_at: string;
 					user_id: string;
@@ -3188,9 +3188,9 @@ export type Database = {
 					speed?: number;
 					stable?: boolean | null;
 					str?: number | null;
-					system_favor_current?: number;
-					system_favor_die?: number;
-					system_favor_max?: number;
+					rift_favor_current?: number;
+					rift_favor_die?: number;
+					rift_favor_max?: number;
 					tool_proficiencies?: string[] | null;
 					updated_at?: string;
 					user_id: string;
@@ -3250,9 +3250,9 @@ export type Database = {
 					speed?: number;
 					stable?: boolean | null;
 					str?: number | null;
-					system_favor_current?: number;
-					system_favor_die?: number;
-					system_favor_max?: number;
+					rift_favor_current?: number;
+					rift_favor_die?: number;
+					rift_favor_max?: number;
 					tool_proficiencies?: string[] | null;
 					updated_at?: string;
 					user_id?: string;
@@ -7732,9 +7732,9 @@ export type Database = {
 					skill_proficiencies: string[] | null;
 					sovereign_id: string | null;
 					speed: number | null;
-					system_favor_current: number | null;
-					system_favor_die: number | null;
-					system_favor_max: number | null;
+					rift_favor_current: number | null;
+					rift_favor_die: number | null;
+					rift_favor_max: number | null;
 					tool_proficiencies: string[] | null;
 					updated_at: string | null;
 					user_email: string | null;
@@ -8064,7 +8064,7 @@ export type Database = {
 				Args: { p_campaign_id: string; p_user_id?: string };
 				Returns: boolean;
 			};
-			is_campaign_system: {
+			is_active_rift: {
 				Args: { p_campaign_id: string; p_user_id?: string };
 				Returns: boolean;
 			};

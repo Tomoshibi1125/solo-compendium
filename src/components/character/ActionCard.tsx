@@ -9,9 +9,9 @@ import {
 } from "lucide-react";
 import { memo } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
@@ -225,7 +225,7 @@ function ActionCardComponent({
 	};
 
 	return (
-		<SystemWindow
+		<AscendantWindow
 			title={displayName.toUpperCase()}
 			className={cn("border-primary/30", className)}
 			headerClassName={
@@ -340,7 +340,7 @@ function ActionCardComponent({
 					)}
 				</div>
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }
 

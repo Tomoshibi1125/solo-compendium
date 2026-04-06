@@ -102,7 +102,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		width: 1024,
 		height: 1024,
 		promptTemplate:
-			"dark manhwa-inspired cinematic fantasy, System Ascendant style, {title} {description}, dramatic lighting, high contrast, detailed character art, dynamic pose, {tags}",
+			"dark manhwa-inspired cinematic fantasy, Rift Ascendant style, {title} {description}, dramatic lighting, high contrast, detailed character art, dynamic pose, {tags}",
 		negativePrompt:
 			"low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts",
 		steps: 20,
@@ -114,7 +114,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		width: 512,
 		height: 512,
 		promptTemplate:
-			"dark manhwa-inspired style, System Ascendant, {title} token art, circular composition, high contrast, {tags}",
+			"dark manhwa-inspired style, Rift Ascendant, {title} token art, circular composition, high contrast, {tags}",
 		negativePrompt:
 			"low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts",
 		steps: 15,
@@ -126,7 +126,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		width: 256,
 		height: 256,
 		promptTemplate:
-			"dark manhwa-inspired style, System Ascendant, {title} icon, detailed item, high contrast, {tags}",
+			"dark manhwa-inspired style, Rift Ascendant, {title} icon, detailed item, high contrast, {tags}",
 		negativePrompt:
 			"low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts",
 		steps: 15,
@@ -138,7 +138,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		width: 1024,
 		height: 768,
 		promptTemplate:
-			"dark manhwa-inspired cinematic fantasy, System Ascendant style, {title} {description}, dramatic lighting, high contrast, detailed item art, {tags}",
+			"dark manhwa-inspired cinematic fantasy, Rift Ascendant style, {title} {description}, dramatic lighting, high contrast, detailed item art, {tags}",
 		negativePrompt:
 			"low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts",
 		steps: 20,
@@ -150,7 +150,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		width: 1024,
 		height: 768,
 		promptTemplate:
-			"dark manhwa-inspired magical fantasy, System Ascendant style, {title} spell effect, magical energy, dramatic lighting, high contrast, {tags}",
+			"dark manhwa-inspired magical fantasy, Rift Ascendant style, {title} spell effect, magical energy, dramatic lighting, high contrast, {tags}",
 		negativePrompt:
 			"low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts",
 		steps: 20,
@@ -162,7 +162,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		width: 1920,
 		height: 512,
 		promptTemplate:
-			"dark manhwa-inspired cinematic landscape, System Ascendant style, {title} {description}, epic environment, dramatic lighting, high contrast, {tags}",
+			"dark manhwa-inspired cinematic landscape, Rift Ascendant style, {title} {description}, epic environment, dramatic lighting, high contrast, {tags}",
 		negativePrompt:
 			"low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts",
 		steps: 25,
@@ -174,7 +174,7 @@ const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 		width: 512,
 		height: 512,
 		promptTemplate:
-			"dark manhwa-inspired style, System Ascendant, {title} job emblem, sigil design, high contrast, {tags}",
+			"dark manhwa-inspired style, Rift Ascendant, {title} job emblem, sigil design, high contrast, {tags}",
 		negativePrompt:
 			"low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts",
 		steps: 15,

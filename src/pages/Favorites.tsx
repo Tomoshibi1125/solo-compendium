@@ -4,11 +4,11 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
+import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useFavorites } from "@/hooks/useFavorites";
 import {
@@ -196,22 +196,22 @@ const Favorites = () => {
 			<div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
 				{/* Header */}
 				<div className="mb-8">
-					<SystemHeading
+					<RiftHeading
 						level={1}
 						variant="sovereign"
 						dimensional
 						className="mb-2"
 					>
 						Favorites
-					</SystemHeading>
-					<DataStreamText
-						variant="system"
+					</RiftHeading>
+					<ManaFlowText
+						variant="rift"
 						speed="slow"
 						className="text-muted-foreground"
 					>
 						Your curated compendium entries — {favoritesCount}{" "}
 						{favoritesCount === 1 ? "artifact" : "artifacts"} saved
-					</DataStreamText>
+					</ManaFlowText>
 				</div>
 
 				{/* Search and Filter */}
@@ -248,35 +248,35 @@ const Favorites = () => {
 
 				{/* Results */}
 				{isBusy ? (
-					<SystemWindow title="LOADING FAVORITES" className="max-w-lg mx-auto">
+					<AscendantWindow
+						title="LOADING FAVORITES"
+						className="max-w-lg mx-auto"
+					>
 						<div className="p-4 text-center">
-							<DataStreamText
-								variant="system"
-								className="text-muted-foreground"
-							>
+							<ManaFlowText variant="rift" className="text-muted-foreground">
 								Loading your favorites...
-							</DataStreamText>
+							</ManaFlowText>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				) : filteredItems.length === 0 ? (
-					<SystemWindow title="NO FAVORITES" className="max-w-lg mx-auto">
+					<AscendantWindow title="NO FAVORITES" className="max-w-lg mx-auto">
 						<div className="p-4 text-center">
 							<Heart className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-							<DataStreamText
-								variant="system"
+							<ManaFlowText
+								variant="rift"
 								className="text-muted-foreground mb-4"
 							>
 								{favoritesCount === 0
 									? "You haven't bound any imprints yet. Browse the archives and click the heart icon to add manifestations to your favorites."
 									: "No imprints match your search protocols."}
-							</DataStreamText>
+							</ManaFlowText>
 							{favoritesCount === 0 && (
 								<Link to="/compendium">
 									<Button>Browse Compendium</Button>
 								</Link>
 							)}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				) : (
 					<div className="grid gap-4">
 						{filteredItems.map((item) => {
@@ -287,7 +287,7 @@ const Favorites = () => {
 								typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1);
 
 							return (
-								<SystemWindow
+								<AscendantWindow
 									key={item.id}
 									title={formatRegentVernacular(item.displayName || item.name)}
 									className="glass-card"
@@ -308,7 +308,7 @@ const Favorites = () => {
 														</Badge>
 													)}
 												</div>
-												<SystemHeading
+												<RiftHeading
 													level={3}
 													variant="sovereign"
 													className="font-semibold text-lg mb-1"
@@ -316,7 +316,7 @@ const Favorites = () => {
 													{formatRegentVernacular(
 														item.displayName || item.name,
 													)}
-												</SystemHeading>
+												</RiftHeading>
 												{item.description && (
 													<p className="text-sm text-muted-foreground mb-2">
 														<AutoLinkText text={item.description} />
@@ -356,7 +356,7 @@ const Favorites = () => {
 											</div>
 										</div>
 									</div>
-								</SystemWindow>
+								</AscendantWindow>
 							);
 						})}
 					</div>

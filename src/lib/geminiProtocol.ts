@@ -1,5 +1,5 @@
 // Gemini Protocol - Unified Sovereign Fusion Generator
-// System Ascendant Post-Reset Timeline - The Absolute Setting
+// Rift Ascendant Post-Reset Timeline - The Absolute Setting
 // Unified Fusion System - Single comprehensive fusion approach
 
 import type { Tables } from "@/integrations/supabase/types";
@@ -808,10 +808,10 @@ export async function generateSovereignWithAI(
 		const pathShortName = path.name
 			.replace(/^Path of the\s*/i, "")
 			.replace(/\s*Path$/i, "");
-		const prompt = `You are the Gemini Protocol — the sovereign fusion engine of System Ascendant. Generate a UNIQUE and CREATIVE sovereign class overlay by fusing two Regents with a Job and Path.
+		const prompt = `You are the Gemini Protocol — the sovereign fusion engine of Rift Ascendant. Generate a UNIQUE and CREATIVE sovereign class overlay by fusing two Regents with a Job and Path.
 
 FUSION PHILOSOPHY:
-This is a TRUE ZENITH FUSION. The components do not just "work together"—they CEASE TO EXIST as individuals and MERGE into a FULLY NEW hybrid entity. The Sovereign's name, title, and every single ability MUST reflect this transformative synthesis. Every ability should feel like a perfectly balanced, inseparable hybrid of Job, Path, and both Regents. This is the highest expression of the System Ascendant's power.
+This is a TRUE ZENITH FUSION. The components do not just "work together"—they CEASE TO EXIST as individuals and MERGE into a FULLY NEW hybrid entity. The Sovereign's name, title, and every single ability MUST reflect this transformative synthesis. Every ability should feel like a perfectly balanced, inseparable hybrid of Job, Path, and both Regents. This is the highest expression of the Rift Ascendant's power.
 
 FUSION INPUTS:
 - Job: ${job.name} (${job.hit_die} hit die, ${(job.primary_abilities || []).join("/")} primary)
@@ -847,7 +847,7 @@ Return as plain text with clear section headers. Do NOT use JSON or code fences.
 			input: prompt,
 			context: {
 				contentType: "sovereign",
-				universe: "System Ascendant",
+				universe: "Rift Ascendant",
 			},
 		});
 

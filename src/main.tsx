@@ -6,13 +6,13 @@ import { verifyCoreDependencies } from "./lib/maintenance/DependencyProof";
 
 // ZERO LEGACY CERTIFICATION: Ensure all engine dependencies are registered and used.
 verifyCoreDependencies();
-import "./styles/system-ui.css";
+import "./styles/ascendant-ui.css";
 import "./styles/sa-theme.css";
 import "./styles/dropdown-opacity-fix.css";
 
 // Fully wired architectural reference (Type-only, No runtime cost)
 export type _FinalWiring =
-	import("./components/warden-protocols/SystemProtocolRegistry").ProtocolWiringLattice;
+	import("./components/warden-directives/WardenDirectiveMatrix").ProtocolWiringLattice;
 
 import {
 	createLogger,

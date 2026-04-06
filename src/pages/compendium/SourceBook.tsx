@@ -51,7 +51,7 @@ const SourceBook = () => {
 			case "rules":
 				return <GameRulesChapter />;
 
-			// Protocol Warden's Directive
+			// Warden's Directive
 			case "world":
 				return <WorldOverview />;
 			case "locations":

@@ -154,7 +154,7 @@ export class AIServiceManager {
 			input: originalPrompt,
 			context: {
 				...context,
-				style: "dark manhwa anime cinematic fantasy, System Ascendant style",
+				style: "dark manhwa anime cinematic fantasy, Rift Ascendant style",
 				mood: "dramatic, high contrast, detailed",
 			},
 		};
@@ -254,7 +254,7 @@ export class AIServiceManager {
 			input: content,
 			context: {
 				content_type: type,
-				style: "dark manhwa anime cinematic fantasy, System Ascendant",
+				style: "dark manhwa anime cinematic fantasy, Rift Ascendant",
 			},
 		};
 
@@ -310,7 +310,7 @@ export class AIServiceManager {
 					"more_mysterious",
 					"more_heroic",
 				],
-				universe: "System Ascendant",
+				universe: "Rift Ascendant",
 			},
 		};
 
@@ -372,7 +372,7 @@ export class AIServiceManager {
 			input: originalContent,
 			context: {
 				variation_type: variationType,
-				style: "dark manhwa anime cinematic fantasy, System Ascendant",
+				style: "dark manhwa anime cinematic fantasy, Rift Ascendant",
 				preserve_core_elements: true,
 			},
 		};
@@ -504,7 +504,7 @@ export class AIServiceManager {
 				? request.input
 				: JSON.stringify(request.input ?? "");
 		const safeText = rawText?.trim() || inputText.trim();
-		const styleHint = request.context?.style || "System Ascendant";
+		const styleHint = request.context?.style || "Rift Ascendant";
 		const moodHint = request.context?.mood || "dramatic";
 
 		switch (request.type) {
@@ -964,7 +964,7 @@ export class AIServiceManager {
 							body: JSON.stringify({
 								messages: [
 									{
-										role: "system",
+										role: "rift",
 										content: this.getSystemPrompt(request.type),
 									},
 									{ role: "user", content: prompt },
@@ -1178,7 +1178,7 @@ export class AIServiceManager {
 					body: JSON.stringify({
 						model,
 						messages: [
-							{ role: "system", content: this.getSystemPrompt(request.type) },
+							{ role: "rift", content: this.getSystemPrompt(request.type) },
 							{ role: "user", content: this.formatInput(request) },
 						],
 						temperature: service.temperature,
@@ -1218,28 +1218,28 @@ export class AIServiceManager {
 		const jsonInstruction =
 			"Return ONLY valid JSON. Do not wrap in Markdown or code fences. Use double quotes for all keys and strings.";
 		const prompts: Record<string, string> = {
-			"enhance-prompt": `${jsonInstruction}\nYou are an expert tabletop RPG and AI art prompt engineer. Enhance the given prompt for high-quality image generation in the style of System Ascendant manhwa-inspired fantasy. Respond with JSON: {"original":"","enhanced":"","additions":[],"improvements":[],"style":"","mood":"","technical":{"weight":"","steps":0,"cfg":0,"sampler":"","scheduler":""}}`,
-			"analyze-image": `${jsonInstruction}\nYou are an expert art analyst specializing in anime/manga style artwork, particularly System Ascendant. Respond with JSON: {"description":"","tags":[],"style":"","mood":"","colors":[],"composition":"","subjects":[],"quality":1,"technical":{"resolution":"","aspectRatio":"","sharpness":1,"brightness":0.5,"contrast":0.5},"suggestions":[]}`,
+			"enhance-prompt": `${jsonInstruction}\nYou are an expert tabletop RPG and AI art prompt engineer. Enhance the given prompt for high-quality image generation in the style of Rift Ascendant manhwa-inspired fantasy. Respond with JSON: {"original":"","enhanced":"","additions":[],"improvements":[],"style":"","mood":"","technical":{"weight":"","steps":0,"cfg":0,"sampler":"","scheduler":""}}`,
+			"analyze-image": `${jsonInstruction}\nYou are an expert art analyst specializing in anime/manga style artwork, particularly Rift Ascendant. Respond with JSON: {"description":"","tags":[],"style":"","mood":"","colors":[],"composition":"","subjects":[],"quality":1,"technical":{"resolution":"","aspectRatio":"","sharpness":1,"brightness":0.5,"contrast":0.5},"suggestions":[]}`,
 			"analyze-audio": `${jsonInstruction}\nYou are an audio expert specializing in tabletop campaign music and sound effects. Respond with JSON: {"mood":"","energy":0.5,"tempo":null,"key":null,"instruments":[],"genre":"","tags":[],"description":"","duration":0,"loudness":null,"spectralCentroid":null}`,
-			"generate-tags": `${jsonInstruction}\nGenerate relevant tags for the given content in the context of a System Ascendant themed campaign. Respond with JSON: {"tags":[]}`,
+			"generate-tags": `${jsonInstruction}\nGenerate relevant tags for the given content in the context of a Rift Ascendant themed campaign. Respond with JSON: {"tags":[]}`,
 			"detect-mood": `${jsonInstruction}\nDetect the primary mood of the given content. Respond with JSON: {"mood":""}`,
 			"suggest-style": `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,
 			"filter-content": `${jsonInstruction}\nAnalyze the given content for appropriateness. Respond with JSON: {"isAppropriate":true,"issues":[],"suggestions":[]}`,
 			"create-variation": `${jsonInstruction}\nCreate a variation of the given content that maintains core elements but adds a different twist. Respond with JSON: {"variation":""}`,
-			"generate-content": `You are an expert tabletop RPG game master and narrative designer for System Ascendant, a d20-based TTRPG with dark manhwa-inspired flavor.
+			"generate-content": `You are an expert tabletop RPG game master and narrative designer for Rift Ascendant, a d20-based TTRPG with dark manhwa-inspired flavor.
 
 CORE RULES CONTEXT:
-- Uses System Ascendant mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), unique martial and caster powers, hit dice, armor class, saving throws, skill checks.
-- Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Agility), VIT (Vitality/Vitality), INT (Intelligence), SENSE (Sense/Sense), PRE (Presence/Presence).
+- Uses Rift Ascendant mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), unique martial and caster powers, hit dice, armor class, saving throws, skill checks.
+- Ability scores use Rift Ascendant names: STR (Strength), AGI (Agility/Agility), VIT (Vitality/Vitality), INT (Intelligence), SENSE (Sense/Sense), PRE (Presence/Presence).
 - Classes are called "Jobs". The 14 canonical jobs are: Destroyer (Fighter), Berserker (Barbarian), Assassin (Rogue), Striker (Monk), Mage (Wizard), Esper (Sorcerer), Revenant (Necromancer), Summoner (Druid), Herald (Cleric), Contractor (Warlock), Stalker (Ranger), Holy Knight (Paladin), Technomancer (Artificer), Idol (Bard).
-- Subclasses are called "Paths". The Protocol Warden (PW) is the system administrator.
-- Regents (formerly Regents) are quest/PW-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
-- Runes follow the System Ascendant model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
-- Shadow Soldiers require the Umbral Regent unlock. System Favor replaces Inspiration.
+- Subclasses are called "Paths". The Warden (Warden) is the system administrator.
+- Regents (formerly Regents) are quest/Warden-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
+- Runes follow the Rift Ascendant model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
+- Shadow Soldiers require the Umbral Regent unlock. Rift Favor replaces Inspiration.
 - Equipment uses 5e armor rules: light (base + AGI), medium (base + min(AGI,2)), heavy (fixed AC, no AGI). Max 3 attuned items.
 
-Generate polished, player-ready content with clear sections and labels. Use System Ascendant terminology. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
-			"generate-regents": `${jsonInstruction}\nYou are an expert RPG game master AI for System Ascendant. Help a player choose their regent path. Regents are quest/PW-gated power overlays. Analyze the player's character and generate the TOP 3 regent choices. Respond with JSON array of objects: {"regent": "id", "name": "", "description": "", "compatibility": 0-100, "reasoning": "", "statAlignment": 0}`,
+Generate polished, player-ready content with clear sections and labels. Use Rift Ascendant terminology. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
+			"generate-regents": `${jsonInstruction}\nYou are an expert RPG game master AI for Rift Ascendant. Help a player choose their regent path. Regents are quest/Warden-gated power overlays. Analyze the player's character and generate the TOP 3 regent choices. Respond with JSON array of objects: {"regent": "id", "name": "", "description": "", "compatibility": 0-100, "reasoning": "", "statAlignment": 0}`,
 			"generate-fusion": `${jsonInstruction}\nYou are an expert RPG fusion AI. Create a unique sovereign class by combining two regents with the character's base job via the Gemini Protocol. Respond with JSON: {"id": "", "name": "", "description": "", "fusionType": "Perfect", "abilities": [], "features": [{"name": "", "description": "", "type": ""}], "spells": [], "techniques": [], "traits": [{"name": "", "description": "", "type": ""}], "statBonuses": {"STR": 0}, "specialAbilities": []}`,
 			"generate-quests": `${jsonInstruction}\nYou are an expert RPG quest master AI. Recommend the TOP 3 quests for a player based on their level and job. Respond with JSON array: {"quest": "id", "name": "", "difficulty": "Medium", "successChance": 0-100, "reasoning": "", "preparation": []}`,
 			"generate-optimizations": `${jsonInstruction}\nYou are an expert RPG character optimizer AI. Provide suggestions for stat priorities, equipment, feats, and level up choices. Respond with JSON: {"statPriorities": [], "equipment": [], "feats": [], "abilities": [], "levelUp": []}`,

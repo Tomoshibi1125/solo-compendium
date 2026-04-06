@@ -8,8 +8,8 @@ import {
 	Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useCharacterSovereign } from "@/hooks/useSavedSovereigns";
@@ -96,7 +96,7 @@ export function SovereignOverlayPanel({
 
 	if (!sovereign) {
 		return (
-			<SystemWindow title="SOVEREIGN OVERLAY">
+			<AscendantWindow title="SOVEREIGN OVERLAY">
 				<div className="flex items-center gap-3 text-muted-foreground text-sm py-2">
 					<Lock className="w-4 h-4 shrink-0" />
 					<p>
@@ -107,7 +107,7 @@ export function SovereignOverlayPanel({
 						once you have unlocked two Regents.
 					</p>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
@@ -116,7 +116,7 @@ export function SovereignOverlayPanel({
 	const standard = abilities.filter((a) => !a.is_capstone);
 
 	return (
-		<SystemWindow title="SOVEREIGN OVERLAY">
+		<AscendantWindow title="SOVEREIGN OVERLAY">
 			{/* Header */}
 			<div className="space-y-3">
 				<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
@@ -193,6 +193,6 @@ export function SovereignOverlayPanel({
 					</ScrollArea>
 				</div>
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

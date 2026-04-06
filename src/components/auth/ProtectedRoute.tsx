@@ -90,7 +90,7 @@ export function ProtectedRoute({
 			return (
 				<AccessDenied
 					title="Access Denied"
-					message="You need Protocol Warden privileges to access this area. Please login with a Warden account."
+					message="You need Warden privileges to access this area. Please login with a Warden account."
 					icon={Lock}
 				/>
 			);
@@ -137,7 +137,7 @@ export function ProtectedRoute({
 		return (
 			<AccessDenied
 				title="Warden Access Required"
-				message="This area requires Protocol Warden privileges. Please login with a Warden account to continue."
+				message="This area requires Warden privileges. Please login with a Warden account to continue."
 				icon={Shield}
 			/>
 		);

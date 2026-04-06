@@ -64,8 +64,8 @@ export function CharacterEditDialog({
 		try {
 			const charDesc = `Level ${character.level} character named ${character.name || "Unknown"}`;
 			const prompt = isApp
-				? `Generate a 2-3 sentence evocative, dark-fantasy physical appearance description for a ${charDesc} in the System Ascendant universe. Emphasize their glowing aura and combat readiness.`
-				: `Generate a 1-paragraph dramatic, high-stakes backstory for a ${charDesc} in the System Ascendant universe. They recently awoke to a powerful, mysterious System. Keep it exciting and aligned with manhwa tropes.`;
+				? `Generate a 2-3 sentence evocative, dark-fantasy physical appearance description for a ${charDesc} in the Rift Ascendant universe. Emphasize their glowing aura and combat readiness.`
+				: `Generate a 1-paragraph dramatic, high-stakes backstory for a ${charDesc} in the Rift Ascendant universe. They recently awoke to a powerful, mysterious System. Keep it exciting and aligned with manhwa tropes.`;
 
 			const response = await aiService.processRequest({
 				service: aiService.getConfiguration().defaultService,
@@ -76,7 +76,7 @@ export function CharacterEditDialog({
 					tone: "epic",
 					length: isApp ? "short" : "medium",
 					complexity: "moderate",
-					universe: "System Ascendant",
+					universe: "Rift Ascendant",
 				},
 			});
 

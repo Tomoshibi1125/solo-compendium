@@ -1,5 +1,5 @@
 /**
- * Encumbrance calculations for System Ascendant 5e SRD
+ * Encumbrance calculations for Rift Ascendant 5e SRD
  * Based on STR score - Ascendants must manage their Rift loot carefully
  */
 

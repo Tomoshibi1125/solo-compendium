@@ -5,8 +5,8 @@ import {
 	getAbilityDisplayName,
 	getAbilityModifier,
 	getProficiencyBonus,
-	getSystemFavorDie,
-	getSystemFavorMax,
+	getRiftFavorDie,
+	getRiftFavorMax,
 	normalizeAbility,
 	RARITY_LABELS,
 } from "../5eRulesEngine";
@@ -34,24 +34,24 @@ describe("5e Rules Engine", () => {
 		expect(getProficiencyBonus(20)).toBe(6);
 	});
 
-	test("System Favor calculations", () => {
-		expect(getSystemFavorMax(1)).toBe(3);
-		expect(getSystemFavorMax(4)).toBe(3);
-		expect(getSystemFavorMax(5)).toBe(4);
-		expect(getSystemFavorMax(10)).toBe(4);
-		expect(getSystemFavorMax(11)).toBe(5);
-		expect(getSystemFavorMax(16)).toBe(5);
-		expect(getSystemFavorMax(17)).toBe(6);
-		expect(getSystemFavorMax(20)).toBe(6);
+	test("Rift Favor calculations", () => {
+		expect(getRiftFavorMax(1)).toBe(3);
+		expect(getRiftFavorMax(4)).toBe(3);
+		expect(getRiftFavorMax(5)).toBe(4);
+		expect(getRiftFavorMax(10)).toBe(4);
+		expect(getRiftFavorMax(11)).toBe(5);
+		expect(getRiftFavorMax(16)).toBe(5);
+		expect(getRiftFavorMax(17)).toBe(6);
+		expect(getRiftFavorMax(20)).toBe(6);
 
-		expect(getSystemFavorDie(1)).toBe(4);
-		expect(getSystemFavorDie(4)).toBe(4);
-		expect(getSystemFavorDie(5)).toBe(6);
-		expect(getSystemFavorDie(10)).toBe(6);
-		expect(getSystemFavorDie(11)).toBe(8);
-		expect(getSystemFavorDie(16)).toBe(8);
-		expect(getSystemFavorDie(17)).toBe(10);
-		expect(getSystemFavorDie(20)).toBe(10);
+		expect(getRiftFavorDie(1)).toBe(4);
+		expect(getRiftFavorDie(4)).toBe(4);
+		expect(getRiftFavorDie(5)).toBe(6);
+		expect(getRiftFavorDie(10)).toBe(6);
+		expect(getRiftFavorDie(11)).toBe(8);
+		expect(getRiftFavorDie(16)).toBe(8);
+		expect(getRiftFavorDie(17)).toBe(10);
+		expect(getRiftFavorDie(20)).toBe(10);
 	});
 
 	test("Ability normalization", () => {
@@ -73,7 +73,7 @@ describe("5e Rules Engine", () => {
 		expect(normalizeAbility("agi")).toBe("AGI");
 	});
 
-	test("System Ascendant ability display names", () => {
+	test("Rift Ascendant ability display names", () => {
 		expect(getAbilityDisplayName("STR")).toBe("Strength");
 		expect(getAbilityDisplayName("AGI")).toBe("Agility");
 		expect(getAbilityDisplayName("VIT")).toBe("Vitality");

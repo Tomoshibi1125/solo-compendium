@@ -336,8 +336,7 @@ export function useCharacterSheetState(characterId: string) {
 			const nextValue = Math.max(0, Math.min(maxValue, currentValue + delta));
 			updateCharacter.mutate({ id, data: { [field]: nextValue } });
 			if (delta < 0) {
-				const label =
-					field === "hit_dice_current" ? "Hit Dice" : "System Favor";
+				const label = field === "hit_dice_current" ? "Hit Dice" : "Rift Favor";
 				ascendantTools
 					.trackCustomFeatureUsage(id, label, "used", "SA")
 					.catch(console.error);

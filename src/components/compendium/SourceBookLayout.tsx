@@ -32,7 +32,7 @@ const BOOKS = [
 		],
 	},
 	{
-		title: "Protocol Warden's Directive",
+		title: "Warden's Directive",
 		sections: [
 			{ id: "world", label: "The New World Order", path: "/source-book/world" },
 			{

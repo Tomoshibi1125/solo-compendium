@@ -17,7 +17,7 @@ import {
 	type CharacterExportSchema,
 	validateCharacterImport,
 } from "@/lib/characterSchema";
-import { ABILITY_NAMES } from "@/types/system-rules";
+import { ABILITY_NAMES } from "@/types/core-rules";
 
 export function ImportDialog({
 	open,

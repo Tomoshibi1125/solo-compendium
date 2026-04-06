@@ -12,7 +12,7 @@ import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
-import { getProficiencyBonus } from "@/types/system-rules";
+import { getProficiencyBonus } from "@/types/core-rules";
 
 export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 export type RuneInscription =
@@ -89,7 +89,7 @@ export function useCompendiumRunes(characterId?: string) {
 				rune_type: r.rune_type ?? "enhancement",
 				rune_category: r.rune_category ?? "general",
 				rarity: (r.rarity as Database["public"]["Enums"]["rarity"]) ?? "common",
-				source_book: r.source_book ?? "System Ascendant Canon",
+				source_book: r.source_book ?? "Rift Ascendant Canon",
 				created_at: r.created_at,
 				tags: r.tags ?? null,
 				image: r.image ?? null,
@@ -128,7 +128,7 @@ export function useCompendiumRunes(characterId?: string) {
 				requires_job: null,
 				requires_level: 1,
 				source_kind: "Canon",
-				source_name: "System Ascendant",
+				source_name: "Rift Ascendant",
 				theme_tags: null,
 				uses_per_rest: "",
 				concentration: false,
@@ -606,7 +606,7 @@ export function useLearnRune() {
 	});
 }
 
-// Absorb a rune — System Ascendant style one-time consumption
+// Absorb a rune — Rift Ascendant style one-time consumption
 // Permanently teaches the rune's ability as a character_feature.
 // Cross-type absorption (caster absorbs martial or vice versa) limits uses per rest.
 export function useAbsorbRune() {

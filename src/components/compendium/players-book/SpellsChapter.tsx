@@ -1,4 +1,4 @@
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { powers } from "@/data/compendium/powers";
 
 interface PowerData {
@@ -26,7 +26,7 @@ interface PowerData {
 	limitations?: {
 		uses?: string;
 		conditions?: string[];
-		cooldown?: string;
+		recharge?: string;
 	};
 	flavor?: string;
 	source?: string;
@@ -113,11 +113,11 @@ export const SpellsChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-amethyst mb-6">
+				<RiftHeading level={1} className="text-5xl text-amethyst mb-6">
 					System Spells & Powers
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-					Abilities granted by the System are fueled by Aether, a resource drawn
+					Abilities granted by the Rift are fueled by Aether, a resource drawn
 					directly from an Ascendant's mana core. These powers range from
 					destructive elemental casts to unique martial techniques that bend the
 					laws of physics. Below is the canonical index of known abilities.

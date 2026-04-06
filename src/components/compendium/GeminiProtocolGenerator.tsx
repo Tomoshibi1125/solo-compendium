@@ -354,7 +354,7 @@ export function GeminiProtocolGenerator() {
 			const broadcastGeneration = (sovereign: GeneratedSovereign) => {
 				const title = formatRegentVernacular(sovereign.title);
 				const name = formatRegentVernacular(sovereign.name);
-				const contextMsg = `System Ascendant Gemini Protocol: Generated Sovereign [${name} - ${title}]`;
+				const contextMsg = `Rift Ascendant Gemini Protocol: Generated Sovereign [${name} - ${title}]`;
 
 				if (campaignId && characterId) {
 					ascendantTools.rollInCampaign(campaignId, {

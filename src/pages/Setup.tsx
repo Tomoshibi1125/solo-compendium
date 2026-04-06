@@ -1,12 +1,12 @@
 import { AlertTriangle, Copy, RefreshCw } from "lucide-react";
 import { useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { getRuntimeEnvValue } from "@/lib/runtimeEnv";
 
@@ -44,28 +44,24 @@ export default function Setup() {
 	return (
 		<div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
 			<div className="w-full max-w-3xl space-y-6">
-				<SystemWindow title="SETUP REQUIRED" variant="alert">
+				<AscendantWindow title="SETUP REQUIRED" variant="alert">
 					<div className="space-y-4">
 						<div className="flex items-start gap-3">
 							<AlertTriangle className="w-6 h-6 text-destructive mt-0.5" />
 							<div>
-								<SystemHeading
+								<RiftHeading
 									level={1}
 									variant="gate"
 									dimensional
 									className="text-xl"
 								>
 									System Link Severed
-								</SystemHeading>
-								<DataStreamText
-									variant="system"
-									speed="fast"
-									className="text-sm"
-								>
+								</RiftHeading>
+								<ManaFlowText variant="rift" speed="fast" className="text-sm">
 									This interface requires a connection to the primary database
 									(Supabase) to process Ascendant and Compendium records. Supply
 									the required protocols and reboot.
-								</DataStreamText>
+								</ManaFlowText>
 							</div>
 						</div>
 
@@ -152,12 +148,12 @@ export default function Setup() {
 							</ul>
 						</div>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemText className="block text-xs text-muted-foreground text-center">
+				<AscendantText className="block text-xs text-muted-foreground text-center">
 					Tip: once configured, you can return here anytime at{" "}
 					<code>/setup</code>.
-				</SystemText>
+				</AscendantText>
 			</div>
 		</div>
 	);

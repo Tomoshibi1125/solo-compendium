@@ -97,7 +97,7 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
 		key: "m",
 		ctrl: true,
 		action: () => {
-			window.location.href = "/warden-protocols";
+			window.location.href = "/warden-directives";
 		},
 		description: "Open Warden tools",
 		category: "navigation",

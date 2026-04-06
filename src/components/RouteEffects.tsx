@@ -12,7 +12,7 @@ import {
 } from "@/lib/guestStore";
 import { formatRegentVernacular, REGENT_LABEL_PLURAL } from "@/lib/vernacular";
 
-const BASE_TITLE = "System Ascendant";
+const BASE_TITLE = "Rift Ascendant";
 const ACTIVE_CHARACTER_STORAGE_KEY = "solo-compendium.active-character";
 
 const COMPENDIUM_LABELS: Record<EntryType, string> = {
@@ -61,7 +61,7 @@ const PLAYER_TOOLS_WITH_CHARACTER = new Set([
 ]);
 
 const WARDEN_TOOL_LABELS: Record<string, string> = {
-	"system-console": "System Console",
+	"rift-console": "Rift Console",
 	"content-audit": "Content Audit",
 	"art-generation": "Art Generation",
 	"encounter-builder": "Encounter Builder",
@@ -131,7 +131,7 @@ const resolveTitle = (pathname: string) => {
 		}
 		return `${BASE_TITLE} - Campaigns`;
 	}
-	if (pathname.startsWith("/warden-protocols")) {
+	if (pathname.startsWith("/warden-directives")) {
 		const segments = pathname.split("/").filter(Boolean);
 		const toolId = segments[1];
 		if (toolId && WARDEN_TOOL_LABELS[toolId]) {
@@ -141,13 +141,13 @@ const resolveTitle = (pathname: string) => {
 	}
 	if (pathname.startsWith("/admin")) {
 		const segments = pathname.split("/").filter(Boolean);
-		const adminKey = segments[1] ?? "system-console";
+		const adminKey = segments[1] ?? "rift-console";
 		const adminLabel =
 			adminKey === "audit"
 				? "Content Audit"
 				: adminKey === "art-generation"
 					? "Art Generation"
-					: "System Console";
+					: "Rift Console";
 		return `${BASE_TITLE} - Warden Tools: ${adminLabel}`;
 	}
 	if (pathname.startsWith("/auth")) {

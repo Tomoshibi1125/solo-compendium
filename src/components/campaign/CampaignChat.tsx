@@ -2,10 +2,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { Brain, Loader2, Send, Sparkles, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import type { CampaignMessage } from "@/hooks/useCampaignChat";
@@ -46,7 +46,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 
 				await sendMessage.mutateAsync({
 					campaignId,
-					content: `Protocol Warden: ${narration}`,
+					content: `Warden: ${narration}`,
 					messageType: "whisper", // Use whisper type to visually distinguish AI flavor text
 				});
 			} catch (error) {
@@ -87,7 +87,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 
 			if (
 				isAutoNarrating &&
-				["roll", "system"].includes(newMessage.message_type) &&
+				["roll", "rift"].includes(newMessage.message_type) &&
 				newMessage.user_id === currentUserId
 			) {
 				// Automatically narrate incoming mechanics if toggle is enabled
@@ -126,7 +126,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 	};
 
 	return (
-		<SystemWindow title="CAMPAIGN CHAT" className="h-[500px] flex flex-col">
+		<AscendantWindow title="CAMPAIGN CHAT" className="h-[500px] flex flex-col">
 			<div className="flex items-center justify-between p-2 border-b bg-muted/50 mb-2">
 				<div className="flex items-center space-x-2">
 					<Brain className="w-4 h-4 text-purple-500" />
@@ -134,7 +134,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 						htmlFor="auto-narrate"
 						className="text-xs font-medium cursor-pointer"
 					>
-						AI Protocol Warden (Auto-Narrate)
+						AI Warden (Auto-Narrate)
 					</Label>
 				</div>
 				<Switch
@@ -187,7 +187,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 												})}
 											</span>
 											<div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
-												{["roll", "system"].includes(msg.message_type) && (
+												{["roll", "rift"].includes(msg.message_type) && (
 													<Button
 														variant="ghost"
 														size="icon"
@@ -243,6 +243,6 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 					)}
 				</Button>
 			</form>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

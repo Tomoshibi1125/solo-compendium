@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { SourceBookPage } from "@/components/compendium/SourceBookPage";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { regents } from "@/data/compendium/regents";
 
 export const BestiaryEcologies = () => {
@@ -29,12 +29,12 @@ export const BestiaryEcologies = () => {
 			<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 				{/* 1. Header Section */}
 				<section className="text-center mb-16">
-					<SystemHeading
+					<RiftHeading
 						level={1}
 						className="text-5xl text-red-500 mb-6 font-display uppercase tracking-widest"
 					>
 						Anomaly Ecologies
-					</SystemHeading>
+					</RiftHeading>
 					<p className="text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto">
 						Anomalies do not spawn in a vacuum. This directory provides a
 						biological and aetheric analysis of Rift environments—how mana

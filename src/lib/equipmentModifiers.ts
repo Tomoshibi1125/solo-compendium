@@ -194,7 +194,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			const value = parseInt(skillMatch[1] || "0", 10);
 			if (!modifiers.skills) modifiers.skills = {};
 			if (lowerProp.includes("all")) {
-				// Expand "*" into all 18 System Ascendant skills
+				// Expand "*" into all 18 Rift Ascendant skills
 				const ALL_SKILLS = [
 					"Athletics",
 					"Acrobatics",

@@ -57,7 +57,7 @@ export function useCharacterPageModel() {
 			if (character) {
 				const learned = await autoLearnRunes(character);
 				if (learned.length > 0) {
-					console.log("[Protocol Warden] Auto-Learned Runes:", learned);
+					console.log("[Warden] Auto-Learned Runes:", learned);
 				}
 			}
 		};
@@ -423,13 +423,13 @@ export function useCharacterPageModel() {
 	};
 
 	const handleResourceAdjust = (
-		field: "hit_dice_current" | "system_favor_current",
+		field: "hit_dice_current" | "rift_favor_current",
 		delta: number,
 	) => {
 		if (!character || isReadOnly) return;
 		const maxLookup = {
 			hit_dice_current: character.hit_dice_max,
-			system_favor_current: character.system_favor_max,
+			rift_favor_current: character.rift_favor_max,
 		};
 		sheetController.handleResourceAdjust(
 			character.id,

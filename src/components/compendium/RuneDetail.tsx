@@ -9,9 +9,9 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import type { Database } from "@/integrations/supabase/types";
 import { setPendingResolution } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -90,7 +90,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				className={typeColor ? `border-2 ${typeColor.split(" ")[2]}` : ""}
 			>
@@ -98,7 +98,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 					<div className="flex items-center gap-3">
 						<Icon className="w-8 h-8 text-primary" />
 						<div>
-							<h2 className="font-display text-2xl gradient-text-system">
+							<h2 className="font-display text-2xl gradient-text-ascendant">
 								{displayName}
 							</h2>
 							<div className="flex items-center gap-2 mt-1">
@@ -132,11 +132,11 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Requirements */}
 			{requirements.length > 0 && (
-				<SystemWindow title="REQUIREMENTS">
+				<AscendantWindow title="REQUIREMENTS">
 					<div className="flex flex-wrap gap-2">
 						{requirements.map((req, _i) => (
 							<Badge key={req} variant="outline">
@@ -158,12 +158,12 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							</div>
 						</div>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Cross-Learning Penalties */}
 			{(data.caster_penalty || data.martial_penalty) && (
-				<SystemWindow title="CROSS-LEARNING MECHANICS">
+				<AscendantWindow title="CROSS-LEARNING MECHANICS">
 					<div className="space-y-3">
 						{data.caster_penalty && (
 							<div>
@@ -206,11 +206,11 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Effect Details */}
-			<SystemWindow title="EFFECT">
+			<AscendantWindow title="EFFECT">
 				<div className="space-y-3">
 					<div>
 						<div className="flex items-center gap-2 mb-2">
@@ -311,11 +311,11 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Passive Bonuses */}
 			{data.passive_bonuses && Object.keys(data.passive_bonuses).length > 0 && (
-				<SystemWindow title="PASSIVE BONUSES">
+				<AscendantWindow title="PASSIVE BONUSES">
 					<div className="space-y-2">
 						{Object.entries(data.passive_bonuses).map(([key, value]) => (
 							<div key={key} className="flex items-center gap-2">
@@ -328,11 +328,11 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							</div>
 						))}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Inscription Details */}
-			<SystemWindow title="INSCRIPTION">
+			<AscendantWindow title="INSCRIPTION">
 				<div className="space-y-2 text-sm">
 					<div>
 						<span className="text-muted-foreground">Can be inscribed on: </span>
@@ -351,15 +351,15 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						<Badge variant="outline">DC {data.inscription_difficulty}</Badge>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Discovery Lore */}
 			{data.discovery_lore && (
-				<SystemWindow title="DISCOVERY">
+				<AscendantWindow title="DISCOVERY">
 					<p className="text-muted-foreground italic">
 						<AutoLinkText text={data.discovery_lore} />
 					</p>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Tags */}

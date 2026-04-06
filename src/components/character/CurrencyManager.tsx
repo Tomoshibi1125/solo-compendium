@@ -1,8 +1,8 @@
 import { Coins, Edit2, Minus, Plus } from "lucide-react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -126,11 +126,11 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 	};
 
 	return (
-		<SystemWindow title="RIFT REWARDS">
+		<AscendantWindow title="RIFT REWARDS">
 			<div className="space-y-3">
 				<p className="text-xs text-muted-foreground mb-4">
 					Track currency earned from Rift completions. In the post-reset world,
-					Ascendants are rewarded by the System.
+					Ascendants are rewarded by the Rift.
 				</p>
 				{CURRENCY_TYPES.map((type) => {
 					const currency = getCurrency(type.id);
@@ -235,6 +235,6 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 					);
 				})}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

@@ -22,7 +22,7 @@ export interface VTTDrawing {
 	strokeWidth: number;
 	fillColor?: string;
 	fillOpacity?: number;
-	layer: "drawing" | "PW";
+	layer: "drawing" | "Warden";
 	createdBy: string;
 	createdAt: string;
 	label?: string;

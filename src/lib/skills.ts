@@ -1,4 +1,4 @@
-import type { AbilityScore } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
 import { getAbilityModifier } from "./characterCalculations";
 
 export interface SkillDefinition {

@@ -15,13 +15,13 @@ import {
 } from "@/lib/guestStore";
 import { log } from "@/lib/logger";
 import { useOptimisticMutation } from "@/lib/optimisticUpdates";
+import type { AbilityScore } from "@/types/core-rules";
 
-// Note: These functions are defined in system-rules.ts but we'll use the ones from characterCalculations
+// Note: These functions are defined in core-rules.ts but we'll use the ones from characterCalculations
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
 type CharacterInsert = Database["public"]["Tables"]["characters"]["Insert"];
 type CharacterUpdate = Database["public"]["Tables"]["characters"]["Update"];
-type AbilityScore = Database["public"]["Enums"]["ability_score"];
 
 export interface CharacterWithAbilities extends Character {
 	abilities: Record<AbilityScore, number>;

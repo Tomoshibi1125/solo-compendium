@@ -1,6 +1,6 @@
 import { Dice6, Wifi, WifiOff } from "lucide-react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCampaignRollFeed } from "@/hooks/useCampaignRollFeed";
 import { cn } from "@/lib/utils";
 
@@ -54,7 +54,7 @@ export function CampaignRollFeed({ campaignId }: CampaignRollFeedProps) {
 
 	return (
 		<div data-testid="campaign-roll-feed">
-			<SystemWindow title="LIVE ROLL FEED">
+			<AscendantWindow title="LIVE ROLL FEED">
 				<div className="space-y-1">
 					<div className="flex items-center justify-between mb-2">
 						<div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -128,7 +128,7 @@ export function CampaignRollFeed({ campaignId }: CampaignRollFeedProps) {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 }

@@ -11,7 +11,7 @@ interface UseLicenseEnforcementReturn {
 
 export function useLicenseEnforcement(): UseLicenseEnforcementReturn {
 	const { user } = useAuth();
-	const [canAccessSRD, _setCanAccessSRD] = useState(true); // Base System Ascendant SRD is always free
+	const [canAccessSRD, _setCanAccessSRD] = useState(true); // Base Rift Ascendant SRD is always free
 	const [canAccessHomebrew, _setCanAccessHomebrew] = useState(true); // Public homebrew is accessible
 	const [canAccessMarketplace, setCanAccessMarketplace] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +25,7 @@ export function useLicenseEnforcement(): UseLicenseEnforcementReturn {
 
 			try {
 				// Here you would typically check user's roles, subscriptions, or purchased content
-				// For System Ascendant, we verify if they have unlocked marketplace access
+				// For Rift Ascendant, we verify if they have unlocked marketplace access
 				const { data, error } = await supabase
 					.from("profiles")
 					.select("role")

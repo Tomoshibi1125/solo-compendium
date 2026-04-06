@@ -1,5 +1,5 @@
 /**
- * Shared hook for AI-enhanced content generation across all Protocol Warden (PW) tools.
+ * Shared hook for AI-enhanced content generation across all Warden (Warden) tools.
  * Uses Google Gemini 2.0 Flash via the server proxy as primary provider.
  */
 
@@ -33,7 +33,7 @@ export function useAIEnhance() {
 					input: seedData,
 					context: {
 						contentType,
-						universe: "System Ascendant",
+						universe: "Rift Ascendant",
 						style:
 							"detailed TTRPG content with full lore, mechanics, rules, and flavor",
 						...(customSystemPrompt ? { customSystemPrompt } : {}),

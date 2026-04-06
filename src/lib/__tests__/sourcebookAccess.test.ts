@@ -33,11 +33,11 @@ type Row = {
 
 describe("sourcebookAccess helpers", () => {
 	it("builds normalized sourcebook candidates", () => {
-		const candidates = sourcebookCandidates(" System Ascendant Canon ");
+		const candidates = sourcebookCandidates(" Rift Ascendant Canon ");
 
 		expect(candidates).toEqual(
 			expect.arrayContaining([
-				"System Ascendant Canon",
+				"Rift Ascendant Canon",
 				"system ascendant canon",
 				"system-ascendant-canon",
 			]),
@@ -47,7 +47,7 @@ describe("sourcebookAccess helpers", () => {
 	it("keeps sourceless rows and allows rows with matching accessible sourcebook", () => {
 		const rows: Row[] = [
 			{ id: "free", source_book: null },
-			{ id: "canon", source_book: "System Ascendant Canon" },
+			{ id: "canon", source_book: "Rift Ascendant Canon" },
 			{ id: "locked", source_book: "Locked Deluxe Tome" },
 		];
 

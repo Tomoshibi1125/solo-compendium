@@ -120,7 +120,7 @@ export function useCampaignDice() {
 								const prompt = `A character just performed an attack roll.
 Context: ${rollData.context || "Standard Attack"}
 Roll Result: ${rollData.result} (Formula: ${rollData.dice_formula})
-Generate a brief (1-2 sentences), hyper-flavorful, cinematic description of this attack occurring in the dark-fantasy System Ascendant universe. Do not include mechanical numbers in the narrative.`;
+Generate a brief (1-2 sentences), hyper-flavorful, cinematic description of this attack occurring in the dark-fantasy Rift Ascendant universe. Do not include mechanical numbers in the narrative.`;
 
 								const response = await aiManager.processRequest({
 									service: "gemini-proxy",
@@ -137,7 +137,7 @@ Generate a brief (1-2 sentences), hyper-flavorful, cinematic description of this
 										await supabase.from("campaign_messages").insert({
 											campaign_id: campaignId,
 											user_id: user.id,
-											message_type: "system",
+											message_type: "rift",
 											content: `**Warden AI:** ${content}`,
 										});
 									}

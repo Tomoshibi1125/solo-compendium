@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface AppState {
-	theme: "light" | "dark" | "system";
-	setTheme: (theme: "light" | "dark" | "system") => void;
+	theme: "light" | "dark" | "rift";
+	setTheme: (theme: "light" | "dark" | "rift") => void;
 	sidebarOpen: boolean; // For mobile drawer
 	setSidebarOpen: (open: boolean) => void;
 	sidebarCollapsed: boolean; // For desktop rail
@@ -17,7 +17,7 @@ interface AppState {
 export const useAppStore = create<AppState>()(
 	persist(
 		(set) => ({
-			theme: "system",
+			theme: "rift",
 			setTheme: (theme) => set({ theme }),
 			sidebarOpen: false,
 			setSidebarOpen: (sidebarOpen) => set({ sidebarOpen }),

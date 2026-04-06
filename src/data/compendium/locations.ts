@@ -1,6 +1,6 @@
 // Comprehensive Locations Compendium - Digital Character Sheet Scale
 // Generated with full admin privileges
-// System Ascendant themed locations with images
+// Rift Ascendant themed locations with images
 
 export interface Location {
 	id: string;

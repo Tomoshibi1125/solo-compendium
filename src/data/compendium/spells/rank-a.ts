@@ -1,5 +1,4 @@
 import type { CompendiumSpell } from "@/types/compendium";
-
 export const spells_a: CompendiumSpell[] = [
 	{
 		id: "spell-a-1",
@@ -41,9 +40,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The rhythm of the kill.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -88,9 +85,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -135,9 +130,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "A hunger that cannot be sated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -182,9 +175,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -229,9 +220,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -240,7 +229,7 @@ export const spells_a: CompendiumSpell[] = [
 		id: "spell-a-6",
 		name: "Carnage tear",
 		description:
-			"Ancient mana, older than the System itself, coalesces into a singular point. The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
+			"Ancient mana, older than the Rift itself, coalesces into a singular point. The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
 		type: "Combat",
 		rank: "A",
 		image: "/generated/compendium/spells/spell-a-6.webp",
@@ -276,9 +265,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The rhythm of the kill.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -323,9 +310,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The sky's wrath concentrated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -370,9 +355,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "A stillness more absolute than death.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -417,9 +400,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "A stillness more absolute than death.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -464,9 +445,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The sky's wrath concentrated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -511,9 +490,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The sky's wrath concentrated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -558,9 +535,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The sky's wrath concentrated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -569,7 +544,7 @@ export const spells_a: CompendiumSpell[] = [
 		id: "spell-a-13",
 		name: "Void blast",
 		description:
-			"Ancient mana, older than the System itself, coalesces into a singular point. A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
+			"Ancient mana, older than the Rift itself, coalesces into a singular point. A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
 		type: "Combat",
 		rank: "A",
 		image: "/generated/compendium/spells/spell-a-13.webp",
@@ -605,9 +580,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "A hunger that cannot be sated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -652,9 +625,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The rhythm of the kill.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",
@@ -699,9 +670,7 @@ export const spells_a: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 80,
-		},
+		limitations: {},
 		flavor: "The sky's wrath concentrated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d10 per tier.",

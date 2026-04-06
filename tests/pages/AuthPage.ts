@@ -38,7 +38,7 @@ export class AuthPage {
 
 		// Select role (this sets the role state in Login.tsx)
 		if (role === "dm") {
-			await this.page.getByRole("button", { name: /Protocol Warden/i }).click();
+			await this.page.getByRole("button", { name: /Warden/i }).click();
 		} else {
 			await this.page
 				.getByRole("button", { name: /Player/i })
@@ -47,7 +47,7 @@ export class AuthPage {
 		}
 
 		// Click the specific guest button
-		const buttonText = `Continue as Guest (${role === "dm" ? "Protocol Warden" : "Player"})`;
+		const buttonText = `Continue as Guest (${role === "dm" ? "Warden" : "Player"})`;
 		await this.page
 			.getByRole("button", { name: buttonText, exact: true })
 			.click();

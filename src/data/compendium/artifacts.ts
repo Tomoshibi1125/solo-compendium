@@ -1,6 +1,6 @@
-// Artifacts Compendium - Authoritative System Ascendant Content
+// Artifacts Compendium - Authoritative Rift Ascendant Content
 // God-tier items and legendary artifacts
-// Based on System Ascendant mechanics
+// Based on Rift Ascendant mechanics
 
 interface Artifact {
 	id: string;
@@ -175,7 +175,7 @@ export const artifacts: Artifact[] = [
 				"Cannot be destroyed by conventional means",
 			],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/shadow-lord-blade.webp",
 	},
 	{
@@ -238,7 +238,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["fire", "cold", "lightning", "poison", "acid"],
 			special: ["Can communicate with dragons", "Cannot be broken"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/dragon-god-spear.webp",
 	},
 	{
@@ -305,7 +305,7 @@ export const artifacts: Artifact[] = [
 				"Exists outside normal time flow",
 			],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/time-master-staff.webp",
 	},
 
@@ -370,7 +370,7 @@ export const artifacts: Artifact[] = [
 				"Exists in multiple dimensions",
 			],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/void-armor.webp",
 	},
 	{
@@ -434,7 +434,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["charm", "fear", "poison"],
 			special: ["Cannot be lied to", "Commands cannot be resisted by mortals"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/divine-crown.webp",
 	},
 	{
@@ -490,7 +490,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["death", "necrotic", "poison"],
 			special: ["Cannot be killed", "Regenerates from nothing"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/eternal-heart.webp",
 	},
 
@@ -552,7 +552,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["illusion", "reality-warping"],
 			special: ["Cannot be deceived", "Can perceive all truths"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/reality-weaver.webp",
 	},
 	{
@@ -618,7 +618,7 @@ export const artifacts: Artifact[] = [
 				"Controls the flow of souls",
 			],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/soul-harvester.webp",
 	},
 	{
@@ -676,7 +676,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["all damage"],
 			special: ["Cannot be destroyed", "Exists in all places at once"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/infinity-orb.webp",
 	},
 
@@ -739,7 +739,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["charm", "fear"],
 			special: ["Cannot be disobeyed", "Commands all creatures"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/regent-gauntlets.webp",
 	},
 	{
@@ -796,7 +796,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["poison", "disease"],
 			special: ["Cannot be destroyed", "Grows stronger with time"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/world-tree-acorn.webp",
 	},
 	{
@@ -856,7 +856,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["fate", "destiny"],
 			special: ["Cannot be surprised", "Knows all outcomes"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/destiny-book.webp",
 	},
 	{
@@ -916,7 +916,7 @@ export const artifacts: Artifact[] = [
 			immunity: ["order", "law"],
 			special: ["Cannot be predicted", "Random effects always beneficial"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/chaos-heart.webp",
 	},
 	{
@@ -978,7 +978,7 @@ export const artifacts: Artifact[] = [
 				"All actions are predictable and perfect",
 			],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/artifacts/order-crystal.webp",
 	},
 ];

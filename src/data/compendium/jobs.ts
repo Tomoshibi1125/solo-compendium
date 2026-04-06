@@ -1788,7 +1788,7 @@ export const jobs: Job[] = [
 				level: 10,
 				name: "Direct Petition",
 				description:
-					"Once per long rest, petition the Absolute directly. Roll d100 ≤ Herald level for the Absolute to intervene with an effect of the PW's choosing. Your connection reaches the Absolute core.",
+					"Once per long rest, petition the Absolute directly. Roll d100 ≤ Herald level for the Absolute to intervene with an effect of the Warden's choosing. Your connection reaches the Absolute core.",
 			},
 			{
 				level: 14,

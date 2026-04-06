@@ -1,6 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface ConditionData {
@@ -29,7 +29,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				className="border-yellow-500/30"
 			>
@@ -39,19 +39,19 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 						<AutoLinkText text={data.description} />
 					</p>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{(data.condition_duration || data.condition_save) && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					{data.condition_duration && (
-						<SystemWindow title="DURATION" compact>
+						<AscendantWindow title="DURATION" compact>
 							<p className="text-sm text-muted-foreground">
 								{formatRegentVernacular(data.condition_duration)}
 							</p>
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 					{data.condition_save && (
-						<SystemWindow title="SAVING THROW" compact>
+						<AscendantWindow title="SAVING THROW" compact>
 							<p className="text-sm text-muted-foreground">
 								{formatRegentVernacular(data.condition_save.type || "")}
 								{typeof data.condition_save.dc === "number"
@@ -63,14 +63,14 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 									{formatRegentVernacular(data.condition_save.description)}
 								</p>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 				</div>
 			)}
 
 			{/* Effects */}
 			{effects.length > 0 && (
-				<SystemWindow title="EFFECTS">
+				<AscendantWindow title="EFFECTS">
 					<ul className="space-y-3">
 						{effects.map((effect, _i) => (
 							<li
@@ -83,11 +83,11 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.condition_removal && data.condition_removal.length > 0 && (
-				<SystemWindow title="REMOVAL">
+				<AscendantWindow title="REMOVAL">
 					<ul className="space-y-3">
 						{data.condition_removal.map((step, _i) => (
 							<li
@@ -100,7 +100,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

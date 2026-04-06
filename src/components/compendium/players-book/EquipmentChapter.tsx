@@ -1,19 +1,19 @@
 import { Package } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { comprehensiveRelics } from "@/data/compendium/relics-comprehensive";
 
 export const EquipmentChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-regent-gold mb-6">
+				<RiftHeading level={1} className="text-5xl text-regent-gold mb-6">
 					Relics & Artifacts
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-					Beyond standard armaments, the System provisions powerful
-					Relics—weapons and armor forged from condensed Aether or harvested
-					from the remains of high-ranking Anomalies. These items defy physics
-					and grant immense power to those who can attune to their resonance.
+					Beyond standard armaments, the Rift provisions powerful Relics—weapons
+					and armor forged from condensed Aether or harvested from the remains
+					of high-ranking Anomalies. These items defy physics and grant immense
+					power to those who can attune to their resonance.
 				</p>
 			</section>
 

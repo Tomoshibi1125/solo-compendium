@@ -2,14 +2,14 @@ import { writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { anomalies } from "../src/data/compendium/anomalies/index";
-import { items_part1 } from "../src/data/compendium/items-part1";
-import { items_part2 } from "../src/data/compendium/items-part2";
-import { items_part3 } from "../src/data/compendium/items-part3";
+import { items as items_part1 } from "../src/data/compendium/items-part1";
+import { items as items_part2 } from "../src/data/compendium/items-part2";
+import { items as items_part3 } from "../src/data/compendium/items-part3";
 // Import Compendium Data
 import { locations } from "../src/data/compendium/locations";
 import { comprehensiveRelics } from "../src/data/compendium/relics-comprehensive";
 
-const allItemsAndRelics = [
+const _allItemsAndRelics = [
 	...comprehensiveRelics,
 	...items_part1,
 	...items_part2,
@@ -36,14 +36,14 @@ const selectedAnomalies = getRandom(anomalies, 60);
 const selectedRelics = getRandom(comprehensiveRelics, 60);
 
 // Helper to format Relics
-function formatRelic(relic: any) {
+function formatRelic(relic: { name: string; type: string; rarity: string; attunement?: boolean; description: string; abilities?: Array<{ name: string; description: string }>; }) {
 	let md = `#### ${relic.name}\n`;
 	md += `*${relic.type.charAt(0).toUpperCase() + relic.type.slice(1)}, ${relic.rarity}${relic.attunement ? " — Requires Attunement" : ""}*\n`;
 	md += `${relic.description}\n\n`;
 
 	if (relic.abilities && relic.abilities.length > 0) {
 		md += `**Abilities:**\n`;
-		relic.abilities.forEach((ab: any) => {
+		relic.abilities.forEach((ab) => {
 			md += `- ***${ab.name}.*** ${ab.description}\n`;
 		});
 		md += `\n`;
@@ -52,7 +52,7 @@ function formatRelic(relic: any) {
 }
 
 // Helper to format Anomalies
-function formatAnomaly(anomaly: any) {
+function formatAnomaly(anomaly: { name: string; rank?: string; type?: string; ac?: number; hp?: number; description?: string; stats?: { ability_scores?: { strength: number; agility: number; vitality: number; intelligence: number; sense: number; presence: number }; challenge_rating?: number }; traits?: Array<{ name: string; description: string }>; actions?: Array<{ name: string; description: string }>; }) {
 	let md = `### ${anomaly.name} (${anomaly.rank}-Rank ${anomaly.type || "Anomaly"})\n`;
 	md += `*Medium Aberration, Unaligned*\n\n`;
 	md += `**AC:** ${anomaly.ac || 15} | **HP:** ${anomaly.hp || 50} | **Speed:** 30 ft.\n`;
@@ -71,12 +71,12 @@ function formatAnomaly(anomaly: any) {
 		`${val} (${mod(val) >= 0 ? "+" : ""}${mod(val)})`;
 
 	md += `| ${formatStat(s.strength)} | ${formatStat(s.agility)} | ${formatStat(s.vitality)} | ${formatStat(s.intelligence)} | ${formatStat(s.sense)} | ${formatStat(s.presence)} |\n\n`;
-	md += `**CR:** ${anomaly.stats?.challenge_rating || "Unknown"}\n`;
+	md += `**CR:** ${anomaly.stats?.challenge_rating || "Classified"}\n`;
 	md += `> ${anomaly.description || "A dangerous anomaly."}\n\n`;
 
 	if (anomaly.traits && anomaly.traits.length > 0) {
 		md += `**Traits:**\n`;
-		anomaly.traits.forEach((t: any) => {
+		anomaly.traits.forEach((t) => {
 			md += `- ***${t.name}.*** ${t.description}\n`;
 		});
 		md += `\n`;
@@ -84,7 +84,7 @@ function formatAnomaly(anomaly: any) {
 
 	if (anomaly.actions && anomaly.actions.length > 0) {
 		md += `**Actions:**\n`;
-		anomaly.actions.forEach((a: any) => {
+		anomaly.actions.forEach((a) => {
 			md += `- ***${a.name}.*** ${a.description}\n`;
 		});
 		md += `\n`;

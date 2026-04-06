@@ -183,9 +183,9 @@ export async function bulkLevelUp(
 			const newLevel = character.level + 1;
 			const hpIncrease = Math.floor(character.hp_max / character.level || 5);
 			const newProficiencyBonus = Math.ceil(newLevel / 4) + 1;
-			const newSystemFavorDie =
+			const newRiftFavorDie =
 				newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10;
-			const newSystemFavorMax =
+			const newRiftFavorMax =
 				newLevel <= 4 ? 3 : newLevel <= 10 ? 4 : newLevel <= 16 ? 5 : 6;
 
 			const { error } = await supabase
@@ -197,8 +197,8 @@ export async function bulkLevelUp(
 					hp_current: character.hp_max + hpIncrease, // Full heal on level up
 					hit_dice_max: newLevel,
 					hit_dice_current: newLevel,
-					system_favor_die: newSystemFavorDie,
-					system_favor_max: newSystemFavorMax,
+					rift_favor_die: newRiftFavorDie,
+					rift_favor_max: newRiftFavorMax,
 				})
 				.eq("id", id);
 
@@ -268,7 +268,7 @@ export async function bulkRest(
 					.update({
 						hp_current: character.hp_max,
 						hit_dice_current: character.hit_dice_max,
-						system_favor_current: character.system_favor_max,
+						rift_favor_current: character.rift_favor_max,
 						exhaustion_level: Math.max(0, character.exhaustion_level - 1),
 						conditions: [],
 					})

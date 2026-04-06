@@ -28,11 +28,11 @@ import {
 	Zap,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	getVTTAssetCategories,
 	getVTTAssetLibrary,
@@ -482,7 +482,7 @@ export function VTTAssetBrowser({
 
 			{/* Preview / action panel */}
 			{previewAsset && (
-				<SystemWindow title={previewAsset.name} compact>
+				<AscendantWindow title={previewAsset.name} compact>
 					<div className="space-y-2">
 						<div className="rounded overflow-hidden border border-border/40 max-h-48">
 							<OptimizedImage
@@ -645,7 +645,7 @@ export function VTTAssetBrowser({
 							)}
 						</div>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

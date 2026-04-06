@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import {
-	OfflineStatus,
-	PWAInstallPrompt,
-} from "@/components/pwa/PWAComponents";
-import { CosmicBackground } from "@/components/ui/CosmicBackground";
-import { OfflineBanner } from "@/components/ui/OfflineBanner";
-import { WardenChatbot } from "@/components/warden-protocols/WardenChatbot";
-import { useEmbedded } from "@/contexts/EmbeddedContext";
-import { useAccessibility } from "@/hooks/useAccessibility";
-import { usePWA } from "@/hooks/usePWA";
-import { cn } from "@/lib/utils";
+import { useEmbedded } from "../../contexts/EmbeddedContext";
+import { useAccessibility } from "../../hooks/useAccessibility";
+import { useWardenA } from "../../hooks/usePWA";
+import { cn } from "../../lib/utils";
+import { OfflineStatus, WardenAInstallPrompt } from "../pwa/PWAComponents";
+import { CosmicBackground } from "../ui/CosmicBackground";
+import { OfflineBanner } from "../ui/OfflineBanner";
+import { WardenChatbot } from "../warden-directives/WardenChatbot";
 
 interface LayoutProps {
 	children?: React.ReactNode;
@@ -49,8 +46,8 @@ function useSAZone(): string {
 	const location = useLocation();
 	const path = location.pathname;
 	if (
-		path.startsWith("/warden-protocols") ||
-		path.startsWith("/warden-protocols") ||
+		path.startsWith("/warden-directives") ||
+		path.startsWith("/warden-directives") ||
 		path.startsWith("/admin")
 	)
 		return "warden";
@@ -77,7 +74,7 @@ export function Layout({ children, className }: LayoutProps) {
 		isOnline,
 		installPrompt,
 		syncQueueLength,
-	} = usePWA();
+	} = useWardenA();
 
 	const isMobile = useMediaQuery("(max-width: 768px)");
 	const isTablet = useMediaQuery("(max-width: 1024px)");
@@ -137,8 +134,8 @@ export function Layout({ children, className }: LayoutProps) {
 				{children || <Outlet />}
 			</main>
 
-			{/* PWA Components */}
-			<PWAInstallPrompt
+			{/* WardenA Components */}
+			<WardenAInstallPrompt
 				isInstallable={isInstallable}
 				isInstalled={isInstalled}
 				onInstall={installPrompt}
@@ -149,7 +146,7 @@ export function Layout({ children, className }: LayoutProps) {
 				syncQueueLength={syncQueueLength}
 			/>
 
-			{saZone === "PW" && <WardenChatbot />}
+			{saZone === "Warden" && <WardenChatbot />}
 		</div>
 	);
 }

@@ -1,8 +1,8 @@
 import type React from "react";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -35,7 +35,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-			<SystemWindow title="MODEL ORIGIN: BACKGROUND BINDING">
+			<AscendantWindow title="MODEL ORIGIN: BACKGROUND BINDING">
 				<div className="space-y-6">
 					<div className="space-y-3">
 						<Label className="text-[10px] uppercase tracking-widest text-primary/60">
@@ -74,9 +74,9 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 										selectedBackgroundData.name,
 								)}
 							</h4>
-							<SystemText className="block text-sm text-muted-foreground leading-relaxed italic">
+							<AscendantText className="block text-sm text-muted-foreground leading-relaxed italic">
 								{formatRegentVernacular(selectedBackgroundData.description)}
-							</SystemText>
+							</AscendantText>
 
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-4 border-t border-primary/5">
 								{selectedBackgroundData.skill_proficiencies &&
@@ -153,7 +153,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

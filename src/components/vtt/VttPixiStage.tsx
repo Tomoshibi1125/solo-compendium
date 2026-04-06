@@ -547,7 +547,7 @@ export function VttPixiStage({
 			if (!walls || walls.length === 0) return;
 
 			const wg = new Graphics();
-			// Walls are drawn in blueish-grey for PW, mostly invisible for players but we draw them for both right now
+			// Walls are drawn in blueish-grey for Warden, mostly invisible for players but we draw them for both right now
 			// so players know why they can't see past it (or we can hide for players). Let's make them subtle for players.
 			const wallColor = isWarden ? 0xef4444 : 0x000000;
 			const wallAlpha = isWarden ? 0.8 : 0.3;

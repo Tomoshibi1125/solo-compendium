@@ -10,9 +10,9 @@ import {
 } from "lucide-react";
 import { useMemo } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useFeatures } from "@/hooks/useFeatures";
@@ -23,7 +23,7 @@ import { resolveRuneAbsorption } from "@/lib/runeAutomation";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
-import { getProficiencyBonus } from "@/types/system-rules";
+import { getProficiencyBonus } from "@/types/core-rules";
 
 const RUNE_TYPE_COLORS: Record<string, string> = {
 	martial: "bg-red-500/20 text-red-400 border-red-500/30",
@@ -142,7 +142,7 @@ export function RunesList({
 	};
 
 	return (
-		<SystemWindow title="RUNES" variant="resurge">
+		<AscendantWindow title="RUNES" variant="resurge">
 			<div className="space-y-4">
 				{unabsorbedRunes.length > 0 && (
 					<div>
@@ -316,6 +316,6 @@ export function RunesList({
 					</div>
 				)}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

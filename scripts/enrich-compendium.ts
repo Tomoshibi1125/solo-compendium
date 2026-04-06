@@ -15,13 +15,9 @@ type SpellInput = {
 	description: string;
 	type: "Attack" | "Defense" | "Utility" | "Healing";
 	rank: SpellRank;
-	manaCost: number;
-	damage?: number;
-	healing?: number;
 	image: string;
 	effect: string;
 	range?: number | { type?: string; value?: number; unit?: string };
-	cooldown: number;
 };
 
 type RawAnomalyStats = {
@@ -369,10 +365,7 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 	}
 
 	if (!isRecord(out.limitations)) {
-		out.limitations = {
-			mana_cost: spell.manaCost,
-			cooldown: spell.cooldown,
-		};
+		out.limitations = {};
 	}
 
 	if (!hasNonEmptyString(out.flavor)) {

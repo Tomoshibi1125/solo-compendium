@@ -1,14 +1,14 @@
 import { Hexagon } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { sigils } from "@/data/compendium/sigils";
 
 export const RunesChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-regent-gold mb-6">
+				<RiftHeading level={1} className="text-5xl text-regent-gold mb-6">
 					Runes & Sigils
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
 					When an Anomaly is defeated, it occasionally leaves behind
 					crystallized fragments of its essence known as Runestones. By

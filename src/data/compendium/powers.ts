@@ -1,6 +1,6 @@
-// Powers Compendium - Authoritative System Ascendant Content
+// Powers Compendium - Authoritative Rift Ascendant Content
 // Supernatural abilities and extraordinary powers
-// Based on System Ascendant mechanics
+// Based on Rift Ascendant mechanics
 // 5e-style power mechanics
 // INNATE POWERS
 // AWAKENING POWERS (Job-linked)
@@ -37,7 +37,7 @@ export const powers = [
 		},
 		flavor:
 			"Ignites the quiet space between breaths. A triumphant death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shadow-step.webp",
 	},
 	{
@@ -65,11 +65,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "3 times per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Weaves the quiet space between breaths. A relentless roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/demonic-aura.webp",
 	},
 	{
@@ -92,7 +92,7 @@ export const powers = [
 		},
 		flavor:
 			"Denies the quiet space between breaths. A brutal death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/regeneration.webp",
 	},
 	{
@@ -112,7 +112,7 @@ export const powers = [
 		},
 		flavor:
 			"Destroys the arrogant and the mighty. A sorrowful beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/true-sight.webp",
 	},
 	{
@@ -137,11 +137,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Absorbs the remnants of humanity. An ancient surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shadow-essence.webp",
 	},
 	{
@@ -170,11 +170,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per short or long rest",
-			cooldown: "Short rest",
+			recharge: "Short rest",
 		},
 		flavor:
 			"Destroys the dimensional divide. A sorrowful testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/dragon-breath.webp",
 	},
 	{
@@ -204,11 +204,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Ignores the arrogant and the mighty. An absolute whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/fey-charm.webp",
 	},
 	{
@@ -232,7 +232,7 @@ export const powers = [
 		},
 		flavor:
 			"Ignores the concept of defeat. An absolute surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/dwarven-resilience.webp",
 	},
 	{
@@ -256,7 +256,7 @@ export const powers = [
 		},
 		flavor:
 			"Denies the darkness within. An ancient breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/halfling-luck.webp",
 	},
 	{
@@ -284,18 +284,18 @@ export const powers = [
 		},
 		limitations: {
 			uses: "3 times per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Overrides the remnants of humanity. A devastating surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/orcish-rage.webp",
 	},
 	{
 		id: "ki-point",
 		name: "Ki Point",
 		description:
-			"Essence-channeled martial energy that fuels transcendent combat abilities, refined through the System's awakening of your inner potential.",
+			"Essence-channeled martial energy that fuels transcendent combat abilities, refined through the Rift's awakening of your inner potential.",
 		type: "class",
 		rarity: "common",
 		requirements: {
@@ -313,7 +313,7 @@ export const powers = [
 		},
 		flavor:
 			"Reflects the dimensional divide. A chaotic testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/ki-point.webp",
 	},
 	{
@@ -342,7 +342,7 @@ export const powers = [
 		},
 		flavor:
 			"Ignores the remnants of humanity. A devastating surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/divine-smite.webp",
 	},
 	{
@@ -371,11 +371,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "2 times per short rest, increases at higher levels",
-			cooldown: "Short rest",
+			recharge: "Short rest",
 		},
 		flavor:
 			"Reflects the fragile limits of flesh. An overwhelming ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/wild-shape.webp",
 	},
 	{
@@ -402,14 +402,14 @@ export const powers = [
 		},
 		flavor:
 			"Shatters all who stand in opposition. An overwhelming whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/arcane-recovery.webp",
 	},
 	{
 		id: "sneak-attack",
 		name: "Precision Kill",
 		description:
-			"The System-enhanced ability to identify and exploit critical weak points in any target's defenses, turning a single strike into a devastating wound.",
+			"The Rift-enhanced ability to identify and exploit critical weak points in any target's defenses, turning a single strike into a devastating wound.",
 		type: "class",
 		rarity: "common",
 		requirements: {
@@ -430,7 +430,7 @@ export const powers = [
 			],
 		},
 		flavor: "Cleanses the architect's design. A subtle death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/sneak-attack.webp",
 	},
 	{
@@ -448,11 +448,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "3 times per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Commands the darkness within. A triumphant breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/vampiric-touch.webp",
 	},
 	{
@@ -479,7 +479,7 @@ export const powers = [
 		},
 		flavor:
 			"Ignites the fragile limits of flesh. A sorrowful breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/lycanthropy.webp",
 	},
 	{
@@ -506,11 +506,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Ignites the concept of defeat. A sorrowful dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/gaze-of-petrification.webp",
 	},
 	{
@@ -534,7 +534,7 @@ export const powers = [
 		},
 		flavor:
 			"Cleanses the dimensional divide. A forbidden testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/telepathy.webp",
 	},
 	{
@@ -560,14 +560,14 @@ export const powers = [
 		},
 		flavor:
 			"Shatters the flow of time itself. A brutal testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/invisibility.webp",
 	},
 	{
 		id: "divine-intervention",
 		name: "System Override",
 		description:
-			"Issue a direct petition to the architects of the System itself, requesting intervention that transcends the normal rules of dimensional reality.",
+			"Issue a direct petition to the architects of the Rift itself, requesting intervention that transcends the normal rules of dimensional reality.",
 		type: "divine",
 		rarity: "legendary",
 		requirements: {
@@ -577,24 +577,24 @@ export const powers = [
 			type: "action",
 		},
 		effects: {
-			primary: "Request direct intervention from the System architects.",
+			primary: "Request direct intervention from the Rift architects.",
 			secondary:
 				"Warden determines the form and effectiveness of the intervention.",
 		},
 		limitations: {
 			uses: "Once per lifetime",
-			cooldown: "Never",
+			recharge: "Never",
 		},
 		flavor:
 			"Bends the arrogant and the mighty. An intricate whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/divine-intervention.webp",
 	},
 	{
 		id: "angelic-wings",
 		name: "Essence Wings",
 		description:
-			"Manifest wings of crystallized essence that grant flight, a hallmark of ascendants who have transcended the System's physical limitations.",
+			"Manifest wings of crystallized essence that grant flight, a hallmark of ascendants who have transcended the Rift's physical limitations.",
 		type: "divine",
 		rarity: "very_rare",
 		requirements: {
@@ -613,11 +613,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "3 times per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Cleanses the remnants of humanity. A forbidden surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/angelic-wings.webp",
 	},
 	{
@@ -651,17 +651,17 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor: "Crushes the architect's design. An intricate roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/holy-aura.webp",
 	},
 	{
 		id: "avatar-of-battle",
 		name: "Avatar of Battle",
 		description:
-			"The System elevates your combat potential beyond mortal limits, transforming you into a living embodiment of warfare itself.",
+			"The Rift elevates your combat potential beyond mortal limits, transforming you into a living embodiment of warfare itself.",
 		type: "divine",
 		rarity: "legendary",
 		requirements: {
@@ -682,18 +682,18 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Commands the fragile limits of flesh. A triumphant ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/avatar-of-battle.webp",
 	},
 	{
 		id: "arcane-ascension",
 		name: "Arcane Ascension",
 		description:
-			"Transcend the System's imposed limitations on mortal spellcasting, briefly accessing the raw aetheric lattice that underlies all dimensional reality.",
+			"Transcend the Rift's imposed limitations on mortal spellcasting, briefly accessing the raw aetheric lattice that underlies all dimensional reality.",
 		type: "divine",
 		rarity: "legendary",
 		requirements: {
@@ -717,11 +717,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Commands the arrogant and the mighty. A desperate beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/arcane-ascension.webp",
 	},
 	{
@@ -750,11 +750,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Ignores the remnants of humanity. A devastating dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/void-collapse.webp",
 	},
 	{
@@ -783,11 +783,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per week",
-			cooldown: "Week",
+			recharge: "Week",
 		},
 		flavor:
 			"Reflects the arrogant and the mighty. A silent beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/chronos-shift.webp",
 	},
 	{
@@ -816,10 +816,10 @@ export const powers = [
 		},
 		limitations: {
 			uses: "3 times per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor: "Shatters the flow of time itself. A chaotic symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/mana-burn.webp",
 	},
 	{
@@ -848,11 +848,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Twice per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/obsidian-carapace.webp",
 	},
 	{
@@ -881,11 +881,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Commands the arrogant and the mighty. A triumphant beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/soul-rend.webp",
 	},
 	{
@@ -913,10 +913,10 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per short rest",
-			cooldown: "Short rest",
+			recharge: "Short rest",
 		},
 		flavor: "Bends the flow of time itself. A subtle symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/aegis-of-light.webp",
 	},
 	{
@@ -945,11 +945,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Twice per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Reclaims the concept of defeat. An overwhelming dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/phantom-barrage.webp",
 	},
 	{
@@ -973,7 +973,7 @@ export const powers = [
 				"You are immune to poison. Once learned via Rune, adapts to highest attribute.",
 		},
 		flavor: "Shatters the architect's design. A brutal roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/venom-blood.webp",
 	},
 	{
@@ -1002,11 +1002,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Destroys the flow of time itself. A sorrowful symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/absolute-zero.webp",
 	},
 	{
@@ -1031,11 +1031,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Proficiency bonus times per rest",
-			cooldown: "Short rest",
+			recharge: "Short rest",
 		},
 		flavor:
 			"Denies all who stand in opposition. A chaotic beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/kinetic-absorption.webp",
 	},
 	{
@@ -1066,7 +1066,7 @@ export const powers = [
 		},
 		flavor:
 			"Cleanses the remnants of humanity. A subtle dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/infernal-forge.webp",
 	},
 	{
@@ -1094,11 +1094,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per month",
-			cooldown: "Month",
+			recharge: "Month",
 		},
 		flavor:
 			"Reclaims the fragile limits of flesh. A silent breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/celestial-judgment.webp",
 	},
 	{
@@ -1130,11 +1130,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Cleanses all who stand in opposition. An intricate whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/mind-control.webp",
 	},
 	{
@@ -1166,7 +1166,7 @@ export const powers = [
 		},
 		flavor:
 			"Overrides the arrogant and the mighty. A relentless beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/warp-strike.webp",
 	},
 	{
@@ -1195,7 +1195,7 @@ export const powers = [
 			uses: "Unlimited",
 		},
 		flavor: "Destroys the darkness within. A desperate ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/life-transfer.webp",
 	},
 	{
@@ -1224,11 +1224,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "3 times per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Destroys the remnants of humanity. A desperate surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/gravity-crush.webp",
 	},
 	{
@@ -1258,11 +1258,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Denies the concept of defeat. A chaotic dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/echo-clone.webp",
 	},
 	{
@@ -1295,11 +1295,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Absorbs the concept of defeat. A sorrowful surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/storm-call.webp",
 	},
 	{
@@ -1328,11 +1328,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Twice per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Bends the quiet space between breaths. An intricate death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/blight-touch.webp",
 	},
 	{
@@ -1361,11 +1361,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per month",
-			cooldown: "Month",
+			recharge: "Month",
 		},
 		flavor:
 			"Cleanses the fragile limits of flesh. An intricate ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/starfall.webp",
 	},
 	{
@@ -1393,11 +1393,11 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Overrides the arrogant and the mighty. A devastating whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/reality-glitch.webp",
 	},
 	{
@@ -1425,10 +1425,10 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Twice per day",
-			cooldown: "Long rest",
+			recharge: "Long rest",
 		},
 		flavor: "Reclaims the architect's design. A devastating roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/solar-flare.webp",
 	},
 	{
@@ -1460,7 +1460,7 @@ export const powers = [
 		},
 		flavor:
 			"Ignites the concept of defeat. A sorrowful surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/void-singularity.webp",
 	},
 	{
@@ -1490,7 +1490,7 @@ export const powers = [
 		},
 		flavor:
 			"Reclaims the dimensional divide. A silent testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/aeon-shield.webp",
 	},
 	{
@@ -1520,7 +1520,7 @@ export const powers = [
 		},
 		flavor:
 			"Overrides the remnants of humanity. A silent surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/nebula-drift.webp",
 	},
 	{
@@ -1550,7 +1550,7 @@ export const powers = [
 			uses: "3 times per day",
 		},
 		flavor: "Bends the remnants of humanity. A subtle surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/gravity-well.webp",
 	},
 	{
@@ -1581,7 +1581,7 @@ export const powers = [
 		},
 		flavor:
 			"Absorbs the fragile limits of flesh. A sorrowful breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/quantum-entanglement.webp",
 	},
 	{
@@ -1612,7 +1612,7 @@ export const powers = [
 		},
 		flavor:
 			"Absorbs the remnants of humanity. A sorrowful surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/supernova-blast.webp",
 	},
 	{
@@ -1643,7 +1643,7 @@ export const powers = [
 		},
 		flavor:
 			"Ignores the remnants of humanity. A devastating dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/nanite-swarm.webp",
 	},
 	{
@@ -1674,7 +1674,7 @@ export const powers = [
 		},
 		flavor:
 			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/titan-strength.webp",
 	},
 	{
@@ -1706,7 +1706,7 @@ export const powers = [
 		},
 		flavor:
 			"Destroys the arrogant and the mighty. A desperate whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/echoes.webp",
 	},
 	{
@@ -1737,7 +1737,7 @@ export const powers = [
 		},
 		flavor:
 			"Cleanses the quiet space between breaths. A forbidden death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/glacier-prison.webp",
 	},
 	{
@@ -1765,7 +1765,7 @@ export const powers = [
 		},
 		flavor:
 			"Destroys the quiet space between breaths. A triumphant death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/light.webp",
 	},
 	{
@@ -1795,7 +1795,7 @@ export const powers = [
 			uses: "At-will",
 		},
 		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/neuro-spike.webp",
 	},
 	{
@@ -1826,7 +1826,7 @@ export const powers = [
 		},
 		flavor:
 			"Weaves all who stand in opposition. A subtle beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/plasma-whip.webp",
 	},
 	{
@@ -1856,7 +1856,7 @@ export const powers = [
 		},
 		flavor:
 			"Cleanses the arrogant and the mighty. A forbidden whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/spectral-blade.webp",
 	},
 	{
@@ -1885,7 +1885,7 @@ export const powers = [
 		},
 		flavor:
 			"Overrides the fragile limits of flesh. A silent breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/rift.webp",
 	},
 	{
@@ -1916,7 +1916,7 @@ export const powers = [
 		},
 		flavor:
 			"Cleanses the flow of time itself. A forbidden symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/soul-bind.webp",
 	},
 	{
@@ -1948,13 +1948,13 @@ export const powers = [
 		},
 		flavor:
 			"Denies the concept of defeat. A brutal dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/entropy.webp",
 	},
 	{
 		id: "celestial-communion",
 		name: "Celestial Communion",
-		description: "Receive direct guidance from the System Core.",
+		description: "Receive direct guidance from the Rift Core.",
 		type: "divine",
 		rarity: "rare",
 		requirements: {
@@ -1979,7 +1979,7 @@ export const powers = [
 		},
 		flavor:
 			"Destroys the dimensional divide. A sorrowful symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/communion.webp",
 	},
 	{
@@ -2011,7 +2011,7 @@ export const powers = [
 		},
 		flavor:
 			"Cleanses the quiet space between breaths. An intricate death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/puppetry.webp",
 	},
 	{
@@ -2042,7 +2042,7 @@ export const powers = [
 		},
 		flavor:
 			"Shatters the dimensional divide. A chaotic testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/thermal.webp",
 	},
 	{
@@ -2073,7 +2073,7 @@ export const powers = [
 		},
 		flavor:
 			"Destroys the quiet space between breaths. A triumphant roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/leap.webp",
 	},
 	{
@@ -2104,7 +2104,7 @@ export const powers = [
 			uses: "Once per short rest",
 		},
 		flavor: "Absorbs the architect's design. A sorrowful roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/wall.webp",
 	},
 	{
@@ -2134,7 +2134,7 @@ export const powers = [
 		},
 		flavor:
 			"Cleanses the quiet space between breaths. A forbidden death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/lance.webp",
 	},
 	{
@@ -2164,7 +2164,7 @@ export const powers = [
 		},
 		flavor:
 			"Crushes the concept of defeat. A desperate dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/vortex.webp",
 	},
 	{
@@ -2194,7 +2194,7 @@ export const powers = [
 			uses: "Once per day",
 		},
 		flavor: "Ignores the architect's design. An absolute roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/seraph.webp",
 	},
 	{
@@ -2226,7 +2226,7 @@ export const powers = [
 		},
 		flavor:
 			"Absorbs the quiet space between breaths. A sorrowful death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/tether.webp",
 	},
 	{
@@ -2257,7 +2257,7 @@ export const powers = [
 		},
 		flavor:
 			"Destroys the flow of time itself. A desperate symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/fortress.webp",
 	},
 	{
@@ -2288,7 +2288,7 @@ export const powers = [
 			uses: "Once per day",
 		},
 		flavor: "Reclaims the darkness within. A devastating ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shear.webp",
 	},
 	{
@@ -2320,7 +2320,7 @@ export const powers = [
 		},
 		flavor:
 			"Commands the arrogant and the mighty. A triumphant beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/omega.webp",
 	},
 ];

@@ -1,5 +1,5 @@
 /**
- * AUTHORITATIVE DEPENDENCY PROOF (Protocol Warden Certified)
+ * AUTHORITATIVE DEPENDENCY PROOF (Warden Certified)
  * Formally references crucial system assets that are primarily used in CSS/PostCSS
  * to satisfy static analysis (Knip) while achieving 100% Zero Legacy status.
  */

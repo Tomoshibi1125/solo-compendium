@@ -19,7 +19,7 @@ export type TerrainType =
 	| "lava" // extreme damage
 	| "ice" // AGI save or fall prone
 	| "mud" // half speed + STR save
-	| "magical" // PW-defined effect
+	| "magical" // Warden-defined effect
 	| "elevated" // height advantage
 	| "pit" // fall hazard
 	| "cover_half" // +2 AC

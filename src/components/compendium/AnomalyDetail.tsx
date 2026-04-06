@@ -13,9 +13,9 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { StatBlock, StatSection } from "@/components/compendium/StatBlock";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import {
 	type ActionResolutionPayload,
@@ -84,7 +84,7 @@ interface AnomalyTrait {
 	description: string;
 }
 
-// Enhanced gate rank colors with System Ascendant theme
+// Enhanced gate rank colors with Rift Ascendant theme
 const gateRankColors: Record<
 	string,
 	{ bg: string; text: string; glow: string }
@@ -390,7 +390,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 			)}
 
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				actions={<ShareToVTTButton itemType="Anomaly" itemName={displayName} />}
 				variant={
@@ -474,11 +474,11 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 						</p>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Core Stats */}
 			<div className="grid grid-cols-3 md:grid-cols-5 gap-4" id="anomaly-stats">
-				<SystemWindow title="ARMOR CLASS" compact>
+				<AscendantWindow title="ARMOR CLASS" compact>
 					<div className="flex items-center gap-2">
 						<Shield className="w-5 h-5 text-blue-400" />
 						<span className="font-display text-2xl">{armorClass}</span>
@@ -488,9 +488,9 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 							{formatRegentVernacular(data.armor_type)}
 						</span>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="HIT POINTS" compact>
+				<AscendantWindow title="HIT POINTS" compact>
 					<div className="flex items-center gap-2">
 						<Heart className="w-5 h-5 text-red-400" />
 						<span className="font-display text-2xl">{hitPointsAverage}</span>
@@ -500,16 +500,16 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 							{hitPointsFormula}
 						</span>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="SPEED" compact>
+				<AscendantWindow title="SPEED" compact>
 					<div className="flex items-center gap-2">
 						<Footprints className="w-5 h-5 text-green-400" />
 						<span className="font-heading text-sm">{speeds}</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="CR" compact>
+				<AscendantWindow title="CR" compact>
 					<div className="flex items-center gap-2">
 						<Skull className="w-5 h-5 text-purple-400" />
 						<span className="font-display text-2xl">{cr}</span>
@@ -517,16 +517,16 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 					{data.xp && (
 						<span className="text-xs text-muted-foreground">{data.xp} XP</span>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="RIFT RANK" compact>
+				<AscendantWindow title="RIFT RANK" compact>
 					<div className="flex items-center gap-2">
 						<Swords className="w-5 h-5 text-orange-400" />
 						<span className="font-display text-2xl">
 							{data.gate_rank || "—"}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 
 			{/* Ability Scores */}
@@ -565,7 +565,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 				{data.damage_vulnerabilities?.length ||
 				data.damage_resistances?.length ||
 				data.damage_immunities?.length ? (
-					<SystemWindow title="DAMAGE MODIFIERS">
+					<AscendantWindow title="DAMAGE MODIFIERS">
 						<div className="space-y-2">
 							{data.damage_vulnerabilities &&
 								data.damage_vulnerabilities.length > 0 && (
@@ -606,11 +606,11 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 								</div>
 							)}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				) : null}
 
 				{data.condition_immunities && data.condition_immunities.length > 0 && (
-					<SystemWindow title="CONDITION IMMUNITIES">
+					<AscendantWindow title="CONDITION IMMUNITIES">
 						<div className="flex flex-wrap gap-1">
 							{data.condition_immunities.map((condition) => (
 								<Badge key={condition} variant="outline">
@@ -618,7 +618,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 								</Badge>
 							))}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 
@@ -675,7 +675,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 										onClick={() =>
 											queueAnomalyActionResolution(
 												action,
-												"/warden-protocols/initiative-tracker",
+												"/warden-directives/initiative-tracker",
 											)
 										}
 									>

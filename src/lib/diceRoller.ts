@@ -1,5 +1,5 @@
 /**
- * Dice rolling utilities for System Ascendant 5e SRD
+ * Dice rolling utilities for Rift Ascendant 5e SRD
  * Supports direct roll execution from action cards
  */
 

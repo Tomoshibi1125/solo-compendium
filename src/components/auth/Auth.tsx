@@ -3,11 +3,11 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { ArrowRight, Crown, Sword } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { AscendantSigil } from "@/components/ui/AscendantSigil";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SystemSigilLogo } from "@/components/ui/SystemSigilLogo";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useOAuth } from "@/hooks/useOAuth";
 import { useProfile, useUpdateProfile } from "@/hooks/useProfile";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
@@ -21,7 +21,7 @@ export function Auth() {
 	const navigate = useNavigate();
 	const [authView, setAuthView] = useState<"sign_up" | "sign_in">("sign_in");
 	const [showRoleSelection, setShowRoleSelection] = useState(false);
-	const [selectedRole, setSelectedRole] = useState<"PW" | "player" | null>(
+	const [selectedRole, setSelectedRole] = useState<"Warden" | "player" | null>(
 		null,
 	);
 	const [isSignup, setIsSignup] = useState(false);
@@ -145,14 +145,14 @@ export function Auth() {
 		return (
 			<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 				<div className="w-full max-w-md">
-					<SystemWindow
+					<AscendantWindow
 						variant="resurge"
 						title="AUTH (E2E)"
 						className="text-center"
 					>
 						<div className="p-8 space-y-4">
 							<div className="flex justify-center">
-								<SystemSigilLogo size="md" variant="supreme" />
+								<AscendantSigil size="md" variant="supreme" />
 							</div>
 							<div>
 								<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
@@ -170,7 +170,7 @@ export function Auth() {
 								Return Home
 							</Button>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</div>
 		);
@@ -183,14 +183,14 @@ export function Auth() {
 		return (
 			<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 				<div className="w-full max-w-md">
-					<SystemWindow
+					<AscendantWindow
 						variant="resurge"
 						title="AUTH SETUP"
 						className="text-center"
 					>
 						<div className="p-8 space-y-4">
 							<div className="flex justify-center">
-								<SystemSigilLogo size="md" variant="supreme" />
+								<AscendantSigil size="md" variant="supreme" />
 							</div>
 							<div>
 								<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
@@ -214,7 +214,7 @@ export function Auth() {
 								Go to Setup
 							</Button>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</div>
 		);
@@ -225,10 +225,10 @@ export function Auth() {
 		return (
 			<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 				<div className="w-full max-w-md">
-					<SystemWindow variant="resurge" className="text-center">
+					<AscendantWindow variant="resurge" className="text-center">
 						<div className="p-8 space-y-6">
 							<div className="flex justify-center mb-4">
-								<SystemSigilLogo size="md" variant="supreme" />
+								<AscendantSigil size="md" variant="supreme" />
 							</div>
 							<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
 								{isSignup
@@ -248,7 +248,7 @@ export function Auth() {
 							<RadioGroup
 								value={selectedRole ?? ""}
 								onValueChange={(value) =>
-									setSelectedRole(value as "PW" | "player")
+									setSelectedRole(value as "Warden" | "player")
 								}
 								className="space-y-4"
 							>
@@ -282,23 +282,25 @@ export function Auth() {
 								</Label>
 
 								<Label
-									htmlFor="role-PW"
+									htmlFor="role-Warden"
 									className={cn(
 										"flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
-										selectedRole === "PW"
+										selectedRole === "Warden"
 											? "border-primary bg-primary/10"
 											: "border-border hover:border-primary/50",
 									)}
 								>
-									<RadioGroupItem value="PW" id="role-PW" className="mt-0" />
+									<RadioGroupItem
+										value="Warden"
+										id="role-Warden"
+										className="mt-0"
+									/>
 									<div className="flex items-center gap-3 flex-1">
 										<div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
 											<Crown className="w-5 h-5 text-primary" />
 										</div>
 										<div className="text-left">
-											<div className="font-heading font-semibold">
-												Protocol Warden
-											</div>
+											<div className="font-heading font-semibold">Warden</div>
 											<div className="text-sm text-muted-foreground">
 												Create campaigns and access Warden tools
 											</div>
@@ -317,7 +319,7 @@ export function Auth() {
 								<ArrowRight className="w-4 h-4 ml-2" />
 							</Button>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</div>
 		);
@@ -327,10 +329,10 @@ export function Auth() {
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
 			<div className="w-full max-w-md">
-				<SystemWindow variant="resurge">
+				<AscendantWindow variant="resurge">
 					<div className="p-6">
 						<div className="flex justify-center mb-6">
-							<SystemSigilLogo size="md" variant="supreme" />
+							<AscendantSigil size="md" variant="supreme" />
 						</div>
 
 						{/* OAuth Buttons */}
@@ -399,7 +401,7 @@ export function Auth() {
 							</button>
 						</div>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 		</div>
 	);

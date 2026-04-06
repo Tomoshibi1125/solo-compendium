@@ -1,5 +1,5 @@
 /**
- * System Ascendant Component & Utility Barrels
+ * Rift Ascendant Component & Utility Barrels
  * This file formally exports and wires application features and utilities
  * that might be dynamically loaded, externally requested, or pending UI implementation.
  */
@@ -19,4 +19,4 @@ export * from "./components/compendium/SendToInventoryDialog";
 export * from "./hooks/useCharacterAbilities";
 
 // --- Libraries ---
-export * from "./lib/systemFavor";
+export * from "./lib/riftFavor";

@@ -1,5 +1,5 @@
 /* ============================================================
-   System Ascendant — Global Dungeon Ascendant Aesthetic v2
+   Rift Ascendant — Global Dungeon Ascendant Aesthetic v2
    Glassmorphism · Neon Glows · Angular Frames · Holographic HUD
    ============================================================
    Zones:
@@ -634,7 +634,7 @@
 	);
 }
 
-/* Auth: System Awakening */
+/* Auth: Ascendant Awakening */
 [data-sa-zone="auth"] .sa-page-header {
 	background: linear-gradient(
 		135deg,
@@ -649,7 +649,7 @@
    Global Element Overrides (applies everywhere)
    ============================================================ */
 
-/* SystemWindow cards get zone-aware borders */
+/* AscendantWindow cards get zone-aware borders */
 [data-sa-zone] .border-border {
 	border-color: rgba(var(--sa-accent-rgb), 0.12);
 }

@@ -1,4 +1,4 @@
-// Magical Tattoos — System Ascendant
+// Magical Tattoos — Rift Ascendant
 // Dimensional ink, sovereign stigmas, and mana circuit grafts.
 
 export const tattoos = [
@@ -6,7 +6,7 @@ export const tattoos = [
 		id: "tattoo-barrier-common",
 		name: "Barrier Tattoo (Minor)",
 		description:
-			"A geometric lattice of interlocking mana circuits inked across the chest and shoulders. When the System detects incoming kinetic force, the circuits flare and project a thin barrier of hardened essence.",
+			"A geometric lattice of interlocking mana circuits inked across the chest and shoulders. When the Rift detects incoming kinetic force, the circuits flare and project a thin barrier of hardened essence.",
 		rarity: "common",
 		attunement: true,
 		body_part: "Chest",
@@ -17,15 +17,13 @@ export const tattoos = [
 		mechanics: {
 			ac_formula: "12 + AGI",
 			replaces_armor: true,
-			system_interaction:
-				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			requires_attunement: true,
 			conditions: ["Cannot be wearing armor"],
 		},
 		tags: ["defense", "tattoo", "barrier"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Resonance Cascade, this phenomenon is often linked to the presence of the Architect's forgotten blueprints. Activating it disrupts a Hunter's innate mana perception.",
 		flavor:
 			"Crushes the flow of time itself. A forbidden symphony of violence.",
@@ -45,15 +43,13 @@ export const tattoos = [
 		mechanics: {
 			ac_formula: "15 + AGI (max 2)",
 			replaces_armor: true,
-			system_interaction:
-				"[Gate-Lord's Echo: S-Rank resonance detected. Reality parameters shifting.]",
 		},
 		limitations: {
 			requires_attunement: true,
 			conditions: ["Cannot be wearing armor"],
 		},
 		tags: ["defense", "tattoo", "barrier"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Eclipse Convergence, this phenomenon is often linked to the presence of Rogue Regent entities. Activating it leaves a trail of shadowy distortion in physical space.",
 		flavor:
 			"Cleanses the dimensional divide. A forbidden symphony of violence.",
@@ -72,15 +68,13 @@ export const tattoos = [
 		mechanics: {
 			ac_formula: "18 flat",
 			replaces_armor: true,
-			system_interaction:
-				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			requires_attunement: true,
 			conditions: ["Cannot be wearing armor"],
 		},
 		tags: ["defense", "tattoo", "barrier"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Azure Gate Collapse, this phenomenon is often linked to the presence of Phantom Tier aberrations. Activating it forces agonizing metabolic sacrifice to maintain.",
 		flavor:
 			"Weaves the quiet space between breaths. A relentless death of hesitation.",
@@ -89,7 +83,7 @@ export const tattoos = [
 		id: "tattoo-blood-fury",
 		name: "Blood Fury Tattoo",
 		description:
-			"A jagged crimson tattoo that pulses in sync with the wearer's heartbeat. Originally developed by berserker-class Hunters who needed to push past the System's damage limiters during S-Rank gate raids.",
+			"A jagged crimson tattoo that pulses in sync with the wearer's heartbeat. Originally developed by berserker-class Hunters who needed to push past the Rift's damage limiters during S-Rank gate raids.",
 		rarity: "legendary",
 		attunement: true,
 		body_part: "Arm",
@@ -104,15 +98,13 @@ export const tattoos = [
 			damage_bonus: "4d6 necrotic",
 			healing: "Equal to necrotic damage dealt",
 			uses_per_rest: "10 charges, regain 1d6+4 at dawn",
-			system_interaction:
-				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
 			charges: 10,
 			recharge: "1d6+4 at dawn",
 		},
 		tags: ["offense", "tattoo", "necrotic", "healing"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Originating from the aftermath of the Azure Gate Collapse, this technique was pioneered by high-tier Rift beasts. Utilizing it leaves temporal scars on reality.",
 		flavor:
 			"Absorbs the flow of time itself. A sorrowful testament to absolute power.",
@@ -136,14 +128,12 @@ export const tattoos = [
 			save_dc: 14,
 			save_ability: "Strength",
 			damage_per_turn: "3d6 force",
-			system_interaction:
-				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {
 			conditions: ["Requires concentration", "One target at a time"],
 		},
 		tags: ["control", "tattoo", "grapple"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Translated from the combat data of Dimensional Scavengers who perished in the Crimson Incursion, this power leaves temporal scars on reality.",
 		flavor: "Absorbs the dimensional divide. A brutal symphony of violence.",
 	},
@@ -151,7 +141,7 @@ export const tattoos = [
 		id: "tattoo-eldritch-claw",
 		name: "Eldritch Claw Tattoo",
 		description:
-			"Clawed sigils carved into the knuckles and metacarpals using enchanted bone needles. The System recognizes unarmed strikes made with these hands as magical, channeling raw essence through every punch.",
+			"Clawed sigils carved into the knuckles and metacarpals using enchanted bone needles. The Rift recognizes unarmed strikes made with these hands as magical, channeling raw essence through every punch.",
 		rarity: "uncommon",
 		attunement: true,
 		body_part: "Hand",
@@ -167,14 +157,12 @@ export const tattoos = [
 			reach_bonus: 15,
 			activation: { type: "bonus action" },
 			duration: "1 minute",
-			system_interaction:
-				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Bonus action feature: once per long rest",
 		},
 		tags: ["offense", "tattoo", "unarmed", "force"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Originating from the aftermath of the Crimson Incursion, this technique was pioneered by an apex-class Awakened. Utilizing it resonates with the hum of raw magical energy.",
 		flavor:
 			"Commands the concept of defeat. A desperate dance performed on the edge of a blade.",
@@ -198,16 +186,14 @@ export const tattoos = [
 			duration: "Until end of next turn",
 			resistance: "All damage except force",
 			movement: "Through creatures and objects",
-			system_interaction:
-				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			uses_per_rest: "3 charges, regain all at dawn",
 			charges: 3,
 		},
 		tags: ["defense", "tattoo", "incorporeal", "phase"],
-		source: "System Ascendant Canon",
-		lore: "A manifestation of raw System authority discovered after the Abyssal Rift Incursion, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
+		source: "Rift Ascendant Canon",
+		lore: "A manifestation of raw Arcane authority discovered after the Abyssal Rift Incursion, this ability bypasses standard biological limits and resonates with the hum of raw magical energy.",
 		flavor: "Cleanses the darkness within. A subtle ultimate equalizer.",
 	},
 	{
@@ -227,14 +213,12 @@ export const tattoos = [
 		mechanics: {
 			spells_granted: ["Disguise Self"],
 			spell_uses: "1/long rest",
-			system_interaction:
-				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Disguise Self: once per long rest",
 		},
 		tags: ["utility", "tattoo", "illusion"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Translated from the combat data of an apex-class Awakened who perished in the Binary Void-Data Influx, this power disrupts a Hunter's innate mana perception.",
 		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
 	},
@@ -242,7 +226,7 @@ export const tattoos = [
 		id: "tattoo-lifewell",
 		name: "Lifewell Tattoo",
 		description:
-			"A mandala of concentric golden circles inked over the heart. Ancient healers across many cultures used similar designs; the System now amplifies them, allowing the tattoo to passively preserve a Hunter's life force against catastrophic damage.",
+			"A mandala of concentric golden circles inked over the heart. Ancient healers across many cultures used similar designs; the Rift now amplifies them, allowing the tattoo to passively preserve a Hunter's life force against catastrophic damage.",
 		rarity: "very_rare",
 		attunement: true,
 		body_part: "Chest",
@@ -254,14 +238,12 @@ export const tattoos = [
 		mechanics: {
 			resistance: "necrotic",
 			death_save: "Drop to 1 HP instead of 0",
-			system_interaction:
-				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {
 			uses_per_rest: "Death prevention: once per long rest",
 		},
 		tags: ["defense", "tattoo", "healing", "necrotic"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Translated from the combat data of a Regent of the Void who perished in the Regent Wars, this power resonates with the hum of raw magical energy.",
 		flavor:
 			"Ignores all who stand in opposition. An absolute whisper in the shadows.",
@@ -283,12 +265,10 @@ export const tattoos = [
 		mechanics: {
 			spells_granted: ["Disguise Self"],
 			spell_uses: "1/long rest",
-			system_interaction:
-				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {},
 		tags: ["utility", "tattoo", "illusion", "disguise"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Translated from the combat data of Phantom Tier aberrations who perished in the First Void Fracture, this power leaves a trail of shadowy distortion in physical space.",
 		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
 	},
@@ -309,14 +289,12 @@ export const tattoos = [
 		mechanics: {
 			stealth_advantage: "In dim light or darkness",
 			reaction_invisibility: true,
-			system_interaction:
-				"[Whisper of the Void: Unbound essence detected. Chaotic resonance detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Invisibility reaction: once per long rest",
 		},
 		tags: ["stealth", "tattoo", "shadow", "invisibility"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Translated from the combat data of an apex-class Awakened who perished in the Resonance Cascade, this power causes the user's eyes to glow with unnatural light.",
 		flavor:
 			"Weaves the fragile limits of flesh. An absolute breaking point of the world.",
@@ -337,14 +315,12 @@ export const tattoos = [
 			spells_granted: ["Shield"],
 			spell_uses: "1 (tattoo consumed)",
 			ac_bonus: 5,
-			system_interaction:
-				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			consumable: true,
 		},
 		tags: ["defense", "tattoo", "consumable", "shield"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Day of Falling Stars, this phenomenon is often linked to the presence of an ancient Guild Master. Activating it leaves temporal scars on reality.",
 		flavor:
 			"Cleanses the arrogant and the mighty. A subtle whisper in the shadows.",
@@ -368,14 +344,12 @@ export const tattoos = [
 			save_dc: 15,
 			save_ability: "Agility",
 			spell_uses: "1 (tattoo consumed)",
-			system_interaction:
-				"[High Warden's Echo: Ancient stigma isolated. Soul-mana integration complete.]",
 		},
 		limitations: {
 			consumable: true,
 		},
 		tags: ["offense", "tattoo", "consumable", "fire"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Eclipse Decree, this phenomenon is often linked to the presence of Phantom Class anomalies. Activating it leaves a trail of shadowy distortion in physical space.",
 		flavor:
 			"Ignites the flow of time itself. A triumphant symphony of violence.",
@@ -398,15 +372,13 @@ export const tattoos = [
 			resistance: "One chosen damage type",
 			reaction_immunity: true,
 			healing: "Half of damage absorbed",
-			system_interaction:
-				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Immunity reaction: once per long rest",
 		},
 		tags: ["defense", "tattoo", "absorb", "resistance"],
-		source: "System Ascendant Canon",
-		lore: "A manifestation of raw System authority discovered after the Manifestation Event, this ability bypasses standard biological limits and leaves a trail of shadowy distortion in physical space.",
+		source: "Rift Ascendant Canon",
+		lore: "A manifestation of raw Arcane authority discovered after the Manifestation Event, this ability bypasses standard biological limits and leaves a trail of shadowy distortion in physical space.",
 		flavor:
 			"Shatters the flow of time itself. A chaotic testament to absolute power.",
 	},
@@ -428,15 +400,13 @@ export const tattoos = [
 			spells_granted: ["Hunter's Mark"],
 			no_concentration: true,
 			spell_uses: "1/long rest",
-			system_interaction:
-				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Once per long rest",
 		},
 		tags: ["offense", "tattoo", "tracking", "hunter"],
-		source: "System Ascendant Canon",
-		lore: "A manifestation of raw System authority discovered after the Day of Falling Stars, this ability bypasses standard biological limits and overrides basic physics within a 30-foot radius.",
+		source: "Rift Ascendant Canon",
+		lore: "A manifestation of raw Arcane authority discovered after the Day of Falling Stars, this ability bypasses standard biological limits and overrides basic physics within a 30-foot radius.",
 		flavor:
 			"Reclaims the dimensional divide. A silent testament to absolute power.",
 	},
@@ -460,15 +430,13 @@ export const tattoos = [
 			save_dc: 15,
 			save_ability: "Vitality",
 			condition: "Deafened",
-			system_interaction:
-				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {
 			uses_per_rest: "3 charges, regain 1d3 at dawn",
 			charges: 3,
 		},
 		tags: ["offense", "tattoo", "thunder", "aoe"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Translated from the combat data of the Architect's forgotten blueprints who perished in the First Resonance, this power overrides basic physics within a 30-foot radius.",
 		flavor:
 			"Destroys the concept of defeat. A sorrowful surge of lethal intent.",
@@ -490,14 +458,12 @@ export const tattoos = [
 			fly_speed: 30,
 			duration: "10 minutes",
 			activation: { type: "bonus action" },
-			system_interaction:
-				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			uses_per_rest: "Once per long rest",
 		},
 		tags: ["mobility", "tattoo", "flight", "wind"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Day of Falling Stars, this phenomenon is often linked to the presence of Dimensional Scavengers. Activating it forces agonizing metabolic sacrifice to maintain.",
 		flavor:
 			"Shatters the remnants of humanity. A chaotic surge of lethal intent.",
@@ -516,14 +482,12 @@ export const tattoos = [
 		},
 		mechanics: {
 			resistance: "BPS (nonmagical)",
-			system_interaction:
-				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
 			conditions: ["Does not stack with Heavy Carapace Armor"],
 		},
 		tags: ["defense", "tattoo", "physical resistance"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Translated from the combat data of Rogue Regent entities who perished in the Regent Manifestation, this power forces agonizing metabolic sacrifice to maintain.",
 		flavor:
 			"Absorbs the darkness within. A sorrowful breaking point of the world.",
@@ -546,14 +510,12 @@ export const tattoos = [
 			save_dc: 14,
 			save_ability: "Vitality",
 			condition: "Poisoned",
-			system_interaction:
-				"[Gate-Lord's Echo: S-Rank resonance detected. Reality parameters shifting.]",
 		},
 		limitations: {
 			uses_per_rest: "Poison condition: once per short rest",
 		},
 		tags: ["offense", "tattoo", "poison"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Abyssal Rift Incursion, this phenomenon is often linked to the presence of Rogue Regent entities. Activating it overrides basic physics within a 30-foot radius.",
 		flavor:
 			"Commands the remnants of humanity. A triumphant surge of lethal intent.",
@@ -574,12 +536,10 @@ export const tattoos = [
 		mechanics: {
 			immunity: "Forced teleportation/banishment",
 			saving_throw_advantage: "Planar displacement effects",
-			system_interaction:
-				"[Reality Fracture: Regent-tier resonance detected. Divine combat parameters active.]",
 		},
 		limitations: {},
 		tags: ["defense", "tattoo", "dimensional", "anchor"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Originating from the aftermath of the Eclipse Convergence, this technique was pioneered by Dimensional Scavengers. Utilizing it creates a vacuum in ambient mana fields.",
 		flavor:
 			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
@@ -588,7 +548,7 @@ export const tattoos = [
 		id: "tattoo-berserker-stigma",
 		name: "Berserker's Stigma",
 		description:
-			"A brutal brand-style tattoo across the face and neck, originally self-inflicted by S-Rank martial Hunters during blood oaths. The System amplifies adrenal output when the wearer's health drops below critical thresholds.",
+			"A brutal brand-style tattoo across the face and neck, originally self-inflicted by S-Rank martial Hunters during blood oaths. The Rift amplifies adrenal output when the wearer's health drops below critical thresholds.",
 		rarity: "legendary",
 		attunement: true,
 		body_part: "Face",
@@ -602,8 +562,6 @@ export const tattoos = [
 			attack_bonus: 2,
 			damage_bonus: 4,
 			immunities: ["Charmed", "Frightened"],
-			system_interaction:
-				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			conditions: [
@@ -612,8 +570,8 @@ export const tattoos = [
 			],
 		},
 		tags: ["offense", "tattoo", "berserker", "frenzy"],
-		source: "System Ascendant Canon",
-		lore: "A manifestation of raw System authority discovered after the First Void Fracture, this ability bypasses standard biological limits and taxes the user's Mana circuits heavily.",
+		source: "Rift Ascendant Canon",
+		lore: "A manifestation of raw Arcane authority discovered after the First Void Fracture, this ability bypasses standard biological limits and taxes the user's Mana circuits heavily.",
 		flavor: "Reclaims the architect's design. A silent roar of raw mana.",
 	},
 	{
@@ -625,22 +583,19 @@ export const tattoos = [
 		attunement: true,
 		body_part: "Arm",
 		effects: {
-			primary:
-				"You gain 2 additional Mana resource slots of 3rd level or lower.",
+			primary: "You gain 2 additional Spell Slots of 3rd level or lower.",
 			secondary:
 				"These bonus slots recharge only at dawn and cannot be restored by other means.",
 		},
 		mechanics: {
 			bonus_spell_slots: 2,
 			max_slot_level: 3,
-			system_interaction:
-				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
 			recharge: "Dawn only",
 		},
 		tags: ["utility", "tattoo", "mana", "caster"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Originating from the aftermath of the Mana Awakening, this technique was pioneered by a forgotten Regent. Utilizing it causes the user's eyes to glow with unnatural light.",
 		flavor:
 			"Ignores the flow of time itself. A devastating testament to absolute power.",
@@ -661,14 +616,12 @@ export const tattoos = [
 		mechanics: {
 			proficiency: "All saving throws",
 			reroll: "1 failed save/long rest",
-			system_interaction:
-				"[Mortal Warning: Corrupted stigma detected. Volatile mana integration complete.]",
 		},
 		limitations: {
 			conditions: ["Cannot be willingly removed", "Visible to other Awakened"],
 		},
 		tags: ["defense", "tattoo", "sovereign", "legendary"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Originating from the aftermath of the Abyssal Rift Incursion, this technique was pioneered by high-tier Rift beasts. Utilizing it creates a vacuum in ambient mana fields.",
 		flavor:
 			"Shatters the fragile limits of flesh. A brutal ultimate equalizer.",
@@ -690,13 +643,11 @@ export const tattoos = [
 		mechanics: {
 			detection_range: "1 mile",
 			detection_target: "Gates and dimensional disturbances",
-			system_interaction:
-				"[Gate-Lord's Echo: S-Rank resonance detected. Reality parameters shifting.]",
 		},
 		limitations: {},
 		tags: ["utility", "tattoo", "navigation", "gate"],
-		source: "System Ascendant Canon",
-		lore: "A manifestation of raw System authority discovered after the First Void Fracture, this ability bypasses standard biological limits and disrupts a Hunter's innate mana perception.",
+		source: "Rift Ascendant Canon",
+		lore: "A manifestation of raw Arcane authority discovered after the First Void Fracture, this ability bypasses standard biological limits and disrupts a Hunter's innate mana perception.",
 		flavor: "Ignites the darkness within. An ancient ultimate equalizer.",
 	},
 	{
@@ -720,15 +671,13 @@ export const tattoos = [
 			area: "20-foot radius",
 			save_dc: 18,
 			save_ability: "Agility",
-			system_interaction:
-				"[Celestial Echo: Primordial resonance isolated. Pure essence detected.]",
 		},
 		limitations: {
 			consumable: true,
-			reapplication_cooldown: "30 days",
+			reapplication_recharge: "30 days",
 		},
 		tags: ["defense", "tattoo", "resurrection", "fire", "legendary"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "First recorded during the Mana Awakening, this phenomenon is often linked to the presence of Dimensional Scavengers. Activating it forces agonizing metabolic sacrifice to maintain.",
 		flavor:
 			"Destroys the concept of defeat. A triumphant surge of lethal intent.",

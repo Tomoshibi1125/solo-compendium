@@ -1,7 +1,7 @@
 import { Dice6 } from "lucide-react";
 import { formatModifier } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
-import { ABILITY_NAMES, type AbilityScore } from "@/types/system-rules";
+import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
 
 interface AbilityScoreStripProps {
 	abilities: Record<AbilityScore, number>;

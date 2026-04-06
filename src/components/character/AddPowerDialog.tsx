@@ -191,7 +191,7 @@ export function AddPowerDialog({
 					typeof spell.duration === "string" ? spell.duration : "Instantaneous",
 				concentration: spell.concentration ?? false,
 				higher_levels: spell.atHigherLevels ?? null,
-				source_book: "System Ascendant Canon",
+				source_book: "Rift Ascendant Canon",
 				source_name: null,
 				source_kind: null,
 				display_name: spell.name,

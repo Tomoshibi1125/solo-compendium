@@ -1,6 +1,6 @@
 /**
  * Daily Quest System Types
- * System Ascendant inspired daily training quests
+ * Rift Ascendant inspired daily training quests
  */
 
 import { z } from "zod";
@@ -60,7 +60,7 @@ export type QuestScaling = z.infer<typeof QuestScalingSchema>;
 
 // Quest reward types
 export const QuestRewardSchema = z.object({
-	system_favor: z.number().optional(),
+	rift_favor: z.number().optional(),
 	gold: z.number().optional(),
 	relic_shards: z.number().optional(),
 	experience: z.number().optional(),
@@ -240,8 +240,8 @@ export function calculateQuestReward(
 	}
 
 	return {
-		system_favor: template.base_rewards.system_favor
-			? Math.max(1, Math.floor(template.base_rewards.system_favor * multiplier))
+		rift_favor: template.base_rewards.rift_favor
+			? Math.max(1, Math.floor(template.base_rewards.rift_favor * multiplier))
 			: undefined,
 		gold: template.base_rewards.gold
 			? Math.max(1, Math.floor(template.base_rewards.gold * multiplier))

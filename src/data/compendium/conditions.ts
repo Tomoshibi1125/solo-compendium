@@ -1,6 +1,6 @@
-// Conditions Compendium - Authoritative System Ascendant Content
+// Conditions Compendium - Authoritative Rift Ascendant Content
 // Status effects and conditions that affect characters in combat and exploration
-// Based on SRD 5e conditions with System Ascendant themed additions
+// Based on SRD 5e conditions with Rift Ascendant themed additions
 
 interface Condition {
 	id: string;
@@ -291,7 +291,7 @@ export const conditions: Condition[] = [
 			type: "Sense",
 			description: "Can repeat save at end of each turn after taking damage",
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/conditions/shadow-corrupted.webp",
 	},
 	{
@@ -312,7 +312,7 @@ export const conditions: Condition[] = [
 			"Greater restoration spell",
 			"Shadow recovery potion",
 		],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/conditions/gate-exhausted.webp",
 	},
 	{
@@ -333,7 +333,7 @@ export const conditions: Condition[] = [
 			"Essence recovery ritual",
 			"Defeating the creature that drained you",
 		],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/conditions/essence-drained.webp",
 	},
 	{
@@ -358,7 +358,7 @@ export const conditions: Condition[] = [
 			type: "Presence",
 			description: "Can attempt to break free once per day",
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/conditions/shadow-bound.webp",
 	},
 	{
@@ -380,7 +380,7 @@ export const conditions: Condition[] = [
 			"Divine intervention",
 			"Wish spell",
 		],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/conditions/regent-marked.webp",
 	},
 	{
@@ -402,7 +402,7 @@ export const conditions: Condition[] = [
 			type: "Sense",
 			description: "Must save each turn to maintain control",
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		image: "/generated/conditions/shadow-fused.webp",
 	},
 ];

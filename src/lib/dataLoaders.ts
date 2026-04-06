@@ -27,7 +27,7 @@ type Regent = Tables<"compendium_regents">;
 export const loadJobs = (): Promise<StaticJob[]> =>
 	import("@/data/compendium/jobs").then((m) => m.jobs);
 export const loadItems = (): Promise<CompendiumItem[]> =>
-	import("@/data/compendium/items").then((m) => m.items);
+	import("@/data/compendium/items").then((m) => m.items as CompendiumItem[]);
 export const loadBackgrounds = (): Promise<StaticBackground[]> =>
 	import("@/data/compendium/backgrounds").then((m) => m.backgrounds);
 export const loadAnomalies = (): Promise<CompendiumAnomaly[]> =>
@@ -42,7 +42,7 @@ export const loadConditions = (): Promise<CompendiumCondition[]> =>
 	import("@/data/compendium/conditions").then((m) => m.conditions);
 export const loadFeats = (): Promise<CompendiumFeat[]> =>
 	import("@/data/compendium/feats-comprehensive").then(
-		(m) => m.comprehensiveFeats,
+		(m) => m.comprehensiveFeats as CompendiumFeat[],
 	);
 export const loadLocations = (): Promise<CompendiumLocation[]> =>
 	import("@/data/compendium/locations").then((m) => m.locations);
@@ -78,18 +78,22 @@ export const loadRelics = (): Promise<CompendiumRelic[]> =>
 		(m) => m.comprehensiveRelics,
 	);
 export const loadSigils = (): Promise<CompendiumRune[]> =>
-	import("@/data/compendium/sigils").then((m) => m.sigils);
+	import("@/data/compendium/sigils").then((m) => m.sigils as CompendiumRune[]);
 export const loadSkills = (): Promise<CompendiumSkill[]> =>
 	import("@/data/compendium/skills-comprehensive").then(
 		(m) => m.comprehensiveSkills,
 	);
 export const loadTattoos = (): Promise<CompendiumTattoo[]> =>
-	import("@/data/compendium/tattoos").then((m) => m.tattoos);
+	import("@/data/compendium/tattoos").then(
+		(m) => m.tattoos as CompendiumTattoo[],
+	);
 export const loadTechniques = (): Promise<CompendiumTechnique[]> =>
 	import("@/data/compendium/techniques").then((m) => m.techniques);
 export const loadBackgroundsAll = (): Promise<CompendiumBackground[]> =>
 	import("@/data/compendium/backgrounds-index").then((m) => m.allBackgrounds);
 export const loadItemsAll = (): Promise<CompendiumItem[]> =>
-	import("@/data/compendium/items-index").then((m) => m.allItems);
+	import("@/data/compendium/items-index").then(
+		(m) => m.allItems as CompendiumItem[],
+	);
 export const loadPaths = (): Promise<CompendiumPath[]> =>
 	import("@/data/compendium/paths").then((m) => m.paths);

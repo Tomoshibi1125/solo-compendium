@@ -2,12 +2,12 @@ import { ArrowLeft, Crosshair, Dice1, Minus, Plus, Send } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
-import { SystemHeading, SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlayerToolsPanel } from "@/components/vtt/PlayerToolsPanel";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
@@ -60,7 +60,7 @@ interface PlacedToken {
 	lightRadius?: number;
 	lightDimRadius?: number;
 	showNameplate?: boolean;
-	barVisibility?: "always" | "owner" | "PW";
+	barVisibility?: "always" | "owner" | "Warden";
 }
 
 interface Scene {
@@ -148,7 +148,7 @@ const PlayerMapView = ({
 		return () => window.removeEventListener("resize", check);
 	}, []);
 
-	// Scene state received from PW
+	// Scene state received from Warden
 	const [currentScene, setCurrentScene] = useState<Scene | null>(null);
 
 	const { data: combatData } = useCampaignCombatSession(
@@ -164,7 +164,7 @@ const PlayerMapView = ({
 		isWarden: false,
 	});
 
-	// Subscribe to campaign_tool_states for scene data from PW
+	// Subscribe to campaign_tool_states for scene data from Warden
 	const toolKey = effectiveSessionId
 		? `vtt_scenes:${effectiveSessionId}`
 		: "vtt_scenes";
@@ -228,7 +228,7 @@ const PlayerMapView = ({
 		};
 	}, [effectiveCampaignId, toolKey, user?.id]);
 
-	// Listen for realtime broadcasts from PW
+	// Listen for realtime broadcasts from Warden
 	useEffect(() => {
 		if (!effectiveCampaignId) return;
 
@@ -306,7 +306,7 @@ const PlayerMapView = ({
 
 	const gridSize = currentScene?.gridSize ?? 50;
 
-	// Visible tokens (player only sees visible tokens, not Protocol Warden (PW) layer)
+	// Visible tokens (player only sees visible tokens, not Warden (Warden) layer)
 	const visibleTokens = useMemo(() => {
 		if (!currentScene?.tokens) return [];
 		return currentScene.tokens.filter((t) => t.visible && t.layer !== 3);
@@ -422,7 +422,7 @@ const PlayerMapView = ({
 
 		if (currentScene?.drawings) {
 			currentScene.drawings.forEach((drawing) => {
-				if (drawing.layer === "PW") return;
+				if (drawing.layer === "Warden") return;
 				const safeId = toSafeClassName(drawing.id);
 
 				if (
@@ -474,14 +474,14 @@ const PlayerMapView = ({
 							<ArrowLeft className="w-4 h-4 mr-2" />
 							Back to Player Tools
 						</Button>
-						<SystemHeading
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="mt-1"
 						>
 							BATTLE MAP {currentScene ? `— ${currentScene.name}` : ""}
-						</SystemHeading>
+						</RiftHeading>
 					</div>
 
 					<div className="flex items-center gap-2">
@@ -508,11 +508,11 @@ const PlayerMapView = ({
 				</div>
 
 				{!effectiveCampaignId ? (
-					<SystemWindow title="NO CAMPAIGN" variant="alert">
-						<SystemText className="block text-sm text-muted-foreground">
+					<AscendantWindow title="NO CAMPAIGN" variant="alert">
+						<AscendantText className="block text-sm text-muted-foreground">
 							Open this page from a campaign to view the shared map.
-						</SystemText>
-					</SystemWindow>
+						</AscendantText>
+					</AscendantWindow>
 				) : (
 					<div
 						className={cn(
@@ -522,7 +522,7 @@ const PlayerMapView = ({
 					>
 						{/* Main Map Area */}
 						<div className="col-span-1 md:col-span-9">
-							<SystemWindow
+							<AscendantWindow
 								title="MAP"
 								className={cn("min-h-[60vh]", isMobile && "h-screen")}
 								contentClassName="flex-1 flex flex-col"
@@ -684,7 +684,7 @@ const PlayerMapView = ({
 												currentScene.drawings.length > 0 && (
 													<div className="absolute inset-0 pointer-events-none z-[2]">
 														{currentScene.drawings.map((drawing) => {
-															if (drawing.layer === "PW") return null; // Only player layers
+															if (drawing.layer === "Warden") return null; // Only player layers
 
 															if (drawing.type === "freehand") {
 																const gZoom = gridSize * zoom;
@@ -1001,15 +1001,14 @@ const PlayerMapView = ({
 												!currentScene?.backgroundImage && (
 													<div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
 														<p className="text-sm font-mono uppercase tracking-widest animate-pulse">
-															Waiting for Protocol Warden to establish lattice
-															link...
+															Waiting for Warden to establish lattice link...
 														</p>
 													</div>
 												)}
 										</DynamicStyle>
 									</ErrorBoundary>
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						</div>
 
 						{/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
@@ -1077,18 +1076,18 @@ const PlayerMapView = ({
 											);
 										}
 										return (
-											<SystemWindow title="CHARACTER" compact>
-												<SystemText className="block text-xs text-muted-foreground text-center py-4">
+											<AscendantWindow title="CHARACTER" compact>
+												<AscendantText className="block text-xs text-muted-foreground text-center py-4">
 													No character linked. Join the campaign with a
 													character to see your sheet here.
-												</SystemText>
-											</SystemWindow>
+												</AscendantText>
+											</AscendantWindow>
 										);
 									})()}
 								</TabsContent>
 
 								<TabsContent value="chat" className="space-y-2">
-									<SystemWindow
+									<AscendantWindow
 										title="CHAT"
 										className="flex flex-col h-[400px]"
 									>
@@ -1122,7 +1121,7 @@ const PlayerMapView = ({
 																		variant="outline"
 																		className="text-[9px] px-1 py-0 border-amber-500/50 text-amber-400"
 																	>
-																		PW
+																		Warden
 																	</Badge>
 																)}
 																<span className="text-muted-foreground text-[10px]">
@@ -1134,7 +1133,7 @@ const PlayerMapView = ({
 																	"p-1.5 rounded",
 																	msg.type === "chat" &&
 																		"border border-border bg-muted/20",
-																	msg.type === "system" &&
+																	msg.type === "rift" &&
 																		"border-l-2 border-slate-500 bg-slate-800/40 text-slate-300",
 																	msg.type === "dice" &&
 																		"border border-cyan-500/40 bg-cyan-950/30 text-cyan-100",
@@ -1226,11 +1225,11 @@ const PlayerMapView = ({
 												<Send className="w-3 h-3" />
 											</Button>
 										</div>
-									</SystemWindow>
+									</AscendantWindow>
 								</TabsContent>
 
 								<TabsContent value="dice" className="space-y-2">
-									<SystemWindow title="DICE ROLLER">
+									<AscendantWindow title="DICE ROLLER">
 										<div className="space-y-3">
 											<div className="grid grid-cols-2 gap-2">
 												{["1d20", "1d12", "2d6", "1d100", "1d8", "1d4"].map(
@@ -1291,16 +1290,16 @@ const PlayerMapView = ({
 													))}
 											</div>
 										</div>
-									</SystemWindow>
+									</AscendantWindow>
 								</TabsContent>
 
 								<TabsContent value="init" className="space-y-2">
-									<SystemWindow title="INITIATIVE">
+									<AscendantWindow title="INITIATIVE">
 										<div className="space-y-2">
 											{tokensInInitiative.length === 0 ? (
-												<SystemText className="block text-xs text-muted-foreground text-center py-4">
+												<AscendantText className="block text-xs text-muted-foreground text-center py-4">
 													No tokens in initiative order yet.
-												</SystemText>
+												</AscendantText>
 											) : (
 												tokensInInitiative.map((token, index) => {
 													const hpPercent =
@@ -1351,27 +1350,27 @@ const PlayerMapView = ({
 												})
 											)}
 										</div>
-									</SystemWindow>
+									</AscendantWindow>
 								</TabsContent>
 
 								<TabsContent value="assets" className="space-y-2">
-									<SystemWindow title="ASSET LIBRARY">
+									<AscendantWindow title="ASSET LIBRARY">
 										<VTTAssetBrowser
 											campaignId={campaignId}
 											readOnly={false}
 											onUseAsToken={(_imageUrl, name) => {
 												vttRealtime.sendChatMessage(
 													`wants to use "${name}" as their token`,
-													"system",
+													"rift",
 												);
 											}}
 										/>
-									</SystemWindow>
+									</AscendantWindow>
 								</TabsContent>
 							</Tabs>
 
 							{/* Token list */}
-							<SystemWindow title="TOKENS ON MAP" compact>
+							<AscendantWindow title="TOKENS ON MAP" compact>
 								<div className="space-y-1 max-h-48 overflow-y-auto">
 									{visibleTokens.map((token) => (
 										<div
@@ -1402,12 +1401,12 @@ const PlayerMapView = ({
 										</div>
 									))}
 									{visibleTokens.length === 0 && (
-										<SystemText className="block text-xs text-muted-foreground text-center py-2">
+										<AscendantText className="block text-xs text-muted-foreground text-center py-2">
 											No tokens yet.
-										</SystemText>
+										</AscendantText>
 									)}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						</div>
 					</div>
 				)}
@@ -1589,9 +1588,9 @@ const PlayerMapView = ({
 								{mobilePanel === "init" && (
 									<div className="space-y-1 max-h-[40vh] overflow-y-auto">
 										{tokensInInitiative.length === 0 ? (
-											<SystemText className="block text-xs text-muted-foreground text-center py-4">
+											<AscendantText className="block text-xs text-muted-foreground text-center py-4">
 												No initiative order yet.
-											</SystemText>
+											</AscendantText>
 										) : (
 											tokensInInitiative.map((token, index) => (
 												<div
@@ -1631,9 +1630,9 @@ const PlayerMapView = ({
 											);
 										}
 										return (
-											<SystemText className="block text-xs text-muted-foreground text-center py-4">
+											<AscendantText className="block text-xs text-muted-foreground text-center py-4">
 												No character linked.
-											</SystemText>
+											</AscendantText>
 										);
 									})()}
 								{mobilePanel === "assets" && (
@@ -1643,7 +1642,7 @@ const PlayerMapView = ({
 										onUseAsToken={(_imageUrl, name) => {
 											vttRealtime.sendChatMessage(
 												`wants to use "${name}" as their token`,
-												"system",
+												"rift",
 											);
 											setMobilePanel(null);
 										}}

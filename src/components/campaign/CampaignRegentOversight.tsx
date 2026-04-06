@@ -1,5 +1,6 @@
 import { Plus, Trash2, User } from "lucide-react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -74,9 +74,9 @@ export function CampaignRegentOversight({
 		) {
 			// Note: useRegentUnlocks(charId).removeUnlock will work because charId is passed
 			// but we need the hook instance for that charId.
-			// For simplicity in this Protocol Warden (PW) view, we can just use the mutation from the hook
+			// For simplicity in this Warden (Warden) view, we can just use the mutation from the hook
 			// if selectedCharId matches, OR we could make a global mutation hook.
-			// For now, let's assume the Protocol Warden (PW) selects the character first.
+			// For now, let's assume the Warden (Warden) selects the character first.
 			setSelectedCharId(charId);
 			setTimeout(() => removeUnlock(unlockId), 0);
 		}
@@ -92,7 +92,7 @@ export function CampaignRegentOversight({
 
 	return (
 		<div className="space-y-6">
-			<SystemWindow title={`${REGENT_LABEL.toUpperCase()} OVERSIGHT`}>
+			<AscendantWindow title={`${REGENT_LABEL.toUpperCase()} OVERSIGHT`}>
 				<div className="flex justify-between items-center mb-6">
 					<p className="text-sm text-muted-foreground">
 						Manage {REGENT_LABEL} unlocks for all characters in this campaign.
@@ -113,7 +113,7 @@ export function CampaignRegentOversight({
 						);
 
 						return (
-							<SystemWindow key={char.id} title={char.name} variant="quest">
+							<AscendantWindow key={char.id} title={char.name} variant="quest">
 								<div className="space-y-3">
 									<div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
 										<User className="w-3 h-3" />
@@ -156,11 +156,11 @@ export function CampaignRegentOversight({
 										</div>
 									)}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						);
 					})}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			<Dialog open={unlockDialogOpen} onOpenChange={setUnlockDialogOpen}>
 				<DialogContent>
@@ -228,7 +228,7 @@ export function CampaignRegentOversight({
 						</div>
 
 						<div className="space-y-2">
-							<Label>PW Notes (Optional)</Label>
+							<Label>Warden Notes (Optional)</Label>
 							<Input
 								placeholder="Internal notes about this unlock..."
 								value={dmNotes}

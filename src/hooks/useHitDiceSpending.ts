@@ -12,7 +12,7 @@
  */
 
 import { useCallback, useMemo, useState } from "react";
-import { getAbilityModifier } from "@/types/system-rules";
+import { getAbilityModifier } from "@/types/core-rules";
 
 interface HitDieRollResult {
 	roll: number;

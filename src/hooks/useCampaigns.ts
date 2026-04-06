@@ -117,7 +117,7 @@ const isMissingAddCharacterRpc = (error: unknown): boolean => {
 	);
 };
 
-// Fetch campaigns where user is System (Protocol Warden)
+// Fetch campaigns where user is System (Warden)
 export const useMyCampaigns = () => {
 	return useQuery({
 		queryKey: ["campaigns", "my"],
@@ -867,7 +867,7 @@ export const useLeaveCampaign = () => {
 	});
 };
 
-// Check if current user is the System (Protocol Warden) of a campaign
+// Check if current user is the Rift (Warden) of a campaign
 export const useIsCampaignWarden = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "is-system"],
@@ -911,7 +911,7 @@ export const useIsCampaignWarden = (campaignId: string) => {
 	});
 };
 
-// Check if current user has System access (is System/Protocol Warden or co-System)
+// Check if current user has System access (is System/Warden or co-System)
 export const useHasWardenAccess = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "has-system-access"],
@@ -947,7 +947,7 @@ export const useHasWardenAccess = (campaignId: string) => {
 				return false;
 			}
 
-			// Check if user is the System (Protocol Warden)
+			// Check if user is the Rift (Warden)
 			const { data: campaign, error: campaignError } = await supabase
 				.from("campaigns")
 				.select("warden_id")
@@ -991,13 +991,13 @@ export const useCampaignRole = (campaignId: string) => {
 	const { user, loading } = useAuth();
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "role"],
-		queryFn: async (): Promise<"system" | "co-warden" | "ascendant" | null> => {
+		queryFn: async (): Promise<"rift" | "co-warden" | "ascendant" | null> => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
 				const campaign = loadLocalCampaigns().find(
 					(entry) => entry.id === campaignId,
 				);
-				if (campaign && campaign.warden_id === userId) return "system";
+				if (campaign && campaign.warden_id === userId) return "rift";
 				const member = loadLocalMembers().find(
 					(entry) =>
 						entry.campaign_id === campaignId && entry.user_id === userId,
@@ -1012,7 +1012,7 @@ export const useCampaignRole = (campaignId: string) => {
 					const campaign = loadLocalCampaigns().find(
 						(entry) => entry.id === campaignId,
 					);
-					if (campaign && campaign.warden_id === userId) return "system";
+					if (campaign && campaign.warden_id === userId) return "rift";
 					const member = loadLocalMembers().find(
 						(entry) =>
 							entry.campaign_id === campaignId && entry.user_id === userId,
@@ -1024,7 +1024,7 @@ export const useCampaignRole = (campaignId: string) => {
 				return null;
 			}
 
-			// Check if user is the System (Protocol Warden)
+			// Check if user is the Rift (Warden)
 			const { data: campaign, error: campaignError } = await supabase
 				.from("campaigns")
 				.select("warden_id")
@@ -1037,7 +1037,7 @@ export const useCampaignRole = (campaignId: string) => {
 				(campaign as Database["public"]["Tables"]["campaigns"]["Row"])
 					.warden_id === user.id
 			) {
-				return "system";
+				return "rift";
 			}
 
 			// Check member role
@@ -1062,7 +1062,7 @@ export const useCampaignRole = (campaignId: string) => {
 	});
 };
 
-// Check if user is a Warden (System/Protocol Warden) - now uses profiles table
+// Check if user is a Warden (System/Warden) - now uses profiles table
 export const useIsWarden = () => {
 	return useQuery({
 		queryKey: ["user", "is-warden"],

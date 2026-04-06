@@ -1,7 +1,7 @@
 import type React from "react";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Label } from "@/components/ui/label";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -31,7 +31,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-			<SystemWindow title="MODEL EVOLUTION: PATH BRANCHING">
+			<AscendantWindow title="MODEL EVOLUTION: PATH BRANCHING">
 				<div className="space-y-6">
 					<div className="space-y-3">
 						<Label className="text-[10px] uppercase tracking-widest text-primary/60">
@@ -58,9 +58,9 @@ export const PathStep: React.FC<PathStepProps> = ({
 									selectedPathData.display_name || selectedPathData.name,
 								)}
 							</h4>
-							<SystemText className="block text-sm text-muted-foreground leading-relaxed italic">
+							<AscendantText className="block text-sm text-muted-foreground leading-relaxed italic">
 								{formatRegentVernacular(selectedPathData.description)}
-							</SystemText>
+							</AscendantText>
 
 							<div className="grid grid-cols-2 gap-4 py-3 border-t border-primary/5 mt-4">
 								<div className="space-y-1">
@@ -83,7 +83,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

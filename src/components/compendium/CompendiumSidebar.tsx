@@ -1,7 +1,7 @@
 import { Sparkles } from "lucide-react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
@@ -80,7 +80,7 @@ export function CompendiumSidebar({
 	return (
 		<aside className="w-64 shrink-0 space-y-4">
 			{/* Quick Filters */}
-			<SystemWindow title="QUICK FILTERS" className="p-4">
+			<AscendantWindow title="QUICK FILTERS" className="p-4">
 				<div className="space-y-2">
 					<Button
 						variant={showFavoritesOnly ? "default" : "outline"}
@@ -97,10 +97,10 @@ export function CompendiumSidebar({
 						)}
 					</Button>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Categories */}
-			<SystemWindow title="CATEGORIES" className="p-4 flex flex-col min-h-0">
+			<AscendantWindow title="CATEGORIES" className="p-4 flex flex-col min-h-0">
 				<ScrollArea className="max-h-[60vh] h-full overflow-y-auto pr-2">
 					<div className="space-y-1">
 						{categories.map((category) => {
@@ -130,11 +130,11 @@ export function CompendiumSidebar({
 						})}
 					</div>
 				</ScrollArea>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Source Books */}
 			{sourceBooks.length > 0 && (
-				<SystemWindow title="SOURCE BOOKS" className="p-4">
+				<AscendantWindow title="SOURCE BOOKS" className="p-4">
 					<ScrollArea className="h-[200px]">
 						<div className="space-y-2">
 							{sourceBooks.map((book) => {
@@ -159,12 +159,12 @@ export function CompendiumSidebar({
 							})}
 						</div>
 					</ScrollArea>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Power Schools (for Powers) */}
 			{schools.length > 0 && onSchoolToggle && (
-				<SystemWindow title="POWER SCHOOLS" className="p-4">
+				<AscendantWindow title="POWER SCHOOLS" className="p-4">
 					<ScrollArea className="h-[200px]">
 						<div className="space-y-2">
 							{schools.map((school) => {
@@ -189,12 +189,12 @@ export function CompendiumSidebar({
 							})}
 						</div>
 					</ScrollArea>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Rift Ranks (for Anomalies) */}
 			{gateRanks.length > 0 && onGateRankToggle && (
-				<SystemWindow title="RIFT RANKS" className="p-4">
+				<AscendantWindow title="RIFT RANKS" className="p-4">
 					<div className="space-y-2">
 						{gateRanks.map((rank) => {
 							const isSelected = selectedGateRanks?.includes(rank);
@@ -217,12 +217,12 @@ export function CompendiumSidebar({
 							);
 						})}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Boss Filters (for Anomalies) */}
 			{(onToggleBossOnly || onToggleMiniBossOnly) && (
-				<SystemWindow title="BOSS FILTERS" className="p-4">
+				<AscendantWindow title="BOSS FILTERS" className="p-4">
 					<div className="space-y-2">
 						{onToggleBossOnly && (
 							<div className="flex items-center gap-2">
@@ -259,11 +259,11 @@ export function CompendiumSidebar({
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 			{/* Rarities */}
 			{rarities.length > 0 && onRarityToggle && (
-				<SystemWindow title="RARITY" className="p-4">
+				<AscendantWindow title="RARITY" className="p-4">
 					<div className="space-y-2">
 						{rarities.map((rarity) => {
 							const isSelected = selectedRarities?.includes(rarity);
@@ -286,12 +286,12 @@ export function CompendiumSidebar({
 							);
 						})}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Elements */}
 			{elements.length > 0 && onElementToggle && (
-				<SystemWindow title="ELEMENTS" className="p-4">
+				<AscendantWindow title="ELEMENTS" className="p-4">
 					<ScrollArea className="h-[150px]">
 						<div className="space-y-2">
 							{elements.map((element) => {
@@ -316,7 +316,7 @@ export function CompendiumSidebar({
 							})}
 						</div>
 					</ScrollArea>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Active Filters Count */}

@@ -1,7 +1,7 @@
 import { BookOpen, Zap } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface SkillData {
@@ -29,7 +29,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				className={abilityColors[data.ability]}
 			>
@@ -44,10 +44,10 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 						<AutoLinkText text={data.description} />
 					</p>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Linked Ability */}
-			<SystemWindow title="LINKED ABILITY" compact>
+			<AscendantWindow title="LINKED ABILITY" compact>
 				<div className="flex items-center gap-3">
 					<div
 						className={`font-display text-3xl ${abilityColors[data.ability]}`}
@@ -58,11 +58,11 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 						Add your {data.ability} modifier to checks using this skill
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Examples */}
 			{data.examples && data.examples.length > 0 && (
-				<SystemWindow title="EXAMPLE USES">
+				<AscendantWindow title="EXAMPLE USES">
 					<ul className="space-y-3">
 						{data.examples.map((example, _i) => (
 							<li key={example} className="flex items-start gap-3">
@@ -73,7 +73,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.source_book && (

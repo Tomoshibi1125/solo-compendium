@@ -1,5 +1,4 @@
 import type { CompendiumSpell } from "@/types/compendium";
-
 export const spells_s: CompendiumSpell[] = [
 	{
 		id: "spell-s-1",
@@ -41,9 +40,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "The sky's wrath concentrated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -88,9 +85,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -135,9 +130,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "The sky's wrath concentrated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -182,9 +175,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A stillness more absolute than death.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -193,7 +184,7 @@ export const spells_s: CompendiumSpell[] = [
 		id: "spell-s-5",
 		name: "Chill burst",
 		description:
-			"Ancient mana, older than the System itself, coalesces into a singular point. A stillness more absolute than death. This technique unleashes pure energy. Target's movement speed is reduced by 10 feet.",
+			"Ancient mana, older than the Rift itself, coalesces into a singular point. A stillness more absolute than death. This technique unleashes pure energy. Target's movement speed is reduced by 10 feet.",
 		type: "Combat",
 		rank: "S",
 		image: "/generated/compendium/spells/spell-s-5.webp",
@@ -229,9 +220,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A stillness more absolute than death.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -276,9 +265,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -323,9 +310,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -370,9 +355,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A stillness more absolute than death.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -417,9 +400,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -464,9 +445,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A brilliance that rivals the First Gate.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -511,9 +490,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A stillness more absolute than death.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -558,9 +535,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A hunger that cannot be sated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -605,9 +580,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A hunger that cannot be sated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -652,9 +625,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A stillness more absolute than death.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",
@@ -699,9 +670,7 @@ export const spells_s: CompendiumSpell[] = [
 				},
 			},
 		},
-		limitations: {
-			mana_cost: 150,
-		},
+		limitations: {},
 		flavor: "A hunger that cannot be sated.",
 		atHigherLevels:
 			"When cast at a higher tier, damage increases by 2d12 per tier.",

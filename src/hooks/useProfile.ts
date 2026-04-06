@@ -6,7 +6,7 @@ import { AppError } from "@/lib/appError";
 
 interface Profile {
 	id: string;
-	role: "PW" | "player";
+	role: "Warden" | "player";
 	created_at: string;
 	updated_at: string;
 }
@@ -38,7 +38,7 @@ export const useProfile = () => {
 				throw error;
 			}
 			if (!data) return null;
-			const normalizedRole = data.role === "admin" ? "PW" : data.role;
+			const normalizedRole = data.role === "admin" ? "Warden" : data.role;
 			return { ...data, role: normalizedRole } as Profile;
 		},
 		retry: false,
@@ -53,7 +53,7 @@ export const useUpdateProfile = () => {
 	const { toast } = useToast();
 
 	return useMutation({
-		mutationFn: async ({ role }: { role: "PW" | "player" }) => {
+		mutationFn: async ({ role }: { role: "Warden" | "player" }) => {
 			const isE2E = import.meta.env.VITE_E2E === "true";
 			if (!isSupabaseConfigured || isE2E) {
 				throw new AppError("Supabase is not configured", "CONFIG");
@@ -96,7 +96,7 @@ export const useUpdateProfile = () => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["profile"] });
-			queryClient.invalidateQueries({ queryKey: ["user", "is-PW"] });
+			queryClient.invalidateQueries({ queryKey: ["user", "is-Warden"] });
 			toast({
 				title: "Profile updated",
 				description: "Your role has been updated.",

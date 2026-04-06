@@ -11,7 +11,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	Select,
@@ -59,7 +58,7 @@ import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-// System Ascendant XP Thresholds (cumulative XP needed to reach each level)
+// Rift Ascendant XP Thresholds (cumulative XP needed to reach each level)
 const XP_THRESHOLDS = [
 	0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
 	120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
@@ -356,7 +355,7 @@ export const LevelUpWizardModal = ({
 		return (
 			<Dialog open={isOpen} onOpenChange={onClose}>
 				<DialogContent className="max-w-2xl bg-background border-resurge/20">
-					<SystemWindow
+					<AscendantWindow
 						title="MAXIMUM LEVEL REACHED"
 						variant="alert"
 						className="text-center py-12"
@@ -366,9 +365,9 @@ export const LevelUpWizardModal = ({
 							{character.name} has reached the pinnacle of power.
 						</p>
 						<p className="text-muted-foreground">
-							Level 20 - The System has no further tests for this Ascendant.
+							Level 20 - The Rift has no further tests for this Ascendant.
 						</p>
-					</SystemWindow>
+					</AscendantWindow>
 					<div className="flex justify-end mt-4">
 						<Button onClick={onClose}>Close</Button>
 					</div>
@@ -415,9 +414,9 @@ export const LevelUpWizardModal = ({
 		try {
 			// Calculate new stats
 			const newProficiencyBonus = Math.ceil(newLevel / 4) + 1;
-			const newSystemFavorDie =
+			const newRiftFavorDie =
 				newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10;
-			const newSystemFavorMax =
+			const newRiftFavorMax =
 				newLevel <= 4 ? 3 : newLevel <= 10 ? 4 : newLevel <= 16 ? 5 : 6;
 			const newHP = character.hp_max + hpIncrease;
 			const newHitDiceMax = newLevel;
@@ -430,9 +429,9 @@ export const LevelUpWizardModal = ({
 					hp_current: character.hp_current + hpIncrease,
 					hit_dice_max: newHitDiceMax,
 					hit_dice_current: newHitDiceMax,
-					system_favor_die: newSystemFavorDie,
-					system_favor_max: newSystemFavorMax,
-					system_favor_current: newSystemFavorMax,
+					rift_favor_die: newRiftFavorDie,
+					rift_favor_max: newRiftFavorMax,
+					rift_favor_current: newRiftFavorMax,
 				};
 
 			// Apply path selection if chosen during this level-up
@@ -597,7 +596,7 @@ export const LevelUpWizardModal = ({
 						if (pendingCount > 0) {
 							toast({
 								title: "Selection Protocol Required",
-								description: `The System detected ${pendingCount} pending selection${pendingCount === 1 ? "" : "s"}. Open your Ascendant sheet to bind them.`,
+								description: `The Rift detected ${pendingCount} pending selection${pendingCount === 1 ? "" : "s"}. Open your Ascendant sheet to bind them.`,
 							});
 						}
 					}
@@ -746,7 +745,7 @@ export const LevelUpWizardModal = ({
 							</div>
 						</div>
 
-						<SystemWindow
+						<AscendantWindow
 							title="SYSTEM ENHANCEMENT"
 							className="border-resurge/50 mb-6"
 						>
@@ -1258,10 +1257,10 @@ export const LevelUpWizardModal = ({
 										</div>
 										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
 											<span className="text-muted-foreground font-heading">
-												System Favor Die
+												Rift Favor Die
 											</span>
 											<span className="font-resurge text-lg">
-												d{character.system_favor_die} {"->"}{" "}
+												d{character.rift_favor_die} {"->"}{" "}
 												<span className="text-resurge">
 													d
 													{newLevel <= 4
@@ -1297,7 +1296,7 @@ export const LevelUpWizardModal = ({
 									</div>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
 						<div className="flex justify-end gap-4 mt-6">
 							<Button

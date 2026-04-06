@@ -1,5 +1,5 @@
 import { Layers, MapPin } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { locations } from "@/data/compendium/locations";
 import { getMapsForTier } from "@/lib/vtt";
 import type { VTTAsset } from "@/lib/vtt/vttAssetManifest";
@@ -20,17 +20,17 @@ export const WorldGuide = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading
+				<RiftHeading
 					level={1}
 					className="text-5xl text-emerald-400 mb-6 font-display uppercase tracking-widest"
 				>
 					World Directory
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto">
 					The appearance of Rifts fractured geographical borders, giving rise to
-					localized dimensional overlaps. The Protocol Warden oversees these
-					anomaly sites, classifying them by Resonance Rank (S to D). Below is
-					the comprehensive directory of discovered environments.
+					localized dimensional overlaps. The Warden oversees these anomaly
+					sites, classifying them by Resonance Rank (S to D). Below is the
+					comprehensive directory of discovered environments.
 				</p>
 			</section>
 

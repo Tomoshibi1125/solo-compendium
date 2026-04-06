@@ -21,7 +21,7 @@ import {
 	initializeConcentration,
 	startConcentration,
 } from "@/lib/system_ascendant/concentration";
-import { getAbilityModifier, getProficiencyBonus } from "@/types/system-rules";
+import { getAbilityModifier, getProficiencyBonus } from "@/types/core-rules";
 
 // ---------------------------------------------------------------------------
 // Types

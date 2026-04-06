@@ -22,7 +22,7 @@ test.describe("Focused DM UI Test", () => {
 		// Phase 1: Landing & Authentication
 		console.log("📝 Phase 1: Landing & Authentication");
 		await page.goto("http://localhost:8080");
-		await expect(page).toHaveTitle(/System Ascendant/);
+		await expect(page).toHaveTitle(/Rift Ascendant/);
 
 		// Test landing page elements
 		await expect(page.locator("h1")).toBeVisible({ timeout: 10000 });

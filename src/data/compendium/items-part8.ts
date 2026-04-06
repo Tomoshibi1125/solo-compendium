@@ -17,13 +17,10 @@ export const items = [
 		attunement: true,
 		weight: 1,
 		value: 26691,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Titanic Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Titanic.",
-		mechanics: {
-			system_interaction:
-				"Deals bludgeoning damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-2",
@@ -43,13 +40,10 @@ export const items = [
 		attunement: false,
 		weight: 3,
 		value: 3720,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Void.",
-		mechanics: {
-			system_interaction:
-				"Deals necrotic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-3",
@@ -69,13 +63,10 @@ export const items = [
 		attunement: true,
 		weight: 4,
 		value: 43870,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Solar.",
-		mechanics: {
-			system_interaction:
-				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-4",
@@ -103,13 +94,10 @@ export const items = [
 		attunement: true,
 		weight: 3,
 		value: 30677,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Glacial.",
-		mechanics: {
-			system_interaction:
-				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-5",
@@ -137,19 +125,16 @@ export const items = [
 		attunement: true,
 		weight: 2,
 		value: 46815,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Void.",
-		mechanics: {
-			system_interaction:
-				"Deals psychic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-6",
 		name: "Essence-Core Shield",
 		description:
-			"A fragment of the original System code. This shield pulses with aetheric resonance.",
+			"A fragment of the original Arcane core. This shield pulses with aetheric resonance.",
 		rarity: "rare",
 		type: "accessory",
 		image: "/generated/compendium/items/item-p8-6.webp",
@@ -171,13 +156,10 @@ export const items = [
 		attunement: true,
 		weight: 4,
 		value: 41580,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
-		mechanics: {
-			system_interaction:
-				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-7",
@@ -205,13 +187,10 @@ export const items = [
 		attunement: true,
 		weight: 1,
 		value: 38169,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Glacial.",
-		mechanics: {
-			system_interaction:
-				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-8",
@@ -239,13 +218,10 @@ export const items = [
 		attunement: true,
 		weight: 4,
 		value: 40196,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Blood.",
-		mechanics: {
-			system_interaction:
-				"Deals necrotic damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-9",
@@ -273,13 +249,10 @@ export const items = [
 		attunement: true,
 		weight: 2,
 		value: 12579,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Blood.",
-		mechanics: {
-			system_interaction:
-				"Deals necrotic damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-10",
@@ -307,13 +280,10 @@ export const items = [
 		attunement: true,
 		weight: 3,
 		value: 7623,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Solar.",
-		mechanics: {
-			system_interaction:
-				"Deals radiant damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-11",
@@ -341,13 +311,10 @@ export const items = [
 		attunement: true,
 		weight: 3,
 		value: 29934,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Blood.",
-		mechanics: {
-			system_interaction:
-				"Deals necrotic damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-12",
@@ -367,13 +334,10 @@ export const items = [
 		attunement: true,
 		weight: 4,
 		value: 42667,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Void.",
-		mechanics: {
-			system_interaction:
-				"Deals necrotic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-13",
@@ -393,13 +357,10 @@ export const items = [
 		attunement: true,
 		weight: 2,
 		value: 35971,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Solar.",
-		mechanics: {
-			system_interaction:
-				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-14",
@@ -427,13 +388,10 @@ export const items = [
 		attunement: true,
 		weight: 2,
 		value: 41844,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Void.",
-		mechanics: {
-			system_interaction:
-				"Deals psychic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-15",
@@ -453,19 +411,16 @@ export const items = [
 		attunement: true,
 		weight: 1,
 		value: 25748,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Blood.",
-		mechanics: {
-			system_interaction:
-				"Deals slashing damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-16",
 		name: "Rift-Walker Cowl",
 		description:
-			"A fragment of the original System code. This cowl pulses with aetheric resonance.",
+			"A fragment of the original Arcane core. This cowl pulses with aetheric resonance.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-p8-16.webp",
@@ -487,13 +442,10 @@ export const items = [
 		attunement: true,
 		weight: 4,
 		value: 40426,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
-		mechanics: {
-			system_interaction:
-				"Deals force damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-17",
@@ -513,13 +465,10 @@ export const items = [
 		attunement: true,
 		weight: 3,
 		value: 16614,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Glacial.",
-		mechanics: {
-			system_interaction:
-				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-18",
@@ -547,13 +496,10 @@ export const items = [
 		attunement: true,
 		weight: 5,
 		value: 49236,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Storm.",
-		mechanics: {
-			system_interaction:
-				"Deals thunder damage and requires a DC 15 Agility Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-19",
@@ -581,13 +527,10 @@ export const items = [
 		attunement: true,
 		weight: 5,
 		value: 29869,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Solar Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Solar.",
-		mechanics: {
-			system_interaction:
-				"Deals fire damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-20",
@@ -607,13 +550,10 @@ export const items = [
 		attunement: false,
 		weight: 2,
 		value: 41312,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Glacial.",
-		mechanics: {
-			system_interaction:
-				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-21",
@@ -641,13 +581,10 @@ export const items = [
 		attunement: true,
 		weight: 4,
 		value: 20488,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Blood.",
-		mechanics: {
-			system_interaction:
-				"Deals necrotic damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-22",
@@ -675,13 +612,10 @@ export const items = [
 		attunement: true,
 		weight: 2,
 		value: 50397,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Void.",
-		mechanics: {
-			system_interaction:
-				"Deals psychic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-23",
@@ -709,13 +643,10 @@ export const items = [
 		attunement: true,
 		weight: 5,
 		value: 49871,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Glacial.",
-		mechanics: {
-			system_interaction:
-				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-24",
@@ -735,13 +666,10 @@ export const items = [
 		attunement: true,
 		weight: 5,
 		value: 19729,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Glacial.",
-		mechanics: {
-			system_interaction:
-				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-25",
@@ -761,13 +689,10 @@ export const items = [
 		attunement: true,
 		weight: 4,
 		value: 18422,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Storm.",
-		mechanics: {
-			system_interaction:
-				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-26",
@@ -795,13 +720,10 @@ export const items = [
 		attunement: true,
 		weight: 2,
 		value: 21831,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Blood Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Blood.",
-		mechanics: {
-			system_interaction:
-				"Deals slashing damage and requires a DC 15 Vitality Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-27",
@@ -829,13 +751,10 @@ export const items = [
 		attunement: true,
 		weight: 5,
 		value: 5011,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Aetheric Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Aetheric.",
-		mechanics: {
-			system_interaction:
-				"Deals psychic damage and requires a DC 15 Intelligence Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-28",
@@ -855,13 +774,10 @@ export const items = [
 		attunement: false,
 		weight: 2,
 		value: 10641,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Storm Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Storm.",
-		mechanics: {
-			system_interaction:
-				"Deals lightning damage and requires a DC 15 Agility Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-29",
@@ -889,13 +805,10 @@ export const items = [
 		attunement: true,
 		weight: 5,
 		value: 45326,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Glacial Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Glacial.",
-		mechanics: {
-			system_interaction:
-				"Deals cold damage and requires a DC 15 Strength Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 	{
 		id: "item-p8-30",
@@ -923,12 +836,9 @@ export const items = [
 		attunement: true,
 		weight: 2,
 		value: 50988,
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 		lore: "Dating back to the Void Resonance event, several high-tier hunters reported these manifesting in the depths of red gates.",
 		flavor: "The dimensional divide shudders in the presence of the Void.",
-		mechanics: {
-			system_interaction:
-				"Deals psychic damage and requires a DC 15 Sense Decree check to resist secondary effects.",
-		},
+		mechanics: {},
 	},
 ];

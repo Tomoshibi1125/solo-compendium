@@ -16,7 +16,7 @@ export interface CharacterExportSchema {
 	stats: {
 		hp: { current: number; max: number; temp: number };
 		hitDice: { current: number; max: number; size: number };
-		systemFavor: { current: number; max: number; die: number };
+		riftFavor: { current: number; max: number; die: number };
 		armorClass: number;
 		speed: number;
 		initiative: number;
@@ -125,7 +125,7 @@ export function validateCharacterImport(
 			: {
 					hp: { current: 10, max: 10, temp: 0 },
 					hitDice: { current: 1, max: 1, size: 8 },
-					systemFavor: { current: 1, max: 1, die: 6 },
+					riftFavor: { current: 1, max: 1, die: 6 },
 					armorClass: 10,
 					speed: 30,
 					initiative: 0,

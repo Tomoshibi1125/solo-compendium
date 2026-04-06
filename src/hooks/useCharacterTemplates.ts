@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { AbilityScore } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
 
 export interface CharacterTemplate {
 	id: string;

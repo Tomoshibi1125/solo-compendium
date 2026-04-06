@@ -182,26 +182,16 @@ function generateProceduralContent(id: string, _name: string) {
 
 	const flavor = `${flavorVerbs[fv]} ${flavorObjects[fo]}. ${flavorNouns[fn]}`;
 
-	const sysCode = Math.floor(rand() * 9999);
-	const sysRanks = [
-		"B-Rank",
-		"A-Rank",
-		"S-Rank",
-		"National",
-		"Unregistered",
-		"Monarch-Class",
-	];
-	const sysType = sysRanks[Math.floor(rand() * sysRanks.length)];
-	const system_interaction = `System Directive [Err${sysCode}]: ${sysType} variable detected. Immediate caution advised.`;
-
-	return { lore, flavor, system_interaction };
+	return { lore, flavor };
 }
 
 // The Rewrite Engine
 
+type AlgoEntry = { id: string; name: string; [k: string]: unknown };
+
 function arrayToTypeScriptExport(
 	arrayName: string,
-	data: any[],
+	data: AlgoEntry[],
 	headerDocs: string,
 ) {
 	const jsonStr = JSON.stringify(data, null, "\t").replace(
@@ -235,15 +225,13 @@ async function processFile(
 
 	// Apply procedural uniqueness
 	for (const item of dataArray) {
-		const { lore, flavor, system_interaction } = generateProceduralContent(
+		const { lore, flavor } = generateProceduralContent(
 			item.id,
 			item.name,
 		);
 
 		item.lore = lore;
 		item.flavor = flavor;
-		if (!item.mechanics) item.mechanics = {};
-		item.mechanics.system_interaction = system_interaction;
 	}
 
 	const fileContent = arrayToTypeScriptExport(exportName, dataArray, header);

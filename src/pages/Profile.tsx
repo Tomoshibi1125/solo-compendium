@@ -2,11 +2,11 @@ import { Camera, LogOut, RefreshCw, Save, Type, User } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemHeading, SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
@@ -123,17 +123,12 @@ export default function Profile() {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-2xl space-y-6">
-				<SystemHeading
-					level={1}
-					variant="sovereign"
-					dimensional
-					className="mb-4"
-				>
+				<RiftHeading level={1} variant="sovereign" dimensional className="mb-4">
 					Profile & Settings
-				</SystemHeading>
+				</RiftHeading>
 
 				{/* Avatar + Name */}
-				<SystemWindow title="IDENTITY">
+				<AscendantWindow title="IDENTITY">
 					<div className="flex flex-col sm:flex-row items-center gap-6">
 						{/* Avatar */}
 						<button
@@ -170,7 +165,7 @@ export default function Profile() {
 							<div className="space-y-1">
 								<Label
 									htmlFor="display-name"
-									className="font-system text-xs uppercase tracking-widest text-primary/80"
+									className="font-heading text-xs uppercase tracking-widest text-primary/80"
 								>
 									Display Name
 								</Label>
@@ -202,15 +197,15 @@ export default function Profile() {
 							</div>
 						</div>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
 				{/* Appearance */}
-				<SystemWindow title="APPEARANCE">
+				<AscendantWindow title="APPEARANCE">
 					<div className="space-y-4">
 						<div className="space-y-2">
 							<div className="flex items-center gap-2">
 								<Type className="w-4 h-4 text-primary/80" />
-								<Label className="font-system text-xs uppercase tracking-widest text-primary/80">
+								<Label className="font-heading text-xs uppercase tracking-widest text-primary/80">
 									UI Font Size
 								</Label>
 							</div>
@@ -221,7 +216,7 @@ export default function Profile() {
 										type="button"
 										onClick={() => handleFontSizeChange(size.value)}
 										className={cn(
-											"flex-1 rounded-[2px] border px-3 py-2 text-xs font-system uppercase tracking-widest transition-all",
+											"flex-1 rounded-[2px] border px-3 py-2 text-xs font-heading uppercase tracking-widest transition-all",
 											selectedFontSize === size.value
 												? "border-primary bg-primary/20 text-primary shadow-[inset_0_0_8px_hsl(var(--primary)/0.3)]"
 												: "border-primary/20 bg-black/40 text-muted-foreground hover:border-primary/50 hover:bg-black/60",
@@ -231,33 +226,33 @@ export default function Profile() {
 									</button>
 								))}
 							</div>
-							<SystemText className="block text-xs font-mono text-muted-foreground uppercase tracking-wider">
+							<AscendantText className="block text-xs font-mono text-muted-foreground uppercase tracking-wider">
 								Adjusts the base UI font size. Saved across sessions.
-							</SystemText>
+							</AscendantText>
 						</div>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
 				{/* Account Actions */}
-				<SystemWindow title="ACCOUNT">
+				<AscendantWindow title="ACCOUNT">
 					<div className="flex flex-col sm:flex-row gap-3">
 						<Button
 							onClick={() => navigate("/auth?changeRole=true")}
 							variant="outline"
-							className="font-system tracking-widest uppercase"
+							className="font-heading tracking-widest uppercase"
 						>
 							Change Role
 						</Button>
 						<Button
 							variant="destructive"
 							onClick={handleSignOut}
-							className="gap-2 font-system tracking-widest uppercase"
+							className="gap-2 font-heading tracking-widest uppercase"
 						>
 							<LogOut className="w-4 h-4" />
 							Sign Out
 						</Button>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 		</Layout>
 	);

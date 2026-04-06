@@ -1,9 +1,9 @@
 import { Loader2, Save, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -105,7 +105,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 					sendMessage
 						.mutateAsync({
 							campaignId,
-							content: `**System**: The Protocol Warden has updated the campaign rules/settings.`,
+							content: `**System**: The Warden has updated the campaign rules/settings.`,
 						})
 						.catch(console.error);
 				},
@@ -115,20 +115,20 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 
 	if (loadingAccess) {
 		return (
-			<SystemWindow
+			<AscendantWindow
 				title="CAMPAIGN SETTINGS"
 				className="h-[400px] flex flex-col"
 			>
 				<div className="flex items-center justify-center flex-1">
 					<Loader2 className="w-6 h-6 animate-spin text-primary" />
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	if (!hasWardenAccess) {
 		return (
-			<SystemWindow
+			<AscendantWindow
 				title="CAMPAIGN SETTINGS"
 				variant="alert"
 				className="h-[400px] flex flex-col"
@@ -139,17 +139,20 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 						Access Restricted
 					</p>
 					<p className="text-sm text-muted-foreground">
-						Only the Protocol Warden can access campaign settings.
+						Only the Warden can access campaign settings.
 					</p>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	if (!campaign) return null;
 
 	return (
-		<SystemWindow title="CAMPAIGN SETTINGS" className="h-[400px] flex flex-col">
+		<AscendantWindow
+			title="CAMPAIGN SETTINGS"
+			className="h-[400px] flex flex-col"
+		>
 			<div className="flex-1 overflow-y-auto space-y-4">
 				<div>
 					<Label htmlFor="campaign-name">Campaign Name</Label>
@@ -223,6 +226,6 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 					)}
 				</Button>
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

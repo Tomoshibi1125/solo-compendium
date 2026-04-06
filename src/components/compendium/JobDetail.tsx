@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -230,7 +230,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						: undefined
 				}
 			/>
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				className="border-primary/50"
 			>
@@ -276,18 +276,18 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Core Stats */}
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-				<SystemWindow title="HIT DIE" compact>
+				<AscendantWindow title="HIT DIE" compact>
 					<div className="flex items-center gap-2">
 						<Heart className="w-5 h-5 text-red-400" />
 						<span className="font-display text-2xl">d{data.hit_die}</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="PRIMARY ABILITIES" compact>
+				<AscendantWindow title="PRIMARY ABILITIES" compact>
 					<div className="flex items-center gap-2">
 						<Zap className="w-5 h-5 text-yellow-400" />
 						<span className="font-heading">
@@ -295,9 +295,9 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								"None"}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="SAVING THROWS" compact>
+				<AscendantWindow title="SAVING THROWS" compact>
 					<div className="flex items-center gap-2">
 						<Shield className="w-5 h-5 text-blue-400" />
 						<span className="font-heading">
@@ -306,9 +306,9 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								.join(", ") || "None"}
 						</span>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="SKILL CHOICES" compact>
+				<AscendantWindow title="SKILL CHOICES" compact>
 					<div className="flex items-center gap-2">
 						<Swords className="w-5 h-5 text-green-400" />
 						<span className="font-heading">Choose {totalChoices.skills}</span>
@@ -337,12 +337,12 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</Badge>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 
 			{/* Hit Points */}
 			{(data.hit_points_at_first_level || data.hit_points_at_higher_levels) && (
-				<SystemWindow title="HIT POINTS">
+				<AscendantWindow title="HIT POINTS">
 					<div className="space-y-2">
 						{data.hit_points_at_first_level && (
 							<div>
@@ -365,11 +365,11 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Proficiencies */}
-			<SystemWindow title="PROFICIENCIES">
+			<AscendantWindow title="PROFICIENCIES">
 				<div className="grid md:grid-cols-3 gap-4">
 					<div>
 						<h4 className="font-heading text-sm text-muted-foreground mb-2">
@@ -416,11 +416,11 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						</p>
 					</div>
 				)}
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Starting Equipment */}
 			{data.starting_equipment && data.starting_equipment.length > 0 && (
-				<SystemWindow title="STARTING EQUIPMENT">
+				<AscendantWindow title="STARTING EQUIPMENT">
 					<ul className="space-y-2">
 						{data.starting_equipment.map((choice, i) => (
 							<li
@@ -434,12 +434,12 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</li>
 						))}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Spellcasting */}
 			{data.spellcasting_ability && (
-				<SystemWindow title="SPELLCASTING">
+				<AscendantWindow title="SPELLCASTING">
 					<div className="space-y-2">
 						<div>
 							<span className="text-sm text-muted-foreground">
@@ -460,20 +460,20 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Regent Prerequisites */}
 			{data.regent_prerequisites && (
-				<SystemWindow title="REGENT PREREQUISITES">
+				<AscendantWindow title="REGENT PREREQUISITES">
 					<p className="font-heading">{data.regent_prerequisites}</p>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Paths */}
 			{paths.length > 0 && (
 				<div id="paths-section">
-					<SystemWindow title="PATHS">
+					<AscendantWindow title="PATHS">
 						<div className="grid md:grid-cols-2 gap-4">
 							{paths.map((path) => (
 								<Link
@@ -493,13 +493,13 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								</Link>
 							))}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			)}
 
 			{/* Related Powers */}
 			{relatedPowers.length > 0 && (
-				<SystemWindow title="RELATED POWERS">
+				<AscendantWindow title="RELATED POWERS">
 					<div className="grid md:grid-cols-2 gap-3">
 						{relatedPowers.map((power) => (
 							<Link
@@ -527,13 +527,13 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					>
 						View all powers for {displayName} →
 					</Link>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Spellcasting Table (for caster jobs with spell slot data) */}
 			{data.spellcasting?.spellSlots &&
 				Object.keys(data.spellcasting.spellSlots).length > 0 && (
-					<SystemWindow title="SPELLCASTING TABLE">
+					<AscendantWindow title="SPELLCASTING TABLE">
 						<div className="overflow-x-auto">
 							<table className="w-full text-sm">
 								<thead>
@@ -605,12 +605,12 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								</tbody>
 							</table>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 			{/* Features by Level (DB features) */}
 			{features.length > 0 && (
-				<SystemWindow title="CLASS FEATURES">
+				<AscendantWindow title="CLASS FEATURES">
 					<div className="space-y-4">
 						{features.map((feature) => (
 							<div
@@ -652,14 +652,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</div>
 						))}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Static Class Features Fallback (level progression table from static data) */}
 			{features.length === 0 &&
 				data.class_features &&
 				data.class_features.length > 0 && (
-					<SystemWindow title="LEVEL PROGRESSION">
+					<AscendantWindow title="LEVEL PROGRESSION">
 						<div className="overflow-x-auto">
 							<table className="w-full text-sm">
 								<thead>
@@ -707,7 +707,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								</tbody>
 							</table>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 		</div>
 	);

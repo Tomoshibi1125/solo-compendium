@@ -1,6 +1,6 @@
-// Comprehensive Skills Compendium - Authoritative System Ascendant Content
+// Comprehensive Skills Compendium - Authoritative Rift Ascendant Content
 // ALL skills needed for the complete compendium system
-// Based on System Ascendant mechanics
+// Based on Rift Ascendant mechanics
 
 export interface Skill {
 	id: string;
@@ -79,7 +79,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Dual wielding",
 		],
 		synergies: ["Shadow Dance", "Critical Shadow", "Two-Weapon Fighting"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "sword-mastery",
@@ -117,7 +117,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Military combat",
 		],
 		synergies: ["Weapon Focus", "Combat Training", "Dueling"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "unarmed-combat",
@@ -154,7 +154,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Crowd control",
 		],
 		synergies: ["Monk Training", "Brawler Style", "Improved Grapple"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "archery",
@@ -191,7 +191,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Cover-based combat",
 		],
 		synergies: ["Sharpshooter", "Ascendant Training", "Precision Shooting"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "shield-mastery",
@@ -228,7 +228,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Shield-based tactics",
 		],
 		synergies: ["Defense Training", "Tank Combat", "Protection"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// EXPLORATION SKILLS (Expanded)
@@ -268,7 +268,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Escaping from dungeons",
 		],
 		synergies: ["Trap Disarmament", "Cartography", "Stonecunning"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "wilderness-survival",
@@ -305,7 +305,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Natural disaster survival",
 		],
 		synergies: ["Herbalism", "Animal Handling", "Nature Lore"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "urban-navigation",
@@ -343,7 +343,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Avoiding authorities",
 		],
 		synergies: ["Street Smarts", "Investigation", "Urban Lore"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "tracking",
@@ -381,7 +381,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Avoiding pursuit",
 		],
 		synergies: ["Wilderness Survival", "Investigation", "Nature Lore"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// SOCIAL SKILLS (Expanded)
@@ -422,7 +422,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Establishing dominance",
 		],
 		synergies: ["Menacing Presence", "Leadership", "Reputation"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "persuasion",
@@ -461,7 +461,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Resolving conflicts peacefully",
 		],
 		synergies: ["Diplomacy", "Leadership", "Social Grace"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "deception",
@@ -499,7 +499,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Creating diversions",
 		],
 		synergies: ["Bluffing", "Disguise", "Acting"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "performance",
@@ -538,7 +538,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Creating legends",
 		],
 		synergies: ["Music", "Acting", "Storytelling"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// MAGICAL SKILLS (Expanded)
@@ -578,7 +578,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Countering enemy magic",
 		],
 		synergies: ["Spellcraft", "Magical Theory", "Research"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "spellcraft",
@@ -616,7 +616,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Improving existing spells",
 		],
 		synergies: ["Arcana", "Magical Theory", "Research"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "magical-theory",
@@ -655,7 +655,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Magical architecture",
 		],
 		synergies: ["Arcana", "Spellcraft", "Research"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// CRAFTING SKILLS (New Category)
@@ -695,7 +695,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Custom crafting",
 		],
 		synergies: ["Metalworking", "Enchanting", "Crafting"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "alchemy",
@@ -734,7 +734,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Chemical warfare",
 		],
 		synergies: ["Herbalism", "Magical Theory", "Research"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "enchanting",
@@ -773,7 +773,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Magical crafting",
 		],
 		synergies: ["Arcana", "Spellcraft", "Crafting"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// UTILITY SKILLS (Expanded)
@@ -812,7 +812,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Emergency medical response",
 		],
 		synergies: ["Medical Training", "Nature Magic", "Divine Magic"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "strength-enhancement",
@@ -849,7 +849,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Combat grappling and shoving",
 		],
 		synergies: ["Athletic Training", "Body Building", "Rage Enhancement"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "perception-enhancement",
@@ -886,7 +886,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Investigation",
 		],
 		synergies: ["Awareness", "Investigation", "Stealth Counter"],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "agility-enhancement",
@@ -927,6 +927,6 @@ export const comprehensiveSkills: Skill[] = [
 			"Reflex Enhancement",
 			"Speed Enhancement",
 		],
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 ];

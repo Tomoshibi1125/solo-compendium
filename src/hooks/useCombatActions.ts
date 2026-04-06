@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { ActionResolutionPayload } from "@/lib/actionResolution";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
-import { type AbilityScore, getAbilityModifier } from "@/types/system-rules";
+import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 import { useCharacterDerivedStats } from "./useCharacterDerivedStats";
 import { useCharacterSheetState } from "./useCharacterSheetState";
 import { type CharacterWithAbilities, useCharacters } from "./useCharacters";

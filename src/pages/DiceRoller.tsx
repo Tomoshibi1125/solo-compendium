@@ -26,14 +26,14 @@ import {
 } from "react";
 import { DICE_THEMES, type DiceTheme } from "@/components/dice/diceThemes";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -567,7 +567,7 @@ const DiceRoller = () => {
 				<div className="mb-8">
 					<div className="flex items-center justify-between mb-4">
 						<div>
-							<SystemHeading
+							<RiftHeading
 								level={1}
 								variant="gate"
 								dimensional
@@ -576,11 +576,11 @@ const DiceRoller = () => {
 								<Sparkles className="w-8 h-8 text-shadow-purple animate-pulse" />
 								Dice Roller
 								<Zap className="w-8 h-8 text-shadow-blue animate-pulse" />
-							</SystemHeading>
-							<DataStreamText variant="system" speed="slow">
-								Roll dice with the System's guidance — may the The Absolute's
+							</RiftHeading>
+							<ManaFlowText variant="rift" speed="slow">
+								Roll dice with the Rift's guidance — may the The Absolute's
 								favor be with you
-							</DataStreamText>
+							</ManaFlowText>
 						</div>
 						<div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
 							{campaigns.length > 0 && (
@@ -629,14 +629,14 @@ const DiceRoller = () => {
 					{/* Dice Selection */}
 					<div className="lg:col-span-2 space-y-6">
 						{pendingResolution && (
-							<SystemWindow title="PENDING RESOLUTION" variant="default">
+							<AscendantWindow title="PENDING RESOLUTION" variant="default">
 								<div className="space-y-3">
-									<DataStreamText
-										variant="system"
+									<ManaFlowText
+										variant="rift"
 										className="text-sm text-muted-foreground"
 									>
 										{pendingResolution.name}
-									</DataStreamText>
+									</ManaFlowText>
 									<div className="flex flex-wrap gap-2">
 										<Button variant="outline" onClick={rollPendingResolution}>
 											Roll Resolution
@@ -683,11 +683,11 @@ const DiceRoller = () => {
 										</div>
 									)}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 						{/* 3D Dice Roller */}
 						{show3D && dice3D.length > 0 && (
-							<SystemWindow
+							<AscendantWindow
 								title={`SYSTEM DICE CHAMBER - ${DICE_THEMES[diceTheme].name.toUpperCase()}`}
 								variant="resurge"
 								className="overflow-hidden"
@@ -695,13 +695,13 @@ const DiceRoller = () => {
 								<Suspense
 									fallback={
 										<div className="flex h-[400px] items-center justify-center">
-											<DataStreamText
-												variant="system"
+											<ManaFlowText
+												variant="rift"
 												speed="slow"
 												className="text-sm text-muted-foreground"
 											>
 												Loading 3D manifestation constructs...
-											</DataStreamText>
+											</ManaFlowText>
 										</div>
 									}
 								>
@@ -714,12 +714,12 @@ const DiceRoller = () => {
 										}}
 									/>
 								</Suspense>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 
 						{/* Dice Theme Selector */}
 						{show3D && (
-							<SystemWindow title="DICE THEME" variant="default">
+							<AscendantWindow title="DICE THEME" variant="default">
 								<div className="space-y-3">
 									<Label>Choose Your Dice Aesthetic</Label>
 									<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -740,13 +740,13 @@ const DiceRoller = () => {
 												>
 													<div className="flex items-center gap-2 mb-1">
 														<Icon className={cn("w-4 h-4", swatch?.icon)} />
-														<SystemHeading
+														<RiftHeading
 															level={3}
 															variant="sovereign"
 															className="font-heading text-sm font-semibold"
 														>
 															{theme.name}
-														</SystemHeading>
+														</RiftHeading>
 													</div>
 													<div
 														className={cn(
@@ -759,10 +759,10 @@ const DiceRoller = () => {
 										})}
 									</div>
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 						{/* Quick Rolls */}
-						<SystemWindow title="SYSTEM QUICK ROLLS" variant="default">
+						<AscendantWindow title="SYSTEM QUICK ROLLS" variant="default">
 							<div className="flex flex-wrap gap-2">
 								{["1d20", "1d20+5", "2d6", "1d8+3", "1d4", "1d12"].map(
 									(notation) => (
@@ -780,10 +780,10 @@ const DiceRoller = () => {
 									),
 								)}
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
 						{/* Dice Builder */}
-						<SystemWindow title="BUILD YOUR ROLL">
+						<AscendantWindow title="BUILD YOUR ROLL">
 							<div className="space-y-4">
 								{/* Dice buttons */}
 								<div className="flex flex-wrap gap-3">
@@ -916,16 +916,16 @@ const DiceRoller = () => {
 									</Button>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
 						{/* Last Roll Result */}
 						{lastRoll && (
-							<SystemWindow
+							<AscendantWindow
 								title="SYSTEM RESULT"
 								variant="resurge"
 								className="animate-resurge relative overflow-hidden"
 							>
-								{/* System Ascendant background effects */}
+								{/* Rift Ascendant background effects */}
 								<div className="absolute inset-0 pointer-events-none">
 									<div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-radial from-shadow-blue/20 via-shadow-purple/10 to-transparent rounded-full blur-3xl animate-pulse" />
 									<div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-radial from-resurge-violet/15 to-transparent rounded-full blur-2xl animate-pulse" />
@@ -938,9 +938,9 @@ const DiceRoller = () => {
 											{lastRoll.total}
 										</div>
 									</div>
-									<SystemText className="block text-muted-foreground font-heading text-lg">
+									<AscendantText className="block text-muted-foreground font-heading text-lg">
 										{lastRoll.dice}
-									</SystemText>
+									</AscendantText>
 									<div className="flex flex-wrap justify-center gap-2 mt-4">
 										{lastRoll.rolls
 											.map((roll, i) => ({ roll, i }))
@@ -979,22 +979,22 @@ const DiceRoller = () => {
 										</span>
 									)}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 					</div>
 
 					{/* Roll History */}
 					<div>
-						<SystemWindow
+						<AscendantWindow
 							title="ROLL HISTORY"
 							variant="regent"
 							className="sticky top-24"
 						>
 							<div className="space-y-2 max-h-[60vh] overflow-y-auto">
 								{rollHistory.length === 0 ? (
-									<SystemText className="block text-center text-muted-foreground py-8 font-heading">
+									<AscendantText className="block text-center text-muted-foreground py-8 font-heading">
 										No rolls yet
-									</SystemText>
+									</AscendantText>
 								) : (
 									rollHistory.map((roll) => (
 										<div
@@ -1009,14 +1009,14 @@ const DiceRoller = () => {
 													{roll.timestamp.toLocaleTimeString()}
 												</span>
 											</div>
-											<SystemText className="block text-sm text-muted-foreground font-heading">
+											<AscendantText className="block text-sm text-muted-foreground font-heading">
 												{roll.dice}
-											</SystemText>
+											</AscendantText>
 										</div>
 									))
 								)}
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					</div>
 				</div>
 			</div>

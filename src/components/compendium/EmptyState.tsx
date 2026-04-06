@@ -1,6 +1,6 @@
 import { Filter, Search, Sparkles } from "lucide-react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { cn } from "@/lib/utils";
 
 interface EmptyStateProps {
@@ -20,7 +20,7 @@ export function EmptyState({
 }: EmptyStateProps) {
 	if (type === "no-results") {
 		return (
-			<SystemWindow
+			<AscendantWindow
 				title="NO RESULTS FOUND"
 				className={cn("max-w-md mx-auto", className)}
 			>
@@ -54,13 +54,13 @@ export function EmptyState({
 						)}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	if (type === "no-favorites") {
 		return (
-			<SystemWindow
+			<AscendantWindow
 				title="NO FAVORITES"
 				className={cn("max-w-md mx-auto", className)}
 			>
@@ -73,12 +73,12 @@ export function EmptyState({
 						</p>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	return (
-		<SystemWindow
+		<AscendantWindow
 			title="NO ENTRIES"
 			className={cn("max-w-md mx-auto", className)}
 		>
@@ -93,6 +93,6 @@ export function EmptyState({
 					</p>
 				</div>
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

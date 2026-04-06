@@ -109,11 +109,11 @@ export function GlobalCharacterHUD() {
 						</div>
 						<div
 							className="flex items-center gap-1.5 md:gap-2 group cursor-help"
-							title="System Favor"
+							title="Rift Favor"
 						>
 							<Dice6 className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
 							<span className="font-bold text-purple-100">
-								{character.system_favor_current}
+								{character.rift_favor_current}
 							</span>
 						</div>
 					</div>

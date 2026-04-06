@@ -1,5 +1,5 @@
 import { Crown, ShieldAlert, Sparkles, Stars } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { PRIME_PANTHEON } from "@/data/compendium/pantheon";
 import { regents } from "@/data/compendium/regents";
 
@@ -7,15 +7,15 @@ export const PantheonChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-fuchsia-400 mb-6">
+				<RiftHeading level={1} className="text-5xl text-fuchsia-400 mb-6">
 					The Echelon of Balance
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
 					Beyond the physical constraints of the Grid exist the
 					Eternals—god-like beings who maintain the existential equilibrium of
-					the Remade World. Protocol Wardens must document these Sovereigns, as
-					their influence governs the very laws of Awakening and the containment
-					of the Sprawl.
+					the Remade World. Wardens must document these Sovereigns, as their
+					influence governs the very laws of Awakening and the containment of
+					the Sprawl.
 				</p>
 			</section>
 

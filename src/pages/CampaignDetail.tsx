@@ -26,6 +26,12 @@ import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPan
 import { CampaignSettings } from "@/components/campaign/CampaignSettings";
 import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -36,12 +42,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { RoleBadge } from "@/components/ui/RoleBadge";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -161,14 +161,14 @@ const CampaignDetail = () => {
 		return (
 			<Layout>
 				<div className="container mx-auto px-4 py-8">
-					<SystemWindow title="CAMPAIGN NOT FOUND" variant="alert">
+					<AscendantWindow title="CAMPAIGN NOT FOUND" variant="alert">
 						<p className="text-destructive mb-4">
 							This campaign does not exist or you don't have access to it.
 						</p>
 						<Button asChild>
 							<Link to="/campaigns">Back to Campaigns</Link>
 						</Button>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</Layout>
 		);
@@ -187,24 +187,24 @@ const CampaignDetail = () => {
 
 				<div className="mb-6 sm:mb-8">
 					<div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-2">
-						<SystemHeading
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="leading-tight"
 						>
 							{campaign.name.toUpperCase()}
-						</SystemHeading>
+						</RiftHeading>
 						{!loadingRole && userRole && <RoleBadge role={userRole} />}
 					</div>
 					{campaign.description && (
-						<DataStreamText
-							variant="system"
+						<ManaFlowText
+							variant="rift"
 							speed="slow"
 							className="text-sm sm:text-base leading-relaxed"
 						>
 							{campaign.description}
-						</DataStreamText>
+						</ManaFlowText>
 					)}
 				</div>
 
@@ -307,26 +307,26 @@ const CampaignDetail = () => {
 					</TabsList>
 
 					<TabsContent value="vtt">
-						<SystemWindow title="VIRTUAL TABLETOP" variant="quest">
+						<AscendantWindow title="VIRTUAL TABLETOP" variant="quest">
 							<div className="space-y-6 text-center py-12">
 								<Layers className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
-								<SystemHeading
+								<RiftHeading
 									level={2}
 									variant="gate"
 									dimensional
 									className="mb-4 text-center mx-auto"
 								>
-									Full-Featured VTT System
-								</SystemHeading>
-								<DataStreamText
-									variant="system"
+									Full-Featured VTT Interface
+								</RiftHeading>
+								<ManaFlowText
+									variant="rift"
 									speed="slow"
 									className="max-w-2xl mx-auto mb-6"
 								>
 									Access the complete Virtual Tabletop system with maps, tokens,
 									initiative tracking, dice rolling, chat, fog of war, and more.
 									Everything you need for running sessions online.
-								</DataStreamText>
+								</ManaFlowText>
 								<Button className="btn-umbral" size="lg" asChild>
 									<Link to={`/campaigns/${id}/vtt`}>
 										<Layers className="w-5 h-5 mr-2" />
@@ -338,38 +338,38 @@ const CampaignDetail = () => {
 										<h3 className="font-heading font-semibold mb-2">
 											Token Management
 										</h3>
-										<SystemText className="block text-xs text-muted-foreground">
+										<AscendantText className="block text-xs text-muted-foreground">
 											Place character tokens, Anomalies, and NPCs. Drag, rotate,
 											and manage HP directly on tokens.
-										</SystemText>
+										</AscendantText>
 									</div>
 									<div className="p-4 rounded-lg border border-border bg-muted/30">
 										<h3 className="font-heading font-semibold mb-2">
 											Initiative Tracking
 										</h3>
-										<SystemText className="block text-xs text-muted-foreground">
+										<AscendantText className="block text-xs text-muted-foreground">
 											Track combat initiative with automatic sorting. Manage
 											turn order and combat flow.
-										</SystemText>
+										</AscendantText>
 									</div>
 									<div className="p-4 rounded-lg border border-border bg-muted/30">
 										<h3 className="font-heading font-semibold mb-2">
 											Dice & Chat
 										</h3>
-										<SystemText className="block text-xs text-muted-foreground">
+										<AscendantText className="block text-xs text-muted-foreground">
 											Roll dice with full notation support. Chat with party
 											members in real-time.
-										</SystemText>
+										</AscendantText>
 									</div>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					</TabsContent>
 
 					<TabsContent value="overview" className="space-y-6">
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 							{/* Campaign Info */}
-							<SystemWindow title="CAMPAIGN INFO">
+							<AscendantWindow title="CAMPAIGN INFO">
 								<div className="space-y-4">
 									{hasWardenAccess ? (
 										<>
@@ -390,9 +390,9 @@ const CampaignDetail = () => {
 												Copy Share Link
 											</Button>
 											<div className="pt-4 border-t border-border">
-												<SystemText className="block text-xs text-muted-foreground mb-2">
+												<AscendantText className="block text-xs text-muted-foreground mb-2">
 													Share this link with Ascendants:
-												</SystemText>
+												</AscendantText>
 												<p className="text-sm font-mono bg-muted p-2 rounded break-all">
 													{window.location.origin}/campaigns/join/
 													{campaign.share_code}
@@ -401,36 +401,35 @@ const CampaignDetail = () => {
 										</>
 									) : (
 										<div className="text-center py-6">
-											<SystemText className="block text-sm text-muted-foreground font-heading mb-2">
+											<AscendantText className="block text-sm text-muted-foreground font-heading mb-2">
 												Share code and invite links are only visible to the
-												Protocol Warden (System).
-											</SystemText>
-											<SystemText className="block text-xs text-muted-foreground">
-												Ask your Protocol Warden (System) for the share code to
-												invite others.
-											</SystemText>
+												Warden.
+											</AscendantText>
+											<AscendantText className="block text-xs text-muted-foreground">
+												Ask your Warden for the share code to invite others.
+											</AscendantText>
 										</div>
 									)}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 
-							{/* Live Roll Feed (PW only) */}
+							{/* Live Roll Feed (Warden only) */}
 							{hasWardenAccess && <CampaignRollFeed campaignId={id || ""} />}
 
 							{/* Campaign Members */}
-							<SystemWindow title="MEMBERS">
+							<AscendantWindow title="MEMBERS">
 								{loadingMembers ? (
 									<div className="flex items-center justify-center py-8">
 										<Loader2 className="w-6 h-6 animate-spin text-primary" />
 									</div>
 								) : members.length === 0 ? (
-									<SystemText className="block text-muted-foreground text-center py-8">
+									<AscendantText className="block text-muted-foreground text-center py-8">
 										No members yet
-									</SystemText>
+									</AscendantText>
 								) : (
 									<div className="space-y-2">
 										{members.map((member) => {
-											// Check if this member is the System (Protocol Warden)
+											// Check if this member is the Rift (Warden)
 											const isWarden = campaign.warden_id === member.user_id;
 											const isMe = member.user_id === user?.id;
 											return (
@@ -451,12 +450,12 @@ const CampaignDetail = () => {
 																	"No Ascendant linked"}
 															</p>
 															{member.characters && (
-																<SystemText className="block text-xs text-muted-foreground">
+																<AscendantText className="block text-xs text-muted-foreground">
 																	Level {member.characters.level}{" "}
 																	{formatRegentVernacular(
 																		member.characters.job || "Unknown",
 																	)}
-																</SystemText>
+																</AscendantText>
 															)}
 															{isMe && !member.characters && (
 																<Button
@@ -482,7 +481,7 @@ const CampaignDetail = () => {
 										})}
 									</div>
 								)}
-							</SystemWindow>
+							</AscendantWindow>
 						</div>
 					</TabsContent>
 

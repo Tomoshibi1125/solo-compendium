@@ -14,7 +14,7 @@
  */
 
 import { useMemo } from "react";
-import { getAbilityModifier } from "@/types/system-rules";
+import { getAbilityModifier } from "@/types/core-rules";
 
 // ---------------------------------------------------------------------------
 // Types

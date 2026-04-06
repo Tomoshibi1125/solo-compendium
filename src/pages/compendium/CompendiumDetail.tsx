@@ -30,9 +30,9 @@ import { TableOfContents } from "@/components/compendium/TableOfContents";
 import { TattooDetail } from "@/components/compendium/TattooDetail";
 import { TechniqueDetail } from "@/components/compendium/TechniqueDetail";
 import { Layout } from "@/components/layout/Layout";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useFavorites } from "@/hooks/useFavorites";
 import {
@@ -405,7 +405,7 @@ const CompendiumDetail = () => {
 					requirement_str: 0,
 					requirement_vit: 0,
 					source_kind: "Core",
-					source_name: "System Ascendant",
+					source_name: "Rift Ascendant",
 					theme_tags: [],
 					updated_at: "",
 					concentration: e.concentration ?? null,
@@ -823,11 +823,11 @@ const CompendiumDetail = () => {
 			}
 			default:
 				return (
-					<SystemWindow title="NOT IMPLEMENTED" variant="alert">
-						<SystemText className="block text-sm text-muted-foreground">
+					<AscendantWindow title="NOT IMPLEMENTED" variant="alert">
+						<AscendantText className="block text-sm text-muted-foreground">
 							Detail view for {type} is not yet implemented.
-						</SystemText>
-					</SystemWindow>
+						</AscendantText>
+					</AscendantWindow>
 				);
 		}
 	}, [entry, type]);
@@ -849,7 +849,7 @@ const CompendiumDetail = () => {
 			return (
 				<Layout>
 					<div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
-						<SystemWindow title="ERROR" className="max-w-lg mx-auto">
+						<AscendantWindow title="ERROR" className="max-w-lg mx-auto">
 							<p className="text-destructive">{error}</p>
 							<Button
 								onClick={() => {
@@ -865,7 +865,7 @@ const CompendiumDetail = () => {
 							>
 								Return to Compendium
 							</Button>
-						</SystemWindow>
+						</AscendantWindow>
 					</div>
 				</Layout>
 			);

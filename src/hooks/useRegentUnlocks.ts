@@ -185,7 +185,7 @@ export function useRegentUnlocks(characterId: string) {
 	};
 }
 
-// Hook for Protocol Wardens to manage regent unlocks for their campaign characters
+// Hook for Wardens to manage regent unlocks for their campaign characters
 export function useCampaignRegentUnlocks(campaignId: string) {
 	const {
 		data: campaignUnlocks = [],

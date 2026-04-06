@@ -1,7 +1,7 @@
 import { Coins } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface BackgroundData {
@@ -30,7 +30,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<SystemWindow title={displayName.toUpperCase()}>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<p className="text-foreground">
 						<AutoLinkText text={data.description} />
@@ -45,11 +45,11 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 						</div>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Proficiencies & Starting */}
 			<div className="grid md:grid-cols-2 gap-4">
-				<SystemWindow title="PROFICIENCIES">
+				<AscendantWindow title="PROFICIENCIES">
 					<div className="space-y-3">
 						<div>
 							<h4 className="font-heading text-sm text-muted-foreground mb-1">
@@ -88,9 +88,9 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="STARTING EQUIPMENT">
+				<AscendantWindow title="STARTING EQUIPMENT">
 					<div className="space-y-3">
 						{data.starting_equipment && (
 							<p className="text-foreground">
@@ -106,12 +106,12 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			</div>
 
 			{/* Feature */}
 			{data.feature_name && (
-				<SystemWindow
+				<AscendantWindow
 					title={`FEATURE: ${formatRegentVernacular(data.feature_name).toUpperCase()}`}
 					className="border-primary/50"
 				>
@@ -122,13 +122,13 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 							""
 						)}
 					</p>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* Characteristics */}
 			<div className="grid md:grid-cols-2 gap-4">
 				{data.personality_traits && data.personality_traits.length > 0 && (
-					<SystemWindow title="PERSONALITY TRAITS">
+					<AscendantWindow title="PERSONALITY TRAITS">
 						<ul className="space-y-2">
 							{data.personality_traits.map((trait, i) => (
 								<li key={trait} className="flex items-start gap-2">
@@ -139,11 +139,11 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								</li>
 							))}
 						</ul>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{data.ideals && data.ideals.length > 0 && (
-					<SystemWindow title="IDEALS">
+					<AscendantWindow title="IDEALS">
 						<ul className="space-y-2">
 							{data.ideals.map((ideal, i) => (
 								<li key={ideal} className="flex items-start gap-2">
@@ -154,11 +154,11 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								</li>
 							))}
 						</ul>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{data.bonds && data.bonds.length > 0 && (
-					<SystemWindow title="BONDS">
+					<AscendantWindow title="BONDS">
 						<ul className="space-y-2">
 							{data.bonds.map((bond, i) => (
 								<li key={bond} className="flex items-start gap-2">
@@ -169,11 +169,11 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								</li>
 							))}
 						</ul>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{data.flaws && data.flaws.length > 0 && (
-					<SystemWindow title="FLAWS">
+					<AscendantWindow title="FLAWS">
 						<ul className="space-y-2">
 							{data.flaws.map((flaw, i) => (
 								<li key={flaw} className="flex items-start gap-2">
@@ -184,7 +184,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 								</li>
 							))}
 						</ul>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 

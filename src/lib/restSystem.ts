@@ -11,7 +11,7 @@ import {
 	type RestLongEvent,
 	type RestShortEvent,
 } from "@/lib/domainEvents";
-import { getProficiencyBonus } from "@/types/system-rules";
+import { getProficiencyBonus } from "@/types/core-rules";
 import { AppError } from "./appError";
 import { logger } from "./logger";
 import { calculateRuneMaxUses } from "./runeAutomation";
@@ -111,7 +111,7 @@ export async function executeShortRest(characterId: string): Promise<void> {
  * Execute long rest
  * - Restore all HP
  * - Restore all hit dice
- * - Restore System Favor
+ * - Restore Rift Favor
  * - Reset long-rest recharge features
  * - Reduce exhaustion by 1
  * - Clear conditions
@@ -141,7 +141,7 @@ export async function executeLongRest(
 				character.hit_dice_current +
 					Math.max(1, Math.floor(character.hit_dice_max / 2)),
 			),
-			system_favor_current: character.system_favor_max,
+			rift_favor_current: character.rift_favor_max,
 			exhaustion_level: Math.max(0, character.exhaustion_level - 1),
 			conditions: [], // Legacy sync
 			gemini_state: {

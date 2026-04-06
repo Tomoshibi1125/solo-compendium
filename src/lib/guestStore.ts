@@ -276,9 +276,9 @@ export function createLocalCharacter(
 		hit_dice_max: data.hit_dice_max ?? 1,
 		hit_dice_size: data.hit_dice_size ?? 8,
 
-		system_favor_current: data.system_favor_current ?? 0,
-		system_favor_max: data.system_favor_max ?? 0,
-		system_favor_die: data.system_favor_die ?? 4,
+		rift_favor_current: data.rift_favor_current ?? 0,
+		rift_favor_max: data.rift_favor_max ?? 0,
+		rift_favor_die: data.rift_favor_die ?? 4,
 
 		shadow_energy_current: data.shadow_energy_current ?? 0,
 		shadow_energy_max: data.shadow_energy_max ?? 0,

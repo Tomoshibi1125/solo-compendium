@@ -4,6 +4,8 @@ import { powers } from "../src/data/compendium/powers";
 import { spells } from "../src/data/compendium/spells";
 import { techniques } from "../src/data/compendium/techniques";
 
+type Entry = { id: string; name: string; type?: string; rarity?: string; style?: string; level?: number };
+
 const output: string[] = [];
 
 // ── ITEMS ──────────────────────────────────────────────────────────
@@ -13,7 +15,7 @@ output.push("══════════════════════�
 output.push(`Total items: ${items.length}`);
 
 const itemDist = new Map<string, number>();
-items.forEach((item: any) => {
+(items as Entry[]).forEach((item) => {
 	const key = `${item.type}|${item.rarity}`;
 	itemDist.set(key, (itemDist.get(key) || 0) + 1);
 });
@@ -28,7 +30,7 @@ let kaelCount = 0,
 	supremeCount = 0,
 	baseCount = 0,
 	otherCount = 0;
-items.forEach((item: any) => {
+(items as Entry[]).forEach((item) => {
 	if (item.name.includes("of Kael")) kaelCount++;
 	else if (item.name.includes("of the Umbral Regent")) umbralCount++;
 	else if (item.name.includes("of Supreme Power")) supremeCount++;
@@ -46,7 +48,7 @@ output.push("══════════════════════�
 output.push(`Total spells: ${spells.length}`);
 
 const spellDist = new Map<string, number>();
-spells.forEach((spell: any) => {
+(spells as Entry[]).forEach((spell) => {
 	const key = `level-${spell.level}`;
 	spellDist.set(key, (spellDist.get(key) || 0) + 1);
 });
@@ -57,7 +59,7 @@ for (const [key, count] of [...spellDist.entries()].sort()) {
 
 // Check for duplicate spell names
 const spellNames = new Map<string, number>();
-spells.forEach((spell: any) => {
+(spells as Entry[]).forEach((spell) => {
 	const name = spell.name.toLowerCase();
 	spellNames.set(name, (spellNames.get(name) || 0) + 1);
 });
@@ -72,7 +74,7 @@ output.push("══════════════════════�
 output.push(`Total powers: ${powers.length}`);
 
 const powerDist = new Map<string, number>();
-powers.forEach((power: any) => {
+(powers as Entry[]).forEach((power) => {
 	const key = `${power.type}|${power.rarity}`;
 	powerDist.set(key, (powerDist.get(key) || 0) + 1);
 });
@@ -83,7 +85,7 @@ for (const [key, count] of [...powerDist.entries()].sort()) {
 
 // Check for duplicate power names
 const powerNames = new Map<string, number>();
-powers.forEach((power: any) => {
+(powers as Entry[]).forEach((power) => {
 	const name = power.name.toLowerCase();
 	powerNames.set(name, (powerNames.get(name) || 0) + 1);
 });
@@ -98,8 +100,8 @@ output.push("══════════════════════�
 output.push(`Total techniques: ${techniques.length}`);
 
 const techDist = new Map<string, number>();
-techniques.forEach((tech: any) => {
-	const key = `${tech.type}|${tech.style || "any"}`;
+(techniques as Entry[]).forEach((tech) => {
+	const key = `${tech.type}|${tech.style || "general"}`;
 	techDist.set(key, (techDist.get(key) || 0) + 1);
 });
 output.push("\nTechniques by type|style:");
@@ -109,7 +111,7 @@ for (const [key, count] of [...techDist.entries()].sort()) {
 
 // Check for duplicate technique names
 const techNames = new Map<string, number>();
-techniques.forEach((tech: any) => {
+(techniques as Entry[]).forEach((tech) => {
 	const name = tech.name.toLowerCase();
 	techNames.set(name, (techNames.get(name) || 0) + 1);
 });

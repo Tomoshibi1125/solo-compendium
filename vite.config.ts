@@ -198,10 +198,10 @@ export default defineConfig(({ mode: _mode }) => {
 			},
 			includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
 			manifest: {
-				name: "System Ascendant",
+				name: "Rift Ascendant",
 				short_name: "Ascendant",
 				description:
-					"System Ascendant 5e SRD Companion - Compendium and Character Tool",
+					"Rift Ascendant 5e SRD Companion - Compendium and Character Tool",
 				theme_color: "#9b6dff",
 				background_color: "#0a0a0a",
 				display: "standalone",

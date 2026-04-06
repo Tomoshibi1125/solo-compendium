@@ -1,9 +1,9 @@
 import { Coins, Gem, Heart, Package, Plus, Shield, Zap } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { SortableList } from "@/components/ui/SortableList";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
@@ -279,7 +279,7 @@ export function EquipmentList({
 	};
 
 	return (
-		<SystemWindow title="INVENTORY">
+		<AscendantWindow title="INVENTORY">
 			<div className="space-y-4">
 				{/* Weight & Encumbrance — rendered by EncumbranceWidget */}
 				{isLoaded && (
@@ -496,6 +496,6 @@ export function EquipmentList({
 					}}
 				/>
 			)}
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

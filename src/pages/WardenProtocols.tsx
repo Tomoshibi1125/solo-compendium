@@ -1,6 +1,6 @@
 /**
- * Enhanced Warden Protocols Page - D&D Beyond Style Layout
- * Professional protocol warden tools with System Ascendant theme
+ * Enhanced Warden Directives Page - D&D Beyond Style Layout
+ * Professional protocol warden tools with Rift Ascendant theme
  */
 
 import {
@@ -37,6 +37,9 @@ import {
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { AscendantSigil } from "@/components/ui/AscendantSigil";
+import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,9 +50,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { SystemSigilLogo } from "@/components/ui/SystemSigilLogo";
-import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -137,7 +137,7 @@ const wardenProtocols = [
 		id: "rollable-tables",
 		name: "Rollable Tables",
 		description:
-			"Access all Protocol Warden's Guide tables for hazards, complications, rewards, and more.",
+			"Access all Warden's Guide tables for hazards, complications, rewards, and more.",
 		icon: Dice6,
 		status: "available",
 		color:
@@ -179,7 +179,7 @@ const wardenProtocols = [
 	{
 		id: "relic-workshop",
 		name: "Relic Workshop",
-		description: "Design custom relics balanced within the system guidelines.",
+		description: "Design custom relics balanced within the rift guidelines.",
 		icon: Settings2,
 		status: "available",
 		color:
@@ -305,8 +305,8 @@ const wardenProtocols = [
 
 	// System Tools
 	{
-		id: "system-console",
-		name: "System Console",
+		id: "rift-console",
+		name: "Rift Console",
 		description:
 			"Import and validate compendium content bundles for your campaign.",
 		icon: Database,
@@ -315,7 +315,7 @@ const wardenProtocols = [
 			"from-slate-500/20 to-slate-600/10 border-slate-500/30 hover:border-slate-500/60",
 		iconColor: "text-slate-400",
 		glow: "group-hover:shadow-slate-500/20",
-		category: "system",
+		category: "rift",
 		priority: 18,
 	},
 	{
@@ -329,7 +329,7 @@ const wardenProtocols = [
 			"from-zinc-500/20 to-zinc-600/10 border-zinc-500/30 hover:border-zinc-500/60",
 		iconColor: "text-zinc-400",
 		glow: "group-hover:shadow-zinc-500/20",
-		category: "system",
+		category: "rift",
 		priority: 19,
 	},
 ];
@@ -343,7 +343,7 @@ const categories = [
 	{ id: "party", name: "Party & Session", icon: UsersRound },
 	{ id: "vtt", name: "VTT & Visual", icon: Grid },
 	{ id: "creative", name: "Creative", icon: Palette },
-	{ id: "system", name: "System", icon: Settings },
+	{ id: "rift", name: "System", icon: Settings },
 ];
 
 const WardenProtocols = () => {
@@ -380,34 +380,34 @@ const WardenProtocols = () => {
 
 	return (
 		<Layout>
-			<div className="warden-protocols-container relative">
-				{/* System UI Background Effects */}
+			<div className="warden-directives-container relative">
+				{/* Ascendant UI Background Effects */}
 				<div className="absolute inset-0 hex-grid-overlay opacity-20 pointer-events-none" />
 				<div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-obsidian-deep pointer-events-none" />
 
 				{/* Header */}
-				<div className="warden-protocols-header relative z-10">
+				<div className="warden-directives-header relative z-10">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-4">
-							<SystemSigilLogo size="lg" className="flex-shrink-0" />
+							<AscendantSigil size="lg" className="flex-shrink-0" />
 							<div>
-								<SystemHeading
+								<RiftHeading
 									level={1}
 									variant="gate"
 									dimensional
-									className="warden-protocols-title system-text-glow"
+									className="warden-directives-title ascendant-text-glow"
 								>
-									Protocol Warden Registry
-								</SystemHeading>
-								<DataStreamText
-									variant="system"
+									Warden Registry
+								</RiftHeading>
+								<ManaFlowText
+									variant="rift"
 									speed="slow"
-									className="warden-protocols-subtitle block"
+									className="warden-directives-subtitle block"
 								>
 									Divine protocols granted to guide Ascendants through the
-									Rifts. In this post-reset world, the System's will shapes
+									Rifts. In this post-reset world, the Rift's will shapes
 									reality.
-								</DataStreamText>
+								</ManaFlowText>
 							</div>
 						</div>
 
@@ -423,7 +423,7 @@ const WardenProtocols = () => {
 							<Button
 								variant="outline"
 								size="sm"
-								onClick={() => navigate("/warden-protocols/system-console")}
+								onClick={() => navigate("/warden-directives/rift-console")}
 							>
 								<Settings className="w-4 h-4 mr-2" />
 								Settings
@@ -434,7 +434,7 @@ const WardenProtocols = () => {
 
 				{/* Eternal Loop */}
 				<div className="eternal-loop-container relative z-10">
-					<SystemWindow
+					<AscendantWindow
 						title="THE ETERNAL LOOP"
 						className="border-resurge/30 hud-brackets"
 					>
@@ -465,16 +465,16 @@ const WardenProtocols = () => {
 								</div>
 							</div>
 							<p className="loop-description">
-								The core session structure from the Protocol Warden's Guide.
-								Ascendants navigate Contracts, Rifts, and their Aftermath under
-								the System's watchful gaze.
+								The core session structure from the Warden's Guide. Ascendants
+								navigate Contracts, Rifts, and their Aftermath under the Rift's
+								watchful gaze.
 							</p>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 
 				{/* Search and Filters */}
-				<div className="warden-protocols-filters relative z-10">
+				<div className="warden-directives-filters relative z-10">
 					<div className="search-bar">
 						<Search className="w-5 h-5 text-muted-foreground" />
 						<Input
@@ -528,7 +528,7 @@ const WardenProtocols = () => {
 				</div>
 
 				{/* Tools Content */}
-				<div className="warden-protocols-content relative z-10">
+				<div className="warden-directives-content relative z-10">
 					{selectedCategory === "all" ? (
 						// Categorized view
 						<div className="space-y-8">
@@ -544,13 +544,13 @@ const WardenProtocols = () => {
 											<div className="category-header">
 												<div className="flex items-center gap-2">
 													<Icon className="w-5 h-5" />
-													<SystemHeading
+													<RiftHeading
 														level={2}
 														variant="gate"
 														className="category-title"
 													>
 														{category.name}
-													</SystemHeading>
+													</RiftHeading>
 													<Badge variant="secondary">
 														{categoryTools.length}
 													</Badge>
@@ -591,7 +591,7 @@ const WardenProtocols = () => {
 				</div>
 
 				{/* Quick Actions */}
-				<div className="warden-protocols-quick-actions relative z-10">
+				<div className="warden-directives-quick-actions relative z-10">
 					<Card>
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2">
@@ -599,7 +599,7 @@ const WardenProtocols = () => {
 								Quick Protocols
 							</CardTitle>
 							<CardDescription>
-								Common tasks and shortcuts for Protocol Wardens
+								Common tasks and shortcuts for Wardens
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
@@ -608,7 +608,7 @@ const WardenProtocols = () => {
 									variant="outline"
 									className="justify-start"
 									onClick={() =>
-										navigate("/warden-protocols/encounter-builder")
+										navigate("/warden-directives/encounter-builder")
 									}
 								>
 									<Sword className="w-4 h-4 mr-2" />
@@ -618,7 +618,7 @@ const WardenProtocols = () => {
 									variant="outline"
 									className="justify-start"
 									onClick={() =>
-										navigate("/warden-protocols/directive-lattice")
+										navigate("/warden-directives/directive-lattice")
 									}
 								>
 									<Scroll className="w-4 h-4 mr-2" />
@@ -627,7 +627,7 @@ const WardenProtocols = () => {
 								<Button
 									variant="outline"
 									className="justify-start"
-									onClick={() => navigate("/warden-protocols/party-tracker")}
+									onClick={() => navigate("/warden-directives/party-tracker")}
 								>
 									<Users className="w-4 h-4 mr-2" />
 									Party Status
@@ -635,7 +635,7 @@ const WardenProtocols = () => {
 								<Button
 									variant="outline"
 									className="justify-start"
-									onClick={() => navigate("/warden-protocols/session-planner")}
+									onClick={() => navigate("/warden-directives/session-planner")}
 								>
 									<Calendar className="w-4 h-4 mr-2" />
 									Session Notes
@@ -684,19 +684,19 @@ const WardenToolCard = ({
 							<Icon className="w-5 h-5" />
 						</div>
 						<div className="flex-1">
-							<SystemHeading
+							<RiftHeading
 								level={3}
 								variant="sovereign"
-								className="warden-tool-title-list font-system text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+								className="warden-tool-title-list font-heading text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
 							>
 								{tool.name}
-							</SystemHeading>
-							<DataStreamText
-								variant="system"
+							</RiftHeading>
+							<ManaFlowText
+								variant="rift"
 								className="warden-tool-description-list text-[10px] font-mono tracking-wider text-muted-foreground uppercase"
 							>
 								{tool.description}
-							</DataStreamText>
+							</ManaFlowText>
 						</div>
 					</div>
 					<div className="flex items-center gap-3">
@@ -708,11 +708,11 @@ const WardenToolCard = ({
 						</Badge>
 						<Button
 							size="sm"
-							className="font-system tracking-widest uppercase"
+							className="font-heading tracking-widest uppercase"
 							variant="outline"
 							asChild
 						>
-							<Link to={`/warden-protocols/${tool.id}`}>
+							<Link to={`/warden-directives/${tool.id}`}>
 								<ChevronRight className="w-3 h-3" />
 							</Link>
 						</Button>
@@ -752,19 +752,19 @@ const WardenToolCard = ({
 				>
 					<Icon className="w-6 h-6" />
 				</div>
-				<SystemHeading
+				<RiftHeading
 					level={3}
 					variant="sovereign"
-					className="warden-tool-title font-system text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+					className="warden-tool-title font-heading text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
 				>
 					{tool.name}
-				</SystemHeading>
-				<DataStreamText
-					variant="system"
+				</RiftHeading>
+				<ManaFlowText
+					variant="rift"
 					className="warden-tool-description text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed"
 				>
 					{tool.description}
-				</DataStreamText>
+				</ManaFlowText>
 			</div>
 			<div className="flex items-center justify-between mt-auto relative z-10">
 				<Badge
@@ -776,7 +776,7 @@ const WardenToolCard = ({
 				<Button
 					size="sm"
 					className={cn(
-						"font-system tracking-widest uppercase gap-1",
+						"font-heading tracking-widest uppercase gap-1",
 						tool.color.includes("amber")
 							? "bg-amber-500/20 text-amber-400 hover:bg-amber-500/40 border border-amber-500/50"
 							: tool.color.includes("red")
@@ -785,7 +785,7 @@ const WardenToolCard = ({
 					)}
 					asChild
 				>
-					<Link to={`/warden-protocols/${tool.id}`}>
+					<Link to={`/warden-directives/${tool.id}`}>
 						Launch
 						<ChevronRight className="w-3 h-3" />
 					</Link>

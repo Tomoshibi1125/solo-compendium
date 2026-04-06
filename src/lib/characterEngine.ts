@@ -2,7 +2,7 @@
  * Centralized Character Calculation Engine
  *
  * SINGLE SOURCE OF TRUTH for all derived character stats.
- * Uses System Ascendant mechanics.
+ * Uses Rift Ascendant mechanics.
  *
  * Philosophy:
  * - Pure functions: input base data, output computed stats
@@ -11,7 +11,7 @@
  * - Deterministic: same input = same output, always
  * - Effect resolution with priority ordering and conflict resolution
  *
- * System Ascendant Terminology:
+ * Rift Ascendant Terminology:
  * - "Jobs" = D&D Classes (Destroyer, Mage, Esper, Herald, etc.)
  * - "Paths" = D&D Subclasses
  * - "Powers" = D&D Spells
@@ -21,9 +21,9 @@
 
 import {
 	getCasterType,
+	getRiftFavorDie,
+	getRiftFavorMax,
 	getSpellSlotsPerLevel,
-	getSystemFavorDie,
-	getSystemFavorMax,
 } from "./5eCharacterCalculations";
 import type { AbilityScore } from "./5eRulesEngine";
 import {
@@ -70,8 +70,8 @@ export type EffectTarget =
 	| "hp_regen"
 	| "hit_dice_max"
 	| "hit_dice_current"
-	| "system_favor_max"
-	| "system_favor_current"
+	| "rift_favor_max"
+	| "rift_favor_current"
 	| "spell_slots"
 	| "feature_uses"
 	| "advantage"
@@ -194,9 +194,9 @@ export interface ActiveSpellEffect {
  * Character job/regent overlay data
  */
 export interface CharacterJob {
-	job: string; // System Ascendant job name (Destroyer, Mage, etc.)
-	path?: string; // System Ascendant subclass/path name (level 3, automatic)
-	regent?: string; // Regent path ID (quest-gated, Protocol Warden (PW) unlocks)
+	job: string; // Rift Ascendant job name (Destroyer, Mage, etc.)
+	path?: string; // Rift Ascendant subclass/path name (level 3, automatic)
+	regent?: string; // Regent path ID (quest-gated, Warden (Warden) unlocks)
 	gemini?: {
 		id?: string;
 		sovereignId?: string;
@@ -243,7 +243,7 @@ export interface CharacterBaseData {
 	hpTemp: number;
 	hitDiceCurrent: number;
 	hitDiceMax: number;
-	systemFavorCurrent: number;
+	riftFavorCurrent: number;
 
 	// Base movement
 	baseSpeed: number; // Usually 30
@@ -304,9 +304,9 @@ interface ComputedCharacterStats {
 		| "heavily-encumbered"
 		| "over-capacity";
 
-	// System Favor (homebrew inspiration mechanic)
-	systemFavorMax: number;
-	systemFavorDie: number;
+	// Rift Favor (homebrew inspiration mechanic)
+	riftFavorMax: number;
+	riftFavorDie: number;
 
 	// HP with exhaustion penalties
 	effectiveHPMax: number;
@@ -615,7 +615,7 @@ export function parseJobTraitEffects(
 
 	// Double damage (e.g., "Deal double damage to objects and structures")
 	if (desc.includes("double damage") || desc.includes("deal double")) {
-		// This is situational and handled by PW/UI, not automatic
+		// This is situational and handled by Warden/UI, not automatic
 	}
 
 	return effects;
@@ -623,7 +623,7 @@ export function parseJobTraitEffects(
 
 /**
  * Aggregate regent features (quest-gated sovereign subclass)
- * Regents are PW-unlocked, NOT level-gated
+ * Regents are Warden-unlocked, NOT level-gated
  */
 export function aggregateRegentFeatures(
 	jobs: CharacterJob[],
@@ -787,7 +787,7 @@ export function parseRegentFeatureEffects(
 		desc.includes("immune to all")
 	) {
 		// Special case: Titan Regent's invulnerability
-		// This is too powerful for auto-effect, must be handled by PW
+		// This is too powerful for auto-effect, must be handled by Warden
 	}
 
 	if (desc.includes("resistance to all") || desc.includes("resist all")) {
@@ -1290,7 +1290,7 @@ export function computeSpellcasting(
 }
 
 /**
- * Get spellcasting ability for a System Ascendant job
+ * Get spellcasting ability for a Rift Ascendant job
  */
 export function getSpellcastingAbilityForJob(job: string): AbilityScore | null {
 	const abilityMap: Record<string, AbilityScore> = {
@@ -1454,7 +1454,7 @@ export function computeEncumbrance(
 	currentWeight: number;
 	tier: "normal" | "encumbered" | "heavily-encumbered" | "over-capacity";
 } {
-	const capacity = strScore * 15; // System Ascendant scaling
+	const capacity = strScore * 15; // Rift Ascendant scaling
 
 	// Find containers with special rules
 	const inactiveContainerIds = new Set(
@@ -1590,9 +1590,9 @@ export function computeCharacterStats(
 
 	// Encumbrance already computed above (step 12)
 
-	// 13. System Favor (homebrew inspiration mechanic)
-	const systemFavorMax = getSystemFavorMax(base.level);
-	const systemFavorDie = getSystemFavorDie(base.level);
+	// 13. Rift Favor (homebrew inspiration mechanic)
+	const riftFavorMax = getRiftFavorMax(base.level);
+	const riftFavorDie = getRiftFavorDie(base.level);
 
 	// 14. Effective HP max with exhaustion penalty
 	const effectiveHPMax = getEffectiveHPMax(base.hpMax, base.exhaustionLevel);
@@ -1663,8 +1663,8 @@ export function computeCharacterStats(
 		carryingCapacity: encumbrance.capacity,
 		currentWeight: encumbrance.currentWeight,
 		encumbranceTier: encumbrance.tier,
-		systemFavorMax,
-		systemFavorDie,
+		riftFavorMax,
+		riftFavorDie,
 		effectiveHPMax,
 		activeEffects,
 		rollModifiers,
@@ -1897,6 +1897,6 @@ export function maintainConcentration(
 	_dc: number = 10,
 	_source: string = "Magic",
 ): boolean {
-	console.log(`[Protocol Warden] Checking Concentration for ${characterId}`);
+	console.log(`[Warden] Checking Concentration for ${characterId}`);
 	return true;
 }

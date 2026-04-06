@@ -1,5 +1,5 @@
 import type { Database } from "@/integrations/supabase/types";
-import type { AbilityScore } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
 
 export const EARTH_LANGUAGES = [
 	"English",

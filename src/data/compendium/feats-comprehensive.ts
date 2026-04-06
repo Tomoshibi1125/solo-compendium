@@ -1,4 +1,4 @@
-// Comprehensive Feats Compendium - System Ascendant Original Content
+// Comprehensive Feats Compendium - Rift Ascendant Original Content
 // ALL feats for the complete compendium system
 // SA-flavored names and descriptions on 5e mechanical backbone
 
@@ -28,7 +28,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the architect's design. An overwhelming death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "essence-absorption",
@@ -55,7 +55,7 @@ export const comprehensiveFeats = [
 			action: "free",
 		},
 		flavor: "Denies the darkness within. A brutal breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "shadow-dance",
@@ -83,7 +83,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the concept of defeat. A desperate surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "critical-shadow",
@@ -111,7 +111,7 @@ export const comprehensiveFeats = [
 			action: "free",
 		},
 		flavor: "Ignites the darkness within. A sorrowful ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-blade-resonance",
@@ -140,7 +140,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Crushes the arrogant and the mighty. An intricate whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "shadow-step-reflex",
@@ -167,7 +167,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Weaves the remnants of humanity. A relentless surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-diagnostic-medic",
@@ -189,13 +189,13 @@ export const comprehensiveFeats = [
 			action: "action",
 		},
 		flavor: "Ignores the architect's design. A relentless roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "phantom-algorithm-strike",
 		name: "Phantom Mandate Strike",
 		description:
-			"The System provides predictive movement patterns, allowing you to strike and fade before an enemy can react.",
+			"The Rift provides predictive movement patterns, allowing you to strike and fade before an enemy can react.",
 		prerequisites: {
 			ability: "Agility",
 			score: 13,
@@ -214,7 +214,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Overrides the architect's design. A relentless roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "heavy-plating-integration",
@@ -239,7 +239,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "neural-duelist-sync",
@@ -262,7 +262,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Weaves the quiet space between breaths. A relentless roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "logic-payload-hack",
@@ -292,7 +292,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reclaims the dimensional divide. A devastating symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-well-font",
@@ -319,7 +319,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Cleanses the remnants of humanity. A subtle surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "apex-scent-tracking",
@@ -344,7 +344,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Commands the architect's design. A forbidden roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "kinetic-force-shover",
@@ -371,7 +371,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Absorbs the fragile limits of flesh. A brutal breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "arcane-overseer-eye",
@@ -396,13 +396,13 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Destroys the darkness within. A triumphant ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "heavy-weapon-calibration",
 		name: "Heavy Weapon Calibration",
 		description:
-			"The System provides micro-adjustments to your posture and grip, allowing you to wield massive weapons with ease.",
+			"The Rift provides micro-adjustments to your posture and grip, allowing you to wield massive weapons with ease.",
 		prerequisites: {
 			ability: "Strength",
 			score: 15,
@@ -422,7 +422,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Commands all who stand in opposition. A desperate beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "void-shifter-reflex",
@@ -449,13 +449,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites all who stand in opposition. A sorrowful whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "regent-command-protocol",
 		name: "Regent Command Decree",
 		description:
-			"Your voice carries the weight of the System, compelling others to follow your directives.",
+			"Your voice carries the weight of the Rift, compelling others to follow your directives.",
 		prerequisites: {
 			ability: "Presence",
 			score: 13,
@@ -478,7 +478,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the concept of defeat. A subtle dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-leech-fangs",
@@ -501,7 +501,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters all who stand in opposition. A brutal whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "endurance-optimization",
@@ -527,7 +527,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Absorbs the darkness within. An ancient ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "combat-hud-analyzer",
@@ -554,7 +554,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Commands the dimensional divide. A desperate testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "cognitive-firewall",
@@ -579,7 +579,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "kinetic-redirection",
@@ -606,7 +606,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the fragile limits of flesh. An intricate breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-leech-algorithm",
@@ -634,7 +634,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reclaims all who stand in opposition. A devastating whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "ghost-recon-drone-link",
@@ -661,13 +661,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the fragile limits of flesh. A chaotic breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-vault-optimization",
 		name: "Dimensional Vault Optimization",
 		description:
-			"Your personal inventory space has been expanded and optimized by the System.",
+			"Your personal inventory space has been expanded and optimized by the Rift.",
 		benefits: {
 			basic: [
 				"Your carrying capacity is tripled.",
@@ -683,7 +683,7 @@ export const comprehensiveFeats = [
 			action: "free",
 		},
 		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "adrenaline-overdrive-limiter",
@@ -710,7 +710,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the arrogant and the mighty. A desperate whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "urban-parkour-specialist",
@@ -732,7 +732,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-shield-capacitor-link",
@@ -755,13 +755,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites all who stand in opposition. A triumphant beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "apex-negotiator-algorithm",
 		name: "Apex Negotiator Mandate",
 		description:
-			"The System analyzes social cues and micro-expressions, feeding you the perfect responses.",
+			"The Rift analyzes social cues and micro-expressions, feeding you the perfect responses.",
 		prerequisites: {
 			ability: "Presence",
 			score: 13,
@@ -769,7 +769,7 @@ export const comprehensiveFeats = [
 		benefits: {
 			basic: [
 				"You gain advantage on Presence (Persuasion) and Presence (Deception) checks against humanoids.",
-				"The System highlights when someone is lying to you (Insight advantage).",
+				"The Rift highlights when someone is lying to you (Insight advantage).",
 				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
 			],
 			expert: [],
@@ -782,7 +782,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Weaves the remnants of humanity. An absolute dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "sonar-pulse-echo",
@@ -804,7 +804,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Absorbs all who stand in opposition. A sorrowful whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-structural-engineer",
@@ -830,7 +830,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Cleanses the arrogant and the mighty. An intricate whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker-blood-frenzy",
@@ -855,7 +855,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-data-analyst",
@@ -866,7 +866,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"You can cast Identify and Detect Magic at will, without expending a spell slot or material components.",
 				"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
-				'The System displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
+				'The Rift displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
 			],
 			expert: [],
 			master: [],
@@ -877,7 +877,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignores the dimensional divide. A devastating symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "phantom-limb-manifestation",
@@ -900,7 +900,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the fragile limits of flesh. An absolute ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "heavy-armor-specialist-v2",
@@ -924,7 +924,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Weaves the architect's design. An absolute roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-teleport-expert",
@@ -950,7 +950,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Cleanses the darkness within. A forbidden breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "internal-mana-battery",
@@ -976,7 +976,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the remnants of humanity. An intricate surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "guild-command-protocol",
@@ -1003,7 +1003,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Weaves the remnants of humanity. A subtle dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "reality-sunder-blade",
@@ -1031,13 +1031,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the quiet space between breaths. A sorrowful death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-omniscience-eyes",
 		name: "Omniscience Eyes",
 		description:
-			"The System grants you the ability to see through all deceptions.",
+			"The Rift grants you the ability to see through all deceptions.",
 		prerequisites: {
 			level: 12,
 		},
@@ -1056,7 +1056,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters all who stand in opposition. A brutal whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-vanguard-stance",
@@ -1082,18 +1082,18 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Absorbs the flow of time itself. A sorrowful testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "umbral-binding-expert",
 		name: "System Linguist",
 		description:
-			"You have decrypted the underlying code of the System's translation layer, allowing you to understand any spoken or written language.",
+			"You have decrypted the underlying code of the Rift's translation layer, allowing you to understand any spoken or written language.",
 		benefits: {
 			basic: [
 				"You learn three languages of your choice.",
 				"You have advantage on Intelligence (History) checks made to decipher ancient texts or gate-script.",
-				"The System provides real-time subtitles for any language you don't know (passive).",
+				"The Rift provides real-time subtitles for any language you don't know (passive).",
 			],
 			expert: [],
 			master: [],
@@ -1104,7 +1104,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Overrides the arrogant and the mighty. A silent whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-leech-strike",
@@ -1132,7 +1132,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "ghost-recon-drone",
@@ -1159,13 +1159,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Commands all who stand in opposition. A forbidden beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-vault-master",
 		name: "Dimensional Vault Master",
 		description:
-			"Your personal inventory space has been expanded and optimized by the System.",
+			"Your personal inventory space has been expanded and optimized by the Rift.",
 		benefits: {
 			basic: [
 				"Your carrying capacity is tripled.",
@@ -1181,7 +1181,7 @@ export const comprehensiveFeats = [
 			action: "free",
 		},
 		flavor: "Reclaims the darkness within. A devastating ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "adrenaline-overdrive",
@@ -1208,7 +1208,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reflects the dimensional divide. An overwhelming symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "urban-parkour-expert",
@@ -1230,7 +1230,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignores the quiet space between breaths. A relentless roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-shield-capacitor",
@@ -1252,13 +1252,13 @@ export const comprehensiveFeats = [
 			action: "reaction",
 		},
 		flavor: "Absorbs the concept of defeat. An ancient surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "apex-negotiator-protocol",
 		name: "Apex Negotiator Decree",
 		description:
-			"The System analyzes social cues and micro-expressions, feeding you the perfect responses.",
+			"The Rift analyzes social cues and micro-expressions, feeding you the perfect responses.",
 		prerequisites: {
 			ability: "Presence",
 			score: 13,
@@ -1266,7 +1266,7 @@ export const comprehensiveFeats = [
 		benefits: {
 			basic: [
 				"You gain advantage on Presence (Persuasion) and Presence (Deception) checks against humanoids.",
-				"The System highlights when someone is lying to you (Insight advantage).",
+				"The Rift highlights when someone is lying to you (Insight advantage).",
 				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
 			],
 			expert: [],
@@ -1279,7 +1279,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Weaves all who stand in opposition. A subtle whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "echo-location-sonar",
@@ -1301,7 +1301,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignores the flow of time itself. A relentless symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-engineer",
@@ -1327,7 +1327,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Overrides the fragile limits of flesh. A relentless breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker-bloodlust",
@@ -1352,7 +1352,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Denies the arrogant and the mighty. A brutal whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-analyst",
@@ -1363,7 +1363,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"You can cast Identify and Detect Magic at will, without expending a spell slot or material components.",
 				"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
-				'The System displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
+				'The Rift displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
 			],
 			expert: [],
 			master: [],
@@ -1374,7 +1374,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the remnants of humanity. An absolute surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "phantom-limb-technique",
@@ -1397,7 +1397,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Cleanses the quiet space between breaths. An intricate roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "heavy-armor-mastery-v2",
@@ -1422,7 +1422,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the flow of time itself. An ancient testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-step-expert",
@@ -1447,7 +1447,7 @@ export const comprehensiveFeats = [
 			action: "reaction",
 		},
 		flavor: "Weaves the darkness within. An absolute ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-battery-core",
@@ -1473,7 +1473,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the dimensional divide. A desperate symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "ascendant-guild-leader",
@@ -1499,7 +1499,7 @@ export const comprehensiveFeats = [
 			action: "bonus-action",
 		},
 		flavor: "Cleanses the architect's design. A forbidden roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "void-blade-mastery",
@@ -1527,13 +1527,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the dimensional divide. A sorrowful testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-overseer-eyes",
 		name: "Overseer Eyes",
 		description:
-			"The System grants you the ability to see through all deceptions.",
+			"The Rift grants you the ability to see through all deceptions.",
 		prerequisites: {
 			level: 12,
 		},
@@ -1552,7 +1552,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-guardian-stance",
@@ -1578,7 +1578,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Commands the dimensional divide. A triumphant testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "kinetic-redirection-expert",
@@ -1605,7 +1605,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Crushes the fragile limits of flesh. An intricate breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-surge-catalyst",
@@ -1632,7 +1632,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Overrides the concept of defeat. A relentless surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-shifter-dodge",
@@ -1657,13 +1657,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignores all who stand in opposition. A devastating whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-scholar",
 		name: "System Scholar",
 		description:
-			"You have studied the System's lore and mechanics more deeply than most.",
+			"You have studied the Rift's lore and mechanics more deeply than most.",
 		benefits: {
 			basic: [
 				"You gain proficiency in three skills of your choice.",
@@ -1679,7 +1679,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the dimensional divide. An absolute testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "heavy-weapon-annihilator",
@@ -1704,13 +1704,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the arrogant and the mighty. A triumphant beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "cybernetic-reflex-booster",
 		name: "Cybernetic Reflex Booster",
 		description:
-			"Your neural link with the System has been overclocked for speed.",
+			"Your neural link with the Rift has been overclocked for speed.",
 		benefits: {
 			basic: [
 				"+2 to Initiative rolls.",
@@ -1726,7 +1726,7 @@ export const comprehensiveFeats = [
 			action: "bonus-action",
 		},
 		flavor: "Crushes the darkness within. A forbidden ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-burn-specialist",
@@ -1752,7 +1752,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends all who stand in opposition. An absolute whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-raid-veteran",
@@ -1773,13 +1773,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends all who stand in opposition. A subtle beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "neural-network-hacker",
 		name: "Neural Network Hacker",
 		description:
-			"You can interface directly with the minds of others via the System.",
+			"You can interface directly with the minds of others via the Rift.",
 		prerequisites: {
 			ability: "Intelligence",
 			score: 15,
@@ -1802,7 +1802,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Weaves the darkness within. An absolute breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-step-evader",
@@ -1828,7 +1828,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the flow of time itself. A subtle testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-capacitor-armor",
@@ -1852,7 +1852,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reclaims the remnants of humanity. A silent surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "apex-assassin-strike",
@@ -1875,7 +1875,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Bends the darkness within. An intricate ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-fortress-body",
@@ -1900,7 +1900,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the quiet space between breaths. A sorrowful roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-weaver-ritualist",
@@ -1921,7 +1921,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reflects all who stand in opposition. A silent whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-master-navigator",
@@ -1945,13 +1945,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Denies the arrogant and the mighty. A chaotic beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "neural-sync-sharpshooter",
 		name: "Neural Sync Sharpshooter",
 		description:
-			"Your link with the System provides perfect ballistic calculations.",
+			"Your link with the Rift provides perfect ballistic calculations.",
 		prerequisites: {
 			ability: "Agility",
 			score: 15,
@@ -1970,7 +1970,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "void-step-striker",
@@ -1994,12 +1994,12 @@ export const comprehensiveFeats = [
 			frequency: "once-per-turn",
 		},
 		flavor: "Ignites the architect's design. A triumphant death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-executioner",
 		name: "System Executioner",
-		description: "The System has designated you as the final arbiter of death.",
+		description: "The Rift has designated you as the final arbiter of death.",
 		prerequisites: {
 			level: 14,
 		},
@@ -2018,13 +2018,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the arrogant and the mighty. A triumphant whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-interface-optimization",
 		name: "Interface Optimization",
 		description:
-			"The System interface has been optimized for your neural architecture, allowing faster data processing.",
+			"The Rift interface has been optimized for your neural architecture, allowing faster data processing.",
 		benefits: {
 			basic: [
 				"You can use a bonus action to take the Help action.",
@@ -2041,7 +2041,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the arrogant and the mighty. An ancient whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-anchor-specialist",
@@ -2068,7 +2068,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the remnants of humanity. An overwhelming surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-blade-dancer",
@@ -2095,7 +2095,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the darkness within. An ancient breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-recon-specialist",
@@ -2117,7 +2117,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Commands the quiet space between breaths. A forbidden roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "neural-link-tactician",
@@ -2144,7 +2144,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignores all who stand in opposition. A devastating whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-surge-vanguard",
@@ -2172,7 +2172,7 @@ export const comprehensiveFeats = [
 			dc: "ability-modifier",
 		},
 		flavor: "Crushes the dimensional divide. A desperate symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "cyber-medic-expert",
@@ -2198,7 +2198,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys all who stand in opposition. A triumphant whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "void-rifter",
@@ -2220,13 +2220,13 @@ export const comprehensiveFeats = [
 			action: "bonus-action",
 		},
 		flavor: "Shatters the darkness within. A chaotic ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-interceptor",
 		name: "System Interceptor",
 		description:
-			"You can jam the System signals of nearby enemies, making their abilities fail.",
+			"You can jam the Rift signals of nearby enemies, making their abilities fail.",
 		prerequisites: {
 			ability: "Intelligence",
 			score: 15,
@@ -2246,7 +2246,7 @@ export const comprehensiveFeats = [
 			action: "reaction",
 		},
 		flavor: "Weaves the concept of defeat. A subtle surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-scavenger",
@@ -2268,7 +2268,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the remnants of humanity. A brutal surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	{
@@ -2297,7 +2297,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "shadow-armor",
@@ -2325,7 +2325,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Absorbs all who stand in opposition. A brutal whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-overclock",
@@ -2353,7 +2353,7 @@ export const comprehensiveFeats = [
 			action: "bonus-action",
 		},
 		flavor: "Shatters the architect's design. A brutal roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "threat-ping",
@@ -2382,7 +2382,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters all who stand in opposition. A chaotic whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "quest-log-intuition",
@@ -2397,7 +2397,7 @@ export const comprehensiveFeats = [
 			basic: [
 				"System highlights interactive objects and hidden doors within 30 feet",
 				"Receive threat assessment when entering a new area",
-				"Once per long rest, ask for a hint — Decree Warden (PW) provides one true clue",
+				"Once per long rest, ask for a hint — Decree Warden (Warden) provides one true clue",
 				"Cannot be surprised while System interface is active",
 			],
 			expert: [],
@@ -2409,13 +2409,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the dimensional divide. A sorrowful testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "kill-count-momentum",
 		name: "Kill Count Momentum",
 		description:
-			"The System tracks kills in real time. As the count rises, combat efficiency escalates.",
+			"The Rift tracks kills in real time. As the count rises, combat efficiency escalates.",
 		prerequisites: {
 			level: 3,
 			ability: "Strength",
@@ -2438,13 +2438,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Overrides the concept of defeat. A devastating surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "daily-quest-discipline",
 		name: "Daily Quest Discipline",
 		description:
-			"You follow the System's daily training regimen. Consistent completion has enhanced your baseline.",
+			"You follow the Rift's daily training regimen. Consistent completion has enhanced your baseline.",
 		prerequisites: {
 			level: 2,
 			ability: "Vitality",
@@ -2466,7 +2466,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Absorbs the fragile limits of flesh. A sorrowful breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-sense",
@@ -2493,7 +2493,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Ignites the architect's design. A sorrowful roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gate-hardened",
@@ -2521,13 +2521,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignores the fragile limits of flesh. A devastating ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "boss-reader",
 		name: "Boss Reader",
 		description:
-			"You read gate boss attack patterns. The System highlights wind-up animations.",
+			"You read gate boss attack patterns. The Rift highlights wind-up animations.",
 		prerequisites: {
 			level: 8,
 			ability: "Intelligence",
@@ -2549,7 +2549,7 @@ export const comprehensiveFeats = [
 			action: "reaction",
 		},
 		flavor: "Crushes the darkness within. A forbidden ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-overflow",
@@ -2578,7 +2578,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reclaims the arrogant and the mighty. A devastating beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mana-siphon",
@@ -2606,7 +2606,7 @@ export const comprehensiveFeats = [
 			action: "free",
 		},
 		flavor: "Cleanses the darkness within. A forbidden ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "circuit-breaker",
@@ -2637,7 +2637,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Commands the fragile limits of flesh. A desperate ultimate equalizer.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "annihilation-style",
@@ -2663,13 +2663,13 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Denies the concept of defeat. A brutal surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "deadeye-protocol",
 		name: "Deadeye Decree",
 		description:
-			"The System feeds targeting data into your instincts, eliminating range penalties.",
+			"The Rift feeds targeting data into your instincts, eliminating range penalties.",
 		prerequisites: {
 			ability: "Agility",
 			score: 13,
@@ -2690,7 +2690,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Absorbs the fragile limits of flesh. A brutal breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "iron-vanguard",
@@ -2712,7 +2712,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Shatters the architect's design. A chaotic roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "twin-fang-technique",
@@ -2738,7 +2738,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Weaves the dimensional divide. A subtle symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "battle-channeler",
@@ -2759,7 +2759,7 @@ export const comprehensiveFeats = [
 			frequency: "at-will",
 		},
 		flavor: "Reflects the architect's design. A chaotic death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "gatekeepers-reach",
@@ -2786,13 +2786,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the dimensional divide. A triumphant symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "iron-vitality",
 		name: "Iron Vitality",
 		description:
-			"The System reinforced your cellular structure, increasing your capacity to absorb punishment.",
+			"The Rift reinforced your cellular structure, increasing your capacity to absorb punishment.",
 		benefits: {
 			basic: [
 				"HP maximum increases by 2 per level (retroactive)",
@@ -2809,7 +2809,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Bends the quiet space between breaths. An intricate roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "adaptive-resistance",
@@ -2832,7 +2832,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reclaims the concept of defeat. A devastating surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "fortress-conditioning",
@@ -2859,7 +2859,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Commands the flow of time itself. A desperate symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "party-sync",
@@ -2887,13 +2887,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the quiet space between breaths. A sorrowful death of hesitation.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "last-stand-protocol",
 		name: "Last Stand Decree",
 		description:
-			"At the brink, the System activates emergency combat mode — defense traded for offense.",
+			"At the brink, the Rift activates emergency combat mode — defense traded for offense.",
 		prerequisites: {
 			level: 8,
 			ability: "Vitality",
@@ -2915,7 +2915,7 @@ export const comprehensiveFeats = [
 			action: "free",
 		},
 		flavor: "Absorbs the dimensional divide. An ancient symphony of violence.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "emergency-extraction",
@@ -2943,7 +2943,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the flow of time itself. A chaotic testament to absolute power.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "destroyer-resolve",
@@ -2969,7 +2969,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the remnants of humanity. A sorrowful surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker-grace",
@@ -2995,7 +2995,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Reclaims the remnants of humanity. A silent surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "double-awakening",
@@ -3021,7 +3021,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "latent-potential",
@@ -3049,7 +3049,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the arrogant and the mighty. A triumphant beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "domain-of-shadows",
@@ -3077,12 +3077,12 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys all who stand in opposition. A triumphant beautiful catastrophe.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "system-administrator",
-		name: "System Administrator",
-		description: "You have gained partial admin access to the System itself.",
+		name: "Warden",
+		description: "You have gained partial admin access to the Rift itself.",
 		prerequisites: {
 			level: 18,
 		},
@@ -3103,13 +3103,13 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Weaves the fragile limits of flesh. A subtle breaking point of the world.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "transcendent-vessel",
 		name: "Transcendent Vessel",
 		description:
-			"Your body has evolved beyond mortal limits. The System no longer classifies you as human.",
+			"Your body has evolved beyond mortal limits. The Rift no longer classifies you as human.",
 		prerequisites: {
 			level: 17,
 		},
@@ -3129,7 +3129,7 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Ignites the arrogant and the mighty. A sorrowful whisper in the shadows.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "rulers-authority",
@@ -3159,6 +3159,6 @@ export const comprehensiveFeats = [
 		},
 		flavor:
 			"Destroys the concept of defeat. A desperate surge of lethal intent.",
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 ];

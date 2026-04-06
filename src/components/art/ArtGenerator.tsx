@@ -112,9 +112,9 @@ export function ArtGenerator({
 		if (!formData.description.trim()) return;
 		try {
 			const result = await enhancePrompt(formData.description, {
-				style: "dark manhwa anime cinematic fantasy, System Ascendant style",
+				style: "dark manhwa anime cinematic fantasy, Rift Ascendant style",
 				mood: formData.mood || "dramatic, high contrast, detailed",
-				universe: "System Ascendant",
+				universe: "Rift Ascendant",
 				entityType,
 			});
 			if (result?.enhanced) {
@@ -148,7 +148,7 @@ export function ArtGenerator({
 	const handleSuggestStyles = async () => {
 		try {
 			await suggestStyles(
-				"dark manhwa anime cinematic fantasy, System Ascendant",
+				"dark manhwa anime cinematic fantasy, Rift Ascendant",
 			);
 		} catch (error) {
 			logger.error("Failed to suggest styles:", error);

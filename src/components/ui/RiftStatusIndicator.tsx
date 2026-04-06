@@ -163,7 +163,7 @@ export const RiftStatusIndicator = ({
 						className="w-2 h-2 rounded-full animate-pulse"
 						style={{ backgroundColor: tierConfig.color }}
 					/>
-					<span className="font-system text-sm tracking-wider text-gate-s">
+					<span className="font-heading text-sm tracking-wider text-gate-s">
 						RIFT STATUS
 					</span>
 				</div>
@@ -179,11 +179,11 @@ export const RiftStatusIndicator = ({
 				/>
 				<div className="absolute inset-0 flex items-center justify-center">
 					<div className="text-center">
-						<div className="font-system text-lg font-bold text-white">
+						<div className="font-heading text-lg font-bold text-white">
 							{stability}%
 						</div>
 						<div
-							className="font-system text-xs tracking-wider"
+							className="font-heading text-xs tracking-wider"
 							style={{ color: statusInfo.color }}
 						>
 							{statusInfo.status}
@@ -194,31 +194,31 @@ export const RiftStatusIndicator = ({
 			{/* Coordinates Display */}
 			{showCoordinates && (
 				<div className="space-y-2">
-					<div className="text-xs font-system tracking-wider text-gray-400 uppercase">
+					<div className="text-xs font-heading tracking-wider text-gray-400 uppercase">
 						Coordinates
 					</div>
 					<div className="grid grid-cols-3 gap-2 text-xs">
 						<div className="text-center">
-							<div className="font-system text-gate-s">X</div>
+							<div className="font-heading text-gate-s">X</div>
 							<div className="font-mono text-white">
 								{coordinates.x.toFixed(1)}
 							</div>
 						</div>
 						<div className="text-center">
-							<div className="font-system text-gate-s">Y</div>
+							<div className="font-heading text-gate-s">Y</div>
 							<div className="font-mono text-white">
 								{coordinates.y.toFixed(1)}
 							</div>
 						</div>
 						<div className="text-center">
-							<div className="font-system text-gate-s">Z</div>
+							<div className="font-heading text-gate-s">Z</div>
 							<div className="font-mono text-white">
 								{coordinates.z.toFixed(1)}
 							</div>
 						</div>
 					</div>
 					<div className="text-center">
-						<div className="font-system text-xs tracking-wider text-gray-400">
+						<div className="font-heading text-xs tracking-wider text-gray-400">
 							DIMENSION
 						</div>
 						<div className="font-display text-sm text-gate-national">
@@ -233,7 +233,7 @@ export const RiftStatusIndicator = ({
 				<div className="mt-3 p-2 bg-red-900/20 border border-red-500/30 rounded">
 					<div className="flex items-center space-x-2">
 						<div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-						<span className="font-system text-xs text-red-400 tracking-wider">
+						<span className="font-heading text-xs text-red-400 tracking-wider">
 							RIFT INSTABILITY DETECTED
 						</span>
 					</div>

@@ -44,7 +44,7 @@ export function MobileAccordionMenu({
 
 						{/* Header */}
 						<div className="flex items-center justify-between pb-4 border-b border-border/50">
-							<span className="font-bold tracking-wider uppercase text-sm font-system text-primary">
+							<span className="font-bold tracking-wider uppercase text-sm font-heading text-primary">
 								System Protocol
 							</span>
 							<Button

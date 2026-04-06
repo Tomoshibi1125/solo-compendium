@@ -1,15 +1,15 @@
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { comprehensiveFeats } from "@/data/compendium/feats-comprehensive";
 
 export const FeatsChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-cyan mb-6">
+				<RiftHeading level={1} className="text-5xl text-cyan mb-6">
 					Feats & Augmentations
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-					As an Ascendant masters their potential, the System rewards them with
+					As an Ascendant masters their potential, the Rift rewards them with
 					profound enhancements to their physical and magical capabilities.
 					These augmentations provide unique tactical advantages beyond basic
 					attribute increases.

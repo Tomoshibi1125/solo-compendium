@@ -14,16 +14,16 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -147,25 +147,25 @@ const Admin = () => {
 							<Database className="w-6 h-6 text-resurge" />
 						</div>
 						<div className="flex-1">
-							<SystemHeading
+							<RiftHeading
 								level={1}
 								variant="sovereign"
 								dimensional
 								className="tracking-wider"
 							>
-								System Console
-							</SystemHeading>
-							<DataStreamText
-								variant="system"
+								Rift Console
+							</RiftHeading>
+							<ManaFlowText
+								variant="rift"
 								speed="slow"
 								className="font-heading"
 							>
-								Import and validate operational parameters for the System
+								Import and validate operational parameters for the Rift
 								Compendium.
-							</DataStreamText>
+							</ManaFlowText>
 						</div>
 						<div className="flex gap-2">
-							<Link to="/warden-protocols/content-audit">
+							<Link to="/warden-directives/content-audit">
 								<Button
 									variant="outline"
 									className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
@@ -174,7 +174,7 @@ const Admin = () => {
 									Content Audit
 								</Button>
 							</Link>
-							<Link to="/warden-protocols/selection-protocols">
+							<Link to="/warden-directives/selection-protocols">
 								<Button
 									variant="outline"
 									className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
@@ -183,7 +183,7 @@ const Admin = () => {
 									Selection Protocols
 								</Button>
 							</Link>
-							<Link to="/warden-protocols/art-generation">
+							<Link to="/warden-directives/art-generation">
 								<Button
 									variant="outline"
 									className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
@@ -199,7 +199,10 @@ const Admin = () => {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 					{/* Input Section */}
 					<div className="space-y-6">
-						<SystemWindow title="IMPORT CONTENT" className="border-resurge/30">
+						<AscendantWindow
+							title="IMPORT CONTENT"
+							className="border-resurge/30"
+						>
 							<div className="space-y-4">
 								<div>
 									<Label
@@ -320,18 +323,18 @@ const Admin = () => {
 									</Button>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
 						{/* Example Template */}
-						<SystemWindow
+						<AscendantWindow
 							title="EXAMPLE TEMPLATE"
 							variant="quest"
 							className="border-amber-500/30"
 						>
-							<SystemText className="block text-sm text-muted-foreground mb-4 font-heading">
+							<AscendantText className="block text-sm text-muted-foreground mb-4 font-heading">
 								Load a sample JSON template to get started with custom content
 								creation.
-							</SystemText>
+							</AscendantText>
 							<Button
 								variant="outline"
 								onClick={() => {
@@ -345,7 +348,7 @@ const Admin = () => {
 												saving_throw_proficiencies: ["STR", "AGI"],
 												hit_die: 10,
 												source_kind: "homebrew",
-												source_name: "System Ascendant Homebrew",
+												source_name: "Rift Ascendant Homebrew",
 											},
 										],
 									};
@@ -356,14 +359,14 @@ const Admin = () => {
 								<Download className="w-4 h-4" />
 								Load Example Template
 							</Button>
-						</SystemWindow>
+						</AscendantWindow>
 					</div>
 
 					{/* Results Section */}
 					<div className="space-y-6">
 						{/* Validation Results */}
 						{validationResult && (
-							<SystemWindow
+							<AscendantWindow
 								title="VALIDATION RESULTS"
 								className={cn(
 									validationResult.valid
@@ -387,9 +390,9 @@ const Admin = () => {
 													<span className="font-resurge font-semibold text-green-400 tracking-wide">
 														VALID
 													</span>
-													<SystemText className="block text-xs text-muted-foreground">
+													<AscendantText className="block text-xs text-muted-foreground">
 														Content bundle is ready for import
-													</SystemText>
+													</AscendantText>
 												</div>
 											</>
 										) : (
@@ -399,9 +402,9 @@ const Admin = () => {
 													<span className="font-resurge font-semibold text-destructive tracking-wide">
 														INVALID
 													</span>
-													<SystemText className="block text-xs text-muted-foreground">
+													<AscendantText className="block text-xs text-muted-foreground">
 														Please fix errors before importing
-													</SystemText>
+													</AscendantText>
 												</div>
 											</>
 										)}
@@ -451,12 +454,12 @@ const Admin = () => {
 										</div>
 									)}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 
 						{/* Import Results */}
 						{importResult && (
-							<SystemWindow
+							<AscendantWindow
 								title="IMPORT RESULTS"
 								className={cn(
 									importResult.success
@@ -480,9 +483,9 @@ const Admin = () => {
 													<span className="font-resurge font-semibold text-green-400 tracking-wide">
 														{dryRun ? "DRY RUN COMPLETE" : "IMPORT SUCCESSFUL"}
 													</span>
-													<SystemText className="block text-xs text-muted-foreground">
+													<AscendantText className="block text-xs text-muted-foreground">
 														Content has been processed
-													</SystemText>
+													</AscendantText>
 												</div>
 											</>
 										) : (
@@ -492,9 +495,9 @@ const Admin = () => {
 													<span className="font-resurge font-semibold text-destructive tracking-wide">
 														IMPORT FAILED
 													</span>
-													<SystemText className="block text-xs text-muted-foreground">
+													<AscendantText className="block text-xs text-muted-foreground">
 														Check errors below
-													</SystemText>
+													</AscendantText>
 												</div>
 											</>
 										)}
@@ -590,22 +593,22 @@ const Admin = () => {
 										</div>
 									)}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 
 						{/* Empty State */}
 						{!validationResult && !importResult && (
-							<SystemWindow
+							<AscendantWindow
 								title="AWAITING INPUT"
 								className="border-muted-foreground/20"
 							>
 								<div className="text-center py-12">
 									<Database className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
-									<SystemText className="block text-muted-foreground font-heading">
+									<AscendantText className="block text-muted-foreground font-heading">
 										Upload or paste JSON content to begin validation
-									</SystemText>
+									</AscendantText>
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 					</div>
 				</div>

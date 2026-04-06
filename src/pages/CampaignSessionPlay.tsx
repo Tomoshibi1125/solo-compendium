@@ -9,15 +9,15 @@ import {
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
-import { SystemNotificationOverlay } from "@/components/vtt/SystemNotificationOverlay";
+import { RiftNotificationOverlay } from "@/components/vtt/RiftNotificationOverlay";
 import {
 	useCampaignCombatSession,
 	useEndCombatSession,
@@ -118,18 +118,13 @@ const CampaignSessionPlay = () => {
 			>
 				<div className="flex items-center justify-between gap-3 flex-wrap">
 					<div>
-						<SystemHeading
-							level={1}
-							variant="gate"
-							dimensional
-							className="mb-2"
-						>
+						<RiftHeading level={1} variant="gate" dimensional className="mb-2">
 							Active Engagement
-						</SystemHeading>
-						<DataStreamText variant="system" speed="slow" className="text-sm">
+						</RiftHeading>
+						<ManaFlowText variant="rift" speed="slow" className="text-sm">
 							Live engagement Lattice: initiative queues, temporal tracking, and
 							dimensional topology.
-						</DataStreamText>
+						</ManaFlowText>
 					</div>
 					<div className="flex gap-2">
 						<Button variant="outline" asChild>
@@ -147,17 +142,17 @@ const CampaignSessionPlay = () => {
 					</div>
 				</div>
 
-				<SystemWindow title="LIVE COMBAT SESSION">
+				<AscendantWindow title="LIVE COMBAT SESSION">
 					{isLoading ? (
-						<SystemText className="block text-sm text-muted-foreground">
+						<AscendantText className="block text-sm text-muted-foreground">
 							Loading session...
-						</SystemText>
+						</AscendantText>
 					) : error ? (
 						<p className="text-sm text-destructive">Failed to load session.</p>
 					) : !session ? (
-						<SystemText className="block text-sm text-muted-foreground">
+						<AscendantText className="block text-sm text-muted-foreground">
 							No active session found.
-						</SystemText>
+						</AscendantText>
 					) : (
 						<div className="space-y-4">
 							{/* Status Bar */}
@@ -174,9 +169,9 @@ const CampaignSessionPlay = () => {
 							{/* Combatant Initiative List */}
 							<div className="space-y-2" data-testid="session-initiative-list">
 								{sorted.length === 0 ? (
-									<SystemText className="block text-sm text-muted-foreground">
+									<AscendantText className="block text-sm text-muted-foreground">
 										No combatants yet.
-									</SystemText>
+									</AscendantText>
 								) : (
 									sorted.map((c, idx) => {
 										const isCurrentTurn = idx === currentTurnIndex;
@@ -283,15 +278,15 @@ const CampaignSessionPlay = () => {
 							</div>
 
 							<div className="pt-2 text-xs text-muted-foreground border-t border-border">
-								This view updates live while the Protocol Warden advances turns
-								in Initiative Tracker.
+								This view updates live while the Warden advances turns in
+								Initiative Tracker.
 							</div>
 
 							{/* Warden Controls */}
 							{wardenTools.isWarden && (
 								<div className="mt-6 pt-4 border-t border-border/50 space-y-4">
 									<h3 className="font-heading font-semibold text-lg text-primary">
-										Protocol Warden Controls
+										Warden Controls
 									</h3>
 
 									{/* Turn / Combat Actions */}
@@ -334,7 +329,7 @@ const CampaignSessionPlay = () => {
 											asChild
 										>
 											<Link
-												to={`/warden-protocols/encounter-builder?campaignId=${resolvedCampaignId}&sessionId=${resolvedSessionId}`}
+												to={`/warden-directives/encounter-builder?campaignId=${resolvedCampaignId}&sessionId=${resolvedSessionId}`}
 											>
 												<Swords className="w-5 h-5" />
 												<span className="font-heading text-sm">
@@ -366,8 +361,8 @@ const CampaignSessionPlay = () => {
 							)}
 						</div>
 					)}
-				</SystemWindow>
-				<SystemNotificationOverlay
+				</AscendantWindow>
+				<RiftNotificationOverlay
 					notifications={activeBroadcasts}
 					onDismiss={dismissBroadcast}
 				/>

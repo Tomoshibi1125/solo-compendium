@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SourceBook from "./pages/compendium/SourceBook";
 import "./index.css";
-import "./styles/system-ui.css";
+import "./styles/ascendant-ui.css";
 import "./styles/sa-theme.css";
 import "./styles/source-book.css";
 

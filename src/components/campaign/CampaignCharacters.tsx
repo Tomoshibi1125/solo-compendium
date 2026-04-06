@@ -1,6 +1,7 @@
 import { ExternalLink, EyeOff, Loader2, Share2 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -10,7 +11,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -88,7 +88,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 
 	return (
 		<>
-			<SystemWindow
+			<AscendantWindow
 				title="SHARED ASCENDANTS"
 				className="h-[400px] flex flex-col"
 			>
@@ -155,7 +155,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 						))
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			<Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
 				<DialogContent>

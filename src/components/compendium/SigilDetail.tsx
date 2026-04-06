@@ -1,9 +1,9 @@
 import { AlertCircle, BookOpen, Shield, Sparkles, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { setPendingResolution } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -80,7 +80,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
 			{/* Header */}
-			<SystemWindow className="relative overflow-hidden">
+			<AscendantWindow className="relative overflow-hidden">
 				<div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
 				<div className="relative flex flex-col md:flex-row gap-6">
@@ -150,14 +150,14 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 						</div>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Main Content Sections */}
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 				{/* Left Column: Properties & Features */}
 				<div className="lg:col-span-2 space-y-6">
 					{/* Effect */}
-					<SystemWindow title="GEAR EFFECT">
+					<AscendantWindow title="GEAR EFFECT">
 						<div className="prose prose-invert max-w-none space-y-6">
 							<div className="p-4 rounded border border-primary/20 bg-primary/5 flex items-start gap-3">
 								<AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -175,12 +175,12 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 								</div>
 							</div>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
 					{/* Passive Bonuses */}
 					{data.passive_bonuses &&
 						Object.keys(data.passive_bonuses).length > 0 && (
-							<SystemWindow title="PASSIVE BONUSES">
+							<AscendantWindow title="PASSIVE BONUSES">
 								<div className="space-y-2">
 									{Object.entries(data.passive_bonuses).map(([key, value]) => (
 										<div key={key} className="flex items-center gap-2">
@@ -195,14 +195,14 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 										</div>
 									))}
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						)}
 				</div>
 
 				{/* Right Column: Inscription & Requirements */}
 				<div className="space-y-6">
 					{/* Requirements */}
-					<SystemWindow title="INSCRIPTION">
+					<AscendantWindow title="INSCRIPTION">
 						<div className="space-y-4">
 							{data.can_inscribe_on && data.can_inscribe_on.length > 0 && (
 								<div>
@@ -230,7 +230,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 								</div>
 							)}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</div>
 		</div>

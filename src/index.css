@@ -9,10 +9,10 @@
 	--font-display: "Orbitron", monospace;
 	--font-heading: "Rajdhani", sans-serif;
 	--font-body: "Space Grotesk", sans-serif;
-	--font-system: "Share Tech Mono", monospace;
+	--font-heading: "Share Tech Mono", monospace;
 	--font-resurge: "Orbitron", monospace;
 
-	/* ── System Ascendant: Protocol Palette ────────────────── */
+	/* ── Rift Ascendant: Protocol Palette ────────────────── */
 	--color-shadow-blue: hsl(var(--shadow-blue));
 	--color-shadow-purple: hsl(var(--shadow-purple));
 	--color-shadow-deep: hsl(var(--shadow-deep));
@@ -58,7 +58,7 @@
 	--animate-gate-energy-flow: gate-energy-flow 3s ease-in-out infinite;
 	--animate-rift-portal: rift-portal 2s ease-out;
 	--animate-dimensional-pulse: dimensional-pulse 4s ease-in-out infinite;
-	--animate-system-materialize: system-materialize 0.6s
+	--animate-ascendant-materialize: ascendant-materialize 0.6s
 		cubic-bezier(0.22, 1, 0.36, 1) both;
 	--animate-hologram-flicker: hologram-flicker 4s ease-in-out infinite;
 	--animate-hud-glow-pulse: hud-glow-pulse 3s ease-in-out infinite;
@@ -68,7 +68,7 @@
 }
 
 /* ============================================================
-   System Ascendant — Amethyst Void Palette v2
+   Rift Ascendant — Amethyst Void Palette v2
    ============================================================
    Primary: Amethyst Neon    (#9d4edd / hsl 275 72% 59%)
    Secondary: True Void       (#070510 / hsl 262 50% 3%)
@@ -136,7 +136,7 @@
 	--sidebar-border: 265 25% 15%;
 	--sidebar-ring: 275 80% 65%;
 
-	/* ── System Ascendant: Protocol Palette ──────────────────── */
+	/* ── Rift Ascendant: Protocol Palette ──────────────────── */
 	--shadow-blue: 220 85% 60%;
 	/* Cool stellar blue */
 	--shadow-purple: 275 80% 60%;
@@ -574,7 +574,7 @@ h3 {
 	/* Compendium stat blocks */
 
 	.glass-card,
-	.SystemWindow {
+	.AscendantWindow {
 		border: 2px solid #000;
 
 		background: white;
@@ -604,7 +604,7 @@ h3 {
 	/* Remove gradients, use black text */
 
 	.gradient-text-shadow,
-	.gradient-text-system,
+	.gradient-text-ascendant,
 	.gradient-text-regent,
 	.gradient-text-resurge,
 	.gradient-text-supreme {

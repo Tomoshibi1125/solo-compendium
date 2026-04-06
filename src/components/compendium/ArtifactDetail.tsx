@@ -2,9 +2,9 @@ import { Crown, Shield, Sparkles, Swords } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	type ActionResolutionPayload,
 	setPendingResolution,
@@ -176,7 +176,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 				</div>
 			)}
 
-			<SystemWindow title={displayName.toUpperCase()}>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						{data.artifact_type && (
@@ -204,10 +204,10 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 						</p>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{data.requirements && (
-				<SystemWindow title="REQUIREMENTS">
+				<AscendantWindow title="REQUIREMENTS">
 					<ul className="space-y-2 text-sm">
 						{data.requirements.level !== undefined && (
 							<li className="flex items-center gap-2">
@@ -249,11 +249,11 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 							</li>
 						)}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.properties && (
-				<SystemWindow id="artifact-properties" title="PROPERTIES">
+				<AscendantWindow id="artifact-properties" title="PROPERTIES">
 					<div className="flex flex-wrap gap-2">
 						{data.properties.magical && (
 							<Badge variant="secondary">Magical</Badge>
@@ -271,11 +271,11 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 							<Badge variant="outline">Legendary</Badge>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{abilities && (
-				<SystemWindow id="artifact-abilities" title="ABILITIES">
+				<AscendantWindow id="artifact-abilities" title="ABILITIES">
 					<div className="space-y-4">
 						{abilityList.map(({ label, ability }) => {
 							if (!ability) return null;
@@ -329,7 +329,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 												onClick={() =>
 													queueResolutionAndNavigate(
 														payload,
-														"/warden-protocols/initiative-tracker",
+														"/warden-directives/initiative-tracker",
 													)
 												}
 											>
@@ -341,11 +341,11 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 							);
 						})}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.lore && (
-				<SystemWindow id="artifact-lore" title="LORE">
+				<AscendantWindow id="artifact-lore" title="LORE">
 					<div className="space-y-3">
 						{data.lore.origin && (
 							<p className="text-sm text-muted-foreground">
@@ -372,11 +372,11 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 							</p>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.mechanics && (
-				<SystemWindow id="artifact-mechanics" title="MECHANICS">
+				<AscendantWindow id="artifact-mechanics" title="MECHANICS">
 					<div className="space-y-3 text-sm">
 						{data.mechanics.bonus && (
 							<div className="flex items-start gap-2">
@@ -440,7 +440,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

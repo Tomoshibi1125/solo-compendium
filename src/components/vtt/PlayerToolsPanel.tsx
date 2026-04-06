@@ -18,11 +18,11 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -190,7 +190,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 		},
 	];
 
-	// Quick abilities — System Ascendant names (STR, AGI, VIT, INT, SENSE, PRE)
+	// Quick abilities — Rift Ascendant names (STR, AGI, VIT, INT, SENSE, PRE)
 	const quickAbilities = [
 		{ id: "strength-save", name: "STR Save", icon: "💪", ability: "STR" },
 		{ id: "agility-save", name: "AGI Save", icon: "🏃", ability: "AGI" },
@@ -213,7 +213,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 	return (
 		<div className={cn("space-y-4", className)}>
 			{/* Quick Actions Bar */}
-			<SystemWindow title="QUICK ACTIONS" compact>
+			<AscendantWindow title="QUICK ACTIONS" compact>
 				<div className="grid grid-cols-2 gap-2">
 					{/* Quick Dice Roll */}
 					<div className="space-y-2">
@@ -287,10 +287,10 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 						))}
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Full Player Tools */}
-			<SystemWindow title="PLAYER TOOLS">
+			<AscendantWindow title="PLAYER TOOLS">
 				<Tabs
 					value={activeTool}
 					onValueChange={setActiveTool}
@@ -316,7 +316,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 					</TabsList>
 
 					<TabsContent value="actions" className="space-y-4">
-						<SystemWindow title="COMBAT ACTIONS" compact>
+						<AscendantWindow title="COMBAT ACTIONS" compact>
 							<div className="grid grid-cols-2 gap-2">
 								{quickActions.map((action) => (
 									<Button
@@ -347,9 +347,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									</Button>
 								))}
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
-						<SystemWindow title="MOVEMENT" compact>
+						<AscendantWindow title="MOVEMENT" compact>
 							<div className="space-y-3">
 								<div className="grid grid-cols-2 gap-2">
 									<Button
@@ -416,11 +416,11 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									</Button>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					</TabsContent>
 
 					<TabsContent value="spells" className="space-y-4">
-						<SystemWindow title="QUICK SPELLS" compact>
+						<AscendantWindow title="QUICK SPELLS" compact>
 							<div className="grid grid-cols-2 gap-2">
 								{quickSpells.map((spell) => (
 									<Button
@@ -454,9 +454,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									</Button>
 								))}
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
-						<SystemWindow title="SPELL MANAGEMENT" compact>
+						<AscendantWindow title="SPELL MANAGEMENT" compact>
 							<div className="space-y-3">
 								<div>
 									<Label className="text-xs">Cast Custom Spell</Label>
@@ -538,11 +538,11 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									</Button>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					</TabsContent>
 
 					<TabsContent value="abilities" className="space-y-4">
-						<SystemWindow title="SAVING THROWS" compact>
+						<AscendantWindow title="SAVING THROWS" compact>
 							<div className="grid grid-cols-2 gap-2">
 								{quickAbilities.map((ability) => (
 									<Button
@@ -563,9 +563,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									</Button>
 								))}
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
-						<SystemWindow title="ABILITY CHECKS" compact>
+						<AscendantWindow title="ABILITY CHECKS" compact>
 							<div className="space-y-3">
 								<div>
 									<Label className="text-xs">Custom Ability Check</Label>
@@ -604,11 +604,11 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									</div>
 								</div>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					</TabsContent>
 
 					<TabsContent value="chat" className="space-y-4">
-						<SystemWindow title="QUICK MESSAGES" compact>
+						<AscendantWindow title="QUICK MESSAGES" compact>
 							<div className="grid grid-cols-2 gap-2">
 								{quickMessages.map((message, _index) => (
 									<Button
@@ -628,9 +628,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									</Button>
 								))}
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 
-						<SystemWindow title="CUSTOM MESSAGE" compact>
+						<AscendantWindow title="CUSTOM MESSAGE" compact>
 							<div className="space-y-3">
 								<div>
 									<Label className="text-xs">Message Type</Label>
@@ -671,10 +671,10 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 									Send Message
 								</Button>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					</TabsContent>
 				</Tabs>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

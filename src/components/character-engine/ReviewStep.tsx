@@ -1,11 +1,11 @@
 import { Check, Loader2 } from "lucide-react";
 import type React from "react";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { Job, StaticJob } from "@/types/character";
-import { ABILITY_NAMES, type AbilityScore } from "@/types/system-rules";
+import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
 
 interface ReviewStepProps {
 	name: string;
@@ -42,7 +42,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 }) => {
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
-			<SystemWindow title="FINAL AUTHORIZATION: ENTITY AWAKENING">
+			<AscendantWindow title="FINAL AUTHORIZATION: ENTITY AWAKENING">
 				<div className="space-y-8">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 						<div className="space-y-6">
@@ -215,10 +215,10 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 					</div>
 
 					<div className="pt-8 border-t border-primary/10 text-center space-y-4">
-						<SystemText className="block text-sm text-primary/60 italic max-w-lg mx-auto leading-relaxed">
+						<AscendantText className="block text-sm text-primary/60 italic max-w-lg mx-auto leading-relaxed">
 							Warning: Affirming entity initialization is irreversible. Confirm
 							node synchronization and functional protocols below.
-						</SystemText>
+						</AscendantText>
 						<Button
 							onClick={onCreate}
 							disabled={loading}
@@ -238,7 +238,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 						</Button>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

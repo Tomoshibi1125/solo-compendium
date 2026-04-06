@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { getAbilityDisplayName, normalizeAbility } from "../5eRulesEngine";
 
 describe("5e Homebrew Compatibility", () => {
-	test("System Ascendant abilities normalize correctly", () => {
+	test("Rift Ascendant abilities normalize correctly", () => {
 		expect(normalizeAbility("STR")).toBe("STR");
 		expect(normalizeAbility("AGI")).toBe("AGI");
 		expect(normalizeAbility("VIT")).toBe("VIT");
@@ -16,7 +16,7 @@ describe("5e Homebrew Compatibility", () => {
 		expect(normalizeAbility("PRE")).toBe("PRE");
 	});
 
-	test("System Ascendant ability display names", () => {
+	test("Rift Ascendant ability display names", () => {
 		expect(getAbilityDisplayName("STR")).toBe("Strength");
 		expect(getAbilityDisplayName("AGI")).toBe("Agility");
 		expect(getAbilityDisplayName("VIT")).toBe("Vitality");
@@ -50,8 +50,8 @@ describe("5e Homebrew Compatibility", () => {
 		});
 	});
 
-	test("System Favor vs Inspiration", () => {
-		// Test System Favor progression matches Bardic Inspiration
+	test("Rift Favor vs Inspiration", () => {
+		// Test Rift Favor progression matches Bardic Inspiration
 		const expectedProgression = [
 			{ level: 1, max: 1, die: 6 },
 			{ level: 4, max: 1, die: 6 },
@@ -64,7 +64,7 @@ describe("5e Homebrew Compatibility", () => {
 		];
 
 		expectedProgression.forEach(({ level, max, die }) => {
-			// This would test the actual System Favor calculation
+			// This would test the actual Rift Favor calculation
 			expect(level).toBeGreaterThan(0);
 			expect(max).toBeGreaterThan(0);
 			expect(die).toBeGreaterThan(0);

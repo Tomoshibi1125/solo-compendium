@@ -38,7 +38,7 @@ import type {
 } from "@/types/compendium";
 export type { StaticBackground, StaticJob };
 
-import { getProficiencyBonus } from "@/types/system-rules";
+import { getProficiencyBonus } from "@/types/core-rules";
 import { getDefaultSigilSlotsBaseForEquipment } from "./sigilAutomation";
 
 export type Job = DbJob;
@@ -1428,7 +1428,7 @@ export function getJobAwakeningFeatureModifiers(
 }
 
 /**
- * Map from 5e ability names (used in static job data) to System Ascendant ability names.
+ * Map from 5e ability names (used in static job data) to Rift Ascendant ability names.
  */
 const JOB_ASI_TO_SYSTEM: Record<string, string> = {
 	strength: "STR",
@@ -1440,7 +1440,7 @@ const JOB_ASI_TO_SYSTEM: Record<string, string> = {
 };
 
 /**
- * Get the ability score improvements for a job, mapped to System Ascendant ability names.
+ * Get the ability score improvements for a job, mapped to Rift Ascendant ability names.
  * Returns a Record like { STR: 2, VIT: 1 }.
  */
 export function getJobASI(
@@ -2448,7 +2448,7 @@ export async function addJobAwakeningBenefitsForLevel(
 		);
 	}
 
-	// Direct Job Features from DB first (System Ascendant authoritative)
+	// Direct Job Features from DB first (Rift Ascendant authoritative)
 	const { data: jobFeatures } = await supabase
 		.from("compendium_job_features")
 		.select("*")

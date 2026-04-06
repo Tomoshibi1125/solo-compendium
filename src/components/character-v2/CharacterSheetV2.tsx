@@ -37,6 +37,8 @@ import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel"
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
+import { AscendantText } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,8 +51,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { SystemText } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Sheet,
 	SheetContent,
@@ -72,7 +72,7 @@ import { getXPProgress, type LevelingType } from "@/lib/experience";
 import { cn } from "@/lib/utils";
 import { QuestLog } from "@/pages/player-tools/QuestLog";
 import type { DetailData } from "@/types/character";
-import type { AbilityScore } from "@/types/system-rules";
+import type { AbilityScore } from "@/types/core-rules";
 import { AbilityScoreStrip } from "./AbilityScoreStrip";
 import { CharacterScrollHeader } from "./CharacterScrollHeader";
 import { ProficiencySidebar } from "./ProficiencySidebar";
@@ -227,18 +227,18 @@ export default function CharacterSheetV2() {
 		return (
 			<Layout>
 				<div className="container mx-auto px-4 py-8">
-					<SystemWindow
+					<AscendantWindow
 						title="ASCENDANT NOT FOUND"
 						className="max-w-lg mx-auto"
 					>
-						<SystemText className="block text-muted-foreground mb-4">
+						<AscendantText className="block text-muted-foreground mb-4">
 							The Ascendant you're looking for doesn't exist or you don't have
 							access to it.
-						</SystemText>
+						</AscendantText>
 						<Button onClick={() => navigate("/characters")}>
 							Back to Ascendants
 						</Button>
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			</Layout>
 		);
@@ -301,7 +301,7 @@ export default function CharacterSheetV2() {
 	const onLongRest = () => handleLongRest();
 	const onLevelUp = () => sheetController.setModal("levelUp", true);
 	const onResourceAdjust = (
-		field: "hit_dice_current" | "system_favor_current",
+		field: "hit_dice_current" | "rift_favor_current",
 		delta: number,
 	) => handleResourceAdjust(field, delta);
 
@@ -766,10 +766,10 @@ export default function CharacterSheetV2() {
 								max: character.hit_dice_max,
 								size: character.hit_dice_size,
 							}}
-							systemFavor={{
-								current: character.system_favor_current,
-								max: character.system_favor_max,
-								die: character.system_favor_die,
+							riftFavor={{
+								current: character.rift_favor_current,
+								max: character.rift_favor_max,
+								die: character.rift_favor_die,
 							}}
 							onRollInitiative={onRollInitiative}
 							onRollHitDice={onRollHitDice}
@@ -879,10 +879,10 @@ export default function CharacterSheetV2() {
 							max: character.hit_dice_max,
 							size: character.hit_dice_size,
 						}}
-						systemFavor={{
-							current: character.system_favor_current,
-							max: character.system_favor_max,
-							die: character.system_favor_die,
+						riftFavor={{
+							current: character.rift_favor_current,
+							max: character.rift_favor_max,
+							die: character.rift_favor_die,
 						}}
 						onRollInitiative={onRollInitiative}
 						onRollHitDice={onRollHitDice}
@@ -1086,7 +1086,7 @@ export default function CharacterSheetV2() {
 									</Badge>
 								</SheetHeader>
 								<div className="flex-1 overflow-y-auto p-6 space-y-6">
-									<div className="text-sm font-system leading-relaxed text-foreground/90 space-y-4">
+									<div className="text-sm font-heading leading-relaxed text-foreground/90 space-y-4">
 										<AutoLinkText text={selectedDetail.description} />
 									</div>
 									{/* Roll Buttons / Actions would go here if provided in payload */}

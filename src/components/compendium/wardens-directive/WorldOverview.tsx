@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { SourceBookPage } from "@/components/compendium/SourceBookPage";
 import { SourceBookStatBlock } from "@/components/compendium/SourceBookStatBlock";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { getAssetsByTier, searchAssets } from "@/lib/vtt";
 import type { CompendiumAnomaly } from "@/types/compendium";
 
@@ -138,12 +138,12 @@ export const WorldOverview = () => {
 					<div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 					<div className="flex items-center gap-3 mb-6 border-b border-cyan-500/20 pb-4">
 						<Globe className="w-8 h-8 text-cyan" />
-						<SystemHeading
+						<RiftHeading
 							level={2}
 							className="text-3xl text-white uppercase tracking-widest font-display font-bold"
 						>
 							The Great Reset
-						</SystemHeading>
+						</RiftHeading>
 					</div>
 					<div className="prose prose-invert max-w-none text-slate-300 leading-relaxed text-sm">
 						<p className="border-l-4 border-cyan-500/50 pl-6 py-2 italic bg-cyan-500/5 mb-6">

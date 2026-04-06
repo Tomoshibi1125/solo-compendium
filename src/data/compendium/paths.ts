@@ -19,7 +19,7 @@ interface Path {
 	abilities: {
 		name: string;
 		description: string;
-		cooldown?: number;
+		recharge?: number;
 		cost?: string;
 	}[];
 	stats: {
@@ -86,7 +86,7 @@ export const paths: Path[] = [
 			{
 				name: "Predator's Focus",
 				description: "Next attack crits on 17-20. Once per short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -145,7 +145,7 @@ export const paths: Path[] = [
 				name: "Combat Scan",
 				description:
 					"Spend a tactical die to learn target AC, HP%, and highest save. Add die to next attack vs it.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "Bonus action",
 			},
 		],
@@ -210,7 +210,7 @@ export const paths: Path[] = [
 				name: "Mana Strike",
 				description:
 					"Cast a cantrip and make a weapon attack, adding INT mod as bonus force damage to both.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -269,7 +269,7 @@ export const paths: Path[] = [
 				name: "Fortress Mode",
 				description:
 					"Anchor yourself — become immovable until you move. Advantage on STR checks/saves, can't be moved by any force.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -328,7 +328,7 @@ export const paths: Path[] = [
 				name: "Piercing Blow",
 				description:
 					"Next melee attack ignores resistance, treats immunity as resistance. Once per short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -393,7 +393,7 @@ export const paths: Path[] = [
 				name: "Kinetic Replay",
 				description:
 					"Teleport to an iteration's position and deliver an opportunistic strike against an adjacent entity. The Absolute manifests you at maximum resonance.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Reaction",
 			},
 		],
@@ -447,7 +447,7 @@ export const paths: Path[] = [
 				name: "Runaway Resonance",
 				description:
 					"1 min: each time you take damage, your next melee strike deals bonus damage equal to your current Overload damage bonus. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Free (while in Overload)",
 			},
 		],
@@ -500,7 +500,7 @@ export const paths: Path[] = [
 				name: "Territorial Roar",
 				description:
 					"All enemies in 30 ft: SENSE save or frightened 1 min. A minor manifestation of a primal gate beast spirit erupts from your soul. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -553,7 +553,7 @@ export const paths: Path[] = [
 				name: "Scar Eruption",
 				description:
 					"All your mana scars discharge simultaneously: 20-ft radius, 3d8 force damage (VIT half). Allies in range gain temp HP equal to the damage dealt. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -606,7 +606,7 @@ export const paths: Path[] = [
 				name: "Storm Detonation",
 				description:
 					"30-ft radius, 4d8 damage (aura type), AGI half. The Absolute unleashed in a single, devastating burst. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -665,7 +665,7 @@ export const paths: Path[] = [
 				name: "Radiant Overload",
 				description:
 					"1 min: melee deals extra 2d6 radiant, emit bright light 10 ft. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -724,7 +724,7 @@ export const paths: Path[] = [
 				name: "Anomalous Detonation",
 				description:
 					"20-ft radius: 3d10 force, VIT half, random Anomaly Surge on each failure. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -784,7 +784,7 @@ export const paths: Path[] = [
 				name: "Phase Grab",
 				description:
 					"Bonus action: phase your hand through a creature within 5 ft and steal a held/worn item (AGI save).",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -843,7 +843,7 @@ export const paths: Path[] = [
 				name: "Phase Termination",
 				description:
 					"After a successful strike, phase into the aether—become invisible until the end of your next turn or until you attack. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Free",
 			},
 		],
@@ -902,7 +902,7 @@ export const paths: Path[] = [
 				name: "Shadow Casting",
 				description:
 					"Cast a cantrip while hidden without revealing position. Add Exploit Weakness if it deals damage. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -961,7 +961,7 @@ export const paths: Path[] = [
 				name: "Coordinated Exploit",
 				description:
 					"Bonus action: designate target in 60 ft. Next ally to hit it adds your Exploit Weakness damage. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -1020,7 +1020,7 @@ export const paths: Path[] = [
 				name: "Aetheric Riposte",
 				description:
 					"Reaction when creature misses you: phase-strike with Exploit Weakness damage. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Reaction",
 			},
 		],
@@ -1079,7 +1079,7 @@ export const paths: Path[] = [
 				name: "Phase Reconnaissance",
 				description:
 					"Phase-scout at triple speed for 10 min while hidden. Auto-succeed Stealth vs passive Perception. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -1133,7 +1133,7 @@ export const paths: Path[] = [
 				name: "Essence Lockdown",
 				description:
 					"VIT save or stunned until end of your next turn. 3 Mandate-Flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "3 Mandate-Flux",
 			},
 		],
@@ -1186,7 +1186,7 @@ export const paths: Path[] = [
 				name: "Phantom Barrage",
 				description:
 					"Teleport between up to 3 creatures within 60 ft, unarmed strike each. Start/end in dim light/darkness. 3 Mandate-Flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "3 Mandate-Flux",
 			},
 		],
@@ -1239,7 +1239,7 @@ export const paths: Path[] = [
 				name: "Omni-Burst",
 				description:
 					"30-ft cone: 2d6 fire+2d6 cold+2d6 lightning+2d6 force. 5 Mandate-Flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "5 Mandate-Flux",
 			},
 		],
@@ -1292,7 +1292,7 @@ export const paths: Path[] = [
 				name: "Entropic Counter",
 				description:
 					"Reaction when missed within 5 ft: unarmed strike with advantage as your essence lunges into an unscripted counterattack. Prof uses/short rest.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "Reaction",
 			},
 		],
@@ -1345,7 +1345,7 @@ export const paths: Path[] = [
 				name: "Blade Tempest",
 				description:
 					"Attack every creature within 10 ft with bonded weapon. Each hit: weapon + 2 Spirit Combat dice. 4 Mandate-Flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "4 Mandate-Flux",
 			},
 		],
@@ -1409,7 +1409,7 @@ export const paths: Path[] = [
 				name: "Aetheric Heal",
 				description:
 					"Touch an ally: restore 2d8+SENSE mod HP and purge one condition by realigning their aetheric pathways. 2 Mandate-Flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "2 Mandate-Flux",
 			},
 		],
@@ -1463,7 +1463,7 @@ export const paths: Path[] = [
 				name: "Absolute Yield",
 				description:
 					"Next damage spell deals maximum damage. Once/long rest (additional uses cause 2d12 necrotic per level from Absolute strain).",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Free",
 			},
 		],
@@ -1516,7 +1516,7 @@ export const paths: Path[] = [
 				name: "Barrier Restoration",
 				description:
 					"Restore your Aetheric Barrier to full HP by channeling ambient mana. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -1569,7 +1569,7 @@ export const paths: Path[] = [
 				name: "Mandate Override",
 				description:
 					"Force a creature to reroll any d20 and take the lower result. You override the local probability branch. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Reaction",
 			},
 		],
@@ -1622,7 +1622,7 @@ export const paths: Path[] = [
 				name: "Phantasmal Terrain",
 				description:
 					"Weave a 30-ft cube of illusory difficult terrain that feels real to all who enter. INT save to disbelieve. 1 min.",
-				cooldown: 2,
+				recharge: 2,
 				cost: "Action",
 			},
 		],
@@ -1675,7 +1675,7 @@ export const paths: Path[] = [
 				name: "Emergency Rift",
 				description:
 					"Teleport up to 60 ft as a bonus action via a micro-gate. Prof uses/long rest.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "Bonus action",
 			},
 		],
@@ -1728,7 +1728,7 @@ export const paths: Path[] = [
 				name: "Molecular Override",
 				description:
 					"Touch an object and rewrite its composition for 1 hour. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -1788,7 +1788,7 @@ export const paths: Path[] = [
 				name: "Dragon Breath",
 				description:
 					"30-ft cone or 60-ft line: 4d8 damage of your resonance type, AGI save for half. 3 Mandate-Flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "3 Mandate-Flux",
 			},
 		],
@@ -1847,7 +1847,7 @@ export const paths: Path[] = [
 				name: "Cascade Bolt",
 				description:
 					"Hurlraw unstable mana: 2d8+1d6, damage type random. If the d8s match, the bolt cascades to another target.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "1st-level slot",
 			},
 		],
@@ -1906,7 +1906,7 @@ export const paths: Path[] = [
 				name: "Void Lance",
 				description:
 					"60-ft ranged spell attack: 3d8 necrotic + target's reactions suppressed until start of your next turn. 2 flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "2 flux",
 			},
 		],
@@ -1971,7 +1971,7 @@ export const paths: Path[] = [
 				name: "Thunder Rift",
 				description:
 					"Teleport 90 ft via lightning bolt. Creatures within 10 ft of origin take 3d10 thunder (VIT half). Can bring one willing creature.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "3rd-level slot",
 			},
 		],
@@ -2030,7 +2030,7 @@ export const paths: Path[] = [
 				name: "Absolute Healing Surge",
 				description:
 					"Manifest a healing rite and add PRE mod to each die of restorative resonance. The Absolute amplifies your output. 2 flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "2 flux",
 			},
 		],
@@ -2095,7 +2095,7 @@ export const paths: Path[] = [
 				name: "Psionic Lance",
 				description:
 					"60 ft: 3d8 psychic, target can't hide from you for 1 hour. 2nd-level slot or 2 flux.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "2 flux",
 			},
 		],
@@ -2155,7 +2155,7 @@ export const paths: Path[] = [
 				name: "Mass Detonation",
 				description:
 					"Detonate up to 3 fallen remnants simultaneously. Each explodes for 3d8+INT mod necrotic in 15 ft. Overlapping areas stack. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2214,7 +2214,7 @@ export const paths: Path[] = [
 				name: "Essence Drain Burst",
 				description:
 					"All creatures within 15 ft: VIT save or take 3d8 necrotic. You regain HP = total damage dealt. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -2273,7 +2273,7 @@ export const paths: Path[] = [
 				name: "Entropy Carapace",
 				description:
 					"Encase yourself in crystallized decay: +3 AC for 1 min. Melee attackers take 1d8 necrotic and have disadvantage on attacks. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -2326,7 +2326,7 @@ export const paths: Path[] = [
 				name: "Void Dance",
 				description:
 					"While active: teleport 15 ft before each strike through your own entropic field. Each hit deals 1d6 extra necrotic. 1 min, once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -2385,7 +2385,7 @@ export const paths: Path[] = [
 				name: "Patient Zero",
 				description:
 					"Touch a creature: it becomes a central carrier for 1 min. Those within 15 ft take 2d8 necrotic and are marked. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2444,7 +2444,7 @@ export const paths: Path[] = [
 				name: "Threshold Pulse",
 				description:
 					"30-ft radius: all allies regain 2d8 HP, all enemies take 2d8 necrotic. You are the center of the life-death axis. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2510,7 +2510,7 @@ export const paths: Path[] = [
 				name: "Biome Surge",
 				description:
 					"Channel the local gate energy: regain internal essence and gain advantage on environmental checks for 1 hour. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2569,7 +2569,7 @@ export const paths: Path[] = [
 				name: "Apex Manifestation",
 				description:
 					"Shift into an apex gate entity for 1 hour. Retain all mandate access. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -2622,7 +2622,7 @@ export const paths: Path[] = [
 				name: "Lush Blessing",
 				description:
 					"All allies within 30 ft regain 2d8 HP and gain advantage on saves against phantasm-effects for 1 min. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2680,7 +2680,7 @@ export const paths: Path[] = [
 				name: "Absolute Alpha",
 				description:
 					"All summoned entities within 60 ft gain +2 to attack and deal extra 1d4 damage. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -2739,7 +2739,7 @@ export const paths: Path[] = [
 				name: "Spore Eruption",
 				description:
 					"All creatures within 20 ft: VIT save or take 4d8 poison and become poisoned. Your colony erupts in a reality-warping discharge. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2798,7 +2798,7 @@ export const paths: Path[] = [
 				name: "Starfall Manifestation",
 				description:
 					"30-ft radius: 4d10 radiant, blind victims in a reality-warping discharge. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2863,7 +2863,7 @@ export const paths: Path[] = [
 				name: "Mass Restoration",
 				description:
 					"All allies within 30 ft regain 3d8+SENSE mod HP and are cured of one condition. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -2927,7 +2927,7 @@ export const paths: Path[] = [
 				name: "Solar Burst",
 				description:
 					"30-ft cone: 4d8 radiant, blind failers for 1 round. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -2991,7 +2991,7 @@ export const paths: Path[] = [
 				name: "Refined Weapon",
 				description:
 					"Touch a weapon: it deals extra 2d8 radiant for 1 hour. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -3049,7 +3049,7 @@ export const paths: Path[] = [
 				name: "Aetheric Query",
 				description:
 					"Request one specific detail from the Absolute about any creature, object, or location. Receive a truthful image or phrase. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action (1 min)",
 			},
 		],
@@ -3113,7 +3113,7 @@ export const paths: Path[] = [
 				name: "Call Lightning Manifestation",
 				description:
 					"30-ft radius: 3d10 lightning. Maximize with Absolute Resonance. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -3177,7 +3177,7 @@ export const paths: Path[] = [
 				name: "Absolute Safeguard",
 				description:
 					"Touch: for 8 hours, the first time the recipient falls, the Absolute catches them at 1 HP instead. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -3231,7 +3231,7 @@ export const paths: Path[] = [
 				name: "Absolute Glow",
 				description:
 					"Manifest a 20-ft cube of aetheric light: reveal all hidden entities and grant advantage on strikes against them.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -3284,7 +3284,7 @@ export const paths: Path[] = [
 				name: "Entropic Blast",
 				description:
 					"Channel a concentrated beam of void-energy: deal fire damage and ignite the recipient with aetheric flames. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Free",
 			},
 		],
@@ -3337,7 +3337,7 @@ export const paths: Path[] = [
 				name: "Void Scream",
 				description:
 					"60-ft range: crush the target's consciousness with a burst of void-energy: 3d10 psychic + stun. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -3395,7 +3395,7 @@ export const paths: Path[] = [
 				name: "Radiant Discharge",
 				description:
 					"30-ft radius: 3d8 radiant damage + restorative output for all allies in range. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -3454,7 +3454,7 @@ export const paths: Path[] = [
 				name: "Shadow Manifest",
 				description:
 					"Conjure a physical blade of pure void-essence for 1 min. It deals psychic damage and grants advantage in shadow.",
-				cooldown: 0,
+				recharge: 0,
 				cost: "Aetheric slot",
 			},
 		],
@@ -3518,7 +3518,7 @@ export const paths: Path[] = [
 				name: "Crushing Resonance",
 				description:
 					"60-ft radius: creatures are restrained by absolute pressure and take 3d8 cold damage. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -3572,7 +3572,7 @@ export const paths: Path[] = [
 				name: "Prey Manifest",
 				description:
 					"Mark an entity for absolute elimination: gain advantage on all strikes and detection for 1 hour. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -3625,7 +3625,7 @@ export const paths: Path[] = [
 				name: "Coordinated Strike",
 				description:
 					"You and your companion both strike the same target with absolute precision. If both hit, the target is stunned. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -3684,7 +3684,7 @@ export const paths: Path[] = [
 				name: "Shadow Strike",
 				description:
 					"Become invisible for 1 round. Your next strike deals extra 2d8 damage and terrifies the recipient. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -3743,7 +3743,7 @@ export const paths: Path[] = [
 				name: "Planar Collapse",
 				description:
 					"Open a 20-ft radius collapse: entities are banished to another plane and take 4d10 force damage. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -3802,7 +3802,7 @@ export const paths: Path[] = [
 				name: "Exploit Vulnerability",
 				description:
 					"After sensing a target, your strikes ignore all resistances and treat immunities as resistance for 1 min. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Free",
 			},
 		],
@@ -3861,7 +3861,7 @@ export const paths: Path[] = [
 				name: "Hive Eruption",
 				description:
 					"Release the hive: all nearby entities take piercing damage and are blinded by absolute static. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -3921,7 +3921,7 @@ export const paths: Path[] = [
 				name: "Absolute Smite",
 				description:
 					"Channel absolute energy into a strike: deal 3d8 extra radiant and blind the recipient. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -3980,7 +3980,7 @@ export const paths: Path[] = [
 				name: "Relentless Pursuit",
 				description:
 					"Designate a target: for 1 min, your movement and offensive output cannot be hindered as you move toward them. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -4039,7 +4039,7 @@ export const paths: Path[] = [
 				name: "Verdant Bulwark",
 				description:
 					"All allies within 30 ft gain resistance to all resonance damage and advantage on saves vs mantras for 1 min. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -4098,7 +4098,7 @@ export const paths: Path[] = [
 				name: "Absolute Presence",
 				description:
 					"All enemies within 30 ft must save or be knocked prone and rooted by sheer pressure. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -4157,7 +4157,7 @@ export const paths: Path[] = [
 				name: "Harmonic Shield",
 				description:
 					"For 1 min, all damage directed at nearby allies is shared by your vessel. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -4216,7 +4216,7 @@ export const paths: Path[] = [
 				name: "Heroic Manifestation",
 				description:
 					"Move at double speed in a direct line, rending all entities in your path with absolute radiance. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -4281,7 +4281,7 @@ export const paths: Path[] = [
 				name: "Volatile Burst",
 				description:
 					"Synthesize a massive entropic burst: 20-ft radius, dealing acid and fire damage. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -4346,7 +4346,7 @@ export const paths: Path[] = [
 				name: "Pulse Overdrive",
 				description:
 					"Bonus action: overcharge your aether-frame for 1 min, dealing massive thunder or lightning resonance. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -4411,7 +4411,7 @@ export const paths: Path[] = [
 				name: "Absolute Salvo",
 				description:
 					"All resonators manifest their power simultaneously at maximum efficiency. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Bonus action",
 			},
 		],
@@ -4476,7 +4476,7 @@ export const paths: Path[] = [
 				name: "Absolute Overdrive",
 				description:
 					"Your defender gains absolute speed and power for 1 min. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Bonus action",
 			},
 		],
@@ -4535,7 +4535,7 @@ export const paths: Path[] = [
 				name: "Absolute Convergence",
 				description:
 					"All swarm conduits converge for a massive force discharge. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -4594,7 +4594,7 @@ export const paths: Path[] = [
 				name: "Absolute Lockdown",
 				description:
 					"Target entity's internal resonance is completely frozen for 1 round. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -4647,7 +4647,7 @@ export const paths: Path[] = [
 				name: "Words of Absolute Truth",
 				description:
 					"Speak a devastating truth to a creature within 60 ft: SENSE save or 3d8 psychic + disadvantage on next manifestation. Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -4698,7 +4698,7 @@ export const paths: Path[] = [
 				name: "Absolute War Anthem",
 				description:
 					"All allies within 30 ft gain +2 to strike rolls and saving throws for 1 min. Concentration. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -4751,7 +4751,7 @@ export const paths: Path[] = [
 				name: "Absolute Charm",
 				description:
 					"All creatures within 30 ft: SENSE save or charmed by you for 1 min. Charmed creatures will follow one reasonable suggestion. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -4809,7 +4809,7 @@ export const paths: Path[] = [
 				name: "Dance of a Thousand Blades",
 				description:
 					"Make a melee attack against every creature within 10 ft. Each hit uses a free Blade Flourish (d6, no Hype die expended). Once/short rest.",
-				cooldown: 1,
+				recharge: 1,
 				cost: "Action",
 			},
 		],
@@ -4862,7 +4862,7 @@ export const paths: Path[] = [
 				name: "Psychic Overload",
 				description:
 					"60 ft: creature makes SENSE save or takes 4d8 psychic and is frightened of you for 1 min. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],
@@ -4915,7 +4915,7 @@ export const paths: Path[] = [
 				name: "Absolute Magnum Opus",
 				description:
 					"Create a Large animated construct (HP = 50, AC 18, +8 attack, 2d10+5 force slam). It lasts 1 hour and obeys your commands. Once/long rest.",
-				cooldown: 3,
+				recharge: 3,
 				cost: "Action",
 			},
 		],

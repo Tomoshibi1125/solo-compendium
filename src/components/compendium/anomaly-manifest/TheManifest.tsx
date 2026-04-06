@@ -1,5 +1,5 @@
 import { Fingerprint, Radio } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { anomalies } from "@/data/compendium/anomalies";
 import { getAnomalyTokensForTier, getAssetsByCategory } from "@/lib/vtt";
 import type { VTTAsset } from "@/lib/vtt/vttAssetManifest";
@@ -23,12 +23,12 @@ export const TheManifest = () => {
 				<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 opacity-10 pointer-events-none">
 					<Fingerprint className="w-32 h-32 text-orange-500" />
 				</div>
-				<SystemHeading
+				<RiftHeading
 					level={1}
 					className="text-5xl text-orange-500 mb-6 font-display uppercase tracking-widest"
 				>
 					The Anomaly Manifest
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto mb-8">
 					The absolute registry of dimensional entities documented by the
 					Ascendant Bureau. Anomalies are beings warped by Aether into walking
@@ -232,7 +232,7 @@ export const TheManifest = () => {
 			{sortedAnomalies.length > 50 && (
 				<div className="text-center p-8 text-orange-500/50 font-mono text-xs uppercase tracking-widest">
 					... And {sortedAnomalies.length - 50} more lower-threat entries in the
-					archives. Seek Protocol Warden clearance for full D-Rank Bestiary.
+					archives. Seek Warden clearance for full D-Rank Bestiary.
 				</div>
 			)}
 		</div>

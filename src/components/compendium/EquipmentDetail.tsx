@@ -1,8 +1,8 @@
 import { Coins, Shield, Sword, Weight } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface EquipmentData {
@@ -60,7 +60,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 			)}
 
 			{/* Header */}
-			<SystemWindow title={displayName.toUpperCase()}>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						<Badge variant="secondary">
@@ -80,11 +80,11 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 						</p>
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Stats */}
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-				<SystemWindow title="COST" compact>
+				<AscendantWindow title="COST" compact>
 					<div className="flex items-center gap-2">
 						<Coins className="w-5 h-5 text-yellow-400" />
 						<span className="font-display text-xl">
@@ -92,18 +92,18 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 						</span>
 					</div>
 					<span className="text-xs text-muted-foreground">credits</span>
-				</SystemWindow>
+				</AscendantWindow>
 
-				<SystemWindow title="WEIGHT" compact>
+				<AscendantWindow title="WEIGHT" compact>
 					<div className="flex items-center gap-2">
 						<Weight className="w-5 h-5 text-muted-foreground" />
 						<span className="font-display text-xl">{data.weight || "—"}</span>
 					</div>
 					<span className="text-xs text-muted-foreground">lbs</span>
-				</SystemWindow>
+				</AscendantWindow>
 
 				{isWeapon && (
-					<SystemWindow title="DAMAGE" compact>
+					<AscendantWindow title="DAMAGE" compact>
 						<div className="flex items-center gap-2">
 							<Sword className="w-5 h-5 text-red-400" />
 							<span className="font-display text-xl">{data.damage || "—"}</span>
@@ -113,24 +113,24 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 								{formatRegentVernacular(data.damage_type)}
 							</span>
 						)}
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 
 				{isArmor && (
-					<SystemWindow title="ARMOR CLASS" compact>
+					<AscendantWindow title="ARMOR CLASS" compact>
 						<div className="flex items-center gap-2">
 							<Shield className="w-5 h-5 text-blue-400" />
 							<span className="font-display text-xl">
 								{data.armor_class ? `+${data.armor_class}` : "—"}
 							</span>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 
 			{/* Properties */}
 			{data.properties && data.properties.length > 0 && (
-				<SystemWindow title="PROPERTIES">
+				<AscendantWindow title="PROPERTIES">
 					<div className="flex flex-wrap gap-2">
 						{data.properties.map((prop) => (
 							<Badge key={prop} variant="outline" className="capitalize">
@@ -138,7 +138,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 							</Badge>
 						))}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

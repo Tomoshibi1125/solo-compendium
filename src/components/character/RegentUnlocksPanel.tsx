@@ -12,6 +12,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -44,7 +44,7 @@ interface RegentUnlocksPanelProps {
 	campaignId?: string;
 }
 
-// Enhanced theme colors with System Ascendant aesthetic
+// Enhanced theme colors with Rift Ascendant aesthetic
 const themeColors: Record<
 	string,
 	{ bg: string; text: string; border: string; glow: string }
@@ -179,7 +179,7 @@ export function RegentUnlocksPanel({
 				name: r.name,
 				title: r.title ?? null,
 				theme: r.theme ?? null,
-				source_book: r.source_book ?? "System Ascendant Canon",
+				source_book: r.source_book ?? "Rift Ascendant Canon",
 			}));
 		},
 	});
@@ -278,7 +278,7 @@ export function RegentUnlocksPanel({
 	};
 
 	return (
-		<SystemWindow
+		<AscendantWindow
 			title={`${REGENT_LABEL.toUpperCase()} UNLOCKS - DIVINE AUTHORITY`}
 			variant="regent"
 			className="border-regent-gold/30"
@@ -462,11 +462,11 @@ export function RegentUnlocksPanel({
 							<DialogHeader>
 								<DialogTitle className="font-display text-xl gradient-text-regent flex items-center gap-2">
 									<Crown className="h-5 w-5" />
-									The System Analyzes Your Potential...
+									The Rift Analyzes Your Potential...
 								</DialogTitle>
 								<div className="text-sm text-muted-foreground mt-2">
-									Based on your capabilities and growth, the System offers
-									exactly three paths to ascendancy. Choose wisely; a{" "}
+									Based on your capabilities and growth, the Rift offers exactly
+									three paths to ascendancy. Choose wisely; a{" "}
 									{REGENT_LABEL.toLowerCase()} overlay is a profound evolution.
 								</div>
 							</DialogHeader>
@@ -562,6 +562,6 @@ export function RegentUnlocksPanel({
 					</Dialog>
 				)}
 			</div>
-		</SystemWindow>
+		</AscendantWindow>
 	);
 }

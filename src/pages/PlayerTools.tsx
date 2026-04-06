@@ -1,6 +1,6 @@
 /**
  * Enhanced Player Tools Page - D&D Beyond Style Layout
- * Role-based tools for players in System Ascendant
+ * Role-based tools for players in Rift Ascendant
  */
 
 import {
@@ -31,6 +31,7 @@ import {
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,7 +42,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
 import {
 	Select,
 	SelectContent,
@@ -287,17 +287,13 @@ const PlayerTools = () => {
 					<div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center">
 						<User className="w-16 h-16 text-muted-foreground/50" />
 						<div>
-							<SystemHeading level={2} variant="sovereign" className="mb-2">
+							<RiftHeading level={2} variant="sovereign" className="mb-2">
 								No Character Found
-							</SystemHeading>
-							<DataStreamText
-								variant="system"
-								speed="slow"
-								className="max-w-md"
-							>
+							</RiftHeading>
+							<ManaFlowText variant="rift" speed="slow" className="max-w-md">
 								You need to create a character before accessing Player Tools.
-								Build your Ascendant and start your journey through the System.
-							</DataStreamText>
+								Build your Ascendant and start your journey through the Rift.
+							</ManaFlowText>
 						</div>
 						<Button size="lg" onClick={() => navigate("/characters/new")}>
 							<Sparkles className="w-5 h-5 mr-2" />
@@ -316,21 +312,21 @@ const PlayerTools = () => {
 				<div className="player-tools-header">
 					<div className="flex items-center justify-between">
 						<div>
-							<SystemHeading
+							<RiftHeading
 								level={1}
 								variant="sovereign"
 								dimensional
 								className="player-tools-title"
 							>
 								Player Tools
-							</SystemHeading>
-							<DataStreamText
-								variant="system"
+							</RiftHeading>
+							<ManaFlowText
+								variant="rift"
 								speed="slow"
 								className="player-tools-subtitle"
 							>
-								Manage your Ascendant's journey through the System
-							</DataStreamText>
+								Manage your Ascendant's journey through the Rift
+							</ManaFlowText>
 						</div>
 
 						<div className="flex items-center gap-4">
@@ -467,13 +463,13 @@ const PlayerTools = () => {
 											<div className="category-header">
 												<div className="flex items-center gap-2">
 													<Icon className="w-5 h-5" />
-													<SystemHeading
+													<RiftHeading
 														level={2}
 														variant="gate"
 														className="category-title"
 													>
 														{category.name}
-													</SystemHeading>
+													</RiftHeading>
 													<Badge variant="secondary">
 														{categoryTools.length}
 													</Badge>
@@ -562,7 +558,7 @@ const PlayerTools = () => {
 								<Button
 									variant="outline"
 									className="justify-start"
-									onClick={() => navigate("/warden-protocols/vtt")}
+									onClick={() => navigate("/warden-directives/vtt")}
 								>
 									<MapIcon className="w-4 h-4 mr-2" />
 									VTT Map
@@ -610,19 +606,19 @@ const ToolCard = ({
 								<Icon className="w-5 h-5" />
 							</div>
 							<div className="flex-1">
-								<SystemHeading
+								<RiftHeading
 									level={3}
 									variant="sovereign"
-									className="font-system text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+									className="font-heading text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
 								>
 									{tool.name}
-								</SystemHeading>
-								<DataStreamText
-									variant="system"
+								</RiftHeading>
+								<ManaFlowText
+									variant="rift"
 									className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase"
 								>
 									{tool.description}
-								</DataStreamText>
+								</ManaFlowText>
 							</div>
 						</div>
 						<div className="flex items-center gap-3">
@@ -652,7 +648,7 @@ const ToolCard = ({
 							)}
 							<Button
 								size="sm"
-								className="font-system tracking-widest uppercase"
+								className="font-heading tracking-widest uppercase"
 								variant="outline"
 								asChild
 							>
@@ -699,19 +695,19 @@ const ToolCard = ({
 					>
 						<Icon className="w-6 h-6" />
 					</div>
-					<SystemHeading
+					<RiftHeading
 						level={3}
 						variant="sovereign"
-						className="font-system text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
+						className="font-heading text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]"
 					>
 						{tool.name}
-					</SystemHeading>
-					<DataStreamText
-						variant="system"
+					</RiftHeading>
+					<ManaFlowText
+						variant="rift"
 						className="text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed"
 					>
 						{tool.description}
-					</DataStreamText>
+					</ManaFlowText>
 				</div>
 				<div className="flex items-center justify-between mt-auto relative z-10">
 					<div className="flex gap-2">
@@ -743,7 +739,7 @@ const ToolCard = ({
 					<Button
 						size="sm"
 						className={cn(
-							"font-system tracking-widest uppercase gap-1",
+							"font-heading tracking-widest uppercase gap-1",
 							tool.color.includes("amber")
 								? "bg-amber-500/20 text-amber-400 hover:bg-amber-500/40 border border-amber-500/50"
 								: tool.color.includes("red")

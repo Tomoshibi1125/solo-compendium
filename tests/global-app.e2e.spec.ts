@@ -10,7 +10,7 @@ import { SharedPage } from "./pages/SharedPage";
  * Global App-Wide E2E Test
  *
  * Exercises every route, tool, button, input, select, generator, and automation
- * across the entire System Ascendant application as both DM and Player.
+ * across the entire Rift Ascendant application as both DM and Player.
  *
  * Uses dual browser contexts (isolated cookies/storage) per role.
  */
@@ -164,8 +164,8 @@ test.describe
 					await dmTools.testVTTMap();
 				});
 
-				// ── 19. System Console ──────────────────────────────────────
-				test("19. System Console: admin page loads", async () => {
+				// ── 19. Rift Console ──────────────────────────────────────
+				test("19. Rift Console: admin page loads", async () => {
 					const dmTools = new DMToolsPage(dmPage);
 					await dmTools.testSystemConsole();
 				});

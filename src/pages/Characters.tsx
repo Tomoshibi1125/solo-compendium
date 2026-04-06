@@ -17,6 +17,12 @@ import { BulkActionsBar } from "@/components/character/BulkActionsBar";
 import { ImportDialog } from "@/components/character/ImportDialog";
 import { Layout } from "@/components/layout/Layout";
 import {
+	AscendantText,
+	ManaFlowText,
+	RiftHeading,
+} from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import {
 	AlertDialog,
 	AlertDialogAction,
 	AlertDialogCancel,
@@ -29,12 +35,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
-import {
-	DataStreamText,
-	SystemHeading,
-	SystemText,
-} from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacters, useDeleteCharacter } from "@/hooks/useCharacters";
 import { cn } from "@/lib/utils";
@@ -120,22 +120,22 @@ const Characters = () => {
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
 					<div className="min-w-0 flex-1">
-						<SystemHeading
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="leading-tight"
 						>
 							Ascendant Roster
-						</SystemHeading>
-						<DataStreamText
-							variant="system"
+						</RiftHeading>
+						<ManaFlowText
+							variant="rift"
 							speed="slow"
 							className="text-sm sm:text-base mt-1"
 						>
-							Manage your awakened Ascendants and prepare them for the System's
+							Manage your awakened Ascendants and prepare them for the Rift's
 							challenges.
-						</DataStreamText>
+						</ManaFlowText>
 					</div>
 					<div className="flex gap-2">
 						<Link to="/party-stash">
@@ -180,13 +180,13 @@ const Characters = () => {
 				/>
 
 				{isGuestMode && (
-					<SystemWindow title="GUEST MODE" variant="alert" className="mb-6">
-						<SystemText className="block text-sm text-muted-foreground">
+					<AscendantWindow title="GUEST MODE" variant="alert" className="mb-6">
+						<AscendantText className="block text-sm text-muted-foreground">
 							You are playing in guest mode. Ascendants are stored locally on
 							this device only. Sign in to sync across devices and enable all
 							online features.
-						</SystemText>
-					</SystemWindow>
+						</AscendantText>
+					</AscendantWindow>
 				)}
 
 				{isLoading ? (
@@ -195,22 +195,22 @@ const Characters = () => {
 							<div className="w-16 h-16 border-4 border-resurge/20 rounded-full" />
 							<div className="absolute inset-0 w-16 h-16 border-4 border-t-resurge rounded-full animate-spin" />
 						</div>
-						<SystemText className="block text-muted-foreground font-heading animate-pulse">
+						<AscendantText className="block text-muted-foreground font-heading animate-pulse">
 							Scanning Ascendant Database...
-						</SystemText>
+						</AscendantText>
 					</div>
 				) : characters.length === 0 ? (
-					<SystemWindow
+					<AscendantWindow
 						title="NO ASCENDANTS DETECTED"
 						variant="alert"
 						className="max-w-lg mx-auto text-center py-12"
 					>
 						<div className="mb-6">
 							<Skull className="w-16 h-16 mx-auto text-muted-foreground mb-4 opacity-50" />
-							<SystemText className="block text-muted-foreground">
-								No awakened Ascendants in the System registry. Begin your
-								journey in the The Absolute's domain.
-							</SystemText>
+							<AscendantText className="block text-muted-foreground">
+								No awakened Ascendants in the Rift registry. Begin your journey
+								in the The Absolute's domain.
+							</AscendantText>
 						</div>
 						<Link to="/characters/new">
 							<Button className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple">
@@ -218,7 +218,7 @@ const Characters = () => {
 								Awaken Your First Ascendant
 							</Button>
 						</Link>
-					</SystemWindow>
+					</AscendantWindow>
 				) : (
 					<>
 						{/* Character Grid */}
@@ -260,7 +260,7 @@ const Characters = () => {
 										{/* Rank badge */}
 										<div
 											className={cn(
-												"absolute top-3 right-3 w-10 h-10 rounded-[2px] flex items-center justify-center font-system font-bold text-lg",
+												"absolute top-3 right-3 w-10 h-10 rounded-[2px] flex items-center justify-center font-heading font-bold text-lg",
 												rankInfo.bg,
 												rankInfo.color,
 												"ring-1 ring-offset-1 ring-offset-background shadow-[0_0_10px_currentColor]",
@@ -336,14 +336,14 @@ const Characters = () => {
 											data-testid="character-card"
 											className="block"
 										>
-											<h3 className="font-system text-xl font-bold uppercase tracking-widest mb-1 group-hover:text-resurge transition-colors drop-shadow-[0_0_8px_currentColor]">
+											<h3 className="font-heading text-xl font-bold uppercase tracking-widest mb-1 group-hover:text-resurge transition-colors drop-shadow-[0_0_8px_currentColor]">
 												{character.name}
 											</h3>
-											<SystemText className="block text-xs font-mono tracking-wider text-muted-foreground mb-4 uppercase">
+											<AscendantText className="block text-xs font-mono tracking-wider text-muted-foreground mb-4 uppercase">
 												{formatRegentVernacular(character.job || "Unawakened")}
 												{character.path &&
 													` - ${formatRegentVernacular(character.path)}`}
-											</SystemText>
+											</AscendantText>
 
 											{/* HP Bar */}
 											<div className="mb-4">
@@ -353,7 +353,7 @@ const Characters = () => {
 													</span>
 													<span
 														className={cn(
-															"text-[10px] font-system font-bold tracking-widest",
+															"text-[10px] font-heading font-bold tracking-widest",
 															hpPercent < 25
 																? "text-destructive"
 																: hpPercent < 50
@@ -387,7 +387,7 @@ const Characters = () => {
 											<div className="grid grid-cols-3 gap-2">
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
 													<Shield className="w-3 h-3 mx-auto mb-1 text-blue-400 opacity-80 group-hover/stat:text-blue-300 transition-colors" />
-													<span className="font-system font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
+													<span className="font-heading font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
 														{character.armor_class}
 													</span>
 													<span className="text-[10px] font-mono tracking-widest text-muted-foreground block uppercase mt-1">
@@ -396,7 +396,7 @@ const Characters = () => {
 												</div>
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
 													<Zap className="w-3 h-3 mx-auto mb-1 text-yellow-400 opacity-80 group-hover/stat:text-yellow-300 transition-colors" />
-													<span className="font-system font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
+													<span className="font-heading font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
 														+{character.initiative}
 													</span>
 													<span className="text-[10px] font-mono tracking-widest text-muted-foreground block uppercase mt-1">
@@ -405,7 +405,7 @@ const Characters = () => {
 												</div>
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
 													<Crown className="w-3 h-3 mx-auto mb-1 text-resurge opacity-80 group-hover/stat:text-resurge-light transition-colors" />
-													<span className="font-system font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
+													<span className="font-heading font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
 														{character.proficiency_bonus}
 													</span>
 													<span className="text-[10px] font-mono tracking-widest text-muted-foreground block uppercase mt-1">
@@ -438,7 +438,7 @@ const Characters = () => {
 								>
 									<Plus className="w-8 h-8 text-resurge/60 group-hover:text-resurge transition-colors" />
 								</div>
-								<p className="font-system font-bold text-lg text-resurge/70 tracking-widest uppercase group-hover:text-resurge group-hover:drop-shadow-[0_0_8px_currentColor] transition-all">
+								<p className="font-heading font-bold text-lg text-resurge/70 tracking-widest uppercase group-hover:text-resurge group-hover:drop-shadow-[0_0_8px_currentColor] transition-all">
 									AWAKEN ASCENDANT
 								</p>
 								<p className="text-xs font-mono tracking-widest text-resurge/40 mt-2 uppercase">
@@ -449,10 +449,10 @@ const Characters = () => {
 
 						{/* Character Builder Preview */}
 						<div className="mt-12">
-							<SystemHeading level={2} variant="gate" className="mb-4">
+							<RiftHeading level={2} variant="gate" className="mb-4">
 								Awakening Protocol
-							</SystemHeading>
-							<SystemWindow title="STEP-BY-STEP CREATION" variant="quest">
+							</RiftHeading>
+							<AscendantWindow title="STEP-BY-STEP CREATION" variant="quest">
 								<div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
 									{[
 										"Concept",
@@ -479,17 +479,17 @@ const Characters = () => {
 										</div>
 									))}
 								</div>
-								<SystemText className="block text-sm text-muted-foreground mt-6">
-									The System guides you through each awakening step, validating
+								<AscendantText className="block text-sm text-muted-foreground mt-6">
+									The Rift guides you through each awakening step, validating
 									your choices against the The Absolute's laws.
-								</SystemText>
+								</AscendantText>
 								<Link to="/characters/new" className="inline-block mt-4">
 									<Button className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple">
 										<Zap className="w-4 h-4" />
 										Begin Awakening
 									</Button>
 								</Link>
-							</SystemWindow>
+							</AscendantWindow>
 						</div>
 					</>
 				)}
@@ -515,7 +515,7 @@ const Characters = () => {
 							</AlertDialogTitle>
 							<AlertDialogDescription>
 								This action cannot be undone. This Ascendant will be permanently
-								removed from the System registry.
+								removed from the Rift registry.
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>

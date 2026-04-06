@@ -311,7 +311,7 @@ const MOOD_CONFIGS: Record<MusicMood, MoodConfig> = {
 		lfoDepth: 0.5,
 	},
 	"system-awakening": {
-		label: "System Awakening (SA)",
+		label: "Ascendant Awakening (SA)",
 		drones: [196.0, 293.66, 392.0],
 		droneType: "sine",
 		droneVolume: 0.04,

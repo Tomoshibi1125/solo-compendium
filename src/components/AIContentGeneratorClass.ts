@@ -38,15 +38,15 @@ interface ContentGenerationOptions {
 }
 
 const AI_CONTENT_PROMPTS = {
-	npc: "Generate a detailed System Ascendant NPC (Ascendant or Citizen). Include name, appearance, personality, background, motivations, and dialogue examples. Use System Ascendant terminology: Awakened, Rifts, System, Awakened Council.",
+	npc: "Generate a detailed Rift Ascendant NPC (Ascendant or Citizen). Include name, appearance, personality, background, motivations, and dialogue examples. Use Rift Ascendant terminology: Awakened, Rifts, System, Awakened Council.",
 	encounter:
 		"Create a combat encounter set in a Rift or the Umbral Waste. Include enemies (Anomalies/Regents), environment, tactics, treasure (Credits, Mats, Runes), and story context.",
 	location:
-		"Describe a detailed location within the world of System Ascendant (e.g., Neon District, Umbral Forest, Rift Interior). Include atmosphere, features, secrets, and interactive elements.",
+		"Describe a detailed location within the world of Rift Ascendant (e.g., Neon District, Umbral Forest, Rift Interior). Include atmosphere, features, secrets, and interactive elements.",
 	quest:
-		"Design a Directive (Quest) for Ascendants. Include title, rank (E through S), objectives, NPCs involved, complications, and rewards. Align with Protocol Warden terminology.",
+		"Design a Directive (Quest) for Ascendants. Include title, rank (E through S), objectives, NPCs involved, complications, and rewards. Align with Warden terminology.",
 	dialogue:
-		"Write dialogue between Ascendants or with the System interface. Include personality, emotion, and plot advancement aligned with the high-stakes setting.",
+		"Write dialogue between Ascendants or with the Rift interface. Include personality, emotion, and plot advancement aligned with the high-stakes setting.",
 	item: "Create a System-grade item (Equipment, Rune, or Relic) with description, properties, history, and game mechanics.",
 	backstory:
 		"Generate a character backstory for an Ascendant. Include their Awakening event, formative events, relationships, goals, and secrets.",
@@ -73,7 +73,7 @@ export class AIContentGenerator {
 					includeStats: options.includeStats ?? false,
 					includeDialogue: options.includeDialogue ?? false,
 					includeDescription: options.includeDescription ?? false,
-					universe: "System Ascendant",
+					universe: "Rift Ascendant",
 				},
 			});
 
@@ -111,7 +111,7 @@ export class AIContentGenerator {
 			options.includeStats &&
 			(options.type === "npc" || options.type === "encounter")
 		) {
-			enhancedPrompt += `\n- Include game statistics (AC, HP, abilities, etc.) aligned with System Ascendant mechanics.`;
+			enhancedPrompt += `\n- Include game statistics (AC, HP, abilities, etc.) aligned with Rift Ascendant mechanics.`;
 		}
 
 		if (
@@ -128,8 +128,8 @@ export class AIContentGenerator {
 			enhancedPrompt += `\n- Include detailed descriptions and sensory details.`;
 		}
 
-		enhancedPrompt += `\n\nFormat the response clearly with headers and appropriate System Ascendant terminology.`;
-		enhancedPrompt += `\n\nKeep the flavor aligned with System Ascendant: cinematic, high-stakes, and system-driven.`;
+		enhancedPrompt += `\n\nFormat the response clearly with headers and appropriate Rift Ascendant terminology.`;
+		enhancedPrompt += `\n\nKeep the flavor aligned with Rift Ascendant: cinematic, high-stakes, and system-driven.`;
 
 		return enhancedPrompt;
 	}

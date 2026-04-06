@@ -263,7 +263,7 @@ export const GlobalEffects = () => {
 				<div className="ambient-glow-violet ambient-glow-3" />
 			</div>
 			{/* System Scan Line */}
-			export {fx.enableScanline && <div className="system-scan-line" />}
+			{fx.enableScanline && <div className="rift-scan-line" />}
 		</>
 	);
 };

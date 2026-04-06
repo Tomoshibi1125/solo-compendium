@@ -17,9 +17,9 @@ import { FeaturesList } from "@/components/character/FeaturesList";
 import { PowersList } from "@/components/character/PowersList";
 import { RunesList } from "@/components/character/RunesList";
 import { Layout } from "@/components/layout/Layout";
+import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
-import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -129,14 +129,14 @@ export default function PlayerToolDetail() {
 		}
 		if (!activeCharacter) {
 			return (
-				<SystemWindow title="NO ACTIVE ASCENDANT">
+				<AscendantWindow title="NO ACTIVE ASCENDANT">
 					<div className="space-y-3 text-sm text-muted-foreground">
 						<p>Create an ascendant to unlock player tools.</p>
 						<Button onClick={() => navigate("/characters/new")}>
 							Create Ascendant
 						</Button>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			);
 		}
 		return null;
@@ -150,7 +150,7 @@ export default function PlayerToolDetail() {
 		switch (toolId) {
 			case "character-sheet":
 				return (
-					<SystemWindow title="ACTIVE ASCENDANT">
+					<AscendantWindow title="ACTIVE ASCENDANT">
 						<div className="space-y-3">
 							<div className="text-sm text-muted-foreground">
 								{activeCharacter?.name} | Level {activeCharacter?.level}{" "}
@@ -164,7 +164,7 @@ export default function PlayerToolDetail() {
 								Open Character Sheet
 							</Button>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				);
 			case "inventory":
 				return activeCharacter ? (
@@ -210,11 +210,11 @@ export default function PlayerToolDetail() {
 				) : null;
 			default:
 				return (
-					<SystemWindow title="TOOL UNAVAILABLE">
+					<AscendantWindow title="TOOL UNAVAILABLE">
 						<div className="text-sm text-muted-foreground">
 							This tool is not configured yet.
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				);
 		}
 	};
@@ -232,17 +232,17 @@ export default function PlayerToolDetail() {
 						Back to Player Tools
 					</Button>
 					<div className="flex-1">
-						<SystemHeading
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="text-2xl sm:text-3xl mb-1"
 						>
 							{tool.title}
-						</SystemHeading>
-						<DataStreamText variant="system" speed="slow">
+						</RiftHeading>
+						<ManaFlowText variant="rift" speed="slow">
 							{tool.subtitle}
-						</DataStreamText>
+						</ManaFlowText>
 					</div>
 					{toolId === "compendium-viewer" && (
 						<Button onClick={() => navigate("/compendium")} className="gap-2">
@@ -258,7 +258,7 @@ export default function PlayerToolDetail() {
 					)}
 					{toolId === "character-art" && (
 						<Button
-							onClick={() => navigate("/warden-protocols/art-generator")}
+							onClick={() => navigate("/warden-directives/art-generator")}
 							variant="outline"
 							className="gap-2"
 						>

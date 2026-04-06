@@ -1,5 +1,6 @@
 import { Menu, Volume2, VolumeX } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AscendantSigil } from "@/components/ui/AscendantSigil";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { GlobalSearch } from "@/components/ui/GlobalSearch";
 import { NotificationCenter } from "@/components/ui/NotificationCenter";
-import { SystemSigilLogo } from "@/components/ui/SystemSigilLogo";
 import { useAppStore } from "@/hooks/useAppStore";
 import { useAuth } from "@/lib/auth/authContext";
 
@@ -53,9 +53,9 @@ export function NavBar() {
 						to="/"
 						className="flex items-center gap-2 transition-opacity hover:opacity-80"
 					>
-						<SystemSigilLogo className="h-8 w-8 text-primary shadow-primary/20 drop-shadow-md" />
+						<AscendantSigil className="h-8 w-8 text-primary shadow-primary/20 drop-shadow-md" />
 						<span className="hidden sm:inline-block font-display font-bold tracking-widest uppercase text-sm">
-							System Protocol
+							Rift Ascendant
 						</span>
 					</Link>
 				</div>
@@ -106,7 +106,7 @@ export function NavBar() {
 								forceMount
 							>
 								<div className="flex flex-col space-y-1 p-2 border-b border-primary/10 mb-1">
-									<p className="font-medium font-system text-sm">
+									<p className="font-medium font-heading text-sm">
 										{user.displayName || "Ascendant"}
 									</p>
 									<p className="text-xs text-muted-foreground truncate">

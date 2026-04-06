@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AppSidebar } from "@/components/navigation/AppSidebar";
 import { GlobalCharacterHUD } from "@/components/navigation/GlobalCharacterHUD";
 import { NavBar } from "@/components/navigation/NavBar";
-import { SystemOverlay } from "@/components/ui/SystemOverlay";
+import { RiftOverlay } from "@/components/ui/RiftOverlay";
 import { cn } from "@/lib/utils";
 
 interface MainLayoutProps {
@@ -18,7 +18,7 @@ export function MainLayout({ children, className }: MainLayoutProps) {
 	return (
 		<div className="min-h-screen flex bg-background selection:bg-primary/30 relative overflow-hidden">
 			{/* Global System Visual Effects */}
-			<SystemOverlay />
+			<RiftOverlay />
 
 			{/* Unified Sidebar (Rail/Drawer) */}
 			<AppSidebar />

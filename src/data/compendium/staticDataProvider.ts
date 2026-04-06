@@ -93,12 +93,11 @@ export interface StaticCompendiumEntry {
 	spell_type?: string | null;
 	location_type?: string | null;
 	rank?: string | null;
-	mana_cost?: number | null;
 	damage?: string | number | null;
 	healing?: number | null;
 	effect?: string | null;
-	range?: number | Record<string, unknown> | null;
-	cooldown?: number | null;
+	range?: number | { type?: string; value?: number; unit?: string } | null;
+	recharge?: number | string | null;
 	encounters?: string[] | null;
 	treasures?: string[] | null;
 	style?: string | null;
@@ -270,12 +269,11 @@ export interface StaticCompendiumEntry {
 	flavor_text?: string | null;
 	unlock_level?: number | null;
 	damage_type?: string | null;
-	attunement_requirements?: string | Record<string, unknown> | null;
+	attunement_requirements?: string | Record<string, string | boolean> | null;
 	action_type?: string | null;
-	recharge?: string | null;
 	legendary_cost?: number | null;
 	attack_bonus?: number | null;
-	special_abilities?: Record<string, unknown>[] | null;
+	special_abilities?: Array<{ name?: string; description?: string }> | null;
 	// Pantheon detail support
 	directive?: string | null;
 	portfolio?: string[] | null;
@@ -409,7 +407,7 @@ type StaticJobSource = {
 	primary_abilities?: string[];
 	rank?: string;
 	image?: string;
-	// System Ascendant Class Features
+	// Rift Ascendant Class Features
 	hitDie?: string;
 	primaryAbility?: string;
 	savingThrows?: string[];
@@ -427,7 +425,7 @@ type StaticJobSource = {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
-	// System Ascendant features
+	// Rift Ascendant features
 	awakeningFeatures?: Array<{
 		name: string;
 		description: string;
@@ -532,21 +530,19 @@ function deriveCastingTime(spell: StaticSpellSource): string {
 
 function deriveLevel(spell: StaticSpellSource): number {
 	if (spell.level !== undefined && spell.level !== null) return spell.level;
-	const mana = (spell.limitations as Record<string, unknown>)?.mana_cost;
-	const manaN = typeof mana === "number" ? mana : 0;
 	const rank = (spell.rank ?? "D").toUpperCase();
-	// Use mana cost as tiebreaker within rank bands
+	// Default level derivation by rank
 	switch (rank) {
 		case "D":
-			return manaN > 50 ? 1 : 0;
+			return 1;
 		case "C":
-			return manaN > 80 ? 3 : 2;
+			return 3;
 		case "B":
-			return manaN > 100 ? 5 : 4;
+			return 5;
 		case "A":
-			return manaN > 110 ? 7 : 6;
+			return 7;
 		case "S":
-			return manaN > 120 ? 9 : 8;
+			return 9;
 		default:
 			return 1;
 	}
@@ -606,7 +602,7 @@ type StaticRuneSource = {
 	rarity?: string;
 	image?: string;
 	power?: number;
-	// System Ascendant rune fields
+	// Rift Ascendant rune fields
 	effect_description?: string;
 	rune_type?: string;
 	rune_category?: string;
@@ -781,7 +777,7 @@ function transformAnomaly(
 			(Anomaly as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: [Anomaly.type, rank].filter(Boolean) as string[],
-		source_book: "System Ascendant Homebrew",
+		source_book: "Rift Ascendant Homebrew",
 		image_url: Anomaly.image,
 		cr: crNumber !== null ? String(crNumber) : (rank ?? null),
 		gate_rank: rank ?? null,
@@ -900,7 +896,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 			(item as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: [item.type, item.rarity].filter(Boolean) as string[],
-		source_book: "System Ascendant Homebrew",
+		source_book: "Rift Ascendant Homebrew",
 		image_url: item.image,
 		image: item.image,
 		equipment_type: item.type,
@@ -950,7 +946,7 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		created_at:
 			(job as { created_at?: string }).created_at || "2024-01-01T00:00:00.000Z",
 		tags: job.primary_abilities || [],
-		source_book: job.source || "System Ascendant Canon",
+		source_book: job.source || "Rift Ascendant Canon",
 		image_url: job.image,
 		rank: job.rank || null,
 		rarity:
@@ -1034,7 +1030,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		tags: [spell.type, spell.rank, school, ...classes].filter(
 			Boolean,
 		) as string[],
-		source_book: "System Ascendant Homebrew",
+		source_book: "Rift Ascendant Homebrew",
 		image_url: spell.image,
 		spell_type: spell.type,
 		rank: rankValue,
@@ -1104,7 +1100,7 @@ function transformLocation(
 			(location as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: [location.type, location.rank].filter(Boolean) as string[],
-		source_book: "System Ascendant Homebrew",
+		source_book: "Rift Ascendant Homebrew",
 		image_url: location.image,
 		location_type: location.type,
 		rank: location.rank,
@@ -1129,7 +1125,7 @@ function transformRune(
 	const { range, duration, activation_action, lore, discovery_lore, ...rest } =
 		rune;
 	return {
-		...rest, // Preserve all native System Ascendant properties (inscription_difficulty, effect_type etc)
+		...rest, // Preserve all native Rift Ascendant properties (inscription_difficulty, effect_type etc)
 		id:
 			rune.id ||
 			rune.name?.toLowerCase().replace(/\s+/g, "-") ||
@@ -1143,7 +1139,7 @@ function transformRune(
 		tags: (rune.tags || [rune.element || rune.rune_type, rune.rarity]).filter(
 			Boolean,
 		) as string[],
-		source_book: (rune.source_book as string) || "System Ascendant Canon",
+		source_book: (rune.source_book as string) || "Rift Ascendant Canon",
 		image_url: rune.image,
 		rune_type: rune.rune_type || rune.element || null,
 		rune_category: rune.rune_category || rune.element || null,
@@ -1202,7 +1198,7 @@ function transformBackground(
 			(background as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: skillProfs,
-		source_book: background.source || "System Ascendant Canon",
+		source_book: background.source || "Rift Ascendant Canon",
 		image_url: background.image,
 		rarity: background.rank?.toLowerCase() || "uncommon",
 		rank: background.rank || null,
@@ -1299,7 +1295,7 @@ function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
 			(regent as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: regent.tags || (["regent", regent.theme].filter(Boolean) as string[]),
-		source_book: regent.source_book || "System Ascendant Canon",
+		source_book: regent.source_book || "Rift Ascendant Canon",
 		image_url: regent.image,
 		title: regent.title,
 		theme: regent.theme,
@@ -1468,7 +1464,7 @@ export const staticDataProvider: StaticDataProvider = {
 			description: relic.description,
 			created_at: new Date().toISOString(),
 			tags: [relic.type, relic.rarity, "relic"].filter(Boolean) as string[],
-			source_book: relic.source || "System Ascendant Canon",
+			source_book: relic.source || "Rift Ascendant Canon",
 			image_url: relic.image,
 			rarity: relic.rarity || "rare",
 			item_type: relic.type || "relic",
@@ -1640,14 +1636,19 @@ export const staticDataProvider: StaticDataProvider = {
 			} | null;
 			limitations?: {
 				uses?: string;
-				cooldown?: string;
+				recharge?: string;
 				conditions?: string[];
 			} | null;
 			flavor?: string;
 			element?: string;
-			saving_throw?: Record<string, unknown>;
-			attack_roll?: Record<string, unknown>;
-			mechanics?: Record<string, unknown>;
+			saving_throw?: { ability?: string; dc?: number | string } | null;
+			attack_roll?: { modifier?: string; type?: string } | null;
+			mechanics?: {
+				action?: string;
+				damage?: string;
+				duration?: string;
+				range?: string;
+			} | null;
 		}>("powers");
 		const filtered = filterBySearch(powers, search, [
 			"name",
@@ -1795,7 +1796,7 @@ export const staticDataProvider: StaticDataProvider = {
 			tags: ["artifact", artifact.type, artifact.rarity].filter(
 				Boolean,
 			) as string[],
-			source_book: artifact.source || "System Ascendant Canon",
+			source_book: artifact.source || "Rift Ascendant Canon",
 			image_url: artifact.image,
 			artifact_type: artifact.type || "artifact",
 			attunement: artifact.attunement,
@@ -1888,7 +1889,7 @@ export const staticDataProvider: StaticDataProvider = {
 			description: item.description,
 			created_at: "2024-01-01T00:00:00.000Z",
 			tags: ["umbral-legion", "umbral", "minion"],
-			source_book: "System Ascendant Canon",
+			source_book: "Rift Ascendant Canon",
 			role: item.role,
 			gate_rank: item.rank,
 			rarity:
@@ -1936,7 +1937,7 @@ export const staticDataProvider: StaticDataProvider = {
 				tags: (sigil.tags || [sigil.rune_type, sigil.rarity, "sigil"]).filter(
 					Boolean,
 				) as string[],
-				source_book: sigil.source_book || "System Ascendant Canon",
+				source_book: sigil.source_book || "Rift Ascendant Canon",
 				image_url: sigil.image,
 				image: sigil.image,
 				rune_type: sigil.rune_type,
@@ -1972,7 +1973,7 @@ export const staticDataProvider: StaticDataProvider = {
 			description: tattoo.description,
 			created_at: new Date().toISOString(),
 			tags: ["tattoo", tattoo.rarity].filter(Boolean) as string[],
-			source_book: tattoo.source || "System Ascendant Canon",
+			source_book: tattoo.source || "Rift Ascendant Canon",
 			image_url: tattoo.image,
 			rarity: tattoo.rarity || "uncommon",
 			attunement: tattoo.attunement,
@@ -1993,7 +1994,7 @@ export const staticDataProvider: StaticDataProvider = {
 			description: deity.description || "",
 			created_at: new Date().toISOString(),
 			tags: ["deity", "pantheon", deity.rank].filter(Boolean) as string[],
-			source_book: "System Ascendant Canon",
+			source_book: "Rift Ascendant Canon",
 			image_url: deity.image_url || deity.image,
 			rank: deity.rank,
 			directive: deity.directive,

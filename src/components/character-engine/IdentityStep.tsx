@@ -1,9 +1,9 @@
 import { Check } from "lucide-react";
 import type React from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Textarea } from "@/components/ui/textarea";
 import type { CharacterTemplate } from "@/hooks/useCharacterTemplates";
 import { cn } from "@/lib/utils";
@@ -35,7 +35,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 }) => {
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-			<SystemWindow title="MODEL INITIALIZATION: IDENTITY BINDING">
+			<AscendantWindow title="MODEL INITIALIZATION: IDENTITY BINDING">
 				<div className="space-y-6">
 					<div className="grid grid-cols-1 gap-6">
 						<div className="space-y-2">
@@ -127,7 +127,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 						</div>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };

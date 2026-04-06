@@ -3,10 +3,10 @@ import { Clock, Loader2, Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRecentItems } from "@/hooks/useRecentItems";
 import { supabase } from "@/integrations/supabase/client";
@@ -247,7 +247,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 
 			{isOpen && (
 				<div className="absolute top-full left-0 right-0 mt-2 z-50">
-					<SystemWindow
+					<AscendantWindow
 						title="SEARCH RESULTS"
 						className="max-h-[400px] overflow-y-auto"
 					>
@@ -318,7 +318,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 								))}
 							</div>
 						)}
-					</SystemWindow>
+					</AscendantWindow>
 				</div>
 			)}
 		</div>

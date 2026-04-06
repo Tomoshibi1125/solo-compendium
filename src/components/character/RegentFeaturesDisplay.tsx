@@ -39,16 +39,15 @@ export function RegentFeaturesDisplay({
 						Regent Features
 					</CardTitle>
 					<CardDescription>
-						No regent unlocked. Complete quests and have your Protocol Warden
-						(PW) unlock a regent for you.
+						No regent unlocked. Complete quests and have your Warden (Warden)
+						unlock a regent for you.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div className="text-center py-8 text-muted-foreground">
 						<Lock className="w-12 h-12 mx-auto mb-4 opacity-50" />
 						<p className="text-sm">
-							Regent abilities are locked until unlocked by your Protocol Warden
-							(PW)
+							Regent abilities are locked until unlocked by your Warden (Warden)
 						</p>
 						<p className="text-xs mt-2">
 							Complete the required quest to unlock regent features

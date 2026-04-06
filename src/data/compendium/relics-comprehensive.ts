@@ -1,6 +1,6 @@
-// Comprehensive Relics Compendium - Authoritative System Ascendant Content
+// Comprehensive Relics Compendium - Authoritative Rift Ascendant Content
 // ALL relics needed for the complete compendium system
-// Based on System Ascendant mechanics
+// Based on Rift Ascendant mechanics
 
 export interface Relic {
 	id: string;
@@ -156,7 +156,7 @@ export const comprehensiveRelics: Relic[] = [
 			resistance: ["necrotic", "force"],
 			immunity: ["poison"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "bloodthirsty-greatsword",
@@ -214,7 +214,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			vulnerabilities: ["radiant"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "lightning-blade",
@@ -269,7 +269,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["lightning", "thunder"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "frost-axe",
@@ -325,7 +325,7 @@ export const comprehensiveRelics: Relic[] = [
 			resistance: ["cold"],
 			vulnerabilities: ["fire"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// LEGENDARY ARMOR
@@ -402,7 +402,7 @@ export const comprehensiveRelics: Relic[] = [
 			],
 			immunity: ["protocol-enhanced"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "abyssal-plate",
@@ -462,7 +462,7 @@ export const comprehensiveRelics: Relic[] = [
 			resistance: ["necrotic", "cold"],
 			immunity: ["poison"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dragon-scale-mail",
@@ -515,7 +515,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["fire"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// LEGENDARY ACCESSORIES
@@ -584,7 +584,7 @@ export const comprehensiveRelics: Relic[] = [
 				ability: "Presence",
 			},
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "bloodstone-amulet",
@@ -642,7 +642,7 @@ export const comprehensiveRelics: Relic[] = [
 			resistance: ["necrotic"],
 			immunity: ["shadow corruption"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dimensional-compass",
@@ -697,7 +697,7 @@ export const comprehensiveRelics: Relic[] = [
 		mechanics: {
 			immunity: ["getting lost"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "crown-of-sense",
@@ -763,7 +763,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			immunity: ["psychic"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// EPIC ITEMS
@@ -819,7 +819,7 @@ export const comprehensiveRelics: Relic[] = [
 		mechanics: {
 			resistance: ["necrotic"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "time-turner",
@@ -877,7 +877,7 @@ export const comprehensiveRelics: Relic[] = [
 		mechanics: {
 			immunity: ["time-based effects"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// CONSUMABLES
@@ -911,7 +911,7 @@ export const comprehensiveRelics: Relic[] = [
 				value: 1,
 			},
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "shadow-elixir",
@@ -942,7 +942,7 @@ export const comprehensiveRelics: Relic[] = [
 				skills: ["Stealth", "Acrobatics"],
 			},
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dragon-blood-potion",
@@ -971,7 +971,7 @@ export const comprehensiveRelics: Relic[] = [
 		mechanics: {
 			resistance: ["fire", "cold", "lightning", "acid", "poison"],
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 
 	// TOOLS
@@ -1018,7 +1018,7 @@ export const comprehensiveRelics: Relic[] = [
 				skills: ["Perception", "Investigation"],
 			},
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "essence-collector",
@@ -1065,6 +1065,6 @@ export const comprehensiveRelics: Relic[] = [
 				ability: "Sense",
 			},
 		},
-		source: "System Ascendant Canon",
+		source: "Rift Ascendant Canon",
 	},
 ];

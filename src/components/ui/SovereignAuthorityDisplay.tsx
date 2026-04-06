@@ -173,7 +173,7 @@ export const SovereignAuthorityDisplay = ({
 						SOVEREIGN AUTHORITY
 					</span>
 				</div>
-				<span className="font-system text-xs tracking-wider text-gray-400">
+				<span className="font-heading text-xs tracking-wider text-gray-400">
 					{tierConfig.name}
 				</span>
 			</div>
@@ -189,7 +189,7 @@ export const SovereignAuthorityDisplay = ({
 						<div className="font-display text-xl font-black text-white">
 							{authority}%
 						</div>
-						<div className="font-system text-xs tracking-wider text-regent-gold">
+						<div className="font-heading text-xs tracking-wider text-regent-gold">
 							AUTHORITY
 						</div>
 					</div>
@@ -199,19 +199,19 @@ export const SovereignAuthorityDisplay = ({
 			{/* Domain Information */}
 			<div className="grid grid-cols-3 gap-3 text-center">
 				<div>
-					<div className="font-system text-xs tracking-wider text-gray-400 uppercase">
+					<div className="font-heading text-xs tracking-wider text-gray-400 uppercase">
 						Domain
 					</div>
 					<div className="font-display text-sm text-regent-gold">{domain}</div>
 				</div>
 				<div>
-					<div className="font-system text-xs tracking-wider text-gray-400 uppercase">
+					<div className="font-heading text-xs tracking-wider text-gray-400 uppercase">
 						Decrees
 					</div>
 					<div className="font-mono text-sm text-white">{decrees}</div>
 				</div>
 				<div>
-					<div className="font-system text-xs tracking-wider text-gray-400 uppercase">
+					<div className="font-heading text-xs tracking-wider text-gray-400 uppercase">
 						Vassals
 					</div>
 					<div className="font-mono text-sm text-white">{vassals}</div>
@@ -220,7 +220,7 @@ export const SovereignAuthorityDisplay = ({
 
 			{/* Authority Level Indicator */}
 			<div className="mt-4">
-				<div className="flex justify-between text-xs font-system tracking-wider text-gray-400 mb-1">
+				<div className="flex justify-between text-xs font-heading tracking-wider text-gray-400 mb-1">
 					<span>LEVEL</span>
 					<span>{Math.floor(authority / 25) + 1}/4</span>
 				</div>
@@ -300,14 +300,14 @@ export const AscensionMeter = ({
 					<span className="font-display text-sm tracking-widest text-white">
 						ASCENSION PROGRESS
 					</span>
-					<span className="font-system text-xs tracking-wider text-gray-300 uppercase">
+					<span className="font-heading text-xs tracking-wider text-gray-300 uppercase">
 						{tier}
 					</span>
 				</div>
 
 				{/* Progress Bar */}
 				<div className="mb-2">
-					<div className="flex justify-between text-xs font-system tracking-wider text-gray-400 mb-1">
+					<div className="flex justify-between text-xs font-heading tracking-wider text-gray-400 mb-1">
 						<span>0%</span>
 						<span>{progress}%</span>
 					</div>
@@ -333,7 +333,7 @@ export const AscensionMeter = ({
 				{/* Next Tier Preview */}
 				{nextTier && (
 					<div className="text-center">
-						<div className="font-system text-xs tracking-wider text-gray-400 uppercase mb-1">
+						<div className="font-heading text-xs tracking-wider text-gray-400 uppercase mb-1">
 							Next: {nextTier}
 						</div>
 						<div className="font-display text-sm text-white">

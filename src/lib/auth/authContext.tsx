@@ -1,6 +1,6 @@
 /**
  * Authentication Context
- * Role-based authentication for System Ascendant
+ * Role-based authentication for Rift Ascendant
  */
 
 import type { Session, User } from "@supabase/supabase-js";
@@ -62,7 +62,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const normalizeRole = (value?: string | null): UserRole => {
-	if (value === "warden" || value === "PW" || value === "admin")
+	if (value === "warden" || value === "Warden" || value === "admin")
 		return "warden";
 	if (value === "ascendant" || value === "player") return "ascendant";
 	if (value) {
@@ -327,7 +327,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 				// Existing users logging in already have a profile due to the handle_new_user trigger.
 				// We use .update() instead of .upsert() to avoid strict INSERT RLS check violations for existing rows.
-				const { error: upsertError } = await supabase.from("profiles")
+				const { error: upsertError } = await supabase
+					.from("profiles")
 					.update({
 						role: expectedRole,
 						updated_at: new Date().toISOString(),
@@ -336,12 +337,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 				if (upsertError) {
 					await supabase.auth.signOut();
-					return { error: `Unable to update account role: ${upsertError.message || "Unknown db error"} ${upsertError.details || ""}` };
+					return {
+						error: `Unable to update account role: ${upsertError.message || "Unknown db error"} ${upsertError.details || ""}`,
+					};
 				}
 
 				// Keep metadata updated so it stays in sync
 				await supabase.auth.updateUser({
-					data: { role: expectedRole }
+					data: { role: expectedRole },
 				});
 			}
 

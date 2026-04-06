@@ -7,15 +7,15 @@
  *
  * Used by:
  *   - PlayerMapView (player's own character)
- *   - VTTEnhanced (PW clicks a token with characterId)
+ *   - VTTEnhanced (Warden clicks a token with characterId)
  */
 
 import { Dice6, ExternalLink, Heart, Shield, Swords, Zap } from "lucide-react";
 // VTTCharacterPanel inherently uses `ddbEnhancements.roll` on line 115 and handles proper campaign syncing via `useCharacterSheetEnhancements(characterId)`.
 import { useCallback, useEffect, useMemo, useRef } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useCharacterSheetEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
@@ -28,21 +28,14 @@ import {
 	ABILITY_NAMES,
 	type AbilityScore,
 	getAbilityModifier,
-} from "@/types/system-rules";
+} from "@/types/core-rules";
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
 type RollFn = (formula: string, msgType?: "dice" | "wardenroll") => void;
 type ChatFn = (
 	message: string,
-	type?:
-		| "chat"
-		| "dice"
-		| "system"
-		| "whisper"
-		| "emote"
-		| "desc"
-		| "wardenroll",
+	type?: "chat" | "dice" | "rift" | "whisper" | "emote" | "desc" | "wardenroll",
 ) => void;
 
 interface VTTCharacterPanelProps {
@@ -51,7 +44,7 @@ interface VTTCharacterPanelProps {
 	onRoll: RollFn;
 	/** Callback to send a text message to VTT chat. Typically vttRealtime.sendChatMessage */
 	onChat: ChatFn;
-	/** If true, the panel is read-only (e.g. Protocol Warden (PW) viewing a player's character) */
+	/** If true, the panel is read-only (e.g. Warden (Warden) viewing a player's character) */
 	readOnly?: boolean;
 	/** Compact mode hides some sections */
 	compact?: boolean;
@@ -174,7 +167,7 @@ export function VTTCharacterPanel({
 				);
 			} else {
 				// Fallback for isolated VTT usage without a campaign log
-				onChat(`${charName} rolls **${label}**`, "system");
+				onChat(`${charName} rolls **${label}**`, "rift");
 			}
 
 			// Still show the 3D dice in the local VTT session!
@@ -187,7 +180,7 @@ export function VTTCharacterPanel({
 	const rollCustom = useCallback(
 		(label: string, formula: string) => {
 			const charName = character?.name || "Unknown";
-			onChat(`${charName} rolls **${label}**`, "system");
+			onChat(`${charName} rolls **${label}**`, "rift");
 			onRoll(formula);
 		},
 		[character?.name, onChat, onRoll],
@@ -205,21 +198,21 @@ export function VTTCharacterPanel({
 
 	if (isLoading) {
 		return (
-			<SystemWindow title="CHARACTER" compact>
+			<AscendantWindow title="CHARACTER" compact>
 				<div className="text-xs text-muted-foreground text-center py-4">
 					Loading character...
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
 	if (!character || !calculatedStats) {
 		return (
-			<SystemWindow title="CHARACTER" compact>
+			<AscendantWindow title="CHARACTER" compact>
 				<div className="text-xs text-muted-foreground text-center py-4">
 					Character not found.
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		);
 	}
 
@@ -230,7 +223,7 @@ export function VTTCharacterPanel({
 	return (
 		<div className="space-y-3">
 			{/* Header */}
-			<SystemWindow
+			<AscendantWindow
 				title={character.name?.toUpperCase() || "CHARACTER"}
 				compact
 			>
@@ -321,10 +314,10 @@ export function VTTCharacterPanel({
 						<ExternalLink className="w-3 h-3" />
 					</Button>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Ability Scores — Rollable */}
-			<SystemWindow title="ABILITIES" compact>
+			<AscendantWindow title="ABILITIES" compact>
 				<div className="grid grid-cols-3 gap-1.5">
 					{ABILITY_KEYS.map((ability) => {
 						const score = finalAbilities[ability];
@@ -356,10 +349,10 @@ export function VTTCharacterPanel({
 						);
 					})}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Saving Throws — Rollable */}
-			<SystemWindow title="SAVING THROWS" compact>
+			<AscendantWindow title="SAVING THROWS" compact>
 				<div className="grid grid-cols-2 gap-1">
 					{ABILITY_KEYS.map((ability) => {
 						const save = calculatedStats.savingThrows[ability];
@@ -394,10 +387,10 @@ export function VTTCharacterPanel({
 						);
 					})}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Skills — Rollable */}
-			<SystemWindow title="SKILLS" compact>
+			<AscendantWindow title="SKILLS" compact>
 				<div className="space-y-0.5 max-h-64 overflow-y-auto">
 					{Object.entries(skills)
 						.sort(([a], [b]) => a.localeCompare(b))
@@ -444,7 +437,7 @@ export function VTTCharacterPanel({
 							</button>
 						))}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			{/* Quick Attack Rolls */}
 			{!compact &&
@@ -456,7 +449,7 @@ export function VTTCharacterPanel({
 					const spellAtkBonus = spellMod !== null ? spellMod + profBonus : null;
 					const spellDC = spellMod !== null ? 8 + profBonus + spellMod : null;
 					return (
-						<SystemWindow title="ATTACKS" compact>
+						<AscendantWindow title="ATTACKS" compact>
 							<div className="space-y-1.5">
 								<div className="flex gap-1.5">
 									<Button
@@ -520,7 +513,7 @@ export function VTTCharacterPanel({
 											onClick={() => {
 												onChat(
 													`${character.name}'s Spell Save DC: **${spellDC}** (${spellAbility})`,
-													"system",
+													"rift",
 												);
 											}}
 										>
@@ -532,13 +525,13 @@ export function VTTCharacterPanel({
 									Click any weapon on full sheet to roll damage
 								</p>
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					);
 				})()}
 
 			{/* Passive Scores */}
 			{!compact && (
-				<SystemWindow title="PASSIVES" compact>
+				<AscendantWindow title="PASSIVES" compact>
 					<div className="grid grid-cols-3 gap-1.5 text-center">
 						<div className="p-1.5 rounded border border-border/50 bg-muted/20">
 							<div className="text-[9px] text-muted-foreground">Perception</div>
@@ -561,7 +554,7 @@ export function VTTCharacterPanel({
 							</div>
 						</div>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

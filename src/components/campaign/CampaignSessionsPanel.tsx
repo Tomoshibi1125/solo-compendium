@@ -1,11 +1,11 @@
 import { formatDistanceToNow } from "date-fns";
 import { Calendar, Plus, Save, ScrollText, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -172,7 +172,7 @@ export function CampaignSessionsPanel({
 
 	return (
 		<div className="space-y-6" data-testid="campaign-sessions-panel">
-			<SystemWindow title="SESSION SCHEDULE">
+			<AscendantWindow title="SESSION SCHEDULE">
 				{canManage && (
 					<div className="mb-6 rounded-lg border border-border bg-muted/30 p-4 space-y-3">
 						<h3 className="font-heading font-semibold flex items-center gap-2">
@@ -320,9 +320,9 @@ export function CampaignSessionsPanel({
 						))}
 					</div>
 				)}
-			</SystemWindow>
+			</AscendantWindow>
 
-			<SystemWindow title="SESSION LOG">
+			<AscendantWindow title="SESSION LOG">
 				{canManage && (
 					<div className="mb-6 rounded-lg border border-border bg-muted/30 p-4 space-y-3">
 						<h3 className="font-heading font-semibold flex items-center gap-2">
@@ -437,7 +437,7 @@ export function CampaignSessionsPanel({
 						))}
 					</div>
 				)}
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 }

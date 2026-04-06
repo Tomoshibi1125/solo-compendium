@@ -9,7 +9,7 @@ interface ProtocolWardenContext {
 
 /**
  * Transforms mechanical logs (e.g., "Rolled 18 to hit, 12 fire damage")
- * into thematic, flavorful narrative descriptions acting as the Protocol Warden (PW).
+ * into thematic, flavorful narrative descriptions acting as the Warden (Warden).
  */
 export async function narrateCombatEvent(
 	mechanicalText: string,
@@ -17,7 +17,7 @@ export async function narrateCombatEvent(
 ): Promise<string> {
 	const config = aiService.getConfiguration();
 
-	const prompt = `You are the AI Protocol Warden (Dungeon Master) of a System Ascendant campaign. 
+	const prompt = `You are the AI Warden (Dungeon Master) of a Rift Ascendant campaign. 
 Your role is to translate mechanical game actions into evocative, concise narrative descriptions.
 
 MECHANICAL EVENT:
@@ -28,7 +28,7 @@ ${context?.recentContext ? `RECENT CONTEXT: ${context.recentContext}` : ""}
 
 INSTRUCTIONS:
 1. Briefly narrate the outcome of this action in 1 to 2 short sentences.
-2. Keep the tone dramatic, slightly sci-fantasy / litRPG ('System Ascendant' thematic).
+2. Keep the tone dramatic, slightly sci-fantasy / litRPG ('Rift Ascendant' thematic).
 3. Do not include mechanics (numbers, dice, stats) in your response — only the purely narrative translation.
 4. If the player misses, describe how the enemy deflected or dodged. If a hit, describe the impact.
 
@@ -41,7 +41,7 @@ Output ONLY the flavor text.`;
 			input: prompt,
 			context: {
 				contentType: "narration",
-				universe: "System Ascendant",
+				universe: "Rift Ascendant",
 			},
 		});
 
@@ -58,7 +58,7 @@ Output ONLY the flavor text.`;
 			"AI_ERROR",
 		);
 	} catch (error) {
-		console.error("Protocol Warden Narration Failed:", error);
+		console.error("Warden Narration Failed:", error);
 		throw error;
 	}
 }

@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 
 export type BroadcastTheme =
-	| "system"
+	| "rift"
 	| "warden"
 	| "red-gate"
 	| "boss"
@@ -35,7 +35,7 @@ export const useVTTBroadcast = (
 	const sendBroadcast = useCallback(
 		async (
 			message: string,
-			theme: BroadcastTheme = "system",
+			theme: BroadcastTheme = "rift",
 			targets: string[] | null = null,
 		) => {
 			if (!campaignId || !user) return;
@@ -58,7 +58,7 @@ export const useVTTBroadcast = (
 					...dbPayload,
 					id: crypto.randomUUID(),
 					created_at: new Date().toISOString(),
-					sender_name: user.email?.split("@")[0] || "Protocol Warden",
+					sender_name: user.email?.split("@")[0] || "Warden",
 					// For transient broadcast, we keep the original targeting for easier filtering
 					target_user_ids: targets,
 				},

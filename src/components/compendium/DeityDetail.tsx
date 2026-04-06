@@ -11,9 +11,9 @@ import {
 	Zap,
 } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { DataStreamText, SystemHeading } from "@/components/ui/SystemText";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { CompendiumDeity } from "@/types/compendium";
@@ -49,14 +49,14 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 						>
 							{data.rank}
 						</Badge>
-						<SystemHeading
+						<RiftHeading
 							level={1}
 							variant="sovereign"
 							dimensional
 							className="text-3xl sm:text-4xl mb-1"
 						>
 							{data.name}
-						</SystemHeading>
+						</RiftHeading>
 						<p className="text-lg text-amethyst font-heading italic tracking-tight">
 							{data.display_name}
 						</p>
@@ -93,20 +93,20 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 				{/* Left Column: Lore and Dogma */}
 				<div className="lg:col-span-2 space-y-6">
 					{/* Narrative Lore */}
-					<SystemWindow title="Divine Lore" variant="regent">
+					<AscendantWindow title="Divine Lore" variant="regent">
 						<div className="p-4 bg-void/50 rounded-sm">
-							<DataStreamText className="text-sm text-muted-foreground leading-relaxed">
+							<ManaFlowText className="text-sm text-muted-foreground leading-relaxed">
 								{typeof data.lore === "string"
 									? data.lore
 									: typeof data.description === "string"
 										? data.description
 										: "No archival data available for this entity."}
-							</DataStreamText>
+							</ManaFlowText>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
 					{/* Divine Dogma */}
-					<SystemWindow title="Divine Dogma" variant="resurge">
+					<AscendantWindow title="Divine Dogma" variant="resurge">
 						<div className="p-1 space-y-3">
 							{data.dogma.map((tenet) => (
 								<div
@@ -122,11 +122,11 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 								</div>
 							))}
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
 					{/* Relationships */}
 					{data.relationships && data.relationships.length > 0 && (
-						<SystemWindow
+						<AscendantWindow
 							title="Divine Network - Relationships"
 							className="bg-glass/10"
 						>
@@ -154,14 +154,14 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 									</div>
 								))}
 							</div>
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 				</div>
 
 				{/* Right Column: Portfolio and Worship */}
 				<div className="space-y-6">
 					{/* Sigil and Portfolio */}
-					<SystemWindow title="Divine Markers">
+					<AscendantWindow title="Divine Markers">
 						<div className="p-4 space-y-4">
 							<div>
 								<div className="flex items-center gap-2 text-cyan font-display text-[10px] uppercase mb-2">
@@ -205,10 +205,10 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 								</div>
 							</div>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
 					{/* Worshipper Profile */}
-					<SystemWindow title="Divine Reach">
+					<AscendantWindow title="Divine Reach">
 						<div className="p-4 space-y-4">
 							<div className="flex gap-3">
 								<Users className="w-5 h-5 text-amethyst shrink-0" />
@@ -234,7 +234,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 								</div>
 							</div>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 
 					<div className="p-4 rounded-lg border border-cyan/30 bg-cyan/5 text-center">
 						<p className="text-[10px] font-mono text-cyan uppercase mb-2">

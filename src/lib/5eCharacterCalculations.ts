@@ -1,5 +1,5 @@
 /**
- * 5e Standard Character Calculations with System Ascendant Flavor
+ * 5e Standard Character Calculations with Rift Ascendant Flavor
  * All calculations follow SRD 5e rules exactly
  */
 
@@ -24,8 +24,8 @@ export interface CharacterStats {
 
 export interface CalculatedStats {
 	proficiencyBonus: number;
-	systemFavorDie: number;
-	systemFavorMax: number;
+	riftFavorDie: number;
+	riftFavorMax: number;
 	abilityModifiers: Record<AbilityScore, number>;
 	savingThrows: Record<AbilityScore, number>;
 	skills: Record<string, number>;
@@ -49,8 +49,8 @@ export function calculateCharacterStats(
 	} = stats;
 
 	const proficiencyBonus = getProficiencyBonus(level);
-	const systemFavorDie = getSystemFavorDie(level);
-	const systemFavorMax = getSystemFavorMax(level);
+	const riftFavorDie = getRiftFavorDie(level);
+	const riftFavorMax = getRiftFavorMax(level);
 
 	// Calculate ability modifiers (standard 5e formula)
 	const abilityModifiers: Record<AbilityScore, number> = {
@@ -84,7 +84,7 @@ export function calculateCharacterStats(
 			(savingThrowProficiencies.includes("PRE") ? proficiencyBonus : 0),
 	};
 
-	// Calculate skills (standard 5e with System Ascendant skill names)
+	// Calculate skills (standard 5e with Rift Ascendant skill names)
 	const skills: Record<string, number> = {};
 
 	// Skill to ability mapping (standard 5e)
@@ -139,8 +139,8 @@ export function calculateCharacterStats(
 
 	return {
 		proficiencyBonus,
-		systemFavorDie,
-		systemFavorMax,
+		riftFavorDie,
+		riftFavorMax,
 		abilityModifiers,
 		savingThrows,
 		skills,
@@ -193,7 +193,7 @@ export function getCasterType(
 	// Artificer special case
 	const artificers = ["Artificer"];
 
-	// Map System Ascendant canonical 14 jobs to 5e equivalents
+	// Map Rift Ascendant canonical 14 jobs to 5e equivalents
 	const jobMapping: Record<string, string> = {
 		Destroyer: "Fighter",
 		Berserker: "Barbarian",
@@ -443,16 +443,16 @@ export function getSpellsPreparedLimit(
 	return null;
 }
 
-// System Favor calculations (mapped to various 5e inspiration mechanics)
-export function getSystemFavorDie(level: number): number {
+// Rift Favor calculations (mapped to various 5e inspiration mechanics)
+export function getRiftFavorDie(level: number): number {
 	if (level <= 4) return 4;
 	if (level <= 10) return 6;
 	if (level <= 16) return 8;
 	return 10;
 }
 
-export function getSystemFavorMax(level: number): number {
-	// Aligned with unified engine: 3/4/5/6 by tier (System Ascendant canonical formula)
+export function getRiftFavorMax(level: number): number {
+	// Aligned with unified engine: 3/4/5/6 by tier (Rift Ascendant canonical formula)
 	if (level <= 4) return 3;
 	if (level <= 10) return 4;
 	if (level <= 16) return 5;

@@ -1,5 +1,5 @@
 import { Target } from "lucide-react";
-import { SystemHeading } from "@/components/ui/SystemText";
+import { RiftHeading } from "@/components/ui/AscendantText";
 import { techniques } from "@/data/compendium/techniques";
 
 export const TechniquesChapter = () => {
@@ -9,9 +9,9 @@ export const TechniquesChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<SystemHeading level={1} className="text-5xl text-red-400 mb-6">
+				<RiftHeading level={1} className="text-5xl text-red-400 mb-6">
 					Martial Techniques
-				</SystemHeading>
+				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
 					While Spells draw purely on Aether to manipulate reality, Techniques
 					represent the absolute pinnacle of physical mastery. These are kinetic
@@ -103,8 +103,8 @@ export const TechniquesChapter = () => {
 
 										<div className="flex justify-between items-center text-[10px] font-mono text-slate-500 pt-3 border-t border-white/10">
 											<span>{tech.limitations.uses}</span>
-											{tech.limitations.cooldown && (
-												<span>Refresh: {tech.limitations.cooldown}</span>
+											{tech.limitations.recharge && (
+												<span>Refresh: {tech.limitations.recharge}</span>
 											)}
 										</div>
 									</div>

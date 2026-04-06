@@ -128,7 +128,7 @@ export function ServiceWorkerUpdatePrompt() {
 				<DialogHeader>
 					<DialogTitle>Update Available</DialogTitle>
 					<DialogDescription>
-						A new version of System Ascendant is available. Would you like to
+						A new version of Rift Ascendant is available. Would you like to
 						update now?
 					</DialogDescription>
 				</DialogHeader>

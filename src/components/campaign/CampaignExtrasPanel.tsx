@@ -1,9 +1,9 @@
 import { Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -66,7 +66,7 @@ export function CampaignExtrasPanel({
 		<div className="space-y-4">
 			{/* Add New Section */}
 			{isWarden && (
-				<SystemWindow title="ADD CAMPAIGN EXTRA" compact variant="alert">
+				<AscendantWindow title="ADD CAMPAIGN EXTRA" compact variant="alert">
 					<div className="grid grid-cols-2 md:grid-cols-[2fr_120px_60px_60px_70px_auto] gap-2 items-end">
 						<div className="flex flex-col gap-1">
 							<span className="text-[10px] uppercase text-muted-foreground">
@@ -140,7 +140,7 @@ export function CampaignExtrasPanel({
 							<Plus className="w-4 h-4" /> Add
 						</Button>
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{/* List of Extras */}
@@ -157,7 +157,7 @@ export function CampaignExtrasPanel({
 				) : (
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						{extras.map((extra) => (
-							<SystemWindow
+							<AscendantWindow
 								key={extra.id}
 								title={extra.name.toUpperCase()}
 								compact
@@ -226,7 +226,7 @@ export function CampaignExtrasPanel({
 										)}
 									</div>
 								</div>
-							</SystemWindow>
+							</AscendantWindow>
 						))}
 					</div>
 				)}

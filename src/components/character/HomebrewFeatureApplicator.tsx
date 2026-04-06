@@ -1,5 +1,6 @@
 import { Plus, Search, Sparkles, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,6 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	type FeatureModifier,
 	useApplyHomebrewFeature,
@@ -158,7 +158,7 @@ export function HomebrewFeatureApplicator({
 
 	return (
 		<div data-testid="homebrew-features-panel">
-			<SystemWindow title="HOMEBREW FEATURES">
+			<AscendantWindow title="HOMEBREW FEATURES">
 				<div className="space-y-3">
 					{homebrewFeatures.length === 0 ? (
 						<p className="text-sm text-muted-foreground text-center py-4">
@@ -311,7 +311,7 @@ export function HomebrewFeatureApplicator({
 						</DialogContent>
 					</Dialog>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 }

@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from "react";
 
-interface UsePWAReturn {
+interface UseWardenAReturn {
 	isInstallable: boolean;
 	isInstalled: boolean;
 	isOnline: boolean;
@@ -13,7 +13,7 @@ interface BeforeInstallPromptEvent extends Event {
 	userChoice: Promise<{ outcome: string }>;
 }
 
-export function usePWA(): UsePWAReturn {
+export function useWardenA(): UseWardenAReturn {
 	const [isInstallable, setIsInstallable] = useState(false);
 	const [isInstalled, setIsInstalled] = useState(false);
 	const [isOnline, setIsOnline] = useState(

@@ -2,7 +2,7 @@
  * Note Privacy Engine
  *
  * Provides per-player note visibility control for campaign notes, journal
- * entries, and handouts. Supports private (PW-only), shared (all players),
+ * entries, and handouts. Supports private (Warden-only), shared (all players),
  * and per-player visibility with read/write permission levels.
  *
  * Roll20 / Foundry VTT parity feature.
@@ -16,7 +16,7 @@ export type NotePermission = "none" | "read" | "write";
 export interface NotePrivacySettings {
 	/** Who can see this note */
 	visibility: NoteVisibility;
-	/** The user who owns the note (usually PW) */
+	/** The user who owns the note (usually Warden) */
 	ownerId: string;
 	/** Per-player permissions (used when visibility is 'per-player') */
 	playerPermissions: Record<string, NotePermission>;
@@ -46,7 +46,7 @@ export interface SecuredNote {
 // ─── Factory Functions ──────────────────────────────────────
 
 /**
- * Create default privacy settings (private to PW)
+ * Create default privacy settings (private to Warden)
  */
 export function createPrivacySettings(ownerId: string): NotePrivacySettings {
 	return {
@@ -216,7 +216,7 @@ export function shareWithAll(note: SecuredNote): SecuredNote {
 }
 
 /**
- * Make a note private (PW-only)
+ * Make a note private (Warden-only)
  */
 export function makePrivate(note: SecuredNote): SecuredNote {
 	return setNoteVisibility(note, "private");

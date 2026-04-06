@@ -55,10 +55,10 @@ export async function exportCharacter(
 				max: character.hit_dice_max,
 				size: character.hit_dice_size,
 			},
-			systemFavor: {
-				current: character.system_favor_current,
-				max: character.system_favor_max,
-				die: character.system_favor_die,
+			riftFavor: {
+				current: character.rift_favor_current,
+				max: character.rift_favor_max,
+				die: character.rift_favor_die,
 			},
 			armorClass: character.armor_class,
 			speed: character.speed,
@@ -113,7 +113,7 @@ export function exportCharacterToMarkdown(character: Character): string {
 ## Stats
 - **HP**: ${character.hp_current}/${character.hp_max}${character.hp_temp > 0 ? ` (+${character.hp_temp} temp)` : ""}
 - **Hit Dice**: ${character.hit_dice_current}/${character.hit_dice_max}d${character.hit_dice_size}
-- **System Favor**: ${character.system_favor_current}/${character.system_favor_max} (d${character.system_favor_die})
+- **Rift Favor**: ${character.rift_favor_current}/${character.rift_favor_max} (d${character.rift_favor_die})
 - **AC**: ${character.armor_class}
 - **Speed**: ${character.speed} ft.
 - **Initiative**: ${character.initiative >= 0 ? "+" : ""}${character.initiative}

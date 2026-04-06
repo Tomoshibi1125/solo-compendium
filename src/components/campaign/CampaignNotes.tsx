@@ -9,6 +9,7 @@ import {
 	Trash2,
 } from "lucide-react";
 import { useState } from "react";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +22,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	Select,
 	SelectContent,
@@ -163,7 +163,10 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 
 	return (
 		<>
-			<SystemWindow title="CAMPAIGN NOTES" className="h-[500px] flex flex-col">
+			<AscendantWindow
+				title="CAMPAIGN NOTES"
+				className="h-[500px] flex flex-col"
+			>
 				<div className="flex justify-between items-center mb-4">
 					<p className="text-sm text-muted-foreground">
 						Session logs, notes, and information for this campaign
@@ -248,7 +251,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 						})
 					)}
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			<Dialog open={dialogOpen} onOpenChange={handleCloseDialog}>
 				<DialogContent className="max-w-2xl">
@@ -299,7 +302,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 								<Label htmlFor="note-shared" className="cursor-pointer">
 									{hasWardenAccess
 										? "Share with campaign members"
-										: "Share with campaign members (Protocol Warden only)"}
+										: "Share with campaign members (Warden only)"}
 								</Label>
 							</div>
 						</div>

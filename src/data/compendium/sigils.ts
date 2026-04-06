@@ -163,7 +163,7 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Frost Binding",
 			description:
-				"A protective mandate from the System, etched into void-glass. It generates a shimmering flickering shadows shroud that dampens incoming kinetic force.",
+				"A protective mandate from the Rift, etched into void-glass. It generates a shimmering flickering shadows shroud that dampens incoming kinetic force.",
 			action_type: "bonus-action",
 			resolution: "DC 13 Str check",
 		},
@@ -192,7 +192,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-ice-shield-8",
 		name: "Sigil of Ice Deflection",
 		description:
-			"A protective mandate from the System, etched into void-glass. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into void-glass. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to flash-freeze the attacker's weapon, imposing a -2 penalty to their next attack roll.",
 		rune_type: "defensive",
@@ -245,7 +245,7 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Glacier Path",
 			description:
-				"The System's offensive directive is transcribed here in soul-bonded alloy. It hums with a spectral resonance frequency, causing the weapon's edge to shimmer with luminous ripples.",
+				"The Rift's offensive directive is transcribed here in soul-bonded alloy. It hums with a spectral resonance frequency, causing the weapon's edge to shimmer with luminous ripples.",
 			action_type: "bonus-action",
 			damage: "4d8 cold",
 			resolution: "DC 20 Agility check",
@@ -303,7 +303,7 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Static Overload",
 			description:
-				"A protective mandate from the System, etched into void-glass. It generates a shimmering shimmering frost shroud that dampens incoming kinetic force.",
+				"A protective mandate from the Rift, etched into void-glass. It generates a shimmering shimmering frost shroud that dampens incoming kinetic force.",
 			action_type: "bonus-action",
 			duration: "1 minute",
 			damage: "2d6 lightning",
@@ -426,7 +426,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-shadow-shield-18",
 		name: "Sigil of Shadow Deflection",
 		description:
-			"A protective mandate from the System, etched into liquid aether. It generates a shimmering white-hot sparks shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into liquid aether. It generates a shimmering white-hot sparks shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to fade into shadows, becoming invisible until the start of your next turn.",
 		rune_type: "defensive",
@@ -495,7 +495,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-light-weapon-21",
 		name: "Sigil of Light Strikes",
 		description:
-			"The System's offensive directive is transcribed here in liquid aether. It hums with a umbral essence frequency, causing the weapon's edge to shimmer with shimmering frost.",
+			"The Rift's offensive directive is transcribed here in liquid aether. It hums with a umbral essence frequency, causing the weapon's edge to shimmer with shimmering frost.",
 		effect_description:
 			"Your weapon attacks deal an extra 3d8 radiant damage. The target sheds bright light for 10 feet and cannot benefit from invisibility.",
 		rune_type: "offensive",
@@ -554,7 +554,7 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Solar Flare",
 			description:
-				"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the umbral essence of the world through distorted space overlays.",
+				"The Rift's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the umbral essence of the world through distorted space overlays.",
 			action_type: "reaction",
 			damage: "3d6 radiant",
 			resolution: "DC 17 Vitality check",
@@ -631,7 +631,7 @@ export const sigils: SigilEntry[] = [
 		active_feature: {
 			name: "Quake Strike",
 			description:
-				"A protective mandate from the System, etched into liquid aether. It generates a shimmering crackling arcs shroud that dampens incoming kinetic force.",
+				"A protective mandate from the Rift, etched into liquid aether. It generates a shimmering crackling arcs shroud that dampens incoming kinetic force.",
 			action_type: "bonus-action",
 			damage: "3d6 bludgeoning",
 			resolution: "DC 17 Strength check",
@@ -666,7 +666,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-earth-shield-28",
 		name: "Sigil of Earth Deflection",
 		description:
-			"A protective mandate from the System, etched into tempered gate-steel. It generates a shimmering white-hot sparks shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into tempered gate-steel. It generates a shimmering white-hot sparks shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you gain temporary hit points equal to the damage blocked, up to 40.",
 		rune_type: "defensive",
@@ -688,7 +688,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-earth-accessory-29",
 		name: "Sigil of Earth Channeling",
 		description:
-			"The System's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the spectral resonance of the world through flickering shadows overlays.",
+			"The Rift's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the spectral resonance of the world through flickering shadows overlays.",
 		effect_description:
 			"Earth and transmutation spells you cast count as one level higher.",
 		rune_type: "caster",
@@ -707,7 +707,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-earth-boots-30",
 		name: "Sigil of Earth Stride",
 		description:
-			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the elemental potential of the world through crackling arcs overlays.",
+			"The Rift's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the elemental potential of the world through crackling arcs overlays.",
 		effect_description:
 			"You gain tremorsense out to 40 feet and ignore difficult terrain made of earth or stone.",
 		rune_type: "martial",
@@ -879,7 +879,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-blood-shield-38",
 		name: "Sigil of Blood Deflection",
 		description:
-			"A protective mandate from the System, etched into obsidian shards. It generates a shimmering crackling arcs shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into obsidian shards. It generates a shimmering crackling arcs shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can expend a Hit Die to immediately heal yourself.",
 		rune_type: "defensive",
@@ -897,7 +897,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-blood-accessory-39",
 		name: "Sigil of Blood Channeling",
 		description:
-			"The System's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the aetheric flow of the world through luminous ripples overlays.",
+			"The Rift's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the aetheric flow of the world through luminous ripples overlays.",
 		effect_description:
 			"When you cast a spell that deals damage, you can expend 5 HP to max out one of the damage dice.",
 		rune_type: "caster",
@@ -933,7 +933,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-weapon-41",
 		name: "Sigil of Void Strikes",
 		description:
-			"The System's offensive directive is transcribed here in crystallized mana. It hums with a thermal energy frequency, causing the weapon's edge to shimmer with luminous ripples.",
+			"The Rift's offensive directive is transcribed here in crystallized mana. It hums with a thermal energy frequency, causing the weapon's edge to shimmer with luminous ripples.",
 		effect_description:
 			"Your weapon attacks deal an extra 1d6 force damage. Targets hit lose their resistance to force damage for 1 minute.",
 		rune_type: "offensive",
@@ -953,7 +953,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-armor-42",
 		name: "Sigil of Void Bulwark",
 		description:
-			"A protective mandate from the System, etched into soul-bonded alloy. It generates a shimmering flickering shadows shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into soul-bonded alloy. It generates a shimmering flickering shadows shroud that dampens incoming kinetic force.",
 		effect_description:
 			"Grants resistance to force damage. Spells targeting you have a 20% chance to be absorbed harmlessly into the void.",
 		rune_type: "defensive",
@@ -975,7 +975,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-void-shield-43",
 		name: "Sigil of Void Deflection",
 		description:
-			"A protective mandate from the System, etched into obsidian shards. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into obsidian shards. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to create a gravity well, pulling enemies within 15 feet exactly 5 feet closer to you.",
 		rune_type: "defensive",
@@ -1192,7 +1192,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-shield-53",
 		name: "Sigil of Space Deflection",
 		description:
-			"A protective mandate from the System, etched into tempered gate-steel. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into tempered gate-steel. It generates a shimmering distorted space shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block an attack, you can use your reaction to swap places with a willing creature within 30 feet.",
 		rune_type: "defensive",
@@ -1215,7 +1215,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-accessory-54",
 		name: "Sigil of Space Channeling",
 		description:
-			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the thermal energy of the world through distorted space overlays.",
+			"The Rift's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the thermal energy of the world through distorted space overlays.",
 		effect_description:
 			"Your spells double in range, and touch spells can be cast at a distance of 30 feet.",
 		rune_type: "caster",
@@ -1234,7 +1234,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-space-boots-55",
 		name: "Sigil of Space Stride",
 		description:
-			"The System's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the thermal energy of the world through crackling arcs overlays.",
+			"The Rift's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the thermal energy of the world through crackling arcs overlays.",
 		effect_description:
 			"You can teleport up to your movement speed instead of walking.",
 		rune_type: "martial",
@@ -1292,7 +1292,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-mind-shield-58",
 		name: "Sigil of Mind Deflection",
 		description:
-			"A protective mandate from the System, etched into void-glass. It generates a shimmering luminous ripples shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into void-glass. It generates a shimmering luminous ripples shroud that dampens incoming kinetic force.",
 		effect_description:
 			"When you block a melee attack, the attacker takes 2d8 psychic damage from a mental backlash.",
 		rune_type: "defensive",
@@ -1360,7 +1360,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-soul-weapon-61",
 		name: "Sigil of Soul Strikes",
 		description:
-			"The System's offensive directive is transcribed here in tempered gate-steel. It hums with a spectral resonance frequency, causing the weapon's edge to shimmer with shimmering frost.",
+			"The Rift's offensive directive is transcribed here in tempered gate-steel. It hums with a spectral resonance frequency, causing the weapon's edge to shimmer with shimmering frost.",
 		effect_description:
 			"Your attacks deal an extra 1d6 radiant or necrotic damage (your choice). Slain enemies can't be raised as undead.",
 		rune_type: "offensive",
@@ -1444,7 +1444,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-soul-boots-65",
 		name: "Sigil of Soul Stride",
 		description:
-			"The System's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the umbral essence of the world through flickering shadows overlays.",
+			"The Rift's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the umbral essence of the world through flickering shadows overlays.",
 		effect_description:
 			"You can walk through solid objects up to 5 feet thick as difficult terrain once per turn.",
 		rune_type: "martial",
@@ -1550,7 +1550,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-nature-boots-70",
 		name: "Sigil of Nature Stride",
 		description:
-			"The System's discernment mandate, etched into frozen moonlight. It allows the wielder to perceive the elemental potential of the world through flickering shadows overlays.",
+			"The Rift's discernment mandate, etched into frozen moonlight. It allows the wielder to perceive the elemental potential of the world through flickering shadows overlays.",
 		effect_description:
 			"You ignore difficult terrain caused by plants or natural overgrowth, and you leave no trace of your passage.",
 		rune_type: "martial",
@@ -1591,7 +1591,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-metal-armor-72",
 		name: "Sigil of Metal Bulwark",
 		description:
-			"A protective mandate from the System, etched into liquid aether. It generates a shimmering shimmering frost shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into liquid aether. It generates a shimmering shimmering frost shroud that dampens incoming kinetic force.",
 		effect_description:
 			"Your AC increases by +2, and critical hits against you become normal hits.",
 		rune_type: "defensive",
@@ -1634,7 +1634,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-metal-accessory-74",
 		name: "Sigil of Metal Channeling",
 		description:
-			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the spectral resonance of the world through crackling arcs overlays.",
+			"The Rift's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the spectral resonance of the world through crackling arcs overlays.",
 		effect_description:
 			"You have advantage on saving throws to maintain concentration, and you gain resistance to nonmagical bludgeoning damage.",
 		rune_type: "caster",
@@ -2055,7 +2055,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-gem-manathirst-onyx",
 		name: "Manathirst Onyx",
 		description:
-			"The System's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the spectral resonance of the world through distorted space overlays.",
+			"The Rift's discernment mandate, etched into soul-bonded alloy. It allows the wielder to perceive the spectral resonance of the world through distorted space overlays.",
 		effect_description:
 			"When you counter or dispel a spell, you regain hit points equal to 1d8 + your spellcasting modifier.",
 		rune_type: "hybrid",
@@ -2161,7 +2161,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-gem-vampiric-garnet",
 		name: "Vampiric Garnet",
 		description:
-			"The System's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the kinetic force of the world through luminous ripples overlays.",
+			"The Rift's discernment mandate, etched into crystallized mana. It allows the wielder to perceive the kinetic force of the world through luminous ripples overlays.",
 		effect_description:
 			"When you deal a critical hit with this weapon, you regain hit points equal to half the necrotic or slashing damage dealt.",
 		rune_type: "hybrid",
@@ -2197,7 +2197,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-gem-binary-void-data-pearl",
 		name: "Binary Void-Data Pearl",
 		description:
-			"The System's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the elemental potential of the world through crackling arcs overlays.",
+			"The Rift's discernment mandate, etched into obsidian shards. It allows the wielder to perceive the elemental potential of the world through crackling arcs overlays.",
 		effect_description:
 			"You gain a swimming speed of 40 feet and can breathe underwater. You also gain resistance to cold damage.",
 		rune_type: "utility",
@@ -2269,7 +2269,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-gem-phoenix-feather",
 		name: "Crystallized Phoenix Feather",
 		description:
-			"A protective mandate from the System, etched into obsidian shards. It generates a shimmering luminous ripples shroud that dampens incoming kinetic force.",
+			"A protective mandate from the Rift, etched into obsidian shards. It generates a shimmering luminous ripples shroud that dampens incoming kinetic force.",
 		effect_description:
 			"If you drop to 0 hit points and don't die outright, you can drop to 1 hit point instead and release a burst of fire dealing 2d6 fire damage to creatures in a 10-ft radius. (Once per long rest).",
 		rune_type: "defensive",
@@ -2316,7 +2316,7 @@ export const sigils: SigilEntry[] = [
 		id: "sigil-chronos-clock",
 		name: "Sigil of the Chronos Clock",
 		description:
-			"An intricate clockwork sigil that seems to move slightly out of sync with the current second. It represents the System's control over temporal sequences.",
+			"An intricate clockwork sigil that seems to move slightly out of sync with the current second. It represents the Rift's control over temporal sequences.",
 		effect_description:
 			"Once per day, when you take an action, you can trigger 'Temporal Overclock' to immediately take another action. After doing so, you are stunned until the start of your next turn.",
 		rune_type: "utility",

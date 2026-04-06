@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SystemWindow } from "@/components/ui/SystemWindow";
 import {
 	type ActionResolutionPayload,
 	setPendingResolution,
@@ -51,7 +51,7 @@ export interface SpellData {
 	} | null;
 	limitations?: {
 		uses?: string;
-		cooldown?: string;
+		recharge?: string;
 		conditions?: string[];
 		exhaustion?: string;
 	} | null;
@@ -251,7 +251,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 				</div>
 			)}
 
-			<SystemWindow
+			<AscendantWindow
 				title={displayName.toUpperCase()}
 				actions={<ShareToVTTButton itemType="Spell" itemName={displayName} />}
 			>
@@ -285,7 +285,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							variant="outline"
 							onClick={() =>
 								queueResolutionAndNavigate(
-									"/warden-protocols/initiative-tracker",
+									"/warden-directives/initiative-tracker",
 								)
 							}
 						>
@@ -293,28 +293,28 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						</Button>
 					</div>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 
 			<div
 				id="spell-stats"
 				className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4"
 			>
 				{rangeText && (
-					<SystemWindow title="RANGE" compact>
+					<AscendantWindow title="RANGE" compact>
 						<div className="flex items-center gap-2">
 							<Target className="w-5 h-5 text-emerald-400" />
 							<span className="font-heading">
 								{formatRegentVernacular(rangeText)}
 							</span>
 						</div>
-					</SystemWindow>
+					</AscendantWindow>
 				)}
 			</div>
 
 			{(activation || duration || components) && (
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 					{activation && (
-						<SystemWindow title="ACTIVATION" compact>
+						<AscendantWindow title="ACTIVATION" compact>
 							<div className="flex items-center gap-2">
 								<Zap className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
@@ -326,10 +326,10 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 									{formatRegentVernacular(activation.cost)}
 								</span>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 					{duration && (
-						<SystemWindow title="DURATION" compact>
+						<AscendantWindow title="DURATION" compact>
 							<div className="flex items-center gap-2">
 								<Timer className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
@@ -341,10 +341,10 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 									{formatRegentVernacular(duration.time)}
 								</span>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 					{components && (
-						<SystemWindow title="COMPONENTS" compact>
+						<AscendantWindow title="COMPONENTS" compact>
 							<div className="flex items-center gap-2">
 								<Sparkles className="w-5 h-5 text-primary" />
 								<span className="font-heading">
@@ -356,13 +356,13 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 									{formatRegentVernacular(components.material_desc)}
 								</span>
 							)}
-						</SystemWindow>
+						</AscendantWindow>
 					)}
 				</div>
 			)}
 
 			{effects && (
-				<SystemWindow title="EFFECTS">
+				<AscendantWindow title="EFFECTS">
 					<div className="space-y-3">
 						{effects.primary && (
 							<p className="text-foreground leading-relaxed">
@@ -380,11 +380,11 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							</p>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{mechanics && (
-				<SystemWindow title="MECHANICS">
+				<AscendantWindow title="MECHANICS">
 					<div className="space-y-4">
 						{mechanics.attack && (
 							<div className="flex items-start gap-2">
@@ -464,11 +464,11 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							</div>
 						)}
 					</div>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{limitations && (
-				<SystemWindow title="LIMITATIONS">
+				<AscendantWindow title="LIMITATIONS">
 					<ul className="space-y-2 text-sm">
 						{limitations.uses && (
 							<li className="flex items-center gap-2">
@@ -476,11 +476,11 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								<span>Uses: {formatRegentVernacular(limitations.uses)}</span>
 							</li>
 						)}
-						{limitations.cooldown && (
+						{limitations.recharge && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Cooldown: {formatRegentVernacular(limitations.cooldown)}
+									Recharge: {formatRegentVernacular(limitations.recharge)}
 								</span>
 							</li>
 						)}
@@ -504,37 +504,37 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							</li>
 						)}
 					</ul>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.effect && (
-				<SystemWindow id="spell-effect" title="EFFECT">
+				<AscendantWindow id="spell-effect" title="EFFECT">
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.effect || ""} />
 					</p>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{(data.higher_levels || data.atHigherLevels) && (
-				<SystemWindow title="AT HIGHER TIERS">
+				<AscendantWindow title="AT HIGHER TIERS">
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText
 							text={data.higher_levels || data.atHigherLevels || ""}
 						/>
 					</p>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.flavor && (
-				<SystemWindow title="FLAVOR">
+				<AscendantWindow title="FLAVOR">
 					<p className="text-sm text-cyan/70 italic bg-cyan/5 border-l-2 border-cyan/30 pl-3 py-1">
 						<AutoLinkText text={data.flavor || ""} />
 					</p>
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 
 			{data.description && (
-				<SystemWindow id="spell-description" title="DESCRIPTION">
+				<AscendantWindow id="spell-description" title="DESCRIPTION">
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
@@ -548,7 +548,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							</p>
 						</div>
 					)}
-				</SystemWindow>
+				</AscendantWindow>
 			)}
 		</div>
 	);

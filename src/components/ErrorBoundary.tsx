@@ -7,8 +7,8 @@ import {
 } from "react-error-boundary";
 import { error as logError } from "@/lib/logger";
 import { captureException } from "@/lib/sentry";
+import { AscendantWindow } from "./ui/AscendantWindow";
 import { Button } from "./ui/button";
-import { SystemWindow } from "./ui/SystemWindow";
 
 interface Props {
 	children: ReactNode;
@@ -18,7 +18,7 @@ interface Props {
 const DefaultErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 	return (
 		<div className="container flex items-center justify-center min-h-[50vh] px-4 py-8 mx-auto max-w-2xl">
-			<SystemWindow
+			<AscendantWindow
 				title="SYSTEM ERROR"
 				variant="alert"
 				className="w-full text-center"
@@ -28,9 +28,8 @@ const DefaultErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 					FATAL ANOMALY
 				</h2>
 				<p className="text-muted-foreground mb-4">
-					The System has encountered an anomaly. Even under the Prime
-					Architect's watch, reality sometimes glitches. Please try resetting
-					the view.
+					The Rift has encountered an anomaly. Even under the Prime Architect's
+					watch, reality sometimes glitches. Please try resetting the view.
 				</p>
 				{error !== undefined && error !== null && (
 					<details className="text-left mb-4">
@@ -56,7 +55,7 @@ const DefaultErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 						Go Home
 					</Button>
 				</div>
-			</SystemWindow>
+			</AscendantWindow>
 		</div>
 	);
 };
