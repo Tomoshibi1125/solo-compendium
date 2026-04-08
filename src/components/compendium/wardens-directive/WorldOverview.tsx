@@ -14,7 +14,7 @@ import { RiftHeading } from "@/components/ui/AscendantText";
 import { getAssetsByTier, searchAssets } from "@/lib/vtt";
 import type { CompendiumAnomaly } from "@/types/compendium";
 
-const kaelVoss: CompendiumAnomaly = {
+const kaelVoss = {
 	id: "kael-voss",
 	name: "Kael Voss",
 	display_name: "The Zenith of Creation",
@@ -47,7 +47,7 @@ const kaelVoss: CompendiumAnomaly = {
 		},
 	],
 	actions: [],
-};
+} as unknown as CompendiumAnomaly;
 
 interface CityInfo {
 	id: string;

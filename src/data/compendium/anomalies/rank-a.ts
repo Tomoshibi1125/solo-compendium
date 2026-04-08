@@ -1,4 +1,4 @@
-export const anomalies_a = [
+﻿export const anomalies_a = [
 	{
 		id: "anomaly-0004",
 		name: "Eternal Demonic Knight",

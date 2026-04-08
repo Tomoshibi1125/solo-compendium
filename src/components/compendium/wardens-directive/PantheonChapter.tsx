@@ -81,7 +81,7 @@ export const PantheonChapter = () => {
 												<Sparkles className="w-3 h-3" /> Core Domains
 											</h4>
 											<div className="flex flex-wrap gap-2">
-												{deity.specializations.map((spec) => (
+												{(deity.specializations ?? []).map((spec: string) => (
 													<span
 														key={spec}
 														className="px-2 py-0.5 bg-fuchsia-500/10 text-fuchsia-300 text-[10px] border border-fuchsia-500/20 rounded-full font-mono"

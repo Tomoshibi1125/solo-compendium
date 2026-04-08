@@ -233,7 +233,7 @@ export const useCombatActions = (characterId: string) => {
 
 		// 2. Spell/Power Actions
 		(powers || []).forEach((p) => {
-			const powerData = p.power as CompendiumPower;
+			const powerData = p.power as unknown as CompendiumPower;
 			if (!powerData) return;
 
 			const castingAbility = character.job === "Technomancer" ? "INT" : "SENSE";
@@ -241,28 +241,28 @@ export const useCombatActions = (characterId: string) => {
 			const attackBonus = abiMod + profBonus;
 			const saveDC = 8 + abiMod + profBonus;
 
-			const mechanics = (powerData.mechanics as JsonMechanics) || {};
+			const mechanics = (powerData.mechanics as unknown as JsonMechanics) || {};
 			const target = powerData.target || (mechanics.target as string) || "";
 
 			result.push({
 				id: `power-${p.id}`,
 				name: p.name,
 				type: powerData.power_type === "Spell" ? "spell" : "power",
-				description: p.description || powerData.description,
+				description: p.description || powerData.description || "",
 				activation: powerData.activation_time || p.casting_time || "1 action",
 				range: p.range || powerData.range || "Self",
 				target: target,
 				attackBonus: powerData.has_attack_roll ? attackBonus : undefined,
 				saveDC: powerData.has_save ? saveDC : undefined,
-				saveAbility: powerData.save_ability as AbilityScore,
-				damageRoll: powerData.damage_roll,
-				damageType: powerData.damage_type,
+				saveAbility: (powerData.save_ability as AbilityScore) || undefined,
+				damageRoll: powerData.damage_roll || undefined,
+				damageType: powerData.damage_type || undefined,
 				payload: {
 					version: 1,
 					id: `power-${p.id}`,
 					name: p.name,
 					source: {
-						type: powerData.power_type === "Spell" ? "spell" : "artifact",
+						type: powerData.power_type === "Spell" ? "spell" : "power",
 						entryId: p.id,
 					},
 					kind: powerData.has_attack_roll ? "attack" : "save",
@@ -278,7 +278,7 @@ export const useCombatActions = (characterId: string) => {
 					damage: powerData.damage_roll
 						? {
 								roll: powerData.damage_roll,
-								type: powerData.damage_type,
+								type: powerData.damage_type || undefined,
 							}
 						: undefined,
 				},
@@ -289,7 +289,7 @@ export const useCombatActions = (characterId: string) => {
 
 		// 3. Technique Actions
 		(techniques || []).forEach((t) => {
-			const techData = t.technique as CompendiumTechnique;
+			const techData = t.technique as unknown as CompendiumTechnique;
 			if (!techData) return;
 
 			const strMod = getAbilityModifier(character.abilities.STR);
@@ -297,15 +297,15 @@ export const useCombatActions = (characterId: string) => {
 			const abiMod = Math.max(strMod, agiMod);
 			const saveDC = 8 + abiMod + profBonus;
 
-			const mechanics = (techData.mechanics as JsonMechanics) || {};
+			const mechanics = (techData.mechanics as unknown as JsonMechanics) || {};
 
 			result.push({
 				id: `tech-${t.id}`,
 				name: techData.name,
 				type: "technique",
-				description: techData.description,
-				activation: techData.activation_type || "1 action",
-				range: techData.range_desc || "5 ft",
+				description: techData.description || "",
+				activation: typeof techData.activation === "string" ? techData.activation : (techData.activation?.type || "1 action"),
+				range: typeof techData.range === "string" ? techData.range : (techData.range?.type ? `${techData.range.type} ${techData.range.distance || ""}`.trim() : "5 ft"),
 				target: (mechanics.target as string) || "",
 				saveDC: mechanics.save_ability ? saveDC : undefined,
 				saveAbility: mechanics.save_ability as AbilityScore,

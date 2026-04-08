@@ -32,7 +32,7 @@ export const runProficiencyPatch = async () => {
 		const needsArmor = !char.armor_proficiencies;
 
 		if (needsWeapon || needsArmor) {
-			const jobData = (getStaticJobs() as StaticJob[]).find(
+			const jobData = (getStaticJobs() as unknown as StaticJob[]).find(
 				(j) => j.name === char.job,
 			);
 

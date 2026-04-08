@@ -1,4 +1,4 @@
-import * as fs from "node:fs";
+﻿import * as fs from "node:fs";
 import * as path from "node:path";
 
 console.log("=== STARTING LORE & MECHANICS ENGINE ===");

@@ -1,678 +1,2119 @@
-import type { CompendiumSpell } from "@/types/compendium";
+import type { CompendiumSpell } from "../../../types/compendium";
+
 export const spells_c: CompendiumSpell[] = [
 	{
-		id: "spell-c-1",
-		name: "Void wave",
-		description:
-			"A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-1.webp",
-		effect: "Critical hits pull the target 10 feet toward the caster.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Critical hits pull the target 10 feet toward the caster.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Critical hits pull the target 10 feet toward the caster.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-1.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A hunger that cannot be sated.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A hunger that cannot be sated.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Critical hits pull the target 10 feet toward the caster."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-1",
+		"name": "Void wave",
+		"description": "A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-2",
-		name: "Corona burst",
-		description:
-			"A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-2.webp",
-		effect: "Undead have disadvantage on Decree checks against this spell.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Undead have disadvantage on Decree checks against this spell.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Undead have disadvantage on Decree checks against this spell.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "radiant",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-2.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A brilliance that rivals the First Gate.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A brilliance that rivals the First Gate.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Undead have disadvantage on Decree checks against this spell."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-2",
+		"name": "Corona burst",
+		"description": "A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-3",
-		name: "Radiant shackle",
-		description:
-			"A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-3.webp",
-		effect: "Undead have disadvantage on Decree checks against this spell.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Undead have disadvantage on Decree checks against this spell.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Undead have disadvantage on Decree checks against this spell.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "radiant",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-3.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A brilliance that rivals the First Gate.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A brilliance that rivals the First Gate.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Undead have disadvantage on Decree checks against this spell."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-3",
+		"name": "Radiant shackle",
+		"description": "A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-4",
-		name: "Abyssal strike",
-		description:
-			"A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-4.webp",
-		effect: "Critical hits pull the target 10 feet toward the caster.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Critical hits pull the target 10 feet toward the caster.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Critical hits pull the target 10 feet toward the caster.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-4.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A hunger that cannot be sated.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A hunger that cannot be sated.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Critical hits pull the target 10 feet toward the caster."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-4",
+		"name": "Abyssal strike",
+		"description": "A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-5",
-		name: "Crimson strike",
-		description:
-			"The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-5.webp",
-		effect: "The caster regains HP equal to half the damage dealt.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "The caster regains HP equal to half the damage dealt.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "The caster regains HP equal to half the damage dealt.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-5.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "The rhythm of the kill.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "The rhythm of the kill.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"The caster regains HP equal to half the damage dealt."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-5",
+		"name": "Crimson strike",
+		"description": "The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-6",
-		name: "Null spike",
-		description:
-			"A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-6.webp",
-		effect: "Critical hits pull the target 10 feet toward the caster.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Critical hits pull the target 10 feet toward the caster.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Critical hits pull the target 10 feet toward the caster.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-6.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A hunger that cannot be sated.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A hunger that cannot be sated.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Critical hits pull the target 10 feet toward the caster."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-6",
+		"name": "Null spike",
+		"description": "A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-7",
-		name: "Crimson shackle",
-		description:
-			"The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-7.webp",
-		effect: "The caster regains HP equal to half the damage dealt.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "The caster regains HP equal to half the damage dealt.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "The caster regains HP equal to half the damage dealt.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-7.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "The rhythm of the kill.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "The rhythm of the kill.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"The caster regains HP equal to half the damage dealt."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-7",
+		"name": "Crimson shackle",
+		"description": "The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-8",
-		name: "Abyssal shackle",
-		description:
-			"A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-8.webp",
-		effect: "Critical hits pull the target 10 feet toward the caster.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Critical hits pull the target 10 feet toward the caster.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Critical hits pull the target 10 feet toward the caster.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-8.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A hunger that cannot be sated.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A hunger that cannot be sated.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Critical hits pull the target 10 feet toward the caster."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-8",
+		"name": "Abyssal shackle",
+		"description": "A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-9",
-		name: "Celestial edge",
-		description:
-			"A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-9.webp",
-		effect: "Undead have disadvantage on Decree checks against this spell.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Undead have disadvantage on Decree checks against this spell.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Undead have disadvantage on Decree checks against this spell.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "radiant",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-9.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A brilliance that rivals the First Gate.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A brilliance that rivals the First Gate.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Undead have disadvantage on Decree checks against this spell."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-9",
+		"name": "Celestial edge",
+		"description": "A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-10",
-		name: "Singularity lance",
-		description:
-			"A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-10.webp",
-		effect: "Critical hits pull the target 10 feet toward the caster.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Critical hits pull the target 10 feet toward the caster.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Critical hits pull the target 10 feet toward the caster.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-10.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A hunger that cannot be sated.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A hunger that cannot be sated.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Critical hits pull the target 10 feet toward the caster."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-10",
+		"name": "Singularity lance",
+		"description": "A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-11",
-		name: "Frost grasp",
-		description:
-			"A stillness more absolute than death. This technique unleashes pure energy. Target's movement speed is reduced by 10 feet.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-11.webp",
-		effect: "Target's movement speed is reduced by 10 feet.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Target's movement speed is reduced by 10 feet.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Target's movement speed is reduced by 10 feet.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "cold",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-11.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A stillness more absolute than death.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A stillness more absolute than death.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Target's movement speed is reduced by 10 feet."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-11",
+		"name": "Frost grasp",
+		"description": "A stillness more absolute than death. This technique unleashes pure energy. Target's movement speed is reduced by 10 feet.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-12",
-		name: "Chill wave",
-		description:
-			"A stillness more absolute than death. This technique unleashes pure energy. Target's movement speed is reduced by 10 feet.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-12.webp",
-		effect: "Target's movement speed is reduced by 10 feet.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Target's movement speed is reduced by 10 feet.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Target's movement speed is reduced by 10 feet.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "cold",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-12.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A stillness more absolute than death.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A stillness more absolute than death.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Target's movement speed is reduced by 10 feet."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-12",
+		"name": "Chill wave",
+		"description": "A stillness more absolute than death. This technique unleashes pure energy. Target's movement speed is reduced by 10 feet.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-13",
-		name: "Radiant grasp",
-		description:
-			"A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-13.webp",
-		effect: "Undead have disadvantage on Decree checks against this spell.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Undead have disadvantage on Decree checks against this spell.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Undead have disadvantage on Decree checks against this spell.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "radiant",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-13.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A brilliance that rivals the First Gate.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A brilliance that rivals the First Gate.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Undead have disadvantage on Decree checks against this spell."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-13",
+		"name": "Radiant grasp",
+		"description": "A brilliance that rivals the First Gate. This technique unleashes pure energy. Undead have disadvantage on Decree checks against this spell.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-14",
-		name: "Abyssal edge",
-		description:
-			"A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-14.webp",
-		effect: "Critical hits pull the target 10 feet toward the caster.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "Critical hits pull the target 10 feet toward the caster.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "Critical hits pull the target 10 feet toward the caster.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-14.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A hunger that cannot be sated.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "A hunger that cannot be sated.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"Critical hits pull the target 10 feet toward the caster."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-14",
+		"name": "Abyssal edge",
+		"description": "A hunger that cannot be sated. This technique unleashes dark energy. Critical hits pull the target 10 feet toward the caster.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
 	},
 	{
-		id: "spell-c-15",
-		name: "Gore shackle",
-		description:
-			"The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
-		type: "Combat",
-		rank: "C",
-		image: "/generated/compendium/spells/spell-c-15.webp",
-		effect: "The caster regains HP equal to half the damage dealt.",
-		range: {
-			type: "distance",
-			value: 120,
-			unit: "ft",
+		"level": 0,
+		"rank": "C",
+		"school": "Evocation",
+		"casting_time": "1 action",
+		"range": "distance",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": false,
+			"focus": "Ascendant focus"
 		},
-		activation: {
-			type: "action",
-			cost: 1,
+		"duration": "instant",
+		"concentration": false,
+		"ritual": false,
+		"effect": "The caster regains HP equal to half the damage dealt.",
+		"attack": {
+			"type": "ranged",
+			"ability": "Intelligence",
+			"damage": "1d10"
 		},
-		duration: {
-			type: "instant",
+		"activation": {
+			"type": "action",
+			"cost": 1
 		},
-		components: {
-			verbal: true,
-			somatic: true,
-			material: false,
-			focus: "Ascendant focus",
+		"higher_levels": "",
+		"saving_throw": {
+			"ability": "",
+			"dc": 0,
+			"success": "",
+			"failure": ""
 		},
-		effects: {
-			primary: "The caster regains HP equal to half the damage dealt.",
+		"area": {
+			"type": "point",
+			"size": "small",
+			"shape": "sphere"
 		},
-		mechanics: {
-			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "2d6",
-					type: "necrotic",
+		"type": "Combat",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"image": "/generated/compendium/spells/spell-c-15.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "The rhythm of the kill.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Core",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
 				},
+				"damage_type": ""
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {},
-		flavor: "The rhythm of the kill.",
-		atHigherLevels:
-			"When cast at a higher tier, damage increases by 2d6 per tier.",
-	},
+		"limitations": {
+			"uses": "",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": [
+			"The caster regains HP equal to half the damage dealt."
+		],
+		"rarity": "common",
+		"cr": "0",
+		"id": "spell-c-15",
+		"name": "Gore shackle",
+		"description": "The rhythm of the kill. This technique unleashes dark energy. The caster regains HP equal to half the damage dealt.",
+		"atHigherLevels": "When cast at a higher tier, damage increases by 2d6 per tier."
+	}
 ];

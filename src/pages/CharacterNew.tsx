@@ -135,7 +135,7 @@ const CharacterNew = () => {
 	const { data: jobs = [] } = useQuery({
 		queryKey: ["jobs"],
 		queryFn: async () => {
-			const staticJobsData: Job[] = (getStaticJobs() as StaticJob[]).map(
+			const staticJobsData: Job[] = (getStaticJobs() as unknown as StaticJob[]).map(
 				(job) => ({
 					id: job.id,
 					name: job.name,
@@ -219,7 +219,7 @@ const CharacterNew = () => {
 		if (!selectedJob) return undefined;
 		const jobName = jobs.find((j) => j.id === selectedJob)?.name;
 		if (!jobName) return undefined;
-		return (getStaticJobs() as StaticJob[]).find((j) => j.name === jobName);
+		return (getStaticJobs() as unknown as StaticJob[]).find((j) => j.name === jobName);
 	}, [selectedJob, jobs]);
 
 	const jobAwakeningAtCreation = useMemo(() => {
@@ -483,10 +483,10 @@ const CharacterNew = () => {
 			if (!dbJob || !dbBg) throw new Error("Job or Background missing");
 
 			// Ensure we use the enriched static data for mapping
-			const job = (getStaticJobs() as StaticJob[]).find(
+			const job = (getStaticJobs() as unknown as StaticJob[]).find(
 				(j: StaticJob) => j.name === dbJob.name,
 			);
-			const bgData = (getStaticBackgrounds() as StaticBackground[]).find(
+			const bgData = (getStaticBackgrounds() as unknown as StaticBackground[]).find(
 				(b: StaticBackground) => b.name === dbBg.name,
 			);
 

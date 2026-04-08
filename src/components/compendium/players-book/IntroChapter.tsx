@@ -112,7 +112,7 @@ export const IntroChapter = () => {
 										{job.name}
 									</h4>
 									<span className="text-[10px] font-mono text-cyan/60 uppercase">
-										Rank {job.rank} | {job.hitDie}
+										Rank {job.rank} | {job.hit_dice}
 									</span>
 								</div>
 								<p className="text-xs text-muted-foreground line-clamp-3 mb-3">

@@ -23,10 +23,11 @@ interface DeityDetailProps {
 }
 
 export const DeityDetail = ({ data }: DeityDetailProps) => {
-	const getRankColor = (rank: string) => {
-		if (rank.includes("Grand"))
+	const getRankColor = (rank: string | null | undefined) => {
+		const r = rank || "";
+		if (r.includes("Grand"))
 			return "border-regent-gold text-regent-gold bg-regent-gold/10 shadow-[0_0_10px_rgba(255,215,0,0.3)]";
-		if (rank.includes("Lesser"))
+		if (r.includes("Lesser"))
 			return "border-amethyst text-amethyst bg-amethyst/10";
 		return "border-cyan text-cyan bg-cyan/10";
 	};
@@ -47,7 +48,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 								getRankColor(data.rank),
 							)}
 						>
-							{data.rank}
+							{data.rank || "Unknown Rank"}
 						</Badge>
 						<RiftHeading
 							level={1}
@@ -58,7 +59,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 							{data.name}
 						</RiftHeading>
 						<p className="text-lg text-amethyst font-heading italic tracking-tight">
-							{data.display_name}
+							{data.display_name || data.name}
 						</p>
 					</div>
 				</div>
@@ -68,14 +69,16 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 						<div className="flex items-center gap-2 text-cyan font-display text-[10px] uppercase mb-1">
 							<Anchor className="w-3 h-3" /> Divine Directive
 						</div>
-						<div className="text-sm font-mono text-white">{data.directive}</div>
+						<div className="text-sm font-mono text-white">
+							{data.directive || "Unspecified"}
+						</div>
 					</div>
 					<div className="bg-glass/30 p-3 rounded-sm border border-amethyst/20">
 						<div className="flex items-center gap-2 text-cyan font-display text-[10px] uppercase mb-1">
 							<MapPin className="w-3 h-3" /> Home Realm
 						</div>
 						<div className="text-sm font-mono text-white">
-							{data.home_realm}
+							{data.home_realm || "Unknown"}
 						</div>
 					</div>
 					<div className="bg-glass/30 p-3 rounded-sm border border-amethyst/20">
@@ -83,7 +86,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 							<Sword className="w-3 h-3" /> Favored Manifestation
 						</div>
 						<div className="text-sm font-mono text-white">
-							{data.manifestation}
+							{data.manifestation || "None"}
 						</div>
 					</div>
 				</div>
@@ -108,7 +111,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 					{/* Divine Dogma */}
 					<AscendantWindow title="Divine Dogma" variant="resurge">
 						<div className="p-1 space-y-3">
-							{data.dogma.map((tenet) => (
+							{(data.dogma ?? []).map((tenet: string) => (
 								<div
 									key={tenet.substring(0, 32)}
 									className="flex gap-4 p-3 bg-shadow-purple/10 border-l-2 border-shadow-purple"
@@ -117,7 +120,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 										{"//"}
 									</span>
 									<p className="text-sm italic text-muted-foreground">
-										<AutoLinkText text={tenet} />
+										<AutoLinkText text={tenet || ""} />
 									</p>
 								</div>
 							))}
@@ -131,7 +134,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 							className="bg-glass/10"
 						>
 							<div className="p-2 space-y-2">
-								{data.relationships.map((rel) => (
+								{data.relationships.map((rel: any) => (
 									<div
 										key={rel.id}
 										className="flex items-center justify-between p-3 rounded-sm border border-amethyst/10 bg-void/40"
@@ -143,11 +146,11 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 													variant="outline"
 													className="text-[10px] h-4 leading-none uppercase"
 												>
-													{rel.type}
+													{rel.type || "Unknown"}
 												</Badge>
 											</div>
 											<p className="text-xs text-muted-foreground mt-1 italic">
-												{rel.description}
+												{rel.description || ""}
 											</p>
 										</div>
 										<ExternalLink className="w-4 h-4 text-amethyst/40" />
@@ -168,7 +171,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 									<Zap className="w-3 h-3" /> Divine Sigil
 								</div>
 								<div className="p-3 bg-amethyst/5 border border-amethyst/20 rounded-sm text-sm italic">
-									{data.sigil}
+									{data.sigil || "Unspecified"}
 								</div>
 							</div>
 
@@ -177,7 +180,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 									<GitBranch className="w-3 h-3" /> Divine Portfolio
 								</div>
 								<div className="flex flex-wrap gap-2">
-									{data.portfolio.map((p) => (
+									{(data.portfolio ?? []).map((p: string) => (
 										<Badge
 											key={p}
 											className="bg-amethyst/20 text-amethyst border-amethyst/40"
@@ -193,7 +196,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 									<Book className="w-3 h-3" /> Specializations
 								</div>
 								<div className="flex flex-wrap gap-2">
-									{data.specializations.map((s) => (
+									{(data.specializations ?? []).map((s: string) => (
 										<Badge
 											key={s}
 											variant="outline"
@@ -217,7 +220,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 										Common Worshippers
 									</p>
 									<p className="text-sm text-muted-foreground leading-relaxed">
-										{data.worshippers}
+										{data.worshippers || "Classified"}
 									</p>
 								</div>
 							</div>
@@ -229,7 +232,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 										Sacred Sites (Temples)
 									</p>
 									<p className="text-sm text-muted-foreground leading-relaxed">
-										{data.temples}
+										{data.temples || "Undisclosed"}
 									</p>
 								</div>
 							</div>

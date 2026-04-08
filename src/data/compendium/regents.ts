@@ -1,4 +1,4 @@
-import type { Regent } from "@/lib/regentTypes";
+﻿import type { Regent } from "@/lib/regentTypes";
 
 export const regents: Regent[] = [
 	{
@@ -7,7 +7,7 @@ export const regents: Regent[] = [
 		title: "Umbral (Regent of Shadows)",
 		theme: "Umbral and Death",
 		description:
-			"The ultimate umbral manifestation Ascendant class overlay, sharing the sovereign power of Kael Voss, the Weaver of the Absolute. You embody mastery over the veil and the ability to 'Resurge' an infinite legion of Umbral Echoes. This is the highest tier veil-based Ascendant class, granting true Eternal-tier authority over the shadow realm to protect the timeline in the name of the Prime Eternal.",
+			"The ultimate umbral manifestation Ascendant class overlay, sharing the ascendant power of Kael Voss, the Weaver of the Absolute. You embody mastery over the veil and the ability to 'Resurge' an infinite legion of Umbral Echoes. This is the highest tier veil-based Ascendant class, granting true Eternal-tier authority over the shadow realm to protect the timeline in the name of the Prime Eternal.",
 		rank: "S",
 		image: "/generated/compendium/Regents/umbral-regent.webp",
 		type: "ascendant-class-overlay",
@@ -557,7 +557,7 @@ export const regents: Regent[] = [
 			{
 				name: "Flame Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute holy protection. All allies within gain immunity to fire and radiant damage. This mirrors the Regent's sanctification sovereignty.",
+					"As an action, create a 1-mile radius area of absolute holy protection. All allies within gain immunity to fire and radiant damage. This mirrors the Regent's sanctification authority.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
@@ -939,7 +939,7 @@ export const regents: Regent[] = [
 			{
 				name: "Iron Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute defensive control. All allies within gain your resistances. This mirrors the Steel Regent's territorial sovereignty.",
+					"As an action, create a 1-mile radius area of absolute defensive control. All allies within gain your resistances. This mirrors the Steel Regent's territorial dominion.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 7,
@@ -1006,7 +1006,7 @@ export const regents: Regent[] = [
 			},
 			{
 				name: "Iron Emperor",
-				description: "Universal reach of your defensive sovereignty.",
+				description: "Universal reach of your defensive dominion.",
 				power_level: 9,
 			},
 			{
@@ -2106,7 +2106,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Ice Age Decree",
 				description:
-					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. This mirrors the Regent of Frost's climate-shattering power.",
+					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100Â°C instantly, freezing all water and making fire damage impossible. This mirrors the Regent of Frost's climate-shattering power.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2121,7 +2121,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Absolute Zero Touch",
 				description:
-					"As a touch attack, channel the boundary of absolute zero. Target takes 10d10 cold damage and must make a VIT save or be paralyzed. On kill, they become a permanent ice statue at -273.15°C.",
+					"As a touch attack, channel the boundary of absolute zero. Target takes 10d10 cold damage and must make a VIT save or be paralyzed. On kill, they become a permanent ice statue at -273.15Â°C.",
 				type: "action",
 				frequency: "short-rest",
 			},
@@ -2485,7 +2485,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Beast King's Call",
 				description:
-					"Exert mental command over all beasts within a 10-mile radius (CR ≤ level). They obey your orders absolutely for 1 hour. useable 1/week. Zoo animals break containment, police K-9 units refuse to engage you.",
+					"Exert mental command over all beasts within a 10-mile radius (CR â‰¤ level). They obey your orders absolutely for 1 hour. useable 1/week. Zoo animals break containment, police K-9 units refuse to engage you.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -3521,7 +3521,7 @@ export const regents: Regent[] = [
 		title: "Mimic Regent Ascendant Class",
 		theme: "Infinite Forms",
 		description:
-			"Embodiment of infinite forms. Copy anything — creatures, objects, concepts. No detection possible. The Ascendant Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
+			"Embodiment of infinite forms. Copy anything â€” creatures, objects, concepts. No detection possible. The Ascendant Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
 		rank: "S",
 		image: "/generated/compendium/Regents/mimic-regent.webp",
 		type: "ascendant-class-overlay",
@@ -3540,7 +3540,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Perfect Imitation",
 				description:
-					"Transform into ANYTHING you've seen, from Tiny to Gargantuan (CR ≤ level). The imitation is perfect and undetectable by True Seeing or Divine Sense. Your DNA matches the target, and the transformation lasts indefinitely. You become the ultimate master of infinite forms.",
+					"Transform into ANYTHING you've seen, from Tiny to Gargantuan (CR â‰¤ level). The imitation is perfect and undetectable by True Seeing or Divine Sense. Your DNA matches the target, and the transformation lasts indefinitely. You become the ultimate master of infinite forms.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -3908,7 +3908,7 @@ export const regents: Regent[] = [
 		title: "Blood Regent (Regent of Blood)",
 		theme: "Hemomancy & Sanguine Regentty",
 		description:
-			"The ultimate authority of biological evolution and living mana-ichor, sharing the adaptive power of Lyra, the Queen of the Swarm. You control the fluid of life, turning it into a sovereign weapon that ignores the limitations of mortal biology. As a node of the Swarm-Heart, your presence accelerates the evolution of reality and cleanses the bloodlines of the world.",
+			"The ultimate authority of biological evolution and living mana-ichor, sharing the adaptive power of Lyra, the Queen of the Swarm. You control the fluid of life, turning it into a monarch weapon that ignores the limitations of mortal biology. As a node of the Swarm-Heart, your presence accelerates the evolution of reality and cleanses the bloodlines of the world.",
 		rank: "S",
 		image: "/generated/compendium/Regents/blood-regent.webp",
 		type: "ascendant-class-overlay",
@@ -4248,7 +4248,7 @@ export const regents: Regent[] = [
 		title: "Gravity Regent (Regent of Weight)",
 		theme: "Gravitational Mastery & Fundamental Force",
 		description:
-			"Vessel of fundamental attraction and universal sovereignty, wielding the incalculable force of Kronos, the Fragment of the Absolute. You command the weight that binds the worlds and collapses the Void into stable geometry. Your will is the anchor of the Ascendant's physics, a universal singularity that dictates the path of all existence in the name of the Absolute Origin.",
+			"Vessel of fundamental attraction and universal authority, wielding the incalculable force of Kronos, the Fragment of the Absolute. You command the weight that binds the worlds and collapses the Void into stable geometry. Your will is the anchor of the Ascendant's physics, a universal singularity that dictates the path of all existence in the name of the Absolute Origin.",
 		rank: "S",
 		image: "/generated/compendium/Regents/gravity-regent.webp",
 		type: "ascendant-class-overlay",

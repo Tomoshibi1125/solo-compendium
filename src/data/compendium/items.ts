@@ -125,11 +125,11 @@ export interface Item {
 
 import { baseEquipment } from "./items-base-equipment";
 // Re-export items from split files
-import { items as itemsPart1 } from "./items-part1";
-import { items as itemsPart2 } from "./items-part2";
-import { items as itemsPart3 } from "./items-part3";
-import { items as itemsPart4 } from "./items-part4";
-import { items as itemsPart5 } from "./items-part5";
+import { items_part1 as itemsPart1 } from "./items-part1";
+import { items_part2 as itemsPart2 } from "./items-part2";
+import { items_part3 as itemsPart3 } from "./items-part3";
+import { items_part4 as itemsPart4 } from "./items-part4";
+import { items_part5 as itemsPart5 } from "./items-part5";
 
 // Combined items array for backward compatibility
 export const items = [

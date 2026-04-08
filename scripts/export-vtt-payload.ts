@@ -1,11 +1,11 @@
-import { readFileSync, writeFileSync } from "node:fs";
+﻿import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 // Import Compendium Data
 import { anomalies } from "../src/data/compendium/anomalies/index";
-import { items as items_part1 } from "../src/data/compendium/items-part1";
-import { items as items_part2 } from "../src/data/compendium/items-part2";
-import { items as items_part3 } from "../src/data/compendium/items-part3";
+import { items_part1 } from "../src/data/compendium/items-part1";
+import { items_part2 } from "../src/data/compendium/items-part2";
+import { items_part3 } from "../src/data/compendium/items-part3";
 import { locations } from "../src/data/compendium/locations";
 import { comprehensiveRelics } from "../src/data/compendium/relics-comprehensive";
 // Import Types
@@ -22,10 +22,10 @@ import type {
 } from "../src/types/vtt";
 
 const allItemsAndRelics: Array<CompendiumRelic | CompendiumItem> = [
-	...comprehensiveRelics,
-	...items_part1,
-	...items_part2,
-	...items_part3,
+	...(comprehensiveRelics as any[]),
+	...(items_part1 as any[]),
+	...(items_part2 as any[]),
+	...(items_part3 as any[]),
 ];
 
 const currentDir = dirname(fileURLToPath(import.meta.url));

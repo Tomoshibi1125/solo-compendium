@@ -57,7 +57,7 @@ export const TechniquesChapter = () => {
 													Activation
 												</h4>
 												<p className="font-mono text-white">
-													{tech.activation.cost || tech.activation.type}
+													{tech.activation && typeof tech.activation === 'object' ? `${tech.activation.cost || tech.activation.type}` : `${tech.activation}`}
 												</p>
 											</div>
 											{tech.range && (
@@ -66,36 +66,36 @@ export const TechniquesChapter = () => {
 														Range
 													</h4>
 													<p className="font-mono text-white">
-														{tech.range.distance
-															? `${tech.range.distance} ft`
-															: tech.range.type}
+														{typeof tech.range === 'object'
+															? (tech.range.distance ? `${tech.range.distance} ft` : tech.range.type)
+															: tech.range}
 													</p>
 												</div>
 											)}
 										</div>
 
 										<div className="bg-void/80 p-3 rounded-sm border border-white/5 space-y-2">
-											{tech.effects.primary && (
+											{typeof tech.effects === 'object' && !Array.isArray(tech.effects) && (tech.effects as unknown as Record<string, string>).primary && (
 												<div className="flex gap-2">
 													<span className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 shrink-0" />
 													<p className="text-slate-300">
-														{tech.effects.primary}
+														{(tech.effects as unknown as Record<string, string>).primary}
 													</p>
 												</div>
 											)}
-											{tech.effects.secondary && (
+											{typeof tech.effects === 'object' && !Array.isArray(tech.effects) && (tech.effects as unknown as Record<string, string>).secondary && (
 												<div className="flex gap-2">
 													<span className="w-1.5 h-1.5 bg-red-400/70 rounded-full mt-1 shrink-0" />
 													<p className="text-slate-300">
-														{tech.effects.secondary}
+														{(tech.effects as unknown as Record<string, string>).secondary}
 													</p>
 												</div>
 											)}
-											{tech.effects.tertiary && (
+											{typeof tech.effects === 'object' && !Array.isArray(tech.effects) && (tech.effects as unknown as Record<string, string>).tertiary && (
 												<div className="flex gap-2">
 													<span className="w-1.5 h-1.5 bg-slate-500 rounded-full mt-1 shrink-0" />
 													<p className="text-slate-300">
-														{tech.effects.tertiary}
+														{(tech.effects as unknown as Record<string, string>).tertiary}
 													</p>
 												</div>
 											)}

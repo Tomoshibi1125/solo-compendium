@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 import { GoogleGenAI } from "@google/genai";
 import sharp from "sharp";

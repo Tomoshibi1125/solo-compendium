@@ -1,4 +1,4 @@
-import * as fs from "node:fs";
+﻿import * as fs from "node:fs";
 import * as path from "node:path";
 
 // Helper to deterministic random based on a string seed (like the ID)
@@ -361,7 +361,7 @@ async function runAll() {
 			file: "src/data/compendium/tattoos.ts",
 			name: "tattoos",
 			header:
-				"// Magical Tattoos — System Ascendant\n// Dimensional ink, sovereign stigmas, and mana circuit grafts.\n\nimport type { CompendiumTattoo } from '../../types/compendium';",
+				"// Magical Tattoos â€” System Ascendant\n// Dimensional ink, sovereign stigmas, and mana circuit grafts.\n\nimport type { CompendiumTattoo } from '../../types/compendium';",
 		},
 		{
 			file: "src/data/compendium/monsters/rank-s.ts",

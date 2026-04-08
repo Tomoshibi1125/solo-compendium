@@ -287,8 +287,8 @@ export interface StaticCompendiumEntry {
 	relationships?: Array<{
 		id: string;
 		name: string;
-		type: "ally" | "enemy" | "rival" | "servant" | "superior";
-		description: string;
+		type?: "ally" | "enemy" | "rival" | "servant" | "superior" | string;
+		description?: string;
 	}> | null;
 	// Sync Parity additions
 	at_higher_levels?: string | null;
@@ -473,7 +473,7 @@ type StaticSpellSource = {
 };
 
 // ---------------------------------------------------------------------------
-// Spell normalization helpers — derive missing 5e fields from existing data
+// Spell normalization helpers â€” derive missing 5e fields from existing data
 // ---------------------------------------------------------------------------
 const SCHOOL_KEYWORDS: [RegExp, string][] = [
 	[/shadow|necrot|death|undead|wither|drain|blight|curse|soul/i, "Necromancy"],
@@ -1245,7 +1245,7 @@ function deriveRegentClassFeatures(
 		| undefined;
 	if (!features && !abilities) return null;
 
-	// Power level → character level mapping (regent power 1-10 → character level 1-20)
+	// Power level â†’ character level mapping (regent power 1-10 â†’ character level 1-20)
 	const powerToLevel: Record<number, number> = {
 		1: 1,
 		2: 3,

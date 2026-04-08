@@ -1,5 +1,4 @@
 import {
-	AlertCircle,
 	BookOpen,
 	CheckCircle,
 	Scroll,
@@ -12,14 +11,12 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { Database } from "@/integrations/supabase/types";
+import type { CompendiumRune } from "@/types/compendium";
 import { setPendingResolution } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
-
 interface RuneDetailProps {
-	data: Rune;
+	data: CompendiumRune;
 }
 
 const RUNE_TYPE_ICONS: Record<
@@ -47,7 +44,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 	const Icon = RUNE_TYPE_ICONS[data.rune_type] || Sparkles;
 	const typeColor = RUNE_TYPE_COLORS[data.rune_type] || "";
 	const displayName = formatRegentVernacular(
-		(data as { display_name?: string | null }).display_name || data.name,
+		data.display_name || data.name,
 	);
 	const navigate = useNavigate();
 
@@ -55,7 +52,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 		const id = crypto.randomUUID();
 		const name = displayName;
 
-		if (data.effect_type === "offensive" || data.effect_type === "utility") {
+		if (data.rune_type === "offensive" || data.rune_type === "utility") {
 			// Most runes use a standard DC or a modifier
 			const dc = data.inscription_difficulty || 10;
 			setPendingResolution({
@@ -72,20 +69,8 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 
 	// Format requirements
 	const requirements: string[] = [];
-	if (data.requirement_str && data.requirement_str > 0)
-		requirements.push(`STR ${data.requirement_str}+`);
-	if (data.requirement_agi && data.requirement_agi > 0)
-		requirements.push(`AGI ${data.requirement_agi}+`);
-	if (data.requirement_vit && data.requirement_vit > 0)
-		requirements.push(`VIT ${data.requirement_vit}+`);
-	if (data.requirement_int && data.requirement_int > 0)
-		requirements.push(`INT ${data.requirement_int}+`);
-	if (data.requirement_sense && data.requirement_sense > 0)
-		requirements.push(`SENSE ${data.requirement_sense}+`);
-	if (data.requirement_pre && data.requirement_pre > 0)
-		requirements.push(`PRE ${data.requirement_pre}+`);
-	if (data.requires_level && data.requires_level > 1)
-		requirements.push(`Level ${data.requires_level}+`);
+	if (data.requires_job && data.requires_job.length > 0)
+		requirements.push(`Required Job: ${data.requires_job.join(", ")}`);
 
 	return (
 		<div className="space-y-6">
@@ -109,105 +94,29 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 								>
 									{formatRegentVernacular(data.rune_type)}
 								</Badge>
-								<Badge variant="secondary">Level {data.rune_level}</Badge>
 								<Badge variant="outline">
-									{formatRegentVernacular(data.rarity)}
+									{formatRegentVernacular(data.rarity || "Common")}
 								</Badge>
 								<Badge variant="outline">
-									{formatRegentVernacular(data.rune_category)}
+									{formatRegentVernacular(data.rune_category || "Uncategorized")}
 								</Badge>
 							</div>
 						</div>
 					</div>
 
 					<p className="text-foreground">
-						<AutoLinkText text={data.description} />
+						<AutoLinkText text={data.description || ""} />
 					</p>
 
 					{data.lore && (
 						<div className="border-l-2 border-primary/30 pl-4">
 							<p className="text-muted-foreground italic">
-								<AutoLinkText text={data.lore} />
+								<AutoLinkText text={typeof data.lore === "string" ? data.lore : data.lore?.history || ""} />
 							</p>
 						</div>
 					)}
 				</div>
 			</AscendantWindow>
-
-			{/* Requirements */}
-			{requirements.length > 0 && (
-				<AscendantWindow title="REQUIREMENTS">
-					<div className="flex flex-wrap gap-2">
-						{requirements.map((req, _i) => (
-							<Badge key={req} variant="outline">
-								{req}
-							</Badge>
-						))}
-					</div>
-					{data.requires_job && data.requires_job.length > 0 && (
-						<div className="mt-3">
-							<p className="text-sm text-muted-foreground mb-2">
-								Natural Users (no penalties):
-							</p>
-							<div className="flex flex-wrap gap-2">
-								{data.requires_job.map((job) => (
-									<Badge key={job} variant="secondary">
-										{formatRegentVernacular(job)}
-									</Badge>
-								))}
-							</div>
-						</div>
-					)}
-				</AscendantWindow>
-			)}
-
-			{/* Cross-Learning Penalties */}
-			{(data.caster_penalty || data.martial_penalty) && (
-				<AscendantWindow title="CROSS-LEARNING MECHANICS">
-					<div className="space-y-3">
-						{data.caster_penalty && (
-							<div>
-								<div className="flex items-center gap-2 mb-2">
-									<AlertCircle className="w-4 h-4 text-blue-400" />
-									<h4 className="font-heading font-semibold text-sm">
-										Casters Using Martial Runes
-									</h4>
-								</div>
-								<p className="text-sm text-muted-foreground ml-6">
-									{formatRegentVernacular(data.caster_penalty)}
-								</p>
-								{data.caster_requirement_multiplier &&
-									data.caster_requirement_multiplier !== 1.0 && (
-										<p className="text-xs text-muted-foreground ml-6 mt-1">
-											Requirement multiplier:{" "}
-											{data.caster_requirement_multiplier}x
-										</p>
-									)}
-							</div>
-						)}
-						{data.martial_penalty && (
-							<div>
-								<div className="flex items-center gap-2 mb-2">
-									<AlertCircle className="w-4 h-4 text-red-400" />
-									<h4 className="font-heading font-semibold text-sm">
-										Martials Using Caster Runes
-									</h4>
-								</div>
-								<p className="text-sm text-muted-foreground ml-6">
-									{formatRegentVernacular(data.martial_penalty)}
-								</p>
-								{data.martial_requirement_multiplier &&
-									data.martial_requirement_multiplier !== 1.0 && (
-										<p className="text-xs text-muted-foreground ml-6 mt-1">
-											Requirement multiplier:{" "}
-											{data.martial_requirement_multiplier}x
-										</p>
-									)}
-							</div>
-						)}
-					</div>
-				</AscendantWindow>
-			)}
 
 			{/* Effect Details */}
 			<AscendantWindow title="EFFECT">
@@ -218,14 +127,14 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							<h4 className="font-heading font-semibold">Effect Type</h4>
 						</div>
 						<Badge variant="outline">
-							{formatRegentVernacular(data.effect_type)}
+							{formatRegentVernacular(data.effect_type || "passive")}
 						</Badge>
 					</div>
 
 					{data.effect_description && (
 						<div>
 							<p className="text-foreground">
-								<AutoLinkText text={data.effect_description} />
+								<AutoLinkText text={data.effect_description || ""} />
 							</p>
 							<div className="mt-2">
 								<Button size="sm" variant="outline" onClick={handleRoll}>
@@ -300,16 +209,6 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						</div>
 					)}
 
-					{data.higher_levels && (
-						<div className="border-l-2 border-primary/30 pl-4 mt-3">
-							<h4 className="font-heading font-semibold text-sm mb-2">
-								At Higher Rune Levels
-							</h4>
-							<p className="text-sm text-muted-foreground">
-								<AutoLinkText text={data.higher_levels} />
-							</p>
-						</div>
-					)}
 				</div>
 			</AscendantWindow>
 

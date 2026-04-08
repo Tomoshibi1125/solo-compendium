@@ -1,2749 +1,8672 @@
-// Techniques Compendium - Authoritative Rift Ascendant Content
-// Combat maneuvers and martial techniques
-// Based on Rift Ascendant mechanics
-// Deduplicated and Lore-Enriched
+import type { CompendiumTechnique } from "../../types/compendium";
 
-export const techniques = [
+export const techniques: CompendiumTechnique[] = [
 	{
-		id: "umbral-strike",
-		name: "Umbral Strike",
-		description: "A devastating attack that strikes from unexpected angles.",
-		type: "offensive",
-		style: "weapon",
-		prerequisites: {
-			level: 5,
-			ability: "Agility",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/umbral-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Overrides all who stand in opposition. A silent beautiful catastrophe.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Attack with advantage and deal extra damage equal to your proficiency bonus.",
-			secondary:
-				"Target must make Vitality saving throw or be blinded until your next turn.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "extra piercing",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency bonus + Agility modifier",
-				success: "No effect",
-				failure: "Blinded until your next turn",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "3 times per short rest",
-			recharge: "Short rest",
-		},
-		flavor:
-			"Overrides all who stand in opposition. A silent beautiful catastrophe.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/umbral-strike.webp",
-	},
-	{
-		id: "dragon-fist",
-		name: "Dragon Fist",
-		description:
-			"A devastating unarmed strike that channels essence in patterns mimicking the breath weapons of rift-born dragons, delivering concussive force that shatters armor and bone alike.",
-		type: "offensive",
-		style: "unarmed",
-		prerequisites: {
-			level: 8,
-			class: "Striker",
-		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Deal 3d10 force damage plus your Strength modifier.",
-			secondary:
-				"Target must make Strength saving throw or be pushed 10 feet away and knocked prone.",
-			tertiary:
-				"If you spend 2 ki points, damage increases to 4d10 and push distance becomes 20 feet.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "force",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {
+				"Intelligence": 1
 			},
-			saving_throw: {
-				ability: "Strength",
-				dc: "8 + proficiency bonus + Sense modifier",
-				success: "No effect",
-				failure: "Pushed 10 feet and knocked prone",
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
-		},
-		limitations: {
-			uses: "At-will",
-			conditions: ["Must spend 2 ki points for enhanced effect"],
-		},
-		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/dragon-fist.webp",
-	},
-	{
-		id: "void-slash",
-		name: "Void Slash",
-		description:
-			"A dimensional cutting attack that tears through the fabric of reality, bypassing conventional defenses by striking through the space between dimensions.",
-		type: "offensive",
-		style: "weapon",
-		prerequisites: {
-			level: 12,
-			ability: "Agility",
-			score: 17,
-		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Attack ignores all armor and resistance.",
-			secondary:
-				"If you hit, you can teleport to an unoccupied space within 30 feet as a bonus action.",
-			tertiary:
-				"Critical hits deal maximum damage and teleport the target to a random location within 30 feet.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "force",
-			},
-			movement: {
-				type: "teleport",
-				distance: 30,
-			},
-		},
-		limitations: {
-			uses: "Once per turn",
-			recharge: "None",
-		},
-		flavor:
-			"Cleanses the darkness within. An intricate breaking point of the world.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/void-slash.webp",
-	},
-	{
-		id: "multi-shot",
-		name: "Multi-Shot",
-		description: "Fire multiple arrows at different targets simultaneously.",
-		type: "offensive",
-		style: "ranged",
-		prerequisites: {
-			level: 6,
-			proficiency: ["Longbow", "Shortbow"],
-		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "ranged",
-		},
-		effects: {
-			primary:
-				"Make three ranged attacks against different targets within range.",
-			secondary:
-				"Each attack uses your full attack bonus but deals only half damage.",
-			tertiary:
-				"If you have the Sharpshooter feat, you can make four attacks instead of three.",
-		},
-		mechanics: {
-			attack: {
-				type: "ranged",
-				modifier: "Agility",
-				damage: "half",
-			},
-		},
-		limitations: {
-			uses: "At-will",
-			conditions: ["Must have enough ammunition", "Targets must be different"],
-		},
-		flavor:
-			"Reflects the flow of time itself. A silent testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/multi-shot.webp",
-	},
-	{
-		id: "whirlwind-strike",
-		name: "Whirlwind Strike",
-		description: "A spinning attack that strikes all nearby enemies.",
-		type: "offensive",
-		style: "two-handed",
-		prerequisites: {
-			level: 10,
-			proficiency: ["Greatsword", "Battleaxe", "Maul"],
-		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "area",
-			distance: 10,
-		},
-		effects: {
-			primary: "Make one melee attack against each creature within 10 feet.",
-			secondary:
-				"Each creature can only be targeted once per use of this technique.",
-			tertiary:
-				"If you hit with all attacks, you can make an additional attack as a bonus action.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-			},
-		},
-		limitations: {
-			uses: "Once per turn",
-			recharge: "None",
-		},
-		flavor:
-			"Commands the architect's design. A triumphant death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/whirlwind-strike.webp",
-	},
-	{
-		id: "umbral-dodge",
-		name: "Umbral Dodge",
-		description: "Phase through umbrals to avoid attacks.",
-		type: "defensive",
-		style: "any",
-		prerequisites: {
-			level: 4,
-			ability: "Agility",
-		},
-		activation: {
-			type: "reaction",
-		},
-		effects: {
-			primary:
-				"When targeted by an attack, teleport to an unoccupied space within 30 feet in dim light or darkness.",
-			secondary: "The attack automatically misses.",
-			tertiary: "You can use this technique even if you are surprised.",
-		},
-		mechanics: {
-			movement: {
-				type: "teleport",
-				distance: 30,
-			},
-		},
-		limitations: {
-			uses: "3 times per short rest",
-			recharge: "Short rest",
-			conditions: ["Must have umbrals or dim light available"],
-		},
-		flavor:
-			"Shatters all who stand in opposition. An overwhelming whisper in the umbrals.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/umbral-dodge.webp",
-	},
-	{
-		id: "iron-wall",
-		name: "Iron Wall",
-		description: "An impenetrable defensive stance.",
-		type: "defensive",
-		style: "shield",
-		prerequisites: {
-			level: 6,
-			proficiency: ["Shield"],
-		},
-		activation: {
-			type: "reaction",
-		},
-		effects: {
-			primary:
-				"Gain resistance to bludgeoning, piercing, and slashing damage until your next turn.",
-			secondary:
-				"Allies within 5 feet gain half damage resistance to the same damage types.",
-			tertiary: "Cannot be moved against your will while using this technique.",
-		},
-		mechanics: {
-			condition: ["resistance", "immovable"],
-		},
-		limitations: {
-			uses: "2 times per short rest",
-			recharge: "Short rest",
-		},
-		flavor: "Destroys the darkness within. A triumphant ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/iron-wall.webp",
-	},
-	{
-		id: "counter-strike",
-		name: "Counter Strike",
-		description: "Turn an enemy's attack against them.",
-		type: "defensive",
-		style: "weapon",
-		prerequisites: {
-			level: 8,
-			ability: "Agility",
-			score: 15,
-		},
-		activation: {
-			type: "reaction",
-		},
-		effects: {
-			primary:
-				"When a creature misses you with a melee attack, you can make an immediate melee attack against them.",
-			secondary:
-				"Your attack deals extra damage equal to your proficiency bonus.",
-			tertiary: "If you score a critical hit, the target is knocked prone.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "extra",
-			},
-		},
-		limitations: {
-			uses: "Once per turn",
-			recharge: "None",
-		},
-		flavor:
-			"Overrides the flow of time itself. A relentless testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/counter-strike.webp",
-	},
-	{
-		id: "deflect-arrows",
-		name: "Deflect Arrows",
-		description: "Deflect incoming projectiles with your weapon.",
-		type: "defensive",
-		style: "weapon",
-		prerequisites: {
-			level: 5,
-			proficiency: ["Sword", "Dagger"],
-		},
-		activation: {
-			type: "reaction",
-		},
-		effects: {
-			primary:
-				"When targeted by a ranged weapon attack, you can deflect it with your weapon.",
-			secondary: "The attack automatically misses.",
-			tertiary:
-				"If you spend a reaction point, you can redirect the attack to another creature within range.",
-		},
-		mechanics: {
-			condition: ["Reaction to ranged attack", "Deflects projectile"],
-		},
-		limitations: {
-			uses: "At-will",
-			conditions: [
-				"Must be wielding a suitable weapon",
-				"Limited to one projectile per reaction",
+			"immunity": [],
+			"resistance": [
+				"necrotic"
 			],
+			"vulnerability": [],
+			"special": "Aligned with Void resonance.",
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		flavor:
-			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/deflect-arrows.webp",
+		"limitations": {
+			"uses": "3 times per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Attack with advantage and deal extra damage equal to your proficiency bonus.",
+			"secondary": "Target must make Vitality saving throw or be blinded until your next turn.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "umbral-strike",
+		"name": "Umbral Strike",
+		"description": "You harness consuming energy to nullify the target's event horizon. This manifestation of Void resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
 	},
 	{
-		id: "guardian-stance",
-		name: "Guardian Stance",
-		description:
-			"A defensive formation technique perfected by the Umbral Legions, projecting a field of protective essence that shields nearby allies from harm.",
-		type: "defensive",
-		style: "any",
-		prerequisites: {
-			level: 7,
-			class: "Destroyer",
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/dragon-fist.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Denies the remnants of humanity. A brutal surge of lethal intent.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "bonus-action",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "force",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Strength",
+				"dc": "8 + proficiency bonus + Sense modifier",
+				"success": "No effect",
+				"failure": "Pushed 10 feet and knocked prone"
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		duration: {
-			type: "concentration",
-			time: "1 minute",
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [
+				"Must spend 2 ki points for enhanced effect"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		effects: {
-			primary: "Allies within 10 feet gain +2 to AC.",
-			secondary:
-				"When an ally within 10 feet is attacked, you can use your reaction to impose disadvantage on the attack.",
-			tertiary: "You cannot move while maintaining this stance.",
+		"effects": {
+			"primary": "Deal 3d10 force damage plus your Strength modifier.",
+			"secondary": "Target must make Strength saving throw or be pushed 10 feet away and knocked prone.",
+			"tertiary": "If you spend 2 ki points, damage increases to 4d10 and push distance becomes 20 feet.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
 		},
-		mechanics: {
-			condition: [
+		"rarity": "common",
+		"cr": "0",
+		"id": "dragon-fist",
+		"name": "Dragon Fist",
+		"description": "A devastating unarmed strike that channels essence in patterns mimicking the breath weapons of rift-born dragons, delivering concussive force that shatters armor and bone alike.",
+		"type": "offensive",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 8,
+			"class": "Striker"
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/void-slash.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Cleanses the darkness within. An intricate breaking point of the world.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "force",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": {},
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "None",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Attack ignores all armor and resistance.",
+			"secondary": "If you hit, you can teleport to an unoccupied space within 30 feet as a bonus action.",
+			"tertiary": "Critical hits deal maximum damage and teleport the target to a random location within 30 feet.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "void-slash",
+		"name": "Void Slash",
+		"description": "A dimensional cutting attack that tears through the fabric of reality, bypassing conventional defenses by striking through the space between dimensions.",
+		"type": "offensive",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 12,
+			"ability": "Agility",
+			"score": 17
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/multi-shot.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reflects the flow of time itself. A silent testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Presence",
+				"dc": "8 + proficiency + Presence",
+				"success": "Half damage",
+				"failure": "The target is stunned by authority."
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [
+				"Must have enough ammunition",
+				"Targets must be different"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Make three ranged attacks against different targets within range.",
+			"secondary": "Each attack uses your full attack bonus but deals only half damage.",
+			"tertiary": "If you have the Sharpshooter feat, you can make four attacks instead of three.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "multi-shot",
+		"name": "Multi-Shot",
+		"description": "You harness fundamental energy to override the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "ranged",
+		"prerequisites": {
+			"level": 6,
+			"proficiency": [
+				"Longbow",
+				"Shortbow"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "ranged"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/whirlwind-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Commands the architect's design. A triumphant death of hesitation.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "None",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Make one melee attack against each creature within 10 feet.",
+			"secondary": "Each creature can only be targeted once per use of this technique.",
+			"tertiary": "If you hit with all attacks, you can make an additional attack as a bonus action.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "whirlwind-strike",
+		"name": "Whirlwind Strike",
+		"description": "You harness fundamental energy to decree the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "two-handed",
+		"prerequisites": {
+			"level": 10,
+			"proficiency": [
+				"Greatsword",
+				"Battleaxe",
+				"Maul"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "area 10"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/umbral-dodge.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Shatters all who stand in opposition. An overwhelming whisper in the umbrals.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Intelligence",
+				"dc": "8 + proficiency + Intelligence",
+				"success": "Half damage",
+				"failure": "The target is pulled into a mana-void."
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "3 times per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [
+				"Must have umbrals or dim light available"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "When targeted by an attack, teleport to an unoccupied space within 30 feet in dim light or darkness.",
+			"secondary": "The attack automatically misses.",
+			"tertiary": "You can use this technique even if you are surprised.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "umbral-dodge",
+		"name": "Umbral Dodge",
+		"description": "You harness consuming energy to extinguish the target's event horizon. This manifestation of Void resonance bypasses traditional defenses.",
+		"type": "defensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 4,
+			"ability": "Agility"
+		},
+		"activation": {
+			"type": "reaction"
+		}
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/iron-wall.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Destroys the darkness within. A triumphant ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "2 times per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Gain resistance to bludgeoning, piercing, and slashing damage until your next turn.",
+			"secondary": "Allies within 5 feet gain half damage resistance to the same damage types.",
+			"tertiary": "Cannot be moved against your will while using this technique.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "iron-wall",
+		"name": "Iron Wall",
+		"description": "You harness undeniable energy to mandate the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "defensive",
+		"style": "shield",
+		"prerequisites": {
+			"level": 6,
+			"proficiency": [
+				"Shield"
+			]
+		},
+		"activation": {
+			"type": "reaction"
+		}
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/counter-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Overrides the flow of time itself. A relentless testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Presence",
+				"dc": "8 + proficiency + Presence",
+				"success": "Half damage",
+				"failure": "The target is stunned by authority."
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "None",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "When a creature misses you with a melee attack, you can make an immediate melee attack against them.",
+			"secondary": "Your attack deals extra damage equal to your proficiency bonus.",
+			"tertiary": "If you score a critical hit, the target is knocked prone.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "counter-strike",
+		"name": "Counter Strike",
+		"description": "You harness fundamental energy to decree the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "defensive",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 8,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "reaction"
+		}
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/deflect-arrows.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Bends the fragile limits of flesh. An intricate ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [
+				"Must be wielding a suitable weapon",
+				"Limited to one projectile per reaction"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "When targeted by a ranged weapon attack, you can deflect it with your weapon.",
+			"secondary": "The attack automatically misses.",
+			"tertiary": "If you spend a reaction point, you can redirect the attack to another creature within range.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "deflect-arrows",
+		"name": "Deflect Arrows",
+		"description": "You harness absolute energy to manifest the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "defensive",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 5,
+			"proficiency": [
+				"Sword",
+				"Dagger"
+			]
+		},
+		"activation": {
+			"type": "reaction"
+		}
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/guardian-stance.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Crushes the architect's design. An intricate death of hesitation.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
 				"Concentration",
 				"Bonus action activation",
-				"Provides AC bonus to allies",
+				"Provides AC bonus to allies"
 			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "3 times per long rest",
-			recharge: "Long rest",
+		"limitations": {
+			"uses": "3 times per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Crushes the architect's design. An intricate death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/guardian-stance.webp",
+		"effects": {
+			"primary": "Allies within 10 feet gain +2 to AC.",
+			"secondary": "When an ally within 10 feet is attacked, you can use your reaction to impose disadvantage on the attack.",
+			"tertiary": "You cannot move while maintaining this stance.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "guardian-stance",
+		"name": "Guardian Stance",
+		"description": "A defensive formation technique perfected by the Umbral Legions, projecting a field of protective essence that shields nearby allies from harm.",
+		"type": "defensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 7,
+			"class": "Destroyer"
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"duration": "concentration"
 	},
 	{
-		id: "wind-dash",
-		name: "Wind Dash",
-		description: "Move with supernatural speed and grace.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 4,
-			ability: "Agility",
-			score: 14,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/wind-dash.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Denies all who stand in opposition. A chaotic beautiful catastrophe.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "bonus-action",
-		},
-		effects: {
-			primary:
-				"Move up to your movement speed without provoking opportunity attacks.",
-			secondary: "Can move through difficult terrain without penalty.",
-			tertiary:
-				"If you end your movement adjacent to an enemy, you can make one melee attack as a bonus action.",
-		},
-		mechanics: {
-			movement: {
-				type: "dash",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "Presence",
+				"dc": "8 + proficiency + Presence",
+				"success": "Half damage",
+				"failure": "The target is stunned by authority."
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Twice per short rest",
-			recharge: "Short rest",
+		"limitations": {
+			"uses": "Twice per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Denies all who stand in opposition. A chaotic beautiful catastrophe.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/wind-dash.webp",
+		"effects": {
+			"primary": "Move up to your movement speed without provoking opportunity attacks.",
+			"secondary": "Can move through difficult terrain without penalty.",
+			"tertiary": "If you end your movement adjacent to an enemy, you can make one melee attack as a bonus action.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "wind-dash",
+		"name": "Wind Dash",
+		"description": "You harness absolute energy to mandate the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 4,
+			"ability": "Agility",
+			"score": 14
+		},
+		"activation": {
+			"type": "bonus-action"
+		}
 	},
 	{
-		id: "wall-run",
-		name: "Wall Run",
-		description: "Run along vertical surfaces with ease.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 5,
-			ability: "Strength",
-			score: 13,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/wall-run.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Bends the quiet space between breaths. An absolute roar of raw mana.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "free",
-		},
-		effects: {
-			primary:
-				"Can run along vertical surfaces and ceilings as if they were horizontal.",
-			secondary: "Do not fall when ending your movement on a vertical surface.",
-			tertiary:
-				"Can jump from a vertical surface without making an ability check.",
-		},
-		mechanics: {
-			movement: {
-				type: "climb",
-				distance: 0,
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
-			condition: ["Free action", "Ignores gravity on surfaces"],
-		},
-		limitations: {
-			uses: "At-will",
-			conditions: ["Must end movement on a surface or fall"],
-		},
-		flavor:
-			"Bends the quiet space between breaths. An absolute roar of raw mana.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/wall-run.webp",
-	},
-	{
-		id: "phase-walk",
-		name: "Phase Walk",
-		description: "Move through solid objects and creatures.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 12,
-			ability: "Vitality",
-			score: 15,
-		},
-		activation: {
-			type: "action",
-		},
-		duration: {
-			type: "timed",
-			time: "1 minute",
-		},
-		effects: {
-			primary:
-				"Can move through solid objects and creatures as if they were difficult terrain.",
-			secondary:
-				"Take 1d10 force damage for every 5 feet moved through an object or creature.",
-			tertiary: "Cannot attack while phasing through objects.",
-		},
-		mechanics: {
-			movement: {
-				type: "teleport",
-				distance: 0,
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-			condition: [
-				"Action activation",
-				"Timed duration",
-				"Takes damage when phasing",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [
+				"Must end movement on a surface or fall"
 			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		limitations: {
-			uses: "Once per long rest",
-			recharge: "Long rest",
+		"effects": {
+			"primary": "Can run along vertical surfaces and ceilings as if they were horizontal.",
+			"secondary": "Do not fall when ending your movement on a vertical surface.",
+			"tertiary": "Can jump from a vertical surface without making an ability check.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
 		},
-		flavor:
-			"Denies the quiet space between breaths. An ancient roar of raw mana.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/phase-walk.webp",
+		"rarity": "common",
+		"cr": "0",
+		"id": "wall-run",
+		"name": "Wall Run",
+		"description": "You harness fundamental energy to manifest the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Strength",
+			"score": 13
+		},
+		"activation": {
+			"type": "free"
+		}
 	},
 	{
-		id: "leap-strike",
-		name: "Leap Strike",
-		description: "Jump incredible distances to strike distant foes.",
-		type: "mobility",
-		style: "weapon",
-		prerequisites: {
-			level: 6,
-			ability: "Strength",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/phase-walk.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Denies the quiet space between breaths. An ancient roar of raw mana.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		effects: {
-			primary: "Jump up to 60 feet horizontally or 30 feet vertically.",
-			secondary: "Make one melee attack against a creature you land near.",
-			tertiary:
-				"If the attack hits, the target must make Strength saving throw or be knocked prone.",
-		},
-		mechanics: {
-			movement: {
-				type: "jump",
-				distance: 60,
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
-			attack: {
-				type: "melee",
-				modifier: "Strength",
+			"saving_throw": {
+				"ability": "Sense",
+				"dc": "8 + proficiency + Sense",
+				"success": "Half damage",
+				"failure": "The target's lattice is distorted."
 			},
-			saving_throw: {
-				ability: "Strength",
-				dc: "8 + proficiency bonus + Strength modifier",
-				success: "No effect",
-				failure: "Knocked prone",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Twice per short rest",
-			recharge: "Short rest",
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Weaves the remnants of humanity. A relentless dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/leap-strike.webp",
+		"effects": {
+			"primary": "Can move through solid objects and creatures as if they were difficult terrain.",
+			"secondary": "Take 1d10 force damage for every 5 feet moved through an object or creature.",
+			"tertiary": "Cannot attack while phasing through objects.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "phase-walk",
+		"name": "Phase Walk",
+		"description": "You harness phasic energy to distort the target's frequency. This manifestation of Aetheric resonance bypasses traditional defenses.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 12,
+			"ability": "Vitality",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"duration": "timed"
 	},
 	{
-		id: "umbral-bind",
-		name: "Umbral Bind",
-		description: "Use umbrals to restrain and control enemies.",
-		type: "utility",
-		style: "any",
-		prerequisites: {
-			level: 8,
-			ability: "Presence",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/leap-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Weaves the remnants of humanity. A relentless dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		duration: {
-			type: "concentration",
-			time: "1 minute",
-		},
-		range: {
-			type: "ranged",
-			distance: 60,
-		},
-		effects: {
-			primary:
-				"Target must make Presence saving throw or be restrained by umbral tendrils.",
-			secondary:
-				"While restrained, target cannot speak or cast spells with verbal components.",
-			tertiary:
-				"You can move the restrained target up to 10 feet as a bonus action.",
-		},
-		mechanics: {
-			condition: ["restrained"],
-			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency bonus + Presence modifier",
-				success: "No effect",
-				failure: "Restrained by umbral tendrils",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per short rest",
-			recharge: "Short rest",
-			conditions: ["Requires umbrals or dim light"],
+		"limitations": {
+			"uses": "Twice per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Absorbs the dimensional divide. A brutal testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/umbral-bind.webp",
+		"effects": {
+			"primary": "Jump up to 60 feet horizontally or 30 feet vertically.",
+			"secondary": "Make one melee attack against a creature you land near.",
+			"tertiary": "If the attack hits, the target must make Strength saving throw or be knocked prone.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "leap-strike",
+		"name": "Leap Strike",
+		"description": "You harness fundamental energy to decree the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "mobility",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 6,
+			"ability": "Strength",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		}
 	},
 	{
-		id: "disarming-strike",
-		name: "Disarming Strike",
-		description: "A precise attack that disarms opponents.",
-		type: "utility",
-		style: "weapon",
-		prerequisites: {
-			level: 5,
-			proficiency: ["Sword", "Dagger", "Rapier"],
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/umbral-bind.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the dimensional divide. A brutal testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		effects: {
-			primary: "Make a melee attack against a creature holding a weapon.",
-			secondary:
-				"If you hit, the creature must make Strength saving throw or drop its weapon.",
-			tertiary: "You can catch the dropped weapon if you have a free hand.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-			saving_throw: {
-				ability: "Strength",
-				dc: "8 + proficiency bonus + Agility modifier",
-				success: "Keeps weapon",
-				failure: "Drops weapon",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {
+				"Intelligence": 1
+			},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [
+				"necrotic"
+			],
+			"vulnerability": [],
+			"special": "Aligned with Void resonance.",
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
-			conditions: ["Target must be holding a weapon"],
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [
+				"Requires umbrals or dim light"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Weaves the quiet space between breaths. A relentless roar of raw mana.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/disarming-strike.webp",
+		"effects": {
+			"primary": "Target must make Presence saving throw or be restrained by umbral tendrils.",
+			"secondary": "While restrained, target cannot speak or cast spells with verbal components.",
+			"tertiary": "You can move the restrained target up to 10 feet as a bonus action.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "umbral-bind",
+		"name": "Umbral Bind",
+		"description": "You harness umbral energy to nullify the target's mana-void. This manifestation of Void resonance bypasses traditional defenses.",
+		"type": "utility",
+		"style": "any",
+		"prerequisites": {
+			"level": 8,
+			"ability": "Presence",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"duration": "concentration",
+		"range": "ranged 60"
 	},
 	{
-		id: "trip-attack",
-		name: "Trip Attack",
-		description: "A sweeping attack that knocks enemies prone.",
-		type: "utility",
-		style: "weapon",
-		prerequisites: {
-			level: 4,
-			proficiency: ["Spear", "Quarterstaff", "Whip"],
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/disarming-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		effects: {
-			primary: "Make a melee attack against a creature.",
-			secondary:
-				"If you hit, the creature must make Agility saving throw or be knocked prone.",
-			tertiary: "Prone creatures have disadvantage on their next attack roll.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
-			saving_throw: {
-				ability: "Agility",
-				dc: "8 + proficiency bonus + Strength modifier",
-				success: "No effect",
-				failure: "Knocked prone",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
-			conditions: ["Target must be your size or smaller"],
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [
+				"Target must be holding a weapon"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Absorbs the concept of defeat. A sorrowful dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/trip-attack.webp",
+		"effects": {
+			"primary": "Make a melee attack against a creature holding a weapon.",
+			"secondary": "If you hit, the creature must make Strength saving throw or drop its weapon.",
+			"tertiary": "You can catch the dropped weapon if you have a free hand.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "disarming-strike",
+		"name": "Disarming Strike",
+		"description": "You harness undeniable energy to decree the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "utility",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 5,
+			"proficiency": [
+				"Sword",
+				"Dagger",
+				"Rapier"
+			]
+		},
+		"activation": {
+			"type": "action"
+		}
 	},
 	{
-		id: "grappling-strike",
-		name: "Grappling Strike",
-		description: "A powerful attack that grabs and restrains enemies.",
-		type: "utility",
-		style: "unarmed",
-		prerequisites: {
-			level: 3,
-			ability: "Strength",
-			score: 13,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/trip-attack.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the concept of defeat. A sorrowful dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		effects: {
-			primary: "Make an unarmed strike against a creature.",
-			secondary:
-				"If you hit, the creature is grappilled and you can move it 10 feet.",
-			tertiary:
-				"Grappled creatures have disadvantage on attacks against creatures other than you.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
-			condition: ["grappled"],
+			"saving_throw": {
+				"ability": "Presence",
+				"dc": "8 + proficiency + Presence",
+				"success": "Half damage",
+				"failure": "The target is stunned by authority."
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
-			conditions: ["Target must be your size or smaller"],
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [
+				"Target must be your size or smaller"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Commands the darkness within. A triumphant ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/grappling-strike.webp",
+		"effects": {
+			"primary": "Make a melee attack against a creature.",
+			"secondary": "If you hit, the creature must make Agility saving throw or be knocked prone.",
+			"tertiary": "Prone creatures have disadvantage on their next attack roll.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "trip-attack",
+		"name": "Trip Attack",
+		"description": "You harness fundamental energy to transmute the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "utility",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 4,
+			"proficiency": [
+				"Spear",
+				"Quarterstaff",
+				"Whip"
+			]
+		},
+		"activation": {
+			"type": "action"
+		}
 	},
 	{
-		id: "intimidating-presence",
-		name: "Intimidating Presence",
-		description: "Channel your inner power to frighten enemies.",
-		type: "utility",
-		style: "any",
-		prerequisites: {
-			level: 6,
-			ability: "Presence",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/grappling-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Commands the darkness within. A triumphant ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 30,
-		},
-		effects: {
-			primary:
-				"Each creature of your choice within 30 feet must make Sense saving throw.",
-			secondary: "On a failure, creatures are frightened of you for 1 minute.",
-			tertiary: "Frightened creatures cannot willingly move closer to you.",
-		},
-		mechanics: {
-			saving_throw: {
-				ability: "Sense",
-				dc: "8 + proficiency bonus + Presence modifier",
-				success: "No effect",
-				failure: "Frightened for 1 minute",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "3 times per long rest",
-			recharge: "Long rest",
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [
+				"Target must be your size or smaller"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Reclaims the darkness within. A silent ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/intimidating-presence.webp",
+		"effects": {
+			"primary": "Make an unarmed strike against a creature.",
+			"secondary": "If you hit, the creature is grappilled and you can move it 10 feet.",
+			"tertiary": "Grappled creatures have disadvantage on attacks against creatures other than you.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "grappling-strike",
+		"name": "Grappling Strike",
+		"description": "You harness pure energy to manifest the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "utility",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 3,
+			"ability": "Strength",
+			"score": 13
+		},
+		"activation": {
+			"type": "action"
+		}
 	},
 	{
-		id: "umbral-termination",
-		name: "Umbral Termination",
-		description: "A devastating finishing move that strikes from the umbrals.",
-		type: "finishing",
-		style: "weapon",
-		prerequisites: {
-			level: 15,
-			ability: "Agility",
-			score: 18,
-			technique: ["Umbral Strike"],
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/intimidating-presence.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reclaims the darkness within. A silent ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Attack with advantage and automatically score a critical hit.",
-			secondary:
-				"Critical hit deals maximum damage and the target must make Vitality saving throw or die.",
-			tertiary:
-				"If the target dies, you regain hit points equal to your level and can immediately use Umbral Step as a bonus action.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
-			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency bonus + Agility modifier + 10",
-				success: "Takes maximum damage",
-				failure: "Dies",
+			"saving_throw": {
+				"ability": "Presence",
+				"dc": "8 + proficiency + Presence",
+				"success": "Half damage",
+				"failure": "The target is stunned by authority."
 			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per long rest",
-			recharge: "Long rest",
-			conditions: [
+		"limitations": {
+			"uses": "3 times per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Each creature of your choice within 30 feet must make Sense saving throw.",
+			"secondary": "On a failure, creatures are frightened of you for 1 minute.",
+			"tertiary": "Frightened creatures cannot willingly move closer to you.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "intimidating-presence",
+		"name": "Intimidating Presence",
+		"description": "You harness undeniable energy to override the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "utility",
+		"style": "any",
+		"prerequisites": {
+			"level": 6,
+			"ability": "Presence",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 30"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/umbral-termination.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reclaims the dimensional divide. A silent symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Vitality",
+				"dc": "8 + proficiency bonus + Agility modifier + 10",
+				"success": "Takes maximum damage",
+				"failure": "Dies"
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [
 				"Target must be below 50% hit points",
-				"Requires dim light or darkness",
+				"Requires dim light or darkness"
 			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Reclaims the dimensional divide. A silent symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/umbral-termination.webp",
+		"effects": {
+			"primary": "Attack with advantage and automatically score a critical hit.",
+			"secondary": "Critical hit deals maximum damage and the target must make Vitality saving throw or die.",
+			"tertiary": "If the target dies, you regain hit points equal to your level and can immediately use Umbral Step as a bonus action.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "umbral-termination",
+		"name": "Umbral Termination",
+		"description": "A devastating finishing move that strikes from the umbrals.",
+		"type": "finishing",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 15,
+			"ability": "Agility",
+			"score": 18,
+			"technique": [
+				"Umbral Strike"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
 	},
 	{
-		id: "dragon-slaying-blow",
-		name: "Dragon-Slaying Blow",
-		description: "A legendary attack that can fell even the mightiest beasts.",
-		type: "finishing",
-		style: "two-handed",
-		prerequisites: {
-			level: 18,
-			ability: "Strength",
-			score: 20,
-			technique: ["Whirlwind Strike"],
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/dragon-slaying-blow.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Denies the dimensional divide. A brutal symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Attack with advantage and deal triple damage.",
-			secondary:
-				"If the target is a dragon or similar creature, it must make Vitality saving throw or die.",
-			tertiary:
-				"If the target dies, you gain temporary hit points equal to its challenge rating times 10.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "triple",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "triple",
+				"damage_type": "none"
 			},
-			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency bonus + Strength modifier + 15",
-				success: "Takes triple damage",
-				failure: "Dies",
+			"saving_throw": {
+				"ability": "Vitality",
+				"dc": "8 + proficiency bonus + Strength modifier + 15",
+				"success": "Takes triple damage",
+				"failure": "Dies"
 			},
-		},
-		limitations: {
-			uses: "Once per long rest",
-			recharge: "Long rest",
-			conditions: ["Target must be a dragon or similar powerful creature"],
-		},
-		flavor: "Denies the dimensional divide. A brutal symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/dragon-slaying-blow.webp",
-	},
-	{
-		id: "void-annihilation",
-		name: "Void Annihilation",
-		description: "An attack that tears through dimensions and reality itself.",
-		type: "finishing",
-		style: "weapon",
-		prerequisites: {
-			level: 20,
-			ability: "Agility",
-			score: 20,
-			technique: ["Void Slash"],
-		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Attack ignores all defenses and deals maximum damage.",
-			secondary:
-				"Target must make Vitality saving throw with disadvantage or be annihilated.",
-			tertiary:
-				"If the target is annihilated, it cannot be revived by any means short of divine intervention.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "maximum",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
-			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency bonus + Agility modifier + 20",
-				success: "Takes maximum damage",
-				failure: "Annihilated",
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [
+				"Target must be a dragon or similar powerful creature"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Attack with advantage and deal triple damage.",
+			"secondary": "If the target is a dragon or similar creature, it must make Vitality saving throw or die.",
+			"tertiary": "If the target dies, you gain temporary hit points equal to its challenge rating times 10.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "dragon-slaying-blow",
+		"name": "Dragon-Slaying Blow",
+		"description": "A legendary attack that can fell even the mightiest beasts.",
+		"type": "finishing",
+		"style": "two-handed",
+		"prerequisites": {
+			"level": 18,
+			"ability": "Strength",
+			"score": 20,
+			"technique": [
+				"Whirlwind Strike"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/void-annihilation.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reflects the fragile limits of flesh. A silent ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "maximum",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "Once per lifetime",
-			recharge: "Never",
-			conditions: ["Requires legendary weapon", "Must be at full health"],
-		},
-		flavor:
-			"Reflects the fragile limits of flesh. A silent ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/void-annihilation.webp",
-	},
-	{
-		id: "divine-execution",
-		name: "Divine Execution",
-		description:
-			"The ultimate expression of radiant judgment—a strike imbued with so much purified essence that it can sever a corrupted soul from its body entirely.",
-		type: "finishing",
-		style: "weapon",
-		prerequisites: {
-			level: 17,
-			class: "Herald",
-			technique: ["Divine Smite"],
-		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Attack with advantage and add 8d8 radiant damage.",
-			secondary:
-				"If the target is an evil creature, it must make Vitality saving throw or die.",
-			tertiary:
-				"If the target dies, you and all allies within 30 feet gain temporary hit points equal to your herald level.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "radiant",
+			"saving_throw": {
+				"ability": "Vitality",
+				"dc": "8 + proficiency bonus + Agility modifier + 20",
+				"success": "Takes maximum damage",
+				"failure": "Annihilated"
 			},
-			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency bonus + Presence modifier + 10",
-				success: "Takes extra radiant damage",
-				failure: "Dies",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per long rest",
-			recharge: "Long rest",
-			conditions: ["Target must be evil", "Requires holy weapon"],
+		"limitations": {
+			"uses": "Once per lifetime",
+			"recharge": "Never",
+			"requires_attunement": false,
+			"conditions": [
+				"Requires legendary weapon",
+				"Must be at full health"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Reflects the remnants of humanity. An overwhelming dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/divine-execution.webp",
+		"effects": {
+			"primary": "Attack ignores all defenses and deals maximum damage.",
+			"secondary": "Target must make Vitality saving throw with disadvantage or be annihilated.",
+			"tertiary": "If the target is annihilated, it cannot be revived by any means short of divine intervention.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "void-annihilation",
+		"name": "Void Annihilation",
+		"description": "An attack that tears through dimensions and reality itself.",
+		"type": "finishing",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 20,
+			"ability": "Agility",
+			"score": 20,
+			"technique": [
+				"Void Slash"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
 	},
 	{
-		id: "arcane-overload",
-		name: "Arcane Overload",
-		description:
-			"Overload your spell lattices beyond their designed capacity, channeling catastrophic amounts of raw essence through a single devastating attack.",
-		type: "finishing",
-		style: "any",
-		prerequisites: {
-			level: 19,
-			class: "Mage",
-			technique: ["Arcane Recovery"],
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/divine-execution.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-			cost: "One attack action + spell slot",
-		},
-		effects: {
-			primary:
-				"Attack with advantage and add damage equal to 3d8 per spell slot level.",
-			secondary:
-				"Target must make Intelligence saving throw or be stunned until your next turn.",
-			tertiary:
-				"If the target is stunned, you can cast one spell as a bonus action without expending a spell slot.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Intelligence",
-				damage: "magical",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
-			saving_throw: {
-				ability: "Intelligence",
-				dc: "8 + proficiency bonus + Intelligence modifier + spell level",
-				success: "Takes extra magical damage",
-				failure: "Stunned until your next turn",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "Once per long rest",
-			recharge: "Long rest",
-			conditions: ["Must expend a spell slot", "Cannot be used with cantrips"],
-		},
-		flavor:
-			"Weaves the concept of defeat. A relentless surge of lethal intent.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/arcane-overload.webp",
-	},
-	{
-		id: "meteor-strike",
-		name: "Meteor Strike",
-		description:
-			"A high-altitude lunging strike that impacts like a falling star.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 11,
-			ability: "Strength",
-			score: 15,
-		},
-		activation: {
-			type: "action",
-			cost: "One attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Leap up to 30 feet into the air and strike a target. Deals an additional 6d6 fire damage.",
-			secondary:
-				"All creatures within 10 feet of the target take 3d6 bludgeoning damage. Adaptive once learned.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "fire/bludgeoning",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per short rest",
-			recharge: "Short rest",
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [
+				"Target must be evil",
+				"Requires holy weapon"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Overrides the fragile limits of flesh. A relentless ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/meteor-strike.webp",
+		"effects": {
+			"primary": "Attack with advantage and add 8d8 radiant damage.",
+			"secondary": "If the target is an evil creature, it must make Vitality saving throw or die.",
+			"tertiary": "If the target dies, you and all allies within 30 feet gain temporary hit points equal to your herald level.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "divine-execution",
+		"name": "Divine Execution",
+		"description": "The ultimate expression of radiant judgmentâ€”a strike imbued with so much purified essence that it can sever a corrupted soul from its body entirely.",
+		"type": "finishing",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 17,
+			"class": "Herald",
+			"technique": [
+				"Divine Smite"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
 	},
 	{
-		id: "phantom-step",
-		name: "Phantom Step",
-		description: "Briefly turn intangible while moving to avoid all obstacles.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 9,
-			ability: "Agility",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/arcane-overload.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Weaves the concept of defeat. A relentless surge of lethal intent.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "bonus-action",
-		},
-		effects: {
-			primary:
-				"Until the end of your turn, you can move through creatures and objects as if they were difficult terrain.",
-			secondary:
-				"You do not provoke opportunity attacks. Adaptive once learned.",
-		},
-		mechanics: {
-			movement: {
-				type: "step",
-				distance: 0,
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Intelligence",
+				"damage": "magical",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "3 times per day",
-			recharge: "Long rest",
-		},
-		flavor:
-			"Bends the flow of time itself. An absolute testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/phantom-step.webp",
-	},
-	{
-		id: "thousand-cuts",
-		name: "Thousand Cuts",
-		description: "A blur of strikes that targets every weak point in a second.",
-		type: "finishing",
-		style: "dual-wielding",
-		prerequisites: {
-			level: 17,
-			ability: "Agility",
-			score: 17,
-			technique: ["Umbral Strike"],
-		},
-		activation: {
-			type: "action",
-			cost: "Full attack action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Make 10 melee attacks against one target. Each hit deals 1d4 + Dex damage.",
-			secondary:
-				"Target is bleeding, taking 2d6 damage at start of turns. Adaptive once learned.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "slashing",
+			"saving_throw": {
+				"ability": "Intelligence",
+				"dc": "8 + proficiency bonus + Intelligence modifier + spell level",
+				"success": "Takes extra magical damage",
+				"failure": "Stunned until your next turn"
 			},
-		},
-		limitations: {
-			uses: "Once per long rest",
-			recharge: "Long rest",
-		},
-		flavor:
-			"Crushes the fragile limits of flesh. An intricate ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/thousand-cuts.webp",
-	},
-	{
-		id: "absolute-defense",
-		name: "Absolute Defense",
-		description:
-			"A perfect parry stance that deflects even magical projectiles.",
-		type: "defensive",
-		style: "shield",
-		prerequisites: {
-			level: 13,
-			ability: "Strength",
-			score: 15,
-		},
-		activation: {
-			type: "reaction",
-		},
-		effects: {
-			primary:
-				"When hit by an attack (including spells), reduce the damage to 0.",
-			secondary:
-				"Reflect half the damage back at the attacker. Adaptive once learned.",
-		},
-		mechanics: {
-			condition: ["Invulnerable for 1 trigger"],
-		},
-		limitations: {
-			uses: "Twice per long rest",
-			recharge: "Long rest",
-		},
-		flavor:
-			"Reclaims the flow of time itself. An overwhelming testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/absolute-defense.webp",
-	},
-	{
-		id: "gravity-bind",
-		name: "Gravity Bind",
-		description:
-			"Increase the gravity around a target to pin them to the ground.",
-		type: "utility",
-		style: "any",
-		prerequisites: {
-			level: 7,
-			ability: "Vitality",
-			score: 13,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 30,
-		},
-		effects: {
-			primary:
-				"One creature must make a Strength save or be restrained and knocked prone.",
-			secondary: "Fly speed is reduced to 0. Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			saving_throw: {
-				ability: "Strength",
-				dc: "10 + level",
-				success: "Half speed",
-				failure: "Restrained",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "3 times per day",
-			recharge: "Long rest",
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [
+				"Must expend a spell slot",
+				"Cannot be used with cantrips"
+			],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Crushes the darkness within. An intricate ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/gravity-bind.webp",
+		"effects": {
+			"primary": "Attack with advantage and add damage equal to 3d8 per spell slot level.",
+			"secondary": "Target must make Intelligence saving throw or be stunned until your next turn.",
+			"tertiary": "If the target is stunned, you can cast one spell as a bonus action without expending a spell slot.",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "arcane-overload",
+		"name": "Arcane Overload",
+		"description": "Overload your spell lattices beyond their designed capacity, channeling catastrophic amounts of raw essence through a single devastating attack.",
+		"type": "finishing",
+		"style": "any",
+		"prerequisites": {
+			"level": 19,
+			"class": "Mage",
+			"technique": [
+				"Arcane Recovery"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action + spell slot"
+		}
 	},
 	{
-		id: "sonic-boom",
-		name: "Sonic Boom",
-		description:
-			"A strike so fast it breaks the sound barrier, creating a concussive wave.",
-		type: "offensive",
-		style: "unarmed",
-		prerequisites: {
-			level: 5,
-			ability: "Strength",
-			score: 13,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/meteor-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Overrides the fragile limits of flesh. A relentless ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 15,
-		},
-		effects: {
-			primary: "Creatures in a 15ft cone take 3d8 thunder damage.",
-			secondary:
-				"Targets must make a Con save or be deafened and pushed 10ft. Adaptive once learned.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "thunder",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "fire/bludgeoning",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "At-will",
-		},
-		flavor: "Absorbs the flow of time itself. A brutal symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/sonic-boom.webp",
-	},
-	{
-		id: "infinite-riposte",
-		name: "Infinite Riposte",
-		description:
-			"Enter a trance where every incoming attack is met with a counter.",
-		type: "defensive",
-		style: "weapon",
-		prerequisites: {
-			level: 15,
-			ability: "Agility",
-			score: 15,
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		duration: {
-			type: "timed",
-			time: "1 round",
-		},
-		effects: {
-			primary:
-				"Gain unlimited reactions for the purpose of making opportunity attacks or parries until your next turn.",
-			secondary: "Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			condition: ["unlimited reactions"],
-		},
-		limitations: {
-			uses: "Once per long rest",
-			recharge: "Long rest",
-		},
-		flavor:
-			"Cleanses the fragile limits of flesh. A subtle ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/infinite-riposte.webp",
-	},
-	{
-		id: "dragon-ascent",
-		name: "Dragon Ascent",
-		description:
-			"A vertical spiraling jump that slices everything in its path.",
-		type: "mobility",
-		style: "weapon",
-		prerequisites: {
-			level: 11,
-			ability: "Strength",
-			score: 15,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "self",
-		},
-		effects: {
-			primary:
-				"Jump 30ft vertically. All creatures within 5ft of your path take weapon damage.",
-			secondary:
-				"Safe landing: you take no falling damage this turn. Adaptive once learned.",
-		},
-		mechanics: {
-			movement: {
-				type: "jump",
-				distance: 30,
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "Twice per short rest",
-			recharge: "Short rest",
-		},
-		flavor:
-			"Cleanses the flow of time itself. An intricate symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/dragon-ascent.webp",
-	},
-	{
-		id: "nerve-strike",
-		name: "Nerve Strike",
-		description: "A precision strike to the target's central nervous system.",
-		type: "utility",
-		style: "unarmed",
-		prerequisites: {
-			level: 7,
-			ability: "Agility",
-			score: 13,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Target must make a Vitality save or be paralyzed until the end of your next turn.",
-			secondary: "Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + prof + Dex",
-				success: "No effect",
-				failure: "Paralyzed",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per short rest",
-			recharge: "Short rest",
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Commands all who stand in opposition. A triumphant whisper in the umbrals.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/nerve-strike.webp",
+		"effects": {
+			"primary": "Leap up to 30 feet into the air and strike a target. Deals an additional 6d6 fire damage.",
+			"secondary": "All creatures within 10 feet of the target take 3d6 bludgeoning damage. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "meteor-strike",
+		"name": "Meteor Strike",
+		"description": "A high-altitude lunging strike that impacts like a falling star.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 11,
+			"ability": "Strength",
+			"score": 15
+		},
+		"activation": {
+			"type": "action",
+			"cost": "One attack action"
+		},
+		"range": "melee"
 	},
 	{
-		id: "bladeshim-storm",
-		name: "Bladeshim Storm",
-		description: "Release a flurry of essence-blades from your weapon.",
-		type: "offensive",
-		style: "weapon",
-		prerequisites: {
-			level: 9,
-			ability: "Agility",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/phantom-step.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Bends the flow of time itself. An absolute testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 30,
-		},
-		effects: {
-			primary:
-				"Creatures in a 30ft radius must make a Dex save or take 5d10 force damage.",
-			secondary: "Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			attack: {
-				type: "ranged",
-				modifier: "Agility",
-				damage: "force",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "Once per short rest",
-			recharge: "Short rest",
-		},
-		flavor:
-			"Absorbs the concept of defeat. An ancient dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/bladeshim-storm.webp",
-	},
-	{
-		id: "immovable-object",
-		name: "Immovable Object",
-		description:
-			"Root yourself in reality, becoming impossible to move or knock down.",
-		type: "defensive",
-		style: "any",
-		prerequisites: {
-			level: 5,
-			ability: "Vitality",
-			score: 13,
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		duration: {
-			type: "concentration",
-			time: "1 minute",
-		},
-		effects: {
-			primary: "Gain advantage on all Strength and Vitality saves.",
-			secondary: "Cannot be moved or knocked prone. Adaptive once learned.",
-		},
-		mechanics: {
-			condition: ["advantage on Str/Con saves", "immovable"],
-		},
-		limitations: {
-			uses: "3 times per day",
-			recharge: "Long rest",
-		},
-		flavor:
-			"Shatters the fragile limits of flesh. A brutal ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/immovable-object.webp",
-	},
-	{
-		id: "echo-step",
-		name: "Echo Step",
-		description: "Move so quickly you leave afterimages that distract foes.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 3,
-			ability: "Agility",
-			score: 13,
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		effects: {
-			primary:
-				"Until the start of your next turn, attacks against you have disadvantage.",
-			secondary: "You can move an extra 10ft this turn. Adaptive once learned.",
-		},
-		mechanics: {
-			movement: {
-				type: "step",
-				distance: 10,
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-			condition: ["disadvantage on incoming attacks"],
-		},
-		limitations: {
-			uses: "At-will",
-		},
-		flavor: "Denies the flow of time itself. A brutal symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/echo-step.webp",
-	},
-	{
-		id: "vortex-pull",
-		name: "Vortex Pull",
-		description:
-			"Spin your weapon to create a vacuum that pulls enemies closer.",
-		type: "utility",
-		style: "two-handed",
-		prerequisites: {
-			level: 7,
-			ability: "Strength",
-			score: 13,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 20,
-		},
-		effects: {
-			primary:
-				"Creatures within 20ft must make a Strength save or be pulled adjacent to you.",
-			secondary: "Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			saving_throw: {
-				ability: "Strength",
-				dc: "8 + prof + Str",
-				success: "No effect",
-				failure: "Pulled",
+			"movement": {},
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
+		"limitations": {
+			"uses": "3 times per day",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Bends all who stand in opposition. An absolute beautiful catastrophe.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/vortex-pull.webp",
+		"effects": {
+			"primary": "Until the end of your turn, you can move through creatures and objects as if they were difficult terrain.",
+			"secondary": "You do not provoke opportunity attacks. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "phantom-step",
+		"name": "Phantom Step",
+		"description": "Briefly turn intangible while moving to avoid all obstacles.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 9,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "bonus-action"
+		}
 	},
 	{
-		id: "blood-tithe",
-		name: "Blood Tithe",
-		description: "Empower your strike by sacrificing your own life force.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 5,
-			ability: "Vitality",
-			score: 13,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/thousand-cuts.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Crushes the fragile limits of flesh. An intricate ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "free",
-		},
-		effects: {
-			primary:
-				"Expend any number of Hit Dice. Add double the total to your next damage roll.",
-			secondary: "Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				damage: "variable",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "slashing",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "Once per turn",
-		},
-		flavor:
-			"Absorbs the flow of time itself. An ancient testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/blood-tithe.webp",
-	},
-	{
-		id: "quaking-stomp",
-		name: "Quaking Stomp",
-		description: "Strike the ground to create a localized earthquake.",
-		type: "utility",
-		style: "any",
-		prerequisites: {
-			level: 9,
-			ability: "Strength",
-			score: 15,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 20,
-		},
-		effects: {
-			primary:
-				"Creatures in a 20ft radius must make a Dex save or take 4d8 bludgeoning and be knocked prone.",
-			secondary: "Area becomes difficult terrain. Adaptive once learned.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "bludgeoning",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "3 times per day",
-			recharge: "Long rest",
-		},
-		flavor:
-			"Commands the arrogant and the mighty. A desperate beautiful catastrophe.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/quaking-stomp.webp",
-	},
-	{
-		id: "blade-dance",
-		name: "Blade Dance",
-		description:
-			"Enter a shifting flow of motion that enhances both offense and defense.",
-		type: "defensive",
-		style: "any",
-		prerequisites: {
-			level: 13,
-			ability: "Agility",
-			score: 15,
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		duration: {
-			type: "concentration",
-			time: "1 minute",
-		},
-		effects: {
-			primary: "Gain +2 AC and your movement speed increases by 20ft.",
-			secondary:
-				"You can make one additional melee attack as a bonus action. Adaptive once learned.",
-		},
-		mechanics: {
-			condition: ["+2 AC"],
-			movement: {
-				type: "step",
-				distance: 20,
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per short rest",
-			recharge: "Short rest",
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Destroys the concept of defeat. A sorrowful surge of lethal intent.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/blade-dance.webp",
+		"effects": {
+			"primary": "Make 10 melee attacks against one target. Each hit deals 1d4 + Dex damage.",
+			"secondary": "Target is bleeding, taking 2d6 damage at start of turns. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "thousand-cuts",
+		"name": "Thousand Cuts",
+		"description": "A blur of strikes that targets every weak point in a second.",
+		"type": "finishing",
+		"style": "dual-wielding",
+		"prerequisites": {
+			"level": 17,
+			"ability": "Agility",
+			"score": 17,
+			"technique": [
+				"Umbral Strike"
+			]
+		},
+		"activation": {
+			"type": "action",
+			"cost": "Full attack action"
+		},
+		"range": "melee"
 	},
 	{
-		id: "grand-slam",
-		name: "Grand Slam",
-		description: "A horizontal swing that sends enemies flying.",
-		type: "offensive",
-		style: "two-handed",
-		prerequisites: {
-			level: 11,
-			ability: "Strength",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/absolute-defense.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reclaims the flow of time itself. An overwhelming testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Strike one target. If hit, they are pushed 30ft away.",
-			secondary:
-				"If they strike a wall, they take an additional 3d6 bludgeoning damage. Adaptive once learned.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "bludgeoning",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "At-will",
-		},
-		flavor:
-			"Crushes the remnants of humanity. A desperate surge of lethal intent.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/grand-slam.webp",
-	},
-	{
-		id: "sky-piercer",
-		name: "Sky Piercer",
-		description:
-			"A precision thrust that targets the soul as much as the body.",
-		type: "offensive",
-		style: "weapon",
-		prerequisites: {
-			level: 15,
-			ability: "Agility",
-			score: 15,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Strike a target. Attack ignores all damage resistance.",
-			secondary:
-				"Target loses one unexpended Action or Bonus Action from their next turn. Adaptive once learned.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "piercing",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "Once per short rest",
-			recharge: "Short rest",
-		},
-		flavor:
-			"Shatters the dimensional divide. A brutal testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/sky-piercer.webp",
-	},
-	{
-		id: "unbreakable-will",
-		name: "Unbreakable Will",
-		description:
-			"Instantly shake off mental control and debuffs through sheer grit.",
-		type: "utility",
-		style: "any",
-		prerequisites: {
-			level: 5,
-			ability: "Vitality",
-			score: 13,
-		},
-		activation: {
-			type: "reaction",
-		},
-		effects: {
-			primary:
-				"End one condition currently affecting you: Charmed, Frightened, or Stunned.",
-			secondary: "Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			condition: ["remove mental debuff"],
-		},
-		limitations: {
-			uses: "Once per short rest",
-			recharge: "Short rest",
-		},
-		flavor:
-			"Overrides the concept of defeat. A relentless dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/unbreakable-will.webp",
-	},
-	{
-		id: "finishing-blast",
-		name: "Final Reckoning",
-		description:
-			"Channel every remaining bit of energy into one final catastrophic blow.",
-		type: "finishing",
-		style: "any",
-		prerequisites: {
-			level: 20,
-			ability: "Strength",
-			score: 17,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Deal 10d10 + Str + Dex + Int damage.",
-			secondary:
-				"You take 2 levels of exhaustion. Adaptive once learned via Rune.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Str/Dex/Int",
-				damage: "untyped",
+			"movement": "",
+			"condition": [
+				"Invulnerable for 1 trigger"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per day",
-			recharge: "Long rest",
+		"limitations": {
+			"uses": "Twice per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Reclaims the architect's design. A silent roar of raw mana.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/final-reckoning.webp",
+		"effects": {
+			"primary": "When hit by an attack (including spells), reduce the damage to 0.",
+			"secondary": "Reflect half the damage back at the attacker. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "absolute-defense",
+		"name": "Absolute Defense",
+		"description": "A perfect parry stance that deflects even magical projectiles.",
+		"type": "defensive",
+		"style": "shield",
+		"prerequisites": {
+			"level": 13,
+			"ability": "Strength",
+			"score": 15
+		},
+		"activation": {
+			"type": "reaction"
+		}
 	},
 	{
-		id: "dimensional-step",
-		name: "Dimensional Step",
-		description:
-			"A series of micro-teleports that make your movement unpredictable.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 5,
-			ability: "Agility",
-			score: 13,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/gravity-bind.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Crushes the darkness within. An intricate ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "free",
-		},
-		effects: {
-			primary:
-				"When you move, you can teleport between any 5ft squares of your movement path.",
-			secondary:
-				"You are immune to opportunity attacks during this movement. Adaptive once learned.",
-		},
-		mechanics: {
-			movement: {
-				type: "teleport",
-				distance: 0,
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "At-will",
-		},
-		flavor:
-			"Commands the concept of defeat. A desperate surge of lethal intent.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/dimensional-step.webp",
-	},
-	{
-		id: "execute",
-		name: "Execution Strike",
-		description: "A cold, calculated strike that finishes off a weakened foe.",
-		type: "finishing",
-		style: "weapon",
-		prerequisites: {
-			level: 9,
-			ability: "Strength",
-			score: 13,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"If the target is below 25% health, they must make a Vitality save or be reduced to 0 HP.",
-			secondary:
-				"On success, they take 10d10 additional weapon damage. Adaptive once learned.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "lethal",
+			"saving_throw": {
+				"ability": "Strength",
+				"dc": "10 + level",
+				"success": "Half speed",
+				"failure": "Restrained"
 			},
-			saving_throw: {
-				ability: "Vitality",
-				dc: "15 + prof",
-				success: "takes damage",
-				failure: "death",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per turn",
+		"limitations": {
+			"uses": "3 times per day",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Ignites the concept of defeat. A triumphant dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/execute.webp",
+		"effects": {
+			"primary": "One creature must make a Strength save or be restrained and knocked prone.",
+			"secondary": "Fly speed is reduced to 0. Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "gravity-bind",
+		"name": "Gravity Bind",
+		"description": "Increase the gravity around a target to pin them to the ground.",
+		"type": "utility",
+		"style": "any",
+		"prerequisites": {
+			"level": 7,
+			"ability": "Vitality",
+			"score": 13
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 30"
 	},
 	{
-		id: "iron-wall-stance",
-		name: "Iron Wall Stance",
-		description:
-			"An absolute defensive posture that negates all frontal attacks.",
-		type: "defensive",
-		style: "shield",
-		prerequisites: {
-			level: 7,
-			ability: "Strength",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/sonic-boom.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the flow of time itself. A brutal symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "bonus-action",
-		},
-		range: {
-			type: "self",
-		},
-		effects: {
-			primary:
-				"You gain total cover from the front. Any melee attacker that hits you takes 2d6 bludgeoning damage from the impact.",
-			secondary: "Your movement is reduced to 5ft.",
-		},
-		mechanics: {
-			condition: ["Total Cover", "Slowed"],
-		},
-		limitations: {
-			uses: "Concentration",
-		},
-		flavor:
-			"Cleanses the concept of defeat. A subtle dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/iron-wall.webp",
-	},
-	{
-		id: "whirlwind-slash",
-		name: "Whirlwind Slash",
-		description: "Spin with your weapon to strike all nearby enemies.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 5,
-			ability: "Strength",
-			score: 13,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 10,
-		},
-		effects: {
-			primary:
-				"All creatures within 10ft must make a Dex save or take weapon damage + 2d8.",
-			secondary: "Adaptive DC.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "weapon+2d8",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "thunder",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "At-will",
-		},
-		flavor: "Absorbs the architect's design. A brutal death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/whirlwind.webp",
-	},
-	{
-		id: "zen-archery",
-		name: "Zen Archery",
-		description: "Close your eyes and let your intuition guide the arrow.",
-		type: "offensive",
-		style: "ranged",
-		prerequisites: {
-			level: 9,
-			ability: "Sense",
-			score: 15,
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		range: {
-			type: "ranged",
-		},
-		effects: {
-			primary: "Your next ranged attack ignores cover and has advantage.",
-			secondary:
-				"You can use Sense instead of Agility for the attack and damage.",
-		},
-		mechanics: {
-			attack: {
-				type: "ranged",
-				modifier: "Sense",
-				damage: "weapon",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "Once per short rest",
-		},
-		flavor: "Ignores the architect's design. An absolute death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/zen-archery.webp",
-	},
-	{
-		id: "disarming-flourish",
-		name: "Disarming Flourish",
-		description:
-			"A flashy maneuver designed to strip an enemy of their weapon.",
-		type: "utility",
-		style: "any",
-		prerequisites: {
-			level: 3,
-			ability: "Agility",
-			score: 14,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"On a hit, the target must make a Strength save or drop one item they are holding.",
-			secondary: "You can use a reaction to catch the item.",
-		},
-		mechanics: {
-			saving_throw: {
-				ability: "Strength",
-				dc: "13 + prof",
-				success: "holds item",
-				failure: "drops item",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Overrides the quiet space between breaths. A relentless death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/disarm.webp",
+		"effects": {
+			"primary": "Creatures in a 15ft cone take 3d8 thunder damage.",
+			"secondary": "Targets must make a Con save or be deafened and pushed 10ft. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "sonic-boom",
+		"name": "Sonic Boom",
+		"description": "A strike so fast it breaks the sound barrier, creating a concussive wave.",
+		"type": "offensive",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Strength",
+			"score": 13
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 15"
 	},
 	{
-		id: "fist-of-the-north-star",
-		name: "Seven Star Strike",
-		description: "Strike seven vital pressure points in rapid succession.",
-		type: "offensive",
-		style: "unarmed",
-		prerequisites: {
-			level: 15,
-			ability: "Sense",
-			score: 18,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/infinite-riposte.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Cleanses the fragile limits of flesh. A subtle ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Target takes 10d6 internal damage and is stunned for 1 minute.",
-			secondary: "If the target dies, they explode in a 10ft radius.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Sense",
-				damage: "10d6",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-			condition: ["Stunned"],
-		},
-		limitations: {
-			uses: "Once per long rest",
-		},
-		flavor:
-			"Reflects the quiet space between breaths. An overwhelming death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/seven-star.webp",
-	},
-	{
-		id: "dragons-tail-sweep",
-		name: "Dragon's Tail Sweep",
-		description: "A low, powerful kick that clears the area.",
-		type: "offensive",
-		style: "unarmed",
-		prerequisites: {
-			level: 4,
-			ability: "Strength",
-			score: 14,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 5,
-		},
-		effects: {
-			primary:
-				"All adjacent creatures must make a Dex save or take 3d8 bludgeoning and be knocked prone.",
-			secondary: "Adaptive DC.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Dex/Str",
-				damage: "3d8",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "At-will",
-		},
-		flavor:
-			"Overrides the fragile limits of flesh. A devastating ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/sweep.webp",
-	},
-	{
-		id: "heavenly-piercing-arrow",
-		name: "Heaven-Piercer",
-		description: "A shot that travels through multiple enemies and structures.",
-		type: "offensive",
-		style: "ranged",
-		prerequisites: {
-			level: 12,
-			ability: "Agility",
-			score: 18,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "ranged",
-			distance: 600,
-		},
-		effects: {
-			primary:
-				"A 5ft wide line 600ft long. All targets take weapon damage + 5d10 piercing.",
-			secondary:
-				"Ignores all cover and can penetrate up to 10ft of solid stone.",
-		},
-		mechanics: {
-			attack: {
-				type: "ranged",
-				modifier: "Agility",
-				damage: "weapon+5d10",
+			"movement": "",
+			"condition": [
+				"unlimited reactions"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per short rest",
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Shatters the flow of time itself. A chaotic symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/piercer.webp",
+		"effects": {
+			"primary": "Gain unlimited reactions for the purpose of making opportunity attacks or parries until your next turn.",
+			"secondary": "Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "infinite-riposte",
+		"name": "Infinite Riposte",
+		"description": "Enter a trance where every incoming attack is met with a counter.",
+		"type": "defensive",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 15,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"duration": "timed"
 	},
 	{
-		id: "mirror-shield-parry",
-		name: "Mirror Parry",
-		description: "Reflect a magical or physical projectile back at the sender.",
-		type: "defensive",
-		style: "shield",
-		prerequisites: {
-			level: 8,
-			ability: "Agility",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/dragon-ascent.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Cleanses the flow of time itself. An intricate symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "reaction",
-		},
-		range: {
-			type: "self",
-		},
-		effects: {
-			primary:
-				"Reduce damage from a ranged attack to 0. You can then make a ranged attack with the same project back at the attacker.",
-			secondary: "Works against spells like Magic Missile or Firebolt.",
-		},
-		mechanics: {
-			condition: ["Damage Negation"],
-		},
-		limitations: {
-			uses: "3 times per short rest",
-		},
-		flavor:
-			"Commands the flow of time itself. A desperate symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/mirror-parry.webp",
-	},
-	{
-		id: "vipers-kiss",
-		name: "Viper's Kiss",
-		description: "A quick, poisoned strike that numbs the target.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 2,
-			ability: "Agility",
-			score: 13,
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Target takes 1d6 poison damage and has disadvantage on their next attack.",
-			secondary: "If hidden, the damage increases to 3d6.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "1d6 poison",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "Once per turn",
-		},
-		flavor:
-			"Overrides the remnants of humanity. A silent surge of lethal intent.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/viper.webp",
-	},
-	{
-		id: "mountain-breaker",
-		name: "Mountain Breaker",
-		description: "Concentrate all your mass into a single, devastating punch.",
-		type: "offensive",
-		style: "unarmed",
-		prerequisites: {
-			level: 10,
-			ability: "Strength",
-			score: 16,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Deal 6d12 bludgeoning damage. Target is knocked back 30ft.",
-			secondary: "Destroys non-magical objects and structures instantly.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "6d12",
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
 			},
-		},
-		limitations: {
-			uses: "Once per short rest",
-		},
-		flavor:
-			"Commands the darkness within. A desperate breaking point of the world.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/breaker.webp",
-	},
-	{
-		id: "blade-storm",
-		name: "Blade Storm",
-		description: "Throw a dozen knives at once in a lethal arc.",
-		type: "offensive",
-		style: "ranged",
-		prerequisites: {
-			level: 11,
-			ability: "Agility",
-			score: 17,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 30,
-		},
-		effects: {
-			primary:
-				"All targets in a 30ft cone take 6d4 piercing damage. Dex save for half.",
-			secondary: "Adaptive DC.",
-		},
-		mechanics: {
-			attack: {
-				type: "ranged",
-				modifier: "Agility",
-				damage: "6d4",
+			"movement": {},
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per short rest",
+		"limitations": {
+			"uses": "Twice per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Destroys the architect's design. A desperate roar of raw mana.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/blade-storm.webp",
+		"effects": {
+			"primary": "Jump 30ft vertically. All creatures within 5ft of your path take weapon damage.",
+			"secondary": "Safe landing: you take no falling damage this turn. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "dragon-ascent",
+		"name": "Dragon Ascent",
+		"description": "A vertical spiraling jump that slices everything in its path.",
+		"type": "mobility",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 11,
+			"ability": "Strength",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "self"
 	},
 	{
-		id: "guardians-rebuke",
-		name: "Guardian's Rebuke",
-		description: "When an ally is hit, you make a sudden retaliatory strike.",
-		type: "defensive",
-		style: "any",
-		prerequisites: {
-			level: 4,
-			ability: "Strength",
-			score: 14,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/nerve-strike.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Commands all who stand in opposition. A triumphant whisper in the umbrals.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "reaction",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"If an ally within 5ft is hit, you make a melee attack against the attacker with advantage.",
-			secondary:
-				"The damage from the attack is reduced by your proficiency bonus.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Str/Dex",
-				damage: "weapon",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
-		},
-		limitations: {
-			uses: "Once per turn",
-		},
-		flavor:
-			"Overrides the fragile limits of flesh. A devastating breaking point of the world.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/rebuke.webp",
-	},
-	{
-		id: "gravity-stomp",
-		name: "Gravity Stomp",
-		description: "Stomp the ground to create a localized heavy gravity zone.",
-		type: "utility",
-		style: "any",
-		prerequisites: {
-			level: 9,
-			ability: "Strength",
-			score: 16,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 15,
-		},
-		effects: {
-			primary:
-				"15ft radius becomes difficult terrain. Moving through it costs 4x movement.",
-			secondary: "Duration: 1 minute.",
-		},
-		mechanics: {
-			condition: ["Difficult Terrain"],
-		},
-		limitations: {
-			uses: "Once per short rest",
-		},
-		flavor:
-			"Ignites the flow of time itself. A sorrowful testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/stomp.webp",
-	},
-	{
-		id: "eagles-eye",
-		name: "Eagle's Eye",
-		description: "A heightened state of awareness for sniper shots.",
-		type: "utility",
-		style: "ranged",
-		prerequisites: {
-			level: 5,
-			ability: "Sense",
-			score: 14,
-		},
-		activation: {
-			type: "bonus-action",
-		},
-		range: {
-			type: "self",
-		},
-		effects: {
-			primary:
-				"You can see clearly up to 2 miles and ignore disadvantage from long range.",
-			secondary: "You gain a +5 bonus to your next ranged attack roll.",
-		},
-		mechanics: {
-			condition: ["Enhanced Sight"],
-		},
-		limitations: {
-			uses: "Short rest",
-		},
-		flavor:
-			"Crushes all who stand in opposition. A desperate beautiful catastrophe.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/eagle-eye.webp",
-	},
-	{
-		id: "dragon-claw-rend",
-		name: "Dragon Claw Rend",
-		description: "Tear through the toughest defenses with overwhelming force.",
-		type: "offensive",
-		style: "unarmed",
-		prerequisites: {
-			level: 14,
-			ability: "Strength",
-			score: 20,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Deal 8d8 slashing damage. This attack ignores all resistances and treats immunity as resistance.",
-			secondary:
-				"The target must make a Con save or have their AC reduced by 4 permanently.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "8d8",
+			"saving_throw": {
+				"ability": "Vitality",
+				"dc": "8 + prof + Dex",
+				"success": "No effect",
+				"failure": "Paralyzed"
 			},
-		},
-		limitations: {
-			uses: "Once per long rest",
-		},
-		flavor:
-			"Destroys the arrogant and the mighty. A desperate whisper in the umbrals.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/rend.webp",
-	},
-	{
-		id: "temporal-feint",
-		name: "Temporal Feint",
-		description: "Start an attack in one timeline, finish it in another.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 16,
-			ability: "Intelligence",
-			score: 15,
-		},
-		activation: {
-			type: "free",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"If your attack misses, you can instantly retry it with advantage as a 'temporal correction'.",
-			secondary: "Target must make a Sense save or be 'Confused' for 1 turn.",
-		},
-		mechanics: {
-			condition: ["Advantage", "Confused"],
-		},
-		limitations: {
-			uses: "Once per turn",
-		},
-		flavor:
-			"Destroys the remnants of humanity. A triumphant dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/feint.webp",
-	},
-	{
-		id: "titan-slam",
-		name: "Titan Slam",
-		description: "Drop from a height to crush everyone below.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 8,
-			ability: "Strength",
-			score: 16,
-		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 15,
-		},
-		effects: {
-			primary:
-				"Requires falling at least 20ft. Deal 1d6 per 10ft fallen to all creatures in 15ft radius.",
-			secondary: "You take no falling damage yourself. Adaptive.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "1d6/10ft",
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
 			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Absorbs the flow of time itself. A brutal symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/slam.webp",
+		"effects": {
+			"primary": "Target must make a Vitality save or be paralyzed until the end of your next turn.",
+			"secondary": "Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "nerve-strike",
+		"name": "Nerve Strike",
+		"description": "A precision strike to the target's central nervous system.",
+		"type": "utility",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 7,
+			"ability": "Agility",
+			"score": 13
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
 	},
 	{
-		id: "ice-path-skate",
-		name: "Frost Runner",
-		description:
-			"Create a path of ice under your feet to glide across terrain.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 3,
-			ability: "Agility",
-			score: 13,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/bladeshim-storm.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the concept of defeat. An ancient dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "bonus-action",
-		},
-		range: {
-			type: "self",
-		},
-		effects: {
-			primary:
-				"You gain +20ft movement and can move across water or thin air (max 10ft high).",
-			secondary: "Path melts after 1 round.",
-		},
-		mechanics: {
-			movement: {
-				type: "step",
-				distance: 20,
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "ranged",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "force",
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Bends the dimensional divide. A subtle symphony of violence.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/skate.webp",
+		"effects": {
+			"primary": "Creatures in a 30ft radius must make a Dex save or take 5d10 force damage.",
+			"secondary": "Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "bladeshim-storm",
+		"name": "Bladeshim Storm",
+		"description": "By aligning your lattice with the Storm Absolute, you can crack the local plasma. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 9,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 30"
 	},
 	{
-		id: "venom-spray-technique",
-		name: "Venom Spray",
-		description: "A specialized delivery of poison in a fine mist.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 4,
-			ability: "Agility",
-			score: 14,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/immovable-object.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Shatters the fragile limits of flesh. A brutal ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "area",
-			distance: 15,
-		},
-		effects: {
-			primary:
-				"15ft cone of toxic gas. Targets must make a Con save or be 'Poisoned' for 1 minute.",
-			secondary: "Deals 2d8 poison damage immediately. Adaptive DC.",
-		},
-		mechanics: {
-			attack: {
-				type: "ranged",
-				modifier: "Agility",
-				damage: "2d8",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"advantage on Str/Con saves",
+				"immovable"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "3 times per day",
+		"limitations": {
+			"uses": "3 times per day",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Weaves the dimensional divide. A subtle testament to absolute power.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/spray.webp",
+		"effects": {
+			"primary": "Gain advantage on all Strength and Vitality saves.",
+			"secondary": "Cannot be moved or knocked prone. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "immovable-object",
+		"name": "Immovable Object",
+		"description": "Root yourself in reality, becoming impossible to move or knock down.",
+		"type": "defensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Vitality",
+			"score": 13
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"duration": "concentration"
 	},
 	{
-		id: "blood-boil-strike",
-		name: "Blood-Boil Strike",
-		description:
-			"Deliver a hit that causes the target's internal temperature to skyrocket.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 12,
-			ability: "Vitality",
-			score: 17,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/echo-step.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Denies the flow of time itself. A brutal symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Target takes 6d10 fire damage and has disadvantage on all checks due to intense pain.",
-			secondary:
-				"Target must make a Con save or take 2d10 fire damage at the start of each turn for 1 minute.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Vitality",
-				damage: "6d10",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": {},
+			"condition": [
+				"disadvantage on incoming attacks"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per day",
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Shatters the darkness within. An overwhelming ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/blood-boil.webp",
+		"effects": {
+			"primary": "Until the start of your next turn, attacks against you have disadvantage.",
+			"secondary": "You can move an extra 10ft this turn. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "echo-step",
+		"name": "Echo Step",
+		"description": "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 3,
+			"ability": "Agility",
+			"score": 13
+		},
+		"activation": {
+			"type": "bonus-action"
+		}
 	},
 	{
-		id: "ancient-hebrew-strings-step-technique",
-		name: "Ancient Hebrew Strings Step",
-		description: "Move between the gaps in the system's code.",
-		type: "mobility",
-		style: "any",
-		prerequisites: {
-			level: 18,
-			ability: "Sense",
-			score: 18,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/vortex-pull.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Bends all who stand in opposition. An absolute beautiful catastrophe.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "bonus-action",
-		},
-		range: {
-			type: "self",
-		},
-		effects: {
-			primary:
-				"You can teleport anywhere within 120ft that you have seen before.",
-			secondary: "You can take one other creature with you. Adaptive.",
-		},
-		mechanics: {
-			movement: {
-				type: "teleport",
-				distance: 120,
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "Strength",
+				"dc": "8 + prof + Str",
+				"success": "No effect",
+				"failure": "Pulled"
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "3 times per long rest",
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Shatters the arrogant and the mighty. A chaotic whisper in the umbrals.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/ancient-hebrew-strings-step.webp",
+		"effects": {
+			"primary": "Creatures within 20ft must make a Strength save or be pulled adjacent to you.",
+			"secondary": "Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "vortex-pull",
+		"name": "Vortex Pull",
+		"description": "Spin your weapon to create a vacuum that pulls enemies closer.",
+		"type": "utility",
+		"style": "two-handed",
+		"prerequisites": {
+			"level": 7,
+			"ability": "Strength",
+			"score": 13
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 20"
 	},
 	{
-		id: "infinity-slash",
-		name: "Infinity Slash",
-		description: "A strike that exists in infinite variations simultaneously.",
-		type: "finishing",
-		style: "weapon",
-		prerequisites: {
-			level: 20,
-			ability: "Strength",
-			score: 20,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/blood-tithe.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the flow of time itself. An ancient testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"Deal 100 untyped damage. This damage cannot be reduced, reflected, or avoided.",
-			secondary:
-				"Target is deleted from the current instance (cannot be revived for 24 hours).",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "System",
-				damage: "100",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "variable",
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per week",
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Absorbs the concept of defeat. A sorrowful dance performed on the edge of a blade.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/infinity-slash.webp",
+		"effects": {
+			"primary": "Expend any number of Hit Dice. Add double the total to your next damage roll.",
+			"secondary": "Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "blood-tithe",
+		"name": "Blood Tithe",
+		"description": "By aligning your lattice with the Blood Absolute, you can rupture the local ichor. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Vitality",
+			"score": 13
+		},
+		"activation": {
+			"type": "free"
+		}
 	},
 	{
-		id: "bone-breaker-lock",
-		name: "Bone Breaker",
-		description: "A grappling technique that snaps limbs.",
-		type: "utility",
-		style: "unarmed",
-		prerequisites: {
-			level: 5,
-			ability: "Strength",
-			score: 16,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/quaking-stomp.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Commands the arrogant and the mighty. A desperate beautiful catastrophe.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary:
-				"If target is grappled, you deal 4d10 damage and reduce their movement by 15ft permanently (until magically healed).",
-			secondary: "Adaptive DC.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Strength",
-				damage: "4d10",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "bludgeoning",
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
+		"limitations": {
+			"uses": "3 times per day",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor: "Reflects the architect's design. A chaotic death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/bone-breaker.webp",
+		"effects": {
+			"primary": "Creatures in a 20ft radius must make a Dex save or take 4d8 bludgeoning and be knocked prone.",
+			"secondary": "Area becomes difficult terrain. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "quaking-stomp",
+		"name": "Quaking Stomp",
+		"description": "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		"type": "utility",
+		"style": "any",
+		"prerequisites": {
+			"level": 9,
+			"ability": "Strength",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 20"
 	},
 	{
-		id: "gale-force-kick",
-		name: "Gale-Force Kick",
-		description: "A fast kick that creates a blast of wind.",
-		type: "offensive",
-		style: "unarmed",
-		prerequisites: {
-			level: 4,
-			ability: "Agility",
-			score: 14,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/blade-dance.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Destroys the concept of defeat. A sorrowful surge of lethal intent.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Deal 2d8 bludgeoning damage and push the target 15ft away.",
-			secondary: "Adaptive push distance.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Agility",
-				damage: "2d8",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
 			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": {},
+			"condition": [
+				"+2 AC"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "At-will",
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Ignites the quiet space between breaths. A sorrowful death of hesitation.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/gale-kick.webp",
+		"effects": {
+			"primary": "Gain +2 AC and your movement speed increases by 20ft.",
+			"secondary": "You can make one additional melee attack as a bonus action. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "blade-dance",
+		"name": "Blade Dance",
+		"description": "Enter a shifting flow of motion that enhances both offense and defense.",
+		"type": "defensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 13,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"duration": "concentration"
 	},
 	{
-		id: "void-touch-manual",
-		name: "Void Touch",
-		description: "A technique that leaves a mark of the void on an enemy.",
-		type: "offensive",
-		style: "any",
-		prerequisites: {
-			level: 10,
-			ability: "Intelligence",
-			score: 15,
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/grand-slam.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Crushes the remnants of humanity. A desperate surge of lethal intent.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
 		},
-		activation: {
-			type: "action",
-		},
-		range: {
-			type: "melee",
-		},
-		effects: {
-			primary: "Target takes 5d6 void damage and is 'Silenced' for 2 rounds.",
-			secondary: "Target cannot be healed while silenced. Adaptive.",
-		},
-		mechanics: {
-			attack: {
-				type: "melee",
-				modifier: "Int/Dex",
-				damage: "5d6",
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
 			},
-			condition: ["Silenced"],
+			"saving_throw": {
+				"ability": "Presence",
+				"dc": "8 + proficiency + Presence",
+				"success": "Half damage",
+				"failure": "The target is stunned by authority."
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
 		},
-		limitations: {
-			uses: "Once per short rest",
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
 		},
-		flavor:
-			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
-		source: "Rift Ascendant Canon",
-		image: "/generated/compendium/techniques/void-touch.webp",
+		"effects": {
+			"primary": "Strike one target. If hit, they are pushed 30ft away.",
+			"secondary": "If they strike a wall, they take an additional 3d6 bludgeoning damage. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "grand-slam",
+		"name": "Grand Slam",
+		"description": "You harness pure energy to override the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "two-handed",
+		"prerequisites": {
+			"level": 11,
+			"ability": "Strength",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
 	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/sky-piercer.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Shatters the dimensional divide. A brutal testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "piercing",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Strike a target. Attack ignores all damage resistance.",
+			"secondary": "Target loses one unexpended Action or Bonus Action from their next turn. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "sky-piercer",
+		"name": "Sky Piercer",
+		"description": "A precision thrust that targets the soul as much as the body.",
+		"type": "offensive",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 15,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/unbreakable-will.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Overrides the concept of defeat. A relentless dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"remove mental debuff"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "Short rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "End one condition currently affecting you: Charmed, Frightened, or Stunned.",
+			"secondary": "Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "unbreakable-will",
+		"name": "Unbreakable Will",
+		"description": "Instantly shake off mental control and debuffs through sheer grit.",
+		"type": "utility",
+		"style": "any",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Vitality",
+			"score": 13
+		},
+		"activation": {
+			"type": "reaction"
+		}
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/final-reckoning.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reclaims the architect's design. A silent roar of raw mana.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Str/Dex/Int",
+				"damage": "untyped",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per day",
+			"recharge": "Long rest",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Deal 10d10 + Str + Dex + Int damage.",
+			"secondary": "You take 2 levels of exhaustion. Adaptive once learned via Rune.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "finishing-blast",
+		"name": "Final Reckoning",
+		"description": "Channel every remaining bit of energy into one final catastrophic blow.",
+		"type": "finishing",
+		"style": "any",
+		"prerequisites": {
+			"level": 20,
+			"ability": "Strength",
+			"score": 17
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/dimensional-step.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Commands the concept of defeat. A desperate surge of lethal intent.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": {},
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "When you move, you can teleport between any 5ft squares of your movement path.",
+			"secondary": "You are immune to opportunity attacks during this movement. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "dimensional-step",
+		"name": "Dimensional Step",
+		"description": "A series of micro-teleports that make your movement unpredictable.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Agility",
+			"score": 13
+		},
+		"activation": {
+			"type": "free"
+		}
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/execute.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Ignites the concept of defeat. A triumphant dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "lethal",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Vitality",
+				"dc": "15 + prof",
+				"success": "takes damage",
+				"failure": "death"
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "If the target is below 25% health, they must make a Vitality save or be reduced to 0 HP.",
+			"secondary": "On success, they take 10d10 additional weapon damage. Adaptive once learned.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "execute",
+		"name": "Execution Strike",
+		"description": "A cold, calculated strike that finishes off a weakened foe.",
+		"type": "finishing",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 9,
+			"ability": "Strength",
+			"score": 13
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/iron-wall.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Cleanses the concept of defeat. A subtle dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"Total Cover",
+				"Slowed"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Concentration",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "You gain total cover from the front. Any melee attacker that hits you takes 2d6 bludgeoning damage from the impact.",
+			"secondary": "Your movement is reduced to 5ft.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "iron-wall-stance",
+		"name": "Iron Wall Stance",
+		"description": "An absolute defensive posture that negates all frontal attacks.",
+		"type": "defensive",
+		"style": "shield",
+		"prerequisites": {
+			"level": 7,
+			"ability": "Strength",
+			"score": 15
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"range": "self"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/whirlwind.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the architect's design. A brutal death of hesitation.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "weapon+2d8",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "All creatures within 10ft must make a Dex save or take weapon damage + 2d8.",
+			"secondary": "Adaptive DC.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "whirlwind-slash",
+		"name": "Whirlwind Slash",
+		"description": "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Strength",
+			"score": 13
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 10"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/zen-archery.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Ignores the architect's design. An absolute death of hesitation.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "ranged",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Sense",
+				"damage": "weapon",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Your next ranged attack ignores cover and has advantage.",
+			"secondary": "You can use Sense instead of Agility for the attack and damage.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "zen-archery",
+		"name": "Zen Archery",
+		"description": "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "ranged",
+		"prerequisites": {
+			"level": 9,
+			"ability": "Sense",
+			"score": 15
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"range": "ranged"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/disarm.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Overrides the quiet space between breaths. A relentless death of hesitation.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Strength",
+				"dc": "13 + prof",
+				"success": "holds item",
+				"failure": "drops item"
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "On a hit, the target must make a Strength save or drop one item they are holding.",
+			"secondary": "You can use a reaction to catch the item.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "disarming-flourish",
+		"name": "Disarming Flourish",
+		"description": "A flashy maneuver designed to strip an enemy of their weapon.",
+		"type": "utility",
+		"style": "any",
+		"prerequisites": {
+			"level": 3,
+			"ability": "Agility",
+			"score": 14
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/seven-star.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reflects the quiet space between breaths. An overwhelming death of hesitation.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Sense",
+				"damage": "10d6",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"Stunned"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Target takes 10d6 internal damage and is stunned for 1 minute.",
+			"secondary": "If the target dies, they explode in a 10ft radius.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "fist-of-the-north-star",
+		"name": "Seven Star Strike",
+		"description": "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 15,
+			"ability": "Sense",
+			"score": 18
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/sweep.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Overrides the fragile limits of flesh. A devastating ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "All adjacent creatures must make a Dex save or take 3d8 bludgeoning and be knocked prone.",
+			"secondary": "Adaptive DC.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "dragons-tail-sweep",
+		"name": "Dragon's Tail Sweep",
+		"description": "You harness fundamental energy to manifest the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 4,
+			"ability": "Strength",
+			"score": 14
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 5"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/piercer.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Shatters the flow of time itself. A chaotic symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "ranged",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "weapon+5d10",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "A 5ft wide line 600ft long. All targets take weapon damage + 5d10 piercing.",
+			"secondary": "Ignores all cover and can penetrate up to 10ft of solid stone.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "heavenly-piercing-arrow",
+		"name": "Heaven-Piercer",
+		"description": "A shot that travels through multiple enemies and structures.",
+		"type": "offensive",
+		"style": "ranged",
+		"prerequisites": {
+			"level": 12,
+			"ability": "Agility",
+			"score": 18
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "ranged 600"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/mirror-parry.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Commands the flow of time itself. A desperate symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"Damage Negation"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "3 times per short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Reduce damage from a ranged attack to 0. You can then make a ranged attack with the same project back at the attacker.",
+			"secondary": "Works against spells like Magic Missile or Firebolt.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "mirror-shield-parry",
+		"name": "Mirror Parry",
+		"description": "Reflect a magical or physical projectile back at the sender.",
+		"type": "defensive",
+		"style": "shield",
+		"prerequisites": {
+			"level": 8,
+			"ability": "Agility",
+			"score": 15
+		},
+		"activation": {
+			"type": "reaction"
+		},
+		"range": "self"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/viper.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Target takes 1d6 poison damage and has disadvantage on their next attack.",
+			"secondary": "If hidden, the damage increases to 3d6.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "vipers-kiss",
+		"name": "Viper's Kiss",
+		"description": "You harness fundamental energy to override the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 2,
+			"ability": "Agility",
+			"score": 13
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/breaker.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Commands the darkness within. A desperate breaking point of the world.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Strength",
+				"damage": "6d12",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Deal 6d12 bludgeoning damage. Target is knocked back 30ft.",
+			"secondary": "Destroys non-magical objects and structures instantly.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "mountain-breaker",
+		"name": "Mountain Breaker",
+		"description": "Concentrate all your mass into a single, devastating punch.",
+		"type": "offensive",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 10,
+			"ability": "Strength",
+			"score": 16
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/blade-storm.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Destroys the architect's design. A desperate roar of raw mana.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "All targets in a 30ft cone take 6d4 piercing damage. Dex save for half.",
+			"secondary": "Adaptive DC.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "blade-storm",
+		"name": "Blade Storm",
+		"description": "You harness hyper-charged energy to crack the target's volts. This manifestation of Storm resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "ranged",
+		"prerequisites": {
+			"level": 11,
+			"ability": "Agility",
+			"score": 17
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 30"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/rebuke.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Overrides the fragile limits of flesh. A devastating breaking point of the world.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Str/Dex",
+				"damage": "weapon",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "If an ally within 5ft is hit, you make a melee attack against the attacker with advantage.",
+			"secondary": "The damage from the attack is reduced by your proficiency bonus.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "guardians-rebuke",
+		"name": "Guardian's Rebuke",
+		"description": "When an ally is hit, you make a sudden retaliatory strike.",
+		"type": "defensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 4,
+			"ability": "Strength",
+			"score": 14
+		},
+		"activation": {
+			"type": "reaction"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/stomp.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Ignites the flow of time itself. A sorrowful testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"Difficult Terrain"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "15ft radius becomes difficult terrain. Moving through it costs 4x movement.",
+			"secondary": "Duration: 1 minute.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "gravity-stomp",
+		"name": "Gravity Stomp",
+		"description": "Stomp the ground to create a localized heavy gravity zone.",
+		"type": "utility",
+		"style": "any",
+		"prerequisites": {
+			"level": 9,
+			"ability": "Strength",
+			"score": 16
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 15"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/eagle-eye.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Crushes all who stand in opposition. A desperate beautiful catastrophe.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"Enhanced Sight"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "You can see clearly up to 2 miles and ignore disadvantage from long range.",
+			"secondary": "You gain a +5 bonus to your next ranged attack roll.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "eagles-eye",
+		"name": "Eagle's Eye",
+		"description": "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		"type": "utility",
+		"style": "ranged",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Sense",
+			"score": 14
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"range": "self"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/rend.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per long rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Deal 8d8 slashing damage. This attack ignores all resistances and treats immunity as resistance.",
+			"secondary": "The target must make a Con save or have their AC reduced by 4 permanently.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "dragon-claw-rend",
+		"name": "Dragon Claw Rend",
+		"description": "Tear through the toughest defenses with overwhelming force.",
+		"type": "offensive",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 14,
+			"ability": "Strength",
+			"score": 20
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/feint.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Destroys the remnants of humanity. A triumphant dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [
+				"Advantage",
+				"Confused"
+			],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per turn",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "If your attack misses, you can instantly retry it with advantage as a 'temporal correction'.",
+			"secondary": "Target must make a Sense save or be 'Confused' for 1 turn.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "temporal-feint",
+		"name": "Temporal Feint",
+		"description": "By aligning your lattice with the Chrono Absolute, you can suspend the local stasis. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 16,
+			"ability": "Intelligence",
+			"score": 15
+		},
+		"activation": {
+			"type": "free"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/slam.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the flow of time itself. A brutal symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Requires falling at least 20ft. Deal 1d6 per 10ft fallen to all creatures in 15ft radius.",
+			"secondary": "You take no falling damage yourself. Adaptive.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "titan-slam",
+		"name": "Titan Slam",
+		"description": "You harness tectonic energy to pressurize the target's lithosphere. This manifestation of Titanic resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 8,
+			"ability": "Strength",
+			"score": 16
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 15"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/skate.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Bends the dimensional divide. A subtle symphony of violence.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": {},
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "You gain +20ft movement and can move across water or thin air (max 10ft high).",
+			"secondary": "Path melts after 1 round.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "ice-path-skate",
+		"name": "Frost Runner",
+		"description": "Create a path of ice under your feet to glide across terrain.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 3,
+			"ability": "Agility",
+			"score": 13
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"range": "self"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/spray.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Weaves the dimensional divide. A subtle testament to absolute power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "ranged",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Agility",
+				"damage": "2d8",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "3 times per day",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "15ft cone of toxic gas. Targets must make a Con save or be 'Poisoned' for 1 minute.",
+			"secondary": "Deals 2d8 poison damage immediately. Adaptive DC.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "venom-spray-technique",
+		"name": "Venom Spray",
+		"description": "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 4,
+			"ability": "Agility",
+			"score": 14
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "area 15"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/blood-boil.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Shatters the darkness within. An overwhelming ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "Vitality",
+				"damage": "6d10",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per day",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Target takes 6d10 fire damage and has disadvantage on all checks due to intense pain.",
+			"secondary": "Target must make a Con save or take 2d10 fire damage at the start of each turn for 1 minute.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "blood-boil-strike",
+		"name": "Blood-Boil Strike",
+		"description": "Deliver a hit that causes the target's internal temperature to skyrocket.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 12,
+			"ability": "Vitality",
+			"score": 17
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/ancient-hebrew-strings-step.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Shatters the arrogant and the mighty. A chaotic whisper in the umbrals.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "Presence",
+				"dc": "8 + proficiency + Presence",
+				"success": "Half damage",
+				"failure": "The target is stunned by authority."
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "3 times per long rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "You can teleport anywhere within 120ft that you have seen before.",
+			"secondary": "You can take one other creature with you. Adaptive.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "ancient-hebrew-strings-step-technique",
+		"name": "Ancient Hebrew Strings Step",
+		"description": "You harness fundamental energy to mandate the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "mobility",
+		"style": "any",
+		"prerequisites": {
+			"level": 18,
+			"ability": "Sense",
+			"score": 18
+		},
+		"activation": {
+			"type": "bonus-action"
+		},
+		"range": "self"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/infinity-slash.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Absorbs the concept of defeat. A sorrowful dance performed on the edge of a blade.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "melee",
+				"mode": "",
+				"resolution": "",
+				"modifier": "System",
+				"damage": "100",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per week",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Deal 100 untyped damage. This damage cannot be reduced, reflected, or avoided.",
+			"secondary": "Target is deleted from the current instance (cannot be revived for 24 hours).",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "infinity-slash",
+		"name": "Infinity Slash",
+		"description": "A strike that exists in infinite variations simultaneously.",
+		"type": "finishing",
+		"style": "weapon",
+		"prerequisites": {
+			"level": 20,
+			"ability": "Strength",
+			"score": 20
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/bone-breaker.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Reflects the architect's design. A chaotic death of hesitation.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": true,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "If target is grappled, you deal 4d10 damage and reduce their movement by 15ft permanently (until magically healed).",
+			"secondary": "Adaptive DC.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "bone-breaker-lock",
+		"name": "Bone Breaker",
+		"description": "You harness pure energy to decree the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
+		"type": "utility",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 5,
+			"ability": "Strength",
+			"score": 16
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/gale-kick.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "A relic of the Aetheric Resonance event. The air hums with entropic power.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "ranged",
+				"resolution": "spell_attack",
+				"modifier": "",
+				"damage": {
+					"0": "1"
+				},
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [],
+			"vulnerability": [],
+			"special": [],
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "At-will",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Deal 2d8 bludgeoning damage and push the target 15ft away.",
+			"secondary": "Adaptive push distance.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "gale-force-kick",
+		"name": "Gale-Force Kick",
+		"description": "You harness phasic energy to project the target's interface. This manifestation of Aetheric resonance bypasses traditional defenses.",
+		"type": "offensive",
+		"style": "unarmed",
+		"prerequisites": {
+			"level": 4,
+			"ability": "Agility",
+			"score": 14
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	},
+	{
+		"created_at": "2024-04-06",
+		"updated_at": "2024-04-06",
+		"source_kind": "Warden Authority",
+		"source_name": "Rift Compendium",
+		"theme_tags": [],
+		"generated_reason": "Direct Rift Extraction",
+		"discovery_lore": "Unearthed from the archives.",
+		"concentration": false,
+		"image": "/generated/compendium/techniques/void-touch.webp",
+		"image_url": "/images/compendium/placeholder.webp",
+		"license_note": "Restricted",
+		"flavor": "Bends the fragile limits of flesh. An intricate ultimate equalizer.",
+		"lore": {
+			"origin": "",
+			"history": "",
+			"curse": "",
+			"personality": "",
+			"current_owner": "",
+			"prior_owners": []
+		},
+		"source": "Rift Ascendant Canon",
+		"source_book": "Manual of Ascension",
+		"tags": [],
+		"system_interaction": "Standard",
+		"mechanics": {
+			"action_type": "",
+			"duration": "",
+			"save_dc": 0,
+			"damage_profile": "",
+			"range": "",
+			"lattice_interaction": "",
+			"type": "",
+			"frequency": "",
+			"action": "",
+			"ability": "",
+			"save": "",
+			"dc": 0,
+			"attack": {
+				"type": "",
+				"mode": "",
+				"resolution": "",
+				"modifier": "",
+				"damage": "1",
+				"damage_type": "none"
+			},
+			"saving_throw": {
+				"ability": "",
+				"dc": 0,
+				"success": "",
+				"failure": ""
+			},
+			"movement": "",
+			"condition": [],
+			"stat_bonuses": {
+				"Intelligence": 1
+			},
+			"special_abilities": [],
+			"restrictions": [],
+			"progression": {},
+			"ac_formula": "",
+			"replaces_armor": false,
+			"detection_target": "",
+			"usage": "",
+			"check": "",
+			"scaling": "",
+			"critical": false,
+			"fumble": false,
+			"bonus": {
+				"type": "none",
+				"value": 0,
+				"ability": "",
+				"skills": []
+			},
+			"immunity": [],
+			"resistance": [
+				"necrotic"
+			],
+			"vulnerability": [],
+			"special": "Aligned with Void resonance.",
+			"healing": {
+				"dice": "",
+				"type": "",
+				"bonus": 0
+			}
+		},
+		"limitations": {
+			"uses": "Once per short rest",
+			"recharge": "",
+			"requires_attunement": false,
+			"conditions": [],
+			"charges": 0,
+			"uses_per_rest": 0,
+			"consumable": false,
+			"prerequisites": [],
+			"cost": 0
+		},
+		"effects": {
+			"primary": "Target takes 5d6 void damage and is 'Silenced' for 2 rounds.",
+			"secondary": "Target cannot be healed while silenced. Adaptive.",
+			"tertiary": "",
+			"passive": [],
+			"active": [],
+			"primaryEffect": "",
+			"secondaryEffect": "",
+			"passiveBonuses": []
+		},
+		"rarity": "common",
+		"cr": "0",
+		"id": "void-touch-manual",
+		"name": "Void Touch",
+		"description": "By aligning your lattice with the Void Absolute, you can nullify the local mana-void. This manifestation bypasses standard Rift dampeners.",
+		"type": "offensive",
+		"style": "any",
+		"prerequisites": {
+			"level": 10,
+			"ability": "Intelligence",
+			"score": 15
+		},
+		"activation": {
+			"type": "action"
+		},
+		"range": "melee"
+	}
 ];

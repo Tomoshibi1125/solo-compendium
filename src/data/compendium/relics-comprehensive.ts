@@ -15,6 +15,10 @@ export interface Relic {
 		| "tool"
 		| "material";
 	rarity: "uncommon" | "rare" | "very_rare" | "epic" | "legendary" | "mythic";
+	damage?: string;
+	damage_type?: string;
+	armor_class?: number;
+	armor_type?: string;
 	attunement?: boolean;
 	requirements?: {
 		level?: number;
@@ -80,6 +84,8 @@ export interface Relic {
 		resistance?: string[];
 		immunity?: string[];
 		vulnerabilities?: string[];
+		stat_bonuses?: Record<string, number>;
+		special?: string;
 	};
 	source: string;
 	image?: string;
@@ -93,6 +99,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged shard of the First Singularity, wreathed in flickering black mana. It does not cut flesh; it deletes the spatial coordinates of whatever it touches.",
 		type: "weapon",
+		damage: "2d8",
+		damage_type: "necrotic",
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
@@ -148,14 +156,14 @@ export const comprehensiveRelics: Relic[] = [
 			],
 		},
 		mechanics: {
-			bonus: {
-				type: "attack",
-				value: 3,
-				ability: "Agility",
+				"stat_bonuses": {
+					"Intelligence": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Void resonance."
 			},
-			resistance: ["necrotic", "force"],
-			immunity: ["poison"],
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -164,6 +172,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged black slab of iron that hums with the rhythm of a heartbeat. It does not just cut; it drinks.",
 		type: "weapon",
+		damage: "2d8",
+		damage_type: "necrotic",
 		rarity: "very_rare",
 		attunement: true,
 		requirements: {
@@ -208,12 +218,14 @@ export const comprehensiveRelics: Relic[] = [
 			],
 		},
 		mechanics: {
-			bonus: {
-				type: "damage",
-				value: 2,
+				"stat_bonuses": {
+					"Strength": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Blood resonance."
 			},
-			vulnerabilities: ["radiant"],
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -222,6 +234,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A rapier forged from a solidified lightning strike, vibrating with ultra-high frequency mana.",
 		type: "weapon",
+		damage: "2d8",
+		damage_type: "radiant",
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
@@ -263,20 +277,23 @@ export const comprehensiveRelics: Relic[] = [
 			priorOwners: ["Storm King", "Lightning Warrior", "Tempest Knight"],
 		},
 		mechanics: {
-			bonus: {
-				type: "damage",
-				value: 3,
+				"stat_bonuses": {
+					"Presence": 1
+				},
+				"resistance": [
+					"radiant"
+				],
+				"special": "Aligned with Solar resonance."
 			},
-			resistance: ["lightning", "thunder"],
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "frost-axe",
 		name: "Frost Axe",
-		description:
-			"An axe carved from permafrost that radiates a field of absolute zero.",
+		description: "This Legendary-Rank artifact vibrates with the power to freeze reality. It allows the wielder to manifest a cryogenic field that can shatter any proximity-based dimensional distortion.",
 		type: "weapon",
+		damage: "2d8",
+		damage_type: "cold",
 		rarity: "very_rare",
 		attunement: true,
 		requirements: {
@@ -318,13 +335,14 @@ export const comprehensiveRelics: Relic[] = [
 			priorOwners: ["Frost Giant King", "Winter Warrior", "Ice Berserker"],
 		},
 		mechanics: {
-			bonus: {
-				type: "damage",
-				value: 2,
+				"stat_bonuses": {
+					"Vitality": 1
+				},
+				"resistance": [
+					"cold"
+				],
+				"special": "Aligned with Glacial resonance."
 			},
-			resistance: ["cold"],
-			vulnerabilities: ["fire"],
-		},
 		source: "Rift Ascendant Canon",
 	},
 
@@ -335,6 +353,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"The legendary gauntlet of the Umbral Regent, containing the power to command shadows and bend reality.",
 		type: "armor",
+		armor_class: 16,
+		armor_type: "heavy",
 		rarity: "mythic",
 		attunement: true,
 		requirements: {
@@ -386,22 +406,14 @@ export const comprehensiveRelics: Relic[] = [
 			currentOwner: "Current Umbral Regent",
 		},
 		mechanics: {
-			resistance: [
-				"bludgeoning",
-				"piercing",
-				"slashing",
-				"fire",
-				"cold",
-				"lightning",
-				"thunder",
-				"acid",
-				"poison",
-				"necrotic",
-				"radiant",
-				"force",
-			],
-			immunity: ["protocol-enhanced"],
-		},
+				"stat_bonuses": {
+					"Presence": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Absolute resonance."
+			},
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -410,6 +422,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"Armor forged in the deepest shadows, offering protection while enhancing shadow abilities.",
 		type: "armor",
+		armor_class: 16,
+		armor_type: "heavy",
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
@@ -455,13 +469,14 @@ export const comprehensiveRelics: Relic[] = [
 			],
 		},
 		mechanics: {
-			bonus: {
-				type: "AC",
-				value: 3,
+				"stat_bonuses": {
+					"Intelligence": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Void resonance."
 			},
-			resistance: ["necrotic", "cold"],
-			immunity: ["poison"],
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -470,6 +485,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"Armor crafted from the scales of an ancient dragon, offering exceptional protection and dragon-like abilities.",
 		type: "armor",
+		armor_class: 16,
+		armor_type: "heavy",
 		rarity: "legendary",
 		attunement: true,
 		requirements: {
@@ -509,12 +526,14 @@ export const comprehensiveRelics: Relic[] = [
 			priorOwners: ["Dragon Knight", "Dragon Slayer", "Scale Lord"],
 		},
 		mechanics: {
-			bonus: {
-				type: "AC",
-				value: 4,
+				"stat_bonuses": {
+					"Presence": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Absolute resonance."
 			},
-			resistance: ["fire"],
-		},
 		source: "Rift Ascendant Canon",
 	},
 
@@ -578,12 +597,14 @@ export const comprehensiveRelics: Relic[] = [
 			],
 		},
 		mechanics: {
-			bonus: {
-				type: "saving-throws",
-				value: 2,
-				ability: "Presence",
+				"stat_bonuses": {
+					"Presence": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Absolute resonance."
 			},
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -639,9 +660,14 @@ export const comprehensiveRelics: Relic[] = [
 			],
 		},
 		mechanics: {
-			resistance: ["necrotic"],
-			immunity: ["shadow corruption"],
-		},
+				"stat_bonuses": {
+					"Strength": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Blood resonance."
+			},
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -695,15 +721,20 @@ export const comprehensiveRelics: Relic[] = [
 			],
 		},
 		mechanics: {
-			immunity: ["getting lost"],
-		},
+				"stat_bonuses": {
+					"Sense": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Aetheric resonance."
+			},
 		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "crown-of-sense",
 		name: "Crown of Sense",
-		description:
-			"A crown that grants the wearer immense knowledge and insight.",
+		description: "This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		type: "accessory",
 		rarity: "legendary",
 		attunement: true,
@@ -756,13 +787,14 @@ export const comprehensiveRelics: Relic[] = [
 			],
 		},
 		mechanics: {
-			bonus: {
-				type: "saving-throws",
-				value: 2,
-				ability: "Intelligence",
+				"stat_bonuses": {
+					"Presence": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Absolute resonance."
 			},
-			immunity: ["psychic"],
-		},
 		source: "Rift Ascendant Canon",
 	},
 
@@ -770,8 +802,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "shadow-orb",
 		name: "Shadow Orb",
-		description:
-			"A sphere of pure shadow energy that can be used to power shadow abilities.",
+		description: "This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		type: "accessory",
 		rarity: "epic",
 		attunement: true,
@@ -817,14 +848,20 @@ export const comprehensiveRelics: Relic[] = [
 			priorOwners: ["Shadow Archmage", "Dark Esper", "Shadow Warlock"],
 		},
 		mechanics: {
-			resistance: ["necrotic"],
-		},
+				"stat_bonuses": {
+					"Intelligence": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Void resonance."
+			},
 		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "time-turner",
 		name: "Time Turner",
-		description: "A device that can manipulate time in limited ways.",
+		description: "This Legendary-Rank artifact vibrates with the power to suspend reality. It allows the wielder to manifest a recursive field that can accelerate any proximity-based dimensional distortion.",
 		type: "accessory",
 		rarity: "mythic",
 		attunement: true,
@@ -875,8 +912,14 @@ export const comprehensiveRelics: Relic[] = [
 			priorOwners: ["Time Master Chronos", "Temporal Mage", "Hourglass Keeper"],
 		},
 		mechanics: {
-			immunity: ["time-based effects"],
-		},
+				"stat_bonuses": {
+					"Sense": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Chrono resonance."
+			},
 		source: "Rift Ascendant Canon",
 	},
 
@@ -906,17 +949,20 @@ export const comprehensiveRelics: Relic[] = [
 				"These potions are highly valued by shadow users for their healing and enhancing properties.",
 		},
 		mechanics: {
-			bonus: {
-				type: "ability-checks",
-				value: 1,
+				"stat_bonuses": {
+					"Presence": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Absolute resonance."
 			},
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "shadow-elixir",
 		name: "Shadow Elixir",
-		description: "A dark elixir that grants temporary shadow abilities.",
+		description: "This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		type: "consumable",
 		rarity: "very_rare",
 		properties: {
@@ -936,19 +982,20 @@ export const comprehensiveRelics: Relic[] = [
 				"These elixirs are used by those who wish to temporarily gain shadow powers.",
 		},
 		mechanics: {
-			bonus: {
-				type: "skill-checks",
-				value: 2,
-				skills: ["Stealth", "Acrobatics"],
+				"stat_bonuses": {
+					"Intelligence": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Void resonance."
 			},
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "dragon-blood-potion",
 		name: "Dragon Blood Potion",
-		description:
-			"A potion made from dragon blood that grants draconic abilities.",
+		description: "This Legendary-Rank artifact vibrates with the power to siphon reality. It allows the wielder to manifest a sanguine field that can clot any proximity-based dimensional distortion.",
 		type: "consumable",
 		rarity: "legendary",
 		properties: {
@@ -969,8 +1016,14 @@ export const comprehensiveRelics: Relic[] = [
 				"These potions are extremely rare and grant the drinker temporary draconic powers.",
 		},
 		mechanics: {
-			resistance: ["fire", "cold", "lightning", "acid", "poison"],
-		},
+				"stat_bonuses": {
+					"Strength": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Blood resonance."
+			},
 		source: "Rift Ascendant Canon",
 	},
 
@@ -1012,19 +1065,20 @@ export const comprehensiveRelics: Relic[] = [
 				"This lens has helped many adventurers discover hidden dangers and secrets.",
 		},
 		mechanics: {
-			bonus: {
-				type: "skill-checks",
-				value: 2,
-				skills: ["Perception", "Investigation"],
+				"stat_bonuses": {
+					"Intelligence": 1
+				},
+				"resistance": [
+					"necrotic"
+				],
+				"special": "Aligned with Void resonance."
 			},
-		},
 		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "essence-collector",
 		name: "Essence Collector",
-		description:
-			"A device that can collect and store life essence from defeated enemies.",
+		description: "This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		type: "tool",
 		rarity: "very_rare",
 		attunement: true,
@@ -1059,12 +1113,14 @@ export const comprehensiveRelics: Relic[] = [
 				"This device has revolutionized the way shadow users collect and use essence.",
 		},
 		mechanics: {
-			bonus: {
-				type: "ability-checks",
-				value: 2,
-				ability: "Sense",
+				"stat_bonuses": {
+					"Presence": 1
+				},
+				"resistance": [
+					"force"
+				],
+				"special": "Aligned with Absolute resonance."
 			},
-		},
 		source: "Rift Ascendant Canon",
 	},
 ];

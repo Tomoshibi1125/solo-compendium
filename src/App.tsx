@@ -540,7 +540,7 @@ const AppContent = () => {
 				<Route
 					path="/warden-directives/quest-generator"
 					element={
-						<Navigate to="/warden-directives/directive-Lattice" replace />
+						<Navigate to="/warden-directives/directive-lattice" replace />
 					}
 				/>
 				<Route
@@ -548,7 +548,7 @@ const AppContent = () => {
 					element={<Navigate to="/warden-directives" replace />}
 				/>
 				<Route
-					path="/warden-directives/directive-Lattice"
+					path="/warden-directives/directive-lattice"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>

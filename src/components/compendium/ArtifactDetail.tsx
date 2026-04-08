@@ -13,7 +13,7 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface ArtifactAbility {
 	name: string;
-	description: string;
+	description?: string;
 	type: string;
 	frequency?: string;
 	action?: string;
@@ -28,7 +28,6 @@ interface ArtifactData {
 	rarity?: string | null;
 	attunement?: boolean | null;
 	requirements?: {
-		level?: number;
 		class?: string;
 		ability?: string;
 		score?: number;
@@ -77,13 +76,14 @@ const rarityStyles: Record<string, string> = {
 	divine: "text-rose-400 border-rose-500/40 bg-rose-500/10",
 };
 
-export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
+export const ArtifactDetail = ({ data }: { data: any }) => {
+	const artifact = data as ArtifactData;
 	const navigate = useNavigate();
-	const displayName = formatRegentVernacular(data.display_name || data.name);
-	const imageSrc = data.image_url || data.image || undefined;
-	const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
+	const displayName = formatRegentVernacular(artifact.display_name || artifact.name);
+	const imageSrc = artifact.image_url || artifact.image || undefined;
+	const rarityStyle = artifact.rarity ? rarityStyles[artifact.rarity] : undefined;
 
-	const abilities = data.abilities || undefined;
+	const abilities = artifact.abilities || undefined;
 	const abilityList: Array<{
 		label: string;
 		ability: ArtifactAbility | undefined;
@@ -119,7 +119,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 				version: 1,
 				id: crypto.randomUUID(),
 				name: payloadName,
-				source: { type: "artifact", entryId: data.id },
+				source: { type: "artifact", entryId: artifact.id },
 				kind: "save",
 				save: { dc, roll: "1d20" },
 				damage: dice ? { roll: dice } : undefined,
@@ -137,7 +137,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 				version: 1,
 				id: crypto.randomUUID(),
 				name: payloadName,
-				source: { type: "artifact", entryId: data.id },
+				source: { type: "artifact", entryId: artifact.id },
 				kind: "healing",
 				healing: { roll: dice },
 			};
@@ -147,7 +147,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 			version: 1,
 			id: crypto.randomUUID(),
 			name: payloadName,
-			source: { type: "artifact", entryId: data.id },
+			source: { type: "artifact", entryId: artifact.id },
 			kind: "damage",
 			damage: { roll: dice },
 		};
@@ -179,95 +179,89 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
-						{data.artifact_type && (
+						{artifact.artifact_type && (
 							<Badge variant="secondary">
-								{formatRegentVernacular(data.artifact_type)}
+								{formatRegentVernacular(artifact.artifact_type)}
 							</Badge>
 						)}
-						{data.rarity && (
+						{artifact.rarity && (
 							<Badge variant="outline" className={rarityStyle}>
-								{formatRegentVernacular(data.rarity)}
+								{formatRegentVernacular(artifact.rarity)}
 							</Badge>
 						)}
-						{data.attunement && (
+						{artifact.attunement && (
 							<Badge variant="destructive">Requires Attunement</Badge>
 						)}
-						{data.source_book && (
+						{artifact.source_book && (
 							<Badge variant="outline">
-								{formatRegentVernacular(data.source_book)}
+								{formatRegentVernacular(artifact.source_book)}
 							</Badge>
 						)}
 					</div>
-					{data.description && (
+					{artifact.description && (
 						<p className="text-muted-foreground leading-relaxed">
-							<AutoLinkText text={data.description} />
+							<AutoLinkText text={artifact.description || ""} />
 						</p>
 					)}
 				</div>
 			</AscendantWindow>
 
-			{data.requirements && (
+			{artifact.requirements && (
 				<AscendantWindow title="REQUIREMENTS">
 					<ul className="space-y-2 text-sm">
-						{data.requirements.level !== undefined && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Level {data.requirements.level}</span>
-							</li>
-						)}
-						{data.requirements.class && (
+						{artifact.requirements.class && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Class: {formatRegentVernacular(data.requirements.class)}
+									Class: {formatRegentVernacular(artifact.requirements.class)}
 								</span>
 							</li>
 						)}
-						{data.requirements.ability &&
-							data.requirements.score !== undefined && (
+						{artifact.requirements.ability &&
+							artifact.requirements.score !== undefined && (
 								<li className="flex items-center gap-2">
 									<Shield className="w-4 h-4 text-muted-foreground" />
 									<span>
-										{formatRegentVernacular(data.requirements.ability)}{" "}
-										{data.requirements.score}+
+										{formatRegentVernacular(artifact.requirements.ability)}{" "}
+										{artifact.requirements.score}+
 									</span>
 								</li>
 							)}
-						{data.requirements.alignment && (
+						{artifact.requirements.alignment && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
 									Alignment:{" "}
-									{formatRegentVernacular(data.requirements.alignment)}
+									{formatRegentVernacular(artifact.requirements.alignment)}
 								</span>
 							</li>
 						)}
-						{data.requirements.quest && (
+						{artifact.requirements.quest && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>{formatRegentVernacular(data.requirements.quest)}</span>
+								<span>{formatRegentVernacular(artifact.requirements.quest)}</span>
 							</li>
 						)}
 					</ul>
 				</AscendantWindow>
 			)}
 
-			{data.properties && (
+			{artifact.properties && (
 				<AscendantWindow id="artifact-properties" title="PROPERTIES">
 					<div className="flex flex-wrap gap-2">
-						{data.properties.magical && (
+						{artifact.properties.magical && (
 							<Badge variant="secondary">Magical</Badge>
 						)}
-						{data.properties.unique && (
+						{artifact.properties.unique && (
 							<Badge variant="secondary">Unique</Badge>
 						)}
-						{data.properties.sentient && (
+						{artifact.properties.sentient && (
 							<Badge variant="secondary">Sentient</Badge>
 						)}
-						{data.properties.cursed && (
+						{artifact.properties.cursed && (
 							<Badge variant="destructive">Cursed</Badge>
 						)}
-						{data.properties.legendary && (
+						{artifact.properties.legendary && (
 							<Badge variant="outline">Legendary</Badge>
 						)}
 					</div>
@@ -309,7 +303,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 										)}
 									</div>
 									<p className="text-sm text-muted-foreground">
-										<AutoLinkText text={ability.description} />
+										<AutoLinkText text={ability.description || ""} />
 									</p>
 
 									{payload && (
@@ -344,60 +338,60 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 				</AscendantWindow>
 			)}
 
-			{data.lore && (
+			{artifact.lore && (
 				<AscendantWindow id="artifact-lore" title="LORE">
 					<div className="space-y-3">
-						{data.lore.origin && (
+						{artifact.lore.origin && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Origin:</span>{" "}
-								<AutoLinkText text={data.lore.origin} />
+								<AutoLinkText text={artifact.lore.origin} />
 							</p>
 						)}
-						{data.lore.history && (
+						{artifact.lore.history && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">History:</span>{" "}
-								<AutoLinkText text={data.lore.history} />
+								<AutoLinkText text={artifact.lore.history} />
 							</p>
 						)}
-						{data.lore.curse && (
+						{artifact.lore.curse && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Curse:</span>{" "}
-								<AutoLinkText text={data.lore.curse} />
+								<AutoLinkText text={artifact.lore.curse} />
 							</p>
 						)}
-						{data.lore.personality && (
+						{artifact.lore.personality && (
 							<p className="text-sm text-muted-foreground">
 								<span className="text-foreground">Personality:</span>{" "}
-								<AutoLinkText text={data.lore.personality} />
+								<AutoLinkText text={artifact.lore.personality} />
 							</p>
 						)}
 					</div>
 				</AscendantWindow>
 			)}
 
-			{data.mechanics && (
+			{artifact.mechanics && (
 				<AscendantWindow id="artifact-mechanics" title="MECHANICS">
 					<div className="space-y-3 text-sm">
-						{data.mechanics.bonus && (
+						{artifact.mechanics.bonus && (
 							<div className="flex items-start gap-2">
 								<Swords className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="text-foreground">
 										Bonus:{" "}
-										{formatRegentVernacular(data.mechanics.bonus.type || "")} +
-										{data.mechanics.bonus.value}
+										{formatRegentVernacular(artifact.mechanics.bonus.type || "")} +
+										{artifact.mechanics.bonus.value}
 									</p>
-									{data.mechanics.bonus.ability && (
+									{artifact.mechanics.bonus.ability && (
 										<p className="text-muted-foreground">
 											Ability:{" "}
-											{formatRegentVernacular(data.mechanics.bonus.ability)}
+											{formatRegentVernacular(artifact.mechanics.bonus.ability)}
 										</p>
 									)}
-									{data.mechanics.bonus.skills &&
-										data.mechanics.bonus.skills.length > 0 && (
+									{artifact.mechanics.bonus.skills &&
+										artifact.mechanics.bonus.skills.length > 0 && (
 											<p className="text-muted-foreground">
 												Skills:{" "}
-												{data.mechanics.bonus.skills
+												{artifact.mechanics.bonus.skills
 													.map(formatRegentVernacular)
 													.join(", ")}
 											</p>
@@ -405,35 +399,35 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 								</div>
 							</div>
 						)}
-						{data.mechanics.immunity && data.mechanics.immunity.length > 0 && (
+						{artifact.mechanics.immunity && artifact.mechanics.immunity.length > 0 && (
 							<p>
 								<span className="text-foreground">Immunity:</span>{" "}
-								{data.mechanics.immunity.map(formatRegentVernacular).join(", ")}
+								{artifact.mechanics.immunity.map(formatRegentVernacular).join(", ")}
 							</p>
 						)}
-						{data.mechanics.resistance &&
-							data.mechanics.resistance.length > 0 && (
+						{artifact.mechanics.resistance &&
+							artifact.mechanics.resistance.length > 0 && (
 								<p>
 									<span className="text-foreground">Resistance:</span>{" "}
-									{data.mechanics.resistance
+									{artifact.mechanics.resistance
 										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>
 							)}
-						{data.mechanics.vulnerability &&
-							data.mechanics.vulnerability.length > 0 && (
+						{artifact.mechanics.vulnerability &&
+							artifact.mechanics.vulnerability.length > 0 && (
 								<p>
 									<span className="text-foreground">Vulnerability:</span>{" "}
-									{data.mechanics.vulnerability
+									{artifact.mechanics.vulnerability
 										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>
 							)}
-						{data.mechanics.special && data.mechanics.special.length > 0 && (
+						{artifact.mechanics.special && artifact.mechanics.special.length > 0 && (
 							<div>
 								<p className="text-foreground">Special:</p>
 								<ul className="list-disc list-inside text-muted-foreground">
-									{data.mechanics.special.map((entry) => (
+									{artifact.mechanics.special.map((entry: string) => (
 										<li key={entry}>{formatRegentVernacular(entry)}</li>
 									))}
 								</ul>

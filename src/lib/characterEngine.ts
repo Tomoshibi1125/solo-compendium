@@ -370,10 +370,10 @@ export function aggregateAwakeningFeatures(
 			const jobData = JOBS_DATABASE.find(
 				(j: { id: string }) => j.id === charJob.job.toLowerCase(),
 			);
-			if (!jobData?.awakeningFeatures) continue;
+			if (!jobData?.awakening_features) continue;
 
 			// Filter features unlocked at or below current job level
-			const unlockedFeatures = jobData.awakeningFeatures.filter(
+			const unlockedFeatures = jobData.awakening_features.filter(
 				(f: { level: number }) => f.level <= charJob.level,
 			);
 
@@ -517,11 +517,11 @@ export function aggregateJobTraits(
 			const jobData = JOBS_DATABASE.find(
 				(j: { id: string }) => j.id === charJob.job.toLowerCase(),
 			);
-			if (!jobData?.jobTraits) continue;
+			if (!jobData?.job_traits) continue;
 
 			// All job traits are available from level 1
 			traits.push(
-				...jobData.jobTraits.map(
+				...jobData.job_traits.map(
 					(t: {
 						name: string;
 						description: string;

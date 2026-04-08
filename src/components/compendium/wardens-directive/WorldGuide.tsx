@@ -94,7 +94,7 @@ export const WorldGuide = () => {
 									<div className="h-48 w-full relative overflow-hidden bg-void/80 border-b border-emerald-900/50">
 										<div className="absolute inset-0 bg-gradient-to-t from-void to-transparent z-10" />
 										<img
-											src={site.image}
+											src={site.image || ""}
 											alt={site.name}
 											className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700 blur-sm"
 										/>
@@ -113,7 +113,7 @@ export const WorldGuide = () => {
 
 									<div className="p-6">
 										<p className="text-sm text-slate-300 leading-relaxed mb-6 italic min-h-[80px]">
-											"{site.description}"
+											"{site.description || ""}"
 										</p>
 
 										<div className="grid grid-cols-2 gap-4">

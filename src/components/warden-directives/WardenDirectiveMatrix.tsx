@@ -28,8 +28,8 @@ import type {
 	AssetManifest,
 	AssetMapping,
 } from "@/data/compendium/assetManifest";
-import type { Background } from "@/data/compendium/backgrounds";
-import type { Location } from "@/data/compendium/locations";
+import type { CompendiumBackground as Background } from "@/types/compendium";
+import type { CompendiumLocation as Location } from "@/types/compendium";
 import type { AIEnhanceResult } from "@/hooks/useAIEnhance";
 import type {
 	ArmorCategory,

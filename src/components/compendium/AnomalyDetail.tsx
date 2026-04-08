@@ -24,47 +24,9 @@ import {
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 
-interface AnomalyData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description?: string;
-	lore?: string;
-	size?: string | null;
-	creature_type?: string | null;
-	alignment?: string;
-	armor_class?: number | null;
-	armor_type?: string;
-	hit_points_average?: number | null;
-	hit_points_formula?: string | null;
-	speed_walk?: number;
-	speed_fly?: number;
-	speed_swim?: number;
-	speed_climb?: number;
-	speed_burrow?: number;
-	str?: number | null;
-	agi?: number | null;
-	vit?: number | null;
-	int?: number | null;
-	sense?: number | null;
-	pre?: number | null;
-	saving_throws?: Record<string, number>;
-	skills?: Record<string, number>;
-	damage_vulnerabilities?: string[];
-	damage_resistances?: string[];
-	damage_immunities?: string[];
-	condition_immunities?: string[];
-	senses?: Record<string, string>;
-	languages?: string[];
-	cr?: string | null;
-	xp?: number;
-	gate_rank?: string;
-	is_boss?: boolean;
-	tags?: string[];
-	image_url?: string | null;
-	Anomaly_actions?: Record<string, unknown>[] | null;
-	Anomaly_traits?: Record<string, unknown>[] | null;
-}
+import type { CompendiumAnomaly } from "@/types/compendium";
+
+interface AnomalyData extends CompendiumAnomaly {}
 
 interface AnomalyAction {
 	id: string;
@@ -124,12 +86,12 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 	const [actions, setActions] = useState<AnomalyAction[]>([]);
 	const [traits, setTraits] = useState<AnomalyTrait[]>([]);
 	const actionHash = useMemo(
-		() => JSON.stringify(data.Anomaly_actions || []),
-		[data.Anomaly_actions],
+		() => JSON.stringify(data.actions || []),
+		[data.actions],
 	);
 	const traitHash = useMemo(
-		() => JSON.stringify(data.Anomaly_traits || []),
-		[data.Anomaly_traits],
+		() => JSON.stringify(data.traits || []),
+		[data.traits],
 	);
 
 	const mapStaticAction = useCallback(
@@ -313,30 +275,22 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 		fetchRelatedData();
 	}, [data.id, actionHash, traitHash, mapStaticAction, mapStaticTrait]);
 
-	const speeds = [
-		data.speed_walk && `${data.speed_walk} ft.`,
-		data.speed_fly && `fly ${data.speed_fly} ft.`,
-		data.speed_swim && `swim ${data.speed_swim} ft.`,
-		data.speed_climb && `climb ${data.speed_climb} ft.`,
-		data.speed_burrow && `burrow ${data.speed_burrow} ft.`,
-	]
-		.filter(Boolean)
-		.join(", ");
+	const speeds = data.speed ? `${data.speed} ft.` : "30 ft.";
 
 	const regularActions = actions.filter((a) => a.action_type === "action");
 	const bonusActions = actions.filter((a) => a.action_type === "bonus");
 	const reactions = actions.filter((a) => a.action_type === "reaction");
 	const legendaryActions = actions.filter((a) => a.action_type === "legendary");
 
-	const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
+	const gateStyle = data.rank ? gateRankColors[data.rank] : null;
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const anomalySize = formatRegentVernacular(data.size || "Medium");
-	const anomalyType = formatRegentVernacular(data.creature_type || "Unknown");
-	const armorClass = data.armor_class ?? 0;
-	const hitPointsAverage = data.hit_points_average ?? 0;
-	const hitPointsFormula = data.hit_points_formula ?? "";
-	const cr = data.cr ?? "—";
-	const isBoss = Boolean(data.is_boss);
+	const anomalyType = formatRegentVernacular(data.type || "Unknown");
+	const armorClass = data.ac ?? 0;
+	const hitPointsAverage = data.hp ?? 0;
+	const hitPointsFormula = "";
+	const cr = data.stats?.challenge_rating?.toString() || data.cr || "—";
+	const isBoss = false; // logic for boss removed in favor of explicit rank properties.
 
 	const queueAnomalyActionResolution = (
 		action: AnomalyAction,
@@ -412,7 +366,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 							{anomalySize} {anomalyType}
 							{data.alignment && `, ${formatRegentVernacular(data.alignment)}`}
 						</span>
-						{data.gate_rank && gateStyle && (
+						{data.rank && gateStyle && (
 							<Badge
 								className={cn(
 									gateStyle.bg,
@@ -421,7 +375,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 									gateStyle.glow,
 								)}
 							>
-								{data.gate_rank}-Rank Rift
+								{data.rank}-Rank Rift
 							</Badge>
 						)}
 						{isBoss && (
@@ -470,7 +424,11 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 					</div>
 					{data.lore && (
 						<p className="text-muted-foreground italic border-l-2 border-shadow-purple/40 pl-4 mt-4 leading-relaxed">
-							<AutoLinkText text={data.lore} />
+							<AutoLinkText
+								text={
+									typeof data.lore === "string" ? data.lore : data.lore.history
+								}
+							/>
 						</p>
 					)}
 				</div>
@@ -483,11 +441,6 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 						<Shield className="w-5 h-5 text-blue-400" />
 						<span className="font-display text-2xl">{armorClass}</span>
 					</div>
-					{data.armor_type && (
-						<span className="text-xs text-muted-foreground">
-							{formatRegentVernacular(data.armor_type)}
-						</span>
-					)}
 				</AscendantWindow>
 
 				<AscendantWindow title="HIT POINTS" compact>
@@ -523,7 +476,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 					<div className="flex items-center gap-2">
 						<Swords className="w-5 h-5 text-orange-400" />
 						<span className="font-display text-2xl">
-							{data.gate_rank || "—"}
+							{(data.rank || "—").toUpperCase()}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -533,17 +486,17 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 			<StatBlock
 				title="ABILITY SCORES"
 				copyable
-				copyContent={`${displayName} - Ability Scores: STR ${data.str ?? 10} (${getModifier(data.str ?? 10)}), AGI ${data.agi ?? 10} (${getModifier(data.agi ?? 10)}), VIT ${data.vit ?? 10} (${getModifier(data.vit ?? 10)}), INT ${data.int ?? 10} (${getModifier(data.int ?? 10)}), SENSE ${data.sense ?? 10} (${getModifier(data.sense ?? 10)}), PRE ${data.pre ?? 10} (${getModifier(data.pre ?? 10)})`}
+				copyContent={`${displayName} - Ability Scores: STR ${data.stats?.ability_scores?.strength ?? 10} (${getModifier(data.stats?.ability_scores?.strength ?? 10)}), AGI ${data.stats?.ability_scores?.agility ?? 10} (${getModifier(data.stats?.ability_scores?.agility ?? 10)}), VIT ${data.stats?.ability_scores?.vitality ?? 10} (${getModifier(data.stats?.ability_scores?.vitality ?? 10)}), INT ${data.stats?.ability_scores?.intelligence ?? 10} (${getModifier(data.stats?.ability_scores?.intelligence ?? 10)}), SENSE ${data.stats?.ability_scores?.sense ?? 10} (${getModifier(data.stats?.ability_scores?.sense ?? 10)}), PRE ${data.stats?.ability_scores?.presence ?? 10} (${getModifier(data.stats?.ability_scores?.presence ?? 10)})`}
 				id="anomaly-abilities"
 			>
 				<div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
 					{[
-						{ name: "STR", value: data.str ?? 10 },
-						{ name: "AGI", value: data.agi ?? 10 },
-						{ name: "VIT", value: data.vit ?? 10 },
-						{ name: "INT", value: data.int ?? 10 },
-						{ name: "SENSE", value: data.sense ?? 10 },
-						{ name: "PRE", value: data.pre ?? 10 },
+						{ name: "STR", value: data.stats?.ability_scores?.strength ?? 10 },
+						{ name: "AGI", value: data.stats?.ability_scores?.agility ?? 10 },
+						{ name: "VIT", value: data.stats?.ability_scores?.vitality ?? 10 },
+						{ name: "INT", value: data.stats?.ability_scores?.intelligence ?? 10 },
+						{ name: "SENSE", value: data.stats?.ability_scores?.sense ?? 10 },
+						{ name: "PRE", value: data.stats?.ability_scores?.presence ?? 10 },
 					].map((stat) => (
 						<div key={stat.name} className="glass-card p-3">
 							<div className="font-display text-xs text-muted-foreground mb-1">
@@ -553,7 +506,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 								{stat.value}
 							</div>
 							<div className="text-sm font-semibold text-primary">
-								{getModifier(stat.value)}
+								{getModifier(stat.value ?? 10)}
 							</div>
 						</div>
 					))}

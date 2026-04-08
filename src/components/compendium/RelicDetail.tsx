@@ -11,63 +11,9 @@ import {
 } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface RelicData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description: string;
-	rarity: string;
-	item_type?: string | null;
-	equipment_type?: string | null;
-	relic_tier?: string;
-	requires_attunement?: boolean;
-	attunement?: boolean | null;
-	attunement_requirements?: string;
-	requirements?: {
-		level?: number;
-		alignment?: string;
-		class?: string;
-		ability?: string;
-		score?: number;
-		job?: string;
-		background?: string;
-	} | null;
-	properties?: string[] | Record<string, unknown> | null;
-	abilities?:
-		| {
-				name?: string;
-				description?: string;
-				type?: string;
-				frequency?: string;
-				action?: string;
-				dc?: number;
-				charges?: number;
-		  }[]
-		| null;
-	lore?: {
-		origin?: string;
-		history?: string;
-		currentOwner?: string;
-		priorOwners?: string[];
-	} | null;
-	mechanics?: {
-		bonus?: {
-			type?: string;
-			value?: number;
-			ability?: string;
-			skills?: string[];
-		};
-		resistance?: string[];
-		immunity?: string[];
-		vulnerabilities?: string[];
-	} | null;
-	quirks?: string[];
-	corruption_risk?: string;
-	value_credits?: number;
-	tags?: string[];
-	source_book?: string;
-	image_url?: string | null;
-}
+import type { CompendiumRelic } from "@/types/compendium";
+
+interface RelicData extends CompendiumRelic {}
 
 type RelicAbility = NonNullable<RelicData["abilities"]>[number];
 
@@ -95,8 +41,11 @@ const tierColors: Record<string, string> = {
 export const RelicDetail = ({ data }: { data: RelicData }) => {
 	const navigate = useNavigate();
 	const displayName = formatRegentVernacular(data.display_name || data.name);
-	const itemType = data.item_type || data.equipment_type || "";
-	const requiresAttunement = data.requires_attunement ?? !!data.attunement;
+	const itemType = data.type || "";
+	const requiresAttunement =
+		typeof data.attunement === "boolean"
+			? data.attunement
+			: data.attunement?.required;
 
 	const propertiesList = Array.isArray(data.properties)
 		? data.properties
@@ -196,23 +145,23 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{/* Header */}
 			<AscendantWindow
 				title={displayName.toUpperCase()}
-				className={`border-2 ${tierColors[data.relic_tier || ""] || "border-primary/50"}`}
+				className={`border-2 ${tierColors[data.tier || ""] || "border-primary/50"}`}
 			>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						<Badge
-							className={`${rarityColors[data.rarity]} text-white capitalize`}
+							className={`${rarityColors[data.rarity || "common"]} text-white capitalize`}
 						>
-							{formatRegentVernacular(data.rarity.replace("_", " "))}
+							{formatRegentVernacular((data.rarity || "common").replace("_", " "))}
 						</Badge>
 						{itemType && (
 							<Badge variant="secondary">
 								{formatRegentVernacular(itemType)}
 							</Badge>
 						)}
-						{data.relic_tier && (
-							<Badge variant="outline" className={tierColors[data.relic_tier]}>
-								{formatRegentVernacular(data.relic_tier)}
+						{data.tier && (
+							<Badge variant="outline" className={tierColors[data.tier]}>
+								{formatRegentVernacular(data.tier)}
 							</Badge>
 						)}
 						{requiresAttunement && (
@@ -220,14 +169,15 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						)}
 					</div>
 
-					{data.attunement_requirements && (
-						<p className="text-sm text-muted-foreground">
-							<em>
-								Attunement:{" "}
-								{formatRegentVernacular(data.attunement_requirements)}
-							</em>
-						</p>
-					)}
+					{typeof data.attunement !== "boolean" &&
+						data.attunement?.requirements && (
+							<p className="text-sm text-muted-foreground">
+								<em>
+									Attunement:{" "}
+									{formatRegentVernacular(data.attunement.requirements)}
+								</em>
+							</p>
+						)}
 				</div>
 			</AscendantWindow>
 
@@ -236,31 +186,31 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 				<AscendantWindow title="RARITY" compact>
 					<div className="flex items-center gap-2">
 						<Gem
-							className={`w-5 h-5 ${data.rarity === "legendary" ? "text-amber-500" : rarityColors[data.rarity] ? "text-white" : ""}`}
+							className={`w-5 h-5 ${data.rarity === "legendary" ? "text-amber-500" : rarityColors[data.rarity || "common"] ? "text-white" : ""}`}
 						/>
 						<span className="font-heading capitalize">
-							{formatRegentVernacular(data.rarity.replace("_", " "))}
+							{formatRegentVernacular((data.rarity || "common").replace("_", " "))}
 						</span>
 					</div>
 				</AscendantWindow>
 
-				{data.relic_tier && (
+				{data.tier && (
 					<AscendantWindow title="TIER" compact>
 						<div className="flex items-center gap-2">
 							<Sparkles className="w-5 h-5 text-primary" />
 							<span className="font-heading capitalize">
-								{formatRegentVernacular(data.relic_tier)}
+								{formatRegentVernacular(data.tier)}
 							</span>
 						</div>
 					</AscendantWindow>
 				)}
 
-				{data.value_credits && (
+				{data.cost && (
 					<AscendantWindow title="VALUE" compact>
 						<div className="flex items-center gap-2">
 							<Coins className="w-5 h-5 text-yellow-400" />
 							<span className="font-heading">
-								{data.value_credits.toLocaleString()} credits
+								{data.cost.toLocaleString()} credits
 							</span>
 						</div>
 					</AscendantWindow>
@@ -327,7 +277,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{/* Description */}
 			<AscendantWindow title="DESCRIPTION">
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
-					<AutoLinkText text={data.description} />
+					<AutoLinkText text={data.description || ""} />
 				</p>
 			</AscendantWindow>
 
@@ -422,7 +372,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 				</AscendantWindow>
 			)}
 
-			{data.lore && (
+			{data.lore && typeof data.lore !== "string" && (
 				<AscendantWindow title="LORE">
 					<div className="space-y-3 text-sm">
 						{data.lore.origin && (
@@ -437,16 +387,16 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 								<AutoLinkText text={data.lore.history} />
 							</p>
 						)}
-						{data.lore.currentOwner && (
+						{data.lore.current_owner && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Current Owner:</span>{" "}
-								<AutoLinkText text={data.lore.currentOwner} />
+								<AutoLinkText text={data.lore.current_owner} />
 							</p>
 						)}
-						{data.lore.priorOwners && data.lore.priorOwners.length > 0 && (
+						{data.lore.prior_owners && data.lore.prior_owners.length > 0 && (
 							<p className="text-muted-foreground">
 								<span className="text-foreground">Prior Lineage:</span>{" "}
-								{data.lore.priorOwners.map(formatRegentVernacular).join(", ")}
+								{data.lore.prior_owners.map(formatRegentVernacular).join(", ")}
 							</p>
 						)}
 					</div>
@@ -464,6 +414,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							</p>
 						)}
 						{data.mechanics.resistance &&
+							Array.isArray(data.mechanics.resistance) &&
 							data.mechanics.resistance.length > 0 && (
 								<p className="text-muted-foreground">
 									<span className="text-foreground">Resistance:</span>{" "}
@@ -472,17 +423,20 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 										.join(", ")}
 								</p>
 							)}
-						{data.mechanics.immunity && data.mechanics.immunity.length > 0 && (
-							<p className="text-muted-foreground">
-								<span className="text-foreground">Immunity:</span>{" "}
-								{data.mechanics.immunity.map(formatRegentVernacular).join(", ")}
-							</p>
-						)}
-						{data.mechanics.vulnerabilities &&
-							data.mechanics.vulnerabilities.length > 0 && (
+						{data.mechanics.immunity &&
+							Array.isArray(data.mechanics.immunity) &&
+							data.mechanics.immunity.length > 0 && (
+								<p className="text-muted-foreground">
+									<span className="text-foreground">Immunity:</span>{" "}
+									{data.mechanics.immunity.map(formatRegentVernacular).join(", ")}
+								</p>
+							)}
+						{data.mechanics.vulnerability &&
+							Array.isArray(data.mechanics.vulnerability) &&
+							data.mechanics.vulnerability.length > 0 && (
 								<p className="text-muted-foreground">
 									<span className="text-foreground">Vulnerabilities:</span>{" "}
-									{data.mechanics.vulnerabilities
+									{data.mechanics.vulnerability
 										.map(formatRegentVernacular)
 										.join(", ")}
 								</p>

@@ -17,29 +17,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { resolveRef } from "@/lib/compendiumResolver";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
 
-export interface SovereignData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description: string;
-	job_id?: string;
-	path_id?: string;
-	regent_a_id?: string;
-	regent_b_id?: string;
-	fusion_theme?: string;
-	fusion_description?: string;
-	prerequisites?: string;
-	is_template?: boolean;
-	is_ai_generated?: boolean;
-	tags?: string[];
-	source_book?: string;
-}
+import type { CompendiumSovereign } from "@/types/compendium";
+
+export interface SovereignData extends CompendiumSovereign {}
 
 interface SovereignFeature {
 	id: string;
 	name: string;
 	display_name?: string | null;
-	description: string;
+	description?: string;
 	level: number;
 	action_type?: string;
 	recharge?: string;
@@ -202,7 +188,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					</div>
 
 					<p className="text-foreground leading-relaxed">
-						<AutoLinkText text={data.description} />
+						<AutoLinkText text={data.description || ""} />
 					</p>
 
 					<div className="flex flex-wrap gap-2">
@@ -283,7 +269,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					<div className="flex items-start gap-3">
 						<Sparkles className="w-6 h-6 text-violet-400 flex-shrink-0" />
 						<p className="text-foreground leading-relaxed italic">
-							<AutoLinkText text={data.fusion_description} />
+							<AutoLinkText text={data.fusion_description || ""} />
 						</p>
 					</div>
 				</AscendantWindow>
@@ -336,7 +322,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									<AutoLinkText text={feature.description} />
+									<AutoLinkText text={feature.description || ""} />
 								</p>
 								{feature.origin_sources &&
 									feature.origin_sources.length > 0 && (
@@ -393,7 +379,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 									)}
 								</div>
 								<p className="text-sm text-foreground">
-									<AutoLinkText text={feature.description} />
+									<AutoLinkText text={feature.description || ""} />
 								</p>
 								{feature.origin_sources &&
 									feature.origin_sources.length > 0 && (

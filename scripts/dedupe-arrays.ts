@@ -34,7 +34,7 @@ const uniqueTechs: CompendiumTechnique[] = [];
 const techIds = new Set();
 const techNames = new Set();
 
-for (const t of techniques) {
+for (const t of techniques as unknown as CompendiumTechnique[]) {
 	if (!techIds.has(t.id) && !techNames.has(t.name)) {
 		uniqueTechs.push(t);
 		techIds.add(t.id);
@@ -62,7 +62,7 @@ const uniqueD: CompendiumAnomaly[] = [];
 const dIds = new Set();
 const dNames = new Set();
 
-for (const m of anomalies_d) {
+for (const m of anomalies_d as unknown as CompendiumAnomaly[]) {
 	if (!dIds.has(m.id) && !dNames.has(m.name)) {
 		uniqueD.push(m);
 		dIds.add(m.id);

@@ -2,17 +2,17 @@ import { Crown, Flame } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import type { Regent } from "@/lib/regentTypes";
+import type { CompendiumRegent } from "@/types/compendium";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
 
 interface RegentDetailProps {
-	data: Regent;
+	data: CompendiumRegent;
 }
 
 interface CombinedFeature {
 	id?: string;
 	name: string;
-	description: string;
+	description?: string;
 	level: number;
 	is_signature: boolean;
 	type?: string;
@@ -20,15 +20,15 @@ interface CombinedFeature {
 }
 
 export const RegentDetail = ({ data }: RegentDetailProps) => {
-	const displayName = formatRegentVernacular(data.name);
-	const displayTitle = formatRegentVernacular(data.title || data.name);
-	const displayTheme = formatRegentVernacular(data.theme || "");
+	const displayName = formatRegentVernacular(data.display_name || data.name);
+	const displayTitle = formatRegentVernacular(data.title || data.display_name || data.name);
+	const displayTheme = formatRegentVernacular(data.tags?.join(", ") || "");
 
 	const classFeatures: CombinedFeature[] = (data.class_features || []).map(
 		(f) => ({
 			id: `cf-${f.level}-${f.name}`,
 			name: f.name,
-			description: f.description,
+			description: f.description || "",
 			level: f.level,
 			is_signature: f.level >= 11,
 			type: f.type,
@@ -36,22 +36,16 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 		}),
 	);
 
-	const abilities: CombinedFeature[] = (data.abilities || []).map((a) => ({
-		id: `ability-${a.name}`,
-		name: a.name,
-		description: a.description,
-		level: a.power_level || 0,
-		is_signature: (a.power_level || 0) >= 11, // Level 11+ is signature/ascendant
-		type: a.type,
-		recharge: a.frequency,
-	}));
+	const abilities: CombinedFeature[] = []; // CompendiumRegent uses class_features/features now
 
 	const dataFeatures: CombinedFeature[] = (data.features || []).map((f) => ({
 		id: `feature-${f.name}`,
 		name: f.name,
-		description: f.description,
+		description: f.description || "",
 		level: f.power_level || 0,
 		is_signature: (f.power_level || 0) >= 11,
+		type: f.type,
+		recharge: f.frequency,
 	}));
 
 	const allFeatures = [...classFeatures, ...abilities, ...dataFeatures]
@@ -90,7 +84,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 
 					{data.description && (
 						<p className="text-foreground leading-relaxed">
-							<AutoLinkText text={data.description} />
+							<AutoLinkText text={data.description || ""} />
 						</p>
 					)}
 
@@ -100,7 +94,11 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText text={data.lore} />
+								<AutoLinkText
+									text={
+										typeof data.lore === "string" ? data.lore : data.lore.history
+									}
+								/>
 							</p>
 						</div>
 					)}
@@ -122,7 +120,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 			</AscendantWindow>
 
 			{/* Requirements & Ascension Logic */}
-			{(data.requirements || data.regent_requirements) && (
+			{data.regent_requirements && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<AscendantWindow title="ASCENSION REQUIREMENTS">
 						<div className="space-y-4">
@@ -138,7 +136,6 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								<p className="text-foreground border-l-2 border-amber-500/30 pl-4 py-1 italic">
 									<AutoLinkText
 										text={
-											data.requirements?.quest_completion ||
 											data.regent_requirements?.quest_completion ||
 											"Complete the designated Regent questline."
 										}
@@ -246,7 +243,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									<AutoLinkText text={feature.description} />
+									<AutoLinkText text={feature.description || ""} />
 								</p>
 							</div>
 						))}
@@ -281,7 +278,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									{formatRegentVernacular(feature.description)}
+									{formatRegentVernacular(feature.description || "")}
 								</p>
 							</div>
 						))}
@@ -321,7 +318,10 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 											Protocol Restrictions
 										</p>
 										<ul className="space-y-1">
-											{data.mechanics.restrictions.map((res) => (
+											{(Array.isArray(data.mechanics.restrictions)
+												? data.mechanics.restrictions
+												: []
+											).map((res) => (
 												<li
 													key={res}
 													className="text-xs text-red-400/80 flex gap-2 italic"
@@ -341,7 +341,10 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 						className="border-purple-500/30"
 					>
 						<div className="space-y-3">
-							{data.mechanics.special_abilities?.map((ability) => (
+							{(Array.isArray(data.mechanics.special_abilities)
+								? data.mechanics.special_abilities
+								: []
+							).map((ability) => (
 								<div
 									key={ability}
 									className="flex gap-3 text-sm border-b border-white/5 pb-2 last:border-0 last:pb-0"

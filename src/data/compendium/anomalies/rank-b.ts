@@ -1,4 +1,4 @@
-export const anomalies_b = [
+﻿export const anomalies_b = [
 	{
 		id: "anomaly-0003",
 		name: "Eternal Abyssal Horror",

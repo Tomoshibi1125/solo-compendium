@@ -1,5 +1,5 @@
-/**
- * sync-static-to-db.ts — Seed Supabase compendium tables from static TS data.
+﻿/**
+ * sync-static-to-db.ts â€” Seed Supabase compendium tables from static TS data.
  *
  * Objective: 100% data parity between static TS source and Supabase.
  * Strategy: Hard-Typed, Non-Generic synchronization for absolute type safety.

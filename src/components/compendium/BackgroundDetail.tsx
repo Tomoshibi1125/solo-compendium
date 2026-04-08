@@ -4,25 +4,9 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface BackgroundData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description: string;
-	skill_proficiencies?: string[];
-	tool_proficiencies?: string[];
-	language_count?: number;
-	starting_equipment?: string;
-	starting_credits?: number;
-	feature_name?: string;
-	feature_description?: string;
-	personality_traits?: string[];
-	ideals?: string[];
-	bonds?: string[];
-	flaws?: string[];
-	tags?: string[];
-	source_book?: string;
-}
+import type { CompendiumBackground } from "@/types/compendium";
+
+interface BackgroundData extends CompendiumBackground {}
 
 export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
@@ -33,7 +17,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<p className="text-foreground">
-						<AutoLinkText text={data.description} />
+						<AutoLinkText text={data.description || ""} />
 					</p>
 					{data.tags && data.tags.length > 0 && (
 						<div className="flex flex-wrap gap-2">
@@ -109,20 +93,21 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 				</AscendantWindow>
 			</div>
 
-			{/* Feature */}
-			{data.feature_name && (
-				<AscendantWindow
-					title={`FEATURE: ${formatRegentVernacular(data.feature_name).toUpperCase()}`}
-					className="border-primary/50"
-				>
-					<p className="text-foreground">
-						{data.feature_description ? (
-							<AutoLinkText text={data.feature_description} />
-						) : (
-							""
-						)}
-					</p>
-				</AscendantWindow>
+			{/* Features */}
+			{data.features && data.features.length > 0 && (
+				<div className="space-y-4">
+					{data.features.map((feature) => (
+						<AscendantWindow
+							key={feature.name}
+							title={`FEATURE: ${formatRegentVernacular(feature.name).toUpperCase()}`}
+							className="border-primary/50"
+						>
+							<p className="text-foreground">
+								<AutoLinkText text={feature.description} />
+							</p>
+						</AscendantWindow>
+					))}
+				</div>
 			)}
 
 			{/* Characteristics */}

@@ -286,7 +286,7 @@ export async function resolveRef(
 						typeof entityData.description === "string"
 							? entityData.description
 							: null,
-				} as CompendiumEntity;
+				} as unknown as CompendiumEntity;
 			}
 		} catch (error) {
 			logger.warn(`Exception resolving ${type}:${id}:`, error);
@@ -312,7 +312,7 @@ export async function resolveRef(
 		type,
 		description:
 			typeof entry.description === "string" ? entry.description : null,
-	} as CompendiumEntity;
+	} as unknown as CompendiumEntity;
 }
 
 /**
@@ -464,7 +464,7 @@ export async function mergeHomebrewEntries(
 			source: "homebrew" as const,
 			homebrew_id: item.id,
 			...((item.data as Record<string, Json>) || {}),
-		})) as CompendiumEntity[];
+		})) as unknown as CompendiumEntity[];
 	} catch (err) {
 		logger.warn(`[mergeHomebrewEntries] Exception for ${type}:`, err);
 		return [];

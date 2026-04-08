@@ -18,55 +18,13 @@ import {
 	setPendingResolution,
 } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { 
+	CompendiumTechnique, 
+	CompendiumEffects,
+	CompendiumMechanics 
+} from "@/types/compendium";
 
-interface TechniqueData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description?: string | null;
-	technique_type?: string | null;
-	style?: string | null;
-	prerequisites?: {
-		level?: number;
-		class?: string;
-		ability?: string;
-		score?: number;
-		proficiency?: string[];
-		technique?: string[];
-	} | null;
-	activation?: { type?: string; cost?: string } | null;
-	duration?: { type?: string; time?: string } | null;
-	range?: { type?: string; distance?: number } | null;
-	components?: {
-		verbal?: boolean;
-		somatic?: boolean;
-		material?: boolean;
-		material_desc?: string;
-	} | null;
-	effects?: { primary?: string; secondary?: string; tertiary?: string } | null;
-	mechanics?: {
-		attack?: { type?: string; modifier?: string; damage?: string };
-		saving_throw?: {
-			ability?: string;
-			dc?: string;
-			success?: string;
-			failure?: string;
-		};
-		movement?: { type?: string; distance?: number };
-		condition?: string[];
-	} | null;
-	limitations?: {
-		uses?: string;
-		recharge?: string;
-		conditions?: string[];
-		exhaustion?: string;
-	} | null;
-	flavor?: string | null;
-	lore?: string | null;
-	source_book?: string | null;
-	image_url?: string | null;
-	image?: string | null;
-}
+export interface TechniqueData extends CompendiumTechnique {}
 
 export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 	const navigate = useNavigate();
@@ -82,17 +40,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 	const mechanics = data.mechanics || undefined;
 	const limitations = data.limitations || undefined;
 
-	const componentFlags = [
-		components?.verbal ? "V" : null,
-		components?.somatic ? "S" : null,
-		components?.material ? "M" : null,
-	].filter(Boolean);
-
 	const buildResolutionPayload = (): ActionResolutionPayload | null => {
+		const m = mechanics as CompendiumMechanics | null;
 		const id = crypto.randomUUID();
 		const name = displayName;
 
 		const parseBonus = (value: unknown): number | null => {
+			if (typeof value === "number") return value;
 			if (typeof value !== "string") return null;
 			const trimmed = value.trim();
 			const match = trimmed.match(/^([+-]?\d+)$/);
@@ -108,18 +62,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 			return parseInt(match[1], 10);
 		};
 
-		const conditions = Array.isArray(mechanics?.condition)
-			? mechanics?.condition
-			: undefined;
+		const conditions = Array.isArray(m?.condition) ? m?.condition : undefined;
 
-		if (mechanics?.attack) {
-			const bonus = parseBonus(mechanics.attack.modifier);
-			const attackRoll =
-				bonus !== null ? `1d20${bonus >= 0 ? "+" : ""}${bonus}` : "1d20";
-			const damageRoll =
-				typeof mechanics.attack.damage === "string"
-					? mechanics.attack.damage
-					: undefined;
+		if (m?.attack) {
+			const bonus = parseBonus(m.attack.modifier);
+			const attackRoll = bonus !== null ? `1d20${bonus >= 0 ? "+" : ""}${bonus}` : "1d20";
+			const damageRoll = typeof m.attack.damage === "string" ? m.attack.damage : (typeof m.attack.damage === 'object' ? m.attack.damage.dice : undefined);
+			
 			return {
 				version: 1,
 				id,
@@ -132,12 +81,10 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 			};
 		}
 
-		if (mechanics?.saving_throw) {
-			const dc = parseDc(mechanics.saving_throw.dc) ?? 10;
-			const ability =
-				typeof mechanics.saving_throw.ability === "string"
-					? mechanics.saving_throw.ability
-					: undefined;
+		if (m?.saving_throw) {
+			const dc = parseDc(m.saving_throw.dc) ?? 10;
+			const ability = typeof m.saving_throw.ability === "string" ? m.saving_throw.ability : undefined;
+			
 			return {
 				version: 1,
 				id,
@@ -169,9 +116,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						size="large"
 						aspectRatio="square"
 						className="max-w-md"
-						fallbackIcon={
-							<Swords className="w-32 h-32 text-muted-foreground" />
-						}
+						fallbackIcon={<Swords className="w-32 h-32 text-muted-foreground" />}
 					/>
 				</div>
 			)}
@@ -179,63 +124,52 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
-						{data.technique_type && (
+						{(data.technique_type || data.type) && (
 							<Badge variant="secondary">
-								{formatRegentVernacular(data.technique_type)}
+								{formatRegentVernacular(data.technique_type || data.type)}
 							</Badge>
 						)}
 						{data.style && (
-							<Badge variant="outline">
-								{formatRegentVernacular(data.style)}
-							</Badge>
+							<Badge variant="outline">{formatRegentVernacular(data.style)}</Badge>
 						)}
 						{data.source_book && (
-							<Badge variant="outline">
-								{formatRegentVernacular(data.source_book)}
-							</Badge>
+							<Badge variant="outline">{formatRegentVernacular(data.source_book)}</Badge>
 						)}
 					</div>
 
 					{(mechanics?.attack || mechanics?.saving_throw) && (
 						<div className="flex flex-wrap gap-2">
-							<Button
-								variant="outline"
-								onClick={() => queueResolutionAndNavigate("/dice")}
-							>
+							<Button variant="outline" onClick={() => queueResolutionAndNavigate("/dice")}>
 								Roll
 							</Button>
 							<Button
 								variant="outline"
-								onClick={() =>
-									queueResolutionAndNavigate(
-										"/warden-directives/initiative-tracker",
-									)
-								}
+								onClick={() => queueResolutionAndNavigate("/warden-directives/initiative-tracker")}
 							>
 								Resolve in Initiative
 							</Button>
 						</div>
 					)}
+					{data.level_requirement !== undefined && data.level_requirement > 0 && (
+						<Badge variant="outline" className="border-primary/40 text-primary">
+							Level {data.level_requirement}
+						</Badge>
+					)}
 				</div>
 			</AscendantWindow>
 
 			{(activation || duration || range || components) && (
-				<div
-					id="technique-activation"
-					className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4"
-				>
+				<div id="technique-activation" className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4">
 					{activation && (
 						<AscendantWindow title="ACTIVATION" compact>
 							<div className="flex items-center gap-2">
 								<Zap className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(activation.type || "action")}
+									{formatRegentVernacular(typeof activation === "string" ? activation : activation.type)}
 								</span>
 							</div>
-							{activation.cost && (
-								<span className="text-xs text-muted-foreground">
-									{formatRegentVernacular(activation.cost)}
-								</span>
+							{typeof activation === "object" && activation.cost && (
+								<span className="text-xs text-muted-foreground">{formatRegentVernacular(String(activation.cost))}</span>
 							)}
 						</AscendantWindow>
 					)}
@@ -244,12 +178,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							<div className="flex items-center gap-2">
 								<Timer className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(duration.type || "instant")}
+									{formatRegentVernacular(typeof duration === "string" ? duration : duration.type)}
 								</span>
 							</div>
-							{duration.time && (
+							{typeof duration === "object" && (duration.value || duration.time) && (
 								<span className="text-xs text-muted-foreground">
-									{formatRegentVernacular(duration.time)}
+									{duration.value || duration.time}
+									{duration.unit ? ` ${duration.unit}` : ""}
 								</span>
 							)}
 						</AscendantWindow>
@@ -259,12 +194,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							<div className="flex items-center gap-2">
 								<Target className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(range.type || "melee")}
+									{formatRegentVernacular(typeof range === "string" ? range : range.type)}
 								</span>
 							</div>
-							{range.distance !== undefined && (
+							{typeof range === "object" && (range.distance || range.value) && (
 								<span className="text-xs text-muted-foreground">
-									{range.distance} ft
+									{range.distance || range.value}
+									{range.unit ? ` ${range.unit}` : " ft"}
 								</span>
 							)}
 						</AscendantWindow>
@@ -274,13 +210,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							<div className="flex items-center gap-2">
 								<Sparkles className="w-5 h-5 text-primary" />
 								<span className="font-heading">
-									{componentFlags.join(", ") || "None"}
+									{components.verbal ? "V" : ""}
+									{components.somatic ? "S" : ""}
+									{components.material ? "M" : ""}
 								</span>
 							</div>
-							{components.material_desc && (
-								<span className="text-xs text-muted-foreground">
-									{formatRegentVernacular(components.material_desc)}
-								</span>
+							{components.material && typeof components.material === "string" && (
+								<p className="text-xs text-muted-foreground mt-1">{components.material}</p>
 							)}
 						</AscendantWindow>
 					)}
@@ -290,12 +226,6 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 			{prereq && (
 				<AscendantWindow title="PREREQUISITES">
 					<ul className="space-y-2 text-sm">
-						{prereq.level !== undefined && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Level {prereq.level}</span>
-							</li>
-						)}
 						{prereq.class && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
@@ -305,49 +235,41 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						{prereq.ability && prereq.score !== undefined && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									{formatRegentVernacular(prereq.ability)} {prereq.score}+
-								</span>
+								<span>{formatRegentVernacular(prereq.ability)} {prereq.score}+</span>
 							</li>
 						)}
 						{prereq.proficiency && prereq.proficiency.length > 0 && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Proficiencies:{" "}
-									{prereq.proficiency.map(formatRegentVernacular).join(", ")}
-								</span>
+								<span>Proficiencies: {prereq.proficiency.map(formatRegentVernacular).join(", ")}</span>
 							</li>
 						)}
 						{prereq.technique && prereq.technique.length > 0 && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Requires:{" "}
-									{prereq.technique.map(formatRegentVernacular).join(", ")}
-								</span>
+								<span>Requires: {prereq.technique.map(formatRegentVernacular).join(", ")}</span>
 							</li>
 						)}
 					</ul>
 				</AscendantWindow>
 			)}
 
-			{effects && (
+			{effects && !Array.isArray(effects) && (
 				<AscendantWindow id="technique-effects" title="EFFECTS">
 					<div className="space-y-3">
-						{effects.primary && (
+						{(effects as CompendiumEffects).primary && (
 							<p className="text-foreground leading-relaxed">
-								<AutoLinkText text={effects.primary} />
+								<AutoLinkText text={(effects as CompendiumEffects).primary || ""} />
 							</p>
 						)}
-						{effects.secondary && (
+						{(effects as CompendiumEffects).secondary && (
 							<p className="text-muted-foreground leading-relaxed">
-								<AutoLinkText text={effects.secondary} />
+								<AutoLinkText text={(effects as CompendiumEffects).secondary || ""} />
 							</p>
 						)}
-						{effects.tertiary && (
+						{(effects as CompendiumEffects).tertiary && (
 							<p className="text-muted-foreground leading-relaxed">
-								<AutoLinkText text={effects.tertiary} />
+								<AutoLinkText text={(effects as CompendiumEffects).tertiary || ""} />
 							</p>
 						)}
 					</div>
@@ -365,16 +287,8 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 										{formatRegentVernacular(mechanics.attack.type || "")} attack
 									</p>
 									<p className="text-sm text-muted-foreground">
-										{mechanics.attack.damage
-											? formatRegentVernacular(
-													`Damage: ${mechanics.attack.damage}`,
-												)
-											: "Damage varies"}
-										{mechanics.attack.modifier
-											? formatRegentVernacular(
-													` | Modifier: ${mechanics.attack.modifier}`,
-												)
-											: ""}
+										{mechanics.attack.damage ? formatRegentVernacular(`Damage: ${typeof mechanics.attack.damage === 'string' ? mechanics.attack.damage : mechanics.attack.damage.dice}`) : "Damage varies"}
+										{mechanics.attack.modifier ? formatRegentVernacular(` | Modifier: ${mechanics.attack.modifier}`) : ""}
 									</p>
 								</div>
 							</div>
@@ -384,53 +298,32 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 								<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">
-										{formatRegentVernacular(
-											mechanics.saving_throw.ability || "",
-										)}{" "}
-										Save
+										{formatRegentVernacular(String(mechanics.saving_throw.ability || ""))} Save
 									</p>
-									<p className="text-sm text-muted-foreground">
-										DC {formatRegentVernacular(mechanics.saving_throw.dc || "")}
-									</p>
+									<p className="text-sm text-muted-foreground">DC {mechanics.saving_throw.dc}</p>
 									{mechanics.saving_throw.success && (
-										<p className="text-xs text-muted-foreground">
-											Success:{" "}
-											{formatRegentVernacular(mechanics.saving_throw.success)}
-										</p>
-									)}
-									{mechanics.saving_throw.failure && (
-										<p className="text-xs text-muted-foreground">
-											Failure:{" "}
-											{formatRegentVernacular(mechanics.saving_throw.failure)}
-										</p>
+										<p className="text-xs text-muted-foreground">Success: {formatRegentVernacular(mechanics.saving_throw.success)}</p>
 									)}
 								</div>
 							</div>
 						)}
-						{mechanics.movement && (
+						{mechanics.movement && typeof mechanics.movement === "object" && (
 							<div className="flex items-start gap-2">
 								<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
 								<div>
-									<p className="font-heading capitalize">
-										{formatRegentVernacular(mechanics.movement.type || "")}{" "}
-										movement
-									</p>
+									<p className="font-heading capitalize">{formatRegentVernacular(mechanics.movement.type || "")} movement</p>
 									{mechanics.movement.distance !== undefined && (
-										<p className="text-sm text-muted-foreground">
-											{mechanics.movement.distance} ft
-										</p>
+										<p className="text-sm text-muted-foreground">{mechanics.movement.distance} ft</p>
 									)}
 								</div>
 							</div>
 						)}
-						{mechanics.condition && mechanics.condition.length > 0 && (
+						{Array.isArray(mechanics.condition) && mechanics.condition.length > 0 && (
 							<div className="flex items-start gap-2">
 								<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">Conditions</p>
-									<p className="text-sm text-muted-foreground">
-										{mechanics.condition.map(formatRegentVernacular).join(", ")}
-									</p>
+									<p className="text-sm text-muted-foreground">{mechanics.condition.map(formatRegentVernacular).join(", ")}</p>
 								</div>
 							</div>
 						)}
@@ -450,35 +343,20 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						{limitations.recharge && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Recharge: {formatRegentVernacular(limitations.recharge)}
-								</span>
+								<span>Recharge: {formatRegentVernacular(limitations.recharge)}</span>
 							</li>
 						)}
 						{limitations.exhaustion && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Exhaustion: {formatRegentVernacular(limitations.exhaustion)}
-								</span>
-							</li>
-						)}
-						{limitations.conditions && limitations.conditions.length > 0 && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Conditions:{" "}
-									{limitations.conditions
-										.map(formatRegentVernacular)
-										.join(", ")}
-								</span>
+								<span>Exhaustion: {formatRegentVernacular(limitations.exhaustion)}</span>
 							</li>
 						)}
 					</ul>
 				</AscendantWindow>
 			)}
 
-			{(data.description || data.flavor) && (
+			{data.description && (
 				<AscendantWindow id="technique-description" title="DESCRIPTION">
 					<div className="space-y-3">
 						{data.flavor && (
@@ -486,18 +364,14 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 								<AutoLinkText text={data.flavor} />
 							</p>
 						)}
-						{data.description && (
-							<p className="text-foreground leading-relaxed">
-								<AutoLinkText text={data.description} />
-							</p>
-						)}
+						<p className="text-foreground leading-relaxed">
+							<AutoLinkText text={data.description} />
+						</p>
 						{data.lore && (
 							<div className="mt-6 pt-4 border-t border-cyan/10">
-								<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
-									Historical Record
-								</h4>
+								<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">Historical Record</h4>
 								<p className="text-sm text-muted-foreground leading-relaxed">
-									<AutoLinkText text={data.lore} />
+									<AutoLinkText text={typeof data.lore === "string" ? data.lore : data.lore.history} />
 								</p>
 							</div>
 						)}

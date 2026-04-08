@@ -69,6 +69,22 @@ const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
 		title: "Marketplace",
 		subtitle: "Browse, download, and review community listings.",
 	},
+	"party-view": {
+		title: "Party View",
+		subtitle: "View party members, their status, and shared information.",
+	},
+	potions: {
+		title: "Potions & Consumables",
+		subtitle: "Manage your potions, elixirs, and consumable items.",
+	},
+	achievements: {
+		title: "Achievements",
+		subtitle: "View your accomplishments and unlock rewards.",
+	},
+	"regent-status": {
+		title: "Regent Status",
+		subtitle: "Manage your regent domains and powers.",
+	},
 };
 
 const requiresCharacter = (toolId: string) =>
@@ -78,6 +94,9 @@ const requiresCharacter = (toolId: string) =>
 		"abilities",
 		"character-art",
 		"quest-log",
+		"potions",
+		"achievements",
+		"regent-status",
 	].includes(toolId);
 
 export default function PlayerToolDetail() {
@@ -175,6 +194,12 @@ export default function PlayerToolDetail() {
 							characterId={activeCharacter.id}
 							campaignId={campaignId}
 						/>
+					</div>
+				) : null;
+			case "potions":
+				return activeCharacter ? (
+					<div className="space-y-6">
+						<EquipmentList characterId={activeCharacter.id} />
 					</div>
 				) : null;
 			case "abilities":

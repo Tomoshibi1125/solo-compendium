@@ -5,20 +5,10 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface EquipmentData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description?: string;
-	equipment_type: string;
-	cost_credits?: number;
-	weight?: number;
-	damage?: string;
-	damage_type?: string;
-	properties?: string[];
-	armor_class?: number;
-	source_book?: string;
-	image_url?: string | null;
+import type { CompendiumItem } from "@/types/compendium";
+
+interface EquipmentData extends Partial<CompendiumItem> {
+	// Local structure matches legacy data if needed
 }
 
 const typeLabels: Record<string, string> = {
@@ -35,21 +25,22 @@ const typeLabels: Record<string, string> = {
 	ascendant_gear: "Ascendant Gear",
 };
 
-export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
+export const EquipmentDetail = ({ data }: { data: any }) => {
+	const item = data as EquipmentData;
 	const isWeapon =
-		data.equipment_type.includes("melee") ||
-		data.equipment_type.includes("ranged");
+		(item.item_type || "").includes("melee") ||
+		(item.item_type || "").includes("ranged");
 	const isArmor =
-		data.equipment_type.includes("armor") || data.equipment_type === "shield";
-	const displayName = formatRegentVernacular(data.display_name || data.name);
+		(item.item_type || "").includes("armor") || item.item_type === "shield";
+	const displayName = formatRegentVernacular(item.display_name || item.name);
 
 	return (
 		<div className="space-y-6">
 			{/* Item Illustration */}
-			{data.image_url && (
+			{item.image_url && (
 				<div className="w-full flex justify-center">
 					<CompendiumImage
-						src={data.image_url}
+						src={item.image_url}
 						alt={displayName}
 						size="large"
 						aspectRatio="square"
@@ -65,18 +56,18 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					<div className="flex flex-wrap items-center gap-2">
 						<Badge variant="secondary">
 							{formatRegentVernacular(
-								typeLabels[data.equipment_type] || data.equipment_type,
+								(item.item_type && typeLabels[item.item_type]) || item.item_type || "Equipment",
 							)}
 						</Badge>
-						{data.source_book && (
+						{item.source_book && (
 							<Badge variant="outline">
-								{formatRegentVernacular(data.source_book)}
+								{formatRegentVernacular(item.source_book)}
 							</Badge>
 						)}
 					</div>
-					{data.description && (
+					{item.description && (
 						<p className="text-muted-foreground leading-relaxed text-base">
-							<AutoLinkText text={data.description} />
+							<AutoLinkText text={item.description} />
 						</p>
 					)}
 				</div>
@@ -88,7 +79,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					<div className="flex items-center gap-2">
 						<Coins className="w-5 h-5 text-yellow-400" />
 						<span className="font-display text-xl">
-							{data.cost_credits?.toLocaleString() || "—"}
+							{item.cost?.toLocaleString() || "—"}
 						</span>
 					</div>
 					<span className="text-xs text-muted-foreground">credits</span>
@@ -97,7 +88,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 				<AscendantWindow title="WEIGHT" compact>
 					<div className="flex items-center gap-2">
 						<Weight className="w-5 h-5 text-muted-foreground" />
-						<span className="font-display text-xl">{data.weight || "—"}</span>
+						<span className="font-display text-xl">{item.weight || "—"}</span>
 					</div>
 					<span className="text-xs text-muted-foreground">lbs</span>
 				</AscendantWindow>
@@ -106,11 +97,11 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					<AscendantWindow title="DAMAGE" compact>
 						<div className="flex items-center gap-2">
 							<Sword className="w-5 h-5 text-red-400" />
-							<span className="font-display text-xl">{data.damage || "—"}</span>
+							<span className="font-display text-xl">{item.damage || "—"}</span>
 						</div>
-						{data.damage_type && (
+						{item.damage_type && (
 							<span className="text-xs text-muted-foreground">
-								{formatRegentVernacular(data.damage_type)}
+								{formatRegentVernacular(item.damage_type)}
 							</span>
 						)}
 					</AscendantWindow>
@@ -121,7 +112,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 						<div className="flex items-center gap-2">
 							<Shield className="w-5 h-5 text-blue-400" />
 							<span className="font-display text-xl">
-								{data.armor_class ? `+${data.armor_class}` : "—"}
+								{item.armor_class ? `+${item.armor_class}` : "—"}
 							</span>
 						</div>
 					</AscendantWindow>
@@ -129,17 +120,33 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 			</div>
 
 			{/* Properties */}
-			{data.properties && data.properties.length > 0 && (
-				<AscendantWindow title="PROPERTIES">
-					<div className="flex flex-wrap gap-2">
-						{data.properties.map((prop) => (
-							<Badge key={prop} variant="outline" className="capitalize">
-								{formatRegentVernacular(prop)}
-							</Badge>
-						))}
-					</div>
-				</AscendantWindow>
-			)}
+			{item.properties &&
+				(Array.isArray(item.properties)
+					? item.properties.length > 0
+					: Object.keys(item.properties).length > 0) && (
+					<AscendantWindow title="PROPERTIES">
+						<div className="flex flex-wrap gap-2">
+							{Array.isArray(item.properties)
+								? item.properties.map((prop: string) => (
+										<Badge key={prop} variant="outline" className="capitalize">
+											{formatRegentVernacular(prop)}
+										</Badge>
+									))
+								: Object.entries(item.properties || {}).map(([key, value]) => (
+										<Badge
+											key={key}
+											variant="outline"
+											className="capitalize flex items-center gap-1"
+										>
+											{formatRegentVernacular(key)}
+											<span className="opacity-70 text-[10px]">
+												({String(value)})
+											</span>
+										</Badge>
+									))}
+						</div>
+					</AscendantWindow>
+				)}
 		</div>
 	);
 };

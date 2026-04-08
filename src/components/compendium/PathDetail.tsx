@@ -7,26 +7,9 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface PathData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description: string;
-	jobId?: string;
-	job_id?: string | null;
-	jobName?: string;
-	tier?: number;
-	level?: number;
-	path_level?: number | null;
-	prerequisites?: string;
-	tags?: string[];
-	source_book?: string;
-	image_url?: string;
-	flavor_text?: string | null;
-	flavor?: string | null;
-	lore?: string | null;
-	mechanics?: Record<string, unknown> | null;
-}
+import type { CompendiumPath } from "@/types/compendium";
+
+interface PathData extends CompendiumPath {}
 
 interface PathFeature {
 	id: string;
@@ -42,16 +25,16 @@ interface PathFeature {
 
 export const PathDetail = ({ data }: { data: PathData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
-	const pathLevel = data.level ?? data.path_level ?? undefined;
+	const pathLevel = data.level;
 	const [features, setFeatures] = useState<PathFeature[]>([]);
-	const [jobName, setJobName] = useState<string | null>(data.jobName ?? null);
+	const [jobName, setJobName] = useState<string | null>(null);
 
 	useEffect(() => {
 		if (!isSupabaseConfigured) return;
 		let isCancelled = false;
 
 		const loadPathData = async () => {
-			const jobId = data.jobId ?? data.job_id ?? null;
+			const jobId = data.job_id;
 
 			const featuresRes = await supabase
 				.from("compendium_job_features")
@@ -99,7 +82,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 		return () => {
 			isCancelled = true;
 		};
-	}, [data.id, data.jobId, data.job_id, jobName]);
+	}, [data.id, data.job_id, jobName]);
 
 	const abilityFeatures = useMemo(
 		() =>
@@ -150,20 +133,20 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			<div className="flex items-start justify-between">
 				<div>
 					<h2 className="text-2xl font-bold font-heading flex items-center gap-2">
-						{getTierIcon(data.tier)}
+						{getTierIcon(data.level)}
 						{displayName}
 					</h2>
-					{(jobName || data.jobName) && (
+					{jobName && (
 						<p className="text-muted-foreground mt-1">
 							Subclass of{" "}
 							<span className="font-semibold">
-								{formatRegentVernacular(jobName || data.jobName || "")}
+								{formatRegentVernacular(jobName)}
 							</span>
 						</p>
 					)}
 				</div>
-				{data.tier && (
-					<Badge className={getTierColor(data.tier)}>Tier {data.tier}</Badge>
+				{data.level && (
+					<Badge className={getTierColor(data.level)}>Tier {data.level}</Badge>
 				)}
 			</div>
 
@@ -172,13 +155,13 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			{/* Description */}
 			<div>
 				<h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
-				{(data.flavor || data.flavor_text) && (
+				{data.flavor && (
 					<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
-						<AutoLinkText text={(data.flavor || data.flavor_text) as string} />
+						<AutoLinkText text={data.flavor} />
 					</p>
 				)}
 				<p className="text-muted-foreground leading-relaxed">
-					<AutoLinkText text={data.description} />
+					<AutoLinkText text={data.description || ""} />
 				</p>
 				{data.lore && (
 					<div className="mt-6 pt-4 border-t border-cyan/10">
@@ -186,7 +169,11 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 							Historical Record
 						</h4>
 						<p className="text-sm text-muted-foreground leading-relaxed">
-							<AutoLinkText text={data.lore} />
+							<AutoLinkText
+								text={
+									typeof data.lore === "string" ? data.lore : data.lore?.history || ""
+								}
+							/>
 						</p>
 					</div>
 				)}

@@ -2,9 +2,9 @@ import { writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { anomalies } from "../src/data/compendium/anomalies/index";
-import { items as items_part1 } from "../src/data/compendium/items-part1";
-import { items as items_part2 } from "../src/data/compendium/items-part2";
-import { items as items_part3 } from "../src/data/compendium/items-part3";
+import { items_part1 } from "../src/data/compendium/items-part1";
+import { items_part2 } from "../src/data/compendium/items-part2";
+import { items_part3 } from "../src/data/compendium/items-part3";
 // Import Compendium Data
 import { locations } from "../src/data/compendium/locations";
 import { comprehensiveRelics } from "../src/data/compendium/relics-comprehensive";
@@ -38,7 +38,7 @@ const selectedRelics = getRandom(comprehensiveRelics, 60);
 // Helper to format Relics
 function formatRelic(relic: { name: string; type: string; rarity: string; attunement?: boolean; description: string; abilities?: Array<{ name: string; description: string }>; }) {
 	let md = `#### ${relic.name}\n`;
-	md += `*${relic.type.charAt(0).toUpperCase() + relic.type.slice(1)}, ${relic.rarity}${relic.attunement ? " — Requires Attunement" : ""}*\n`;
+	md += `*${relic.type.charAt(0).toUpperCase() + relic.type.slice(1)}, ${relic.rarity}${relic.attunement ? " â€” Requires Attunement" : ""}*\n`;
 	md += `${relic.description}\n\n`;
 
 	if (relic.abilities && relic.abilities.length > 0) {
@@ -97,7 +97,7 @@ function formatAnomaly(anomaly: { name: string; rank?: string; type?: string; ac
 // Write the document
 let content = `# Protocol Zero: The Neo-Seoul Sandbox
 
-**A Megadungeon & Sandbox Campaign for Levels 1–10**
+**A Megadungeon & Sandbox Campaign for Levels 1â€“10**
 **Setting:** Neo-Seoul, Modern Urban Fantasy
 **System:** System Ascendant (d20 / 5e-Compatible)
 
@@ -109,7 +109,7 @@ The Protocol Zero campaign has been expanded into a fully realized Sandbox. Draw
 ---
 
 ## The Sandbox: Neo-Seoul Districts
-The mid-game of this campaign (Levels 3–8) takes place across various districts and safehouses. The DM can use these locations to run a point-crawl or open-world exploration.
+The mid-game of this campaign (Levels 3â€“8) takes place across various districts and safehouses. The DM can use these locations to run a point-crawl or open-world exploration.
 
 `;
 
@@ -130,14 +130,14 @@ content += `## Procedural Appendix A: Comprehensive Relics List\n\n`;
 content += `This massive arsenal represents the loot available throughout the sandbox. Items can be seeded into Gate boss chests or Black Market shops.\n\n`;
 
 selectedRelics.forEach((relic) => {
-	content += formatRelic(relic);
+	content += formatRelic(relic as unknown as Parameters<typeof formatRelic>[0]);
 });
 
 content += `## Procedural Appendix B: The Grand Bestiary\n\n`;
 content += `A complete catalog of the Anomalies that populate Neo-Seoul's Gates. DM's should roll on random encounter tables referencing these horrors.\n\n`;
 
 selectedAnomalies.forEach((anomaly) => {
-	content += formatAnomaly(anomaly);
+	content += formatAnomaly(anomaly as unknown as Parameters<typeof formatAnomaly>[0]);
 });
 
 content += `## Appendix G: Pacing & Advancement\n\n`;

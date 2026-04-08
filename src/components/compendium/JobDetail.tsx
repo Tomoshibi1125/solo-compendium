@@ -1,67 +1,24 @@
 import { Heart, Shield, Swords, Wand2, Zap } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
-import {
-	calculateTotalChoices,
-	getChoiceGrantDetails,
-} from "@/lib/choiceCalculations";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { DetailHeader } from "./DetailHeader";
 
-interface JobData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description: string;
-	flavor?: string | null;
-	flavor_text?: string;
-	lore?: string | null;
-	mechanics?: Record<string, unknown> | null;
-	hit_die: number;
-	primary_abilities: string[];
-	secondary_abilities?: string[];
-	saving_throw_proficiencies: string[];
-	armor_proficiencies?: string[];
-	weapon_proficiencies?: string[];
-	tool_proficiencies?: string[];
-	skill_choices?: string[];
-	skill_choice_count: number;
-	tags?: string[];
-	source_book?: string;
-	image_url?: string | null;
-	// DDB-parity fields (from static data fallback)
-	starting_equipment?: string[][] | null;
-	hit_points_at_first_level?: string | null;
-	hit_points_at_higher_levels?: string | null;
-	regent_prerequisites?: string | null;
-	spellcasting_ability?: string | null;
-	spellcasting_focus?: string | null;
-	class_features?: Array<{
-		level: number;
-		name: string;
-		description: string;
-	}> | null;
-	spellcasting?: {
-		ability: string;
-		focus?: string;
-		cantripsKnown?: number[];
-		spellsKnown?: number[];
-		spellSlots?: Record<string, number[]>;
-	} | null;
-}
+import type { CompendiumJob } from "@/types/compendium";
+
+interface JobData extends CompendiumJob {}
 
 export interface JobFeature {
 	id: string;
 	name: string;
 	display_name?: string | null;
-	description: string;
+	description?: string;
 	level: number;
 	action_type?: string;
 	is_path_feature: boolean;
@@ -71,7 +28,7 @@ export interface JobPath {
 	id: string;
 	name: string;
 	display_name?: string | null;
-	description: string;
+	description?: string;
 	path_level: number;
 }
 
@@ -86,52 +43,6 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			power_level: number;
 		}>
 	>([]);
-
-	const { data: staticJobs = [] } = useStaticJobs();
-
-	// Calculate total choices including awakening features
-	const totalChoices = useMemo(() => {
-		const staticJob = staticJobs.find((job) => job.name === data.name);
-		if (!staticJob)
-			return {
-				skills: data.skill_choice_count,
-				feats: 0,
-				spells: 0,
-				powers: 0,
-				techniques: 0,
-				runes: 0,
-				items: 0,
-				tools: 0,
-				languages: 0,
-				expertise: 0,
-			};
-
-		// Create enhanced job data that includes both database fields and static awakening features/traits
-		const enhancedJobData = {
-			...data,
-			class_features: data.class_features ?? undefined,
-			awakeningFeatures: staticJob.awakeningFeatures || [],
-			jobTraits: staticJob.jobTraits || [],
-		};
-
-		return calculateTotalChoices(enhancedJobData, null, [], 1);
-	}, [data, staticJobs]);
-
-	// Get choice grant details for UI display
-	const _choiceGrantDetails = useMemo(() => {
-		const staticJob = staticJobs.find((job) => job.name === data.name);
-		if (!staticJob) return [];
-
-		// Create enhanced job data that includes both database fields and static awakening features/traits
-		const enhancedJobData = {
-			...data,
-			class_features: data.class_features ?? undefined,
-			awakeningFeatures: staticJob.awakeningFeatures || [],
-			jobTraits: staticJob.jobTraits || [],
-		};
-
-		return getChoiceGrantDetails(enhancedJobData, null, [], 1);
-	}, [data, staticJobs]);
 
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 
@@ -174,14 +85,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				await Promise.all([
 					filterRowsBySourcebookAccess(
 						featureRows,
-						(feature) => feature.source_name,
+						(feature: JobFeature & { source_name?: string | null }) => feature.source_name,
 					),
-					filterRowsBySourcebookAccess(pathRows, (path) => path.source_book),
-					filterRowsBySourcebookAccess(powerRows, (power) => power.source_book),
+					filterRowsBySourcebookAccess(pathRows, (path: JobPath & { source_book?: string | null }) => path.source_book),
+					filterRowsBySourcebookAccess(powerRows, (power: { source_book?: string | null }) => power.source_book),
 				]);
 
 			setFeatures(
-				accessibleFeatures.map((feature) => ({
+				accessibleFeatures.map((feature: JobFeature) => ({
 					...feature,
 					action_type: feature.action_type ?? undefined,
 					display_name: feature.display_name ?? undefined,
@@ -189,7 +100,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			);
 			setPaths(accessiblePaths);
 			setRelatedPowers(
-				accessiblePowers.map((power) => ({
+				accessiblePowers.map((power: { id: string; name: string; display_name?: string | null; power_level: number }) => ({
 					id: power.id,
 					name: power.name,
 					display_name: power.display_name ?? null,
@@ -235,15 +146,13 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				className="border-primary/50"
 			>
 				<div className="space-y-4">
-					{(data.flavor || data.flavor_text) && (
+					{data.flavor && (
 						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
-							<AutoLinkText
-								text={(data.flavor || data.flavor_text) as string}
-							/>
+							<AutoLinkText text={data.flavor} />
 						</p>
 					)}
 					<p className="text-foreground leading-relaxed">
-						<AutoLinkText text={data.description} />
+						<AutoLinkText text={data.description || ""} />
 					</p>
 					{data.lore && (
 						<div className="mt-6 pt-4 border-t border-cyan/10">
@@ -251,7 +160,11 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText text={data.lore} />
+								<AutoLinkText
+									text={
+										typeof data.lore === "string" ? data.lore : data.lore?.history || ""
+									}
+								/>
 							</p>
 						</div>
 					)}
@@ -283,7 +196,9 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				<AscendantWindow title="HIT DIE" compact>
 					<div className="flex items-center gap-2">
 						<Heart className="w-5 h-5 text-red-400" />
-						<span className="font-display text-2xl">d{data.hit_die}</span>
+						<span className="font-display text-2xl">
+							{data.hit_dice || "d10"}
+						</span>
 					</div>
 				</AscendantWindow>
 
@@ -301,9 +216,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					<div className="flex items-center gap-2">
 						<Shield className="w-5 h-5 text-blue-400" />
 						<span className="font-heading">
-							{data.saving_throw_proficiencies
-								?.map(formatRegentVernacular)
-								.join(", ") || "None"}
+							{data.saving_throws?.map(formatRegentVernacular).join(", ") ||
+								"None"}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -311,56 +225,34 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				<AscendantWindow title="SKILL CHOICES" compact>
 					<div className="flex items-center gap-2">
 						<Swords className="w-5 h-5 text-green-400" />
-						<span className="font-heading">Choose {totalChoices.skills}</span>
-						{totalChoices.skills > data.skill_choice_count && (
-							<Badge variant="secondary" className="text-xs">
-								+{totalChoices.skills - data.skill_choice_count} from features
-							</Badge>
-						)}
-						{/* Show other choice types if available */}
-						{(totalChoices.feats > 0 ||
-							totalChoices.spells > 0 ||
-							totalChoices.powers > 0 ||
-							totalChoices.techniques > 0 ||
-							totalChoices.runes > 0 ||
-							totalChoices.items > 0 ||
-							totalChoices.tools > 0 ||
-							totalChoices.languages > 0) && (
-							<Badge variant="outline" className="text-xs ml-2">
-								+
-								{Object.values(totalChoices).reduce(
-									(sum, val, idx) =>
-										idx === 0 ? val - data.skill_choice_count : sum + val,
-									0,
-								)}{" "}
-								more choices
-							</Badge>
-						)}
+						<span className="font-heading">
+							Choose {data.skill_choices?.length || 2}
+						</span>
 					</div>
 				</AscendantWindow>
 			</div>
 
 			{/* Hit Points */}
-			{(data.hit_points_at_first_level || data.hit_points_at_higher_levels) && (
+			{(data.hp_at_level_1 || data.hp_at_higher_levels) && (
 				<AscendantWindow title="HIT POINTS">
 					<div className="space-y-2">
-						{data.hit_points_at_first_level && (
+						{data.hp_at_level_1 && (
 							<div>
 								<span className="text-sm text-muted-foreground">
 									At 1st Level:{" "}
 								</span>
 								<span className="font-heading">
-									{data.hit_points_at_first_level}
+									{data.hp_at_level_1}
 								</span>
 							</div>
 						)}
-						{data.hit_points_at_higher_levels && (
+						{data.hp_at_higher_levels && (
 							<div>
 								<span className="text-sm text-muted-foreground">
 									At Higher Levels:{" "}
 								</span>
 								<span className="font-heading">
-									{data.hit_points_at_higher_levels}
+									{data.hp_at_higher_levels}
 								</span>
 							</div>
 						)}
@@ -438,7 +330,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			)}
 
 			{/* Spellcasting */}
-			{data.spellcasting_ability && (
+			{data.spellcasting && (
 				<AscendantWindow title="SPELLCASTING">
 					<div className="space-y-2">
 						<div>
@@ -446,16 +338,16 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								Spellcasting Ability:{" "}
 							</span>
 							<span className="font-heading font-semibold">
-								{formatRegentVernacular(data.spellcasting_ability)}
+								{formatRegentVernacular(data.spellcasting.ability)}
 							</span>
 						</div>
-						{data.spellcasting_focus && (
+						{data.spellcasting.focus && (
 							<div>
 								<span className="text-sm text-muted-foreground">
 									Spellcasting Focus:{" "}
 								</span>
 								<span className="font-heading">
-									{formatRegentVernacular(data.spellcasting_focus)}
+									{formatRegentVernacular(data.spellcasting.focus)}
 								</span>
 							</div>
 						)}
@@ -464,9 +356,11 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			)}
 
 			{/* Regent Prerequisites */}
-			{data.regent_prerequisites && (
+			{data.regent_requirements && (
 				<AscendantWindow title="REGENT PREREQUISITES">
-					<p className="font-heading">{data.regent_prerequisites}</p>
+					<p className="font-heading italic">
+						{data.regent_requirements.quest_completion || "Designated Regent Quest required."}
+					</p>
 				</AscendantWindow>
 			)}
 
@@ -647,7 +541,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									<AutoLinkText text={feature.description} />
+									<AutoLinkText text={feature.description || ""} />
 								</p>
 							</div>
 						))}
@@ -700,7 +594,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 												)}
 											</td>
 											<td className="py-2 px-3 text-sm text-muted-foreground">
-												<AutoLinkText text={cf.description} />
+												<AutoLinkText text={cf.description || ""} />
 											</td>
 										</tr>
 									))}

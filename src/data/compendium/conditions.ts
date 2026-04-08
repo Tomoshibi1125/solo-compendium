@@ -1,4 +1,4 @@
-// Conditions Compendium - Authoritative Rift Ascendant Content
+﻿// Conditions Compendium - Authoritative Rift Ascendant Content
 // Status effects and conditions that affect characters in combat and exploration
 // Based on SRD 5e conditions with Rift Ascendant themed additions
 

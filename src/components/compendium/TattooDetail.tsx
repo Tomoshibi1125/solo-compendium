@@ -89,7 +89,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 				)}
 			</div>
 
-			{data.effects && (
+			{data.effects && !Array.isArray(data.effects) && (
 				<AscendantWindow
 					id="tattoo-effects"
 					title="CIRCUIT EFFECTS"
@@ -102,7 +102,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 									Primary Effect
 								</p>
 								<p className="text-foreground leading-relaxed">
-									<AutoLinkText text={data.effects.primary as string} />
+									<AutoLinkText text={data.effects.primary} />
 								</p>
 							</div>
 						)}
@@ -112,7 +112,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 									Secondary Effect
 								</p>
 								<p className="text-foreground leading-relaxed">
-									<AutoLinkText text={data.effects.secondary as string} />
+									<AutoLinkText text={data.effects.secondary} />
 								</p>
 							</div>
 						)}
@@ -128,7 +128,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 						</p>
 					)}
 					<p className="text-foreground leading-relaxed">
-						<AutoLinkText text={data.description} />
+						<AutoLinkText text={data.description || ""} />
 					</p>
 
 					{data.lore && (
@@ -137,7 +137,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText text={data.lore as string} />
+								<AutoLinkText text={(data.lore as string) || ""} />
 							</p>
 						</div>
 					)}

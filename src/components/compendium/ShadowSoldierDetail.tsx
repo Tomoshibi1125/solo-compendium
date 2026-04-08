@@ -4,16 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
+import type { CompendiumShadowSoldier } from "@/types/compendium";
+
 interface ShadowSoldierDetailProps {
-	data: {
-		id: string;
-		name: string;
-		description: string;
-		gate_rank?: string;
-		role?: string;
-		tags?: string[];
-		source_book?: string;
-	};
+	data: CompendiumShadowSoldier;
 }
 
 export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
@@ -61,9 +55,9 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 						</div>
 					)}
 				</div>
-				{entry.gate_rank && (
-					<Badge className={getRankColor(entry.gate_rank)}>
-						{entry.gate_rank}-Rank
+				{entry.rank && (
+					<Badge className={getRankColor(entry.rank)}>
+						{entry.rank}-Rank
 					</Badge>
 				)}
 			</div>
@@ -74,7 +68,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 			<div id="soldier-description" className="scroll-mt-4">
 				<h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
 				<p className="text-muted-foreground leading-relaxed">
-					<AutoLinkText text={entry.description} />
+					<AutoLinkText text={entry.description || ""} />
 				</p>
 			</div>
 

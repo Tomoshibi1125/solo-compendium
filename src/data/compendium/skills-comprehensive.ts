@@ -1,4 +1,4 @@
-// Comprehensive Skills Compendium - Authoritative Rift Ascendant Content
+﻿// Comprehensive Skills Compendium - Authoritative Rift Ascendant Content
 // ALL skills needed for the complete compendium system
 // Based on Rift Ascendant mechanics
 

@@ -12,6 +12,8 @@ import {
 } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
+import type { CompendiumItem } from "@/types/compendium";
+
 interface ItemData {
 	id: string;
 	name: string;
@@ -20,9 +22,8 @@ interface ItemData {
 	item_type?: string | null;
 	rarity?: string | null;
 	value?: number | null;
-	weight?: number | null;
+	// weight matches CompendiumItem
 	requirements?: {
-		level?: number;
 		class?: string[];
 		job?: string[];
 		alignment?: string[];
@@ -93,13 +94,14 @@ const rarityStyles: Record<string, string> = {
 	legendary: "text-amber-400 border-amber-500/40 bg-amber-500/10",
 };
 
-export const ItemDetail = ({ data }: { data: ItemData }) => {
+export const ItemDetail = ({ data }: { data: any }) => {
+	const item = data as ItemData;
 	const navigate = useNavigate();
-	const displayName = formatRegentVernacular(data.display_name || data.name);
-	const imageSrc = data.image_url || data.image || undefined;
-	const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
-	const weapon = data.properties?.weapon;
-	const magical = data.properties?.magical;
+	const displayName = formatRegentVernacular(item.display_name || item.name);
+	const imageSrc = item.image_url || item.image || undefined;
+	const rarityStyle = item.rarity ? rarityStyles[item.rarity.toLowerCase()] : undefined;
+	const weapon = item.properties?.weapon;
+	const magical = item.properties?.magical;
 
 	const parseDiceFromText = (text: string): string | null => {
 		const match = text.match(/\b(\d+d\d+(?:\s*[+-]\s*\d+)?)\b/i);
@@ -286,12 +288,6 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 			{data.requirements && (
 				<AscendantWindow title="REQUIREMENTS">
 					<ul className="space-y-2 text-sm">
-						{data.requirements.level !== undefined && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Level {data.requirements.level}</span>
-							</li>
-						)}
 						{data.requirements.class && data.requirements.class.length > 0 && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
@@ -425,9 +421,9 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 							<div>
 								<p className="font-heading text-foreground">Passive</p>
 								<ul className="list-disc list-inside text-muted-foreground">
-									{data.effects.passive.map((entry) => (
+									{item.effects?.passive?.map((entry: string) => (
 										<li key={entry}>
-											<AutoLinkText text={entry} />
+											<AutoLinkText text={entry || ""} />
 										</li>
 									))}
 								</ul>
@@ -436,7 +432,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						{data.effects?.active && data.effects.active.length > 0 && (
 							<div className="space-y-3">
 								<p className="font-heading text-foreground">Active</p>
-								{data.effects.active.map((active) => {
+								{item.effects?.active?.map((active: any) => {
 									const payload = buildActiveEffectPayload(active);
 
 									return (
@@ -492,7 +488,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 											)}
 
 											<p className="text-muted-foreground">
-												<AutoLinkText text={active.description} />
+												<AutoLinkText text={active.description || ""} />
 											</p>
 										</div>
 									);
@@ -501,7 +497,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						)}
 						{data.effect && (
 							<p className="text-muted-foreground">
-								<AutoLinkText text={data.effect} />
+								<AutoLinkText text={data.effect || ""} />
 							</p>
 						)}
 					</div>
@@ -524,7 +520,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText text={data.lore} />
+								<AutoLinkText text={data.lore || ""} />
 							</p>
 						</div>
 					)}

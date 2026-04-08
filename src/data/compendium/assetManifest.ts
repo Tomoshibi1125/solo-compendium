@@ -1,9 +1,9 @@
-/**
+﻿/**
  * Canonical Asset Mapping System
  *
  * Provides deterministic URL generation for compendium entry assets.
  * Zero-import: generates paths from ID + type without loading any compendium data.
- * This keeps the initial bundle small — compendium data is only loaded on-demand.
+ * This keeps the initial bundle small â€” compendium data is only loaded on-demand.
  */
 
 // Base asset paths
@@ -18,7 +18,7 @@ const DEFAULT_FALLBACKS = {
 	token: "/ui-art/shadow-soldier-emblem.webp",
 };
 
-// Type → folder mapping
+// Type â†’ folder mapping
 const TYPE_FOLDER_MAP: Record<string, string> = {
 	Anomaly: "Anomalies",
 	Anomalies: "Anomalies",
@@ -46,7 +46,7 @@ const TYPE_FOLDER_MAP: Record<string, string> = {
 
 /**
  * Get asset URL deterministically from entry ID and type.
- * No data loading required — pure path generation.
+ * No data loading required â€” pure path generation.
  */
 export function getAssetUrl(
 	entryId: string,

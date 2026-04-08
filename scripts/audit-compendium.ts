@@ -14,17 +14,17 @@ import type { BaseCompendiumItem } from "../src/types/compendium";
 
 type Entry = BaseCompendiumItem;
 const datasets: Record<string, Entry[]> = {
-	items: items as Entry[],
-	spells: spells as Entry[],
-	feats: comprehensiveFeats as Entry[],
-	powers: powers as Entry[],
-	techniques: techniques as Entry[],
-	backgrounds: backgrounds as Entry[],
-	anomalies: anomalies as Entry[],
-	regents: regents as Entry[],
-	locations: locations as Entry[],
-	jobs: jobs as Entry[],
-	conditions: conditions as Entry[],
+	items: items as unknown as Entry[],
+	spells: spells as unknown as Entry[],
+	feats: comprehensiveFeats as unknown as Entry[],
+	powers: powers as unknown as Entry[],
+	techniques: techniques as unknown as Entry[],
+	backgrounds: backgrounds as unknown as Entry[],
+	anomalies: anomalies as unknown as Entry[],
+	regents: regents as unknown as Entry[],
+	locations: locations as unknown as Entry[],
+	jobs: jobs as unknown as Entry[],
+	conditions: conditions as unknown as Entry[],
 };
 
 console.log("=== COMPENDIUM AUDIT START ===");

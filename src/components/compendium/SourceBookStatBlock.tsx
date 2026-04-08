@@ -13,8 +13,8 @@ const getModifier = (val: number | undefined) => {
 
 export const SourceBookStatBlock: React.FC<StatBlockProps> = ({ Anomaly }) => {
 	// Fallback to top-level or nested stats
-	const ac = Anomaly.ac ?? Anomaly.armor_class ?? 10;
-	const hp = Anomaly.hp ?? Anomaly.hit_points ?? 10;
+	const ac = Anomaly.ac ?? (Anomaly as any).armor_class ?? 10;
+	const hp = Anomaly.hp ?? (Anomaly as any).hit_points ?? 10;
 	const speed = Anomaly.speed ?? "30 ft.";
 
 	const abilityScores = Anomaly.stats?.ability_scores || {
@@ -74,13 +74,13 @@ export const SourceBookStatBlock: React.FC<StatBlockProps> = ({ Anomaly }) => {
 
 			{Anomaly.traits?.map((trait) => (
 				<div
-					key={`${trait.name}-${trait.description.substring(0, 10)}`}
+					key={`${trait.name}-${(trait.description || "").substring(0, 10)}`}
 					className="mb-3 text-xs leading-relaxed"
 				>
 					<span className="font-bold italic text-fuchsia-400">
 						{trait.name}.
 					</span>{" "}
-					<span className="text-slate-300">{trait.description}</span>
+					<span className="text-slate-300">{trait.description || ""}</span>
 				</div>
 			))}
 
@@ -91,13 +91,13 @@ export const SourceBookStatBlock: React.FC<StatBlockProps> = ({ Anomaly }) => {
 					</h4>
 					{Anomaly.actions.map((action) => (
 						<div
-							key={`${action.name}-${action.description.substring(0, 10)}`}
+							key={`${action.name}-${(action.description || "").substring(0, 10)}`}
 							className="mb-3 text-xs leading-relaxed"
 						>
 							<span className="font-bold italic text-fuchsia-300">
 								{action.name}.
 							</span>{" "}
-							<span className="text-slate-400">{action.description}</span>
+							<span className="text-slate-400">{action.description || ""}</span>
 						</div>
 					))}
 				</>
@@ -110,13 +110,13 @@ export const SourceBookStatBlock: React.FC<StatBlockProps> = ({ Anomaly }) => {
 					</h4>
 					{Anomaly.legendary_actions.map((action) => (
 						<div
-							key={`${action.name}-${action.description.substring(0, 10)}`}
+							key={`${action.name}-${(action.description || "").substring(0, 10)}`}
 							className="mb-3 text-xs leading-relaxed"
 						>
 							<span className="font-bold italic text-amber-400">
 								{action.name}.
 							</span>{" "}
-							<span className="text-slate-400">{action.description}</span>
+							<span className="text-slate-400">{action.description || ""}</span>
 						</div>
 					))}
 				</>

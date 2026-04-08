@@ -1,4 +1,4 @@
-// Expanded Backgrounds
+﻿// Expanded Backgrounds
 
 export const expandedBackgrounds = [
 	{

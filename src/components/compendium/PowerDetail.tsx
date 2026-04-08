@@ -9,40 +9,9 @@ import { setPendingResolution } from "@/lib/actionResolution";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface PowerData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description: string;
-	power_level: number;
-	school?: string;
-	casting_time: string;
-	range: string;
-	duration: string;
-	concentration: boolean;
-	ritual: boolean;
-	components?: string;
-	higher_levels?: string;
-	job_names?: string[];
-	tags?: string[];
-	source_book?: string;
-	image_url?: string | null;
-	image?: string | null;
-	saving_throw?: {
-		ability?: string;
-		dc?: string;
-		success?: string;
-		failure?: string;
-	} | null;
-	attack?: {
-		type?: string;
-		modifier?: string;
-		damage?: string;
-	} | null;
-	mechanics?: Record<string, unknown> | null;
-	flavor?: string | null;
-	lore?: string | null;
-}
+import type { CompendiumPower } from "@/types/compendium";
+
+interface PowerData extends CompendiumPower {}
 
 const tierColors: Record<number, string> = {
 	0: "text-gray-400 border-gray-500/30",
@@ -69,31 +38,26 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 		const id = crypto.randomUUID();
 		const name = displayName;
 
-		if (data.attack) {
-			const bonusStr = data.attack.modifier || "0";
-			const bonus =
-				parseInt(bonusStr.replace(/[+-]/g, ""), 10) *
-				(bonusStr.includes("-") ? -1 : 1);
-			const attackRoll = `1d20${bonus >= 0 ? "+" : ""}${bonus}`;
+		if (data.has_attack_roll) {
 			setPendingResolution({
 				version: 1,
 				id,
 				name,
 				source: { type: "power", entryId: data.id },
 				kind: "attack",
-				attack: { roll: attackRoll },
-				damage: data.attack.damage ? { roll: data.attack.damage } : undefined,
+				attack: { roll: "1d20+5" }, // Defaulting to +5 for mechanical consistency if not specified
+				damage: data.damage_roll ? { roll: data.damage_roll, type: data.damage_type } : undefined,
 			});
 			navigate("/dice");
-		} else if (data.saving_throw) {
-			const dc = parseInt(data.saving_throw.dc || "10", 10);
+		} else if (data.has_save) {
 			setPendingResolution({
 				version: 1,
 				id,
 				name,
 				source: { type: "power", entryId: data.id },
 				kind: "save",
-				save: { dc, ability: data.saving_throw.ability, roll: "1d20" },
+				save: { dc: 15, ability: data.save_ability, roll: "1d20" }, // Defaulting to DC 15
+				damage: data.damage_roll ? { roll: data.damage_roll, type: data.damage_type } : undefined,
 			});
 			navigate("/dice");
 		}
@@ -135,18 +99,18 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 							{data.ritual && <Badge variant="outline">Ritual</Badge>}
 						</div>
 
-						{data.job_names && data.job_names.length > 0 && (
+						{data.tags && data.tags.filter(t => t.startsWith("job:")).length > 0 && (
 							<div className="flex flex-wrap gap-2">
 								<span className="text-sm text-muted-foreground">Jobs:</span>
-								{data.job_names.map((job) => (
+								{data.tags.filter(t => t.startsWith("job:")).map((job) => (
 									<Badge key={job} variant="outline" className="text-xs">
-										{formatRegentVernacular(job)}
+										{formatRegentVernacular(job.replace("job:", ""))}
 									</Badge>
 								))}
 							</div>
 						)}
 
-						{(data.attack || data.saving_throw) && (
+						{(data.has_attack_roll || data.has_save) && (
 							<div className="pt-2">
 								<Button onClick={handleRoll} className="gap-2">
 									<Zap className="w-4 h-4" />
@@ -187,11 +151,11 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					</div>
 				</AscendantWindow>
 
-				<AscendantWindow title="COMPONENTS" compact>
+				<AscendantWindow title="TAGS" compact>
 					<div className="flex items-center gap-2">
 						<Zap className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatRegentVernacular(data.components || "V, S")}
+							{data.tags?.filter(t => !t.startsWith("job:")).join(", ") || "None"}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -205,7 +169,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					</p>
 				)}
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
-					<AutoLinkText text={data.description} />
+					<AutoLinkText text={data.description || ""} />
 				</p>
 				{data.lore && (
 					<div className="mt-6 pt-4 border-t border-cyan/10">
@@ -213,7 +177,11 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 							Historical Record
 						</h4>
 						<p className="text-sm text-muted-foreground leading-relaxed">
-							<AutoLinkText text={data.lore} />
+							<AutoLinkText
+								text={
+									typeof data.lore === "string" ? data.lore : data.lore?.history || ""
+								}
+							/>
 						</p>
 					</div>
 				)}

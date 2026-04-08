@@ -1,4 +1,4 @@
-// Base Equipment Catalog — Standard weapons, armor, shields, and adventuring gear
+﻿// Base Equipment Catalog â€” Standard weapons, armor, shields, and adventuring gear
 // These are the mundane items referenced by job startingEquipment arrays.
 // Mechanical properties follow the equipmentModifiers.ts parser format so that
 // equipping an item actually changes AC, damage, etc.
@@ -63,7 +63,7 @@ function baseItem(
 	} as Item;
 }
 
-// ────────────────────────────── ARMOR ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ ARMOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const padded = baseItem({
 	id: "base-armor-padded",
@@ -222,7 +222,7 @@ const shield = baseItem({
 	value: 10,
 });
 
-// ────────────────────────────── SIMPLE MELEE WEAPONS ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ SIMPLE MELEE WEAPONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const club = baseItem({
 	id: "base-weapon-club",
@@ -365,7 +365,7 @@ const spear = baseItem({
 	value: 1,
 });
 
-// ────────────────────────────── SIMPLE RANGED WEAPONS ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ SIMPLE RANGED WEAPONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const lightCrossbow = baseItem({
 	id: "base-weapon-light-crossbow",
@@ -425,7 +425,7 @@ const sling = baseItem({
 	value: 0.1,
 });
 
-// ────────────────────────────── MARTIAL MELEE WEAPONS ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ MARTIAL MELEE WEAPONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const battleaxe = baseItem({
 	id: "base-weapon-battleaxe",
@@ -668,7 +668,7 @@ const whip = baseItem({
 	value: 2,
 });
 
-// ────────────────────────────── MARTIAL RANGED WEAPONS ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ MARTIAL RANGED WEAPONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const blowgun = baseItem({
 	id: "base-weapon-blowgun",
@@ -727,7 +727,7 @@ const longbow = baseItem({
 	value: 50,
 });
 
-// ────────────────────────────── AMMUNITION ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ AMMUNITION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const arrows20 = baseItem({
 	id: "base-ammo-arrows-20",
@@ -756,7 +756,7 @@ const darts10 = baseItem({
 	value: 0.5,
 });
 
-// ────────────────────────────── ADVENTURING GEAR / PACKS ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ ADVENTURING GEAR / PACKS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const explorersPack = baseItem({
 	id: "base-gear-explorers-pack",
@@ -828,7 +828,7 @@ const entertainersPack = baseItem({
 	value: 40,
 });
 
-// ────────────────────────────── FOCUS ITEMS ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ FOCUS ITEMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const arcaneFocus = baseItem({
 	id: "base-focus-arcane",
@@ -878,7 +878,7 @@ const grimoire = baseItem({
 	value: 50,
 });
 
-// ────────────────────────────── TOOLS ──────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TOOLS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const thievesTools = baseItem({
 	id: "base-tool-thieves",

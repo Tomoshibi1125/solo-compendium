@@ -2,9 +2,9 @@ import { readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { anomalies } from "../src/data/compendium/anomalies/index";
-import { items as items_part1 } from "../src/data/compendium/items-part1";
-import { items as items_part2 } from "../src/data/compendium/items-part2";
-import { items as items_part3 } from "../src/data/compendium/items-part3";
+import { items_part1 } from "../src/data/compendium/items-part1";
+import { items_part2 } from "../src/data/compendium/items-part2";
+import { items_part3 } from "../src/data/compendium/items-part3";
 // Import Compendium Data
 import { locations } from "../src/data/compendium/locations";
 import { comprehensiveRelics } from "../src/data/compendium/relics-comprehensive";
@@ -39,7 +39,7 @@ const selectedRelics = getRandom(allItemsAndRelics, 75);
 // Formatters
 function formatRelic(relic: { name: string; type?: string; rarity?: string; attunement?: boolean; description?: string; abilities?: Array<{ name: string; description: string }>; }) {
 	let md = `#### ${relic.name}\n`;
-	md += `*${relic.type ? relic.type.charAt(0).toUpperCase() + relic.type.slice(1) : "Item"}, ${relic.rarity || "Uncommon"}${relic.attunement ? " — Requires Attunement" : ""}*\n`;
+	md += `*${relic.type ? relic.type.charAt(0).toUpperCase() + relic.type.slice(1) : "Item"}, ${relic.rarity || "Uncommon"}${relic.attunement ? " â€” Requires Attunement" : ""}*\n`;
 	md += `${relic.description || "A mysterious item of unknown provenance."}\n\n`;
 
 	if (relic.abilities && relic.abilities.length > 0) {
@@ -113,12 +113,12 @@ selectedLocations.forEach((loc) => {
 // Generate massive new Appendices A and B
 let appAMd = `## Appendix A: Relics & Magic Items\n\nThis comprehensive list of ${selectedRelics.length} items can be found as Gate boss rewards or purchased through Black Market dealers across the Sandbox.\n\n`;
 selectedRelics.forEach((relic) => {
-	appAMd += formatRelic(relic);
+	appAMd += formatRelic(relic as unknown as Parameters<typeof formatRelic>[0]);
 });
 
 let appBMd = `## Appendix B: The Grand Bestiary\n\nA massive compendium of ${selectedAnomalies.length} Anomalies found throughout the Gates and the Sandbox point-crawl.\n\n`;
 selectedAnomalies.forEach((anomaly) => {
-	appBMd += formatAnomaly(anomaly);
+	appBMd += formatAnomaly(anomaly as unknown as Parameters<typeof formatAnomaly>[0]);
 });
 
 // MERGE

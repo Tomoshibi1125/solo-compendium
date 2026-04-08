@@ -120,13 +120,11 @@ export async function initializeProtocolData(): Promise<void> {
 
 	registry.jobs = (jobsRaw as StaticJob[]).map((j): CompendiumJob => {
 		const { abilities: rawAbilities, ...rest } = j;
-		const structuredAbilities: CompendiumJob["abilities"] = Array.isArray(
-			rawAbilities,
-		)
+		const structuredAbilities = (Array.isArray(rawAbilities)
 			? rawAbilities.map((a) =>
 					typeof a === "string" ? { name: a, description: a } : a,
-				)
-			: undefined;
+			  )
+			: []) as unknown as CompendiumJob["abilities"];
 		return {
 			...rest,
 			hit_dice: j.hit_dice || j.hitDie || "1d10",
@@ -138,7 +136,7 @@ export async function initializeProtocolData(): Promise<void> {
 			toolProficiencies: j.toolProficiencies || j.tool_proficiencies || [],
 			type: j.type || "Job",
 			abilities: structuredAbilities,
-		} as CompendiumJob;
+		} as unknown as CompendiumJob;
 	});
 
 	registry.backgrounds = (backgroundsRaw as StaticBackground[]).map(
@@ -150,7 +148,7 @@ export async function initializeProtocolData(): Promise<void> {
 			equipment: b.equipment || [],
 			features: b.features || [],
 			type: b.type || "Background",
-		}),
+		} as unknown as CompendiumBackground),
 	);
 
 	registry.items = itemsRaw;

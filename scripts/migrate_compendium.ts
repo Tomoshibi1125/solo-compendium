@@ -1,4 +1,4 @@
-import { lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+﻿import { lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const DATA_DIR = join(process.cwd(), "src/data/compendium");

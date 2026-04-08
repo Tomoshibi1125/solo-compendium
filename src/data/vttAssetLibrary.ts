@@ -45,7 +45,7 @@ export interface VTTAsset {
 	thumbnailUrl?: string;
 	tags: string[];
 	rank?: string;
-	description?: string;
+	description?: string | null;
 }
 
 // ── Premade Battle Maps ──────────────────────────────────────────────────
@@ -680,7 +680,7 @@ export function getAnomalyVTTAssets(): VTTAsset[] {
 			(m.type || "").toLowerCase(),
 		].filter(Boolean),
 		rank: m.rank ?? undefined,
-		description: m.description,
+		description: m.description ?? undefined,
 	}));
 }
 
@@ -697,7 +697,7 @@ export function getLocationVTTAssets(): VTTAsset[] {
 			(l.type || "").toLowerCase(),
 		].filter(Boolean),
 		rank: l.rank ?? undefined,
-		description: l.description,
+		description: l.description ?? undefined,
 	}));
 }
 
@@ -797,7 +797,7 @@ export function getSpellVTTAssets(): VTTAsset[] {
 			(s.rank || "").toLowerCase(),
 		].filter(Boolean),
 		rank: s.rank ?? undefined,
-		description: s.description,
+		description: s.description ?? undefined,
 	}));
 }
 

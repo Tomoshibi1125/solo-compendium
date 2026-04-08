@@ -262,7 +262,7 @@ const inferAnomalyScores = (anomalyType: string, rank: SpellRank) => {
 };
 
 const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
-	const out: CompendiumSpell = {
+	const out = {
 		id: spell.id,
 		name: spell.name,
 		description: spell.description,
@@ -270,7 +270,7 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 		rank: spell.rank,
 		image: spell.image,
 		effect: spell.effect,
-	};
+	} as unknown as CompendiumSpell;
 
 	const damageType = inferDamageType(spell.name, spell.effect);
 	const dc = rankToSpellSaveDC(spell.rank);
@@ -292,7 +292,7 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 	if (!isRecord(out.duration)) {
 		out.duration = {
 			type: "instant",
-		};
+		} as unknown as CompendiumSpell["duration"];
 	}
 
 	if (!isRecord(out.range)) {
@@ -312,15 +312,15 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 		};
 	}
 
-	out.effects = isRecord(out.effects)
+	out.effects = (isRecord(out.effects)
 		? out.effects
 		: {
 				primary: hasNonEmptyString(spell.effect)
 					? spell.effect
 					: "Channels ascendant force into a defined outcome.",
-			};
+			}) as unknown as CompendiumSpell["effects"];
 
-	const currentEffects = out.effects as Record<string, unknown>;
+	const currentEffects = out.effects as unknown as Record<string, unknown>;
 	if (!hasNonEmptyString(currentEffects.primary)) {
 		currentEffects.primary = hasNonEmptyString(spell.effect)
 			? spell.effect
@@ -335,10 +335,10 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 	const hasHealing = !!(mechanics && isRecord(mechanics.healing));
 
 	if (!out.mechanics) {
-		out.mechanics = {};
+		out.mechanics = {} as unknown as CompendiumSpell["mechanics"];
 	}
 
-	const mechanicsOut = out.mechanics as Record<string, unknown>;
+	const mechanicsOut = out.mechanics as unknown as Record<string, unknown>;
 
 	if (!hasAttack && !hasSave && !hasHealing) {
 		if (spell.type === "Attack") {
@@ -365,7 +365,7 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 	}
 
 	if (!isRecord(out.limitations)) {
-		out.limitations = {};
+		out.limitations = {} as unknown as CompendiumSpell["limitations"];
 	}
 
 	if (!hasNonEmptyString(out.flavor)) {
@@ -437,7 +437,7 @@ const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
 		armor_class: armorClass,
 		hit_points: hitPoints,
 		challenge_rating: String(crValue),
-	};
+	} as unknown as CompendiumAnomaly;
 
 	const traits = out.traits;
 	if (!traits || traits.length === 0) {
@@ -488,7 +488,7 @@ const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
 			usage: idx === 0 ? "at-will" : "recharge",
 		}));
 
-		const fallback: NonNullable<CompendiumAnomaly["actions"]>[number] = {
+		const fallback = {
 			name: "Lattice Strike",
 			description: `Melee Weapon Attack: +${bonus} to hit, reach 5 ft., one target. Hit: ${baseDice} ${damageType} damage.`,
 			type: "melee",
@@ -498,7 +498,7 @@ const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
 			range: 5,
 			recharge: "recharge",
 			usage: "at-will",
-		};
+		} as unknown as NonNullable<CompendiumAnomaly["actions"]>[number];
 
 		out.actions =
 			templated.length > 0

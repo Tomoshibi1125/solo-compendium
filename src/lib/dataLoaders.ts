@@ -25,27 +25,27 @@ import type {
 type Regent = Tables<"compendium_regents">;
 
 export const loadJobs = (): Promise<StaticJob[]> =>
-	import("@/data/compendium/jobs").then((m) => m.jobs);
+	import("@/data/compendium/jobs").then((m) => m.jobs as unknown as StaticJob[]);
 export const loadItems = (): Promise<CompendiumItem[]> =>
-	import("@/data/compendium/items").then((m) => m.items as CompendiumItem[]);
+	import("@/data/compendium/items").then((m) => m.items as unknown as CompendiumItem[]);
 export const loadBackgrounds = (): Promise<StaticBackground[]> =>
-	import("@/data/compendium/backgrounds").then((m) => m.backgrounds);
+	import("@/data/compendium/backgrounds").then((m) => m.backgrounds as unknown as StaticBackground[]);
 export const loadAnomalies = (): Promise<CompendiumAnomaly[]> =>
-	import("@/data/compendium/anomalies").then((m) => m.anomalies);
+	import("@/data/compendium/anomalies").then((m) => m.anomalies as unknown as CompendiumAnomaly[]);
 export const loadSpells = (): Promise<CompendiumSpell[]> =>
-	import("@/data/compendium/spells").then((m) => m.spells);
+	import("@/data/compendium/spells").then((m) => m.spells as unknown as CompendiumSpell[]);
 export const loadRuneCompendium = (): Promise<CompendiumRune[]> =>
-	import("@/data/compendium/runes/index").then((m) => m.allRunes);
+	import("@/data/compendium/runes/index").then((m) => m.allRunes as unknown as CompendiumRune[]);
 
 // SourceBook specific / Comprehensive loaders
 export const loadConditions = (): Promise<CompendiumCondition[]> =>
-	import("@/data/compendium/conditions").then((m) => m.conditions);
+	import("@/data/compendium/conditions").then((m) => m.conditions as unknown as CompendiumCondition[]);
 export const loadFeats = (): Promise<CompendiumFeat[]> =>
 	import("@/data/compendium/feats-comprehensive").then(
-		(m) => m.comprehensiveFeats as CompendiumFeat[],
+		(m) => m.comprehensiveFeats as unknown as CompendiumFeat[],
 	);
 export const loadLocations = (): Promise<CompendiumLocation[]> =>
-	import("@/data/compendium/locations").then((m) => m.locations);
+	import("@/data/compendium/locations").then((m) => m.locations as unknown as CompendiumLocation[]);
 export const loadRegents = (): Promise<CompendiumRegent[]> =>
 	import("@/data/compendium/regents").then((m) => {
 		const raw = m.regents as (CompendiumRegent | Regent)[];
@@ -75,25 +75,25 @@ export const loadRegents = (): Promise<CompendiumRegent[]> =>
 	});
 export const loadRelics = (): Promise<CompendiumRelic[]> =>
 	import("@/data/compendium/relics-comprehensive").then(
-		(m) => m.comprehensiveRelics,
+		(m) => m.comprehensiveRelics as unknown as CompendiumRelic[],
 	);
 export const loadSigils = (): Promise<CompendiumRune[]> =>
-	import("@/data/compendium/sigils").then((m) => m.sigils as CompendiumRune[]);
+	import("@/data/compendium/sigils").then((m) => m.sigils as unknown as CompendiumRune[]);
 export const loadSkills = (): Promise<CompendiumSkill[]> =>
 	import("@/data/compendium/skills-comprehensive").then(
-		(m) => m.comprehensiveSkills,
+		(m) => m.comprehensiveSkills as unknown as CompendiumSkill[],
 	);
 export const loadTattoos = (): Promise<CompendiumTattoo[]> =>
 	import("@/data/compendium/tattoos").then(
-		(m) => m.tattoos as CompendiumTattoo[],
+		(m) => m.tattoos as unknown as CompendiumTattoo[],
 	);
 export const loadTechniques = (): Promise<CompendiumTechnique[]> =>
-	import("@/data/compendium/techniques").then((m) => m.techniques);
+	import("@/data/compendium/techniques").then((m) => m.techniques as unknown as CompendiumTechnique[]);
 export const loadBackgroundsAll = (): Promise<CompendiumBackground[]> =>
-	import("@/data/compendium/backgrounds-index").then((m) => m.allBackgrounds);
+	import("@/data/compendium/backgrounds-index").then((m) => m.allBackgrounds as unknown as CompendiumBackground[]);
 export const loadItemsAll = (): Promise<CompendiumItem[]> =>
 	import("@/data/compendium/items-index").then(
-		(m) => m.allItems as CompendiumItem[],
+		(m) => m.allItems as unknown as CompendiumItem[],
 	);
 export const loadPaths = (): Promise<CompendiumPath[]> =>
-	import("@/data/compendium/paths").then((m) => m.paths);
+	import("@/data/compendium/paths").then((m) => m.paths as unknown as CompendiumPath[]);

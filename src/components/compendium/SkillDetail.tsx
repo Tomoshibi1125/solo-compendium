@@ -4,14 +4,16 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface SkillData {
+import type { CompendiumSkill } from "@/types/compendium";
+
+interface SkillData extends CompendiumSkill {
 	id: string;
 	name: string;
 	display_name?: string | null;
-	description: string;
+	description?: string | null;
 	ability: string;
 	examples?: string[];
-	source_book?: string;
+	source_book?: string | null;
 }
 
 const abilityColors: Record<string, string> = {
@@ -41,7 +43,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 						</Badge>
 					</div>
 					<p className="text-foreground">
-						<AutoLinkText text={data.description} />
+						<AutoLinkText text={data.description || ""} />
 					</p>
 				</div>
 			</AscendantWindow>
@@ -60,21 +62,38 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 				</div>
 			</AscendantWindow>
 
-			{/* Examples */}
-			{data.examples && data.examples.length > 0 && (
-				<AscendantWindow title="EXAMPLE USES">
-					<ul className="space-y-3">
-						{data.examples.map((example, _i) => (
-							<li key={example} className="flex items-start gap-3">
-								<BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-								<span className="text-foreground">
-									<AutoLinkText text={example} />
-								</span>
-							</li>
-						))}
-					</ul>
-				</AscendantWindow>
+			{/* Benefits (Structured) */}
+			{data.benefits && (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+					{Object.entries(data.benefits).map(([rank, items]) => (
+						<AscendantWindow key={rank} title={rank.toUpperCase()}>
+							<ul className="space-y-1 text-sm list-inside list-disc text-muted-foreground">
+								{items.map((item) => (
+									<li key={item}>{item}</li>
+								))}
+							</ul>
+						</AscendantWindow>
+					))}
+				</div>
 			)}
+
+			{/* Examples (Legacy Fallback) */}
+			{(!data.benefits || Object.keys(data.benefits).length === 0) &&
+				data.examples &&
+				data.examples.length > 0 && (
+					<AscendantWindow title="EXAMPLE USES">
+						<ul className="space-y-3">
+							{data.examples.map((example) => (
+								<li key={example} className="flex items-start gap-3">
+									<BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+									<span className="text-foreground">
+										<AutoLinkText text={example} />
+									</span>
+								</li>
+							))}
+						</ul>
+					</AscendantWindow>
+				)}
 
 			{data.source_book && (
 				<div className="flex justify-end">

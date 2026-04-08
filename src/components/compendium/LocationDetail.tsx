@@ -5,19 +5,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-interface LocationData {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description?: string | null;
-	location_type?: string | null;
-	rank?: string | null;
-	encounters?: string[] | null;
-	treasures?: string[] | null;
-	source_book?: string | null;
-	image_url?: string | null;
-	image?: string | null;
-}
+import type { CompendiumLocation } from "@/types/compendium";
 
 const rankStyles: Record<string, string> = {
 	S: "text-amber-400 border-amber-500/40 bg-amber-500/10",
@@ -27,7 +15,7 @@ const rankStyles: Record<string, string> = {
 	D: "text-muted-foreground border-border bg-card",
 };
 
-export const LocationDetail = ({ data }: { data: LocationData }) => {
+export const LocationDetail = ({ data }: { data: CompendiumLocation }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const imageSrc = data.image_url || data.image || undefined;
 	const rankStyle = data.rank ? rankStyles[data.rank] : undefined;
@@ -52,9 +40,9 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
 			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
-						{data.location_type && (
+						{data.type && (
 							<Badge variant="secondary">
-								{formatRegentVernacular(data.location_type)}
+								{formatRegentVernacular(data.type)}
 							</Badge>
 						)}
 						{data.rank && (

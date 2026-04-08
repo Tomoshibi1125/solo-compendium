@@ -129,8 +129,8 @@ export const TheManifest = () => {
 												Defenses
 											</h4>
 											<div className="text-xs font-mono text-white/90">
-												AC: {anomaly.armor_class || anomaly.ac || "?"} <br />
-												HP: {anomaly.hit_points || anomaly.hp || "?"}
+												AC: {anomaly.ac || "?"} <br />
+												HP: {anomaly.hp || "?"}
 											</div>
 										</div>
 										<div className="bg-void/60 p-3 rounded-sm border border-white/5">

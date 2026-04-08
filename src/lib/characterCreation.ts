@@ -160,7 +160,9 @@ export function buildItemProperties(item: StaticItem): string[] {
 	}
 	if (item.range && item.range !== "Melee") props.push(`Range ${item.range}`);
 
-	const passive = item.effects?.passive;
+	const passive = Array.isArray(item.effects) 
+		? item.effects 
+		: (item.effects as { passive?: string[] })?.passive;
 	if (Array.isArray(passive)) {
 		for (const line of passive) {
 			if (typeof line === "string" && line.trim().length > 0) {
@@ -1448,10 +1450,10 @@ export function getJobASI(
 	level: number,
 ): Record<string, number> {
 	const job = findStaticJobByName(jobName);
-	if (!job || !job.abilityScoreImprovements) return {};
+	if (!job || !job.ability_score_improvements) return {};
 
 	const result: Record<string, number> = {};
-	const asi = job.abilityScoreImprovements;
+	const asi = job.ability_score_improvements;
 	if (Array.isArray(asi) && asi.includes(level)) {
 		// This handles the case where improvements are gated by level
 		// (Common in path scaling)
