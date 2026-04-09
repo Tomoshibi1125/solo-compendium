@@ -64,7 +64,6 @@ import { useCharacters } from "@/hooks/useCharacters";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useFilterPersistence } from "@/hooks/useFilterPersistence";
-import { useLicenseEnforcement } from "@/hooks/useLicenseEnforcement";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
@@ -167,7 +166,6 @@ const Compendium = () => {
 
 	const { favorites, toggleFavorite } = useFavorites();
 	const { toast } = useToast();
-	const { canAccessMarketplace } = useLicenseEnforcement();
 	const isE2E = import.meta.env.VITE_E2E === "true";
 	const setupRouteEnabled = isSetupRouteEnabled();
 	const showSetup = !isSupabaseConfigured && setupRouteEnabled && !isE2E;
@@ -1385,12 +1383,6 @@ const Compendium = () => {
 												</div>
 												<h3 className="font-heading text-lg font-semibold mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
 													{highlightText(entry.name, filters.searchQuery)}
-													{entry.source_book !== "Rift Ascendant Canon" &&
-														!canAccessMarketplace && (
-															<span title="Premium Content">
-																<AlertTriangle className="w-4 h-4 text-amber-500" />
-															</span>
-														)}
 												</h3>
 												<AscendantText className="block text-sm text-muted-foreground line-clamp-2">
 													{highlightText(
@@ -1436,12 +1428,6 @@ const Compendium = () => {
 												<div className="flex-1 min-w-0">
 													<h3 className="font-heading font-semibold group-hover:text-primary transition-colors leading-tight flex items-center gap-2">
 														{highlightText(entry.name, filters.searchQuery)}
-														{entry.source_book !== "Rift Ascendant Canon" &&
-															!canAccessMarketplace && (
-																<span title="Premium Content">
-																	<AlertTriangle className="w-3 h-3 text-amber-500" />
-																</span>
-															)}
 													</h3>
 													<AscendantText className="block text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
 														{highlightText(
