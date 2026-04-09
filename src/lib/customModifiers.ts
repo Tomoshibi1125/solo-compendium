@@ -45,9 +45,9 @@ const normalizeTarget = (value?: string | null) =>
 	value?.trim().toLowerCase() || null;
 
 export function normalizeCustomModifiers(
-	modifiers?: Record<string, unknown>[] | Partial<CustomModifier>[] | null,
+	modifiers?: Partial<CustomModifier>[] | null,
 ): CustomModifier[] {
-	return (modifiers ?? []).map((modifier: unknown) => {
+	return (modifiers ?? []).map((modifier) => {
 		const m = modifier as CustomModifier;
 		return {
 			...m,

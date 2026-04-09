@@ -25,8 +25,10 @@ import {
 	calculateTotalWeight,
 } from "@/lib/encumbrance";
 import { applyEquipmentModifiers } from "@/lib/equipmentModifiers";
-import type { RuneBonusResult } from "@/lib/runeAutomation";
-import { applySigilBonuses } from "@/lib/sigilAutomation";
+import {
+	applySigilBonuses,
+	type SigilBonusResult,
+} from "@/lib/sigilAutomation";
 import {
 	calculateSkillModifier,
 	getAllSkills,
@@ -69,7 +71,7 @@ export type DerivedStats = {
 	customAbilityBonuses: number;
 	allSkills: SkillDefinition[];
 	equipmentMods: EquipmentModifierResult;
-	sigilBonuses: RuneBonusResult;
+	sigilBonuses: SigilBonusResult;
 	finalSpeed: number;
 	otherSpeeds: Record<string, number>;
 	finalInitiative: number;
@@ -516,6 +518,7 @@ export function useCharacterDerivedStats(
 				isEquipped: !!item.is_equipped,
 				weight: item.weight || 0,
 			})),
+			tattoos: [],
 			activeConditions: [],
 			activeSpells: [],
 			features: [],

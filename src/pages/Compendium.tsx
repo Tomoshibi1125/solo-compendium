@@ -112,6 +112,8 @@ const categories = [
 	{ id: "artifacts", name: "Artifacts", icon: Crown },
 	{ id: "equipment", name: "Equipment", icon: Swords },
 	{ id: "items", name: "Items", icon: Package },
+	{ id: "tattoos", name: "Tattoos", icon: Heart },
+	{ id: "pantheon", name: "Pantheon", icon: Crown },
 	{ id: "locations", name: "Locations", icon: MapPin },
 	{ id: "conditions", name: "Conditions", icon: AlertTriangle },
 	{ id: "shadow-soldiers", name: "Umbral Legion", icon: Users },
@@ -257,6 +259,8 @@ const Compendium = () => {
 				"shadow-soldiers",
 				"items",
 				"sigils",
+				"tattoos",
+				"pantheon",
 			] as const;
 
 			for (const category of categories) {
@@ -328,6 +332,12 @@ const Compendium = () => {
 								break;
 							case "items":
 								data = await staticDataProvider.getItems(parsedQuery.text);
+								break;
+							case "tattoos":
+								data = await staticDataProvider.getTattoos(parsedQuery.text);
+								break;
+							case "pantheon":
+								data = await staticDataProvider.getPantheon(parsedQuery.text);
 								break;
 						}
 

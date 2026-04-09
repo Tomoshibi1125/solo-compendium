@@ -327,12 +327,27 @@ const CampaignDetail = () => {
 									initiative tracking, dice rolling, chat, fog of war, and more.
 									Everything you need for running sessions online.
 								</ManaFlowText>
-								<Button className="btn-umbral" size="lg" asChild>
-									<Link to={`/campaigns/${id}/vtt`}>
-										<Layers className="w-5 h-5 mr-2" />
-										Launch VTT
-									</Link>
-								</Button>
+								<div className="flex items-center justify-center gap-4 flex-wrap">
+									<Button className="btn-umbral" size="lg" asChild>
+										<Link to={`/campaigns/${id}/vtt`}>
+											<Layers className="w-5 h-5 mr-2" />
+											Launch VTT
+										</Link>
+									</Button>
+									{hasWardenAccess && (
+										<Button
+											variant="outline"
+											size="lg"
+											className="border-primary/50 hover:border-primary hover:bg-primary/10"
+											asChild
+										>
+											<Link to={`/campaigns/${id}/book`}>
+												<BookOpen className="w-5 h-5 mr-2" />
+												Campaign Book
+											</Link>
+										</Button>
+									)}
+								</div>
 								<div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-3xl mx-auto">
 									<div className="p-4 rounded-lg border border-border bg-muted/30">
 										<h3 className="font-heading font-semibold mb-2">

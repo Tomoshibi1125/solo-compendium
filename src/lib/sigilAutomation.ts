@@ -1,5 +1,13 @@
-import type { Database } from "@/integrations/supabase/types";
-import type { RuneBonusResult } from "./runeAutomation";
+import type { Database, Json } from "@/integrations/supabase/types";
+
+export interface SigilBonusResult {
+	ac: number;
+	speed: number;
+	abilities: Record<string, number>;
+	attackBonus: number;
+	damageBonus: string;
+	traits: string[];
+}
 
 export type EquipmentRow =
 	Database["public"]["Tables"]["character_equipment"]["Row"];
@@ -34,7 +42,7 @@ export function getSigilSlotBonusForRarity(
 
 export function getDefaultSigilSlotsBaseForEquipment(_equipment: {
 	item_type: string | null | undefined;
-	properties: unknown;
+	properties: string[] | null;
 	name: string;
 	rarity?: string | null | undefined;
 }): number {
@@ -56,7 +64,7 @@ export function getEffectiveSigilSlots(equipment: {
 
 export function getEquipmentSigilCategory(equipment: {
 	item_type: string | null | undefined;
-	properties: unknown;
+	properties: string[] | null;
 	name: string;
 }): string {
 	const itemType = (equipment.item_type || "").toLowerCase();
@@ -138,10 +146,13 @@ export function getEquipmentSigilCategory(equipment: {
  * Apply passive bonuses from active sigils to character stats.
  */
 export function applySigilBonuses(
-	initialBonuses: Omit<RuneBonusResult, "traits"> & { traits?: string[] },
-	activeSigils: Array<{ sigil: Record<string, unknown>; is_active: boolean }>,
-): RuneBonusResult {
-	const totalBonuses: RuneBonusResult = {
+	initialBonuses: Omit<SigilBonusResult, "traits"> & { traits?: string[] },
+	activeSigils: Array<{
+		sigil: Record<string, Json>;
+		is_active: boolean;
+	}>,
+): SigilBonusResult {
+	const totalBonuses: SigilBonusResult = {
 		...initialBonuses,
 		traits: initialBonuses.traits || [],
 	};
@@ -149,7 +160,7 @@ export function applySigilBonuses(
 	for (const { sigil, is_active } of activeSigils) {
 		if (!is_active || !sigil) continue;
 
-		const bonuses = sigil.passive_bonuses as Record<string, unknown>;
+		const bonuses = sigil.passive_bonuses as Record<string, Json> | null;
 		if (!bonuses || typeof bonuses !== "object") continue;
 
 		if (bonuses.ac_bonus && typeof bonuses.ac_bonus === "number") {
@@ -195,7 +206,7 @@ export function applySigilBonuses(
 		}
 
 		if (Array.isArray(bonuses.traits)) {
-			bonuses.traits.forEach((trait: unknown) => {
+			bonuses.traits.forEach((trait: Json) => {
 				if (typeof trait === "string" && !totalBonuses.traits.includes(trait)) {
 					totalBonuses.traits.push(trait);
 				}

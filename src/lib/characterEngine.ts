@@ -141,6 +141,19 @@ export interface EquipmentInstance {
 }
 
 /**
+ * Tattoo instance (Isolated attunement, Body area mechanic)
+ */
+export interface TattooInstance {
+	id: string;
+	name: string;
+	isActive: boolean;
+	bodyPart: string;
+	requiresAttunement: boolean;
+	isAttuned: boolean;
+	effects?: Effect[];
+}
+
+/**
  * Active condition on character
  */
 export interface ActiveCondition {
@@ -250,6 +263,7 @@ export interface CharacterBaseData {
 
 	// Active states
 	equippedItems: EquipmentInstance[];
+	tattoos: TattooInstance[];
 	activeConditions: ActiveCondition[];
 	activeSpells: ActiveSpellEffect[];
 	features: FeatureInstance[];
@@ -326,6 +340,9 @@ interface ComputedCharacterStats {
 
 	// Attacks per action (Extra Attack from Job/Regent)
 	attacksPerAction?: number;
+
+	// Tattoos
+	tattooAttunement: { current: number; max: number };
 }
 
 /**
@@ -947,6 +964,17 @@ export function aggregateEffects(base: CharacterBaseData): Effect[] {
 		if (item.effects) {
 			allEffects.push(
 				...item.effects.map((e) => ({ ...e, priority: e.priority ?? 100 })),
+			);
+		}
+	}
+
+	// Tattoo effects (Priority: 110)
+	for (const tattoo of base.tattoos || []) {
+		if (!tattoo.isActive) continue;
+		if (tattoo.requiresAttunement && !tattoo.isAttuned) continue;
+		if (tattoo.effects) {
+			allEffects.push(
+				...tattoo.effects.map((e) => ({ ...e, priority: e.priority ?? 110 })),
 			);
 		}
 	}
@@ -1647,6 +1675,16 @@ export function computeCharacterStats(
 		base.features.some((f) => f.name.toLowerCase().includes("extra attack")),
 	);
 
+	// 19. Compute Tattoo Attunement (Base is 1 slot unless modified by feats/traits)
+	const maxTattooAttunement = applyEffectsToStat(
+		1,
+		effects,
+		"tattoo_attunement" as EffectTarget,
+	);
+	const currentTattooAttunement = (base.tattoos || []).filter(
+		(t) => t.isAttuned,
+	).length;
+
 	return {
 		proficiencyBonus,
 		abilityModifiers,
@@ -1670,6 +1708,10 @@ export function computeCharacterStats(
 		rollModifiers,
 		senses,
 		attacksPerAction,
+		tattooAttunement: {
+			current: currentTattooAttunement,
+			max: maxTattooAttunement,
+		},
 	};
 }
 

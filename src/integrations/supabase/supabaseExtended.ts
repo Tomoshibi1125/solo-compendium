@@ -44,25 +44,24 @@ export interface CharacterExtended extends CharacterRow {
 	known_spells?: string[];
 	/** Computed attunement slots remaining */
 	attunement_slots?: number;
-	// regent_overlays and regent_overlays already in CharacterRow
 }
 
 // ─── Equipment Extended ─────────────────────────────────────────────────────────
 
 /** Equipment properties as structured data (stored as Json in DB) */
 export interface EquipmentProperties {
-	passive?: Record<string, unknown>;
+	passive?: Record<string, Json>;
 	weapon?: {
 		damage?: string;
 		damageType?: string;
-		[key: string]: unknown;
+		properties?: string[];
 	};
 	armor?: {
 		baseAC?: number;
-		[key: string]: unknown;
+		stealthDisadvantage?: boolean;
+		category?: "none" | "light" | "medium" | "heavy" | "shield";
 	};
-	magical?: boolean | Record<string, unknown>;
-	[key: string]: unknown;
+	magical?: boolean | { bonus?: number; requiresAttunement?: boolean };
 }
 
 /** Equipment with extended fields used by AddEquipmentDialog and stat computation */
@@ -71,7 +70,6 @@ export interface EquipmentExtended extends EquipmentRow {
 	ac_formula?: string;
 	/** Generic type indicator (weapon, armor, etc.) */
 	type?: string;
-	// rarity already in EquipmentRow
 	/** Whether item requires attunement */
 	attunement?: boolean;
 	/** Damage string (e.g. "1d8+3") */
@@ -86,7 +84,6 @@ export interface EquipmentExtended extends EquipmentRow {
 
 /** Character feature with homebrew support and formula fields */
 export interface FeatureExtended extends FeatureRow {
-	// homebrew_id and modifiers already in FeatureRow
 	/** Formula for computing uses (e.g. "PB + PRE") */
 	uses_formula?: string;
 }
@@ -104,8 +101,8 @@ export interface FeatureModifier {
 
 /** Compendium item effects (stored as Json) */
 export interface CompendiumItemEffects {
-	passive?: Record<string, unknown>;
-	[key: string]: unknown;
+	passive?: string[];
+	active?: string[];
 }
 
 /** Compendium regent/regent with extended fields */
@@ -114,21 +111,25 @@ export interface RegentExtended {
 	name: string;
 	source_book?: string;
 	theme?: string;
-	class_features?: unknown[];
+	class_features?: Array<{
+		name: string;
+		description: string;
+		power_level?: number;
+	}>;
 	features?: Array<{ name: string; description: string; power_level?: number }>;
-	[key: string]: unknown;
 }
 
 /** Compendium feat prerequisites (stored as Json) */
 export interface FeatPrerequisites {
 	feats?: string[];
-	[key: string]: unknown;
+	level?: number;
+	ability?: Record<string, number>;
 }
 
 /** Compendium artifact requirements (stored as Json) */
 export interface ArtifactRequirements {
 	level?: number;
-	[key: string]: unknown;
+	class?: string[];
 }
 
 // ─── Combat / Encounter Extended ────────────────────────────────────────────────
@@ -137,12 +138,16 @@ export interface ArtifactRequirements {
 export interface CombatantStats {
 	xp_worth?: number;
 	loot_worth?: number;
-	[key: string]: unknown;
+	hp_current?: number;
+	hp_max?: number;
+	ac?: number;
 }
 
 /** Campaign settings (stored as Json in campaigns) */
 export interface CampaignSettings {
-	[key: string]: unknown;
+	allow_homebrew?: boolean;
+	sandbox_generation_enabled?: boolean;
+	discord_webhook?: string;
 }
 
 // ─── Sheet State Extended ───────────────────────────────────────────────────────
@@ -151,11 +156,10 @@ export interface CampaignSettings {
 export interface SheetStateExtended {
 	primaryRegentUnlock?: {
 		regent_id: string;
-		[key: string]: unknown;
+		unlocked_at?: string;
 	};
-	resources?: Record<string, unknown>;
+	resources?: Record<string, number | string | boolean>;
 	customModifiers?: CustomModifier[];
-	[key: string]: unknown;
 }
 
 // ─── Computed Stats Extended ────────────────────────────────────────────────────
@@ -164,9 +168,9 @@ export interface SheetStateExtended {
 export interface CalculatedStatsExtended {
 	encumbrance?: {
 		status: "normal" | "heavy" | "overloaded";
-		[key: string]: unknown;
+		currentWeight?: number;
+		capacity?: number;
 	};
-	[key: string]: unknown;
 }
 
 // ─── Spell Duration Types ───────────────────────────────────────────────────────
@@ -182,8 +186,7 @@ export type SpellDurationType =
 /** Extended choice data with eligible power names set */
 export interface ChoiceDataExtended {
 	eligiblePowerNames?: Set<string>;
-	featureById?: Map<string, unknown>;
-	[key: string]: unknown;
+	featureById?: Map<string, FeatureExtended>;
 }
 
 // ─── Regent/Sovereign Types ─────────────────────────────────────────────────────
@@ -191,14 +194,14 @@ export interface ChoiceDataExtended {
 /** Regent unlock with nested regent data */
 export interface RegentUnlockExtended {
 	regent?: RegentExtended;
-	[key: string]: unknown;
+	unlocked_at?: string;
 }
 
 /** Generated sovereign with regent theme data */
 export interface GeneratedSovereignExtended {
-	regentA?: { theme: string; [key: string]: unknown };
-	regentB?: { theme: string; [key: string]: unknown };
-	[key: string]: unknown;
+	regentA?: { theme: string; name?: string; id?: string };
+	regentB?: { theme: string; name?: string; id?: string };
+	fusionName?: string;
 }
 
 // ─── VTT Types ──────────────────────────────────────────────────────────────────
@@ -215,17 +218,15 @@ export type VTTWeatherType =
 // ─── Utility Types ──────────────────────────────────────────────────────────────
 
 /** Type-safe helper for JSON column access */
-export function asRecord(
-	json: Json | null | undefined,
-): Record<string, unknown> {
+export function asRecord(json: Json | null | undefined): Record<string, Json> {
 	if (json && typeof json === "object" && !Array.isArray(json)) {
-		return json as Record<string, unknown>;
+		return json as Record<string, Json>;
 	}
 	return {};
 }
 
 /** Type-safe helper for JSON array column access */
-export function _asJsonArray(json: Json | null | undefined): unknown[] {
+export function _asJsonArray(json: Json | null | undefined): Json[] {
 	if (Array.isArray(json)) return json;
 	return [];
 }

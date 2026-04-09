@@ -44,214 +44,56 @@ export async function autoLearnRunes(
 }
 
 /**
- * Check if character can inscribe a rune on equipment
- * Validates requirements, equipment type, and existing inscriptions
+ * Check if character can learn/consume a rune
+ * Validates if the character already knows the rune's contents
  */
-export async function canInscribeRune(
+export async function canLearnRune(
 	characterId: string,
-	equipmentId: string,
 	runeId: string,
-): Promise<{ canInscribe: boolean; reason?: string }> {
+): Promise<{ canLearn: boolean; reason?: string }> {
 	try {
 		// Get character data
 		const { data: character, error: charError } = await supabase
 			.from("characters")
-			.select(`
-        *,
-        abilities:character_abilities(*)
-      `)
+			.select("id")
 			.eq("id", characterId)
 			.single();
 
 		if (charError || !character) {
-			return { canInscribe: false, reason: "Character not found" };
+			return { canLearn: false, reason: "Character not found" };
 		}
 
 		// Get rune data
 		const { data: rune, error: runeError } = await supabase
 			.from("compendium_runes")
-			.select("*")
+			.select("id, name")
 			.eq("id", runeId)
 			.single();
 
 		if (runeError || !rune) {
-			return { canInscribe: false, reason: "Rune not found" };
+			return { canLearn: false, reason: "Rune not found" };
 		}
 
-		// Get equipment data
-		const { data: equipment, error: equipError } = await supabase
-			.from("character_equipment")
-			.select("*")
-			.eq("id", equipmentId)
-			.eq("character_id", characterId)
-			.single();
-
-		if (equipError || !equipment) {
-			return { canInscribe: false, reason: "Equipment not found" };
-		}
-
-		// Check if equipment type is compatible
-		const equipmentTypeMap: Record<string, string> = {
-			weapon: "weapon",
-			armor: "armor",
-			relic: "accessory",
-			gear: "accessory",
-			consumable: "accessory",
-		};
-
-		const equipType =
-			equipmentTypeMap[equipment.item_type || "gear"] || "universal";
-
-		if (
-			!rune.can_inscribe_on?.includes(equipType) &&
-			!rune.can_inscribe_on?.includes("universal")
-		) {
-			return {
-				canInscribe: false,
-				reason: `This rune cannot be inscribed on ${equipment.item_type} equipment`,
-			};
-		}
-
-		// Check if rune already inscribed on this equipment
+		// Check if rune already learned
 		const { data: existing } = await supabase
-			.from("character_rune_inscriptions")
+			.from("character_rune_knowledge")
 			.select("id")
-			.eq("equipment_id", equipmentId)
+			.eq("character_id", characterId)
 			.eq("rune_id", runeId)
 			.single();
 
 		if (existing) {
 			return {
-				canInscribe: false,
-				reason: "This rune is already inscribed on this equipment",
+				canLearn: false,
+				reason: "You have already absorbed the knowledge of this rune.",
 			};
 		}
 
-		return { canInscribe: true };
+		return { canLearn: true };
 	} catch (error) {
-		logger.error("Failed to check rune inscription:", error);
-		return { canInscribe: false, reason: "Error checking requirements" };
+		logger.error("Failed to check rune learning status:", error);
+		return { canLearn: false, reason: "Error checking requirements" };
 	}
-}
-
-/**
- * Get all runes that can be inscribed on a piece of equipment
- */
-export async function getAvailableRunesForEquipment(
-	equipmentType: string,
-): Promise<Rune[]> {
-	try {
-		const equipmentTypeMap: Record<string, string> = {
-			weapon: "weapon",
-			armor: "armor",
-			relic: "accessory",
-			gear: "accessory",
-			consumable: "accessory",
-		};
-
-		const equipType = equipmentTypeMap[equipmentType] || "universal";
-
-		const { data: runes, error } = await supabase
-			.from("compendium_runes")
-			.select("*")
-			.or(`can_inscribe_on.cs.{${equipType}},can_inscribe_on.cs.{universal}`)
-			.order("rune_level", { ascending: true })
-			.order("name", { ascending: true });
-
-		if (error) throw error;
-		return runes as Rune[];
-	} catch (error) {
-		logger.error("Failed to get available runes:", error);
-		return [];
-	}
-}
-
-export interface RuneBonusResult {
-	ac: number;
-	speed: number;
-	abilities: Record<string, number>;
-	attackBonus: number;
-	damageBonus: string;
-	traits: string[];
-}
-
-/**
- * Apply rune passive bonuses to character stats
- * This is called when calculating final character stats
- */
-export function applyRuneBonuses(
-	baseStats: Omit<RuneBonusResult, "traits"> & { traits?: string[] },
-	activeRunes: Array<{
-		rune: Rune;
-		is_active: boolean;
-	}>,
-): RuneBonusResult {
-	const modifiedStats: RuneBonusResult = {
-		...baseStats,
-		traits: baseStats.traits || [],
-	};
-
-	for (const { rune, is_active } of activeRunes) {
-		if (!is_active || !rune.passive_bonuses) continue;
-
-		const bonuses = rune.passive_bonuses as Record<string, unknown>;
-
-		// AC bonus
-		if (bonuses.ac_bonus && typeof bonuses.ac_bonus === "number") {
-			modifiedStats.ac += bonuses.ac_bonus;
-		}
-
-		// Speed bonus
-		if (bonuses.speed_bonus && typeof bonuses.speed_bonus === "number") {
-			modifiedStats.speed += bonuses.speed_bonus;
-		}
-
-		// Ability score bonuses
-		const abilityMap: Record<string, string> = {
-			str: "STR",
-			agi: "AGI",
-			vit: "VIT",
-			int: "INT",
-			sense: "SENSE",
-			pre: "PRE",
-		};
-
-		for (const [key, ability] of Object.entries(abilityMap)) {
-			if (
-				bonuses[`${key}_bonus`] &&
-				typeof bonuses[`${key}_bonus`] === "number"
-			) {
-				modifiedStats.abilities[ability] =
-					(modifiedStats.abilities[ability] || 0) +
-					(bonuses[`${key}_bonus`] as number);
-			}
-		}
-
-		// Attack and damage bonuses
-		if (bonuses.attack_bonus && typeof bonuses.attack_bonus === "number") {
-			modifiedStats.attackBonus += bonuses.attack_bonus;
-		}
-
-		if (bonuses.damage_bonus && typeof bonuses.damage_bonus === "string") {
-			modifiedStats.damageBonus = modifiedStats.damageBonus
-				? `${modifiedStats.damageBonus} + ${bonuses.damage_bonus}`
-				: bonuses.damage_bonus;
-		}
-
-		// Traits
-		if (Array.isArray(bonuses.traits)) {
-			bonuses.traits.forEach((trait: unknown) => {
-				if (
-					typeof trait === "string" &&
-					!modifiedStats.traits.includes(trait)
-				) {
-					modifiedStats.traits.push(trait);
-				}
-			});
-		}
-	}
-
-	return modifiedStats;
 }
 
 // ---------------------------------------------------------------------------

@@ -8,13 +8,10 @@
  */
 
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
+import type { Json } from "@/integrations/supabase/types";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
-import type {
-	CompendiumDeity,
-	CompendiumRune,
-	CompendiumSigil,
-} from "@/types/compendium";
+import type { CompendiumDeity } from "@/types/compendium";
 
 type DataLoader<T> = () => Promise<T[]>;
 
@@ -26,11 +23,7 @@ const dataLoaders = {
 	locations: () => import("./locations").then((module) => module.locations),
 	runesCompendium: () =>
 		import("./runes/index").then((module) => module.allRunes),
-	systemAscendantRunes: async () => {
-		const { allRunes } = await import("./runes/index");
-		const { sigils } = await import("./sigils");
-		return [...allRunes, ...sigils];
-	},
+
 	backgrounds: () =>
 		import("./backgrounds-index").then((module) => module.allBackgrounds),
 	regents: () => import("./regents").then((module) => module.regents),
@@ -54,10 +47,12 @@ const dataLoaders = {
 	sigils: () => import("./sigils").then((module) => module.sigils),
 	tattoos: () => import("./tattoos").then((module) => module.tattoos),
 	pantheon: () => import("./pantheon").then((module) => module.PRIME_PANTHEON),
-} satisfies Record<string, DataLoader<unknown>>;
+} satisfies Record<string, DataLoader<{ id: string; name: string }>>;
 
 type DataKey = keyof typeof dataLoaders;
-const dataCache: Partial<Record<DataKey, Promise<unknown[]>>> = {};
+const dataCache: Partial<
+	Record<DataKey, Promise<{ id: string; name: string }[]>>
+> = {};
 
 const loadData = async <T>(key: DataKey): Promise<T[]> => {
 	if (!dataCache[key]) {
@@ -80,8 +75,8 @@ export interface StaticCompendiumEntry {
 	power_level?: number | null;
 	school?: string | null;
 	theme?: string | null;
-	prerequisites?: string | Record<string, unknown> | null;
-	requirements?: Record<string, unknown> | null;
+	prerequisites?: string | Record<string, Json> | null;
+	requirements?: Record<string, Json> | null;
 	fusion_theme?: string | null;
 	equipment_type?: string | null;
 	ability?: string | null;
@@ -114,23 +109,23 @@ export interface StaticCompendiumEntry {
 	style?: string | null;
 	image?: string | null;
 	cost_credits?: number | null;
-	item_properties?: Record<string, unknown> | null;
-	activation?: Record<string, unknown> | null;
-	duration?: Record<string, unknown> | null;
-	components?: Record<string, unknown> | null;
-	effects?: Record<string, unknown> | null;
-	mechanics?: Record<string, unknown> | null;
-	limitations?: Record<string, unknown> | null;
+	item_properties?: Record<string, Json> | null;
+	activation?: Record<string, Json> | null;
+	duration?: Record<string, Json> | null;
+	components?: Record<string, Json> | null;
+	effects?: Record<string, Json> | null;
+	mechanics?: Record<string, Json> | null;
+	limitations?: Record<string, Json> | null;
 	flavor?: string | null;
 	higher_levels?: string | null;
 	atHigherLevels?: string | null;
-	properties?: string[] | Record<string, unknown> | null;
-	abilities?: Record<string, unknown> | null;
-	lore?: string | Record<string, unknown> | null;
+	properties?: string[] | Record<string, Json> | null;
+	abilities?: Record<string, Json> | null;
+	lore?: string | Record<string, Json> | null;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
-	charges?: Record<string, unknown> | null;
-	stats?: Record<string, unknown> | null;
+	charges?: Record<string, Json> | null;
+	stats?: Record<string, Json> | null;
 	source?: string | null;
 	role?: string | null;
 	value?: number | null;
@@ -155,7 +150,7 @@ export interface StaticCompendiumEntry {
 	sense?: number | null;
 	pre?: number | null;
 	saving_throws?: Record<string, number> | null;
-	skills?: Record<string, number> | Record<string, unknown> | null;
+	skills?: Record<string, number> | Record<string, Json> | null;
 	damage_vulnerabilities?: string[] | null;
 	damage_resistances?: string[] | null;
 	damage_immunities?: string[] | null;
@@ -163,10 +158,10 @@ export interface StaticCompendiumEntry {
 	senses?: string[] | Record<string, string> | null;
 	languages?: string[] | null;
 	xp?: number | null;
-	Anomaly_actions?: Record<string, unknown>[] | null;
-	Anomaly_traits?: Record<string, unknown>[] | null;
-	attack?: Record<string, unknown> | null;
-	movement?: Record<string, unknown> | null;
+	Anomaly_actions?: Record<string, Json>[] | null;
+	Anomaly_traits?: Record<string, Json>[] | null;
+	attack?: Record<string, Json> | null;
+	movement?: Record<string, Json> | null;
 	// Background detail support (static fallback)
 	skill_proficiencies?: string[] | null;
 	tool_proficiencies?: string[] | null;
@@ -230,10 +225,10 @@ export interface StaticCompendiumEntry {
 	regent_manifestation?: string | null;
 	regent_corruption_risk?: string | null;
 	regent_lore?: string | null;
-	regent_abilities?: Array<Record<string, unknown>> | null;
-	regent_features?: Array<Record<string, unknown>> | null;
-	regent_mechanics?: Record<string, unknown> | null;
-	regent_requirements?: Record<string, unknown> | null;
+	regent_abilities?: Array<Record<string, Json>> | null;
+	regent_features?: Array<Record<string, Json>> | null;
+	regent_mechanics?: Record<string, Json> | null;
+	regent_requirements?: Record<string, Json> | null;
 	// Feat detail support
 	benefits?: string[] | null;
 	// Path detail support
@@ -250,10 +245,10 @@ export interface StaticCompendiumEntry {
 	activation_action?: string | null;
 	uses_per_rest?: string | null;
 	requires_level?: number | null;
-	requires_job?: Record<string, unknown> | null;
+	requires_job?: Record<string, Json> | null;
 	caster_penalty?: string | null;
 	martial_penalty?: string | null;
-	passive_bonuses?: Record<string, unknown> | null;
+	passive_bonuses?: Record<string, Json> | null;
 	effect_description?: string | null;
 	power_type?: string | null;
 	level_requirement?: number | null;
@@ -304,20 +299,20 @@ export interface StaticCompendiumEntry {
 	// Sync Parity additions
 	at_higher_levels?: string | null;
 	classes?: string[] | null;
-	spell_attack?: Record<string, unknown> | null;
-	area?: Record<string, unknown> | null;
+	spell_attack?: Record<string, Json> | null;
+	area?: Record<string, Json> | null;
 	hit_dice?: string | null;
-	progression_table?: Record<string, unknown> | null;
+	progression_table?: Record<string, Json> | null;
 	dangers?: string[] | null;
-	suggested_characteristics?: Record<string, unknown> | null;
-	actions?: Record<string, unknown>[] | null;
-	traits?: Record<string, unknown>[] | null;
-	reactions?: Record<string, unknown>[] | null;
-	legendary_actions?: Record<string, unknown>[] | null;
-	saving_throw?: Record<string, unknown> | null;
+	suggested_characteristics?: Record<string, Json> | null;
+	actions?: Record<string, Json>[] | null;
+	traits?: Record<string, Json>[] | null;
+	reactions?: Record<string, Json>[] | null;
+	legendary_actions?: Record<string, Json>[] | null;
+	saving_throw?: Record<string, Json> | null;
 	saving_throw_ability?: string | null;
 	has_attack_roll?: boolean | null;
-	area_of_effect?: Record<string, unknown> | null;
+	area_of_effect?: Record<string, Json> | null;
 }
 
 interface StaticDataProvider {
@@ -373,21 +368,21 @@ type StaticAnomaliesource = {
 	image?: string;
 	ac?: number;
 	hp?: number;
-	stats?: Record<string, unknown>;
-	skills?: unknown;
-	damageResistances?: unknown;
-	damageImmunities?: unknown;
-	damageVulnerabilities?: unknown;
-	conditionImmunities?: unknown;
-	senses?: unknown;
-	languages?: unknown;
-	traits?: unknown;
-	actions?: unknown;
-	legendary?: unknown;
-	alignment?: unknown;
-	source?: unknown;
-	xp?: unknown;
-	size?: unknown;
+	stats?: Record<string, Json>;
+	skills?: string[] | Record<string, number>;
+	damageResistances?: string[];
+	damageImmunities?: string[];
+	damageVulnerabilities?: string[];
+	conditionImmunities?: string[];
+	senses?: string | string[] | Record<string, string>;
+	languages?: string | string[];
+	traits?: Array<{ name: string; description: string }>;
+	actions?: Array<{ name: string; description: string }>;
+	legendary?: Array<{ name: string; description: string }>;
+	alignment?: string;
+	source?: string;
+	xp?: number;
+	size?: string;
 };
 
 type StaticItemSource = {
@@ -397,13 +392,13 @@ type StaticItemSource = {
 	type?: string;
 	rarity?: string;
 	image?: string;
-	requirements?: Record<string, unknown>;
-	properties?: Record<string, unknown>;
-	effects?: Record<string, unknown>;
+	requirements?: Record<string, Json>;
+	properties?: Record<string, Json>;
+	effects?: Record<string, Json>;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
-	charges?: Record<string, unknown>;
-	stats?: Record<string, unknown>;
+	charges?: Record<string, Json>;
+	stats?: Record<string, Json>;
 	effect?: string;
 	value?: number;
 	weight?: number;
@@ -461,13 +456,13 @@ type StaticSpellSource = {
 	rank?: string;
 	image?: string;
 	effect?: string;
-	range?: number | string | Record<string, unknown>;
-	activation?: Record<string, unknown>;
-	duration?: string | Record<string, unknown>;
-	components?: Record<string, unknown>;
-	effects?: Record<string, unknown>;
-	mechanics?: Record<string, unknown>;
-	limitations?: Record<string, unknown>;
+	range?: number | string | Record<string, Json>;
+	activation?: Record<string, Json>;
+	duration?: string | Record<string, Json>;
+	components?: Record<string, Json>;
+	effects?: Record<string, Json>;
+	mechanics?: Record<string, Json>;
+	limitations?: Record<string, Json>;
 	flavor?: string;
 	higher_levels?: string;
 	atHigherLevels?: string;
@@ -478,9 +473,9 @@ type StaticSpellSource = {
 	concentration?: boolean;
 	ritual?: boolean;
 	classes?: string[];
-	savingThrow?: Record<string, unknown>;
-	spellAttack?: Record<string, unknown>;
-	area?: Record<string, unknown>;
+	savingThrow?: Record<string, Json>;
+	spellAttack?: Record<string, Json>;
+	area?: Record<string, Json>;
 };
 
 // ---------------------------------------------------------------------------
@@ -528,7 +523,7 @@ function deriveSchool(spell: StaticSpellSource): string {
 
 function deriveCastingTime(spell: StaticSpellSource): string {
 	if (spell.castingTime) return spell.castingTime;
-	const act = spell.activation as Record<string, unknown> | undefined;
+	const act = spell.activation as Record<string, Json> | undefined;
 	if (!act) return "1 action";
 	const t = String(act.type ?? "action").toLowerCase();
 	const cost = Number(act.cost ?? 1);
@@ -564,7 +559,7 @@ function deriveConcentration(spell: StaticSpellSource): boolean {
 	const dur = spell.duration;
 	if (typeof dur === "string") return /concentrat/i.test(dur);
 	if (dur && typeof dur === "object") {
-		const t = String((dur as Record<string, unknown>).type ?? "");
+		const t = String((dur as Record<string, Json>).type ?? "");
 		return /concentrat/i.test(t);
 	}
 	return false;
@@ -707,14 +702,14 @@ function transformAnomaly(
 
 	const statsObj =
 		Anomaly.stats && typeof Anomaly.stats === "object"
-			? (Anomaly.stats as Record<string, unknown>)
+			? (Anomaly.stats as Record<string, Json>)
 			: null;
 	const abilityScores =
 		(statsObj?.abilityScores || statsObj?.ability_scores) &&
 		typeof (statsObj?.abilityScores || statsObj?.ability_scores) === "object"
 			? ((statsObj?.abilityScores || statsObj?.ability_scores) as Record<
 					string,
-					unknown
+					Json
 				>)
 			: null;
 
@@ -748,11 +743,13 @@ function transformAnomaly(
 		typeof (statsObj?.savingThrows || statsObj?.saving_throws) === "object"
 			? ((statsObj?.savingThrows || statsObj?.saving_throws) as Record<
 					string,
-					unknown
+					Json
 				>)
 			: null;
 
-	const normalizeStringArray = (value: unknown): string[] | null => {
+	const normalizeStringArray = (
+		value: string | string[] | number | null | undefined,
+	): string[] | null => {
 		if (Array.isArray(value)) {
 			return value.map((v) => String(v)).filter((s) => s.trim().length > 0);
 		}
@@ -766,13 +763,17 @@ function transformAnomaly(
 	};
 
 	const traits = Array.isArray(Anomaly.traits)
-		? (Anomaly.traits as Record<string, unknown>[])
+		? (Anomaly.traits as Record<string, Json>[])
 		: null;
 	const actions = Array.isArray(Anomaly.actions)
-		? (Anomaly.actions as Record<string, unknown>[])
+		? (Anomaly.actions as Record<string, Json>[])
 		: null;
 
-	const skillNames = normalizeStringArray(Anomaly.skills);
+	const skillNames = Anomaly.skills
+		? Array.isArray(Anomaly.skills)
+			? normalizeStringArray(Anomaly.skills)
+			: normalizeStringArray(Object.keys(Anomaly.skills))
+		: null;
 	const skillMap = skillNames
 		? Object.fromEntries(
 				skillNames.map((name) => [name, proficiencyBonus ?? 0]),
@@ -860,9 +861,9 @@ function transformAnomaly(
 
 function deriveItemProperties(
 	item: StaticItemSource,
-): Record<string, unknown> | null {
-	if (item.properties) return item.properties as Record<string, unknown>;
-	const stats = item.stats as Record<string, unknown> | undefined;
+): Record<string, Json> | null {
+	if (item.properties) return item.properties as Record<string, Json>;
+	const stats = item.stats as Record<string, Json> | undefined;
 	const t = (item.type ?? "").toLowerCase();
 
 	if (t === "weapon") {
@@ -873,7 +874,7 @@ function deriveItemProperties(
 				versatile: null,
 				finesse: false,
 			},
-			magical: stats ? { bonus: { attack: 0, damage: 0 } } : undefined,
+			magical: stats ? { bonus: { attack: 0, damage: 0 } } : null,
 		};
 	}
 	if (t === "armor") {
@@ -885,7 +886,7 @@ function deriveItemProperties(
 				type: acBonus >= 3 ? "heavy" : acBonus >= 2 ? "medium" : "light",
 			},
 			magical:
-				acBonus > 0 ? { bonus: { armor_class_migrated: acBonus } } : undefined,
+				acBonus > 0 ? { bonus: { armor_class_migrated: acBonus } } : null,
 		};
 	}
 	if (t === "consumable") {
@@ -1003,7 +1004,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 			: typeof spell.range === "string"
 				? { type: spell.range, distance: spell.range }
 				: spell.range && typeof spell.range === "object"
-					? (spell.range as Record<string, unknown>)
+					? (spell.range as Record<string, Json>)
 					: null;
 	const rankValue = typeof spell.rank === "string" ? spell.rank : null;
 	const primaryEffect = typeof spell.effect === "string" ? spell.effect : "";
@@ -1051,23 +1052,23 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		school: school,
 		activation: (spell.activation && typeof spell.activation === "object"
 			? spell.activation
-			: derivedActivation) as Record<string, unknown>,
+			: derivedActivation) as Record<string, Json>,
 		duration: (spell.duration && typeof spell.duration === "object"
 			? spell.duration
-			: derivedDuration) as Record<string, unknown>,
+			: derivedDuration) as Record<string, Json>,
 		components: (spell.components && typeof spell.components === "object"
 			? spell.components
-			: derivedComponents) as Record<string, unknown>,
+			: derivedComponents) as Record<string, Json>,
 		effects: (spell.effects && typeof spell.effects === "object"
 			? spell.effects
-			: derivedEffects) as Record<string, unknown>,
+			: derivedEffects) as Record<string, Json>,
 		mechanics: (spell.mechanics && typeof spell.mechanics === "object"
 			? spell.mechanics
-			: (spell as Record<string, unknown>).spellAttack
-				? { attack: (spell as Record<string, unknown>).spellAttack }
+			: (spell as Record<string, Json>).spellAttack
+				? { attack: (spell as Record<string, Json>).spellAttack }
 				: {
 						saving_throw: { ability: "agility", effect: "half damage" },
-					}) as Record<string, unknown>,
+					}) as Record<string, Json>,
 		limitations: (spell.limitations && typeof spell.limitations === "object"
 			? {
 					...spell.limitations,
@@ -1081,7 +1082,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 					ritual,
 					casting_time: castingTime,
 					spell_classes: classes,
-				}) as Record<string, unknown>,
+				}) as Record<string, Json>,
 		flavor:
 			typeof spell.flavor === "string" ? spell.flavor : spell.description || "",
 		higher_levels: spell.higher_levels || spell.atHigherLevels || null,
@@ -1131,7 +1132,7 @@ function transformLocation(
 }
 
 function _transformRune(
-	rune: StaticRuneSource & Record<string, unknown>,
+	rune: StaticRuneSource & Record<string, Json>,
 ): StaticCompendiumEntry {
 	const { range, duration, activation_action, lore, discovery_lore, ...rest } =
 		rune;
@@ -1160,7 +1161,7 @@ function _transformRune(
 		range: typeof range === "string" ? { type: range } : range,
 		duration: typeof duration === "string" ? { type: duration } : duration,
 		activation: activation_action ? { type: activation_action } : undefined,
-		lore: lore ? { origin: lore, discovery: discovery_lore } : null,
+		lore: lore ? { origin: lore, discovery: discovery_lore ?? null } : null,
 		flavor: lore || null,
 	};
 }
@@ -1324,13 +1325,10 @@ function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
 		// Regent-specific fields for RegentDetail.tsx
 		regent_title: regent.title || null,
 		regent_theme: regent.theme || null,
-		regent_abilities:
-			(regent.abilities as Array<Record<string, unknown>>) || null,
-		regent_features:
-			(regent.features as Array<Record<string, unknown>>) || null,
-		regent_mechanics: (regent.mechanics as Record<string, unknown>) || null,
-		regent_requirements:
-			(regent.requirements as Record<string, unknown>) || null,
+		regent_abilities: (regent.abilities as Array<Record<string, Json>>) || null,
+		regent_features: (regent.features as Array<Record<string, Json>>) || null,
+		regent_mechanics: (regent.mechanics as Record<string, Json>) || null,
+		regent_requirements: (regent.requirements as Record<string, Json>) || null,
 		// Derived 5e-style class features for all regents
 		class_features: classFeatures,
 	};
@@ -1433,11 +1431,11 @@ export const staticDataProvider: StaticDataProvider = {
 	},
 
 	getRunes: async (search?: string) => {
-		const slRunes = await loadData<CompendiumRune | CompendiumSigil>(
-			"systemAscendantRunes",
+		const runes = await loadData<StaticRuneSource & Record<string, Json>>(
+			"runesCompendium",
 		);
-		const filtered = filterBySearch(slRunes, search, ["name", "description"]);
-		return filtered as never as StaticCompendiumEntry[];
+		const filtered = filterBySearch(runes, search, ["name", "description"]);
+		return filtered.map(_transformRune);
 	},
 
 	getBackgrounds: async (search?: string) => {
@@ -1457,11 +1455,11 @@ export const staticDataProvider: StaticDataProvider = {
 			type?: string;
 			rarity?: string;
 			attunement?: boolean;
-			requirements?: Record<string, unknown> | null;
-			properties?: Record<string, unknown> | null;
-			abilities?: Record<string, unknown> | null;
-			lore?: Record<string, unknown> | null;
-			mechanics?: Record<string, unknown> | null;
+			requirements?: Record<string, Json> | null;
+			properties?: Record<string, Json> | null;
+			abilities?: Record<string, Json> | null;
+			lore?: Record<string, Json> | null;
+			mechanics?: Record<string, Json> | null;
 			source?: string;
 			image?: string;
 		}>("comprehensiveRelics");
@@ -1556,7 +1554,7 @@ export const staticDataProvider: StaticDataProvider = {
 				name: string;
 				description: string;
 				benefits?: string;
-				prerequisites?: string | Record<string, string | number | boolean>;
+				prerequisites?: string | Record<string, Json>;
 				source?: string;
 			}>("comprehensiveFeats")) || [];
 		const filtered = filterBySearch(comprehensiveFeats, search, [
@@ -1575,8 +1573,8 @@ export const staticDataProvider: StaticDataProvider = {
 				"ability",
 				...(feat.prerequisites &&
 				typeof feat.prerequisites !== "string" &&
-				Array.isArray((feat.prerequisites as Record<string, unknown>).feats)
-					? ((feat.prerequisites as Record<string, unknown>).feats as string[])
+				Array.isArray((feat.prerequisites as Record<string, Json>).feats)
+					? ((feat.prerequisites as Record<string, Json>).feats as string[])
 					: []),
 			].filter(Boolean) as string[],
 			source_book: feat.source,
@@ -1689,16 +1687,16 @@ export const staticDataProvider: StaticDataProvider = {
 			rarity: power.rarity,
 			level: power.requirements?.level,
 			// Rich fields for detail views
-			activation: (power.activation as Record<string, unknown>) || null,
+			activation: (power.activation as Record<string, Json>) || null,
 			duration: power.duration || null,
 			range: power.range || null,
-			components: (power.components as Record<string, unknown>) || null,
-			effects: (power.effects as Record<string, unknown>) || null,
-			limitations: (power.limitations as Record<string, unknown>) || null,
+			components: (power.components as Record<string, Json>) || null,
+			effects: (power.effects as Record<string, Json>) || null,
+			limitations: (power.limitations as Record<string, Json>) || null,
 			flavor: power.flavor || null,
-			saving_throw: (power.saving_throw as Record<string, unknown>) || null,
-			attack: (power.attack_roll as Record<string, unknown>) || null,
-			mechanics: (power.mechanics as Record<string, unknown>) || null,
+			saving_throw: (power.saving_throw as Record<string, Json>) || null,
+			attack: (power.attack_roll as Record<string, Json>) || null,
+			mechanics: (power.mechanics as Record<string, Json>) || null,
 		}));
 	},
 
@@ -1712,13 +1710,13 @@ export const staticDataProvider: StaticDataProvider = {
 			image?: string;
 			source?: string;
 			prerequisites?: { level?: number } | null;
-			activation?: Record<string, unknown> | null;
-			duration?: Record<string, unknown> | null;
-			range?: Record<string, unknown> | null;
-			components?: Record<string, unknown> | null;
-			effects?: Record<string, unknown> | null;
-			mechanics?: Record<string, unknown> | null;
-			limitations?: Record<string, unknown> | null;
+			activation?: Record<string, Json> | null;
+			duration?: Record<string, Json> | null;
+			range?: Record<string, Json> | null;
+			components?: Record<string, Json> | null;
+			effects?: Record<string, Json> | null;
+			mechanics?: Record<string, Json> | null;
+			limitations?: Record<string, Json> | null;
 			element?: string | null;
 			flavor?: string | null;
 		}>("techniques");
@@ -1743,13 +1741,13 @@ export const staticDataProvider: StaticDataProvider = {
 			style: technique.style,
 			element: technique.element || null,
 			prerequisites: technique.prerequisites || null,
-			activation: (technique.activation as Record<string, unknown>) || null,
-			duration: (technique.duration as Record<string, unknown>) || null,
-			range: (technique.range as Record<string, unknown>) || null,
-			components: (technique.components as Record<string, unknown>) || null,
-			effects: (technique.effects as Record<string, unknown>) || null,
-			mechanics: (technique.mechanics as Record<string, unknown>) || null,
-			limitations: (technique.limitations as Record<string, unknown>) || null,
+			activation: (technique.activation as Record<string, Json>) || null,
+			duration: (technique.duration as Record<string, Json>) || null,
+			range: (technique.range as Record<string, Json>) || null,
+			components: (technique.components as Record<string, Json>) || null,
+			effects: (technique.effects as Record<string, Json>) || null,
+			mechanics: (technique.mechanics as Record<string, Json>) || null,
+			limitations: (technique.limitations as Record<string, Json>) || null,
 			flavor: technique.flavor,
 			source: technique.source,
 			power_level:
@@ -1769,10 +1767,9 @@ export const staticDataProvider: StaticDataProvider = {
 						: "uncommon",
 			level: technique.prerequisites?.level,
 			saving_throw:
-				(technique.mechanics?.saving_throw as Record<string, unknown>) || null,
-			attack: (technique.mechanics?.attack as Record<string, unknown>) || null,
-			movement:
-				(technique.mechanics?.movement as Record<string, unknown>) || null,
+				(technique.mechanics?.saving_throw as Record<string, Json>) || null,
+			attack: (technique.mechanics?.attack as Record<string, Json>) || null,
+			movement: (technique.mechanics?.movement as Record<string, Json>) || null,
 		}));
 	},
 
@@ -1786,11 +1783,11 @@ export const staticDataProvider: StaticDataProvider = {
 			source?: string;
 			image?: string;
 			attunement?: boolean | null;
-			requirements?: Record<string, unknown> | null;
-			properties?: Record<string, unknown> | null;
-			abilities?: Record<string, unknown> | null;
-			lore?: Record<string, unknown> | null;
-			mechanics?: Record<string, unknown> | null;
+			requirements?: Record<string, Json> | null;
+			properties?: Record<string, Json> | null;
+			abilities?: Record<string, Json> | null;
+			lore?: Record<string, Json> | null;
+			mechanics?: Record<string, Json> | null;
 		}>("artifacts");
 		const filtered = filterBySearch(artifacts, search, [
 			"name",
@@ -1831,9 +1828,9 @@ export const staticDataProvider: StaticDataProvider = {
 			theme: artifact.rarity,
 			rarity: artifact.rarity || "legendary",
 			level:
-				typeof (artifact.requirements as Record<string, unknown>)?.level ===
+				typeof (artifact.requirements as Record<string, Json>)?.level ===
 				"number"
-					? ((artifact.requirements as Record<string, unknown>).level as number)
+					? ((artifact.requirements as Record<string, Json>).level as number)
 					: undefined,
 		}));
 	},

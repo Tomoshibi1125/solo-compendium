@@ -476,7 +476,7 @@ export interface CompendiumBackground extends BaseCompendiumItem {
 	dangers?: string[];
 	abilities?: string[];
 	source?: string;
-	suggested_characteristics?: Record<string, unknown>;
+	suggested_characteristics?: Record<string, string[]>;
 }
 
 export interface CompendiumJob extends BaseCompendiumItem {
