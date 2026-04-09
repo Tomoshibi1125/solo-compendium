@@ -42,10 +42,12 @@ export const FeatsChapter = () => {
 								{Array.isArray(feat.benefits)
 									? feat.benefits.map((benefit: string) => (
 											<li key={benefit}>{benefit}</li>
-									  ))
-									: (feat.benefits as unknown as Record<string, string[]>)?.basic?.map((benefit: string) => (
+										))
+									: (
+											feat.benefits as unknown as Record<string, string[]>
+										)?.basic?.map((benefit: string) => (
 											<li key={benefit}>{benefit}</li>
-									  ))}
+										))}
 							</ul>
 						</div>
 
@@ -53,16 +55,51 @@ export const FeatsChapter = () => {
 							Object.keys(feat.prerequisites).length > 0 && (
 								<div className="mt-4 pt-3 border-t border-white/5 text-[10px] font-mono text-muted-foreground flex gap-3 flex-wrap">
 									<span className="text-white/40">PREREQ:</span>
-									{(feat.prerequisites as unknown as Record<string, number>).level && (
-										<span>Level {(feat.prerequisites as unknown as Record<string, number>).level}</span>
-									)}
-									{(feat.prerequisites as unknown as Record<string, string>).ability && (
+									{(feat.prerequisites as unknown as Record<string, number>)
+										.level && (
 										<span>
-											{(feat.prerequisites as unknown as Record<string, string>).ability} {(feat.prerequisites as unknown as Record<string, number>).score}
+											Level{" "}
+											{
+												(
+													feat.prerequisites as unknown as Record<
+														string,
+														number
+													>
+												).level
+											}
 										</span>
 									)}
-									{(feat.prerequisites as unknown as Record<string, string[]>).feats && (
-										<span>{(feat.prerequisites as unknown as Record<string, string[]>).feats.join(", ")}</span>
+									{(feat.prerequisites as unknown as Record<string, string>)
+										.ability && (
+										<span>
+											{
+												(
+													feat.prerequisites as unknown as Record<
+														string,
+														string
+													>
+												).ability
+											}{" "}
+											{
+												(
+													feat.prerequisites as unknown as Record<
+														string,
+														number
+													>
+												).score
+											}
+										</span>
+									)}
+									{(feat.prerequisites as unknown as Record<string, string[]>)
+										.feats && (
+										<span>
+											{(
+												feat.prerequisites as unknown as Record<
+													string,
+													string[]
+												>
+											).feats.join(", ")}
+										</span>
 									)}
 								</div>
 							)}

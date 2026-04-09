@@ -9,7 +9,7 @@ import {
 	useCharacterSheetState,
 } from "@/hooks/useCharacterSheetState";
 import { useEquipment } from "@/hooks/useEquipment";
-import { useRunes } from "@/hooks/useRunes";
+
 import { useSigils } from "@/hooks/useSigils";
 import { formatModifier } from "@/lib/characterCalculations";
 
@@ -19,14 +19,14 @@ export function GlobalCharacterHUD() {
 	const charId = character?.id || "";
 
 	const { equipment } = useEquipment(charId);
-	const { data: runes } = useRunes(charId);
+
 	const { data: sigils } = useSigils(charId);
 	const { state: sheetState } = useCharacterSheetState(charId);
 
 	const derivedStats = useCharacterDerivedStats(
 		character,
 		equipment || [],
-		runes || [],
+
 		sigils || [],
 		sheetState?.customModifiers || [],
 	);

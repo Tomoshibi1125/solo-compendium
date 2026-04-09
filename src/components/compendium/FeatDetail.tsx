@@ -29,7 +29,13 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText text={typeof data.lore === "string" ? data.lore : data.lore?.history || ""} />
+								<AutoLinkText
+									text={
+										typeof data.lore === "string"
+											? data.lore
+											: data.lore?.history || ""
+									}
+								/>
 							</p>
 						</div>
 					)}
@@ -49,7 +55,10 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 							) : (
 								Object.entries(data.prerequisites).map(([key, value]) => (
 									<div key={key} className="flex items-center gap-2">
-										<Badge variant="outline" className="text-[10px] uppercase tracking-tighter">
+										<Badge
+											variant="outline"
+											className="text-[10px] uppercase tracking-tighter"
+										>
 											{formatRegentVernacular(key)}
 										</Badge>
 										<span className="text-sm text-muted-foreground">
@@ -69,8 +78,8 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 					<div className="space-y-6">
 						{Array.isArray(data.benefits) ? (
 							<ul className="space-y-3">
-								{data.benefits.map((benefit, i) => (
-									<li key={i} className="flex items-start gap-3">
+								{data.benefits.map((benefit) => (
+									<li key={benefit} className="flex items-start gap-3">
 										<CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
 										<p className="text-sm text-muted-foreground">
 											<AutoLinkText text={benefit} />
@@ -82,10 +91,12 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 							<div className="space-y-6">
 								{data.benefits.basic && (
 									<div>
-										<h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Basic Benefits</h4>
+										<h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-3">
+											Basic Benefits
+										</h4>
 										<ul className="space-y-3">
-											{data.benefits.basic.map((benefit, i) => (
-												<li key={i} className="flex items-start gap-3">
+											{data.benefits.basic.map((benefit) => (
+												<li key={benefit} className="flex items-start gap-3">
 													<CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
 													<p className="text-sm text-muted-foreground">
 														<AutoLinkText text={benefit} />
@@ -97,10 +108,12 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 								)}
 								{data.benefits.expert && data.benefits.expert.length > 0 && (
 									<div>
-										<h4 className="text-xs font-bold uppercase tracking-widest text-amethyst mb-3">Expert Benefits</h4>
+										<h4 className="text-xs font-bold uppercase tracking-widest text-amethyst mb-3">
+											Expert Benefits
+										</h4>
 										<ul className="space-y-3">
-											{data.benefits.expert.map((benefit, i) => (
-												<li key={i} className="flex items-start gap-3">
+											{data.benefits.expert.map((benefit) => (
+												<li key={benefit} className="flex items-start gap-3">
 													<CheckCircle className="w-5 h-5 text-amethyst flex-shrink-0 mt-0.5" />
 													<p className="text-sm text-muted-foreground">
 														<AutoLinkText text={benefit} />
@@ -112,10 +125,12 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 								)}
 								{data.benefits.master && data.benefits.master.length > 0 && (
 									<div>
-										<h4 className="text-xs font-bold uppercase tracking-widest text-amber-500 mb-3">Master Benefits</h4>
+										<h4 className="text-xs font-bold uppercase tracking-widest text-amber-500 mb-3">
+											Master Benefits
+										</h4>
 										<ul className="space-y-3">
-											{data.benefits.master.map((benefit, i) => (
-												<li key={i} className="flex items-start gap-3">
+											{data.benefits.master.map((benefit) => (
+												<li key={benefit} className="flex items-start gap-3">
 													<CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
 													<p className="text-sm text-muted-foreground">
 														<AutoLinkText text={benefit} />
@@ -134,7 +149,10 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 			{/* Source */}
 			{data.source_book && (
 				<div className="flex justify-end p-2">
-					<Badge variant="outline" className="text-[10px] opacity-50 uppercase tracking-tighter">
+					<Badge
+						variant="outline"
+						className="text-[10px] opacity-50 uppercase tracking-tighter"
+					>
 						Source: {formatRegentVernacular(data.source_book)}
 					</Badge>
 				</div>

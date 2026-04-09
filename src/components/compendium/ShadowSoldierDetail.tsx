@@ -56,9 +56,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 					)}
 				</div>
 				{entry.rank && (
-					<Badge className={getRankColor(entry.rank)}>
-						{entry.rank}-Rank
-					</Badge>
+					<Badge className={getRankColor(entry.rank)}>{entry.rank}-Rank</Badge>
 				)}
 			</div>
 

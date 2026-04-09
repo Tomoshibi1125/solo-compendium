@@ -149,16 +149,7 @@ import {
 	isPresencePayload,
 } from "@/hooks/useRealtimeCollaboration";
 import { useRiftSound } from "@/hooks/useRiftSound";
-import {
-	checkRuneRequirements,
-	useCompendiumRunes,
-	useEquipmentRunes,
-	useInscribeRune,
-	useLearnRune,
-	useRemoveRuneInscription,
-	useToggleRuneActive,
-	useUseRune,
-} from "@/hooks/useRunes";
+import { useCompendiumRunes, useLearnRune } from "@/hooks/useRunes";
 import type { SavedSovereign } from "@/hooks/useSavedSovereigns";
 import {
 	useDeleteSovereign,
@@ -464,10 +455,7 @@ import {
 	applyProficiencyBonus as wrapProficiencyBonus,
 	rollWithReroll as wrapReroll,
 } from "@/lib/rollEngine";
-import {
-	canInscribeRune,
-	getAvailableRunesForEquipment,
-} from "@/lib/runeAutomation";
+// Legacy rune automation imports removed.
 import {
 	sanitizeHTML,
 	sanitizeNumber,
@@ -997,10 +985,7 @@ export const WardenWiringSeal = {
 			filter: filterReadableNotes,
 		},
 		sync: { unregister: unregisterOfflineSyncProcessor },
-		runes: {
-			canInscribe: canInscribeRune,
-			available: getAvailableRunesForEquipment,
-		},
+		runes: {},
 		sanitize: {
 			html: sanitizeHTML,
 			text: sanitizeText,
@@ -1059,13 +1044,7 @@ export const WardenWiringSeal = {
 		test: { createTestUsers, authenticateTestUser, cleanupTestUsers },
 		runes: {
 			useCompendiumRunes,
-			useEquipmentRunes,
-			useInscribeRune,
-			useRemoveRuneInscription,
-			useToggleRuneActive,
-			useUseRune,
 			useLearnRune,
-			checkRuneRequirements,
 		},
 		attunement: { useAttunement },
 		assets: {

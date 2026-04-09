@@ -135,50 +135,50 @@ const CharacterNew = () => {
 	const { data: jobs = [] } = useQuery({
 		queryKey: ["jobs"],
 		queryFn: async () => {
-			const staticJobsData: Job[] = (getStaticJobs() as unknown as StaticJob[]).map(
-				(job) => ({
-					id: job.id,
-					name: job.name,
-					display_name: job.name,
-					description: job.description,
-					hit_die: Number.parseInt(job.hitDie?.replace("1d", "") || "8", 10),
-					primary_abilities: (job.primary_abilities ||
-						(job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
-					saving_throw_proficiencies: (job.saving_throw_proficiencies ||
-						job.savingThrows ||
-						[]) as AbilityScore[],
-					armor_proficiencies: (job.armor_proficiencies ||
-						job.armorProficiencies ||
-						[]) as string[],
-					weapon_proficiencies: (job.weapon_proficiencies ||
-						job.weaponProficiencies ||
-						[]) as string[],
-					tool_proficiencies: (job.tool_proficiencies ||
-						job.toolProficiencies ||
-						[]) as string[],
-					skill_choices: (job.skillChoices || []) as string[],
-					skill_choice_count: 2,
-					source_book: job.source || "Rift Ascendant Canon",
-					class_features: (job.classFeatures || null) as Json,
-					spellcasting: (job.spellcasting || null) as Json,
-					starting_equipment: (job.startingEquipment || null) as Json,
-					hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
-					hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
-					regent_prerequisites: null,
-					aliases: [],
-					flavor_text: null,
-					generated_reason: null,
-					image_url: job.image || null,
-					tags: [],
-					license_note: null,
-					secondary_abilities: [],
-					source_kind: "canon",
-					source_name: job.source || "Rift Ascendant Canon",
-					theme_tags: [],
-					created_at: new Date().toISOString(),
-					updated_at: new Date().toISOString(),
-				}),
-			);
+			const staticJobsData: Job[] = (
+				getStaticJobs() as unknown as StaticJob[]
+			).map((job) => ({
+				id: job.id,
+				name: job.name,
+				display_name: job.name,
+				description: job.description,
+				hit_die: Number.parseInt(job.hitDie?.replace("1d", "") || "8", 10),
+				primary_abilities: (job.primary_abilities ||
+					(job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
+				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
+					job.savingThrows ||
+					[]) as AbilityScore[],
+				armor_proficiencies: (job.armor_proficiencies ||
+					job.armorProficiencies ||
+					[]) as string[],
+				weapon_proficiencies: (job.weapon_proficiencies ||
+					job.weaponProficiencies ||
+					[]) as string[],
+				tool_proficiencies: (job.tool_proficiencies ||
+					job.toolProficiencies ||
+					[]) as string[],
+				skill_choices: (job.skillChoices || []) as string[],
+				skill_choice_count: 2,
+				source_book: job.source || "Rift Ascendant Canon",
+				class_features: (job.classFeatures || null) as Json,
+				spellcasting: (job.spellcasting || null) as Json,
+				starting_equipment: (job.startingEquipment || null) as Json,
+				hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
+				hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
+				regent_prerequisites: null,
+				aliases: [],
+				flavor_text: null,
+				generated_reason: null,
+				image_url: job.image || null,
+				tags: [],
+				license_note: null,
+				secondary_abilities: [],
+				source_kind: "canon",
+				source_name: job.source || "Rift Ascendant Canon",
+				theme_tags: [],
+				created_at: new Date().toISOString(),
+				updated_at: new Date().toISOString(),
+			}));
 
 			try {
 				const { data: dbJobs, error } = await supabase
@@ -219,7 +219,9 @@ const CharacterNew = () => {
 		if (!selectedJob) return undefined;
 		const jobName = jobs.find((j) => j.id === selectedJob)?.name;
 		if (!jobName) return undefined;
-		return (getStaticJobs() as unknown as StaticJob[]).find((j) => j.name === jobName);
+		return (getStaticJobs() as unknown as StaticJob[]).find(
+			(j) => j.name === jobName,
+		);
 	}, [selectedJob, jobs]);
 
 	const jobAwakeningAtCreation = useMemo(() => {
@@ -486,9 +488,9 @@ const CharacterNew = () => {
 			const job = (getStaticJobs() as unknown as StaticJob[]).find(
 				(j: StaticJob) => j.name === dbJob.name,
 			);
-			const bgData = (getStaticBackgrounds() as unknown as StaticBackground[]).find(
-				(b: StaticBackground) => b.name === dbBg.name,
-			);
+			const bgData = (
+				getStaticBackgrounds() as unknown as StaticBackground[]
+			).find((b: StaticBackground) => b.name === dbBg.name);
 
 			if (!job || !bgData) throw new Error("Enhanced data missing");
 

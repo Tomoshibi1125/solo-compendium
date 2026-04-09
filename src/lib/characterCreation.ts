@@ -160,8 +160,8 @@ export function buildItemProperties(item: StaticItem): string[] {
 	}
 	if (item.range && item.range !== "Melee") props.push(`Range ${item.range}`);
 
-	const passive = Array.isArray(item.effects) 
-		? item.effects 
+	const passive = Array.isArray(item.effects)
+		? item.effects
 		: (item.effects as { passive?: string[] })?.passive;
 	if (Array.isArray(passive)) {
 		for (const line of passive) {

@@ -19,7 +19,7 @@ interface ArtifactAbility {
 	action?: string;
 }
 
-interface ArtifactData {
+export interface ArtifactData {
 	id: string;
 	name: string;
 	display_name?: string | null;
@@ -76,12 +76,16 @@ const rarityStyles: Record<string, string> = {
 	divine: "text-rose-400 border-rose-500/40 bg-rose-500/10",
 };
 
-export const ArtifactDetail = ({ data }: { data: any }) => {
-	const artifact = data as ArtifactData;
+export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
+	const artifact = data;
 	const navigate = useNavigate();
-	const displayName = formatRegentVernacular(artifact.display_name || artifact.name);
+	const displayName = formatRegentVernacular(
+		artifact.display_name || artifact.name,
+	);
 	const imageSrc = artifact.image_url || artifact.image || undefined;
-	const rarityStyle = artifact.rarity ? rarityStyles[artifact.rarity] : undefined;
+	const rarityStyle = artifact.rarity
+		? rarityStyles[artifact.rarity]
+		: undefined;
 
 	const abilities = artifact.abilities || undefined;
 	const abilityList: Array<{
@@ -239,7 +243,9 @@ export const ArtifactDetail = ({ data }: { data: any }) => {
 						{artifact.requirements.quest && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>{formatRegentVernacular(artifact.requirements.quest)}</span>
+								<span>
+									{formatRegentVernacular(artifact.requirements.quest)}
+								</span>
 							</li>
 						)}
 					</ul>
@@ -378,8 +384,10 @@ export const ArtifactDetail = ({ data }: { data: any }) => {
 								<div>
 									<p className="text-foreground">
 										Bonus:{" "}
-										{formatRegentVernacular(artifact.mechanics.bonus.type || "")} +
-										{artifact.mechanics.bonus.value}
+										{formatRegentVernacular(
+											artifact.mechanics.bonus.type || "",
+										)}{" "}
+										+{artifact.mechanics.bonus.value}
 									</p>
 									{artifact.mechanics.bonus.ability && (
 										<p className="text-muted-foreground">
@@ -399,12 +407,15 @@ export const ArtifactDetail = ({ data }: { data: any }) => {
 								</div>
 							</div>
 						)}
-						{artifact.mechanics.immunity && artifact.mechanics.immunity.length > 0 && (
-							<p>
-								<span className="text-foreground">Immunity:</span>{" "}
-								{artifact.mechanics.immunity.map(formatRegentVernacular).join(", ")}
-							</p>
-						)}
+						{artifact.mechanics.immunity &&
+							artifact.mechanics.immunity.length > 0 && (
+								<p>
+									<span className="text-foreground">Immunity:</span>{" "}
+									{artifact.mechanics.immunity
+										.map(formatRegentVernacular)
+										.join(", ")}
+								</p>
+							)}
 						{artifact.mechanics.resistance &&
 							artifact.mechanics.resistance.length > 0 && (
 								<p>
@@ -423,16 +434,17 @@ export const ArtifactDetail = ({ data }: { data: any }) => {
 										.join(", ")}
 								</p>
 							)}
-						{artifact.mechanics.special && artifact.mechanics.special.length > 0 && (
-							<div>
-								<p className="text-foreground">Special:</p>
-								<ul className="list-disc list-inside text-muted-foreground">
-									{artifact.mechanics.special.map((entry: string) => (
-										<li key={entry}>{formatRegentVernacular(entry)}</li>
-									))}
-								</ul>
-							</div>
-						)}
+						{artifact.mechanics.special &&
+							artifact.mechanics.special.length > 0 && (
+								<div>
+									<p className="text-foreground">Special:</p>
+									<ul className="list-disc list-inside text-muted-foreground">
+										{artifact.mechanics.special.map((entry: string) => (
+											<li key={entry}>{formatRegentVernacular(entry)}</li>
+										))}
+									</ul>
+								</div>
+							)}
 					</div>
 				</AscendantWindow>
 			)}

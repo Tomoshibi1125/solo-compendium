@@ -57,7 +57,10 @@ export const TechniquesChapter = () => {
 													Activation
 												</h4>
 												<p className="font-mono text-white">
-													{tech.activation && typeof tech.activation === 'object' ? `${tech.activation.cost || tech.activation.type}` : `${tech.activation}`}
+													{tech.activation &&
+													typeof tech.activation === "object"
+														? `${tech.activation.cost || tech.activation.type}`
+														: `${tech.activation}`}
 												</p>
 											</div>
 											{tech.range && (
@@ -66,8 +69,10 @@ export const TechniquesChapter = () => {
 														Range
 													</h4>
 													<p className="font-mono text-white">
-														{typeof tech.range === 'object'
-															? (tech.range.distance ? `${tech.range.distance} ft` : tech.range.type)
+														{typeof tech.range === "object"
+															? tech.range.distance
+																? `${tech.range.distance} ft`
+																: tech.range.type
 															: tech.range}
 													</p>
 												</div>
@@ -75,30 +80,60 @@ export const TechniquesChapter = () => {
 										</div>
 
 										<div className="bg-void/80 p-3 rounded-sm border border-white/5 space-y-2">
-											{typeof tech.effects === 'object' && !Array.isArray(tech.effects) && (tech.effects as unknown as Record<string, string>).primary && (
-												<div className="flex gap-2">
-													<span className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 shrink-0" />
-													<p className="text-slate-300">
-														{(tech.effects as unknown as Record<string, string>).primary}
-													</p>
-												</div>
-											)}
-											{typeof tech.effects === 'object' && !Array.isArray(tech.effects) && (tech.effects as unknown as Record<string, string>).secondary && (
-												<div className="flex gap-2">
-													<span className="w-1.5 h-1.5 bg-red-400/70 rounded-full mt-1 shrink-0" />
-													<p className="text-slate-300">
-														{(tech.effects as unknown as Record<string, string>).secondary}
-													</p>
-												</div>
-											)}
-											{typeof tech.effects === 'object' && !Array.isArray(tech.effects) && (tech.effects as unknown as Record<string, string>).tertiary && (
-												<div className="flex gap-2">
-													<span className="w-1.5 h-1.5 bg-slate-500 rounded-full mt-1 shrink-0" />
-													<p className="text-slate-300">
-														{(tech.effects as unknown as Record<string, string>).tertiary}
-													</p>
-												</div>
-											)}
+											{typeof tech.effects === "object" &&
+												!Array.isArray(tech.effects) &&
+												(tech.effects as unknown as Record<string, string>)
+													.primary && (
+													<div className="flex gap-2">
+														<span className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 shrink-0" />
+														<p className="text-slate-300">
+															{
+																(
+																	tech.effects as unknown as Record<
+																		string,
+																		string
+																	>
+																).primary
+															}
+														</p>
+													</div>
+												)}
+											{typeof tech.effects === "object" &&
+												!Array.isArray(tech.effects) &&
+												(tech.effects as unknown as Record<string, string>)
+													.secondary && (
+													<div className="flex gap-2">
+														<span className="w-1.5 h-1.5 bg-red-400/70 rounded-full mt-1 shrink-0" />
+														<p className="text-slate-300">
+															{
+																(
+																	tech.effects as unknown as Record<
+																		string,
+																		string
+																	>
+																).secondary
+															}
+														</p>
+													</div>
+												)}
+											{typeof tech.effects === "object" &&
+												!Array.isArray(tech.effects) &&
+												(tech.effects as unknown as Record<string, string>)
+													.tertiary && (
+													<div className="flex gap-2">
+														<span className="w-1.5 h-1.5 bg-slate-500 rounded-full mt-1 shrink-0" />
+														<p className="text-slate-300">
+															{
+																(
+																	tech.effects as unknown as Record<
+																		string,
+																		string
+																	>
+																).tertiary
+															}
+														</p>
+													</div>
+												)}
 										</div>
 
 										<div className="flex justify-between items-center text-[10px] font-mono text-slate-500 pt-3 border-t border-white/10">

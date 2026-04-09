@@ -74,7 +74,11 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 		typeof Anomaly.stats?.challenge_rating === "number"
 			? String(Anomaly.stats.challenge_rating)
 			: RANK_CR_MAP[Anomaly.rank || "D"] || "1";
-	const hitPoints = toNumber(Anomaly.hp ?? (Anomaly as unknown as Record<string, unknown>).hit_points as number, 1);
+	const hitPoints = toNumber(
+		Anomaly.hp ??
+			((Anomaly as unknown as Record<string, unknown>).hit_points as number),
+		1,
+	);
 
 	return {
 		id: Anomaly.id,
@@ -91,7 +95,11 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 		gate_rank: Anomaly.rank || null,
 		is_boss: Anomaly.rank === "S" || Anomaly.rank === "A",
 		creature_type: Anomaly.type || "Unknown",
-		armor_class: toNumber(Anomaly.ac ?? (Anomaly as unknown as Record<string, unknown>).armor_class as number, 10),
+		armor_class: toNumber(
+			Anomaly.ac ??
+				((Anomaly as unknown as Record<string, unknown>).armor_class as number),
+			10,
+		),
 		hit_points_average: hitPoints,
 		hit_points_formula: "1d8",
 		size: "Medium",

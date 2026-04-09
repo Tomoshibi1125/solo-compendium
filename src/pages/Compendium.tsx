@@ -1384,7 +1384,7 @@ const Compendium = () => {
 												</h3>
 												<AscendantText className="block text-sm text-muted-foreground line-clamp-2">
 													{highlightText(
-														entry.description,
+														entry.description || "",
 														filters.searchQuery,
 													)}
 												</AscendantText>
@@ -1435,7 +1435,7 @@ const Compendium = () => {
 													</h3>
 													<AscendantText className="block text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
 														{highlightText(
-															entry.description,
+															entry.description || "",
 															filters.searchQuery,
 														)}
 													</AscendantText>

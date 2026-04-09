@@ -26,7 +26,7 @@ import {
 } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
-import { useCharacterRuneInscriptions } from "@/hooks/useRunes";
+
 import { useCharacterSigilInscriptions } from "@/hooks/useSigils";
 import { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
@@ -189,9 +189,7 @@ export function useCharacterPageModel() {
 	);
 
 	const undoRedo = useCharacterUndoRedo(character ?? null);
-	const { data: activeRunes = [] } = useCharacterRuneInscriptions(
-		character?.id,
-	);
+
 	const { data: activeSigilInscriptions = [] } = useCharacterSigilInscriptions(
 		character?.id,
 	);
@@ -288,7 +286,7 @@ export function useCharacterPageModel() {
 	const memoizedStats = useCharacterDerivedStats(
 		character as CharacterWithAbilities | null,
 		equipment,
-		activeRunes,
+
 		activeSigilInscriptions,
 		customModifiers,
 	);

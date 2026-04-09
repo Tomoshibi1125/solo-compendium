@@ -44,7 +44,7 @@ export function useOfflineCacheWarmer() {
 								offlineStorage.storeCompendiumItem({
 									id: entry.id,
 									name: entry.name,
-									description: entry.description,
+									description: entry.description ?? undefined,
 									type: entry.type,
 									source_book: entry.source_book,
 									rarity: entry.rarity,

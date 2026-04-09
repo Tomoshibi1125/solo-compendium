@@ -19,10 +19,10 @@ import {
 	setPendingResolution,
 } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import type { 
-	CompendiumMechanics, 
+import type {
+	CompendiumEffects,
+	CompendiumMechanics,
 	CompendiumSpell,
-	CompendiumEffects
 } from "@/types/compendium";
 
 export interface SpellData extends CompendiumSpell {}
@@ -62,23 +62,35 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 
 	const rankBonus = (rank: string | null | undefined): number => {
 		switch (rank) {
-			case "S": return 11;
-			case "A": return 9;
-			case "B": return 7;
-			case "C": return 5;
-			case "D": return 3;
-			default: return 5;
+			case "S":
+				return 11;
+			case "A":
+				return 9;
+			case "B":
+				return 7;
+			case "C":
+				return 5;
+			case "D":
+				return 3;
+			default:
+				return 5;
 		}
 	};
 
 	const rankSaveDC = (rank: string | null | undefined): number => {
 		switch (rank) {
-			case "S": return 18;
-			case "A": return 16;
-			case "B": return 14;
-			case "C": return 13;
-			case "D": return 12;
-			default: return 13;
+			case "S":
+				return 18;
+			case "A":
+				return 16;
+			case "B":
+				return 14;
+			case "C":
+				return 13;
+			case "D":
+				return 12;
+			default:
+				return 13;
 		}
 	};
 
@@ -87,7 +99,8 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 		const id = crypto.randomUUID();
 		const name = displayName;
 
-		const damageRoll = typeof m?.attack?.damage === "string" ? m.attack.damage : null;
+		const damageRoll =
+			typeof m?.attack?.damage === "string" ? m.attack.damage : null;
 		const healingRoll = m?.healing?.dice ?? null;
 
 		if (m?.attack) {
@@ -102,13 +115,21 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 				damage: damageRoll ? { roll: String(damageRoll) } : undefined,
 				appliesConditions: Array.isArray(m?.condition)
 					? m.condition
-					: typeof m?.condition === "string" ? [m.condition] : undefined,
+					: typeof m?.condition === "string"
+						? [m.condition]
+						: undefined,
 			};
 		}
 
 		if (m?.saving_throw) {
-			const dc = typeof m.saving_throw.dc === "number" ? m.saving_throw.dc : rankSaveDC(data.rank);
-			const ability = typeof m.saving_throw.ability === "string" ? m.saving_throw.ability : undefined;
+			const dc =
+				typeof m.saving_throw.dc === "number"
+					? m.saving_throw.dc
+					: rankSaveDC(data.rank);
+			const ability =
+				typeof m.saving_throw.ability === "string"
+					? m.saving_throw.ability
+					: undefined;
 
 			return {
 				version: 1,
@@ -120,7 +141,9 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 				damage: damageRoll ? { roll: String(damageRoll) } : undefined,
 				appliesConditions: Array.isArray(m?.condition)
 					? (m.condition as string[])
-					: typeof m?.condition === "string" ? [m.condition] : undefined,
+					: typeof m?.condition === "string"
+						? [m.condition]
+						: undefined,
 			};
 		}
 
@@ -155,7 +178,9 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						size="large"
 						aspectRatio="square"
 						className="max-w-md"
-						fallbackIcon={<Sparkles className="w-32 h-32 text-muted-foreground" />}
+						fallbackIcon={
+							<Sparkles className="w-32 h-32 text-muted-foreground" />
+						}
 					/>
 				</div>
 			)}
@@ -166,24 +191,35 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
-						<Badge variant="secondary">{formatRegentVernacular(data.school)}</Badge>
+						<Badge variant="secondary">
+							{formatRegentVernacular(data.school)}
+						</Badge>
 						{data.rank && (
 							<Badge variant="outline" className={rankStyle}>
 								Rank {data.rank}
 							</Badge>
 						)}
 						{data.source_book && (
-							<Badge variant="outline">{formatRegentVernacular(data.source_book)}</Badge>
+							<Badge variant="outline">
+								{formatRegentVernacular(data.source_book)}
+							</Badge>
 						)}
 					</div>
 
 					<div className="flex flex-wrap gap-2">
-						<Button variant="outline" onClick={() => queueResolutionAndNavigate("/dice")}>
+						<Button
+							variant="outline"
+							onClick={() => queueResolutionAndNavigate("/dice")}
+						>
 							Roll
 						</Button>
 						<Button
 							variant="outline"
-							onClick={() => queueResolutionAndNavigate("/warden-directives/initiative-tracker")}
+							onClick={() =>
+								queueResolutionAndNavigate(
+									"/warden-directives/initiative-tracker",
+								)
+							}
 						>
 							Resolve in Initiative
 						</Button>
@@ -191,12 +227,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 				</div>
 			</AscendantWindow>
 
-			<div id="spell-stats" className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4">
+			<div
+				id="spell-stats"
+				className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4"
+			>
 				{rangeText && (
 					<AscendantWindow title="RANGE" compact>
 						<div className="flex items-center gap-2">
 							<Target className="w-5 h-5 text-emerald-400" />
-							<span className="font-heading">{formatRegentVernacular(rangeText)}</span>
+							<span className="font-heading">
+								{formatRegentVernacular(rangeText)}
+							</span>
 						</div>
 					</AscendantWindow>
 				)}
@@ -209,7 +250,11 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<div className="flex items-center gap-2">
 								<Zap className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(typeof activation === "string" ? activation : activation.type)}
+									{formatRegentVernacular(
+										typeof activation === "string"
+											? activation
+											: activation.type,
+									)}
 								</span>
 							</div>
 							{typeof activation === "object" && activation.cost && (
@@ -224,12 +269,15 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<div className="flex items-center gap-2">
 								<Timer className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(typeof duration === "string" ? duration : duration.type)}
+									{formatRegentVernacular(
+										typeof duration === "string" ? duration : duration.type,
+									)}
 								</span>
 							</div>
 							{typeof duration === "object" && (
 								<span className="text-xs text-muted-foreground">
-									{duration.value}{duration.unit ? ` ${duration.unit}` : ""}
+									{duration.value}
+									{duration.unit ? ` ${duration.unit}` : ""}
 								</span>
 							)}
 						</AscendantWindow>
@@ -244,11 +292,16 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 									{components.material ? "M" : ""}
 								</span>
 							</div>
-							{components.material && typeof components.material === "string" && (
-								<p className="text-xs text-muted-foreground mt-1">{components.material}</p>
-							)}
+							{components.material &&
+								typeof components.material === "string" && (
+									<p className="text-xs text-muted-foreground mt-1">
+										{components.material}
+									</p>
+								)}
 							{components.focus && (
-								<p className="text-xs text-muted-foreground italic mt-0.5">Focus: {components.focus}</p>
+								<p className="text-xs text-muted-foreground italic mt-0.5">
+									Focus: {components.focus}
+								</p>
 							)}
 						</AscendantWindow>
 					)}
@@ -261,21 +314,27 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						{(effects as CompendiumEffects).primary && (
 							<div className="border-l-2 border-primary/50 pl-3">
 								<p className="text-foreground">
-									<AutoLinkText text={(effects as CompendiumEffects).primary || ""} />
+									<AutoLinkText
+										text={(effects as CompendiumEffects).primary || ""}
+									/>
 								</p>
 							</div>
 						)}
 						{(effects as CompendiumEffects).secondary && (
 							<div className="border-l-2 border-secondary/50 pl-3">
 								<p className="text-muted-foreground">
-									<AutoLinkText text={(effects as CompendiumEffects).secondary || ""} />
+									<AutoLinkText
+										text={(effects as CompendiumEffects).secondary || ""}
+									/>
 								</p>
 							</div>
 						)}
 						{(effects as CompendiumEffects).tertiary && (
 							<div className="border-l-2 border-muted-foreground/50 pl-3">
 								<p className="text-xs text-muted-foreground">
-									<AutoLinkText text={(effects as CompendiumEffects).tertiary || ""} />
+									<AutoLinkText
+										text={(effects as CompendiumEffects).tertiary || ""}
+									/>
 								</p>
 							</div>
 						)}
@@ -294,8 +353,16 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 										{formatRegentVernacular(mechanics.attack.type || "")} attack
 									</p>
 									<p className="text-sm text-muted-foreground">
-										{mechanics.attack.damage ? formatRegentVernacular(`Damage: ${typeof mechanics.attack.damage === 'string' ? mechanics.attack.damage : mechanics.attack.damage.dice}`) : "Damage varies"}
-										{mechanics.attack.modifier ? formatRegentVernacular(` | Modifier: ${mechanics.attack.modifier}`) : ""}
+										{mechanics.attack.damage
+											? formatRegentVernacular(
+													`Damage: ${typeof mechanics.attack.damage === "string" ? mechanics.attack.damage : mechanics.attack.damage.dice}`,
+												)
+											: "Damage varies"}
+										{mechanics.attack.modifier
+											? formatRegentVernacular(
+													` | Modifier: ${mechanics.attack.modifier}`,
+												)
+											: ""}
 									</p>
 								</div>
 							</div>
@@ -305,11 +372,19 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">
-										{formatRegentVernacular(String(mechanics.saving_throw.ability || ""))} Save
+										{formatRegentVernacular(
+											String(mechanics.saving_throw.ability || ""),
+										)}{" "}
+										Save
 									</p>
-									<p className="text-sm text-muted-foreground">DC {mechanics.saving_throw.dc}</p>
+									<p className="text-sm text-muted-foreground">
+										DC {mechanics.saving_throw.dc}
+									</p>
 									{mechanics.saving_throw.success && (
-										<p className="text-xs text-muted-foreground">Success: {formatRegentVernacular(mechanics.saving_throw.success)}</p>
+										<p className="text-xs text-muted-foreground">
+											Success:{" "}
+											{formatRegentVernacular(mechanics.saving_throw.success)}
+										</p>
 									)}
 								</div>
 							</div>
@@ -318,22 +393,32 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<div className="flex items-start gap-2">
 								<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
 								<div>
-									<p className="font-heading capitalize">{formatRegentVernacular(mechanics.movement.type || "")} movement</p>
+									<p className="font-heading capitalize">
+										{formatRegentVernacular(mechanics.movement.type || "")}{" "}
+										movement
+									</p>
 									{mechanics.movement.distance !== undefined && (
-										<p className="text-sm text-muted-foreground">{mechanics.movement.distance} ft</p>
+										<p className="text-sm text-muted-foreground">
+											{mechanics.movement.distance} ft
+										</p>
 									)}
 								</div>
 							</div>
 						)}
-						{Array.isArray(mechanics.condition) && mechanics.condition.length > 0 && (
-							<div className="flex items-start gap-2">
-								<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-								<div>
-									<p className="font-heading">Conditions</p>
-									<p className="text-sm text-muted-foreground">{mechanics.condition.map(formatRegentVernacular).join(", ")}</p>
+						{Array.isArray(mechanics.condition) &&
+							mechanics.condition.length > 0 && (
+								<div className="flex items-start gap-2">
+									<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading">Conditions</p>
+										<p className="text-sm text-muted-foreground">
+											{mechanics.condition
+												.map(formatRegentVernacular)
+												.join(", ")}
+										</p>
+									</div>
 								</div>
-							</div>
-						)}
+							)}
 					</div>
 				</AscendantWindow>
 			)}
@@ -350,13 +435,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						{limitations.recharge && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Recharge: {formatRegentVernacular(limitations.recharge)}</span>
+								<span>
+									Recharge: {formatRegentVernacular(limitations.recharge)}
+								</span>
 							</li>
 						)}
 						{limitations.exhaustion && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Exhaustion: {formatRegentVernacular(limitations.exhaustion)}</span>
+								<span>
+									Exhaustion: {formatRegentVernacular(limitations.exhaustion)}
+								</span>
 							</li>
 						)}
 					</ul>
@@ -366,7 +455,9 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{(data.higher_levels || data.atHigherLevels) && (
 				<AscendantWindow title="AT HIGHER TIERS">
 					<p className="text-foreground leading-relaxed">
-						<AutoLinkText text={data.higher_levels || data.atHigherLevels || ""} />
+						<AutoLinkText
+							text={data.higher_levels || data.atHigherLevels || ""}
+						/>
 					</p>
 				</AscendantWindow>
 			)}
@@ -378,9 +469,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					</p>
 					{data.lore && (
 						<div className="mt-6 pt-4 border-t border-cyan/10">
-							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">Historical Record</h4>
+							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+								Historical Record
+							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText text={typeof data.lore === "string" ? data.lore : data.lore?.history || ""} />
+								<AutoLinkText
+									text={
+										typeof data.lore === "string"
+											? data.lore
+											: data.lore?.history || ""
+									}
+								/>
 							</p>
 						</div>
 					)}

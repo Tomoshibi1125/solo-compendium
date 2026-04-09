@@ -494,7 +494,10 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 						{ name: "STR", value: data.stats?.ability_scores?.strength ?? 10 },
 						{ name: "AGI", value: data.stats?.ability_scores?.agility ?? 10 },
 						{ name: "VIT", value: data.stats?.ability_scores?.vitality ?? 10 },
-						{ name: "INT", value: data.stats?.ability_scores?.intelligence ?? 10 },
+						{
+							name: "INT",
+							value: data.stats?.ability_scores?.intelligence ?? 10,
+						},
 						{ name: "SENSE", value: data.stats?.ability_scores?.sense ?? 10 },
 						{ name: "PRE", value: data.stats?.ability_scores?.presence ?? 10 },
 					].map((stat) => (

@@ -3,7 +3,10 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { AnomalyDetail } from "@/components/compendium/AnomalyDetail";
-import { ArtifactDetail } from "@/components/compendium/ArtifactDetail";
+import {
+	type ArtifactData,
+	ArtifactDetail,
+} from "@/components/compendium/ArtifactDetail";
 import { BackgroundDetail } from "@/components/compendium/BackgroundDetail";
 import { Breadcrumbs } from "@/components/compendium/Breadcrumbs";
 import { ConditionDetail } from "@/components/compendium/ConditionDetail";
@@ -11,7 +14,7 @@ import { DeityDetail } from "@/components/compendium/DeityDetail";
 import { DetailLayout } from "@/components/compendium/DetailLayout";
 import { EquipmentDetail } from "@/components/compendium/EquipmentDetail";
 import { FeatDetail } from "@/components/compendium/FeatDetail";
-import { ItemDetail } from "@/components/compendium/ItemDetail";
+import { type ItemData, ItemDetail } from "@/components/compendium/ItemDetail";
 import { JobDetail } from "@/components/compendium/JobDetail";
 import { LocationDetail } from "@/components/compendium/LocationDetail";
 import { PathDetail } from "@/components/compendium/PathDetail";
@@ -59,10 +62,11 @@ import type {
 	CompendiumRegent,
 	CompendiumRelic,
 	CompendiumRune,
+	CompendiumShadowSoldier,
+	CompendiumSigil,
 	CompendiumSkill,
 	CompendiumSovereign,
 	CompendiumSpell,
-	CompendiumShadowSoldier,
 	CompendiumTattoo,
 	CompendiumTechnique,
 } from "@/types/compendium";
@@ -317,7 +321,7 @@ const CompendiumDetail = () => {
 				return <SkillDetail data={e} />;
 			}
 			case "items": {
-				const e = entry as CompendiumItem;
+				const e = entry as unknown as ItemData;
 				return <ItemDetail data={e} />;
 			}
 			case "spells": {
@@ -337,7 +341,7 @@ const CompendiumDetail = () => {
 				return <RelicDetail data={e} />;
 			}
 			case "sigils": {
-				const e = entry as CompendiumRune;
+				const e = entry as CompendiumSigil;
 				return <SigilDetail data={e} />;
 			}
 			case "tattoos": {
@@ -353,7 +357,9 @@ const CompendiumDetail = () => {
 				return <ShadowSoldierDetail data={e} />;
 			}
 			case "artifacts": {
-				const e = entry as CompendiumItem;
+				// ArtifactDetail defines its own ArtifactData locally,
+				// but it expects the data prop to match its interface.
+				const e = entry as unknown as ArtifactData;
 				return <ArtifactDetail data={e} />;
 			}
 			case "sovereigns": {

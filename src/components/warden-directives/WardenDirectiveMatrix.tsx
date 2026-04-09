@@ -28,8 +28,6 @@ import type {
 	AssetManifest,
 	AssetMapping,
 } from "@/data/compendium/assetManifest";
-import type { CompendiumBackground as Background } from "@/types/compendium";
-import type { CompendiumLocation as Location } from "@/types/compendium";
 import type { AIEnhanceResult } from "@/hooks/useAIEnhance";
 import type {
 	ArmorCategory,
@@ -201,7 +199,12 @@ import type {
 } from "@/lib/vtt";
 import * as vttCore from "@/lib/vtt";
 import type { CharacterCreateRequest } from "@/types/character";
-import type { BaseCompendiumItem, CompendiumPath } from "@/types/compendium";
+import type {
+	CompendiumBackground as Background,
+	BaseCompendiumItem,
+	CompendiumPath,
+	CompendiumLocation as Location,
+} from "@/types/compendium";
 import type { Anomaly } from "@/types/core-rules";
 
 /**

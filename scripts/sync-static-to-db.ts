@@ -1,4 +1,4 @@
-﻿/**
+/**
  * sync-static-to-db.ts â€” Seed Supabase compendium tables from static TS data.
  *
  * Objective: 100% data parity between static TS source and Supabase.
@@ -288,6 +288,7 @@ async function syncRunes() {
 			martial_penalty: m.martial_penalty || null,
 			passive_bonuses: castToJson(m.passive_bonuses),
 			effect_description: m.effect_description || m.description || "",
+			can_inscribe_on: castToStringArray(m.can_inscribe_on),
 		});
 	}
 

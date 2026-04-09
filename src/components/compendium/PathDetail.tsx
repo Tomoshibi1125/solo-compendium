@@ -171,7 +171,9 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 						<p className="text-sm text-muted-foreground leading-relaxed">
 							<AutoLinkText
 								text={
-									typeof data.lore === "string" ? data.lore : data.lore?.history || ""
+									typeof data.lore === "string"
+										? data.lore
+										: data.lore?.history || ""
 								}
 							/>
 						</p>

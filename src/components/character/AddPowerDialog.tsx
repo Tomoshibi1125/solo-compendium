@@ -168,9 +168,9 @@ export function AddPowerDialog({
 					if ((spell.level ?? 0) > maxPowerLevel) return false;
 					// Job filter matches if job is in the tags list (or allow all if none specified)
 					const tags = spell.tags || [];
-					const matches = tags.length === 0 || tags.some(
-						(c: string) => c.toLowerCase() === jobNameLower,
-					);
+					const matches =
+						tags.length === 0 ||
+						tags.some((c: string) => c.toLowerCase() === jobNameLower);
 					if (!matches) return false;
 
 					return true;
@@ -183,12 +183,16 @@ export function AddPowerDialog({
 				description: spell.description ?? "",
 				power_level: spell.level ?? 0,
 				school: spell.school ?? null,
-				casting_time: typeof spell.casting_time === "string" ? spell.casting_time : "1 action",
+				casting_time:
+					typeof spell.casting_time === "string"
+						? spell.casting_time
+						: "1 action",
 				range: typeof spell.range === "string" ? spell.range : "Self",
 				duration:
 					typeof spell.duration === "string" ? spell.duration : "Instantaneous",
 				concentration: spell.concentration ?? false,
-				higher_levels: typeof spell.higher_levels === "string" ? spell.higher_levels : null,
+				higher_levels:
+					typeof spell.higher_levels === "string" ? spell.higher_levels : null,
 				source_book: "Rift Ascendant Canon",
 				source_name: null,
 				source_kind: null,

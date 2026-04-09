@@ -13,8 +13,8 @@ const getModifier = (val: number | undefined) => {
 
 export const SourceBookStatBlock: React.FC<StatBlockProps> = ({ Anomaly }) => {
 	// Fallback to top-level or nested stats
-	const ac = Anomaly.ac ?? (Anomaly as any).armor_class ?? 10;
-	const hp = Anomaly.hp ?? (Anomaly as any).hit_points ?? 10;
+	const ac = Anomaly.ac ?? Anomaly.armor_class ?? 10;
+	const hp = Anomaly.hp ?? Anomaly.hit_points ?? 10;
 	const speed = Anomaly.speed ?? "30 ft.";
 
 	const abilityScores = Anomaly.stats?.ability_scores || {

@@ -127,46 +127,6 @@ export async function canInscribeRune(
 			};
 		}
 
-		// Check requirements
-		const abilities = (
-			(character.abilities as Array<{ ability: string; score: number }>) || []
-		).reduce(
-			(acc, ab) => {
-				acc[ab.ability] = ab.score;
-				return acc;
-			},
-			{} as Record<string, number>,
-		);
-
-		const requirements = [
-			{ ability: "STR", score: rune.requirement_str || 0 },
-			{ ability: "AGI", score: rune.requirement_agi || 0 },
-			{ ability: "VIT", score: rune.requirement_vit || 0 },
-			{ ability: "INT", score: rune.requirement_int || 0 },
-			{ ability: "SENSE", score: rune.requirement_sense || 0 },
-			{ ability: "PRE", score: rune.requirement_pre || 0 },
-		];
-
-		for (const req of requirements) {
-			if (req.score > 0) {
-				const abilityScore = abilities[req.ability] || 0;
-				if (abilityScore < req.score) {
-					return {
-						canInscribe: false,
-						reason: `Requires ${req.ability} ${req.score} (have ${abilityScore})`,
-					};
-				}
-			}
-		}
-
-		// Check level requirement
-		if (rune.requires_level && character.level < rune.requires_level) {
-			return {
-				canInscribe: false,
-				reason: `Requires level ${rune.requires_level} (have ${character.level})`,
-			};
-		}
-
 		return { canInscribe: true };
 	} catch (error) {
 		logger.error("Failed to check rune inscription:", error);

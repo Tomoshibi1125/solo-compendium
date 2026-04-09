@@ -46,7 +46,9 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 				source: { type: "power", entryId: data.id },
 				kind: "attack",
 				attack: { roll: "1d20+5" }, // Defaulting to +5 for mechanical consistency if not specified
-				damage: data.damage_roll ? { roll: data.damage_roll, type: data.damage_type } : undefined,
+				damage: data.damage_roll
+					? { roll: data.damage_roll, type: data.damage_type }
+					: undefined,
 			});
 			navigate("/dice");
 		} else if (data.has_save) {
@@ -57,7 +59,9 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 				source: { type: "power", entryId: data.id },
 				kind: "save",
 				save: { dc: 15, ability: data.save_ability, roll: "1d20" }, // Defaulting to DC 15
-				damage: data.damage_roll ? { roll: data.damage_roll, type: data.damage_type } : undefined,
+				damage: data.damage_roll
+					? { roll: data.damage_roll, type: data.damage_type }
+					: undefined,
 			});
 			navigate("/dice");
 		}
@@ -99,16 +103,19 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 							{data.ritual && <Badge variant="outline">Ritual</Badge>}
 						</div>
 
-						{data.tags && data.tags.filter(t => t.startsWith("job:")).length > 0 && (
-							<div className="flex flex-wrap gap-2">
-								<span className="text-sm text-muted-foreground">Jobs:</span>
-								{data.tags.filter(t => t.startsWith("job:")).map((job) => (
-									<Badge key={job} variant="outline" className="text-xs">
-										{formatRegentVernacular(job.replace("job:", ""))}
-									</Badge>
-								))}
-							</div>
-						)}
+						{data.tags &&
+							data.tags.filter((t) => t.startsWith("job:")).length > 0 && (
+								<div className="flex flex-wrap gap-2">
+									<span className="text-sm text-muted-foreground">Jobs:</span>
+									{data.tags
+										.filter((t) => t.startsWith("job:"))
+										.map((job) => (
+											<Badge key={job} variant="outline" className="text-xs">
+												{formatRegentVernacular(job.replace("job:", ""))}
+											</Badge>
+										))}
+								</div>
+							)}
 
 						{(data.has_attack_roll || data.has_save) && (
 							<div className="pt-2">
@@ -137,7 +144,11 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Target className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatRegentVernacular(data.range || "Self")}
+							{formatRegentVernacular(
+								(typeof data.range === "string"
+									? data.range
+									: (data.range as { type?: string })?.type) || "Self",
+							)}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -146,7 +157,12 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Timer className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatRegentVernacular(data.duration || "Instantaneous")}
+							{formatRegentVernacular(
+								(typeof data.duration === "string"
+									? data.duration
+									: (data.duration as { value?: string })?.value) ||
+									"Instantaneous",
+							)}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -155,7 +171,8 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Zap className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{data.tags?.filter(t => !t.startsWith("job:")).join(", ") || "None"}
+							{data.tags?.filter((t) => !t.startsWith("job:")).join(", ") ||
+								"None"}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -179,7 +196,9 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 						<p className="text-sm text-muted-foreground leading-relaxed">
 							<AutoLinkText
 								text={
-									typeof data.lore === "string" ? data.lore : data.lore?.history || ""
+									typeof data.lore === "string"
+										? data.lore
+										: data.lore?.history || ""
 								}
 							/>
 						</p>

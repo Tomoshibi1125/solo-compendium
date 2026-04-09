@@ -8,7 +8,7 @@ import { useCharacterSheetState } from "./useCharacterSheetState";
 import { type CharacterWithAbilities, useCharacters } from "./useCharacters";
 import { useEquipment } from "./useEquipment";
 import { usePowers } from "./usePowers";
-import { useRunes } from "./useRunes";
+
 import { useSigils } from "./useSigils";
 import { useTechniques } from "./useTechniques";
 
@@ -72,7 +72,7 @@ export const useCombatActions = (characterId: string) => {
 	const { powers, isLoading: powersLoading } = usePowers(characterId);
 	const { techniques, isLoading: techniquesLoading } =
 		useTechniques(characterId);
-	const { data: runes, isLoading: runesLoading } = useRunes(characterId);
+
 	const { data: sigils, isLoading: sigilsLoading } = useSigils(
 		characterId || "",
 	);
@@ -81,17 +81,13 @@ export const useCombatActions = (characterId: string) => {
 	const derivedStats = useCharacterDerivedStats(
 		character,
 		equipment || [],
-		runes || [],
+
 		sigils || [],
 		sheetState.customModifiers || [],
 	);
 
 	const isLoading =
-		equipmentLoading ||
-		powersLoading ||
-		techniquesLoading ||
-		runesLoading ||
-		sigilsLoading;
+		equipmentLoading || powersLoading || techniquesLoading || sigilsLoading;
 
 	const actions = useMemo(() => {
 		if (!character || !derivedStats) return [];
@@ -250,7 +246,12 @@ export const useCombatActions = (characterId: string) => {
 				type: powerData.power_type === "Spell" ? "spell" : "power",
 				description: p.description || powerData.description || "",
 				activation: powerData.activation_time || p.casting_time || "1 action",
-				range: p.range || powerData.range || "Self",
+				range:
+					typeof p.range === "string"
+						? p.range
+						: typeof powerData.range === "string"
+							? powerData.range
+							: "Self",
 				target: target,
 				attackBonus: powerData.has_attack_roll ? attackBonus : undefined,
 				saveDC: powerData.has_save ? saveDC : undefined,
@@ -304,8 +305,16 @@ export const useCombatActions = (characterId: string) => {
 				name: techData.name,
 				type: "technique",
 				description: techData.description || "",
-				activation: typeof techData.activation === "string" ? techData.activation : (techData.activation?.type || "1 action"),
-				range: typeof techData.range === "string" ? techData.range : (techData.range?.type ? `${techData.range.type} ${techData.range.distance || ""}`.trim() : "5 ft"),
+				activation:
+					typeof techData.activation === "string"
+						? techData.activation
+						: techData.activation?.type || "1 action",
+				range:
+					typeof techData.range === "string"
+						? techData.range
+						: techData.range?.type
+							? `${techData.range.type} ${techData.range.distance || ""}`.trim()
+							: "5 ft",
 				target: (mechanics.target as string) || "",
 				saveDC: mechanics.save_ability ? saveDC : undefined,
 				saveAbility: mechanics.save_ability as AbilityScore,

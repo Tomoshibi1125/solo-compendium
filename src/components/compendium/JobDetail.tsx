@@ -8,9 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import { DetailHeader } from "./DetailHeader";
-
 import type { CompendiumJob } from "@/types/compendium";
+import { DetailHeader } from "./DetailHeader";
 
 interface JobData extends CompendiumJob {}
 
@@ -85,10 +84,18 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				await Promise.all([
 					filterRowsBySourcebookAccess(
 						featureRows,
-						(feature: JobFeature & { source_name?: string | null }) => feature.source_name,
+						(feature: JobFeature & { source_name?: string | null }) =>
+							feature.source_name,
 					),
-					filterRowsBySourcebookAccess(pathRows, (path: JobPath & { source_book?: string | null }) => path.source_book),
-					filterRowsBySourcebookAccess(powerRows, (power: { source_book?: string | null }) => power.source_book),
+					filterRowsBySourcebookAccess(
+						pathRows,
+						(path: JobPath & { source_book?: string | null }) =>
+							path.source_book,
+					),
+					filterRowsBySourcebookAccess(
+						powerRows,
+						(power: { source_book?: string | null }) => power.source_book,
+					),
 				]);
 
 			setFeatures(
@@ -100,12 +107,19 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			);
 			setPaths(accessiblePaths);
 			setRelatedPowers(
-				accessiblePowers.map((power: { id: string; name: string; display_name?: string | null; power_level: number }) => ({
-					id: power.id,
-					name: power.name,
-					display_name: power.display_name ?? null,
-					power_level: power.power_level,
-				})),
+				accessiblePowers.map(
+					(power: {
+						id: string;
+						name: string;
+						display_name?: string | null;
+						power_level: number;
+					}) => ({
+						id: power.id,
+						name: power.name,
+						display_name: power.display_name ?? null,
+						power_level: power.power_level,
+					}),
+				),
 			);
 		};
 
@@ -162,7 +176,9 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							<p className="text-sm text-muted-foreground leading-relaxed">
 								<AutoLinkText
 									text={
-										typeof data.lore === "string" ? data.lore : data.lore?.history || ""
+										typeof data.lore === "string"
+											? data.lore
+											: data.lore?.history || ""
 									}
 								/>
 							</p>
@@ -241,9 +257,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								<span className="text-sm text-muted-foreground">
 									At 1st Level:{" "}
 								</span>
-								<span className="font-heading">
-									{data.hp_at_level_1}
-								</span>
+								<span className="font-heading">{data.hp_at_level_1}</span>
 							</div>
 						)}
 						{data.hp_at_higher_levels && (
@@ -251,9 +265,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								<span className="text-sm text-muted-foreground">
 									At Higher Levels:{" "}
 								</span>
-								<span className="font-heading">
-									{data.hp_at_higher_levels}
-								</span>
+								<span className="font-heading">{data.hp_at_higher_levels}</span>
 							</div>
 						)}
 					</div>
@@ -359,7 +371,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			{data.regent_requirements && (
 				<AscendantWindow title="REGENT PREREQUISITES">
 					<p className="font-heading italic">
-						{data.regent_requirements.quest_completion || "Designated Regent Quest required."}
+						{data.regent_requirements.quest_completion ||
+							"Designated Regent Quest required."}
 					</p>
 				</AscendantWindow>
 			)}

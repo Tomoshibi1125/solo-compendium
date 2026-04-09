@@ -1,9 +1,28 @@
+export interface CompendiumValue {
+	type?: string;
+	value?: number | string;
+	unit?: string;
+	distance?: string | number;
+	cost?: number | string;
+}
+
+export type CompendiumRange = CompendiumValue | string;
+export type CompendiumDuration = CompendiumValue | string;
+export type CompendiumActivation = CompendiumValue | string;
+
+export interface CompendiumComponents {
+	verbal?: boolean;
+	somatic?: boolean;
+	material?: string | boolean;
+	focus?: string | boolean;
+}
+
 export interface CompendiumMechanics {
 	action_type?: string;
-	duration?: string;
+	duration?: string | CompendiumDuration;
 	save_dc?: number;
 	damage_profile?: string;
-	range?: string;
+	range?: string | CompendiumRange;
 	lattice_interaction?: string;
 	type?: string;
 	frequency?: string;
@@ -40,7 +59,15 @@ export interface CompendiumMechanics {
 	critical?: boolean;
 	fumble?: boolean;
 	bonus?: {
-		type?: "damage" | "attack" | "AC" | "saving-throws" | "ability-checks" | "skill-checks" | "none" | "";
+		type?:
+			| "damage"
+			| "attack"
+			| "AC"
+			| "saving-throws"
+			| "ability-checks"
+			| "skill-checks"
+			| "none"
+			| "";
 		value?: number;
 		ability?: string;
 		skills?: string[];
@@ -94,6 +121,18 @@ export interface CompendiumLore {
 	prior_owners: string[];
 }
 
+export interface CompendiumProperties {
+	[key: string]: string | number | boolean | string[] | undefined;
+}
+
+export interface ArtifactAbility {
+	name: string;
+	description?: string;
+	type: string;
+	frequency?: string;
+	action?: string;
+}
+
 export interface BaseCompendiumItem {
 	id: string;
 	name: string;
@@ -143,6 +182,33 @@ export interface CompendiumDeity extends BaseCompendiumItem {
 	}> | null;
 }
 
+export interface AnomalyTrait {
+	id?: string;
+	name: string;
+	description: string;
+}
+
+export interface AnomalyAction {
+	id?: string;
+	name: string;
+	description: string;
+	action_type:
+		| "action"
+		| "bonus"
+		| "reaction"
+		| "legendary"
+		| "mythic"
+		| "lair";
+	attack_bonus?: number;
+	damage?: string;
+	damage_type?: string;
+	recharge?: string;
+	legendary_cost?: number;
+	save?: string;
+	dc?: number;
+	usage?: string;
+}
+
 export interface CompendiumAnomaly extends BaseCompendiumItem {
 	type: string;
 	rank: string;
@@ -170,26 +236,8 @@ export interface CompendiumAnomaly extends BaseCompendiumItem {
 	condition_immunities?: string[];
 	senses?: string;
 	languages?: string;
-	traits?: Array<{
-		name?: string;
-		description?: string;
-		action?: string;
-		frequency?: string;
-	}>;
-	actions?: Array<{
-		name?: string;
-		description?: string;
-		type?: string;
-		attack_bonus?: number;
-		damage?: string;
-		damage_type?: string;
-		range?: number | string;
-		hit?: string;
-		recharge?: string;
-		save?: string;
-		dc?: number;
-		usage?: string;
-	}>;
+	traits?: AnomalyTrait[];
+	actions?: AnomalyAction[];
 	legendary_actions?: Array<{
 		name?: string;
 		description?: string;
@@ -220,14 +268,9 @@ export interface CompendiumSpell extends BaseCompendiumItem {
 	level?: number | null;
 	school?: string | null;
 	casting_time?: string | null;
-	range?: { type: string; value: number | string; unit?: string } | string | null;
-	components?: {
-		verbal: boolean;
-		somatic: boolean;
-		material: string | boolean;
-		focus: string;
-	} | null;
-	duration?: { type: string; value: number | string; unit?: string } | string | null;
+	range?: CompendiumRange | null;
+	components?: CompendiumComponents | null;
+	duration?: CompendiumDuration | null;
 	concentration?: boolean | null;
 	ritual?: boolean | null;
 	rank?: string | null;
@@ -237,7 +280,7 @@ export interface CompendiumSpell extends BaseCompendiumItem {
 		ability: string;
 		damage: string;
 	} | null;
-	activation?: { type: string; cost: number | string } | null;
+	activation?: CompendiumActivation | null;
 	higher_levels?: string | null;
 	saving_throw?: {
 		ability: string;
@@ -253,20 +296,22 @@ export interface CompendiumSpell extends BaseCompendiumItem {
 export interface CompendiumPower extends BaseCompendiumItem {
 	power_type: string;
 	power_level: number;
-	casting_time: string;
-	activation_time: string;
-	range: string;
-	duration: string;
+	casting_time?: string;
+	activation_time?: string;
+	activation?: CompendiumActivation;
+	range?: CompendiumRange;
+	duration?: CompendiumDuration;
 	concentration: boolean;
 	ritual: boolean;
 	school: string;
-	target: string;
-	has_attack_roll: boolean;
-	has_save: boolean;
-	save_ability: string;
-	damage_roll: string;
-	damage_type: string;
-	higher_levels: string;
+	target?: string;
+	has_attack_roll?: boolean;
+	has_save?: boolean;
+	save_ability?: string;
+	damage_roll?: string;
+	damage_type?: string;
+	higher_levels?: string;
+	components?: CompendiumComponents;
 }
 
 export interface CompendiumTechnique extends BaseCompendiumItem {
@@ -274,8 +319,17 @@ export interface CompendiumTechnique extends BaseCompendiumItem {
 	style: string;
 	level_requirement?: number;
 	activation?: { type?: string; cost?: string | number } | string;
-	range?: { type?: string; distance?: string | number; value?: number | string; unit?: string } | string;
-	duration?: { type?: string; time?: string; value?: number | string; unit?: string } | string;
+	range?:
+		| {
+				type?: string;
+				distance?: string | number;
+				value?: number | string;
+				unit?: string;
+		  }
+		| string;
+	duration?:
+		| { type?: string; time?: string; value?: number | string; unit?: string }
+		| string;
 	components?: {
 		verbal?: boolean;
 		somatic?: boolean;
@@ -299,7 +353,7 @@ export interface CompendiumTechnique extends BaseCompendiumItem {
 export interface CompendiumRune extends BaseCompendiumItem {
 	effect_description: string;
 	aliases?: string[];
-	rune_type: "martial" | "caster" | "hybrid" | "utility" | "offensive" | "defensive";
+	rune_type: string;
 	rune_category?: string;
 	effect_type?: "active" | "passive" | "both";
 	activation_action?: string;
@@ -311,31 +365,33 @@ export interface CompendiumRune extends BaseCompendiumItem {
 	uses_per_rest?: string;
 	recharge?: string;
 	higher_levels?: string;
-	requires_job?: string[];
-	caster_penalty?: string;
-	martial_penalty?: string;
-	passive_bonuses?: Record<string, number | string | string[]>;
-	can_inscribe_on?: string[];
-	inscription_difficulty?: number;
 	discovery_lore?: string;
-	caster_requirement_multiplier: number;
-	martial_requirement_multiplier: number;
-	requirement_agi: number;
-	requirement_int: number;
-	requirement_pre: number;
-	requirement_sense: number;
-	requirement_str: number;
-	requirement_vit: number;
+	rune_level?: number;
+	rank?: string;
+	tags?: string[];
+}
+
+export interface CompendiumSigil extends BaseCompendiumItem {
+	passive_bonuses: Record<string, number | string | string[] | boolean>;
+	can_inscribe_on: string[];
+	rarity: string;
+	tags: string[];
+	effect_description?: string;
+	rune_type?: string;
+	rune_level?: number;
+	rune_category?: string;
 }
 
 export interface CompendiumRelic extends BaseCompendiumItem {
 	type: string;
 	tier: string;
 	cost: number;
-	attunement: boolean | {
-		required: boolean;
-		requirements: string;
-	};
+	attunement:
+		| boolean
+		| {
+				required: boolean;
+				requirements: string;
+		  };
 	mechanics: CompendiumMechanics;
 	quirks: string[];
 	corruption_risk: string;
@@ -362,11 +418,13 @@ export interface CompendiumRelic extends BaseCompendiumItem {
 
 export interface CompendiumFeat extends BaseCompendiumItem {
 	prerequisites?: Record<string, string | number | string[] | boolean> | string;
-	benefits?: string[] | {
-		basic: string[];
-		expert?: string[];
-		master?: string[];
-	};
+	benefits?:
+		| string[]
+		| {
+				basic: string[];
+				expert?: string[];
+				master?: string[];
+		  };
 }
 
 export interface CompendiumTattoo extends BaseCompendiumItem {
@@ -381,7 +439,7 @@ export interface CompendiumItem extends BaseCompendiumItem {
 	type?: string | null;
 	item_type?: string | null;
 	attunement?: boolean | null;
-	properties?: string[] | Record<string, boolean | string | string[] | number | Record<string, any>> | null;
+	properties?: string[] | CompendiumProperties | null;
 	simple_properties?: string[] | null;
 	armor_class?: string | number | null;
 	armor_type?: string | null;
@@ -462,14 +520,16 @@ export interface CompendiumJob extends BaseCompendiumItem {
 		sense: number;
 		presence: number;
 	};
-	ability_score_improvements: number[] | {
-		strength: number;
-		agility: number;
-		vitality: number;
-		intelligence: number;
-		sense: number;
-		presence: number;
-	};
+	ability_score_improvements:
+		| number[]
+		| {
+				strength: number;
+				agility: number;
+				vitality: number;
+				intelligence: number;
+				sense: number;
+				presence: number;
+		  };
 	hp_at_level_1: string;
 	hp_at_higher_levels: string;
 	spellcasting?: {
@@ -536,10 +596,13 @@ export interface CompendiumRegent extends BaseCompendiumItem {
 		spell_preparation: boolean;
 		additional_spells: string[];
 	};
-	progression_table: Record<string, {
-		features_gained: string[];
-		abilities_improved: string[];
-	}>;
+	progression_table: Record<
+		string,
+		{
+			features_gained: string[];
+			abilities_improved: string[];
+		}
+	>;
 }
 
 export interface CompendiumLocation extends BaseCompendiumItem {
@@ -615,4 +678,5 @@ export type CompendiumEntity =
 	| CompendiumLocation
 	| CompendiumTattoo
 	| CompendiumDeity
+	| CompendiumSigil
 	| CompendiumShadowSoldier;

@@ -25,8 +25,8 @@ const typeLabels: Record<string, string> = {
 	ascendant_gear: "Ascendant Gear",
 };
 
-export const EquipmentDetail = ({ data }: { data: any }) => {
-	const item = data as EquipmentData;
+export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
+	const item = data;
 	const isWeapon =
 		(item.item_type || "").includes("melee") ||
 		(item.item_type || "").includes("ranged");
@@ -56,7 +56,9 @@ export const EquipmentDetail = ({ data }: { data: any }) => {
 					<div className="flex flex-wrap items-center gap-2">
 						<Badge variant="secondary">
 							{formatRegentVernacular(
-								(item.item_type && typeLabels[item.item_type]) || item.item_type || "Equipment",
+								(item.item_type && typeLabels[item.item_type]) ||
+									item.item_type ||
+									"Equipment",
 							)}
 						</Badge>
 						{item.source_book && (

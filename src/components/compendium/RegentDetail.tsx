@@ -2,8 +2,8 @@ import { Crown, Flame } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import type { CompendiumRegent } from "@/types/compendium";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
+import type { CompendiumRegent } from "@/types/compendium";
 
 interface RegentDetailProps {
 	data: CompendiumRegent;
@@ -21,7 +21,9 @@ interface CombinedFeature {
 
 export const RegentDetail = ({ data }: RegentDetailProps) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
-	const displayTitle = formatRegentVernacular(data.title || data.display_name || data.name);
+	const displayTitle = formatRegentVernacular(
+		data.title || data.display_name || data.name,
+	);
 	const displayTheme = formatRegentVernacular(data.tags?.join(", ") || "");
 
 	const classFeatures: CombinedFeature[] = (data.class_features || []).map(
@@ -96,7 +98,9 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 							<p className="text-sm text-muted-foreground leading-relaxed">
 								<AutoLinkText
 									text={
-										typeof data.lore === "string" ? data.lore : data.lore.history
+										typeof data.lore === "string"
+											? data.lore
+											: data.lore.history
 									}
 								/>
 							</p>

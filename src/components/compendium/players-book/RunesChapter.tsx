@@ -33,7 +33,8 @@ export const RunesChapter = () => {
 									{sigil.name}
 								</h3>
 								<p className="text-[10px] font-mono text-regent-gold/70 tracking-widest uppercase mt-1">
-									Vibration Level: {(sigil as any).rune_level || 1} / Type: {(sigil as any).rune_type || "utility"}
+									Vibration Level: {sigil.rune_level || 1} / Type:{" "}
+									{sigil.rune_type || "utility"}
 								</p>
 							</div>
 						</div>
@@ -47,7 +48,7 @@ export const RunesChapter = () => {
 								Amplification Effects
 							</h4>
 							<p className="text-xs font-mono text-white/90">
-								{(sigil as any).effect_description || sigil.description}
+								{sigil.effect_description || sigil.description}
 							</p>
 						</div>
 					</article>

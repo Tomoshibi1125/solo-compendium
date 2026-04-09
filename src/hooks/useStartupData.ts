@@ -37,13 +37,13 @@ export interface CompendiumEntry {
 		| "legendary"
 		| string
 		| null;
-	description: string; // Required in Compendium.tsx
+	description: string | null; // Allow null to match database/static sources
 	level?: number;
 	cr?: string;
 	gate_rank?: string;
 	is_boss?: boolean;
 	tags?: string[] | null;
-	created_at?: string;
+	created_at?: string | null;
 	source_book?: string | null;
 	image_url?: string | null;
 	isFavorite: boolean;
@@ -52,8 +52,14 @@ export interface CompendiumEntry {
 	flavor?: string | null;
 	higher_levels?: string | null;
 	atHigherLevels?: string | null;
-	properties?: string[] | Record<string, unknown> | null;
-	abilities?: Record<string, unknown> | null;
+	properties?:
+		| string[]
+		| import("@/types/compendium").CompendiumProperties
+		| null;
+	abilities?: Record<
+		string,
+		import("@/types/compendium").ArtifactAbility
+	> | null;
 	school?: string | null;
 	title?: string | null;
 	theme?: string | null;
@@ -102,7 +108,7 @@ type StartupSupabaseEntry = {
 	name: string;
 	display_name?: string | null;
 	description?: string | null;
-	created_at?: string;
+	created_at?: string | null;
 	tags?: string[] | null;
 	source_book?: string | null;
 	image_url?: string | null;

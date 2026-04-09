@@ -10,7 +10,11 @@
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
-import type { CompendiumDeity } from "@/types/compendium";
+import type {
+	CompendiumDeity,
+	CompendiumRune,
+	CompendiumSigil,
+} from "@/types/compendium";
 
 type DataLoader<T> = () => Promise<T[]>;
 
@@ -22,8 +26,11 @@ const dataLoaders = {
 	locations: () => import("./locations").then((module) => module.locations),
 	runesCompendium: () =>
 		import("./runes/index").then((module) => module.allRunes),
-	systemAscendantRunes: () =>
-		import("./runes/index").then((module) => module.allRunes),
+	systemAscendantRunes: async () => {
+		const { allRunes } = await import("./runes/index");
+		const { sigils } = await import("./sigils");
+		return [...allRunes, ...sigils];
+	},
 	backgrounds: () =>
 		import("./backgrounds-index").then((module) => module.allBackgrounds),
 	regents: () => import("./regents").then((module) => module.regents),
@@ -64,8 +71,8 @@ export interface StaticCompendiumEntry {
 	id: string;
 	name: string;
 	display_name?: string | null;
-	description: string;
-	created_at: string;
+	description?: string | null;
+	created_at?: string | null;
 	tags?: string[] | null;
 	source_book?: string | null;
 	image_url?: string | null;
@@ -96,7 +103,11 @@ export interface StaticCompendiumEntry {
 	damage?: string | number | null;
 	healing?: number | null;
 	effect?: string | null;
-	range?: number | { type?: string; value?: number; unit?: string } | null;
+	range?:
+		| number
+		| string
+		| { type?: string; value?: number; unit?: string }
+		| null;
 	recharge?: number | string | null;
 	encounters?: string[] | null;
 	treasures?: string[] | null;
@@ -326,10 +337,10 @@ interface StaticDataProvider {
 	getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getTechniques: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
 
 // Helper function to filter by search query
@@ -1119,7 +1130,7 @@ function transformLocation(
 	};
 }
 
-function transformRune(
+function _transformRune(
 	rune: StaticRuneSource & Record<string, unknown>,
 ): StaticCompendiumEntry {
 	const { range, duration, activation_action, lore, discovery_lore, ...rest } =
@@ -1422,9 +1433,11 @@ export const staticDataProvider: StaticDataProvider = {
 	},
 
 	getRunes: async (search?: string) => {
-		const slRunes = await loadData<StaticRuneSource>("systemAscendantRunes");
+		const slRunes = await loadData<CompendiumRune | CompendiumSigil>(
+			"systemAscendantRunes",
+		);
 		const filtered = filterBySearch(slRunes, search, ["name", "description"]);
-		return filtered.map(transformRune);
+		return filtered as never as StaticCompendiumEntry[];
 	},
 
 	getBackgrounds: async (search?: string) => {
@@ -1903,56 +1916,20 @@ export const staticDataProvider: StaticDataProvider = {
 	},
 
 	getSigils: async (search?: string) => {
-		const allSigils = await loadData<{
-			id: string;
-			name: string;
-			description: string;
-			effect_description: string;
-			rune_type: string;
-			rune_category: string;
-			rune_level: number;
-			rarity: string;
-			effect_type: string;
-			requires_level?: number;
-			passive_bonuses?: Record<string, unknown>;
-			can_inscribe_on?: string[];
-			inscription_difficulty?: number;
-			tags?: string[];
-			image?: string;
-			source_book?: string;
-		}>("sigils");
-		const filtered = filterBySearch(allSigils, search, ["name", "description"]);
-		return filtered.map((sigil) => {
-			const { effect_description, description, passive_bonuses, ...rest } =
-				sigil;
-			return {
-				...rest,
-				id: sigil.id,
-				name: sigil.name,
-				display_name: sigil.name,
-				description: effect_description || description || "",
-				created_at:
-					(sigil as { created_at?: string }).created_at ||
-					"2024-01-01T00:00:00.000Z",
-				tags: (sigil.tags || [sigil.rune_type, sigil.rarity, "sigil"]).filter(
-					Boolean,
-				) as string[],
-				source_book: sigil.source_book || "Rift Ascendant Canon",
-				image_url: sigil.image,
-				image: sigil.image,
-				rune_type: sigil.rune_type,
-				rune_category: sigil.rune_category,
-				rune_level: sigil.rune_level,
-				rarity: sigil.rarity || "rare",
-				level: sigil.requires_level || sigil.rune_level,
-				effect: effect_description,
-				effect_description: effect_description,
-				passive_bonuses: passive_bonuses || null,
-				can_inscribe_on: sigil.can_inscribe_on || null,
-				inscription_difficulty: sigil.inscription_difficulty || null,
-				flavor: description || null,
-			};
-		});
+		const { sigils } = await import("./sigils");
+		const filtered = filterBySearch(sigils, search, ["name", "description"]);
+		return filtered.map((sigil) => ({
+			id: sigil.id,
+			name: sigil.name,
+			display_name: sigil.name,
+			description: sigil.description,
+			created_at: new Date().toISOString(),
+			tags: sigil.tags || [],
+			source_book: sigil.source_book || "Rift Ascendant Canon",
+			rarity: sigil.rarity || "rare",
+			passive_bonuses: sigil.passive_bonuses || null,
+			can_inscribe_on: sigil.can_inscribe_on || null,
+		}));
 	},
 	getTattoos: async (search?: string) => {
 		const tattoos = await loadData<{

@@ -73,6 +73,85 @@ type LegacyAnomaly = {
 	xp?: number;
 };
 
+function cyrb128(str: string) {
+	let h1 = 1779033703,
+		h2 = 3144134277,
+		h3 = 1013904242,
+		h4 = 2773480762;
+	for (let i = 0, k; i < str.length; i++) {
+		k = str.charCodeAt(i);
+		h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+		h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+		h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+		h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+	}
+	h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+	h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+	h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+	h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+	return [
+		(h1 ^ h2 ^ h3 ^ h4) >>> 0,
+		(h2 ^ h1) >>> 0,
+		(h3 ^ h1) >>> 0,
+		(h4 ^ h1) >>> 0,
+	];
+}
+
+function sfc32(a: number, b: number, c: number, d: number) {
+	return () => {
+		a >>>= 0;
+		b >>>= 0;
+		c >>>= 0;
+		d >>>= 0;
+		let t = (a + b) | 0;
+		a = b ^ (b >>> 9);
+		b = (c + (c << 3)) | 0;
+		c = (c << 21) | (c >>> 11);
+		d = (d + 1) | 0;
+		t = (t + d) | 0;
+		c = (t + c) | 0;
+		return (t >>> 0) / 4294967296;
+	};
+}
+
+const traitNames = [
+	"{TYPE} Physiology", "Void Resilience", "Lattice Anchor", "Dimensional Phasing",
+	"Predatory Instinct", "Furious Assault", "Unnatural Fortitude", "Temporal Shift",
+	"Mana Distortion", "Sovereign Aura"
+];
+const traitDesc = [
+	"This entity is stabilized by post-reset lattice pressure. It cannot be surprised while conscious and has advantage on checks to resist forced movement.",
+	"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet.",
+	"Its body dynamically adapts to damage. The first time it takes damage each round, it reduces the damage by its proficiency bonus.",
+	"It exists slightly out of phase with reality, causing attacks from farther than 30 feet to have disadvantage.",
+	"It can sense the presence of any creature within 60 feet that is not protected by mind-shielding magic.",
+	"Once per turn, when it hits with a melee attack, it can push the target up to 10 feet away.",
+	"Whenever it succeeds on a saving throw, it gains temporary hit points equal to twice its Challenge Rating.",
+	"If it starts its turn with a movement-impairing condition, it can attempt a new saving throw to end the effect immediately.",
+	"Its presence warps ambient mana. Healing spells cast within 30 feet of it restore half the normal amount.",
+	"Creatures that start their turn within 10 feet of this entity must spend 1 extra foot of movement for every foot moved."
+];
+
+const actionNames = [
+	"Lattice Strike", "Void Rupture", "Shattering Blow", "Umbral Lash",
+	"Feral Rend", "Ethereal Blast", "Cataclysmic Burst", "Phantom Talon",
+	"Oblivion Beam", "Shockwave Stomp"
+];
+const actionDescPrimary = [
+	"Melee Weapon Attack: +{HIT} to hit, reach 5 ft., one target. Hit: {DICE} {TYPE} damage.",
+	"Ranged Spell Attack: +{HIT} to hit, range 60 ft., one target. Hit: {DICE} {TYPE} damage.",
+	"Melee Weapon Attack: +{HIT} to hit, reach 10 ft., one target. Hit: {DICE} {TYPE} damage and the target is pushed 5 ft.",
+	"Ranged Weapon Attack: +{HIT} to hit, range 30/120 ft., one target. Hit: {DICE} {TYPE} damage."
+];
+const actionDescSpecial = [
+	"Protocol action. The target must succeed on a DC {DC} {SAVE} saving throw or take {DICE} {TYPE} damage and suffer a brief impairment.",
+	"Energy pulse. Each creature within 15 feet must make a DC {DC} {SAVE} saving throw, taking {DICE} {TYPE} damage on a failed save, or half as much on a successful one.",
+	"Focus blast. A line of force 30 feet long and 5 feet wide erupts from it. Creatures in the line must succeed on a DC {DC} {SAVE} saving throw or take {DICE} {TYPE} damage and fall prone.",
+	"Miasma surge. Target area (10 ft radius, 30 ft range) is flooded with hazardous energy. Creatures inside must pass a DC {DC} {SAVE} save or take {DICE} {TYPE} damage."
+];
+
+const savesList = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
+
 const isRecord = (value: unknown): value is Record<string, unknown> =>
 	!!value && typeof value === "object" && !Array.isArray(value);
 
@@ -303,29 +382,43 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 		};
 	}
 
+	const seed = cyrb128(`${spell.id}spell`);
+	const rand = sfc32(seed[0], seed[1], seed[2], seed[3]);
+	const pickRand = <T>(arr: T[]): T => arr[Math.floor(rand() * arr.length)];
+
+	const verbalOpts = [true, false];
+	const somaticOpts = [true, false];
+	const hasVerbal = pickRand(verbalOpts);
+	const hasSomatic = hasVerbal ? pickRand(somaticOpts) : true;
+
 	if (!isRecord(out.components)) {
 		out.components = {
-			verbal: true,
-			somatic: true,
+			verbal: hasVerbal,
+			somatic: hasSomatic,
 			material: false,
-			focus: "Ascendant focus (attuned conduit)",
+			focus: pickRand([
+				"Ascendant focus (attuned conduit)",
+				"Resonance crystal",
+				"Runic catalyst",
+				"None required"
+			]),
 		};
 	}
 
-	out.effects = (isRecord(out.effects)
-		? out.effects
-		: {
-				primary: hasNonEmptyString(spell.effect)
-					? spell.effect
-					: "Channels ascendant force into a defined outcome.",
-			}) as unknown as CompendiumSpell["effects"];
+	const effectDescriptions = [
+		hasNonEmptyString(spell.effect) ? spell.effect : "Channels ascendant force into a defined outcome.",
+		"Manipulates the local mana field to enforce the user's will.",
+		"Bypasses the natural laws of physics with concentrated essence.",
+		"Imprints a systemic command onto the immediate environment."
+	];
 
-	const currentEffects = out.effects as unknown as Record<string, unknown>;
-	if (!hasNonEmptyString(currentEffects.primary)) {
-		currentEffects.primary = hasNonEmptyString(spell.effect)
-			? spell.effect
-			: "Channels ascendant force into a defined outcome.";
-	}
+	const primaryEff = isRecord(out.effects) && hasNonEmptyString(out.effects.primary) 
+		? out.effects.primary 
+		: pickRand(effectDescriptions);
+
+	out.effects = (isRecord(out.effects)
+		? { ...out.effects, primary: primaryEff }
+		: { primary: primaryEff }) as unknown as CompendiumSpell["effects"];
 
 	const mechanics = isRecord(out.mechanics)
 		? (out.mechanics as Record<string, unknown>)
@@ -343,7 +436,7 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 	if (!hasAttack && !hasSave && !hasHealing) {
 		if (spell.type === "Attack") {
 			mechanicsOut.attack = {
-				mode: "ranged",
+				mode: pickRand(["ranged", "melee"]),
 				resolution: "spell_attack",
 				damage: {
 					dice: rankToDice(spell.rank, "damage"),
@@ -353,13 +446,22 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 		} else if (spell.type === "Healing") {
 			mechanicsOut.healing = {
 				dice: rankToDice(spell.rank, "healing"),
-				notes: "Restores vitality; does not remove conditions unless stated.",
+				notes: pickRand([
+					"Restores vitality; does not remove conditions unless stated.",
+					"Rapid cellular regeneration fueled by mana.",
+					"Stitches wounds utilizing ambient life force."
+				]),
 			};
 		} else {
 			mechanicsOut.saving_throw = {
-				ability: "CON",
+				ability: pickRand(["CON", "DEX", "WIS", "STR"]),
 				dc,
-				on_save: "Half effect or negates secondary impairment (if any).",
+				on_save: pickRand([
+					"Half effect.",
+					"Negates impairment.",
+					"Target is pushed instead.",
+					"Reduced duration."
+				]),
 			};
 		}
 	}
@@ -369,7 +471,19 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 	}
 
 	if (!hasNonEmptyString(out.flavor)) {
-		out.flavor = `In the post-reset lattice, ${spell.name} is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.`;
+		const flavorPrefixes = [
+			"In the post-reset lattice,",
+			"Considered a foundational technique,",
+			"Derived from forgotten archives,",
+			"A potent assertion of system authority,"
+		];
+		const flavorSuffixes = [
+			"is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
+			"demands absolute control to prevent devastating feedback loops.",
+			"temporarily rewrites the rules governing ambient mana.",
+			"serves as a brutal reminder of an Awakened's superiority."
+		];
+		out.flavor = `${pickRand(flavorPrefixes)} ${spell.name} ${pickRand(flavorSuffixes)}`;
 	}
 
 	return out;
@@ -439,71 +553,84 @@ const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
 		challenge_rating: String(crValue),
 	} as unknown as CompendiumAnomaly;
 
+	const seed = cyrb128(`${anomaly.id}generator`);
+	const rand = sfc32(seed[0], seed[1], seed[2], seed[3]);
+
+	const pickRand = <T>(arr: T[]): T => arr[Math.floor(rand() * arr.length)];
+	const damageType = inferDamageType(anomaly.name, anomaly.description);
+	const baseDice = rankToDice(anomaly.rank, "damage");
+	const bonus = Math.max(0, prof + Math.floor((inferredScores.strength - 10) / 2));
+	const dcValue = rankToSpellSaveDC(anomaly.rank);
+
 	const traits = out.traits;
 	if (!traits || traits.length === 0) {
+		const traitGen1 = pickRand(traitNames).replace("{TYPE}", anomaly.type);
+		const traitGen2 = pickRand(traitNames).replace("{TYPE}", anomaly.type);
+		const traitNamesOutput = traitGen1 === traitGen2 ? traitGen1 + " Resilience" : traitGen1;
+
 		out.traits = [
 			{
-				name: "Ascendant Physiology",
-				description:
-					"This entity is stabilized by post-reset lattice pressure. It cannot be surprised while conscious and has advantage on checks to resist forced movement.",
-				action: "passive",
-				frequency: "at-will",
+				name: traitNamesOutput,
+				description: pickRand(traitDesc),
 			},
 			{
-				name: `${anomaly.type} Instinct`,
-				description:
-					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
-				action: "passive",
-				frequency: "once-per-day",
+				name: traitGen2,
+				description: pickRand(traitDesc),
 			},
 		];
 	}
 
 	const actions = out.actions;
 	if (!actions || actions.length === 0) {
-		const damageType = inferDamageType(anomaly.name, anomaly.description);
-		const baseDice = rankToDice(anomaly.rank, "damage");
-		const bonus = Math.max(
-			0,
-			prof + Math.floor((inferredScores.strength - 10) / 2),
-		);
+		const abilityActions = Array.isArray(anomaly.abilities) ? anomaly.abilities : [];
+		
+		const templated = abilityActions.slice(0, 3).map((name, idx) => {
+			const actionDesc = idx === 0 
+				? pickRand(actionDescPrimary)
+				: pickRand(actionDescSpecial);
+			const selectedSave = pickRand(savesList);
 
-		const abilityActions = Array.isArray(anomaly.abilities)
-			? anomaly.abilities
-			: [];
-		const templated = abilityActions.slice(0, 3).map((name, idx) => ({
-			name,
-			description:
-				idx === 0
-					? `Melee Weapon Attack: +${bonus} to hit, reach 5 ft., one target. Hit: ${baseDice} ${damageType} damage.`
-					: `Protocol action. The target must succeed on a DC ${rankToSpellSaveDC(anomaly.rank)} Constitution saving throw or take ${baseDice} ${damageType} damage and suffer a brief impairment (start-of-next-turn).`,
-			type: idx === 0 ? "melee" : "special",
-			attack_bonus: idx === 0 ? bonus : undefined,
-			damage: baseDice,
-			damage_type: damageType,
-			range: idx === 0 ? 5 : 60,
-			save: idx === 0 ? undefined : "Constitution",
-			dc: idx === 0 ? undefined : rankToSpellSaveDC(anomaly.rank),
-			recharge: idx === 0 ? "recharge" : "short-rest",
-			usage: idx === 0 ? "at-will" : "recharge",
-		}));
+			const formattedDesc = actionDesc
+				.replace("{HIT}", String(bonus))
+				.replace("{DICE}", baseDice)
+				.replace("{TYPE}", damageType)
+				.replace("{DC}", String(dcValue))
+				.replace("{SAVE}", selectedSave);
 
-		const fallback = {
-			name: "Lattice Strike",
-			description: `Melee Weapon Attack: +${bonus} to hit, reach 5 ft., one target. Hit: ${baseDice} ${damageType} damage.`,
-			type: "melee",
-			attack_bonus: bonus,
-			damage: baseDice,
-			damage_type: damageType,
-			range: 5,
-			recharge: "recharge",
-			usage: "at-will",
-		} as unknown as NonNullable<CompendiumAnomaly["actions"]>[number];
+			// Safely structuring without undefined
+			const baseAction = {
+				name,
+				description: formattedDesc,
+				action_type: "action" as const,
+				damage: baseDice,
+				damage_type: damageType,
+				usage: idx === 0 ? "at-will" : "recharge",
+			};
 
-		out.actions =
-			templated.length > 0
-				? (templated as CompendiumAnomaly["actions"])
-				: [fallback];
+			if (idx === 0) {
+				return { ...baseAction, attack_bonus: bonus };
+			} else {
+				return { ...baseAction, save: selectedSave, dc: dcValue, recharge: "short-rest" };
+			}
+		});
+
+		if (templated.length === 0) {
+			const baseAction = {
+				name: pickRand(actionNames),
+				description: pickRand(actionDescPrimary)
+					.replace("{HIT}", String(bonus))
+					.replace("{DICE}", baseDice)
+					.replace("{TYPE}", damageType),
+				action_type: "action" as const,
+				attack_bonus: bonus,
+				damage: baseDice,
+				damage_type: damageType,
+				usage: "at-will",
+			};
+			templated.push(baseAction);
+		}
+
+		out.actions = templated as NonNullable<CompendiumAnomaly["actions"]>;
 	}
 
 	return out;

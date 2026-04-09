@@ -12,7 +12,8 @@ export const powers = [
 	{
 		id: "shadow-step",
 		name: "Shadow Step",
-		description: "You harness entropic energy to collapse the target's singularity. This manifestation of Void resonance bypasses traditional defenses.",
+		description:
+			"You harness entropic energy to collapse the target's singularity. This manifestation of Void resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "common",
 		activation: {
@@ -26,15 +27,15 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "necrotic"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "necrotic",
+				},
 			},
+		},
 		effects: {
 			primary:
 				"Teleport up to 30 feet to an unoccupied space you can see that is in dim light or darkness.",
@@ -45,14 +46,16 @@ export const powers = [
 			uses: "At-will",
 			conditions: ["Must have shadows or dim light available"],
 		},
-		flavor: "A relic of the Void Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Void Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shadow-step.webp",
 	},
 	{
 		id: "demonic-aura",
 		name: "Demonic Aura",
-		description: "You harness undeniable energy to manifest the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness undeniable energy to manifest the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "uncommon",
 		activation: {
@@ -67,15 +70,15 @@ export const powers = [
 			distance: 10,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary:
 				"Enemies within 10 feet must make Sense saving throws or be frightened.",
@@ -86,30 +89,32 @@ export const powers = [
 			uses: "3 times per day",
 			recharge: "Long rest",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/demonic-aura.webp",
 	},
 	{
 		id: "regeneration",
 		name: "Regeneration",
-		description: "You harness absolute energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness absolute energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "rare",
 		activation: {
 			type: "passive",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Regain 1 hit point at the start of your turn if you have at least 1 hit point.",
@@ -127,35 +132,38 @@ export const powers = [
 	{
 		id: "true-sight",
 		name: "True Sight",
-		description: "You harness fundamental energy to transmute the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to transmute the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "very_rare",
 		activation: {
 			type: "passive",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary: "Can see in normal and magical darkness.",
 			secondary: "Can see invisible creatures and objects.",
 			tertiary: "Can see into the Ethereal Plane.",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/true-sight.webp",
 	},
 	{
 		id: "shadow-essence",
 		name: "Shadow Essence",
-		description: "You harness consuming energy to nullify the target's oblivion. This manifestation of Void resonance bypasses traditional defenses.",
+		description:
+			"You harness consuming energy to nullify the target's oblivion. This manifestation of Void resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "very_rare",
 		activation: {
@@ -166,14 +174,12 @@ export const powers = [
 			time: "1 minute",
 		},
 		mechanics: {
-				"stat_bonuses": {
-					"Intelligence": 1
-				},
-				"resistance": [
-					"necrotic"
-				],
-				"special": "Aligned with Void resonance."
+			stat_bonuses: {
+				Intelligence: 1,
 			},
+			resistance: ["necrotic"],
+			special: "Aligned with Void resonance.",
+		},
 		effects: {
 			primary: "Become incorporeal while in dim light or darkness.",
 			secondary:
@@ -185,14 +191,16 @@ export const powers = [
 			uses: "Once per day",
 			recharge: "Long rest",
 		},
-		flavor: "A relic of the Void Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Void Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shadow-essence.webp",
 	},
 	{
 		id: "dragon-breath",
 		name: "Dragon Breath",
-		description: "You harness pure energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
@@ -209,21 +217,21 @@ export const powers = [
 			distance: 15,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary: "Exhale destructive energy in a 15-foot cone.",
 			secondary: "Damage type determined by draconic ancestry.",
@@ -240,7 +248,8 @@ export const powers = [
 	{
 		id: "arcane-charm",
 		name: "Arcane Charm",
-		description: "You harness undeniable energy to transmute the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness undeniable energy to transmute the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "uncommon",
 		requirements: {
@@ -258,16 +267,16 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary: "Target must make Sense saving throw or be charmed.",
 			secondary: "Charmed creature regards you as a trusted friend.",
@@ -284,7 +293,8 @@ export const powers = [
 	{
 		id: "bulwark-resilience",
 		name: "Bulwark Resilience",
-		description: "You harness pure energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "common",
 		requirements: {
@@ -294,21 +304,21 @@ export const powers = [
 			type: "passive",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary: "Advantage on saving throws against poison.",
 			secondary: "Resistance to poison damage.",
@@ -323,7 +333,8 @@ export const powers = [
 	{
 		id: "assassin-luck",
 		name: "Assassin's Luck",
-		description: "You harness fundamental energy to override the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to override the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "common",
 		requirements: {
@@ -333,16 +344,16 @@ export const powers = [
 			type: "reaction",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary: "Reroll a 1 on an attack roll, ability check, or saving throw.",
 		},
@@ -357,7 +368,8 @@ export const powers = [
 	{
 		id: "warrior-rage",
 		name: "Warrior's Rage",
-		description: "You harness fundamental energy to transmute the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to transmute the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "uncommon",
 		requirements: {
@@ -371,15 +383,15 @@ export const powers = [
 			time: "1 minute",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary: "Advantage on Strength checks and saving throws.",
 			secondary:
@@ -390,14 +402,16 @@ export const powers = [
 			uses: "3 times per day",
 			recharge: "Long rest",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/orcish-rage.webp",
 	},
 	{
 		id: "ki-point",
 		name: "Ki Point",
-		description: "You harness fundamental energy to override the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to override the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "class",
 		rarity: "common",
 		requirements: {
@@ -407,16 +421,16 @@ export const powers = [
 			type: "passive",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary: "Gain a pool of ki points equal to your martial artist level.",
 			secondary: "Can spend ki points to use various martial artist abilities.",
@@ -432,7 +446,8 @@ export const powers = [
 	{
 		id: "divine-smite",
 		name: "Divine Smite",
-		description: "You harness absolute energy to manifest the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness absolute energy to manifest the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "class",
 		rarity: "rare",
 		requirements: {
@@ -443,21 +458,21 @@ export const powers = [
 			type: "reaction",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Add radiant damage equal to 2d8 + herald level to a melee weapon hit.",
@@ -476,7 +491,8 @@ export const powers = [
 	{
 		id: "wild-shape",
 		name: "Primal Shift",
-		description: "You harness wild energy to destabilize the target's primordial mass. This manifestation of Chaos resonance bypasses traditional defenses.",
+		description:
+			"You harness wild energy to destabilize the target's primordial mass. This manifestation of Chaos resonance bypasses traditional defenses.",
 		type: "class",
 		rarity: "rare",
 		requirements: {
@@ -491,16 +507,16 @@ export const powers = [
 			time: "2 hours",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "psychic"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "psychic",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Transform into a beast with challenge rating no higher than your summoner level divided by 3.",
@@ -519,7 +535,8 @@ export const powers = [
 	{
 		id: "arcane-recovery",
 		name: "Arcane Recovery",
-		description: "You harness pure energy to transmute the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to transmute the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "class",
 		rarity: "uncommon",
 		requirements: {
@@ -530,21 +547,21 @@ export const powers = [
 			type: "long-rest",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Recover expended spell slots with a total level equal to half your mage level.",
@@ -561,7 +578,8 @@ export const powers = [
 	{
 		id: "sneak-attack",
 		name: "Precision Kill",
-		description: "You harness absolute energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness absolute energy to override the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "class",
 		rarity: "common",
 		requirements: {
@@ -571,16 +589,16 @@ export const powers = [
 			type: "passive",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Add extra damage to attacks when you have advantage or target has an ally adjacent.",
@@ -599,28 +617,29 @@ export const powers = [
 	{
 		id: "vampiric-touch",
 		name: "Vampiric Touch",
-		description: "You harness visceral energy to rupture the target's arteries. This manifestation of Blood resonance bypasses traditional defenses.",
+		description:
+			"You harness visceral energy to rupture the target's arteries. This manifestation of Blood resonance bypasses traditional defenses.",
 		type: "monstrous",
 		rarity: "rare",
 		activation: {
 			type: "action",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "necrotic"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "necrotic",
 				},
-				"saving_throw": {
-					"ability": "Strength",
-					"dc": "8 + proficiency + Strength",
-					"success": "Half damage",
-					"failure": "The target is blinded by erupting ichor."
-				}
 			},
+			saving_throw: {
+				ability: "Strength",
+				dc: "8 + proficiency + Strength",
+				success: "Half damage",
+				failure: "The target is blinded by erupting ichor.",
+			},
+		},
 		effects: {
 			primary: "Touch deals necrotic damage and heals you for the same amount.",
 			secondary: "Cannot heal more than your maximum hit points.",
@@ -637,7 +656,8 @@ export const powers = [
 	{
 		id: "lycanthropy",
 		name: "Lycanthropy",
-		description: "You harness pure energy to decree the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to decree the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "monstrous",
 		rarity: "very_rare",
 		activation: {
@@ -648,16 +668,16 @@ export const powers = [
 			time: "1 hour",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary: "Transform into a hybrid werewolf form.",
 			secondary: "Gain multiattack and increased Strength.",
@@ -675,7 +695,8 @@ export const powers = [
 	{
 		id: "gaze-of-petrification",
 		name: "Gaze of Petrification",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "monstrous",
 		rarity: "legendary",
 		activation: {
@@ -690,21 +711,21 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Target must make Vitality saving throw or begin turning to stone.",
@@ -722,7 +743,8 @@ export const powers = [
 	{
 		id: "telepathy",
 		name: "Telepathy",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "monstrous",
 		rarity: "rare",
 		activation: {
@@ -733,16 +755,16 @@ export const powers = [
 			distance: 120,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Communicate telepathically with any creature you can see within 120 feet.",
@@ -757,7 +779,8 @@ export const powers = [
 	{
 		id: "invisibility",
 		name: "Invisibility",
-		description: "You harness fundamental energy to override the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to override the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "monstrous",
 		rarity: "uncommon",
 		activation: {
@@ -768,21 +791,21 @@ export const powers = [
 			time: "1 hour",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary: "Become invisible to all sight.",
 			secondary: "Invisibility ends if you attack or cast a spell.",
@@ -810,15 +833,15 @@ export const powers = [
 			type: "action",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary: "Request direct intervention from the Rift architects.",
 			secondary:
@@ -828,7 +851,8 @@ export const powers = [
 			uses: "Once per lifetime",
 			recharge: "Never",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/divine-intervention.webp",
 	},
@@ -850,15 +874,15 @@ export const powers = [
 			time: "1 hour",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary: "Manifest spectral wings that grant a fly speed of 60 feet.",
 			secondary: "Wings shed bright light in a 10-foot radius.",
@@ -867,7 +891,8 @@ export const powers = [
 			uses: "3 times per day",
 			recharge: "Long rest",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/angelic-wings.webp",
 	},
@@ -894,16 +919,16 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary: "Allies in aura have advantage on saving throws.",
 			secondary:
@@ -938,21 +963,21 @@ export const powers = [
 			time: "1 minute",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary: "Gain two additional attacks per turn.",
 			secondary: "Advantage on all attack rolls.",
@@ -986,16 +1011,16 @@ export const powers = [
 			time: "1 minute",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Can cast any spell of 8th level or lower without expending a spell slot.",
@@ -1016,7 +1041,8 @@ export const powers = [
 	{
 		id: "void-collapse",
 		name: "Void Collapse",
-		description: "By aligning your lattice with the Void Absolute, you can nullify the local mana-void. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Void Absolute, you can nullify the local mana-void. This manifestation bypasses standard Rift dampeners.",
 		type: "awakening",
 		rarity: "legendary",
 		requirements: {
@@ -1032,14 +1058,12 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"stat_bonuses": {
-					"Intelligence": 1
-				},
-				"resistance": [
-					"necrotic"
-				],
-				"special": "Aligned with Void resonance."
+			stat_bonuses: {
+				Intelligence: 1,
 			},
+			resistance: ["necrotic"],
+			special: "Aligned with Void resonance.",
+		},
 		effects: {
 			primary:
 				"Create a 20-foot radius sphere of crushing gravity. Creatures inside take 8d10 force damage and are knocked prone and restrained.",
@@ -1058,7 +1082,8 @@ export const powers = [
 	{
 		id: "chronos-shift",
 		name: "Chronos Shift",
-		description: "You harness absolute energy to mandate the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness absolute energy to mandate the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "very_rare",
 		requirements: {
@@ -1074,15 +1099,15 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary:
 				"When a creature takes damage or fails a save, rewind time for them to completely undo the event.",
@@ -1093,14 +1118,16 @@ export const powers = [
 			uses: "Once per week",
 			recharge: "Week",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/chronos-shift.webp",
 	},
 	{
 		id: "mana-burn",
 		name: "Mana Burn",
-		description: "You harness fundamental energy to override the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to override the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
@@ -1116,21 +1143,21 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Target loses an unexpended resource (spell slot, ki, mana) and takes 1d8 psychic damage per level of resource lost.",
@@ -1148,7 +1175,8 @@ export const powers = [
 	{
 		id: "obsidian-carapace",
 		name: "Obsidian Carapace",
-		description: "You harness fundamental energy to decree the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to decree the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "monstrous",
 		rarity: "uncommon",
 		requirements: {
@@ -1164,16 +1192,16 @@ export const powers = [
 			time: "1 hour",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Gain 30 temporary hit points. While you have these, attackers taking melee swings at you take 1d6 piercing damage.",
@@ -1192,7 +1220,8 @@ export const powers = [
 	{
 		id: "soul-rend",
 		name: "Soul Rend",
-		description: "You harness undeniable energy to transmute the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness undeniable energy to transmute the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "very_rare",
 		requirements: {
@@ -1208,21 +1237,21 @@ export const powers = [
 			distance: 15,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Deal 4d10 necrotic damage and reduce the target's maximum hit points by the same amount.",
@@ -1241,7 +1270,8 @@ export const powers = [
 	{
 		id: "aegis-of-light",
 		name: "Aegis of Light",
-		description: "You harness solar energy to beam the target's flare. This manifestation of Solar resonance bypasses traditional defenses.",
+		description:
+			"You harness solar energy to beam the target's flare. This manifestation of Solar resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "rare",
 		requirements: {
@@ -1256,16 +1286,16 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "radiant"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "radiant",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Gain immunity to magical damage until the start of your next turn.",
@@ -1300,21 +1330,21 @@ export const powers = [
 			distance: 120,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary: "Make 5 ranged spell attacks. Each deals 1d10 force damage.",
 			secondary:
@@ -1332,7 +1362,8 @@ export const powers = [
 	{
 		id: "venom-blood",
 		name: "Venom Blood",
-		description: "You harness throbbing energy to boil the target's ichor. This manifestation of Blood resonance bypasses traditional defenses.",
+		description:
+			"You harness throbbing energy to boil the target's ichor. This manifestation of Blood resonance bypasses traditional defenses.",
 		type: "monstrous",
 		rarity: "uncommon",
 		requirements: {
@@ -1344,16 +1375,16 @@ export const powers = [
 			type: "passive",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "necrotic"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "necrotic",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Whenever you take piercing or slashing damage, the attacker takes 2d6 poison damage.",
@@ -1367,7 +1398,8 @@ export const powers = [
 	{
 		id: "absolute-zero",
 		name: "Absolute Zero",
-		description: "You harness brittle energy to shatter the target's lattice. This manifestation of Glacial resonance bypasses traditional defenses.",
+		description:
+			"You harness brittle energy to shatter the target's lattice. This manifestation of Glacial resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "very_rare",
 		requirements: {
@@ -1383,21 +1415,21 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "cold"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "cold",
 				},
-				"saving_throw": {
-					"ability": "Vitality",
-					"dc": "8 + proficiency + Vitality",
-					"success": "Half damage",
-					"failure": "The target is flash-frozen."
-				}
 			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: "8 + proficiency + Vitality",
+				success: "Half damage",
+				failure: "The target is flash-frozen.",
+			},
+		},
 		effects: {
 			primary:
 				"All creatures in a 20-foot sphere take 6d8 cold damage and are paralyzed for 1 minute (Con save ends).",
@@ -1416,7 +1448,8 @@ export const powers = [
 	{
 		id: "kinetic-absorption",
 		name: "Kinetic Absorption",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "innate",
 		rarity: "rare",
 		requirements: {
@@ -1428,16 +1461,16 @@ export const powers = [
 			type: "reaction",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Reduce incoming physical damage by 1d10 + attribute. Store this energy.",
@@ -1456,7 +1489,8 @@ export const powers = [
 	{
 		id: "infernal-forge",
 		name: "Infernal Forge",
-		description: "You harness absolute energy to override the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness absolute energy to override the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
@@ -1472,15 +1506,15 @@ export const powers = [
 			time: "10 minutes",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary: "Manifest a weapon of pure fire in your empty hand.",
 			secondary:
@@ -1489,14 +1523,16 @@ export const powers = [
 		limitations: {
 			uses: "At-will",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/infernal-forge.webp",
 	},
 	{
 		id: "celestial-judgment",
 		name: "Celestial Judgment",
-		description: "You harness absolute energy to override the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness absolute energy to override the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "legendary",
 		requirements: {
@@ -1511,16 +1547,16 @@ export const powers = [
 			type: "sight",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Target loses all damage resistances and immunities for 1 minute.",
@@ -1539,7 +1575,8 @@ export const powers = [
 	{
 		id: "mind-control",
 		name: "Dominate Will",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "innate",
 		rarity: "very_rare",
 		requirements: {
@@ -1559,21 +1596,21 @@ export const powers = [
 			time: "1 hour",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"You dictate the creature's actions completely. Adapts to your highest applicable attribute.",
@@ -1591,7 +1628,8 @@ export const powers = [
 	{
 		id: "warp-strike",
 		name: "Warp Strike",
-		description: "By aligning your lattice with the Aetheric Absolute, you can distort the local aether. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Aetheric Absolute, you can distort the local aether. This manifestation bypasses standard Rift dampeners.",
 		type: "awakening",
 		rarity: "uncommon",
 		requirements: {
@@ -1607,16 +1645,16 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Make a ranged attack with a melee weapon. Hit or miss, you teleport to an unoccupied space adjacent to the target.",
@@ -1634,7 +1672,8 @@ export const powers = [
 	{
 		id: "life-transfer",
 		name: "Life Transfer",
-		description: "You harness pure energy to mandate the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to mandate the target's existence. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "uncommon",
 		requirements: {
@@ -1649,21 +1688,21 @@ export const powers = [
 			type: "touch",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary: "Take 4d8 necrotic damage (ignores resistance/immunity).",
 			secondary:
@@ -1679,7 +1718,8 @@ export const powers = [
 	{
 		id: "gravity-crush",
 		name: "Gravity Crush",
-		description: "You harness unyielding energy to grind the target's core. This manifestation of Titanic resonance bypasses traditional defenses.",
+		description:
+			"You harness unyielding energy to grind the target's core. This manifestation of Titanic resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
@@ -1695,16 +1735,16 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "bludgeoning"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "bludgeoning",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Target takes 5d10 force damage and has its movement speed reduced to 5 feet.",
@@ -1740,21 +1780,21 @@ export const powers = [
 			time: "1 hour",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Create a clone with 1 HP and your exact AC and stats. It shares your turn and can attack.",
@@ -1773,7 +1813,8 @@ export const powers = [
 	{
 		id: "storm-call",
 		name: "Storm Call",
-		description: "You harness hyper-charged energy to discharge the target's volts. This manifestation of Storm resonance bypasses traditional defenses.",
+		description:
+			"You harness hyper-charged energy to discharge the target's volts. This manifestation of Storm resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "very_rare",
 		requirements: {
@@ -1793,16 +1834,16 @@ export const powers = [
 			time: "10 minutes",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "lightning"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "lightning",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Call down lightning bolts every turn as a bonus action (6d10 damage).",
@@ -1837,21 +1878,21 @@ export const powers = [
 			type: "touch",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "radiant"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "radiant",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is blinded by radiant light."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is blinded by radiant light.",
+			},
+		},
 		effects: {
 			primary:
 				"Deal 8d8 necrotic damage. Plants and non-magical structures instantly wither or degrade.",
@@ -1870,7 +1911,8 @@ export const powers = [
 	{
 		id: "starfall",
 		name: "Starfall",
-		description: "You harness pure energy to decree the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to decree the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "legendary",
 		requirements: {
@@ -1886,16 +1928,16 @@ export const powers = [
 			distance: 300,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"A blazing meteorite impacts a 40-foot radius. Deals 15d6 fire and 15d6 bludgeoning damage.",
@@ -1930,21 +1972,21 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Target is removed from reality for 1d4 rounds. When they return, they take 10d10 force damage.",
@@ -1962,7 +2004,8 @@ export const powers = [
 	{
 		id: "solar-flare",
 		name: "Solar Flare",
-		description: "You harness incandescent energy to illuminate the target's halo. This manifestation of Solar resonance bypasses traditional defenses.",
+		description:
+			"You harness incandescent energy to illuminate the target's halo. This manifestation of Solar resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "rare",
 		requirements: {
@@ -1978,16 +2021,16 @@ export const powers = [
 			distance: 20,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "radiant"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "radiant",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"All creatures in a 20ft radius take 6d8 fire damage and are blinded for 1 minute.",
@@ -2004,7 +2047,8 @@ export const powers = [
 	{
 		id: "void-singularity",
 		name: "Void Singularity",
-		description: "By aligning your lattice with the Void Absolute, you can nullify the local mana-void. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Void Absolute, you can nullify the local mana-void. This manifestation bypasses standard Rift dampeners.",
 		type: "awakening",
 		rarity: "legendary",
 		requirements: {
@@ -2020,14 +2064,12 @@ export const powers = [
 			distance: 100,
 		},
 		mechanics: {
-				"stat_bonuses": {
-					"Intelligence": 1
-				},
-				"resistance": [
-					"necrotic"
-				],
-				"special": "Aligned with Void resonance."
+			stat_bonuses: {
+				Intelligence: 1,
 			},
+			resistance: ["necrotic"],
+			special: "Aligned with Void resonance.",
+		},
 		effects: {
 			primary:
 				"Create a singularity that pulls all creatures within 50ft toward it. Deals 20d10 force damage.",
@@ -2045,7 +2087,8 @@ export const powers = [
 	{
 		id: "aeon-shield",
 		name: "Aeon Shield",
-		description: "You harness dilated energy to loop the target's stasis. This manifestation of Chrono resonance bypasses traditional defenses.",
+		description:
+			"You harness dilated energy to loop the target's stasis. This manifestation of Chrono resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "very_rare",
 		requirements: {
@@ -2060,16 +2103,16 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"For 1 minute, you are immune to all damage as attacks simply stop in time before hitting you.",
@@ -2086,7 +2129,8 @@ export const powers = [
 	{
 		id: "nebula-drift",
 		name: "Nebula Drift",
-		description: "You harness unstable energy to shred the target's primordial mass. This manifestation of Chaos resonance bypasses traditional defenses.",
+		description:
+			"You harness unstable energy to shred the target's primordial mass. This manifestation of Chaos resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "rare",
 		requirements: {
@@ -2101,15 +2145,15 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "psychic"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "psychic",
+				},
 			},
+		},
 		effects: {
 			primary:
 				"You become incorporeal and can pass through objects. You gain a fly speed of 60ft.",
@@ -2118,14 +2162,16 @@ export const powers = [
 		limitations: {
 			uses: "Duration: 10 minutes",
 		},
-		flavor: "A relic of the Chaos Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Chaos Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/nebula-drift.webp",
 	},
 	{
 		id: "gravity-well",
 		name: "Gravity Well",
-		description: "You harness tectonic energy to grind the target's lithosphere. This manifestation of Titanic resonance bypasses traditional defenses.",
+		description:
+			"You harness tectonic energy to grind the target's lithosphere. This manifestation of Titanic resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "uncommon",
 		requirements: {
@@ -2141,16 +2187,16 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "bludgeoning"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "bludgeoning",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Creatures in a 20ft radius have their speed reduced to 0 and take 4d6 bludgeoning damage.",
@@ -2166,7 +2212,8 @@ export const powers = [
 	{
 		id: "quantum-entanglement",
 		name: "Quantum Entanglement",
-		description: "You harness fundamental energy to transmute the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to transmute the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
@@ -2182,21 +2229,21 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Choose two targets. Any damage or healing received by one is shared by the other.",
@@ -2213,7 +2260,8 @@ export const powers = [
 	{
 		id: "supernova-blast",
 		name: "Supernova Blast",
-		description: "You harness fundamental energy to decree the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to decree the target's reality. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "legendary",
 		requirements: {
@@ -2229,15 +2277,15 @@ export const powers = [
 			distance: 120,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary: "Deals 15d12 fire and radiant damage in a 40ft radius.",
 			secondary:
@@ -2246,14 +2294,16 @@ export const powers = [
 		limitations: {
 			uses: "Once per day",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/supernova-blast.webp",
 	},
 	{
 		id: "nanite-swarm",
 		name: "Nanite Swarm",
-		description: "You harness fundamental energy to manifest the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to manifest the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "class",
 		rarity: "uncommon",
 		requirements: {
@@ -2269,21 +2319,21 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"The swarm deals 2d8 piercing damage to a target each turn and grants you half-cover.",
@@ -2300,7 +2350,8 @@ export const powers = [
 	{
 		id: "titan-strength",
 		name: "Titan's Strength",
-		description: "By aligning your lattice with the Titanic Absolute, you can grind the local core. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Titanic Absolute, you can grind the local core. This manifestation bypasses standard Rift dampeners.",
 		type: "innate",
 		rarity: "uncommon",
 		requirements: {
@@ -2315,16 +2366,16 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "bludgeoning"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "bludgeoning",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Your next melee attack deals triple damage and knocks the target prone.",
@@ -2342,7 +2393,8 @@ export const powers = [
 	{
 		id: "echoes-of-the-past",
 		name: "Echoes of the Past",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
@@ -2358,15 +2410,15 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary:
 				"Create 1d4 echoes that mimic your movements and attacks, dealing 25% damage each.",
@@ -2376,14 +2428,16 @@ export const powers = [
 		limitations: {
 			uses: "Duration: 3 rounds",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/echoes.webp",
 	},
 	{
 		id: "glacier-prison",
 		name: "Glacier Prison",
-		description: "You harness fundamental energy to transmute the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to transmute the target's will. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "rare",
 		requirements: {
@@ -2399,15 +2453,15 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary:
 				"Target is frozen solid, becoming paralyzed and immune to all damage for 3 rounds.",
@@ -2416,14 +2470,16 @@ export const powers = [
 		limitations: {
 			uses: "Once per day",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/glacier-prison.webp",
 	},
 	{
 		id: "bio-luminescence",
 		name: "Bio-Luminescence",
-		description: "You harness fundamental energy to mandate the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness fundamental energy to mandate the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "common",
 		requirements: {
@@ -2436,21 +2492,21 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"Shed bright light in a 20ft radius and dim light for another 20ft.",
@@ -2467,7 +2523,8 @@ export const powers = [
 	{
 		id: "neuro-spike",
 		name: "Neuro Spike",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "class",
 		rarity: "common",
 		requirements: {
@@ -2483,16 +2540,16 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Target takes 1d10 psychic damage and cannot take reactions until their next turn.",
@@ -2508,7 +2565,8 @@ export const powers = [
 	{
 		id: "plasma-whip",
 		name: "Plasma Whip",
-		description: "You harness hyper-charged energy to discharge the target's volts. This manifestation of Storm resonance bypasses traditional defenses.",
+		description:
+			"You harness hyper-charged energy to discharge the target's volts. This manifestation of Storm resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "uncommon",
 		requirements: {
@@ -2524,21 +2582,21 @@ export const powers = [
 			distance: 15,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "lightning"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "lightning",
 				},
-				"saving_throw": {
-					"ability": "Intelligence",
-					"dc": "8 + proficiency + Intelligence",
-					"success": "Half damage",
-					"failure": "The target is paralyzed by volts."
-				}
 			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: "8 + proficiency + Intelligence",
+				success: "Half damage",
+				failure: "The target is paralyzed by volts.",
+			},
+		},
 		effects: {
 			primary:
 				"Melee spell attack dealing 3d8 fire damage. Target is pulled 10ft toward you.",
@@ -2555,7 +2613,8 @@ export const powers = [
 	{
 		id: "spectral-blade",
 		name: "Spectral Blade",
-		description: "You harness pure energy to mandate the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to mandate the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "class",
 		rarity: "uncommon",
 		requirements: {
@@ -2570,16 +2629,16 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"A blade appears in your hand. Attacks deal 2d10 force damage and ignore non-magical armor.",
@@ -2596,7 +2655,8 @@ export const powers = [
 	{
 		id: "dimensional-rift",
 		name: "Dimensional Rift",
-		description: "You harness harmonic energy to project the target's dimensional fabric. This manifestation of Aetheric resonance bypasses traditional defenses.",
+		description:
+			"You harness harmonic energy to project the target's dimensional fabric. This manifestation of Aetheric resonance bypasses traditional defenses.",
 		type: "innate",
 		rarity: "rare",
 		requirements: {
@@ -2611,21 +2671,21 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Sense",
-					"dc": "8 + proficiency + Sense",
-					"success": "Half damage",
-					"failure": "The target's lattice is distorted."
-				}
 			},
+			saving_throw: {
+				ability: "Sense",
+				dc: "8 + proficiency + Sense",
+				success: "Half damage",
+				failure: "The target's lattice is distorted.",
+			},
+		},
 		effects: {
 			primary: "Access a private storage dimension (up to 500 lbs of gear).",
 			secondary: "Can be used to bypass security checkpoints easily.",
@@ -2641,7 +2701,8 @@ export const powers = [
 	{
 		id: "soul-binding",
 		name: "Soul Binding",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "class",
 		rarity: "very_rare",
 		requirements: {
@@ -2656,16 +2717,16 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Choose a 'Sanctuary'. You can teleport back to it from anywhere on the same plane.",
@@ -2683,7 +2744,8 @@ export const powers = [
 	{
 		id: "entropy-field",
 		name: "Entropy Field",
-		description: "You harness entropic energy to extinguish the target's oblivion. This manifestation of Void resonance bypasses traditional defenses.",
+		description:
+			"You harness entropic energy to extinguish the target's oblivion. This manifestation of Void resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "rare",
 		requirements: {
@@ -2699,21 +2761,21 @@ export const powers = [
 			distance: 20,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "necrotic"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "necrotic",
 				},
-				"saving_throw": {
-					"ability": "Intelligence",
-					"dc": "8 + proficiency + Intelligence",
-					"success": "Half damage",
-					"failure": "The target is pulled into a mana-void."
-				}
 			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: "8 + proficiency + Intelligence",
+				success: "Half damage",
+				failure: "The target is pulled into a mana-void.",
+			},
+		},
 		effects: {
 			primary:
 				"All non-living objects in range rot or rust instantly. Living targets take 5d8 necrotic damage.",
@@ -2731,7 +2793,8 @@ export const powers = [
 	{
 		id: "celestial-communion",
 		name: "Celestial Communion",
-		description: "You harness undeniable energy to mandate the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness undeniable energy to mandate the target's structure. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "rare",
 		requirements: {
@@ -2746,16 +2809,16 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"You can ask three questions and receive cryptic but 100% accurate answers.",
@@ -2773,7 +2836,8 @@ export const powers = [
 	{
 		id: "shadow-puppetry",
 		name: "Shadow Puppetry",
-		description: "By aligning your lattice with the Void Absolute, you can nullify the local mana-void. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Void Absolute, you can nullify the local mana-void. This manifestation bypasses standard Rift dampeners.",
 		type: "innate",
 		rarity: "very_rare",
 		requirements: {
@@ -2789,14 +2853,12 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"stat_bonuses": {
-					"Intelligence": 1
-				},
-				"resistance": [
-					"necrotic"
-				],
-				"special": "Aligned with Void resonance."
+			stat_bonuses: {
+				Intelligence: 1,
 			},
+			resistance: ["necrotic"],
+			special: "Aligned with Void resonance.",
+		},
 		effects: {
 			primary:
 				"Target must make a Sense save or become your puppet. You control its movement and actions.",
@@ -2806,14 +2868,16 @@ export const powers = [
 		limitations: {
 			uses: "Once per long rest",
 		},
-		flavor: "A relic of the Void Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Void Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/puppetry.webp",
 	},
 	{
 		id: "thermal-vent",
 		name: "Thermal Vent",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "innate",
 		rarity: "uncommon",
 		requirements: {
@@ -2829,16 +2893,16 @@ export const powers = [
 			distance: 10,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Triggered when you take damage. Deals 3d10 fire damage to all adjacent enemies.",
@@ -2871,21 +2935,21 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "bludgeoning"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "bludgeoning",
 				},
-				"saving_throw": {
-					"ability": "Vitality",
-					"dc": "8 + proficiency + Vitality",
-					"success": "Half damage",
-					"failure": "The target is crushed by weight."
-				}
 			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: "8 + proficiency + Vitality",
+				success: "Half damage",
+				failure: "The target is crushed by weight.",
+			},
+		},
 		effects: {
 			primary:
 				"You can jump up to 60ft as part of your movement. You do not take falling damage.",
@@ -2902,7 +2966,8 @@ export const powers = [
 	{
 		id: "obsidian-wall",
 		name: "Obsidian Wall",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "awakening",
 		rarity: "uncommon",
 		requirements: {
@@ -2918,16 +2983,16 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Create a wall 20ft long, 10ft high, and 1ft thick. It has 50 HP.",
@@ -2944,7 +3009,8 @@ export const powers = [
 	{
 		id: "star-fire-lance",
 		name: "Star-Fire Lance",
-		description: "You harness pure energy to decree the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
+		description:
+			"You harness pure energy to decree the target's power. This manifestation of Absolute resonance bypasses traditional defenses.",
 		type: "divine",
 		rarity: "rare",
 		requirements: {
@@ -2960,15 +3026,15 @@ export const powers = [
 			distance: 120,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "8d10",
-						"type": "force"
-					}
-				}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "8d10",
+					type: "force",
+				},
 			},
+		},
 		effects: {
 			primary: "A 5ft wide line deals 8d8 radiant damage. Penetrates targets.",
 			secondary: "Undead take double damage.",
@@ -2976,14 +3042,16 @@ export const powers = [
 		limitations: {
 			uses: "2 times per long rest",
 		},
-		flavor: "A relic of the Absolute Resonance event. The air hums with entropic power.",
+		flavor:
+			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/lance.webp",
 	},
 	{
 		id: "vortex-shield",
 		name: "Vortex Shield",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "innate",
 		rarity: "uncommon",
 		requirements: {
@@ -2998,16 +3066,16 @@ export const powers = [
 			type: "self",
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Ranged attacks against you have disadvantage. Any creature that enters adjacent space is pushed 10ft away.",
@@ -3024,7 +3092,8 @@ export const powers = [
 	{
 		id: "seraph-call",
 		name: "Seraph's Call",
-		description: "By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Absolute Absolute, you can mandate the local will. This manifestation bypasses standard Rift dampeners.",
 		type: "divine",
 		rarity: "very_rare",
 		requirements: {
@@ -3040,21 +3109,21 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Presence",
-					"dc": "8 + proficiency + Presence",
-					"success": "Half damage",
-					"failure": "The target is stunned by authority."
-				}
 			},
+			saving_throw: {
+				ability: "Presence",
+				dc: "8 + proficiency + Presence",
+				success: "Half damage",
+				failure: "The target is stunned by authority.",
+			},
+		},
 		effects: {
 			primary:
 				"An angelic guardian appears and grants all allies +4 AC and resistance to necrotic damage.",
@@ -3070,7 +3139,8 @@ export const powers = [
 	{
 		id: "necrotic-tether",
 		name: "Necrotic Tether",
-		description: "By aligning your lattice with the Blood Absolute, you can rupture the local ichor. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Blood Absolute, you can rupture the local ichor. This manifestation bypasses standard Rift dampeners.",
 		type: "class",
 		rarity: "rare",
 		requirements: {
@@ -3086,16 +3156,16 @@ export const powers = [
 			distance: 60,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "necrotic"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "necrotic",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"Target takes 4d6 necrotic damage each turn. You heal for the same amount.",
@@ -3113,7 +3183,8 @@ export const powers = [
 	{
 		id: "glacial-fortress",
 		name: "Glacial Fortress",
-		description: "You harness absolute zero energy to petrify the target's molecular movement. This manifestation of Glacial resonance bypasses traditional defenses.",
+		description:
+			"You harness absolute zero energy to petrify the target's molecular movement. This manifestation of Glacial resonance bypasses traditional defenses.",
 		type: "awakening",
 		rarity: "very_rare",
 		requirements: {
@@ -3129,21 +3200,21 @@ export const powers = [
 			distance: 30,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "cold"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "cold",
 				},
-				"saving_throw": {
-					"ability": "Vitality",
-					"dc": "8 + proficiency + Vitality",
-					"success": "Half damage",
-					"failure": "The target is flash-frozen."
-				}
 			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: "8 + proficiency + Vitality",
+				success: "Half damage",
+				failure: "The target is flash-frozen.",
+			},
+		},
 		effects: {
 			primary:
 				"Create a 30ft radius dome. It has 200 HP and grants total cover to those inside.",
@@ -3177,16 +3248,16 @@ export const powers = [
 			distance: 90,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "5d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "5d10",
+					type: "force",
 				},
-				"critical": true
 			},
+			critical: true,
+		},
 		effects: {
 			primary:
 				"A 10ft tear appears. It sucks in all air and light, dealing 12d12 force damage.",
@@ -3202,7 +3273,8 @@ export const powers = [
 	{
 		id: "omega-pulse",
 		name: "Omega Pulse",
-		description: "By aligning your lattice with the Aetheric Absolute, you can distort the local aether. This manifestation bypasses standard Rift dampeners.",
+		description:
+			"By aligning your lattice with the Aetheric Absolute, you can distort the local aether. This manifestation bypasses standard Rift dampeners.",
 		type: "divine",
 		rarity: "legendary",
 		requirements: {
@@ -3218,21 +3290,21 @@ export const powers = [
 			distance: 100,
 		},
 		mechanics: {
-				"attack": {
-					"mode": "ranged",
-					"resolution": "spell_attack",
-					"damage": {
-						"dice": "3d10",
-						"type": "force"
-					}
+			attack: {
+				mode: "ranged",
+				resolution: "spell_attack",
+				damage: {
+					dice: "3d10",
+					type: "force",
 				},
-				"saving_throw": {
-					"ability": "Sense",
-					"dc": "8 + proficiency + Sense",
-					"success": "Half damage",
-					"failure": "The target's lattice is distorted."
-				}
 			},
+			saving_throw: {
+				ability: "Sense",
+				dc: "8 + proficiency + Sense",
+				success: "Half damage",
+				failure: "The target's lattice is distorted.",
+			},
+		},
 		effects: {
 			primary:
 				"All enemies in 100ft must make a Sense save or be reduced to 1 HP.",

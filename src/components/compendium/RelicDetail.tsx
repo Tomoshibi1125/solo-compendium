@@ -152,7 +152,9 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						<Badge
 							className={`${rarityColors[data.rarity || "common"]} text-white capitalize`}
 						>
-							{formatRegentVernacular((data.rarity || "common").replace("_", " "))}
+							{formatRegentVernacular(
+								(data.rarity || "common").replace("_", " "),
+							)}
 						</Badge>
 						{itemType && (
 							<Badge variant="secondary">
@@ -189,7 +191,9 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							className={`w-5 h-5 ${data.rarity === "legendary" ? "text-amber-500" : rarityColors[data.rarity || "common"] ? "text-white" : ""}`}
 						/>
 						<span className="font-heading capitalize">
-							{formatRegentVernacular((data.rarity || "common").replace("_", " "))}
+							{formatRegentVernacular(
+								(data.rarity || "common").replace("_", " "),
+							)}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -428,7 +432,9 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 							data.mechanics.immunity.length > 0 && (
 								<p className="text-muted-foreground">
 									<span className="text-foreground">Immunity:</span>{" "}
-									{data.mechanics.immunity.map(formatRegentVernacular).join(", ")}
+									{data.mechanics.immunity
+										.map(formatRegentVernacular)
+										.join(", ")}
 								</p>
 							)}
 						{data.mechanics.vulnerability &&

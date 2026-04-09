@@ -134,7 +134,7 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 							className="bg-glass/10"
 						>
 							<div className="p-2 space-y-2">
-								{data.relationships.map((rel: any) => (
+								{data.relationships.map((rel) => (
 									<div
 										key={rel.id}
 										className="flex items-center justify-between p-3 rounded-sm border border-amethyst/10 bg-void/40"

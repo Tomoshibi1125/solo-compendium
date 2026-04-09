@@ -12,9 +12,7 @@ import {
 } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-import type { CompendiumItem } from "@/types/compendium";
-
-interface ItemData {
+export interface ItemData {
 	id: string;
 	name: string;
 	display_name?: string | null;
@@ -22,6 +20,7 @@ interface ItemData {
 	item_type?: string | null;
 	rarity?: string | null;
 	value?: number | null;
+	weight?: number | null;
 	// weight matches CompendiumItem
 	requirements?: {
 		class?: string[];
@@ -94,12 +93,14 @@ const rarityStyles: Record<string, string> = {
 	legendary: "text-amber-400 border-amber-500/40 bg-amber-500/10",
 };
 
-export const ItemDetail = ({ data }: { data: any }) => {
-	const item = data as ItemData;
+export const ItemDetail = ({ data }: { data: ItemData }) => {
+	const item = data;
 	const navigate = useNavigate();
 	const displayName = formatRegentVernacular(item.display_name || item.name);
 	const imageSrc = item.image_url || item.image || undefined;
-	const rarityStyle = item.rarity ? rarityStyles[item.rarity.toLowerCase()] : undefined;
+	const rarityStyle = item.rarity
+		? rarityStyles[item.rarity.toLowerCase()]
+		: undefined;
 	const weapon = item.properties?.weapon;
 	const magical = item.properties?.magical;
 
@@ -432,7 +433,7 @@ export const ItemDetail = ({ data }: { data: any }) => {
 						{data.effects?.active && data.effects.active.length > 0 && (
 							<div className="space-y-3">
 								<p className="font-heading text-foreground">Active</p>
-								{item.effects?.active?.map((active: any) => {
+								{item.effects?.active?.map((active) => {
 									const payload = buildActiveEffectPayload(active);
 
 									return (

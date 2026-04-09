@@ -1,12 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useFeatures } from "@/hooks/useFeatures";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
-import { useCharacterRuneInscriptions } from "@/hooks/useRunes";
-import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 
 interface LimitedUseTrackerProps {
@@ -14,10 +12,8 @@ interface LimitedUseTrackerProps {
 }
 
 export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
-	const queryClient = useQueryClient();
+	const _queryClient = useQueryClient();
 	const { features, updateFeature } = useFeatures(characterId);
-	const { data: runeInscriptions = [] } =
-		useCharacterRuneInscriptions(characterId);
 
 	// D&D Beyond Parity Integration
 	const ascendantTools = useAscendantTools();
@@ -27,35 +23,9 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 	const { broadcastDiceRoll, isConnected: isCampaignConnected } =
 		useRealtimeCollaboration(campaignId || "");
 
-	// Custom mutation for updating rune usages up or down (bypassing useUseRune which only decrements)
-	const updateRuneUses = useMutation({
-		mutationFn: async ({
-			id,
-			usesCurrent,
-		}: {
-			id: string;
-			usesCurrent: number;
-		}) => {
-			const { error } = await supabase
-				.from("character_rune_inscriptions")
-				.update({ uses_current: usesCurrent })
-				.eq("id", id);
-			if (error) throw error;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["character-rune-inscriptions", characterId],
-			});
-			queryClient.invalidateQueries({ queryKey: ["equipment-runes"] });
-		},
-	});
-
 	const limitedFeatures = features.filter((f) => f.uses_max !== null);
-	const limitedRunes = runeInscriptions.filter(
-		(r) => r.uses_max !== null && r.is_active,
-	);
 
-	const hasAnyUses = limitedFeatures.length > 0 || limitedRunes.length > 0;
+	const hasAnyUses = limitedFeatures.length > 0;
 
 	if (!hasAnyUses) return null;
 
@@ -129,63 +99,6 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 		}
 	};
 
-	const handleRuneToggle = (
-		id: string,
-		usesMax: number,
-		currentUses: number | null,
-		indexToToggle: number,
-	) => {
-		const actualCurrent = currentUses ?? usesMax;
-		const targetUses = indexToToggle + 1;
-
-		let newUses = actualCurrent;
-		if (actualCurrent === targetUses) {
-			newUses = targetUses - 1;
-		} else {
-			newUses = targetUses;
-		}
-
-		updateRuneUses.mutate({ id, usesCurrent: newUses });
-
-		// DDB Parity: Broadcast usage
-		const runeDetails = limitedRunes.find((r) => r.id === id);
-		if (runeDetails?.rune) {
-			const isSpending = newUses < actualCurrent;
-			const actionType = isSpending ? "spend" : "regain";
-			ascendantTools
-				.trackCustomFeatureUsage(
-					characterId,
-					runeDetails.rune.name,
-					actionType,
-					"SA",
-				)
-				.catch(console.error);
-
-			if (isSpending) {
-				const scope = campaignId && isCampaignConnected ? "campaign" : "local";
-				recordRoll.mutate({
-					dice_formula: "Rune Tracker",
-					result: 0,
-					rolls: [],
-					roll_type: "ability",
-					context: `Uses Rune: ${runeDetails.rune.name}`,
-					modifiers: null,
-					campaign_id: campaignId ?? null,
-					character_id: characterId,
-				});
-
-				if (scope === "campaign") {
-					broadcastDiceRoll("Rune Tracker", 0, {
-						characterName: "Character", // Prop fallback
-						rollType: "ability",
-						context: `Uses Rune: ${runeDetails.rune.name}`,
-						rolls: [],
-					});
-				}
-			}
-		}
-	};
-
 	return (
 		<AscendantWindow title="LIMITED USE" compact>
 			<div className="space-y-4 pt-4">
@@ -230,51 +143,6 @@ export function LimitedUseTracker({ characterId }: LimitedUseTrackerProps) {
 											"w-2.5 h-2.5 rounded-sm transition-transform",
 											i < (feature.uses_current ?? feature.uses_max ?? 0)
 												? "bg-cyan-400 scale-100"
-												: "scale-0",
-										)}
-									/>
-								</button>
-							))}
-						</div>
-					</div>
-				))}
-
-				{limitedRunes.map((entry) => (
-					<div
-						key={entry.id}
-						className="flex flex-col gap-1.5 border-b border-white/5 pb-3 last:border-0 last:pb-0"
-					>
-						<div className="flex justify-between items-end">
-							<span className="text-sm font-semibold capitalize text-amethyst-purple">
-								{entry.rune?.name} (Rune)
-							</span>
-						</div>
-						<div className="flex flex-wrap gap-1.5 mt-1">
-							{Array.from({ length: entry.uses_max ?? 0 }).map((_, i) => (
-								<button
-									type="button"
-									key={`slot-${[...Array(i + 1)].length}`}
-									aria-label={`Toggle use ${i + 1} of ${entry.rune?.name}`}
-									className={cn(
-										"w-5 h-5 rounded border flex items-center justify-center transition-all",
-										i < (entry.uses_current ?? entry.uses_max ?? 0)
-											? "bg-amethyst-purple/20 border-amethyst-purple text-amethyst-purple hover:bg-amethyst-purple/30" // Available
-											: "bg-background border-white/10 text-transparent hover:border-white/30", // Used
-									)}
-									onClick={() =>
-										handleRuneToggle(
-											entry.id,
-											entry.uses_max ?? 0,
-											entry.uses_current,
-											i,
-										)
-									}
-								>
-									<div
-										className={cn(
-											"w-2.5 h-2.5 rounded-sm transition-transform",
-											i < (entry.uses_current ?? entry.uses_max ?? 0)
-												? "bg-amethyst-purple scale-100"
 												: "scale-0",
 										)}
 									/>
