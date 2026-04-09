@@ -283,12 +283,7 @@ async function syncRunes() {
 			concentration: !!m.concentration,
 			uses_per_rest: m.uses_per_rest || null,
 			requires_level: m.requires_level || 1,
-			requires_job: castToStringArray(m.requires_job),
-			caster_penalty: m.caster_penalty || null,
-			martial_penalty: m.martial_penalty || null,
-			passive_bonuses: castToJson(m.passive_bonuses),
 			effect_description: m.effect_description || m.description || "",
-			can_inscribe_on: castToStringArray(m.can_inscribe_on),
 		});
 	}
 
