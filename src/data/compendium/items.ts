@@ -90,6 +90,11 @@ export interface Item {
 
 	// Enhanced effects
 	effects?: {
+		primary?: string;
+		secondary?: string;
+		tertiary?: string;
+		primaryEffect?: string;
+		secondaryEffect?: string;
 		passive?: string[];
 		active?: {
 			name: string;

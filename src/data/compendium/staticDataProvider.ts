@@ -110,8 +110,8 @@ export interface StaticCompendiumEntry {
 	image?: string | null;
 	cost_credits?: number | null;
 	item_properties?: Record<string, Json> | null;
-	activation?: Record<string, Json> | null;
-	duration?: Record<string, Json> | null;
+	activation?: Record<string, Json> | string | null;
+	duration?: Record<string, Json> | string | null;
 	components?: Record<string, Json> | null;
 	effects?: Record<string, Json> | null;
 	mechanics?: Record<string, Json> | null;
@@ -1158,8 +1158,9 @@ function _transformRune(
 		rune_level: rune.rune_level ?? rune.power ?? undefined,
 		rarity: rune.rarity || "uncommon",
 		level: rune.requires_level ?? rune.rune_level ?? rune.power ?? undefined,
-		range: typeof range === "string" ? { type: range } : range,
-		duration: typeof duration === "string" ? { type: duration } : duration,
+		range: range as unknown as Record<string, Json>, // Range expects object for some things but rune UI expects string
+		duration: duration as unknown as Record<string, Json>,
+		activation_action: activation_action,
 		activation: activation_action ? { type: activation_action } : undefined,
 		lore: lore ? { origin: lore, discovery: discovery_lore ?? null } : null,
 		flavor: lore || null,

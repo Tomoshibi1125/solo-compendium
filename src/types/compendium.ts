@@ -428,6 +428,7 @@ export interface CompendiumFeat extends BaseCompendiumItem {
 				expert?: string[];
 				master?: string[];
 		  };
+	repeatable?: boolean;
 }
 
 export interface CompendiumTattoo extends BaseCompendiumItem {
