@@ -73,12 +73,23 @@ const CampaignDetail = () => {
 	const [attachDialogOpen, setAttachDialogOpen] = useState(false);
 	const [selectedCharacterToAttach, setSelectedCharacterToAttach] =
 		useState("");
+	const [loadingTimedOut, setLoadingTimedOut] = useState(false);
 
 	const { user, loading } = useAuth();
 	const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 	const isE2E = import.meta.env.VITE_E2E === "true";
 
 	const { data: campaign, isLoading: loadingCampaign } = useCampaign(id || "");
+
+	// Safety net: if campaign doesn't load within 8 seconds, stop showing spinner
+	useEffect(() => {
+		if (!loadingCampaign || campaign) {
+			setLoadingTimedOut(false);
+			return;
+		}
+		const timer = setTimeout(() => setLoadingTimedOut(true), 8000);
+		return () => clearTimeout(timer);
+	}, [loadingCampaign, campaign]);
 	const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(
 		id || "",
 	);
@@ -145,7 +156,7 @@ const CampaignDetail = () => {
 		});
 	};
 
-	if (loadingCampaign || (!campaign && id)) {
+	if ((loadingCampaign || (!campaign && id)) && !loadingTimedOut) {
 		return (
 			<Layout>
 				<div className="container mx-auto px-4 py-8">

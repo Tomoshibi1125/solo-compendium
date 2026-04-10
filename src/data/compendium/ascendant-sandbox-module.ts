@@ -1,4 +1,8 @@
 import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
+import {
+	sandboxRecruitableNPCs,
+	type SandboxNPC,
+} from "@/data/compendium/sandbox-npcs";
 
 // ============================================================================
 // RIFT ASCENDANT: SANDBOX CAMPAIGN MODULE
@@ -15,6 +19,7 @@ export interface SandboxModule {
 	chapters: SandboxChapter[];
 	scenes: (VTTScene & { audioTracks?: { url: string; name: string }[] })[];
 	handouts: SandboxHandout[];
+	npcs: SandboxNPC[];
 }
 
 export interface SandboxHandout {
@@ -137,6 +142,124 @@ An unstoppable S-Rank anomaly known as The Executioner roams the lower-level map
 
 **Mechanic**: Every 24 in-game hours, or whenever the players use a massive burst of Aetheric Energy, roll 1d20. On a 1, The Executioner enters the region. 
 The players are not meant to fight it early on—they MUST run and hide. It moves at 60ft per round and can sense aetheric signatures.`,
+	},
+	{
+		title: "NPC Directory: Bureau Sentinels",
+		content: `# Bureau Sentinels — NPC Roster
+
+The Bureau of Ascendant Affairs maintains the last functioning government outpost in Sector B. These NPCs represent the military and administrative personnel stationed at Ground Zero Safehouse.
+
+## Commander Park Jae-won (Level 8 Vanguard)
+**Location**: Ground Zero Safehouse | **Recruitment**: Complete 3 eradication quests + earn Bureau 'Trusted' reputation
+
+Battle-scarred veteran with cybernetic left arm. Commands the outpost with iron will. Abilities: Fortification Aura, Command Strike, Cybernetic Overcharge.
+
+## Quartermaster Lin Mei-hua (Level 4 Artificer)
+**Location**: Ground Zero Safehouse | **Recruitment**: Joins if Black Market Bazaar is destroyed
+
+Logistics clerk trapped in a warzone. Not military, just indispensable. Abilities: Equipment Maintenance, Inventory Mastery, Emergency Fabrication.
+
+## Sergeant Yoon Hye-jin (Level 5 Ranger)
+**Location**: Ground Zero Safehouse | **Recruitment**: Help find missing Squad Seven
+
+Scout leader who's never lost a squad member — until now. Abilities: Shadow Step, Anomaly Sense, Precision Strike.
+
+## Dr. Elara Voss (Level 6 Scholar)
+**Location**: Ground Zero Safehouse | **Recruitment**: Bring 3 anomaly tissue samples (Rank C+)
+
+Aetheric researcher who believes the Regent can be communicated with. Abilities: Analyze Weakness, Aetheric Shield, Research Insight.
+
+## Agent Kira Blackwood (Level 7 Shadow)
+**Location**: Ground Zero Safehouse | **Recruitment**: Bureau reputation 'Trusted' + complete her personal quest
+
+Bureau intelligence operative with a classified mission. Was in Sector B before the Quarantine. Abilities: Infiltration, Killing Blow, Dead Drop.
+
+## Corporal Deng Wei (Level 4 Warrior)
+**Location**: Ground Zero Safehouse | **Recruitment**: Show kindness after nightmare episode
+
+Gentle giant haunted by The Executioner. Former chef. Abilities: Suppressing Fire, Heavy Hitter, Fortify Position.
+
+## Comms Officer Reyes (Level 3 Technician)
+**Location**: Ground Zero Safehouse | **Recruitment**: Help repair secondary comms relay
+
+The only person who can reach Central Command. Abilities: Signal Boost, Decrypt, EMP Burst.
+
+## Warden-Aspirant Sato Ken (Level 2 Initiate)
+**Location**: Ground Zero Safehouse | **Recruitment**: Ask him — he volunteers immediately
+
+Eighteen-year-old recruit. Photo of his sister inside his helmet. Abilities: Determination, Quick Learner, Inspire.`,
+	},
+	{
+		title: "NPC Directory: Vermillion Guild",
+		content: `# Vermillion Guild — NPC Roster
+
+Mercenaries, criminals, and outcasts who control the underground economy.
+
+## Rat-king Ji (Level 6 Merchant)
+**Location**: The Lower City Bazaar | **Recruitment**: Vermillion 'Respected' reputation + retrieve stashed funds
+
+Black market fence with one aetheric eye implant. Knows where a Regent Relic is hidden.
+
+## Vex "Quicksilver" (Level 7 Assassin)
+**Location**: The Lower City Bazaar | **Recruitment**: Help eliminate High Priestess Nyx
+
+Guild assassin with absorbed haste-rune. Partner was killed by the Cult. Uses they/them pronouns.
+
+## Mother Rust (Level 5 Alchemist)
+**Location**: The Lower City Bazaar | **Recruitment**: Bring a vial of 'living aether' from Botanical Sector
+
+Disgraced university chemist turned junk potion brewer. Working on a compound to close Gates permanently.
+
+## Torch (Level 6 Pyromancer)
+**Location**: The Lower City Bazaar | **Recruitment**: Pay 5,000 Credits or help send a letter through Quarantine perimeter
+
+Pyrokinetic enforcer. Gentle demeanor, devastating power.
+
+## Old Man Crane (Level 10 Sage)
+**Location**: The Lower City Bazaar | **Recruitment**: Only joins for the final Regent confrontation
+
+Retired S-Rank 'White Heron.' Veteran of twelve Gate Collapses.
+
+## Ash & Ember (Level 3 Twin Rogues)
+**Location**: The Lower City Bazaar | **Recruitment**: Ask nicely, promise to find their brother
+
+Identical twins. Joint recruit, never separated.
+
+## Guildmaster Orin (Level 9 Tactician)
+**Location**: The Lower City Bazaar | **Recruitment**: Unite Bureau and Vermillion factions
+
+Former Bureau Warden court-martialed for saving lives.`,
+	},
+	{
+		title: "NPC Directory: Awoko Cult & Others",
+		content: `# Awoko Cult — Mostly Hostile
+
+## High Priestess Nyx (Level 9) ☠ — Primary antagonist. Cannot be recruited.
+## The Prophet / Whisper (Level 5) ✓ — Defector hiding in Sewers. Persuasion DC 14.
+## Blood Zealot Karn (Level 7) ☠ — Boss encounter. Kill on sight.
+## Sister Veil (Level 6) ✓ — Show her Dr. Voss's research. Persuasion DC 16.
+## Acolyte Mara (Level 2) ✓ — Rescue from Financial District. Joins immediately.
+
+---
+
+# Independents & Anomaly-Adjacent
+
+## Doc Tanaka (L4 Medic) — Underground surgeon. Outer Slums.
+## Zara the Scrapper (L3 Engineer) — Self-taught mechanic. Outer Slums.
+## Father Gregor (L5 Cleric) — Divine magic chaplain. Outer Slums.
+## Mika the Kid (L1 Civilian) — Orphan with prophetic drawings. Roaming.
+## Professor Lun (L6 Scholar) — Regent entity expert. Outer Slums.
+## Ghost (L8 Unknown) — Amnesiac A-Rank combatant. Outer Slums.
+## Mama Chen (L3 Guardian) — Shelter matron protecting 47 civilians. Outer Slums.
+## Jax the Runner (L2 Scout) — Fastest courier in Sector B. Bazaar.
+## Iron Belle (L7 Brawler) — Undefeated fighting champion. Bazaar.
+## The Architect (L7 Artificer) — Building the Gate Disruption Device. Sewers.
+## Echo-7 (L5 Hybrid) — Partially transformed human. Botanical Sector.
+## The Watcher (L8 Guardian) — Ancient Gate entity with Regent Relic. Citadel.
+## Specimen X (L6 Mutant) — Sapient lab escapee. Sewers.
+## Lyra (L7 Psychic) — Dream frequency walker. Botanical Sector.
+## The Archivist (L4 Repository) — Sapient AI with classified data. Hospital.
+## Rex (L3 Beast) — Very good mutated war hound. Subway Network.`,
 	},
 ];
 
@@ -333,8 +456,10 @@ export const sandboxVTTScenes: (VTTScene & {
 export const massiveSandboxModule: SandboxModule = {
 	id: "sandbox-shadow-regent",
 	title: "The Shadow of the Regent",
-	description: "A dynamic 1-10 level sandbox campaign.",
+	description:
+		"A massive open-world sandbox campaign (Level 1-10) featuring 40+ unique NPCs across 5 factions, 10 VTT maps, and a non-linear story driven by player choice.",
 	chapters: sandboxWikiChapters,
 	scenes: sandboxVTTScenes,
 	handouts: sandboxHandouts,
+	npcs: sandboxRecruitableNPCs,
 };

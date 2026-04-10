@@ -10,6 +10,7 @@ import {
 	UserPlus,
 	Users,
 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -45,6 +46,7 @@ import { cn } from "@/lib/utils";
 const Campaigns = () => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
+	const queryClient = useQueryClient();
 	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 	const [campaignName, setCampaignName] = useState("");
 	const [campaignDescription, setCampaignDescription] = useState("");
@@ -55,8 +57,7 @@ const Campaigns = () => {
 		useJoinedCampaigns();
 	const createCampaign = useCreateCampaign();
 	const leaveCampaign = useLeaveCampaign();
-	const [targetCampaignId, setTargetCampaignId] = useState<string | null>(null);
-	const { injectSandbox } = useCampaignSandboxInjector(targetCampaignId);
+	const { injectSandbox } = useCampaignSandboxInjector(null);
 
 	const handleCreateCampaign = async () => {
 		if (!campaignName.trim()) {
@@ -74,13 +75,26 @@ const Campaigns = () => {
 				description: campaignDescription || undefined,
 			});
 
+			// Optimistically seed query cache so CampaignDetail loads instantly
+			// without waiting for Supabase RLS propagation
+			queryClient.setQueryData(["campaigns", campaignId], {
+				id: campaignId,
+				name: campaignName,
+				description: campaignDescription || null,
+				warden_id: "optimistic",
+				share_code: "------",
+				is_active: true,
+				created_at: new Date().toISOString(),
+				updated_at: new Date().toISOString(),
+				settings: { leveling_mode: "milestone" },
+			});
+
 			if (importSandbox) {
-				setTargetCampaignId(campaignId);
-				// Fire and forget sandbox injection
+				// Pass campaignId directly — don't rely on setState which is async
 				void injectSandbox(campaignId);
 				toast({
 					title: "Campaign Established",
-					description: "Importing sandbox module in the background...",
+					description: "Importing \"The Shadow of the Regent\" sandbox module in the background...",
 				});
 			}
 

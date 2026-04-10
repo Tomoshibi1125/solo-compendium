@@ -1118,3 +1118,129 @@ export const useIsWarden = () => {
 		retry: false,
 	});
 };
+
+// Delete campaign mutation
+export const useDeleteCampaign = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async (campaignId: string) => {
+			if (isLocalMode()) {
+				const campaigns = loadLocalCampaigns().filter(
+					(campaign) => campaign.id !== campaignId,
+				);
+				saveLocalCampaigns(campaigns);
+				const members = loadLocalMembers().filter(
+					(member) => member.campaign_id !== campaignId,
+				);
+				saveLocalMembers(members);
+				return;
+			}
+
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+			if (!user) {
+				if (guestEnabled) {
+					const campaigns = loadLocalCampaigns().filter(
+						(campaign) => campaign.id !== campaignId,
+					);
+					saveLocalCampaigns(campaigns);
+					const members = loadLocalMembers().filter(
+						(member) => member.campaign_id !== campaignId,
+					);
+					saveLocalMembers(members);
+					return;
+				}
+				throw new AppError("Not authenticated", "AUTH_REQUIRED");
+			}
+
+			const { error } = await supabase
+				.from("campaigns")
+				.delete()
+				.eq("id", campaignId)
+				.eq("warden_id", user.id);
+
+			if (error) throw error;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			toast({
+				title: "Campaign Deleted",
+				description: "The campaign has been permanently deleted.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to delete campaign",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+// Regenerate share code mutation
+export const useRegenerateShareCode = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async (campaignId: string) => {
+			const newCode = createShareCode();
+
+			if (isLocalMode()) {
+				const updated = updateLocalCampaign(campaignId, {});
+				// Manually update share_code in local storage
+				const campaigns = loadLocalCampaigns();
+				const idx = campaigns.findIndex((c) => c.id === campaignId);
+				if (idx !== -1) {
+					campaigns[idx] = { ...campaigns[idx], share_code: newCode };
+					saveLocalCampaigns(campaigns);
+				}
+				return newCode;
+			}
+
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+			if (!user) {
+				if (guestEnabled) {
+					const campaigns = loadLocalCampaigns();
+					const idx = campaigns.findIndex((c) => c.id === campaignId);
+					if (idx !== -1) {
+						campaigns[idx] = { ...campaigns[idx], share_code: newCode };
+						saveLocalCampaigns(campaigns);
+					}
+					return newCode;
+				}
+				throw new AppError("Not authenticated", "AUTH_REQUIRED");
+			}
+
+			const { error } = await supabase
+				.from("campaigns")
+				.update({ share_code: newCode })
+				.eq("id", campaignId)
+				.eq("warden_id", user.id);
+
+			if (error) throw error;
+			return newCode;
+		},
+		onSuccess: (_, campaignId) => {
+			queryClient.invalidateQueries({ queryKey: ["campaigns", campaignId] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			toast({
+				title: "Share Code Regenerated",
+				description: "The old share code has been invalidated. Share the new one with your Ascendants.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to regenerate share code",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};

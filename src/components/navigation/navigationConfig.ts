@@ -225,6 +225,23 @@ export const navigationConfig: NavItemConfig[] = [
 		],
 	},
 	{
+		title: "Guilds",
+		items: [
+			{
+				title: "My Guilds",
+				href: "/guilds",
+				description: "Manage your guilds and NPC recruits.",
+				icon: Shield,
+			},
+			{
+				title: "Join a Guild",
+				href: "/guilds/join",
+				description: "Join an existing guild with a share code.",
+				icon: Users,
+			},
+		],
+	},
+	{
 		title: "Collections",
 		items: [
 			{

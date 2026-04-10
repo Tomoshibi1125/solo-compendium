@@ -144,6 +144,8 @@ const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignBookView = lazy(() => import("./pages/CampaignBookView"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CampaignSessionPlay = lazy(() => import("./pages/CampaignSessionPlay"));
+const Guilds = lazy(() => import("./pages/Guilds"));
+const GuildDetail = lazy(() => import("./pages/GuildDetail"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
 const MarketplacePage = lazy(() => import("./pages/Marketplace"));
@@ -758,6 +760,31 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<CampaignBookView />
+						</Suspense>
+					}
+				/>
+				{/* Guild Routes */}
+				<Route
+					path="/guilds"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<Guilds />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/guilds/join"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<Guilds />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/guilds/:id"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<GuildDetail />
 						</Suspense>
 					}
 				/>
