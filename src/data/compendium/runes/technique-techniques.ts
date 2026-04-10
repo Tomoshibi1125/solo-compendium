@@ -25,7 +25,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -72,7 +72,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -119,7 +119,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -166,7 +166,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -213,7 +213,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -260,7 +260,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -307,7 +307,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -354,7 +354,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -401,7 +401,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -448,7 +448,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -495,7 +495,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -542,7 +542,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -589,7 +589,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -636,7 +636,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -683,7 +683,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -730,7 +730,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -777,7 +777,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -824,7 +824,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -871,7 +871,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -918,7 +918,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -965,7 +965,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1012,7 +1012,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1059,7 +1059,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1106,7 +1106,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1153,7 +1153,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1200,7 +1200,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1247,7 +1247,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Frightened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1294,7 +1294,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1341,7 +1341,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1388,7 +1388,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1435,7 +1435,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1482,7 +1482,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1529,7 +1529,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1576,7 +1576,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1623,7 +1623,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1670,7 +1670,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1717,7 +1717,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1764,7 +1764,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1811,7 +1811,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1858,7 +1858,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1905,7 +1905,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1952,7 +1952,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Frightened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -1999,7 +1999,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Frightened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2046,7 +2046,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2093,7 +2093,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Frightened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2140,7 +2140,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2187,7 +2187,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2234,7 +2234,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2281,7 +2281,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2328,7 +2328,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2375,7 +2375,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Incapacitated.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2422,7 +2422,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2469,7 +2469,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Frightened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2516,7 +2516,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2563,7 +2563,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2610,7 +2610,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2657,7 +2657,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2704,7 +2704,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Sense saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2751,7 +2751,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2798,7 +2798,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Frightened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2845,7 +2845,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d10 + 4 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2892,7 +2892,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Strength saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2939,7 +2939,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Prone.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -2986,7 +2986,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -3033,7 +3033,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Restrained.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -3080,7 +3080,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Frightened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -3127,7 +3127,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Presence saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -3174,7 +3174,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 3d8 damage. Targets must succeed on a DC 15 Agility saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -3221,7 +3221,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 2d12 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Deafened.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -3268,7 +3268,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 4d6 damage. Targets must succeed on a DC 15 Vitality saving throw or suffer its full effects and is Stunned.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
@@ -3315,7 +3315,7 @@ export const technique_runes: CompendiumRune[] = [
 		},
 		effect_description:
 			"Unleashes a surge of magical power dealing 5d4 damage. Targets must succeed on a DC 15 Intelligence saving throw or suffer its full effects and is Blinded.",
-		rune_type: "Socketable",
+		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
 		activation_cost: "Mana",
