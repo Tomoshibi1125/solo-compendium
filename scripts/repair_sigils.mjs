@@ -1,17 +1,17 @@
-import fs from 'fs';
+import fs from "node:fs";
 
-const filePath = 'src/data/compendium/sigils.ts';
-let content = fs.readFileSync(filePath, 'utf8');
+const filePath = "src/data/compendium/sigils.ts";
+let content = fs.readFileSync(filePath, "utf8");
 
 console.log("Initial file length:", content.length);
 
 // 1. Remove the corrupted top part (everything before sigil-fire-accessory-4)
 const midPoint = content.indexOf('id: "sigil-fire-accessory-4"');
 if (midPoint !== -1) {
-    const entryStart = content.lastIndexOf('{', midPoint);
-    if (entryStart !== -1) {
-        content = content.substring(entryStart);
-    }
+	const entryStart = content.lastIndexOf("{", midPoint);
+	if (entryStart !== -1) {
+		content = content.substring(entryStart);
+	}
 }
 
 // 2. Prepend the correct header and first 3 entries
@@ -136,23 +136,26 @@ export const sigils: SigilEntry[] = [
 		uses_per_rest: "2/long rest (non-casters)"
 	}`;
 
-content = header + ",\n\t" + content;
+content = `${header},\n\t${content}`;
 
 // 3. Fix double commas
-content = content.replace(/,,/g, ',');
+content = content.replace(/,,/g, ",");
 
 // 4. Fix duplicate requires_level and trailing commas/syntax errors
 // The duplicate looks like: requires_level: 15,\n\t\teffect_type: "...",\n\t\trequires_level: 2,
-content = content.replace(/requires_level: 15,\s*(effect_type: "[^"]+",)\s*requires_level: (\d+),/g, '$1\n\t\trequires_level: $2,');
+content = content.replace(
+	/requires_level: 15,\s*(effect_type: "[^"]+",)\s*requires_level: (\d+),/g,
+	"$1\n\t\trequires_level: $2,",
+);
 
 // 5. Final array closing (ensure it ends with ];)
-if (!content.trim().endsWith('];')) {
-    content = content.trim();
-    if (content.endsWith('}')) {
-        content += '\n];';
-    } else if (content.endsWith(',')) {
-        content = content.slice(0, -1) + '\n];';
-    }
+if (!content.trim().endsWith("];")) {
+	content = content.trim();
+	if (content.endsWith("}")) {
+		content += "\n];";
+	} else if (content.endsWith(",")) {
+		content = `${content.slice(0, -1)}\n];`;
+	}
 }
 
 fs.writeFileSync(filePath, content);

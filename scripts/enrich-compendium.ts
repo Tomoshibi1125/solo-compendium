@@ -78,7 +78,7 @@ function cyrb128(str: string) {
 		h2 = 3144134277,
 		h3 = 1013904242,
 		h4 = 2773480762;
-	for (let i = 0, k; i < str.length; i++) {
+	for (let i = 0, k = 0; i < str.length; i++) {
 		k = str.charCodeAt(i);
 		h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
 		h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
@@ -115,9 +115,16 @@ function sfc32(a: number, b: number, c: number, d: number) {
 }
 
 const traitNames = [
-	"{TYPE} Physiology", "Void Resilience", "Lattice Anchor", "Dimensional Phasing",
-	"Predatory Instinct", "Furious Assault", "Unnatural Fortitude", "Temporal Shift",
-	"Mana Distortion", "Sovereign Aura"
+	"{TYPE} Physiology",
+	"Void Resilience",
+	"Lattice Anchor",
+	"Dimensional Phasing",
+	"Predatory Instinct",
+	"Furious Assault",
+	"Unnatural Fortitude",
+	"Temporal Shift",
+	"Mana Distortion",
+	"Sovereign Aura",
 ];
 const traitDesc = [
 	"This entity is stabilized by post-reset lattice pressure. It cannot be surprised while conscious and has advantage on checks to resist forced movement.",
@@ -129,28 +136,42 @@ const traitDesc = [
 	"Whenever it succeeds on a saving throw, it gains temporary hit points equal to twice its Challenge Rating.",
 	"If it starts its turn with a movement-impairing condition, it can attempt a new saving throw to end the effect immediately.",
 	"Its presence warps ambient mana. Healing spells cast within 30 feet of it restore half the normal amount.",
-	"Creatures that start their turn within 10 feet of this entity must spend 1 extra foot of movement for every foot moved."
+	"Creatures that start their turn within 10 feet of this entity must spend 1 extra foot of movement for every foot moved.",
 ];
 
 const actionNames = [
-	"Lattice Strike", "Void Rupture", "Shattering Blow", "Umbral Lash",
-	"Feral Rend", "Ethereal Blast", "Cataclysmic Burst", "Phantom Talon",
-	"Oblivion Beam", "Shockwave Stomp"
+	"Lattice Strike",
+	"Void Rupture",
+	"Shattering Blow",
+	"Umbral Lash",
+	"Feral Rend",
+	"Ethereal Blast",
+	"Cataclysmic Burst",
+	"Phantom Talon",
+	"Oblivion Beam",
+	"Shockwave Stomp",
 ];
 const actionDescPrimary = [
 	"Melee Weapon Attack: +{HIT} to hit, reach 5 ft., one target. Hit: {DICE} {TYPE} damage.",
 	"Ranged Spell Attack: +{HIT} to hit, range 60 ft., one target. Hit: {DICE} {TYPE} damage.",
 	"Melee Weapon Attack: +{HIT} to hit, reach 10 ft., one target. Hit: {DICE} {TYPE} damage and the target is pushed 5 ft.",
-	"Ranged Weapon Attack: +{HIT} to hit, range 30/120 ft., one target. Hit: {DICE} {TYPE} damage."
+	"Ranged Weapon Attack: +{HIT} to hit, range 30/120 ft., one target. Hit: {DICE} {TYPE} damage.",
 ];
 const actionDescSpecial = [
 	"Protocol action. The target must succeed on a DC {DC} {SAVE} saving throw or take {DICE} {TYPE} damage and suffer a brief impairment.",
 	"Energy pulse. Each creature within 15 feet must make a DC {DC} {SAVE} saving throw, taking {DICE} {TYPE} damage on a failed save, or half as much on a successful one.",
 	"Focus blast. A line of force 30 feet long and 5 feet wide erupts from it. Creatures in the line must succeed on a DC {DC} {SAVE} saving throw or take {DICE} {TYPE} damage and fall prone.",
-	"Miasma surge. Target area (10 ft radius, 30 ft range) is flooded with hazardous energy. Creatures inside must pass a DC {DC} {SAVE} save or take {DICE} {TYPE} damage."
+	"Miasma surge. Target area (10 ft radius, 30 ft range) is flooded with hazardous energy. Creatures inside must pass a DC {DC} {SAVE} save or take {DICE} {TYPE} damage.",
 ];
 
-const savesList = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
+const savesList = [
+	"Strength",
+	"Dexterity",
+	"Constitution",
+	"Intelligence",
+	"Wisdom",
+	"Charisma",
+];
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
 	!!value && typeof value === "object" && !Array.isArray(value);
@@ -400,21 +421,24 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 				"Ascendant focus (attuned conduit)",
 				"Resonance crystal",
 				"Runic catalyst",
-				"None required"
+				"None required",
 			]),
 		};
 	}
 
 	const effectDescriptions = [
-		hasNonEmptyString(spell.effect) ? spell.effect : "Channels ascendant force into a defined outcome.",
+		hasNonEmptyString(spell.effect)
+			? spell.effect
+			: "Channels ascendant force into a defined outcome.",
 		"Manipulates the local mana field to enforce the user's will.",
 		"Bypasses the natural laws of physics with concentrated essence.",
-		"Imprints a systemic command onto the immediate environment."
+		"Imprints a systemic command onto the immediate environment.",
 	];
 
-	const primaryEff = isRecord(out.effects) && hasNonEmptyString(out.effects.primary) 
-		? out.effects.primary 
-		: pickRand(effectDescriptions);
+	const primaryEff =
+		isRecord(out.effects) && hasNonEmptyString(out.effects.primary)
+			? out.effects.primary
+			: pickRand(effectDescriptions);
 
 	out.effects = (isRecord(out.effects)
 		? { ...out.effects, primary: primaryEff }
@@ -449,7 +473,7 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 				notes: pickRand([
 					"Restores vitality; does not remove conditions unless stated.",
 					"Rapid cellular regeneration fueled by mana.",
-					"Stitches wounds utilizing ambient life force."
+					"Stitches wounds utilizing ambient life force.",
 				]),
 			};
 		} else {
@@ -460,7 +484,7 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 					"Half effect.",
 					"Negates impairment.",
 					"Target is pushed instead.",
-					"Reduced duration."
+					"Reduced duration.",
 				]),
 			};
 		}
@@ -475,13 +499,13 @@ const ensureSpellStructured = (spell: SpellInput): CompendiumSpell => {
 			"In the post-reset lattice,",
 			"Considered a foundational technique,",
 			"Derived from forgotten archives,",
-			"A potent assertion of system authority,"
+			"A potent assertion of system authority,",
 		];
 		const flavorSuffixes = [
 			"is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
 			"demands absolute control to prevent devastating feedback loops.",
 			"temporarily rewrites the rules governing ambient mana.",
-			"serves as a brutal reminder of an Awakened's superiority."
+			"serves as a brutal reminder of an Awakened's superiority.",
 		];
 		out.flavor = `${pickRand(flavorPrefixes)} ${spell.name} ${pickRand(flavorSuffixes)}`;
 	}
@@ -559,14 +583,18 @@ const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
 	const pickRand = <T>(arr: T[]): T => arr[Math.floor(rand() * arr.length)];
 	const damageType = inferDamageType(anomaly.name, anomaly.description);
 	const baseDice = rankToDice(anomaly.rank, "damage");
-	const bonus = Math.max(0, prof + Math.floor((inferredScores.strength - 10) / 2));
+	const bonus = Math.max(
+		0,
+		prof + Math.floor((inferredScores.strength - 10) / 2),
+	);
 	const dcValue = rankToSpellSaveDC(anomaly.rank);
 
 	const traits = out.traits;
 	if (!traits || traits.length === 0) {
 		const traitGen1 = pickRand(traitNames).replace("{TYPE}", anomaly.type);
 		const traitGen2 = pickRand(traitNames).replace("{TYPE}", anomaly.type);
-		const traitNamesOutput = traitGen1 === traitGen2 ? traitGen1 + " Resilience" : traitGen1;
+		const traitNamesOutput =
+			traitGen1 === traitGen2 ? `${traitGen1} Resilience` : traitGen1;
 
 		out.traits = [
 			{
@@ -582,12 +610,13 @@ const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
 
 	const actions = out.actions;
 	if (!actions || actions.length === 0) {
-		const abilityActions = Array.isArray(anomaly.abilities) ? anomaly.abilities : [];
-		
+		const abilityActions = Array.isArray(anomaly.abilities)
+			? anomaly.abilities
+			: [];
+
 		const templated = abilityActions.slice(0, 3).map((name, idx) => {
-			const actionDesc = idx === 0 
-				? pickRand(actionDescPrimary)
-				: pickRand(actionDescSpecial);
+			const actionDesc =
+				idx === 0 ? pickRand(actionDescPrimary) : pickRand(actionDescSpecial);
 			const selectedSave = pickRand(savesList);
 
 			const formattedDesc = actionDesc
@@ -610,7 +639,12 @@ const ensureAnomalyStructured = (anomaly: LegacyAnomaly): CompendiumAnomaly => {
 			if (idx === 0) {
 				return { ...baseAction, attack_bonus: bonus };
 			} else {
-				return { ...baseAction, save: selectedSave, dc: dcValue, recharge: "short-rest" };
+				return {
+					...baseAction,
+					save: selectedSave,
+					dc: dcValue,
+					recharge: "short-rest",
+				};
 			}
 		});
 

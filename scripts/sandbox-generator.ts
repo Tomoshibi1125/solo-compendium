@@ -1,6 +1,6 @@
-import { writeFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { anomalies } from "../src/data/compendium/anomalies/index";
 import { items_part1 } from "../src/data/compendium/items-part1";
 import { items_part2 } from "../src/data/compendium/items-part2";
@@ -36,7 +36,14 @@ const selectedAnomalies = getRandom(anomalies, 60);
 const selectedRelics = getRandom(comprehensiveRelics, 60);
 
 // Helper to format Relics
-function formatRelic(relic: { name: string; type: string; rarity: string; attunement?: boolean; description: string; abilities?: Array<{ name: string; description: string }>; }) {
+function formatRelic(relic: {
+	name: string;
+	type: string;
+	rarity: string;
+	attunement?: boolean;
+	description: string;
+	abilities?: Array<{ name: string; description: string }>;
+}) {
 	let md = `#### ${relic.name}\n`;
 	md += `*${relic.type.charAt(0).toUpperCase() + relic.type.slice(1)}, ${relic.rarity}${relic.attunement ? " â€” Requires Attunement" : ""}*\n`;
 	md += `${relic.description}\n\n`;
@@ -52,7 +59,27 @@ function formatRelic(relic: { name: string; type: string; rarity: string; attune
 }
 
 // Helper to format Anomalies
-function formatAnomaly(anomaly: { name: string; rank?: string; type?: string; ac?: number; hp?: number; description?: string; stats?: { ability_scores?: { strength: number; agility: number; vitality: number; intelligence: number; sense: number; presence: number }; challenge_rating?: number }; traits?: Array<{ name: string; description: string }>; actions?: Array<{ name: string; description: string }>; }) {
+function formatAnomaly(anomaly: {
+	name: string;
+	rank?: string;
+	type?: string;
+	ac?: number;
+	hp?: number;
+	description?: string;
+	stats?: {
+		ability_scores?: {
+			strength: number;
+			agility: number;
+			vitality: number;
+			intelligence: number;
+			sense: number;
+			presence: number;
+		};
+		challenge_rating?: number;
+	};
+	traits?: Array<{ name: string; description: string }>;
+	actions?: Array<{ name: string; description: string }>;
+}) {
 	let md = `### ${anomaly.name} (${anomaly.rank}-Rank ${anomaly.type || "Anomaly"})\n`;
 	md += `*Medium Aberration, Unaligned*\n\n`;
 	md += `**AC:** ${anomaly.ac || 15} | **HP:** ${anomaly.hp || 50} | **Speed:** 30 ft.\n`;
@@ -137,7 +164,9 @@ content += `## Procedural Appendix B: The Grand Bestiary\n\n`;
 content += `A complete catalog of the Anomalies that populate Neo-Seoul's Gates. DM's should roll on random encounter tables referencing these horrors.\n\n`;
 
 selectedAnomalies.forEach((anomaly) => {
-	content += formatAnomaly(anomaly as unknown as Parameters<typeof formatAnomaly>[0]);
+	content += formatAnomaly(
+		anomaly as unknown as Parameters<typeof formatAnomaly>[0],
+	);
 });
 
 content += `## Appendix G: Pacing & Advancement\n\n`;

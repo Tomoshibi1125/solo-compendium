@@ -1,4 +1,4 @@
-﻿import * as fs from "node:fs";
+import * as fs from "node:fs";
 import * as path from "node:path";
 
 // Helper to deterministic random based on a string seed (like the ID)
@@ -7,7 +7,7 @@ function cyrb128(str: string) {
 		h2 = 3144134277,
 		h3 = 1013904242,
 		h4 = 2773480762;
-	for (let i = 0, k; i < str.length; i++) {
+	for (let i = 0, k = 0; i < str.length; i++) {
 		k = str.charCodeAt(i);
 		h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
 		h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
@@ -209,7 +209,7 @@ async function processFile(
 	const absolutePath = path.resolve(process.cwd(), filePath);
 	process.stdout.write(`Processing ${exportName}... `);
 
-	let dataModule;
+	let dataModule: Record<string, unknown> = {};
 	try {
 		dataModule = await import(`file:///${absolutePath.replace(/\\/g, "/")}`);
 	} catch (e) {
@@ -225,10 +225,7 @@ async function processFile(
 
 	// Apply procedural uniqueness
 	for (const item of dataArray) {
-		const { lore, flavor } = generateProceduralContent(
-			item.id,
-			item.name,
-		);
+		const { lore, flavor } = generateProceduralContent(item.id, item.name);
 
 		item.lore = lore;
 		item.flavor = flavor;

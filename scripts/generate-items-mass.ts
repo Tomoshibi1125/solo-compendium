@@ -3,17 +3,75 @@ import path from "node:path";
 import type { Item } from "../src/data/compendium/items";
 
 // Helpers
-const randomTitle = (prefixes: string[], suffixes: string[]) => 
+const randomTitle = (prefixes: string[], suffixes: string[]) =>
 	`${prefixes[Math.floor(Math.random() * prefixes.length)]} ${suffixes[Math.floor(Math.random() * suffixes.length)]}`;
 
 // Generators
-const WEAPON_PREFIXES = ["Aetheric", "Shattered", "Void", "Crimson", "Abyssal", "Starlight", "Obsidian", "Hunter's", "Guild-Issue", "Mana-Infused"];
-const WEAPON_SUFFIXES = ["Longsword", "Dagger", "Katana", "Gauntlets", "Halberd", "Revolver", "Sniper Rifle", "Spear", "Warhammer", "Whip"];
-const ARMOR_PREFIXES = ["Shadow", "Titanium", "Dragon-Scale", "Aegis", "Vanguard", "Phantom", "Gate-Forged", "Ceramic", "Nano-Weave", "Aether-Plated"];
-const ARMOR_SUFFIXES = ["Breastplate", "Trench Coat", "Combat Vest", "Exo-Suit", "Spaulders", "Shin Guards", "Tactical Helmet", "Bracers"];
+const WEAPON_PREFIXES = [
+	"Aetheric",
+	"Shattered",
+	"Void",
+	"Crimson",
+	"Abyssal",
+	"Starlight",
+	"Obsidian",
+	"Hunter's",
+	"Guild-Issue",
+	"Mana-Infused",
+];
+const WEAPON_SUFFIXES = [
+	"Longsword",
+	"Dagger",
+	"Katana",
+	"Gauntlets",
+	"Halberd",
+	"Revolver",
+	"Sniper Rifle",
+	"Spear",
+	"Warhammer",
+	"Whip",
+];
+const ARMOR_PREFIXES = [
+	"Shadow",
+	"Titanium",
+	"Dragon-Scale",
+	"Aegis",
+	"Vanguard",
+	"Phantom",
+	"Gate-Forged",
+	"Ceramic",
+	"Nano-Weave",
+	"Aether-Plated",
+];
+const ARMOR_SUFFIXES = [
+	"Breastplate",
+	"Trench Coat",
+	"Combat Vest",
+	"Exo-Suit",
+	"Spaulders",
+	"Shin Guards",
+	"Tactical Helmet",
+	"Bracers",
+];
 
-const CONSUMABLE_PREFIXES = ["High-Grade", "Lesser", "Greater", "Guild-Standard", "Black-Market", "Unstable", "Purified", "Concentrated"];
-const CONSUMABLE_SUFFIXES = ["Health Potion", "Mana Elixir", "Stamina Stim", "Aetheric Antidote", "Beast Repellent", "Liquid Shadow"];
+const CONSUMABLE_PREFIXES = [
+	"High-Grade",
+	"Lesser",
+	"Greater",
+	"Guild-Standard",
+	"Black-Market",
+	"Unstable",
+	"Purified",
+	"Concentrated",
+];
+const CONSUMABLE_SUFFIXES = [
+	"Health Potion",
+	"Mana Elixir",
+	"Stamina Stim",
+	"Aetheric Antidote",
+	"Beast Repellent",
+	"Liquid Shadow",
+];
 
 function generateItem(idPrefix: string, index: number): Item {
 	const typeRand = Math.random();
@@ -61,8 +119,12 @@ function generateItem(idPrefix: string, index: number): Item {
 		item_type: itemType as Item["item_type"],
 		source: "Rift Ascendant Canon",
 		effects: { passive: [effect] },
-		...(damage ? { damage: damage, damage_type: "kinetic", weapon_type: "martial melee" } : {}),
-		...(itemType === "armor" ? { armor_type: "Medium", armor_class: "14 + Dex modifier (max 2)" } : {})
+		...(damage
+			? { damage: damage, damage_type: "kinetic", weapon_type: "martial melee" }
+			: {}),
+		...(itemType === "armor"
+			? { armor_type: "Medium", armor_class: "14 + Dex modifier (max 2)" }
+			: {}),
 	};
 }
 
@@ -72,12 +134,15 @@ for (let partNum = 2; partNum <= 9; partNum++) {
 	for (let i = 0; i < 50; i++) {
 		items.push(generateItem(`item_p${partNum}`, i));
 	}
-	
+
 	const content = `import type { Item } from "./items";
 
 export const items_part${partNum}: Item[] = ${JSON.stringify(items, null, 2)};
 `;
-	fs.writeFileSync(path.join(process.cwd(), `src/data/compendium/items-part${partNum}.ts`), content);
+	fs.writeFileSync(
+		path.join(process.cwd(), `src/data/compendium/items-part${partNum}.ts`),
+		content,
+	);
 	console.log(`Generated items-part${partNum}.ts (50 items)`);
 }
 
@@ -87,7 +152,8 @@ const artifacts: Item[] = [
 		id: "artifact_1",
 		name: "Kamish's Wrath",
 		display_name: "Kamish's Wrath",
-		description: "A pair of twin daggers forged from the fang of humanity's greatest calamity. The blades vibrate with draconic malice.",
+		description:
+			"A pair of twin daggers forged from the fang of humanity's greatest calamity. The blades vibrate with draconic malice.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "",
@@ -100,13 +166,19 @@ const artifacts: Item[] = [
 		simple_properties: ["light", "finesse", "thrown"],
 		requires_attunement: true,
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["Attacks ignore resistance to slashing damage.", "On critical hit, inflicts a bleeding condition that deals 1d6 damage per turn."] }
+		effects: {
+			passive: [
+				"Attacks ignore resistance to slashing damage.",
+				"On critical hit, inflicts a bleeding condition that deals 1d6 damage per turn.",
+			],
+		},
 	},
 	{
 		id: "artifact_2",
 		name: "Demon King's Longsword",
 		display_name: "Demon King's Longsword",
-		description: "A colossal dark blade that crackles with white lightning. Belonged to the sovereign of white flames.",
+		description:
+			"A colossal dark blade that crackles with white lightning. Belonged to the sovereign of white flames.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "",
@@ -119,13 +191,19 @@ const artifacts: Item[] = [
 		simple_properties: ["heavy", "two-handed"],
 		requires_attunement: true,
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["Deals an additional 2d6 lightning damage.", "Grants resistance to fire and lightning damage."] }
+		effects: {
+			passive: [
+				"Deals an additional 2d6 lightning damage.",
+				"Grants resistance to fire and lightning damage.",
+			],
+		},
 	},
 	{
 		id: "artifact_3",
 		name: "Shadow Monarch's Mantle",
 		display_name: "Shadow Monarch's Mantle",
-		description: "Woven from pure abyssal mana, this pitch-black cloak billows silently even when there is no wind.",
+		description:
+			"Woven from pure abyssal mana, this pitch-black cloak billows silently even when there is no wind.",
 		rarity: "legendary",
 		type: "armor",
 		image: "",
@@ -136,17 +214,33 @@ const artifacts: Item[] = [
 		armor_class: "15 + Dex modifier",
 		requires_attunement: true,
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["Grants immunity to necrotic damage.", "Advantage on stealth checks in dim light or darkness."] }
-	}
+		effects: {
+			passive: [
+				"Grants immunity to necrotic damage.",
+				"Advantage on stealth checks in dim light or darkness.",
+			],
+		},
+	},
 ];
 
 // Add some more procedurally generated artifacts
 for (let i = 4; i <= 20; i++) {
 	artifacts.push({
 		id: `artifact_${i}`,
-		name: randomTitle(["Monarch's", "Calamity", "Sovereign", "Abyssal", "World-Ender", "Origin"], ["Core", "Edge", "Aegis", "Crown", "Reliquary"]),
+		name: randomTitle(
+			[
+				"Monarch's",
+				"Calamity",
+				"Sovereign",
+				"Abyssal",
+				"World-Ender",
+				"Origin",
+			],
+			["Core", "Edge", "Aegis", "Crown", "Reliquary"],
+		),
 		display_name: `Mythic Rank S Item`,
-		description: "An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+		description:
+			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
 		type: i % 2 === 0 ? "weapon" : "armor",
 		image: "",
@@ -156,7 +250,9 @@ for (let i = 4; i <= 20; i++) {
 		requires_attunement: true,
 		source: "Rift Ascendant Canon",
 		effects: { passive: ["Grants extraordinary supernatural abilities."] },
-		...(i % 2 === 0 ? { weapon_type: "martial melee", damage: "3d8", damage_type: "force" } : { armor_type: "Heavy", armor_class: "20" })
+		...(i % 2 === 0
+			? { weapon_type: "martial melee", damage: "3d8", damage_type: "force" }
+			: { armor_type: "Heavy", armor_class: "20" }),
 	});
 }
 
@@ -164,5 +260,8 @@ const artifactContent = `import type { Item } from "./items";
 
 export const artifacts: Item[] = ${JSON.stringify(artifacts, null, 2)};
 `;
-fs.writeFileSync(path.join(process.cwd(), "src/data/compendium/artifacts.ts"), artifactContent);
+fs.writeFileSync(
+	path.join(process.cwd(), "src/data/compendium/artifacts.ts"),
+	artifactContent,
+);
 console.log("Generated artifacts.ts (20 artifacts)");

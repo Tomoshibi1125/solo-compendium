@@ -26,18 +26,18 @@ const entries = [];
 let depth = 0;
 let current = "";
 let inString = false;
-let escape = false;
+let isEscaped = false;
 
 for (let i = 0; i < arrayBody.length; i++) {
 	const ch = arrayBody[i];
-	if (escape) {
+	if (isEscaped) {
 		current += ch;
-		escape = false;
+		isEscaped = false;
 		continue;
 	}
 	if (ch === "\\") {
 		current += ch;
-		escape = true;
+		isEscaped = true;
 		continue;
 	}
 	if (ch === '"') {

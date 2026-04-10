@@ -1,5 +1,3 @@
-// Expanded Backgrounds — Modern-Day Earth Careers (Pre-Awakening)
-
 export const expandedBackgrounds = [
 	{
 		id: "paramedic",
@@ -56,9 +54,19 @@ export const expandedBackgrounds = [
 			"You spent years rushing toward emergencies while everyone else ran away. When gates started opening across the city, you were among the first responders on scene. The carnage was unlike anything in your training, but you adapted—you always do.",
 		dangers: ["Compassion Fatigue", "Trauma Response", "Overextension"],
 		source: "Rift Ascendant Canon",
-		lore: "First responders were among the earliest non-combatant awakened, their survival instincts honed by years of life-or-death decisions under pressure.",
+		lore: {
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "The steady hands that held the line when the world cracked open.",
 		mechanics: {},
+		tags: ["background", "offensive", "healing", "area", "stealth"],
 	},
 	{
 		id: "office-worker",
@@ -115,9 +123,19 @@ export const expandedBackgrounds = [
 			"You spent your days in a climate-controlled office, navigating spreadsheets and email chains. Then the world broke open and your cubicle dissolved into aetheric fire. The skills that made you a reliable employee—attention to detail, pattern recognition, and sheer stubbornness—turned out to be exactly what the System values.",
 		dangers: ["Analysis Paralysis", "Imposter Syndrome", "Physical Fragility"],
 		source: "Rift Ascendant Canon",
-		lore: "The System does not discriminate. Some of its most powerful ascendants emerged from the most mundane of origins.",
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "The pivot table that shattered reality.",
 		mechanics: {},
+		tags: ["background", "area", "stealth"],
 	},
 	{
 		id: "construction-worker",
@@ -178,9 +196,19 @@ export const expandedBackgrounds = [
 			"Old Injuries",
 		],
 		source: "Rift Ascendant Canon",
-		lore: "The city's reconstruction efforts after the early gate breaks relied heavily on awakened construction workers who could operate in aetherically unstable zones.",
+		lore: {
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "Steel-toed boots on shattered asphalt. The foundation holds.",
 		mechanics: {},
+		tags: ["background", "sustained", "debuff", "support", "burst"],
 	},
 	{
 		id: "journalist",
@@ -241,9 +269,19 @@ export const expandedBackgrounds = [
 			"Trust Issues",
 		],
 		source: "Rift Ascendant Canon",
-		lore: "The first generation of 'Rift Journalists' became essential to public understanding of the awakening phenomenon, though many paid the ultimate price for their scoops.",
+		lore: {
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "The camera doesn't lie. Neither do I.",
 		mechanics: {},
+		tags: ["background", "burst", "perception", "necrotic", "radiant"],
 	},
 	{
 		id: "street-vendor",
@@ -304,9 +342,19 @@ export const expandedBackgrounds = [
 			"Territorial Disputes",
 		],
 		source: "Rift Ascendant Canon",
-		lore: "The post-gate economy created a massive demand for rift materials, and street vendors were among the first to establish the informal trade networks that would become the modern ascendant marketplace.",
+		lore: {
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "Five Credits. Final offer. Take it or leave it.",
 		mechanics: {},
+		tags: ["background", "debuff", "void"],
 	},
 	{
 		id: "security-guard",
@@ -363,9 +411,19 @@ export const expandedBackgrounds = [
 			"You spent long nights watching cameras, walking perimeters, and dealing with minor disturbances. Then the gates opened and your cardboard-thin sense of security was destroyed. But the instincts you built—the watchfulness, the territorial awareness, the refusal to let anything get past you—those translated perfectly to a world under siege.",
 		dangers: ["Hypervigilance Burnout", "Authority Conflicts", "PTSD"],
 		source: "Rift Ascendant Canon",
-		lore: "Post-gate, private security became one of the most dangerous and in-demand professions. Many guards who survived the early breaks were among the first to be recruited by hunter guilds.",
+		lore: {
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "Nothing gets past me. Not anymore.",
 		mechanics: {},
+		tags: ["background", "utility", "area", "radiant", "offensive"],
 	},
 	{
 		id: "delivery-driver",
@@ -422,9 +480,19 @@ export const expandedBackgrounds = [
 			"You navigated gridlocked streets, hostile neighborhoods, and impossible deadlines for a living. When the gates shattered the city's infrastructure, you became one of the few people who could still move through the chaos. Your knowledge of every back route and service entrance makes you invaluable in urban rift operations.",
 		dangers: ["Traffic Hazards", "Rift Zone Navigation", "Exhaustion"],
 		source: "Rift Ascendant Canon",
-		lore: "During the infrastructure collapse following the first major gate breaks, delivery drivers and couriers became critical to civilian survival, running supply lines through rift-damaged sectors.",
+		lore: {
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "Rain, shine, or dimensional collapse. Package delivered.",
 		mechanics: {},
+		tags: ["background", "stealth", "radiant"],
 	},
 	{
 		id: "teacher",
@@ -481,9 +549,19 @@ export const expandedBackgrounds = [
 			"You shaped young minds, managed chaos in a classroom, and made the mundane feel meaningful. When the System activated and your school became a gate zone, the same qualities that made you a great teacher—patience, authority, and the refusal to leave anyone behind—made you a natural leader in the new world.",
 		dangers: ["Overprotectiveness", "Emotional Exhaustion", "Guilt"],
 		source: "Rift Ascendant Canon",
-		lore: "The Ascendant Academy's early curriculum was designed primarily by awakened teachers who recognized that combat training without education produced dangerous, unstable hunters.",
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "Class is in session. Today's lesson: survival.",
 		mechanics: {},
+		tags: ["background", "perception", "necrotic", "support", "area"],
 	},
 	{
 		id: "mechanic",
@@ -540,9 +618,19 @@ export const expandedBackgrounds = [
 			"You kept the city running—fixing engines, rewiring circuits, and keeping machines alive past their expiration date. When gates started tearing through the infrastructure and magitech began proliferating, your skills became critical. You can repair anything, build anything, and break anything.",
 		dangers: ["Obsessive Focus", "Explosive Materials", "Magitech Instability"],
 		source: "Rift Ascendant Canon",
-		lore: "As rift-infused technology became commonplace, mechanics who could work with both conventional and aetheric systems became some of the most valuable non-combat specialists in the ascendant world.",
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "Give me ten minutes and a wrench. I'll fix anything.",
 		mechanics: {},
+		tags: ["background", "mobility", "psychic", "fire", "damage"],
 	},
 	{
 		id: "firefighter",
@@ -599,9 +687,19 @@ export const expandedBackgrounds = [
 			"You charged into burning buildings when everyone else ran out. When gates started opening across the city and spewing fire, acid, and worse, your department was on the front lines. The tools changed—halligan bars swapped for mana-reinforced axes—but the mission stayed the same: get people out alive.",
 		dangers: ["Hero Complex", "Burn Scars", "Adrenaline Dependency"],
 		source: "Rift Ascendant Canon",
-		lore: "Fire departments across the globe were redesignated as first-response gate containment units. Those who survived the transition formed the backbone of civilian defense infrastructure.",
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "The fire doesn't scare me. What's behind it might.",
 		mechanics: {},
+		tags: ["background", "healing", "area"],
 	},
 	{
 		id: "social-worker",
@@ -658,9 +756,19 @@ export const expandedBackgrounds = [
 			"You spent your career navigating broken systems, advocating for the vulnerable, and holding people together through the worst moments of their lives. When the world broke open, the number of people who needed help skyrocketed—and you stepped up, just like you always have.",
 		dangers: ["Compassion Fatigue", "Emotional Burnout", "Vicarious Trauma"],
 		source: "Rift Ascendant Canon",
-		lore: "In the aftermath of the first gate breaks, social workers and counselors were among the only professionals equipped to handle mass trauma response. Their skills proved essential to maintaining social cohesion.",
+		lore: {
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "I see you. I hear you. Now let's get you somewhere safe.",
 		mechanics: {},
+		tags: ["background", "necrotic", "support", "offensive"],
 	},
 	{
 		id: "police-officer",
@@ -717,8 +825,18 @@ export const expandedBackgrounds = [
 			"You walked a beat, responded to calls, and tried to keep order in a city slowly losing its grip on reality. When the gates opened and monsters poured into the streets, the thin blue line became even thinner. Most of your colleagues quit or died. You stayed, because someone had to.",
 		dangers: ["Corruption Temptation", "PTSD", "Authority Conflicts"],
 		source: "Rift Ascendant Canon",
-		lore: "The traditional police force was largely absorbed into the Ascendant Bureau after the gate breaks, with awakened officers forming the core of the Bureau's enforcement division.",
+		lore: {
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
 		flavor: "Badge or no badge, the job doesn't change.",
 		mechanics: {},
+		tags: ["background", "necrotic", "perception"],
 	},
 ];

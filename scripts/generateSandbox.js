@@ -1,10 +1,9 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "node:fs";
 
 // This script procedurally generates the massive 1-10 Sandbox Campaign Module
 // complete with Curse of Strahd style mechanics (Regional Sandbox structure).
 
-const OUTPUT_FILE = './src/data/compendium/ascendant-sandbox-module.ts';
+const OUTPUT_FILE = "./src/data/compendium/ascendant-sandbox-module.ts";
 
 const fileContent = `
 import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
@@ -223,6 +222,6 @@ export const massiveSandboxModule: SandboxModule = {
 };
 `;
 
-console.log('Writing sandbox module generator...');
+console.log("Writing sandbox module generator...");
 fs.writeFileSync(OUTPUT_FILE, fileContent);
-console.log('Successfully generated ' + OUTPUT_FILE);
+console.log(`Successfully generated ${OUTPUT_FILE}`);

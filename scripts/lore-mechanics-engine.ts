@@ -4,7 +4,13 @@ import * as path from "node:path";
 console.log("=== STARTING LORE & MECHANICS ENGINE ===");
 
 // UTILS
-type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+type JsonValue =
+	| string
+	| number
+	| boolean
+	| null
+	| JsonValue[]
+	| { [key: string]: JsonValue };
 
 const rand = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 const _slugify = (str: string) =>
@@ -77,18 +83,31 @@ function generateLore(type: string, name: string) {
 // ENRICHMENT FUNCTIONS
 // -------------------------------------------------------------
 
-type CompendiumEntry = { name: string; lore?: string; cost?: number; manaCost?: number; [k: string]: JsonValue | undefined };
+type CompendiumEntry = {
+	name: string;
+	lore?: string;
+	cost?: number;
+	manaCost?: number;
+	[k: string]: JsonValue | undefined;
+};
 
 function _enrichSpell(spell: CompendiumEntry): CompendiumEntry {
-	const s = sanitizeObject(spell as unknown as JsonValue) as unknown as CompendiumEntry;
+	const s = sanitizeObject(
+		spell as unknown as JsonValue,
+	) as unknown as CompendiumEntry;
 	if (!s.lore || (typeof s.lore === "string" && s.lore.length < 10)) {
 		s.lore = generateLore("Spell Protocol", s.name);
 	}
 	return s;
 }
 
-function _enrichPowerOrTechnique(pt: CompendiumEntry, isPower: boolean): CompendiumEntry {
-	const obj = sanitizeObject(pt as unknown as JsonValue) as unknown as CompendiumEntry;
+function _enrichPowerOrTechnique(
+	pt: CompendiumEntry,
+	isPower: boolean,
+): CompendiumEntry {
+	const obj = sanitizeObject(
+		pt as unknown as JsonValue,
+	) as unknown as CompendiumEntry;
 	if (!obj.lore) {
 		obj.lore = generateLore(
 			isPower ? "Awakened Power" : "Hunter Technique",
@@ -102,7 +121,9 @@ function _enrichPowerOrTechnique(pt: CompendiumEntry, isPower: boolean): Compend
 }
 
 function _enrichFeat(feat: CompendiumEntry): CompendiumEntry {
-	const obj = sanitizeObject(feat as unknown as JsonValue) as unknown as CompendiumEntry;
+	const obj = sanitizeObject(
+		feat as unknown as JsonValue,
+	) as unknown as CompendiumEntry;
 	if (!obj.lore) {
 		obj.lore = generateLore("System Trait", obj.name);
 	}

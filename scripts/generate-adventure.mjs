@@ -5,9 +5,9 @@
  * Pulls canonical data from the compendium source files.
  */
 
-import { writeFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT = resolve(__dirname, "..", "docs", "adventure-protocol-zero.md");
@@ -15,11 +15,11 @@ const OUTPUT = resolve(__dirname, "..", "docs", "adventure-protocol-zero.md");
 // ---------------------------------------------------------------------------
 // HELPERS
 // ---------------------------------------------------------------------------
-function statMod(score) {
+function _statMod(score) {
 	const m = Math.floor((score - 10) / 2);
 	return m >= 0 ? `+${m}` : `${m}`;
 }
-function profBonus(cr) {
+function _profBonus(cr) {
 	if (cr <= 4) return 2;
 	if (cr <= 8) return 3;
 	if (cr <= 12) return 4;
@@ -27,7 +27,7 @@ function profBonus(cr) {
 	if (cr <= 20) return 6;
 	return 7;
 }
-function hpCalc(hitDice, dieSize, vitMod) {
+function _hpCalc(hitDice, dieSize, vitMod) {
 	const avg = Math.floor(hitDice * ((dieSize + 1) / 2) + hitDice * vitMod);
 	return `${avg} (${hitDice}d${dieSize} ${vitMod >= 0 ? "+" : ""}${hitDice * vitMod})`;
 }

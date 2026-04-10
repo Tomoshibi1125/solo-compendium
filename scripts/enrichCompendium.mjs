@@ -206,8 +206,7 @@ function processFile(filePath) {
 	const r =
 		/(name:\s*")([^"\\]*(?:\\.[^"\\]*)*)(")|(lore:\s*")([^"\\]*(?:\\.[^"\\]*)*)(")|(flavor:\s*")([^"\\]*(?:\\.[^"\\]*)*)(")|(system_interaction:\s*")([^"\\]*(?:\\.[^"\\]*)*)(")/g;
 
-	let match;
-	while ((match = r.exec(content)) !== null) {
+	for (const match of content.matchAll(r)) {
 		if (match[2]) {
 			currentName = match[2];
 			result +=
@@ -241,7 +240,7 @@ function processFile(filePath) {
 				newInteraction +
 				match[12];
 		}
-		pos = r.lastIndex;
+		pos = match.index + match[0].length;
 	}
 
 	result += content.substring(pos);

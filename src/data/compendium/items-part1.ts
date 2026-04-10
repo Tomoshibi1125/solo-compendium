@@ -1,9 +1,6 @@
 import type { Item } from "./items";
-// Rift Ascendant Compendium — Background Starting Equipment
-// Modern-day career items that background characters start with.
 
 export const items_part1: Item[] = [
-	// ────────── PARAMEDIC EQUIPMENT ──────────
 	{
 		id: "bg-emr-uniform",
 		name: "Emergency Medical Responder Uniform",
@@ -16,7 +13,25 @@ export const items_part1: Item[] = [
 		value: 15,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["+1 to Medicine checks when worn"] },
+		effects: {
+			passive: ["+1 to Medicine checks when worn"],
+		},
+		lore: {
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Purges the threshold of human potential. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "area", "offensive", "single-target", "debuff"],
+		theme_tags: ["black-market", "experimental", "elite-tier"],
 	},
 	{
 		id: "bg-trauma-kit",
@@ -30,7 +45,25 @@ export const items_part1: Item[] = [
 		value: 25,
 		item_type: "tool",
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["+2 to Medicine checks to stabilize a creature"] },
+		effects: {
+			passive: ["+2 to Medicine checks to stabilize a creature"],
+		},
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Fractures the remnants of a dead world. A reminder that the System has no mercy.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "stealth", "control", "support"],
+		theme_tags: ["mana-overflow", "guild-ops", "ancient-power"],
 	},
 	{
 		id: "bg-phantom-pager",
@@ -49,9 +82,23 @@ export const items_part1: Item[] = [
 				"Buzzes faintly when within 300 feet of an unstable rift (50% reliability)",
 			],
 		},
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Shatters the certainty of outcomes. The line between Hunter and monster.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["equipment", "psychic", "single-target"],
+		theme_tags: ["modern-warfare", "dimensional-bleed"],
 	},
-
-	// ────────── OFFICE WORKER EQUIPMENT ──────────
 	{
 		id: "bg-cracked-laptop",
 		name: "Cracked-Screen Laptop",
@@ -67,6 +114,22 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["+1 to Investigation checks involving data analysis"],
 		},
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Mirrors the threshold of human potential. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "lightning", "necrotic", "defensive"],
+		theme_tags: ["guild-ops", "ancient-power", "urban-combat"],
 	},
 	{
 		id: "bg-company-badge",
@@ -80,6 +143,22 @@ export const items_part1: Item[] = [
 		value: 1,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
+		lore: {
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Silences the silence between heartbeats. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "shadow", "control", "void"],
+		theme_tags: ["ancient-power", "elite-tier", "survival"],
 	},
 	{
 		id: "bg-business-suit",
@@ -93,10 +172,26 @@ export const items_part1: Item[] = [
 		value: 20,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["+1 to Persuasion checks in formal settings"] },
+		effects: {
+			passive: ["+1 to Persuasion checks in formal settings"],
+		},
+		lore: {
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Devours the last defense of the unprepared. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "debuff", "buff", "necrotic"],
+		theme_tags: ["rift-energy", "survival"],
 	},
-
-	// ────────── CONSTRUCTION WORKER EQUIPMENT ──────────
 	{
 		id: "bg-safety-vest",
 		name: "Reinforced Safety Vest",
@@ -111,6 +206,22 @@ export const items_part1: Item[] = [
 		armor_type: "Light",
 		armor_class: "11 + Dex modifier",
 		source: "Rift Ascendant Canon",
+		lore: {
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Condemns the architect's design. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "debuff", "utility", "psychic", "healing"],
+		theme_tags: ["ancient-power", "mana-overflow", "rift-energy"],
 	},
 	{
 		id: "bg-dented-hardhat",
@@ -127,6 +238,22 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["Advantage on saves against falling debris and cave-ins"],
 		},
+		lore: {
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Condemns the concept of distance. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "debuff", "shadow", "single-target"],
+		theme_tags: ["ancient-power", "dungeon-core", "hunter-bureau"],
 	},
 	{
 		id: "bg-heavy-multitool",
@@ -140,10 +267,26 @@ export const items_part1: Item[] = [
 		value: 15,
 		item_type: "tool",
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["+1 to checks involving improvised repairs"] },
+		effects: {
+			passive: ["+1 to checks involving improvised repairs"],
+		},
+		lore: {
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Corrodes the fabric of reality. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "support", "damage", "stealth"],
+		theme_tags: ["classified", "survival"],
 	},
-
-	// ────────── JOURNALIST EQUIPMENT ──────────
 	{
 		id: "bg-press-badge",
 		name: "Weathered Press Badge",
@@ -161,6 +304,22 @@ export const items_part1: Item[] = [
 				"+2 to Persuasion checks when requesting access or information from officials",
 			],
 		},
+		lore: {
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Corrodes the threshold of human potential. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["equipment", "burst", "single-target"],
+		theme_tags: ["experimental", "elite-tier"],
 	},
 	{
 		id: "bg-voice-recorder",
@@ -177,6 +336,22 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["+1 to Investigation checks involving interviews"],
 		},
+		lore: {
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Unravels the silence between heartbeats. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "healing", "stealth", "damage"],
+		theme_tags: ["experimental", "rift-energy"],
 	},
 	{
 		id: "bg-encrypted-notebook",
@@ -195,9 +370,23 @@ export const items_part1: Item[] = [
 				"Contains d4 useful contacts in any major city (Warden discretion)",
 			],
 		},
+		lore: {
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Binds the fabric of reality. A testament to what Hunters have become.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "single-target", "stealth"],
+		theme_tags: ["classified", "guild-ops"],
 	},
-
-	// ────────── STREET VENDOR EQUIPMENT ──────────
 	{
 		id: "bg-market-stall",
 		name: "Collapsible Market Stall",
@@ -210,6 +399,22 @@ export const items_part1: Item[] = [
 		value: 20,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Commands the remnants of a dead world. Proof that some things cannot be survived.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["equipment", "damage", "lightning"],
+		theme_tags: ["gate-zone", "black-market", "shadow-domain"],
 	},
 	{
 		id: "bg-lucky-coin",
@@ -228,6 +433,22 @@ export const items_part1: Item[] = [
 				"Once per long rest, reroll a failed Persuasion check involving commerce",
 			],
 		},
+		lore: {
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Crushes the remnants of a dead world. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "healing", "sustained"],
+		theme_tags: ["classified", "post-awakening", "system-glitch"],
 	},
 	{
 		id: "bg-customer-ledger",
@@ -246,9 +467,23 @@ export const items_part1: Item[] = [
 				"+1 to Persuasion checks in marketplace or commercial settings",
 			],
 		},
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Ignites the fabric of reality. A testament to what Hunters have become.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "control", "mobility", "defensive", "support"],
+		theme_tags: ["dimensional-bleed", "elite-tier"],
 	},
-
-	// ────────── SECURITY GUARD EQUIPMENT ──────────
 	{
 		id: "bg-security-uniform",
 		name: "Reinforced Security Uniform",
@@ -263,6 +498,22 @@ export const items_part1: Item[] = [
 		armor_type: "Light",
 		armor_class: "12 + Dex modifier",
 		source: "Rift Ascendant Canon",
+		lore: {
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Overrides the illusion of safety. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["equipment", "single-target", "defensive"],
+		theme_tags: ["system-glitch", "black-market"],
 	},
 	{
 		id: "bg-tactical-flashlight",
@@ -280,7 +531,25 @@ export const items_part1: Item[] = [
 		damage_type: "bludgeoning",
 		simple_properties: ["light"],
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["Provides 60 ft bright light, 120 ft dim light"] },
+		effects: {
+			passive: ["Provides 60 ft bright light, 120 ft dim light"],
+		},
+		lore: {
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Silences the architect's design. The line between Hunter and monster.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["equipment", "sustained", "mobility", "psychic", "buff"],
+		theme_tags: ["elite-tier", "gate-zone"],
 	},
 	{
 		id: "bg-guild-radio",
@@ -297,9 +566,23 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["Can monitor guild and emergency frequencies within 5 miles"],
 		},
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Binds the architect's design. Proof that some things cannot be survived.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "defensive", "psychic"],
+		theme_tags: ["mana-overflow", "system-glitch"],
 	},
-
-	// ────────── DELIVERY DRIVER EQUIPMENT ──────────
 	{
 		id: "bg-delivery-uniform",
 		name: "Reflective Delivery Uniform",
@@ -312,6 +595,22 @@ export const items_part1: Item[] = [
 		value: 10,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
+		lore: {
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Annihilates the last defense of the unprepared. The final equation in a war without end.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "sustained", "defensive", "utility", "offensive"],
+		theme_tags: ["survival", "monarch-era", "rift-energy"],
 	},
 	{
 		id: "bg-gate-gps",
@@ -331,6 +630,22 @@ export const items_part1: Item[] = [
 				"Shows known rift locations within 10 miles",
 			],
 		},
+		lore: {
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Overrides the last defense of the unprepared. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "ice", "support", "lightning"],
+		theme_tags: ["modern-warfare", "survival"],
 	},
 	{
 		id: "bg-thermal-bag",
@@ -350,9 +665,23 @@ export const items_part1: Item[] = [
 				"Potions stored inside maintain potency 50% longer",
 			],
 		},
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Eclipses the remnants of a dead world. A testament to what Hunters have become.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["equipment", "void", "radiant", "sustained", "buff"],
+		theme_tags: ["post-awakening", "gate-zone", "modern-warfare"],
 	},
-
-	// ────────── TEACHER EQUIPMENT ──────────
 	{
 		id: "bg-teacher-satchel",
 		name: "Teacher's Leather Satchel",
@@ -370,6 +699,22 @@ export const items_part1: Item[] = [
 				"Can hold up to 30 lbs of books and documents without encumbrance",
 			],
 		},
+		lore: {
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Overrides the certainty of outcomes. The final equation in a war without end.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "mobility", "psychic"],
+		theme_tags: ["dimensional-bleed", "mana-overflow"],
 	},
 	{
 		id: "bg-red-pen",
@@ -383,6 +728,22 @@ export const items_part1: Item[] = [
 		value: 0.5,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
+		lore: {
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Unravels the dimensional barrier. Proof that some things cannot be survived.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "burst", "radiant", "perception"],
+		theme_tags: ["dungeon-core", "rift-energy"],
 	},
 	{
 		id: "bg-ironic-textbook",
@@ -396,10 +757,26 @@ export const items_part1: Item[] = [
 		value: 10,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["+1 to History checks involving pre-gate events"] },
+		effects: {
+			passive: ["+1 to History checks involving pre-gate events"],
+		},
+		lore: {
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Shatters the boundary between life and death. The line between Hunter and monster.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "lightning", "shadow"],
+		theme_tags: ["mana-overflow", "survival", "dimensional-bleed"],
 	},
-
-	// ────────── MECHANIC EQUIPMENT ──────────
 	{
 		id: "bg-oil-coveralls",
 		name: "Oil-Stained Coveralls",
@@ -412,7 +789,25 @@ export const items_part1: Item[] = [
 		value: 10,
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		effects: { passive: ["Resistance to acid damage from mechanical fluids"] },
+		effects: {
+			passive: ["Resistance to acid damage from mechanical fluids"],
+		},
+		lore: {
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Silences the remnants of a dead world. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "support", "utility", "healing"],
+		theme_tags: ["mana-overflow", "experimental"],
 	},
 	{
 		id: "bg-rune-wrenches",
@@ -431,6 +826,22 @@ export const items_part1: Item[] = [
 				"+2 to checks involving repair or dismantling mechanical devices",
 			],
 		},
+		lore: {
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Reclaims the concept of distance. A reminder that the System has no mercy.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["equipment", "sustained", "defensive", "healing"],
+		theme_tags: ["forbidden", "mana-overflow"],
 	},
 	{
 		id: "bg-aetheric-scanner",
@@ -450,9 +861,23 @@ export const items_part1: Item[] = [
 				"+1 to Arcana checks involving magitech",
 			],
 		},
+		lore: {
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Shatters the illusion of safety. A reminder that the System has no mercy.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "support", "utility"],
+		theme_tags: ["dimensional-bleed", "dungeon-core"],
 	},
-
-	// ────────── FIREFIGHTER EQUIPMENT ──────────
 	{
 		id: "bg-fire-jacket",
 		name: "Guild-Reinforced Tactical Jacket",
@@ -470,6 +895,22 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["Resistance to fire damage from non-magical sources"],
 		},
+		lore: {
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Dissolves the threshold of human potential. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "stealth", "damage", "debuff", "support"],
+		theme_tags: ["gate-zone", "shadow-domain"],
 	},
 	{
 		id: "bg-halligan-bar",
@@ -492,6 +933,23 @@ export const items_part1: Item[] = [
 				"Advantage on Strength checks to force open doors and barriers",
 			],
 		},
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse:
+				"The user becomes unable to dream, replaced by visions of the void between Gates.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Overrides the chains of mortality. The line between Hunter and monster.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "debuff", "control", "psychic"],
+		theme_tags: ["post-awakening", "monarch-era", "gate-zone"],
 	},
 	{
 		id: "bg-dept-radio",
@@ -508,9 +966,23 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["Communication range: 3 miles (1 mile in gate zones)"],
 		},
+		lore: {
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Eclipses the fabric of reality. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["equipment", "shadow", "area", "debuff"],
+		theme_tags: ["modern-warfare", "dimensional-bleed", "dungeon-core"],
 	},
-
-	// ────────── SOCIAL WORKER EQUIPMENT ──────────
 	{
 		id: "bg-case-binder",
 		name: "Case File Binder",
@@ -526,6 +998,23 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["+1 to Insight checks when reviewing documents or records"],
 		},
+		lore: {
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse:
+				"Prolonged use causes the wielder's shadow to move independently, whispering in dead languages.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Eclipses the architect's design. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "control", "buff", "burst"],
+		theme_tags: ["forbidden", "elite-tier", "experimental"],
 	},
 	{
 		id: "bg-govt-id",
@@ -544,6 +1033,22 @@ export const items_part1: Item[] = [
 				"Grants access to government and Bureau-affiliated public facilities",
 			],
 		},
+		lore: {
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Commands the concept of distance. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "single-target", "support"],
+		theme_tags: ["guild-ops", "gate-zone"],
 	},
 	{
 		id: "bg-deescalation-guide",
@@ -560,9 +1065,23 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: ["+1 to Persuasion checks to calm frightened or hostile NPCs"],
 		},
+		lore: {
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Rends the dimensional barrier. The line between Hunter and monster.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "defensive", "damage", "perception", "debuff"],
+		theme_tags: ["black-market", "elite-tier", "monarch-era"],
 	},
-
-	// ────────── POLICE OFFICER EQUIPMENT ──────────
 	{
 		id: "bg-tactical-vest",
 		name: "Department-Issue Tactical Vest",
@@ -577,6 +1096,22 @@ export const items_part1: Item[] = [
 		armor_type: "Medium",
 		armor_class: "14 + Dex modifier (max 2)",
 		source: "Rift Ascendant Canon",
+		lore: {
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Annihilates the silence between heartbeats. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "psychic", "offensive", "single-target", "radiant"],
+		theme_tags: ["survival", "elite-tier", "mana-overflow"],
 	},
 	{
 		id: "bg-mana-handcuffs",
@@ -596,6 +1131,22 @@ export const items_part1: Item[] = [
 				"Requires DC 20 Strength or DC 25 Sleight of Hand to escape",
 			],
 		},
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Shatters the fabric of reality. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "burst", "control", "ice", "necrotic"],
+		theme_tags: ["experimental", "dimensional-bleed", "rift-energy"],
 	},
 	{
 		id: "bg-police-badge",
@@ -615,5 +1166,21 @@ export const items_part1: Item[] = [
 				"Grants access to law enforcement facilities and crime scenes",
 			],
 		},
+		lore: {
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		flavor:
+			"Condemns the flow of causality. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		tags: ["equipment", "control", "buff", "mobility", "necrotic"],
+		theme_tags: ["survival", "post-awakening", "system-glitch"],
 	},
 ];

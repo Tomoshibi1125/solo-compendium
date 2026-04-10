@@ -3,9 +3,9 @@
  * Protocol Zero — Final Assembly Script
  * Combines all parts and writes the complete adventure module.
  */
-import { writeFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT = resolve(__dirname, "..", "docs", "adventure-protocol-zero.md");
@@ -17,7 +17,7 @@ import { appendices } from "./generate-adventure-part4.mjs";
 
 // Import the base content inline (front matter, intro, overview, ch1 are in generate-adventure.mjs)
 // We'll read them via dynamic import
-const base = await import("./generate-adventure.mjs");
+const _base = await import("./generate-adventure.mjs");
 
 // The base script already defines sections array and writes to OUTPUT
 // But since it uses a module-level side effect, we need to just call the functions
@@ -41,7 +41,7 @@ const frontMatter = `# Protocol Zero: A System Ascendant Adventure
 `;
 
 // Build the full document
-const sections = [
+const _sections = [
 	frontMatter,
 	chapter2(),
 	chapter3(),
@@ -51,7 +51,7 @@ const sections = [
 ];
 
 // Read the base content (which has front matter through chapter 1)
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 
 const baseContent = readFileSync(OUTPUT, "utf8");
 

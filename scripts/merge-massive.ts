@@ -1,6 +1,6 @@
-import { readFileSync, writeFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { readFileSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { anomalies } from "../src/data/compendium/anomalies/index";
 import { items_part1 } from "../src/data/compendium/items-part1";
 import { items_part2 } from "../src/data/compendium/items-part2";
@@ -37,7 +37,14 @@ const selectedAnomalies = getRandom(anomalies, 60);
 const selectedRelics = getRandom(allItemsAndRelics, 75);
 
 // Formatters
-function formatRelic(relic: { name: string; type?: string; rarity?: string; attunement?: boolean; description?: string; abilities?: Array<{ name: string; description: string }>; }) {
+function formatRelic(relic: {
+	name: string;
+	type?: string;
+	rarity?: string;
+	attunement?: boolean;
+	description?: string;
+	abilities?: Array<{ name: string; description: string }>;
+}) {
 	let md = `#### ${relic.name}\n`;
 	md += `*${relic.type ? relic.type.charAt(0).toUpperCase() + relic.type.slice(1) : "Item"}, ${relic.rarity || "Uncommon"}${relic.attunement ? " â€” Requires Attunement" : ""}*\n`;
 	md += `${relic.description || "A mysterious item of unknown provenance."}\n\n`;
@@ -52,7 +59,27 @@ function formatRelic(relic: { name: string; type?: string; rarity?: string; attu
 	return md;
 }
 
-function formatAnomaly(anomaly: { name: string; rank?: string; type?: string; ac?: number; hp?: number; description?: string; stats?: { ability_scores?: { strength: number; agility: number; vitality: number; intelligence: number; sense: number; presence: number }; challenge_rating?: number }; traits?: Array<{ name: string; description: string }>; actions?: Array<{ name: string; description: string }>; }) {
+function formatAnomaly(anomaly: {
+	name: string;
+	rank?: string;
+	type?: string;
+	ac?: number;
+	hp?: number;
+	description?: string;
+	stats?: {
+		ability_scores?: {
+			strength: number;
+			agility: number;
+			vitality: number;
+			intelligence: number;
+			sense: number;
+			presence: number;
+		};
+		challenge_rating?: number;
+	};
+	traits?: Array<{ name: string; description: string }>;
+	actions?: Array<{ name: string; description: string }>;
+}) {
 	let md = `### ${anomaly.name} (${anomaly.rank}-Rank ${anomaly.type || "Anomaly"})\n`;
 	md += `*Medium Aberration, Unaligned*\n\n`;
 	md += `**AC:** ${anomaly.ac || 15} | **HP:** ${anomaly.hp || 50} | **Speed:** 30 ft.\n`;
@@ -118,7 +145,9 @@ selectedRelics.forEach((relic) => {
 
 let appBMd = `## Appendix B: The Grand Bestiary\n\nA massive compendium of ${selectedAnomalies.length} Anomalies found throughout the Gates and the Sandbox point-crawl.\n\n`;
 selectedAnomalies.forEach((anomaly) => {
-	appBMd += formatAnomaly(anomaly as unknown as Parameters<typeof formatAnomaly>[0]);
+	appBMd += formatAnomaly(
+		anomaly as unknown as Parameters<typeof formatAnomaly>[0],
+	);
 });
 
 // MERGE
@@ -134,7 +163,7 @@ let merged = part1 + sandboxMd + part2;
 
 // 2. Replace Appendix A
 const appAStart = merged.indexOf("## Appendix A: Relics & Equipment");
-const appBStart = merged.indexOf("## Appendix B: Anomaly Bestiary");
+const _appBStart = merged.indexOf("## Appendix B: Anomaly Bestiary");
 const appCStart = merged.indexOf("## Appendix C: NPC Profiles & Stat Blocks");
 
 const beforeAppA = merged.substring(0, appAStart);

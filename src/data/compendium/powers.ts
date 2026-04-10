@@ -1,13 +1,3 @@
-﻿// Powers Compendium - Authoritative Rift Ascendant Content
-// Supernatural abilities and extraordinary powers
-// Based on Rift Ascendant mechanics
-// 5e-style power mechanics
-// INNATE POWERS
-// AWAKENING POWERS (Job-linked)
-// CLASS POWERS
-// MONSTROUS POWERS
-// DIVINE POWERS
-
 export const powers = [
 	{
 		id: "shadow-step",
@@ -28,12 +18,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "necrotic",
+				mode: "melee",
 				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "necrotic",
-				},
+				modifier: "Presence",
+				damage: "2d10",
+				damage_type: "necrotic",
+			},
+			action_type: "1 bonus action",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "2d10 necrotic",
+			lattice_interaction: "Ambient mana absorption",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 20,
+				success: "No effect",
+				failure: "Full damage",
 			},
 		},
 		effects: {
@@ -45,11 +47,26 @@ export const powers = [
 		limitations: {
 			uses: "At-will",
 			conditions: ["Must have shadows or dim light available"],
+			recharge: "Short rest",
 		},
 		flavor:
 			"A relic of the Void Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shadow-step.webp",
+		lore: {
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["power", "support", "utility"],
+		theme_tags: ["black-market", "hunter-bureau"],
 	},
 	{
 		id: "demonic-aura",
@@ -71,12 +88,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "lightning",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "6d6",
+				damage_type: "lightning",
+			},
+			action_type: "1 reaction",
+			type: "innate",
+			frequency: "At will",
+			action: "1 reaction",
+			damage_profile: "6d6 lightning",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Agility",
+				dc: 10,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
 			},
 		},
 		effects: {
@@ -93,6 +122,20 @@ export const powers = [
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/demonic-aura.webp",
+		lore: {
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "burst", "necrotic", "mobility"],
+		theme_tags: ["experimental", "survival", "shadow-domain"],
 	},
 	{
 		id: "regeneration",
@@ -106,14 +149,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "radiant",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Intelligence",
+				damage: "3d10",
+				damage_type: "radiant",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "3d10 radiant",
+			lattice_interaction: "Resonance amplification",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -123,11 +178,28 @@ export const powers = [
 		},
 		limitations: {
 			conditions: ["Reduced effectiveness in light or against radiant damage"],
+			uses: "3/long rest",
+			recharge: "Dusk",
 		},
 		flavor:
 			"Denies the quiet space between breaths. A brutal death of hesitation.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/regeneration.webp",
+		lore: {
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse:
+				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "psychic", "mobility", "healing", "area"],
+		theme_tags: ["classified", "system-glitch"],
 	},
 	{
 		id: "true-sight",
@@ -141,12 +213,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				type: "acid",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "5d6",
+				damage_type: "acid",
+			},
+			action_type: "1 bonus action",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "5d6 acid",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Presence",
+				dc: 12,
+				success: "Partial effect",
+				failure: "Full damage",
 			},
 		},
 		effects: {
@@ -158,6 +242,20 @@ export const powers = [
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/true-sight.webp",
+		lore: {
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "damage", "buff", "offensive"],
+		theme_tags: ["black-market", "classified", "experimental"],
 	},
 	{
 		id: "shadow-essence",
@@ -179,6 +277,26 @@ export const powers = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			action_type: "1 action",
+			type: "monstrous",
+			frequency: "2/short rest",
+			action: "1 action",
+			damage_profile: "3d8 necrotic",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "necrotic",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Strength",
+				damage: "3d8",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary: "Become incorporeal while in dim light or darkness.",
@@ -195,6 +313,20 @@ export const powers = [
 			"A relic of the Void Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shadow-essence.webp",
+		lore: {
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["power", "burst", "psychic"],
+		theme_tags: ["shadow-domain", "dungeon-core", "hunter-bureau"],
 	},
 	{
 		id: "dragon-breath",
@@ -218,19 +350,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "psychic",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Sense",
+				damage: "2d12",
+				damage_type: "psychic",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Sense",
+				dc: 17,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 reaction",
+			type: "monstrous",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			damage_profile: "2d12 psychic",
+			lattice_interaction: "Lattice bypass — raw power",
 		},
 		effects: {
 			primary: "Exhale destructive energy in a 15-foot cone.",
@@ -244,6 +382,20 @@ export const powers = [
 			"Destroys the dimensional divide. A sorrowful testament to absolute power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/dragon-breath.webp",
+		lore: {
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "damage", "defensive", "burst", "healing"],
+		theme_tags: ["rift-energy", "gate-zone", "urban-combat"],
 	},
 	{
 		id: "arcane-charm",
@@ -268,14 +420,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "radiant",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "2d12",
+				damage_type: "radiant",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			damage_profile: "2d12 radiant",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Sense",
+				dc: 15,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary: "Target must make Sense saving throw or be charmed.",
@@ -289,6 +453,20 @@ export const powers = [
 			"Ignores the arrogant and the mighty. An absolute whisper in the shadows.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/fey-charm.webp",
+		lore: {
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["power", "stealth", "healing", "area"],
+		theme_tags: ["shadow-domain", "gate-zone", "classified"],
 	},
 	{
 		id: "bulwark-resilience",
@@ -305,19 +483,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "necrotic",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "6d6",
+				damage_type: "necrotic",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Strength",
+				dc: 21,
+				success: "Partial effect",
+				failure: "Full damage",
 			},
+			action_type: "1 action",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 action",
+			damage_profile: "6d6 necrotic",
+			lattice_interaction: "Lattice bypass — raw power",
 		},
 		effects: {
 			primary: "Advantage on saving throws against poison.",
@@ -329,6 +513,20 @@ export const powers = [
 			"Ignores the concept of defeat. An absolute surge of lethal intent.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/dwarven-resilience.webp",
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["power", "perception", "damage", "defensive", "necrotic"],
+		theme_tags: ["mana-overflow", "system-glitch"],
 	},
 	{
 		id: "assassin-luck",
@@ -345,25 +543,52 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "fire",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "fire",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "4d8 fire",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Presence",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary: "Reroll a 1 on an attack roll, ability check, or saving throw.",
 		},
 		limitations: {
 			uses: "Once per turn",
+			recharge: "Short rest",
 		},
 		flavor:
 			"Denies the darkness within. An ancient breaking point of the world.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/halfling-luck.webp",
+		lore: {
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["power", "healing", "perception"],
+		theme_tags: ["dungeon-core", "monarch-era"],
 	},
 	{
 		id: "warrior-rage",
@@ -384,12 +609,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "force",
+				mode: "self",
 				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				modifier: "Presence",
+				damage: "3d6",
+				damage_type: "force",
+			},
+			action_type: "1 bonus action",
+			type: "monstrous",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			damage_profile: "3d6 force",
+			lattice_interaction: "Resonance amplification",
+			saving_throw: {
+				ability: "Sense",
+				dc: 13,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
 			},
 		},
 		effects: {
@@ -406,6 +643,20 @@ export const powers = [
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/orcish-rage.webp",
+		lore: {
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["power", "mobility", "void", "perception", "ice"],
+		theme_tags: ["post-awakening", "hunter-bureau"],
 	},
 	{
 		id: "ki-point",
@@ -422,14 +673,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "psychic",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "5d6",
+				damage_type: "psychic",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "5d6 psychic",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary: "Gain a pool of ki points equal to your martial artist level.",
@@ -437,11 +700,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Regain all ki points after a long rest",
+			recharge: "Short rest",
 		},
 		flavor:
 			"Reflects the dimensional divide. A chaotic testament to absolute power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/ki-point.webp",
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["power", "damage", "single-target", "support", "void"],
+		theme_tags: ["ancient-power", "post-awakening"],
 	},
 	{
 		id: "divine-smite",
@@ -459,19 +737,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "radiant",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "radiant",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Intelligence",
+				dc: 21,
+				success: "No effect",
+				failure: "Full damage",
 			},
+			action_type: "1 action",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "2d8 radiant",
+			lattice_interaction: "Standard channel",
 		},
 		effects: {
 			primary:
@@ -482,11 +766,26 @@ export const powers = [
 		limitations: {
 			uses: "Limited by spell slots",
 			conditions: ["Must hit a creature"],
+			recharge: "Short rest",
 		},
 		flavor:
 			"Ignores the remnants of humanity. A devastating surge of lethal intent.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/divine-smite.webp",
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["power", "single-target", "defensive"],
+		theme_tags: ["hunter-bureau", "mana-overflow"],
 	},
 	{
 		id: "wild-shape",
@@ -508,14 +807,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "psychic",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "psychic",
-				},
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "2d12",
+				damage_type: "psychic",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "divine",
+			frequency: "At will",
+			action: "1 action",
+			damage_profile: "2d12 psychic",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Agility",
+				dc: 21,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -531,6 +842,20 @@ export const powers = [
 			"Reflects the fragile limits of flesh. An overwhelming ultimate equalizer.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/wild-shape.webp",
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "radiant", "necrotic"],
+		theme_tags: ["experimental", "urban-combat", "dungeon-core"],
 	},
 	{
 		id: "arcane-recovery",
@@ -548,19 +873,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "fire",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "3d8",
+				damage_type: "fire",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Strength",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 reaction",
+			damage_profile: "3d8 fire",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary:
@@ -569,11 +900,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per long rest",
+			recharge: "Dawn",
 		},
 		flavor:
 			"Shatters all who stand in opposition. An overwhelming whisper in the shadows.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/arcane-recovery.webp",
+		lore: {
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["power", "radiant", "defensive"],
+		theme_tags: ["dungeon-core", "rift-energy"],
 	},
 	{
 		id: "sneak-attack",
@@ -590,14 +936,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "psychic",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "3d10",
+				damage_type: "psychic",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "awakening",
+			frequency: "3/long rest",
+			action: "1 bonus action",
+			damage_profile: "3d10 psychic",
+			lattice_interaction: "Ambient mana absorption",
+			saving_throw: {
+				ability: "Sense",
+				dc: 14,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -609,10 +967,26 @@ export const powers = [
 				"Must use finesse or ranged weapon",
 				"Target must be vulnerable",
 			],
+			uses: "3/long rest",
+			recharge: "Dusk",
 		},
 		flavor: "Cleanses the architect's design. A subtle death of hesitation.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/sneak-attack.webp",
+		lore: {
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["power", "single-target", "healing", "perception", "psychic"],
+		theme_tags: ["forbidden", "dungeon-core", "experimental"],
 	},
 	{
 		id: "vampiric-touch",
@@ -626,19 +1000,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "necrotic",
-				},
+				type: "thunder",
+				mode: "melee",
+				resolution: "ability_check",
+				modifier: "Sense",
+				damage: "4d6",
+				damage_type: "thunder",
 			},
 			saving_throw: {
-				ability: "Strength",
-				dc: "8 + proficiency + Strength",
-				success: "Half damage",
-				failure: "The target is blinded by erupting ichor.",
+				ability: "Sense",
+				dc: 18,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 reaction",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "4d6 thunder",
+			lattice_interaction: "Direct mana circuit injection",
 		},
 		effects: {
 			primary: "Touch deals necrotic damage and heals you for the same amount.",
@@ -652,6 +1032,21 @@ export const powers = [
 			"Commands the darkness within. A triumphant breaking point of the world.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/vampiric-touch.webp",
+		lore: {
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse:
+				"Corrupts nearby healing magic by 10%, causing heals to occasionally deal damage instead.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["power", "offensive", "damage"],
+		theme_tags: ["hunter-bureau", "dimensional-bleed", "forbidden"],
 	},
 	{
 		id: "lycanthropy",
@@ -669,14 +1064,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "cold",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Sense",
+				damage: "2d12",
+				damage_type: "cold",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "monstrous",
+			frequency: "2/short rest",
+			action: "1 action",
+			damage_profile: "2d12 cold",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Presence",
+				dc: 14,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary: "Transform into a hybrid werewolf form.",
@@ -686,11 +1093,26 @@ export const powers = [
 		limitations: {
 			uses: "Once per night",
 			conditions: ["Full moon transformation is involuntary"],
+			recharge: "Dawn",
 		},
 		flavor:
 			"Ignites the fragile limits of flesh. A sorrowful breaking point of the world.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/lycanthropy.webp",
+		lore: {
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["power", "sustained", "stealth", "radiant", "utility"],
+		theme_tags: ["urban-combat", "mana-overflow", "ancient-power"],
 	},
 	{
 		id: "gaze-of-petrification",
@@ -712,19 +1134,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "thunder",
+				mode: "melee",
+				resolution: "ability_check",
+				modifier: "Strength",
+				damage: "2d12",
+				damage_type: "thunder",
 			},
 			saving_throw: {
 				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				dc: 18,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 action",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 action",
+			damage_profile: "2d12 thunder",
+			lattice_interaction: "Standard channel",
 		},
 		effects: {
 			primary:
@@ -739,6 +1167,20 @@ export const powers = [
 			"Ignites the concept of defeat. A sorrowful dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/gaze-of-petrification.webp",
+		lore: {
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "single-target", "utility"],
+		theme_tags: ["dimensional-bleed", "gate-zone"],
 	},
 	{
 		id: "telepathy",
@@ -756,14 +1198,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "psychic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "4d8",
+				damage_type: "psychic",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "4d8 psychic",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 11,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -775,6 +1229,20 @@ export const powers = [
 			"Cleanses the dimensional divide. A forbidden testament to absolute power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/telepathy.webp",
+		lore: {
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["power", "utility", "mobility"],
+		theme_tags: ["forbidden", "gate-zone", "experimental"],
 	},
 	{
 		id: "invisibility",
@@ -792,19 +1260,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "acid",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "acid",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Vitality",
+				dc: 10,
+				success: "No effect",
+				failure: "Full damage",
 			},
+			action_type: "1 action",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 action",
+			damage_profile: "3d6 acid",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary: "Become invisible to all sight.",
@@ -813,11 +1287,26 @@ export const powers = [
 		limitations: {
 			uses: "At-will",
 			conditions: ["Ends when taking hostile action"],
+			recharge: "Long rest",
 		},
 		flavor:
 			"Shatters the flow of time itself. A brutal testament to absolute power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/invisibility.webp",
+		lore: {
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "fire", "control", "single-target"],
+		theme_tags: ["hunter-bureau", "experimental"],
 	},
 	{
 		id: "divine-intervention",
@@ -834,12 +1323,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				type: "acid",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "2d10",
+				damage_type: "acid",
+			},
+			action_type: "1 bonus action",
+			type: "class",
+			frequency: "At will",
+			action: "1 bonus action",
+			damage_profile: "2d10 acid",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
 			},
 		},
 		effects: {
@@ -855,6 +1356,20 @@ export const powers = [
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/divine-intervention.webp",
+		lore: {
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["power", "area", "psychic", "burst", "necrotic"],
+		theme_tags: ["gate-zone", "hunter-bureau"],
 	},
 	{
 		id: "angelic-wings",
@@ -875,12 +1390,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "radiant",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				resolution: "automatic",
+				modifier: "Sense",
+				damage: "3d10",
+				damage_type: "radiant",
+			},
+			action_type: "1 bonus action",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "3d10 radiant",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Sense",
+				dc: 15,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
 			},
 		},
 		effects: {
@@ -895,6 +1422,21 @@ export const powers = [
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/angelic-wings.webp",
+		lore: {
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+			curse:
+				"Leaves a faint mark on the soul visible to Monarchs and entities of comparable power.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["power", "radiant", "offensive", "mobility", "single-target"],
+		theme_tags: ["mana-overflow", "shadow-domain"],
 	},
 	{
 		id: "holy-aura",
@@ -920,14 +1462,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "lightning",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				resolution: "automatic",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "lightning",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 bonus action",
+			damage_profile: "3d6 lightning",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Agility",
+				dc: 11,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary: "Allies in aura have advantage on saving throws.",
@@ -943,6 +1497,20 @@ export const powers = [
 		flavor: "Crushes the architect's design. An intricate roar of raw mana.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/holy-aura.webp",
+		lore: {
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["power", "void", "stealth"],
+		theme_tags: ["dimensional-bleed", "ancient-power", "modern-warfare"],
 	},
 	{
 		id: "avatar-of-battle",
@@ -964,19 +1532,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "cold",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d10",
+				damage_type: "cold",
 			},
 			saving_throw: {
 				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				dc: 20,
+				success: "No effect",
+				failure: "Full damage",
 			},
+			action_type: "1 action",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "3d10 cold",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary: "Gain two additional attacks per turn.",
@@ -991,6 +1565,20 @@ export const powers = [
 			"Commands the fragile limits of flesh. A triumphant ultimate equalizer.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/avatar-of-battle.webp",
+		lore: {
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["power", "defensive", "burst"],
+		theme_tags: ["black-market", "post-awakening"],
 	},
 	{
 		id: "arcane-ascension",
@@ -1012,14 +1600,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "cold",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "cold",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "monstrous",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			damage_profile: "2d12 cold",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 15,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -1037,6 +1637,20 @@ export const powers = [
 			"Commands the arrogant and the mighty. A desperate beautiful catastrophe.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/arcane-ascension.webp",
+		lore: {
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["power", "single-target", "stealth"],
+		theme_tags: ["classified", "guild-ops", "shadow-domain"],
 	},
 	{
 		id: "void-collapse",
@@ -1063,6 +1677,26 @@ export const powers = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			action_type: "1 action",
+			type: "divine",
+			frequency: "Proficiency/long rest",
+			action: "1 action",
+			damage_profile: "4d8 psychic",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "psychic",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 18,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -1078,6 +1712,20 @@ export const powers = [
 			"Ignores the remnants of humanity. A devastating dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/void-collapse.webp",
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["power", "area", "debuff"],
+		theme_tags: ["post-awakening", "hunter-bureau", "survival"],
 	},
 	{
 		id: "chronos-shift",
@@ -1100,12 +1748,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "necrotic",
 				mode: "ranged",
 				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				modifier: "Intelligence",
+				damage: "4d6",
+				damage_type: "necrotic",
+			},
+			action_type: "1 action",
+			type: "divine",
+			frequency: "Proficiency/long rest",
+			action: "1 action",
+			damage_profile: "4d6 necrotic",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Sense",
+				dc: 20,
+				success: "Half damage",
+				failure: "Full effect and prone",
 			},
 		},
 		effects: {
@@ -1122,6 +1782,20 @@ export const powers = [
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/chronos-shift.webp",
+		lore: {
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["power", "psychic", "area"],
+		theme_tags: ["dungeon-core", "forbidden", "guild-ops"],
 	},
 	{
 		id: "mana-burn",
@@ -1144,19 +1818,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "poison",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "2d10",
+				damage_type: "poison",
 			},
 			saving_throw: {
 				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 reaction",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "2d10 poison",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary:
@@ -1171,6 +1851,20 @@ export const powers = [
 		flavor: "Shatters the flow of time itself. A chaotic symphony of violence.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/mana-burn.webp",
+		lore: {
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "stealth", "defensive", "buff"],
+		theme_tags: ["ancient-power", "dimensional-bleed", "rift-energy"],
 	},
 	{
 		id: "obsidian-carapace",
@@ -1193,14 +1887,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "necrotic",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "3d8",
+				damage_type: "necrotic",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "3d8 necrotic",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Sense",
+				dc: 20,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -1216,6 +1922,20 @@ export const powers = [
 			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/obsidian-carapace.webp",
+		lore: {
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["power", "necrotic", "control", "mobility"],
+		theme_tags: ["system-glitch", "dimensional-bleed"],
 	},
 	{
 		id: "soul-rend",
@@ -1238,19 +1958,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "thunder",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "thunder",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Vitality",
+				dc: 18,
+				success: "No effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 action",
+			type: "divine",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "2d12 thunder",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary:
@@ -1266,6 +1992,20 @@ export const powers = [
 			"Commands the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/soul-rend.webp",
+		lore: {
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["power", "perception", "single-target", "support", "offensive"],
+		theme_tags: ["mana-overflow", "shadow-domain", "survival"],
 	},
 	{
 		id: "aegis-of-light",
@@ -1287,14 +2027,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "acid",
+				mode: "melee",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "radiant",
-				},
+				modifier: "Sense",
+				damage: "6d6",
+				damage_type: "acid",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "class",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			damage_profile: "6d6 acid",
+			lattice_interaction: "Ambient mana absorption",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 10,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -1309,6 +2061,20 @@ export const powers = [
 		flavor: "Bends the flow of time itself. A subtle symphony of violence.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/aegis-of-light.webp",
+		lore: {
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["power", "necrotic", "debuff", "shadow", "burst"],
+		theme_tags: ["dimensional-bleed", "elite-tier"],
 	},
 	{
 		id: "phantom-barrage",
@@ -1331,19 +2097,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "psychic",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "psychic",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
+				ability: "Strength",
+				dc: 15,
 				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				failure: "Full damage",
 			},
+			action_type: "1 action",
+			type: "divine",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "2d10 psychic",
+			lattice_interaction: "Direct mana circuit injection",
 		},
 		effects: {
 			primary: "Make 5 ranged spell attacks. Each deals 1d10 force damage.",
@@ -1358,6 +2130,20 @@ export const powers = [
 			"Reclaims the concept of defeat. An overwhelming dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/phantom-barrage.webp",
+		lore: {
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		tags: ["power", "offensive", "defensive", "mobility"],
+		theme_tags: ["classified", "ancient-power", "mana-overflow"],
 	},
 	{
 		id: "venom-blood",
@@ -1376,14 +2162,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "force",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "necrotic",
-				},
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "3d8",
+				damage_type: "force",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "3d8 force",
+			lattice_interaction: "Resonance amplification",
+			saving_throw: {
+				ability: "Strength",
+				dc: 12,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -1394,6 +2192,20 @@ export const powers = [
 		flavor: "Shatters the architect's design. A brutal roar of raw mana.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/venom-blood.webp",
+		lore: {
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["power", "fire", "perception"],
+		theme_tags: ["urban-combat", "ancient-power"],
 	},
 	{
 		id: "absolute-zero",
@@ -1416,19 +2228,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "cold",
-				},
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "poison",
 			},
 			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency + Vitality",
-				success: "Half damage",
-				failure: "The target is flash-frozen.",
+				ability: "Agility",
+				dc: 16,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 bonus action",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			damage_profile: "2d8 poison",
+			lattice_interaction: "Standard channel",
 		},
 		effects: {
 			primary:
@@ -1444,6 +2262,20 @@ export const powers = [
 			"Destroys the flow of time itself. A sorrowful symphony of violence.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/absolute-zero.webp",
+		lore: {
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["power", "psychic", "mobility"],
+		theme_tags: ["ancient-power", "monarch-era", "mana-overflow"],
 	},
 	{
 		id: "kinetic-absorption",
@@ -1462,14 +2294,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "psychic",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d8",
+				damage_type: "psychic",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "divine",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "3d8 psychic",
+			lattice_interaction: "Ambient mana absorption",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 21,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -1485,6 +2329,20 @@ export const powers = [
 			"Denies all who stand in opposition. A chaotic beautiful catastrophe.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/kinetic-absorption.webp",
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["power", "radiant", "shadow", "necrotic", "single-target"],
+		theme_tags: ["guild-ops", "dungeon-core"],
 	},
 	{
 		id: "infernal-forge",
@@ -1507,12 +2365,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "lightning",
 				mode: "ranged",
 				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				modifier: "Sense",
+				damage: "3d6",
+				damage_type: "lightning",
+			},
+			action_type: "1 action",
+			type: "divine",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "3d6 lightning",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Presence",
+				dc: 11,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
 			},
 		},
 		effects: {
@@ -1522,11 +2392,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "At-will",
+			recharge: "Short rest",
 		},
 		flavor:
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/infernal-forge.webp",
+		lore: {
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["power", "area", "void"],
+		theme_tags: ["experimental", "system-glitch", "ancient-power"],
 	},
 	{
 		id: "celestial-judgment",
@@ -1548,14 +2433,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "fire",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "fire",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "divine",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "4d8 fire",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 11,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -1571,6 +2468,20 @@ export const powers = [
 			"Reclaims the fragile limits of flesh. A silent breaking point of the world.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/celestial-judgment.webp",
+		lore: {
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["power", "shadow", "mobility"],
+		theme_tags: ["modern-warfare", "dimensional-bleed"],
 	},
 	{
 		id: "mind-control",
@@ -1597,19 +2508,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "psychic",
+				mode: "self",
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "4d8",
+				damage_type: "psychic",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Agility",
+				dc: 21,
+				success: "No effect",
+				failure: "Full damage",
 			},
+			action_type: "1 reaction",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "4d8 psychic",
+			lattice_interaction: "Direct mana circuit injection",
 		},
 		effects: {
 			primary:
@@ -1624,6 +2541,20 @@ export const powers = [
 			"Cleanses all who stand in opposition. An intricate whisper in the shadows.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/mind-control.webp",
+		lore: {
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["power", "control", "healing", "ice"],
+		theme_tags: ["elite-tier", "rift-energy", "forbidden"],
 	},
 	{
 		id: "warp-strike",
@@ -1646,14 +2577,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "poison",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "2d12 poison",
+			lattice_interaction: "Resonance amplification",
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -1663,11 +2606,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "At-will",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Overrides the arrogant and the mighty. A relentless beautiful catastrophe.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/warp-strike.webp",
+		lore: {
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["power", "mobility", "stealth", "shadow"],
+		theme_tags: ["dungeon-core", "rift-energy", "classified"],
 	},
 	{
 		id: "life-transfer",
@@ -1689,19 +2647,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "force",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "force",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Vitality",
+				dc: 15,
+				success: "No effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
+			damage_profile: "2d10 force",
+			lattice_interaction: "Lattice bypass — raw power",
 		},
 		effects: {
 			primary: "Take 4d8 necrotic damage (ignores resistance/immunity).",
@@ -1710,10 +2674,25 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Unlimited",
+			recharge: "Long rest",
 		},
 		flavor: "Destroys the darkness within. A desperate ultimate equalizer.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/life-transfer.webp",
+		lore: {
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "single-target", "necrotic", "support"],
+		theme_tags: ["survival", "guild-ops"],
 	},
 	{
 		id: "gravity-crush",
@@ -1736,14 +2715,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "poison",
 				mode: "ranged",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "bludgeoning",
-				},
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "poison",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "awakening",
+			frequency: "2/short rest",
+			action: "1 action",
+			damage_profile: "2d12 poison",
+			lattice_interaction: "Ambient mana absorption",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -1759,6 +2750,20 @@ export const powers = [
 			"Destroys the remnants of humanity. A desperate surge of lethal intent.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/gravity-crush.webp",
+		lore: {
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["power", "stealth", "fire"],
+		theme_tags: ["gate-zone", "guild-ops", "elite-tier"],
 	},
 	{
 		id: "echo-clone",
@@ -1781,19 +2786,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "poison",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "3d10",
+				damage_type: "poison",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
+				ability: "Strength",
+				dc: 10,
 				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				failure: "Full damage",
 			},
+			action_type: "1 reaction",
+			type: "monstrous",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			damage_profile: "3d10 poison",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary:
@@ -1809,6 +2820,21 @@ export const powers = [
 			"Denies the concept of defeat. A chaotic dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/echo-clone.webp",
+		lore: {
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse:
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["power", "ice", "lightning", "sustained"],
+		theme_tags: ["post-awakening", "experimental"],
 	},
 	{
 		id: "storm-call",
@@ -1835,14 +2861,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "radiant",
+				mode: "aura",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "lightning",
-				},
+				modifier: "Sense",
+				damage: "6d6",
+				damage_type: "radiant",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 reaction",
+			damage_profile: "6d6 radiant",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 19,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -1858,6 +2896,20 @@ export const powers = [
 			"Absorbs the concept of defeat. A sorrowful surge of lethal intent.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/storm-call.webp",
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["power", "psychic", "radiant", "area", "defensive"],
+		theme_tags: ["elite-tier", "modern-warfare"],
 	},
 	{
 		id: "blight-touch",
@@ -1879,19 +2931,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "psychic",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "radiant",
-				},
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "6d6",
+				damage_type: "psychic",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
+				ability: "Vitality",
+				dc: 21,
 				success: "Half damage",
-				failure: "The target is blinded by radiant light.",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 reaction",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "6d6 psychic",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary:
@@ -1907,6 +2965,20 @@ export const powers = [
 			"Bends the quiet space between breaths. An intricate death of hesitation.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/blight-touch.webp",
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["power", "defensive", "burst", "sustained", "healing"],
+		theme_tags: ["monarch-era", "dimensional-bleed", "elite-tier"],
 	},
 	{
 		id: "starfall",
@@ -1929,14 +3001,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "cold",
+				mode: "self",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				modifier: "Agility",
+				damage: "5d6",
+				damage_type: "cold",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "divine",
+			frequency: "At will",
+			action: "1 action",
+			damage_profile: "5d6 cold",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Agility",
+				dc: 10,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -1952,6 +3036,20 @@ export const powers = [
 			"Cleanses the fragile limits of flesh. An intricate ultimate equalizer.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/starfall.webp",
+		lore: {
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "psychic", "utility", "radiant"],
+		theme_tags: ["monarch-era", "guild-ops"],
 	},
 	{
 		id: "reality-glitch",
@@ -1973,19 +3071,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "radiant",
+				mode: "melee",
 				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "radiant",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Sense",
+				dc: 12,
+				success: "Partial effect",
+				failure: "Full damage",
 			},
+			action_type: "1 bonus action",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "3d6 radiant",
+			lattice_interaction: "Direct mana circuit injection",
 		},
 		effects: {
 			primary:
@@ -2000,6 +3104,20 @@ export const powers = [
 			"Overrides the arrogant and the mighty. A devastating whisper in the shadows.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/reality-glitch.webp",
+		lore: {
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["power", "fire", "void"],
+		theme_tags: ["dimensional-bleed", "ancient-power", "system-glitch"],
 	},
 	{
 		id: "solar-flare",
@@ -2022,14 +3140,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "radiant",
-				},
+				type: "radiant",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "6d6",
+				damage_type: "radiant",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "class",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			damage_profile: "6d6 radiant",
+			lattice_interaction: "Resonance amplification",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 20,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -2043,6 +3173,20 @@ export const powers = [
 		flavor: "Reclaims the architect's design. A devastating roar of raw mana.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/solar-flare.webp",
+		lore: {
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "area", "mobility", "void", "offensive"],
+		theme_tags: ["dungeon-core", "modern-warfare", "urban-combat"],
 	},
 	{
 		id: "void-singularity",
@@ -2069,6 +3213,26 @@ export const powers = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			action_type: "1 bonus action",
+			type: "awakening",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			damage_profile: "2d12 cold",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "cold",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "2d12",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 19,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -2078,11 +3242,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
+			recharge: "Dawn",
 		},
 		flavor:
 			"Ignites the concept of defeat. A sorrowful surge of lethal intent.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/void-singularity.webp",
+		lore: {
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["power", "damage", "mobility", "support"],
+		theme_tags: ["dimensional-bleed", "forbidden"],
 	},
 	{
 		id: "aeon-shield",
@@ -2104,14 +3283,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "thunder",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "4d6",
+				damage_type: "thunder",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "monstrous",
+			frequency: "2/short rest",
+			action: "1 action",
+			damage_profile: "4d6 thunder",
+			lattice_interaction: "Resonance amplification",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 21,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -2120,11 +3311,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per long rest",
+			recharge: "Dusk",
 		},
 		flavor:
 			"Reclaims the dimensional divide. A silent testament to absolute power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/aeon-shield.webp",
+		lore: {
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["power", "sustained", "stealth"],
+		theme_tags: ["rift-energy", "dungeon-core"],
 	},
 	{
 		id: "nebula-drift",
@@ -2146,12 +3352,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "fire",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "psychic",
-				},
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "6d6",
+				damage_type: "fire",
+			},
+			action_type: "1 reaction",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			damage_profile: "6d6 fire",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 14,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
 		},
 		effects: {
@@ -2161,11 +3379,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Duration: 10 minutes",
+			recharge: "Dusk",
 		},
 		flavor:
 			"A relic of the Chaos Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/nebula-drift.webp",
+		lore: {
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["power", "support", "shadow", "defensive", "control"],
+		theme_tags: ["system-glitch", "rift-energy", "dimensional-bleed"],
 	},
 	{
 		id: "gravity-well",
@@ -2188,14 +3421,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "bludgeoning",
-				},
+				type: "necrotic",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "necrotic",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 action",
+			damage_profile: "3d6 necrotic",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -2204,10 +3449,25 @@ export const powers = [
 		},
 		limitations: {
 			uses: "3 times per day",
+			recharge: "Long rest",
 		},
 		flavor: "Bends the remnants of humanity. A subtle surge of lethal intent.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/gravity-well.webp",
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "utility", "necrotic"],
+		theme_tags: ["modern-warfare", "dimensional-bleed"],
 	},
 	{
 		id: "quantum-entanglement",
@@ -2230,19 +3490,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "lightning",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d6",
+				damage_type: "lightning",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
+				ability: "Vitality",
+				dc: 18,
 				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 bonus action",
+			type: "class",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			damage_profile: "4d6 lightning",
+			lattice_interaction: "Resonance amplification",
 		},
 		effects: {
 			primary:
@@ -2251,11 +3517,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per short rest",
+			recharge: "Dusk",
 		},
 		flavor:
 			"Absorbs the fragile limits of flesh. A sorrowful breaking point of the world.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/quantum-entanglement.webp",
+		lore: {
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["power", "radiant", "debuff", "stealth"],
+		theme_tags: ["urban-combat", "hunter-bureau"],
 	},
 	{
 		id: "supernova-blast",
@@ -2278,12 +3559,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "force",
+				mode: "aura",
 				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				modifier: "Presence",
+				damage: "3d6",
+				damage_type: "force",
+			},
+			action_type: "1 action",
+			type: "awakening",
+			frequency: "3/long rest",
+			action: "1 action",
+			damage_profile: "3d6 force",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
 			},
 		},
 		effects: {
@@ -2293,11 +3586,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
+			recharge: "Short rest",
 		},
 		flavor:
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/supernova-blast.webp",
+		lore: {
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["power", "necrotic", "support", "damage"],
+		theme_tags: ["shadow-domain", "mana-overflow"],
 	},
 	{
 		id: "nanite-swarm",
@@ -2320,19 +3628,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "acid",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "acid",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Sense",
+				dc: 21,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 bonus action",
+			type: "divine",
+			frequency: "At will",
+			action: "1 bonus action",
+			damage_profile: "2d12 acid",
+			lattice_interaction: "Direct mana circuit injection",
 		},
 		effects: {
 			primary:
@@ -2341,11 +3655,27 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Concentration, up to 1 minute",
+			recharge: "Dawn",
 		},
 		flavor:
 			"Ignores the remnants of humanity. A devastating dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/nanite-swarm.webp",
+		lore: {
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+			curse:
+				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "offensive", "debuff", "single-target", "necrotic"],
+		theme_tags: ["hunter-bureau", "dimensional-bleed", "urban-combat"],
 	},
 	{
 		id: "titan-strength",
@@ -2367,14 +3697,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "bludgeoning",
-				},
+				type: "force",
+				mode: "self",
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "4d6",
+				damage_type: "force",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "innate",
+			frequency: "At will",
+			action: "1 bonus action",
+			damage_profile: "4d6 force",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Sense",
+				dc: 17,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -2384,11 +3726,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per short rest",
+			recharge: "Dusk",
 		},
 		flavor:
 			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/titan-strength.webp",
+		lore: {
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["power", "damage", "control"],
+		theme_tags: ["urban-combat", "black-market"],
 	},
 	{
 		id: "echoes-of-the-past",
@@ -2411,12 +3768,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Intelligence",
+				damage: "5d6",
+				damage_type: "force",
+			},
+			action_type: "1 action",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "5d6 force",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Presence",
+				dc: 20,
+				success: "Partial effect",
+				failure: "Full damage",
 			},
 		},
 		effects: {
@@ -2427,11 +3796,27 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Duration: 3 rounds",
+			recharge: "Dusk",
 		},
 		flavor:
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/echoes.webp",
+		lore: {
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+			curse:
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["power", "necrotic", "perception", "sustained", "debuff"],
+		theme_tags: ["post-awakening", "survival"],
 	},
 	{
 		id: "glacier-prison",
@@ -2454,12 +3839,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				type: "psychic",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "6d6",
+				damage_type: "psychic",
+			},
+			action_type: "1 reaction",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			damage_profile: "6d6 psychic",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 11,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
 			},
 		},
 		effects: {
@@ -2469,11 +3866,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
+			recharge: "Dusk",
 		},
 		flavor:
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/glacier-prison.webp",
+		lore: {
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["power", "necrotic", "defensive", "lightning"],
+		theme_tags: ["monarch-era", "hunter-bureau", "guild-ops"],
 	},
 	{
 		id: "bio-luminescence",
@@ -2493,19 +3905,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "lightning",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "3d6",
+				damage_type: "lightning",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
+				ability: "Intelligence",
+				dc: 17,
 				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				failure: "Full damage",
 			},
+			action_type: "1 bonus action",
+			type: "divine",
+			frequency: "At will",
+			action: "1 bonus action",
+			damage_profile: "3d6 lightning",
+			lattice_interaction: "Standard channel",
 		},
 		effects: {
 			primary:
@@ -2514,11 +3932,27 @@ export const powers = [
 		},
 		limitations: {
 			uses: "At-will",
+			recharge: "Dawn",
 		},
 		flavor:
 			"Destroys the quiet space between breaths. A triumphant death of hesitation.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/light.webp",
+		lore: {
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["power", "damage", "void", "healing"],
+		theme_tags: ["mana-overflow", "dimensional-bleed", "hunter-bureau"],
 	},
 	{
 		id: "neuro-spike",
@@ -2541,14 +3975,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "fire",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d8",
+				damage_type: "fire",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 reaction",
+			damage_profile: "3d8 fire",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 12,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -2557,10 +4003,25 @@ export const powers = [
 		},
 		limitations: {
 			uses: "At-will",
+			recharge: "Dusk",
 		},
 		flavor: "Denies the remnants of humanity. A brutal surge of lethal intent.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/neuro-spike.webp",
+		lore: {
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["power", "area", "fire", "shadow", "ice"],
+		theme_tags: ["forbidden", "rift-energy"],
 	},
 	{
 		id: "plasma-whip",
@@ -2583,19 +4044,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "lightning",
+				mode: "melee",
 				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "lightning",
-				},
+				modifier: "Intelligence",
+				damage: "2d10",
+				damage_type: "lightning",
 			},
 			saving_throw: {
-				ability: "Intelligence",
-				dc: "8 + proficiency + Intelligence",
-				success: "Half damage",
-				failure: "The target is paralyzed by volts.",
+				ability: "Vitality",
+				dc: 18,
+				success: "No effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 bonus action",
+			type: "divine",
+			frequency: "3/long rest",
+			action: "1 bonus action",
+			damage_profile: "2d10 lightning",
+			lattice_interaction: "Lattice bypass — raw power",
 		},
 		effects: {
 			primary:
@@ -2604,11 +4071,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "At-will",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Weaves all who stand in opposition. A subtle beautiful catastrophe.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/plasma-whip.webp",
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "debuff", "burst"],
+		theme_tags: ["system-glitch", "ancient-power"],
 	},
 	{
 		id: "spectral-blade",
@@ -2630,14 +4112,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "acid",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				resolution: "ability_check",
+				modifier: "Strength",
+				damage: "3d6",
+				damage_type: "acid",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "divine",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			damage_profile: "3d6 acid",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Agility",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -2646,11 +4140,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per short rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Cleanses the arrogant and the mighty. A forbidden whisper in the shadows.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/spectral-blade.webp",
+		lore: {
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["power", "mobility", "perception"],
+		theme_tags: ["ancient-power", "shadow-domain", "modern-warfare"],
 	},
 	{
 		id: "dimensional-rift",
@@ -2672,19 +4181,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "radiant",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "radiant",
 			},
 			saving_throw: {
-				ability: "Sense",
-				dc: "8 + proficiency + Sense",
+				ability: "Strength",
+				dc: 14,
 				success: "Half damage",
-				failure: "The target's lattice is distorted.",
+				failure: "Full damage",
 			},
+			action_type: "1 action",
+			type: "class",
+			frequency: "Proficiency/long rest",
+			action: "1 action",
+			damage_profile: "2d12 radiant",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary: "Access a private storage dimension (up to 500 lbs of gear).",
@@ -2692,11 +4207,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "At-will",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Overrides the fragile limits of flesh. A silent breaking point of the world.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/rift.webp",
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "burst", "lightning"],
+		theme_tags: ["gate-zone", "forbidden"],
 	},
 	{
 		id: "soul-binding",
@@ -2718,14 +4248,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "thunder",
+				mode: "melee",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				modifier: "Strength",
+				damage: "3d6",
+				damage_type: "thunder",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "class",
+			frequency: "Proficiency/long rest",
+			action: "1 action",
+			damage_profile: "3d6 thunder",
+			lattice_interaction: "Ambient mana absorption",
+			saving_throw: {
+				ability: "Agility",
+				dc: 14,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -2735,11 +4277,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "One anchor at a time",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Cleanses the flow of time itself. A forbidden symphony of violence.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/soul-bind.webp",
+		lore: {
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "ice", "damage"],
+		theme_tags: ["dungeon-core", "classified"],
 	},
 	{
 		id: "entropy-field",
@@ -2762,19 +4319,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "thunder",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "necrotic",
-				},
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "3d10",
+				damage_type: "thunder",
 			},
 			saving_throw: {
-				ability: "Intelligence",
-				dc: "8 + proficiency + Intelligence",
-				success: "Half damage",
-				failure: "The target is pulled into a mana-void.",
+				ability: "Agility",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 action",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 action",
+			damage_profile: "3d10 thunder",
+			lattice_interaction: "Resonance amplification",
 		},
 		effects: {
 			primary:
@@ -2784,11 +4347,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per short rest",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Denies the concept of defeat. A brutal dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/entropy.webp",
+		lore: {
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["power", "ice", "area"],
+		theme_tags: ["elite-tier", "forbidden", "mana-overflow"],
 	},
 	{
 		id: "celestial-communion",
@@ -2810,14 +4388,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "fire",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "fire",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "monstrous",
+			frequency: "At will",
+			action: "1 bonus action",
+			damage_profile: "4d8 fire",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -2827,11 +4417,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per week",
+			recharge: "Dusk",
 		},
 		flavor:
 			"Destroys the dimensional divide. A sorrowful symphony of violence.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/communion.webp",
+		lore: {
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "area", "damage", "void"],
+		theme_tags: ["post-awakening", "shadow-domain"],
 	},
 	{
 		id: "shadow-puppetry",
@@ -2858,6 +4463,26 @@ export const powers = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			action_type: "1 reaction",
+			type: "monstrous",
+			frequency: "At will",
+			action: "1 reaction",
+			damage_profile: "4d8 lightning",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "lightning",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "Half damage",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -2867,11 +4492,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per long rest",
+			recharge: "Dawn",
 		},
 		flavor:
 			"A relic of the Void Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/puppetry.webp",
+		lore: {
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["power", "offensive", "lightning"],
+		theme_tags: ["experimental", "monarch-era", "modern-warfare"],
 	},
 	{
 		id: "thermal-vent",
@@ -2894,14 +4534,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "poison",
+				mode: "melee",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				modifier: "Strength",
+				damage: "5d6",
+				damage_type: "poison",
 			},
 			critical: true,
+			action_type: "1 reaction",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 reaction",
+			damage_profile: "5d6 poison",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Strength",
+				dc: 11,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -2910,11 +4562,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Twice per long rest",
+			recharge: "Dawn",
 		},
 		flavor:
 			"Shatters the dimensional divide. A chaotic testament to absolute power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/thermal.webp",
+		lore: {
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["power", "stealth", "area", "fire"],
+		theme_tags: ["post-awakening", "urban-combat"],
 	},
 	{
 		id: "gravity-leap",
@@ -2936,19 +4603,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "necrotic",
+				mode: "aura",
 				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "bludgeoning",
-				},
+				modifier: "Presence",
+				damage: "2d12",
+				damage_type: "necrotic",
 			},
 			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency + Vitality",
-				success: "Half damage",
-				failure: "The target is crushed by weight.",
+				ability: "Presence",
+				dc: 17,
+				success: "No effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 reaction",
+			type: "innate",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			damage_profile: "2d12 necrotic",
+			lattice_interaction: "Lattice bypass — raw power",
 		},
 		effects: {
 			primary:
@@ -2957,11 +4630,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "At-will",
+			recharge: "Dawn",
 		},
 		flavor:
 			"Destroys the quiet space between breaths. A triumphant roar of raw mana.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/leap.webp",
+		lore: {
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["power", "psychic", "damage", "control"],
+		theme_tags: ["classified", "survival", "shadow-domain"],
 	},
 	{
 		id: "obsidian-wall",
@@ -2984,14 +4672,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "cold",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "cold",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			damage_profile: "2d10 cold",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Presence",
+				dc: 19,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -3001,10 +4701,25 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per short rest",
+			recharge: "Short rest",
 		},
 		flavor: "Absorbs the architect's design. A sorrowful roar of raw mana.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/wall.webp",
+		lore: {
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "necrotic", "buff"],
+		theme_tags: ["dungeon-core", "mana-overflow", "modern-warfare"],
 	},
 	{
 		id: "star-fire-lance",
@@ -3027,12 +4742,24 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
+				type: "acid",
 				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "8d10",
-					type: "force",
-				},
+				resolution: "saving_throw",
+				modifier: "Intelligence",
+				damage: "3d8",
+				damage_type: "acid",
+			},
+			action_type: "1 reaction",
+			type: "innate",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			damage_profile: "3d8 acid",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "Half damage",
+				failure: "Full effect and prone",
 			},
 		},
 		effects: {
@@ -3041,11 +4768,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "2 times per long rest",
+			recharge: "Dawn",
 		},
 		flavor:
 			"A relic of the Absolute Resonance event. The air hums with entropic power.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/lance.webp",
+		lore: {
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		tags: ["power", "burst", "control", "sustained"],
+		theme_tags: ["ancient-power", "modern-warfare", "dimensional-bleed"],
 	},
 	{
 		id: "vortex-shield",
@@ -3067,14 +4809,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				type: "cold",
+				mode: "self",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "4d8",
+				damage_type: "cold",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "4d8 cold",
+			lattice_interaction: "Direct mana circuit injection",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 15,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		effects: {
 			primary:
@@ -3083,11 +4837,26 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Duration: 1 minute",
+			recharge: "Short rest",
 		},
 		flavor:
 			"Crushes the concept of defeat. A desperate dance performed on the edge of a blade.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/vortex.webp",
+		lore: {
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["power", "perception", "radiant", "support", "fire"],
+		theme_tags: ["classified", "guild-ops"],
 	},
 	{
 		id: "seraph-call",
@@ -3110,19 +4879,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "radiant",
+				mode: "melee",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "3d10",
+				damage_type: "radiant",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: "8 + proficiency + Presence",
-				success: "Half damage",
-				failure: "The target is stunned by authority.",
+				ability: "Agility",
+				dc: 15,
+				success: "No effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 bonus action",
+			type: "innate",
+			frequency: "At will",
+			action: "1 bonus action",
+			damage_profile: "3d10 radiant",
+			lattice_interaction: "Resonance amplification",
 		},
 		effects: {
 			primary:
@@ -3131,10 +4906,25 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
+			recharge: "Dusk",
 		},
 		flavor: "Ignores the architect's design. An absolute roar of raw mana.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/seraph.webp",
+		lore: {
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["power", "psychic", "necrotic", "sustained", "utility"],
+		theme_tags: ["experimental", "elite-tier", "urban-combat"],
 	},
 	{
 		id: "necrotic-tether",
@@ -3157,14 +4947,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "poison",
+				mode: "aura",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "necrotic",
-				},
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "poison",
 			},
 			critical: true,
+			action_type: "1 action",
+			type: "innate",
+			frequency: "At will",
+			action: "1 action",
+			damage_profile: "2d12 poison",
+			lattice_interaction: "Standard channel",
+			saving_throw: {
+				ability: "Strength",
+				dc: 10,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		effects: {
 			primary:
@@ -3174,11 +4976,27 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Concentration",
+			recharge: "Long rest",
 		},
 		flavor:
 			"Absorbs the quiet space between breaths. A sorrowful death of hesitation.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/tether.webp",
+		lore: {
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
+			curse:
+				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["power", "debuff", "psychic", "perception"],
+		theme_tags: ["mana-overflow", "hunter-bureau"],
 	},
 	{
 		id: "glacial-fortress",
@@ -3201,19 +5019,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "cold",
-				},
+				type: "psychic",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Intelligence",
+				damage: "4d8",
+				damage_type: "psychic",
 			},
 			saving_throw: {
-				ability: "Vitality",
-				dc: "8 + proficiency + Vitality",
-				success: "Half damage",
-				failure: "The target is flash-frozen.",
+				ability: "Agility",
+				dc: 19,
+				success: "No effect",
+				failure: "Full effect and prone",
 			},
+			action_type: "1 action",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 action",
+			damage_profile: "4d8 psychic",
+			lattice_interaction: "Ambient mana absorption",
 		},
 		effects: {
 			primary:
@@ -3222,11 +5046,27 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
+			recharge: "Dusk",
 		},
 		flavor:
 			"Destroys the flow of time itself. A desperate symphony of violence.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/fortress.webp",
+		lore: {
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
+			curse:
+				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["power", "buff", "defensive", "area", "shadow"],
+		theme_tags: ["classified", "elite-tier", "shadow-domain"],
 	},
 	{
 		id: "reality-shear",
@@ -3249,14 +5089,26 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
+				type: "necrotic",
+				mode: "melee",
 				resolution: "spell_attack",
-				damage: {
-					dice: "5d10",
-					type: "force",
-				},
+				modifier: "Strength",
+				damage: "3d10",
+				damage_type: "necrotic",
 			},
 			critical: true,
+			action_type: "1 bonus action",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			damage_profile: "3d10 necrotic",
+			lattice_interaction: "Lattice bypass — raw power",
+			saving_throw: {
+				ability: "Presence",
+				dc: 19,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		effects: {
 			primary:
@@ -3265,10 +5117,25 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per day",
+			recharge: "Short rest",
 		},
 		flavor: "Reclaims the darkness within. A devastating ultimate equalizer.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/shear.webp",
+		lore: {
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["power", "radiant", "damage", "psychic"],
+		theme_tags: ["guild-ops", "hunter-bureau", "black-market"],
 	},
 	{
 		id: "omega-pulse",
@@ -3291,19 +5158,25 @@ export const powers = [
 		},
 		mechanics: {
 			attack: {
-				mode: "ranged",
-				resolution: "spell_attack",
-				damage: {
-					dice: "3d10",
-					type: "force",
-				},
+				type: "force",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "force",
 			},
 			saving_throw: {
-				ability: "Sense",
-				dc: "8 + proficiency + Sense",
+				ability: "Strength",
+				dc: 14,
 				success: "Half damage",
-				failure: "The target's lattice is distorted.",
+				failure: "Full damage",
 			},
+			action_type: "1 bonus action",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			damage_profile: "2d10 force",
+			lattice_interaction: "Lattice bypass — raw power",
 		},
 		effects: {
 			primary:
@@ -3313,10 +5186,25 @@ export const powers = [
 		},
 		limitations: {
 			uses: "Once per week",
+			recharge: "Dawn",
 		},
 		flavor:
 			"Commands the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		source: "Rift Ascendant Canon",
 		image: "/generated/compendium/powers/omega.webp",
+		lore: {
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["power", "psychic", "void"],
+		theme_tags: ["hunter-bureau", "survival"],
 	},
 ];

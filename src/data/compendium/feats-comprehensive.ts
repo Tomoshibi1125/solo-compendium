@@ -6,9 +6,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "survival"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -16,8 +17,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the architect's design. An overwhelming death of hesitation.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25,7 +28,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "mobility", "lightning", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -36,7 +39,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -85,8 +88,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -96,13 +99,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your mana signature has attuned to shadow-frequency energy, granting instinctive control over darkness.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your mana signature has attuned to shadow-frequency energy, granting instinctive control over darkne",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -122,8 +127,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Can use Shadow Step as a bonus action (teleport up to 15 ft between shadows) 2 times per short rest",
 				"Resistance to necrotic damage",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -131,17 +141,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Denies the darkness within. A brutal breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -149,7 +162,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "stealth", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -209,8 +222,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -220,13 +233,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your System interface siphons residual life energy from slain creatures, converting it into temporary power.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your System interface siphons residual life energy from slain creatures, converting it into temporar",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -246,8 +261,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Can store absorbed essence to fuel shadow abilities",
 				"+1 to Vitality saving throws",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -255,9 +275,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "dungeon-core", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -265,8 +286,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the concept of defeat. A desperate surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -274,7 +297,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "fire", "perception", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -334,8 +357,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -345,13 +368,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You move through combat like a wraith, phasing between shadows to strike from impossible angles.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You move through combat like a wraith, phasing between shadows to strike from impossible angles.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -371,8 +396,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Advantage on Agility saving throws against area effects",
 				"Can use Shadow Step as a reaction when targeted by an attack",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -380,17 +410,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "ancient-power", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Ignites the darkness within. A sorrowful ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -398,7 +431,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "control", "area", "mobility", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -458,8 +491,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -469,13 +502,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your strikes carry shadow energy that erupts on critical hits, blinding targets with concentrated darkness.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your strikes carry shadow energy that erupts on critical hits, blinding targets with concentrated da",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -496,8 +531,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Shadow-infused weapons count as magical for overcoming resistance",
 				"Can reroll one damage die on critical hits (must use new result)",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -505,9 +545,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -515,8 +556,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Crushes the arrogant and the mighty. An intricate whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -524,7 +567,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "utility", "healing", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -535,7 +578,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "once-per-turn",
-			action: "",
+			action: "1 bonus action",
 			ability: "Strength",
 			save: "Strength",
 			dc: "ability-modifier",
@@ -584,8 +627,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -595,13 +638,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have mastered the art of imbuing melee weapons with raw mana, creating a resonant field that slices through armor.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have mastered the art of imbuing melee weapons with raw mana, creating a resonant field that sli",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -620,8 +665,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per turn, when you hit a creature with a melee attack, you can force it to make a Strength save (DC 8 + prof + Str mod) or be pushed 10 feet.",
 				"You gain proficiency with shortswords and longswords.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -629,9 +679,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -639,8 +690,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Weaves the remnants of humanity. A relentless surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -648,7 +701,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "psychic", "ice", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -708,8 +761,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -719,13 +772,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your reflexes are attuned to the dimensional membrane, allowing you to slip through space when targeted.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your reflexes are attuned to the dimensional membrane, allowing you to slip through space when targe",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -744,8 +799,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on Agility checks made to initiative combat while in dim light or darkness.",
 				"You can see through magical darkness out to 30 feet.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -753,17 +813,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "classified"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Ignores the architect's design. A relentless roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -771,7 +834,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "utility", "healing", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -831,8 +894,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -842,13 +905,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have unlocked the healer-class diagnostic Aether-Sight, allowing you to patch wounds with supernatural efficiency.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have unlocked the healer-class diagnostic Aether-Sight, allowing you to patch wounds with supern",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -863,8 +928,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"As an action, you can spend one use of a healer's kit to restore 1d6 + 4 + target's maximum Hit Dice HP to a creature.",
 				"You gain proficiency in Medicine and with the herbalism kit.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -872,17 +942,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Overrides the architect's design. A relentless roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -890,7 +963,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "healing", "sustained", "buff", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -901,7 +974,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -950,8 +1023,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -961,13 +1034,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift provides predictive movement patterns, allowing you to strike and fade before an enemy can react.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift provides predictive movement patterns, allowing you to strike and fade before an enemy can ",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -986,8 +1061,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Your movement speed increases by 10 feet.",
 				"Difficult terrain doesn't cost you extra movement when you take the Dash action.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -995,9 +1075,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -1005,8 +1086,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1014,7 +1097,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "control", "perception", "shadow", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1025,7 +1108,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -1074,8 +1157,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1085,13 +1168,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have adapted to the heaviest armor by reinforcing your frame with mana-dense muscle fibers.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have adapted to the heaviest armor by reinforcing your frame with mana-dense muscle fibers.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1109,8 +1194,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"+1 to Vitality score (max 20).",
 				"While wearing Heavy Carapace Armor, reduce non-magical bludgeoning, piercing, and slashing damage by 3.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -1118,9 +1208,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -1128,8 +1219,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Weaves the quiet space between breaths. A relentless roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1137,7 +1230,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "debuff", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1197,8 +1290,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1208,13 +1301,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your neural pathways are perfectly synced for one-on-one combat, making you a master of the single blade.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your neural pathways are perfectly synced for one-on-one combat, making you a master of the single b",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1229,8 +1324,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When you use the Ready action to prepare an attack, you gain advantage on that attack.",
 				"Use reaction to parry: gain +prof bonus to AC against one melee attack.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -1238,9 +1338,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "classified"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -1248,8 +1349,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reclaims the dimensional divide. A devastating symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1257,7 +1360,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "void", "control", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1317,8 +1420,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1328,13 +1431,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can insert viral mana-code into magical effects or constructs, causing them to fail or detonate.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can insert viral mana-code into magical effects or constructs, causing them to fail or detonate.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1354,8 +1459,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Ongoing effects are suppressed for 1 minute (Intelligence check DC 10 + spell level).",
 				"You gain proficiency with Hacking Tools.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -1363,9 +1473,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "forbidden", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -1373,8 +1484,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Cleanses the remnants of humanity. A subtle surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1382,7 +1495,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "damage", "perception", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1442,8 +1555,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1453,13 +1566,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your body acts as a natural reservoir for ambient mana, allowing you to cast spells more frequently.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your body acts as a natural reservoir for ambient mana, allowing you to cast spells more frequently.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1478,8 +1593,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per long rest, recover a spent spell slot of level equal to half your level (rounded up, max 5th).",
 				"You learn one additional cantrip of your choice.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -1487,17 +1607,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Commands the architect's design. A forbidden roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1505,7 +1628,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "fire", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1516,7 +1639,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -1565,8 +1688,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1576,13 +1699,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your awakening heightened your primal senses to a supernatural degree. No one can hide from you.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your awakening heightened your primal senses to a supernatural degree. No one can hide from you.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1601,8 +1726,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Track creatures through magically obscured areas or between dimensions if the trail is fresh.",
 				"Gain blindsight out to 10 feet.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -1610,9 +1740,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "hunter-bureau", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -1620,8 +1751,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Absorbs the fragile limits of flesh. A brutal breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1629,7 +1762,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "shadow", "offensive", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1689,8 +1822,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1700,13 +1833,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You use small rifts to amplify your physical force, tossing enemies across the battlefield.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You use small rifts to amplify your physical force, tossing enemies across the battlefield.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1725,8 +1860,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"If you successfully shove a creature, they are pushed an additional 10 feet.",
 				"You gain advantage on Athletics checks made to initiate or resist a grapple.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -1734,17 +1874,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "monarch-era", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Destroys the darkness within. A triumphant ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1752,7 +1895,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "mobility", "psychic", "debuff", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1763,7 +1906,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -1812,8 +1955,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1823,13 +1966,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have manifested a secondary, spectral eye that floats near you, providing a total view of the battlefield.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have manifested a secondary, spectral eye that floats near you, providing a total view of the ba",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1848,8 +1993,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Other creatures don't gain advantage on attack rolls against you as a result of being hidden.",
 				"You can see into the Ethereal Plane out to 60 feet.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -1857,9 +2007,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "modern-warfare", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -1867,8 +2018,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Commands all who stand in opposition. A desperate beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1876,7 +2029,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "damage", "psychic", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1887,7 +2040,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -1936,8 +2089,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -1947,13 +2100,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift provides micro-adjustments to your posture and grip, allowing you to wield massive weapons with ease.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift provides micro-adjustments to your posture and grip, allowing you to wield massive weapons ",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -1972,8 +2127,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When you hit with a heavy weapon, you can reroll 1s and 2s on damage dice (must use new result).",
 				"+1 to Strength score (max 20).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -1981,9 +2141,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -1991,8 +2152,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites all who stand in opposition. A sorrowful whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2000,7 +2163,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "lightning", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2060,8 +2223,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2071,13 +2234,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can momentarily phase out of existence to avoid certain death.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can momentarily phase out of existence to avoid certain death.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2096,8 +2261,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Use reaction to teleport 5 feet when an attack misses you.",
 				"+1 to Agility score (max 20).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -2105,9 +2275,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "rift-energy", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -2115,8 +2286,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the concept of defeat. A subtle dance performed on the edge of a blade.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2124,7 +2297,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "psychic", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2184,8 +2357,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2195,13 +2368,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your voice carries the weight of the Rift, compelling others to follow your directives.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your voice carries the weight of the Rift, compelling others to follow your directives.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2220,8 +2395,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per long rest, use an action to inspire up to 5 allies â€” they gain temp HP equal to your level + Cha mod.",
 				"Advantage on Intimidation checks against creatures of a lower rank.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -2229,9 +2409,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -2239,8 +2420,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters all who stand in opposition. A brutal whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2248,7 +2431,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "mobility", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2308,8 +2491,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2319,13 +2502,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your awakening allows you to feast on the mana of your enemies through direct contact.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your awakening allows you to feast on the mana of your enemies through direct contact.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2340,8 +2525,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When you hit a creature with a melee attack, use bonus action to drain mana â€” they lose their lowest spell slot, you regain 1d4 HP.",
 				"Resistance to necrotic damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -2349,17 +2539,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "modern-warfare", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Absorbs the darkness within. An ancient ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2367,7 +2560,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "burst", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2378,7 +2571,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -2427,8 +2620,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2438,13 +2631,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have survived more gate collapses than most ascendants see in a lifetime. Your endurance is legendary.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have survived more gate collapses than most ascendants see in a lifetime. Your endurance is lege",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2464,8 +2659,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can go without food or water for 3 days without penalty.",
 				"+1 to Vitality score (max 20).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -2473,9 +2673,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "dungeon-core", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -2483,8 +2684,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Commands the dimensional divide. A desperate testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2492,7 +2695,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "shadow", "buff", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2552,8 +2755,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2563,13 +2766,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your System interface provides real-time combat analysis, highlighting enemy weaknesses.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your System interface provides real-time combat analysis, highlighting enemy weaknesses.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2588,8 +2793,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"As a bonus action, analyze a creature you can see. Your next attack against it has advantage.",
 				"You gain proficiency in Investigation and Perception.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -2597,17 +2807,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2615,7 +2828,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "damage", "control", "necrotic", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2626,7 +2839,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -2675,8 +2888,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2686,13 +2899,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your brain is shielded by a mana-reinforced firewall, making you nearly immune to mental intrusion.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your brain is shielded by a mana-reinforced firewall, making you nearly immune to mental intrusion.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2711,8 +2926,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Immune to effects that read your thoughts or sense emotions.",
 				"Resistance to psychic damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -2720,9 +2940,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "shadow-domain", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -2730,16 +2951,19 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the fragile limits of flesh. An intricate breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
-			curse: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "",
 			current_owner: "",
 			prior_owners: [],
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2799,8 +3023,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2810,13 +3034,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your reflexes are so sharp you can catch and redirect the kinetic energy of incoming projectiles.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your reflexes are so sharp you can catch and redirect the kinetic energy of incoming projectiles.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2835,8 +3061,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"If you reduce the damage to 0, you catch the projectile and can make a ranged attack with it as part of the same reaction.",
 				"+1 to Agility saving throws.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -2844,9 +3075,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -2854,8 +3086,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reclaims all who stand in opposition. A devastating whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2863,7 +3097,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "sustained", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2923,8 +3157,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -2934,13 +3168,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can sap the energy from an enemy's spells to fuel your own abilities.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can sap the energy from an enemy's spells to fuel your own abilities.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -2958,8 +3194,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"On a failure, the creature loses its lowest level spell slot, and you regain a spell slot of that level.",
 				"You gain resistance to force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -2967,9 +3208,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -2977,8 +3219,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the fragile limits of flesh. A chaotic breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2986,7 +3230,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "void", "single-target", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3046,8 +3290,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3057,13 +3301,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have manifested a tiny, invisible mana-construct that serves as a scout.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have manifested a tiny, invisible mana-construct that serves as a scout.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3082,8 +3328,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can see and hear through the drone's senses as long as it is on the same plane of existence.",
 				"As an action, the drone can emit a high-frequency pulse that reveals invisible creatures within 10 feet.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -3091,17 +3342,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "gate-zone", "survival"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3109,7 +3363,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "debuff", "mobility", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3169,8 +3423,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3180,13 +3434,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your personal inventory space has been expanded and optimized by the Rift.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your personal inventory space has been expanded and optimized by the Rift.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3201,8 +3457,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can retrieve or stow an item from your personal vault as a free action once per turn.",
 				"You can hide one item (up to 10 lbs) in a pocket dimension that cannot be detected by non-System scans.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -3210,9 +3471,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "dimensional-bleed", "survival"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -3220,8 +3482,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the arrogant and the mighty. A desperate whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3229,7 +3493,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "support", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3289,8 +3553,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3300,13 +3564,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can force your body into a state of heightened physical performance at the cost of extreme fatigue.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can force your body into a state of heightened physical performance at the cost of extreme fatig",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3325,8 +3591,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"After using this ability, your speed is halved and you cannot take reactions until the end of your next turn.",
 				"Once used, you must complete a long rest before using it again.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -3334,9 +3605,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -3344,8 +3616,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the fragile limits of flesh. An intricate ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3353,7 +3627,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3364,7 +3638,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -3413,8 +3687,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3424,13 +3698,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You move through the city and the dungeon with equal ease, utilizing every surface for mobility.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You move through the city and the dungeon with equal ease, utilizing every surface for mobility.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3445,8 +3721,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can make a running long jump or running high jump after moving only 5 feet.",
 				"You have advantage on Agility (Acrobatics) checks made to navigate difficult terrain.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -3454,9 +3735,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "system-glitch", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -3464,8 +3746,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites all who stand in opposition. A triumphant beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3473,7 +3757,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "control", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3533,8 +3817,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3544,13 +3828,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have installed a mana-reactive shield generator in your neural network.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have installed a mana-reactive shield generator in your neural network.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3565,8 +3851,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
 				"You gain proficiency in Vitality saving throws.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -3574,9 +3865,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "classified"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -3584,8 +3876,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Weaves the remnants of humanity. An absolute dance performed on the edge of a blade.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3593,7 +3887,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "utility", "stealth", "void", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3653,8 +3947,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3664,13 +3958,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift analyzes social cues and micro-expressions, feeding you the perfect responses.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift analyzes social cues and micro-expressions, feeding you the perfect responses.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3689,8 +3985,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"The Rift highlights when someone is lying to you (Insight advantage).",
 				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -3698,9 +3999,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "system-glitch", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -3708,8 +4010,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Absorbs all who stand in opposition. A sorrowful whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3717,7 +4021,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "lightning", "support", "fire", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3728,7 +4032,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -3777,8 +4081,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3788,13 +4092,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You emit high-frequency mana pulses that map your surroundings in total darkness.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You emit high-frequency mana pulses that map your surroundings in total darkness.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3809,8 +4115,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on Sense (Perception) checks made to detect hidden creatures within 30 feet.",
 				"Creatures cannot gain advantage on attack rolls against you by being hidden.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -3818,9 +4129,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -3828,8 +4140,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Cleanses the arrogant and the mighty. An intricate whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3837,7 +4151,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "void", "radiant", "lightning", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3848,7 +4162,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -3897,8 +4211,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -3908,13 +4222,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You understand the structural mechanics of dimensional rifts, allowing you to manipulate them.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You understand the structural mechanics of dimensional rifts, allowing you to manipulate them.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -3933,8 +4249,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on checks made to disable magical traps or security systems within a gate.",
 				"Proficiency in Hacking Tools and Tinker's Tools.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -3942,9 +4263,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "dimensional-bleed", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -3952,8 +4274,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3961,7 +4285,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "stealth", "sustained", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4021,8 +4345,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4032,13 +4356,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "The sight of blood triggers a systemic combat frenzy.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "The sight of blood triggers a systemic combat frenzy.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4055,8 +4379,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"While below half HP, you have advantage on all Strength checks and Strength saving throws.",
 				"Your critical hit range increases by 1 (e.g., 19-20).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -4064,9 +4393,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "classified"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -4074,8 +4404,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignores the dimensional divide. A devastating symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4083,7 +4415,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "damage", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4094,7 +4426,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -4143,8 +4475,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4154,13 +4486,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can read the underlying data of the world, identifying the properties of anything you see.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can read the underlying data of the world, identifying the properties of anything you see.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4175,8 +4509,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
 				'The Rift displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -4184,9 +4523,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -4194,8 +4534,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the fragile limits of flesh. An absolute ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4203,7 +4545,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "healing", "stealth", "offensive", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4263,8 +4605,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4274,13 +4616,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You use mana to extend your reach and manipulate objects from a distance.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You use mana to extend your reach and manipulate objects from a distance.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4295,8 +4639,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can cast Mage Hand as a bonus action, and the hand is invisible.",
 				"You have advantage on Sleight of Hand checks made using your Mage Hand.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -4304,17 +4653,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "ancient-power", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Weaves the architect's design. An absolute roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4322,7 +4674,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "utility", "single-target", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4333,7 +4685,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -4382,8 +4734,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4393,13 +4745,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have mastered the weight and balance of heavy defensive plating.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have mastered the weight and balance of heavy defensive plating.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4417,8 +4771,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"While wearing Heavy Carapace Armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
 				"You can don or doff Heavy Carapace Armor in half the normal time.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -4426,9 +4785,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "post-awakening", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -4436,8 +4796,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Cleanses the darkness within. A forbidden breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4445,7 +4807,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "fire", "mobility", "control", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4505,8 +4867,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4516,13 +4878,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your short-range teleportation is more efficient and frequent.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your short-range teleportation is more efficient and frequent.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4540,8 +4903,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Your teleportation range increases by 10 feet.",
 				"Once per long rest, use a reaction to teleport up to 30 feet when you would take damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -4549,9 +4917,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -4559,8 +4928,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the remnants of humanity. An intricate surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4568,7 +4939,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "healing", "mobility", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4579,7 +4950,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -4628,8 +4999,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4639,13 +5010,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your internal mana core is exceptionally large and efficient.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your internal mana core is exceptionally large and efficient.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4664,8 +5036,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When you finish a short rest, you can recover spell slots whose combined level is equal to half your level.",
 				"Your spells deal an additional 1d4 force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -4673,9 +5050,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "monarch-era", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -4683,8 +5061,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Weaves the remnants of humanity. A subtle dance performed on the edge of a blade.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4692,7 +5072,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "perception", "void", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4752,8 +5132,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4763,13 +5143,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have the natural presence and tactical mind to lead a guild of ascendants.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have the natural presence and tactical mind to lead a guild of ascendants.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4788,8 +5170,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"As a bonus action, grant one ally within 30 feet an additional reaction they can use before the start of your next turn.",
 				"You gain proficiency in Persuasion and Intimidation.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -4797,9 +5184,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "black-market", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -4807,16 +5195,19 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the quiet space between breaths. A sorrowful death of hesitation.",
 		lore: {
-			origin: "",
-			history: "",
-			curse: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+			curse:
+				"The user becomes unable to dream, replaced by visions of the void between Gates.",
 			personality: "",
 			current_owner: "",
 			prior_owners: [],
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "perception", "psychic", "offensive", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4827,7 +5218,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "active",
 			frequency: "short-rest",
-			action: "",
+			action: "1 bonus action",
 			ability: "Presence",
 			save: "Presence",
 			dc: "ability-modifier",
@@ -4876,8 +5267,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -4887,13 +5278,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your weapons slice through the very fabric of reality.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "Your weapons slice through the very fabric of reality.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -4911,8 +5302,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per turn, when you hit a creature, you can force it to make a Presence save or be banished to a void-space until the start of your next turn.",
 				"Your critical hits deal an additional 1d12 force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -4920,9 +5316,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -4930,8 +5327,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters all who stand in opposition. A brutal whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4939,7 +5338,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "support", "fire", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4950,7 +5349,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -4999,8 +5398,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5010,13 +5409,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "The Rift grants you the ability to see through all deceptions.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift grants you the ability to see through all deceptions.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5034,8 +5434,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can see through any magical or non-magical illusion.",
 				"You have advantage on all saving throws against being blinded or dazzled.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -5043,9 +5448,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "black-market"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -5053,8 +5459,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Absorbs the flow of time itself. A sorrowful testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5062,7 +5470,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "buff", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5073,7 +5481,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -5122,8 +5530,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5133,13 +5541,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You stand as an unbreakable wall against the tides of the dungeon.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You stand as an unbreakable wall against the tides of the dungeon.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5158,8 +5568,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Creatures that provoke an opportunity attack from you take an additional 1d10 damage if you hit.",
 				"You are immune to being moved against your will while you are conscious.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -5167,9 +5582,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -5177,8 +5593,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Overrides the arrogant and the mighty. A silent whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5186,7 +5604,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "psychic", "radiant", "debuff", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5197,7 +5615,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -5246,8 +5664,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5257,13 +5675,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have decrypted the underlying code of the Rift's translation layer, allowing you to understand any spoken or written",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have decrypted the underlying code of the Rift's translation layer, allowing you to understand a",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5278,8 +5698,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on Intelligence (History) checks made to decipher ancient texts or gate-script.",
 				"The Rift provides real-time subtitles for any language you don't know (passive).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -5287,9 +5712,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -5297,8 +5723,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5306,7 +5734,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "perception", "offensive", "single-target", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5366,8 +5794,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5377,13 +5805,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can sap the energy from an enemy's spells to fuel your own abilities.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can sap the energy from an enemy's spells to fuel your own abilities.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5401,8 +5831,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"On a failure, the creature loses its lowest level spell slot, and you regain mana points or a spell slot of that level.",
 				"You gain resistance to force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -5410,9 +5845,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -5420,8 +5856,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Commands all who stand in opposition. A forbidden beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5429,7 +5867,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "lightning", "psychic", "area", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5489,8 +5927,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5500,13 +5938,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have manifested a tiny, invisible mana-construct that serves as a scout.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have manifested a tiny, invisible mana-construct that serves as a scout.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5525,8 +5965,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can see and hear through the drone's senses as long as it is on the same plane of existence.",
 				"As an action, the drone can emit a high-frequency pulse that reveals invisible creatures within 10 feet.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -5534,17 +5979,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Reclaims the darkness within. A devastating ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5552,7 +6000,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "fire", "utility", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5612,8 +6060,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5623,13 +6071,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your personal inventory space has been expanded and optimized by the Rift.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your personal inventory space has been expanded and optimized by the Rift.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5644,8 +6094,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can retrieve or stow an item from your personal vault as a free action once per turn.",
 				"You can hide one item (up to 10 lbs) in a pocket dimension that cannot be detected by non-System scans.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -5653,9 +6108,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "hunter-bureau", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -5663,8 +6119,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reflects the dimensional divide. An overwhelming symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5672,7 +6130,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "burst", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5732,8 +6190,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5743,13 +6201,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can force your body into a state of heightened physical performance at the cost of extreme fatigue.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can force your body into a state of heightened physical performance at the cost of extreme fatig",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5768,8 +6228,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"After using this ability, your speed is halved and you cannot take reactions until the end of your next turn.",
 				"Once used, you must complete a long rest before using it again.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -5777,9 +6242,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -5787,8 +6253,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignores the quiet space between breaths. A relentless roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5796,7 +6264,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "mobility", "ice", "healing", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5807,7 +6275,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -5856,8 +6324,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5867,13 +6335,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You move through the city and the dungeon with equal ease, utilizing every surface for mobility.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You move through the city and the dungeon with equal ease, utilizing every surface for mobility.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -5888,8 +6358,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can make a running long jump or running high jump after moving only 5 feet.",
 				"You have advantage on Agility (Acrobatics) checks made to navigate difficult terrain.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -5897,17 +6372,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "rift-energy", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Absorbs the concept of defeat. An ancient surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5915,7 +6393,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "utility", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5975,8 +6453,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -5986,13 +6464,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have installed a mana-reactive shield generator in your neural network.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have installed a mana-reactive shield generator in your neural network.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6007,8 +6487,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"If this reduces the damage to 0, the capacitor gains a charge. At 3 charges, your next spell deals an extra 2d6 force damage.",
 				"You gain proficiency in Vitality saving throws.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -6016,9 +6501,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "dungeon-core", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -6026,16 +6512,19 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Weaves all who stand in opposition. A subtle whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
-			curse: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
+			curse:
+				"Prolonged use causes the wielder's shadow to move independently, whispering in dead languages.",
 			personality: "",
 			current_owner: "",
 			prior_owners: [],
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "void", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6095,8 +6584,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6106,13 +6595,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift analyzes social cues and micro-expressions, feeding you the perfect responses.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift analyzes social cues and micro-expressions, feeding you the perfect responses.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6131,8 +6622,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"The Rift highlights when someone is lying to you (Insight advantage).",
 				'Once per long rest, you can use an action to "Charm" a person (as the spell) via logical manipulation.',
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -6140,9 +6636,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "post-awakening", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -6150,8 +6647,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignores the flow of time itself. A relentless symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6159,7 +6658,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "fire", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6170,7 +6669,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -6219,8 +6718,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6230,13 +6729,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You emit high-frequency mana pulses that map your surroundings in total darkness.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You emit high-frequency mana pulses that map your surroundings in total darkness.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6251,8 +6752,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on Sense (Perception) checks made to detect hidden creatures within 30 feet.",
 				"Creatures cannot gain advantage on attack rolls against you by being hidden.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -6260,9 +6766,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -6270,8 +6777,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Overrides the fragile limits of flesh. A relentless breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6279,7 +6788,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "offensive", "void", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6290,7 +6799,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -6339,8 +6848,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6350,13 +6859,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You understand the structural mechanics of dimensional rifts, allowing you to manipulate them.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You understand the structural mechanics of dimensional rifts, allowing you to manipulate them.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6375,8 +6886,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on checks made to disable magical traps or security systems within a gate.",
 				"Proficiency in Hacking Tools and Tinker's Tools.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -6384,9 +6900,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "post-awakening", "black-market"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -6394,8 +6911,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Denies the arrogant and the mighty. A brutal whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6403,7 +6922,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "single-target", "necrotic", "perception", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6463,8 +6982,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6474,13 +6993,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "The sight of blood triggers a systemic combat frenzy.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "The sight of blood triggers a systemic combat frenzy.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6497,8 +7016,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"While below half HP, you have advantage on all Strength checks and Strength saving throws.",
 				"Your critical hit range increases by 1 (e.g., 19-20).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -6506,9 +7030,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -6516,16 +7041,19 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the remnants of humanity. An absolute surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
-			curse: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
+			curse:
+				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
 			personality: "",
 			current_owner: "",
 			prior_owners: [],
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "buff", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6536,7 +7064,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -6585,8 +7113,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6596,13 +7124,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can read the underlying data of the world, identifying the properties of anything you see.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can read the underlying data of the world, identifying the properties of anything you see.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6617,8 +7147,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on Intelligence (Investigation) checks made to understand how a device or spell works.",
 				'The Rift displays the "Challenge Rating" or "Power Level" of any creature you look at for 6 seconds.',
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -6626,9 +7161,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "rift-energy", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -6636,8 +7172,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Cleanses the quiet space between breaths. An intricate roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6645,7 +7183,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6705,8 +7243,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6716,13 +7254,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You use mana to extend your reach and manipulate objects from a distance.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You use mana to extend your reach and manipulate objects from a distance.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6737,8 +7277,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can cast Mage Hand as a bonus action, and the hand is invisible.",
 				"You have advantage on Sleight of Hand checks made using your Mage Hand.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -6746,9 +7291,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "dungeon-core", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -6756,8 +7302,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the flow of time itself. An ancient testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6765,7 +7313,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "lightning", "offensive", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6776,7 +7324,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -6825,8 +7373,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6836,13 +7384,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have mastered the weight and balance of heavy defensive plating.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have mastered the weight and balance of heavy defensive plating.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6860,8 +7410,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"While wearing Heavy Carapace Armor, bludgeoning, piercing, and slashing damage you take from non-magical attacks is reduced by 3.",
 				"You can don or doff Heavy Carapace Armor in half the normal time.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -6869,17 +7424,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Weaves the darkness within. An absolute ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6887,7 +7445,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "debuff", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6947,8 +7505,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -6958,13 +7516,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your short-range teleportation is more efficient and frequent.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your short-range teleportation is more efficient and frequent.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -6982,8 +7541,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Your teleportation range increases by 10 feet.",
 				"Once per long rest, use a reaction to teleport up to 30 feet when you would take damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -6991,9 +7555,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7001,8 +7566,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the dimensional divide. A desperate symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7010,7 +7577,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "support", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7021,7 +7588,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -7070,8 +7637,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7081,13 +7648,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your internal mana core is exceptionally large and efficient.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your internal mana core is exceptionally large and efficient.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7106,8 +7674,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When you finish a short rest, you can recover spell slots whose combined level is equal to half your level.",
 				"Your spells deal an additional 1d4 force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -7115,17 +7688,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Cleanses the architect's design. A forbidden roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7133,7 +7709,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "support", "mobility", "control", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7193,8 +7769,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7204,13 +7780,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have the natural presence and tactical mind to lead a guild of ascendants.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have the natural presence and tactical mind to lead a guild of ascendants.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7229,8 +7807,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"As a bonus action, grant one ally within 30 feet an additional reaction they can use before the start of your next turn.",
 				"You gain proficiency in Persuasion and Intimidation.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -7238,9 +7821,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7248,8 +7832,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the dimensional divide. A sorrowful testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7257,7 +7843,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7268,7 +7854,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "active",
 			frequency: "short-rest",
-			action: "",
+			action: "1 reaction",
 			ability: "Presence",
 			save: "Presence",
 			dc: "ability-modifier",
@@ -7317,8 +7903,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7328,13 +7914,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your weapons slice through the very fabric of reality.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "Your weapons slice through the very fabric of reality.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7352,8 +7938,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per turn, when you hit a creature, you can force it to make a Presence save or be banished to a void-space until the start of your next turn.",
 				"Your critical hits deal an additional 1d12 force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -7361,9 +7952,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7371,8 +7963,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignores the remnants of humanity. An absolute dance performed on the edge of a blade.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7380,7 +7974,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "single-target", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7391,7 +7985,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -7440,8 +8034,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7451,13 +8045,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "The Rift grants you the ability to see through all deceptions.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift grants you the ability to see through all deceptions.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7475,8 +8070,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can see through any magical or non-magical illusion.",
 				"You have advantage on all saving throws against being blinded or dazzled.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -7484,9 +8084,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "guild-ops", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7494,8 +8095,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Commands the dimensional divide. A triumphant testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7503,7 +8106,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "stealth", "debuff", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7514,7 +8117,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -7563,8 +8166,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7574,13 +8177,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You stand as an unbreakable wall against the tides of the dungeon.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You stand as an unbreakable wall against the tides of the dungeon.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7599,8 +8204,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Creatures that provoke an opportunity attack from you take an additional 1d10 damage if you hit.",
 				"You are immune to being moved against your will while you are conscious.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -7608,9 +8218,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "guild-ops", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7618,8 +8229,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Crushes the fragile limits of flesh. An intricate breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7627,7 +8240,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "buff", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7687,8 +8300,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7698,13 +8311,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have mastered the art of catching and returning ranged fire.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have mastered the art of catching and returning ranged fire.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7723,8 +8338,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You gain proficiency in Agility saving throws.",
 				"You can use your Agility modifier instead of Strength for jump distance.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -7732,9 +8352,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "classified", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7742,8 +8363,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Overrides the concept of defeat. A relentless surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7751,7 +8374,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "lightning", "necrotic", "support", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7811,8 +8434,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7822,13 +8445,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your mana flow is highly volatile, allowing for explosive bursts of power.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your mana flow is highly volatile, allowing for explosive bursts of power.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7847,8 +8472,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can cast Shield once per long rest without expending a spell slot.",
 				"Your mana-infused attacks count as magical for overcoming resistance.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -7856,9 +8486,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "black-market"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7866,8 +8497,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignores all who stand in opposition. A devastating whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7875,7 +8508,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "burst", "perception", "control", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7886,7 +8519,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -7935,8 +8568,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -7946,13 +8579,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You flicker in and out of reality when under threat.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "You flicker in and out of reality when under threat.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -7970,8 +8603,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Attack rolls against you have disadvantage if you have moved at least 20 feet this turn.",
 				"+1 to AC while not wearing Heavy Carapace Armor.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -7979,9 +8617,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -7989,8 +8628,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the dimensional divide. An absolute testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7998,7 +8639,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "utility", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8009,7 +8650,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -8058,8 +8699,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8069,13 +8710,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have studied the Rift's lore and mechanics more deeply than most.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have studied the Rift's lore and mechanics more deeply than most.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8090,8 +8733,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on Intelligence (Arcana) checks made to identify System protocols or rifts.",
 				"You can cast Detect Magic as a ritual.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -8099,9 +8747,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "hunter-bureau", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -8109,8 +8758,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8118,7 +8769,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "perception", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8129,7 +8780,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "once-per-turn",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -8178,8 +8829,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8189,13 +8840,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You swing massive weapons with terrifying momentum.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "You swing massive weapons with terrifying momentum.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8213,8 +8864,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per turn, when you hit with a heavy weapon, you can deal an extra 1d8 force damage.",
 				"You gain proficiency in Athletics.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -8222,17 +8878,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "forbidden", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Crushes the darkness within. A forbidden ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8240,7 +8899,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "burst", "healing", "mobility", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8300,8 +8959,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8311,13 +8970,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your neural link with the Rift has been overclocked for speed.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your neural link with the Rift has been overclocked for speed.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8332,8 +8992,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can take the Dash or Disengage action as a bonus action.",
 				"You have advantage on Agility checks made to initiate combat.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -8341,9 +9006,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "guild-ops", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -8351,8 +9017,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends all who stand in opposition. An absolute whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8360,7 +9028,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "shadow", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8371,7 +9039,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -8420,8 +9088,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8431,13 +9099,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your attacks leave lingering mana-residue that ignites spellcasters.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your attacks leave lingering mana-residue that ignites spellcasters.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8456,8 +9126,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Creatures hit by your spells cannot take reactions until the start of your next turn.",
 				"You gain resistance to force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -8465,9 +9140,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "dimensional-bleed", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -8475,8 +9151,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends all who stand in opposition. A subtle beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8484,7 +9162,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "psychic", "offensive", "defensive", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8495,7 +9173,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -8544,8 +9222,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8555,13 +9233,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You have seen it all in the rifts. Nothing shakes you.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "You have seen it all in the rifts. Nothing shakes you.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8575,8 +9253,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on all saving throws made while inside a gate.",
 				"+1 to Sense score (max 20).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -8584,9 +9267,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -8594,8 +9278,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Weaves the darkness within. An absolute breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8603,7 +9289,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "radiant", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8663,8 +9349,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8674,13 +9360,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can interface directly with the minds of others via the Rift.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can interface directly with the minds of others via the Rift.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8699,8 +9387,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per long rest, you can cast Suggestion without expending a spell slot (Int save).",
 				"You have advantage on checks made to detect if someone is under magical influence.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -8708,9 +9401,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "dungeon-core", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -8718,8 +9412,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the flow of time itself. A subtle testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8727,7 +9423,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "support", "fire", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8787,8 +9483,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8798,13 +9494,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You slip through cracks in space to avoid harm.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "You slip through cracks in space to avoid harm.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8822,8 +9518,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can move through the space of hostile creatures regardless of their size.",
 				"+1 to Agility score (max 20).",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -8831,9 +9532,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "black-market", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -8841,8 +9543,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reclaims the remnants of humanity. A silent surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8850,7 +9554,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "mobility", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8861,7 +9565,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -8910,8 +9614,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -8921,13 +9625,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your armor stores ambient energy to reinforce your strikes.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your armor stores ambient energy to reinforce your strikes.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -8944,8 +9649,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When you take damage, your next melee attack deals an extra 1d6 force damage.",
 				"You gain proficiency in Strength saving throws.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -8953,25 +9663,29 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "dungeon-core", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Bends the darkness within. An intricate ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
-			curse: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "",
 			current_owner: "",
 			prior_owners: [],
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "perception", "shadow", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8982,7 +9696,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -9031,8 +9745,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9042,13 +9756,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You have mastered the art of the perfect kill.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "You have mastered the art of the perfect kill.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9065,8 +9779,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"If you surprise a creature and hit it, the hit is automatically a critical hit.",
 				"You gain a +10 bonus to Stealth checks if you do not move more than half your speed.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -9074,9 +9793,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -9084,8 +9804,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the quiet space between breaths. A sorrowful roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9093,7 +9815,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "sustained", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9104,7 +9826,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -9153,8 +9875,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9164,13 +9886,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your body has been hardened into a living bunker.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "Your body has been hardened into a living bunker.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9188,8 +9910,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Your HP maximum increases by an additional 1 per level.",
 				"You cannot be knocked prone while you are conscious.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -9197,9 +9924,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "dimensional-bleed", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -9207,8 +9935,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reflects all who stand in opposition. A silent whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9216,7 +9946,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "healing", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9227,7 +9957,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -9276,8 +10006,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9287,13 +10017,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You can weave complex mana-patterns without expending slots.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can weave complex mana-patterns without expending slots.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9307,8 +10038,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Ritual casting time is reduced to 1 minute.",
 				"You gain proficiency in two Intelligence or Sense based skills.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -9316,9 +10052,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "dimensional-bleed", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -9326,8 +10063,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Denies the arrogant and the mighty. A chaotic beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9335,7 +10074,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "void", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9346,7 +10085,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -9395,8 +10134,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9406,13 +10145,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "The rifts are your second home. You know every shortcut.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "The rifts are your second home. You know every shortcut.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9429,8 +10168,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You cannot become lost in a gate unless by magical means.",
 				"Once per long rest, you can sense the exact location of the boss-room in a gate.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -9438,17 +10182,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "guild-ops", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Denies the fragile limits of flesh. A chaotic ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9456,7 +10203,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "fire", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9467,7 +10214,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "active",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -9516,8 +10263,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9527,13 +10274,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your link with the Rift provides perfect ballistic calculations.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your link with the Rift provides perfect ballistic calculations.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9552,8 +10301,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Your ranged weapon attacks ignore half and three-quarters cover.",
 				"Before you make an attack with a ranged weapon, you can take a -5 penalty to the attack roll to gain +10 damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -9561,17 +10315,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "classified"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Ignites the architect's design. A triumphant death of hesitation.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9579,7 +10336,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "support", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9590,7 +10347,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "active",
 			frequency: "once-per-turn",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -9639,8 +10396,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9650,13 +10407,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You strike through rifts in space, reaching targets from afar.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You strike through rifts in space, reaching targets from afar.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9674,8 +10432,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per turn, when you hit a creature with a melee attack, you can teleport to an unoccupied space within 5 feet of it.",
 				"You gain resistance to necrotic damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -9683,9 +10446,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -9693,8 +10457,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the arrogant and the mighty. A triumphant whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9702,7 +10468,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "void", "debuff", "perception", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9713,7 +10479,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -9762,8 +10528,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9773,13 +10539,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "The Rift has designated you as the final arbiter of death.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift has designated you as the final arbiter of death.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9796,8 +10563,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You have advantage on attack rolls against creatures below half HP.",
 				"You gain proficiency in Intimidation.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -9805,9 +10577,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "dungeon-core", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -9815,8 +10588,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the arrogant and the mighty. An ancient whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9824,7 +10599,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "sustained", "single-target", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9884,8 +10659,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -9895,13 +10670,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift interface has been optimized for your neural architecture, allowing faster data processing.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift interface has been optimized for your neural architecture, allowing faster data processing.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -9916,8 +10693,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When you take the Help action to aid an ally's attack roll, you can also give them a +1d4 bonus to their damage roll.",
 				"You gain proficiency in one skill of your choice.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -9925,9 +10707,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "hunter-bureau", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -9935,8 +10718,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the remnants of humanity. An overwhelming surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9944,7 +10729,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "radiant", "damage", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10004,8 +10789,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10015,13 +10800,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You have a deep understanding of rift stability, allowing you to anchor yourself or others to reality.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You have a deep understanding of rift stability, allowing you to anchor yourself or others to realit",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10040,8 +10827,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"As a reaction when an ally within 30 feet is forced to teleport, you can force the effect to fail (once per long rest).",
 				"You gain proficiency in the Athletics skill.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -10049,9 +10841,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "monarch-era", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -10059,8 +10852,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the darkness within. An ancient breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10068,7 +10863,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "healing", "debuff", "area", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10128,8 +10923,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10139,13 +10934,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You move with a flow that mirrors the currents of ambient mana, making your movements unpredictable.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You move with a flow that mirrors the currents of ambient mana, making your movements unpredictable.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10164,8 +10961,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can use your reaction to impose disadvantage on one melee attack roll made against you.",
 				"Your movement speed increases by 5 feet.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -10173,9 +10975,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "rift-energy", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -10183,8 +10986,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Commands the quiet space between breaths. A forbidden roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10192,7 +10997,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "radiant", "defensive", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10203,7 +11008,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -10252,8 +11057,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10263,13 +11068,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your Aether-Sight is tuned for long-range detection and structural analysis.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your Aether-Sight is tuned for long-range detection and structural analysis.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10284,8 +11091,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can see through up to 1 foot of stone, 1 inch of common metal, or 3 feet of wood or dirt.",
 				"You have advantage on Perception checks made to detect hidden rifts or traps.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -10293,9 +11105,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -10303,8 +11116,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignores all who stand in opposition. A devastating whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10312,7 +11127,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "sustained", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10372,8 +11187,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10383,13 +11198,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can forge a temporary neural link with your party to coordinate complex maneuvers.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can forge a temporary neural link with your party to coordinate complex maneuvers.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10408,8 +11225,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Allies under your direction gain a +2 bonus to the directed roll.",
 				"Once per long rest, you can grant the entire party advantage on initiative.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -10417,17 +11239,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "survival", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Crushes the dimensional divide. A desperate symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10435,7 +11260,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "necrotic", "mobility", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10495,8 +11320,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10506,13 +11331,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can detonate your internal mana reserves to clear space around you.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can detonate your internal mana reserves to clear space around you.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10531,8 +11358,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"On a failure, a creature takes 2d8 force damage and is pushed 10 feet. On a success, half damage and no push.",
 				"You can use this ability a number of times equal to your proficiency bonus per long rest.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -10540,9 +11372,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "dungeon-core", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -10550,8 +11383,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys all who stand in opposition. A triumphant whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10559,7 +11394,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "void", "burst", "ice", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10619,8 +11454,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10630,13 +11465,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your medical protocols have been upgraded with nanite-simulating mana.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your medical protocols have been upgraded with nanite-simulating mana.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10654,8 +11491,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can use an action to remove one condition (poisoned, paralyzed, or stunned) from a creature.",
 				"You gain advantage on saving throws against disease and poison.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -10663,17 +11505,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Shatters the darkness within. A chaotic ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10681,7 +11526,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "psychic", "buff", "perception", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10741,8 +11586,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10752,13 +11597,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can create tiny, localized rifts to bypass physical obstacles.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can create tiny, localized rifts to bypass physical obstacles.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10773,8 +11620,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can reach through solid objects up to 1 inch thick as if they weren't there.",
 				"You gain resistance to force damage.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -10782,17 +11634,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Weaves the concept of defeat. A subtle surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10800,7 +11655,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "lightning", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10860,8 +11715,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10871,13 +11726,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You can jam the Rift signals of nearby enemies, making their abilities fail.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You can jam the Rift signals of nearby enemies, making their abilities fail.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -10896,8 +11753,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can cast Counterspell once per long rest without a spell slot (Intelligence check).",
 				"You have advantage on saving throws against spells.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -10905,9 +11767,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "forbidden", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -10915,8 +11778,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the remnants of humanity. A brutal surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10924,7 +11789,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "support", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10935,7 +11800,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -10984,8 +11849,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -10995,13 +11860,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You find value in the detritus of the rifts that others overlook.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You find value in the detritus of the rifts that others overlook.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11016,8 +11883,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"You can identify any mana-crystal or rift-related item as a free action.",
 				"You find twice as many consumable items (potions, scrolls) in random loot.",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -11025,9 +11897,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "ancient-power", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -11035,8 +11908,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reflects the fragile limits of flesh. An overwhelming breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11044,7 +11919,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "support", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11104,8 +11979,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11115,13 +11990,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You forge weapons from pure shadow energy, summoning blades that dissolve after striking.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You forge weapons from pure shadow energy, summoning blades that dissolve after striking.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11141,8 +12018,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Can change weapon form as a bonus action",
 				"Can throw shadow weapons â€” they return to your hand at end of turn",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"Once per long rest, you can use this feat's ability without expending any resources.",
+			],
 		},
 	},
 	{
@@ -11150,9 +12032,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -11160,8 +12043,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Absorbs all who stand in opposition. A brutal whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11169,7 +12054,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "control", "void", "burst", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11229,8 +12114,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11240,13 +12125,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You weave protective shadow energy around yourself, forming armor from compressed darkness.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You weave protective shadow energy around yourself, forming armor from compressed darkness.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11266,8 +12153,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Shadow armor imposes no Stealth disadvantage",
 				"Can repair shadow armor as a bonus action if damaged",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -11275,17 +12167,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Shatters the architect's design. A brutal roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11293,7 +12188,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "healing", "psychic", "ice", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11353,8 +12248,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11364,13 +12259,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You push your System interface beyond safe limits, temporarily boosting all stat outputs.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You push your System interface beyond safe limits, temporarily boosting all stat outputs.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11391,8 +12288,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When Overclock ends, gain 1 level of exhaustion",
 				"Duration extends by 1 round per enemy reduced to 0 HP",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -11400,9 +12302,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "guild-ops", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -11410,8 +12313,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters all who stand in opposition. A chaotic whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11419,7 +12324,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "necrotic", "lightning", "area", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11479,8 +12384,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11490,13 +12395,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your System broadcasts threat markers to allies, highlighting enemies and weak points.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your System broadcasts threat markers to allies, highlighting enemies and weak points.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11517,8 +12424,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Only one mark at a time; marking new target removes old mark",
 				"When marked target drops to 0 HP, immediately mark another as a free action",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -11526,9 +12438,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "dungeon-core", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -11536,8 +12449,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the dimensional divide. A sorrowful testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11545,7 +12460,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "single-target", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11556,7 +12471,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -11605,8 +12520,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11616,13 +12531,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your System feeds you hints about objectives, hidden paths, and threat assessments.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your System feeds you hints about objectives, hidden paths, and threat assessments.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11642,8 +12559,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per long rest, ask for a hint â€” Decree Warden (Warden) provides one true clue",
 				"Cannot be surprised while System interface is active",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -11651,9 +12573,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "mana-overflow", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -11661,8 +12584,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Overrides the concept of defeat. A devastating surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11670,7 +12595,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "area", "void", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11730,8 +12655,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11741,13 +12666,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift tracks kills in real time. As the count rises, combat efficiency escalates.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift tracks kills in real time. As the count rises, combat efficiency escalates.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11768,8 +12695,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"After 4 kills: +1d4 bonus damage on weapon attacks",
 				"After 6 kills: crit range expands by 1. Resets when combat ends or 1 min without a kill",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -11777,9 +12709,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "rift-energy", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -11787,8 +12720,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Absorbs the fragile limits of flesh. A sorrowful breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11796,7 +12731,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "radiant", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11807,7 +12742,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -11856,8 +12791,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11867,13 +12802,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You follow the Rift's daily training regimen. Consistent completion has enhanced your baseline.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You follow the Rift's daily training regimen. Consistent completion has enhanced your baseline.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -11894,8 +12831,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per day after a short rest, remove 1 level of exhaustion",
 				"Declare daily quest at dawn for +1 to all saves until next long rest",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -11903,17 +12845,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Ignites the architect's design. A sorrowful roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11921,7 +12866,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "buff", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11932,7 +12877,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -11981,8 +12926,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -11992,13 +12937,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Repeated gate exposure has attuned your senses to dimensional energy.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Repeated gate exposure has attuned your senses to dimensional energy.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12019,8 +12966,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Advantage on saves against forced teleportation",
 				"Detect invisible/ethereal creatures within 15 feet",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -12028,9 +12980,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -12038,8 +12991,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignores the fragile limits of flesh. A devastating ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12047,7 +13002,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "control", "single-target", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12058,7 +13013,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -12107,8 +13062,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12118,13 +13073,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Repeated gate exposure has warped your body, granting resistance to dimensional hazards.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Repeated gate exposure has warped your body, granting resistance to dimensional hazards.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12145,8 +13102,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Extreme gate environments impose no disadvantage",
 				"Once per long rest, drop to 1 HP instead of 0 inside a gate",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -12154,17 +13116,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "monarch-era", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Crushes the darkness within. A forbidden ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12172,7 +13137,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "radiant", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12232,8 +13197,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12243,13 +13208,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You read gate boss attack patterns. The Rift highlights wind-up animations.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You read gate boss attack patterns. The Rift highlights wind-up animations.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12270,8 +13237,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				'Once per long rest, "Pattern Read" a recharge ability â€” it automatically misses you',
 				"System displays boss HP as a percentage bar",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"Allies within 10 feet gain half the benefit of this feat while you are conscious.",
+			],
 		},
 	},
 	{
@@ -12279,9 +13251,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -12289,8 +13262,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reclaims the arrogant and the mighty. A devastating beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12298,7 +13273,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "psychic", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12358,8 +13333,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12369,13 +13344,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your circuits temporarily hold more energy than designed, supercharging your next spell.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your circuits temporarily hold more energy than designed, supercharging your next spell.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12396,8 +13373,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Take 1d8 force damage after as circuits vent",
 				"First spell in combat auto-triggers Overflow if available",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -12405,17 +13387,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "system-glitch", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Cleanses the darkness within. A forbidden ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12423,7 +13408,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "shadow", "area", "defensive", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12483,8 +13468,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12494,13 +13479,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"On kill, your circuits drain residual energy from the corpse, recovering spent resources.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"On kill, your circuits drain residual energy from the corpse, recovering spent resources.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12521,8 +13508,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Siphoned energy dissipates after 1 hour if unused",
 				"Cannot siphon from constructs or undead",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -12530,9 +13522,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "black-market", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -12540,8 +13533,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Commands the fragile limits of flesh. A desperate ultimate equalizer.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12549,7 +13544,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "debuff", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12609,8 +13604,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12620,13 +13615,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You overload an enemy's mana network, disrupting their magical abilities.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You overload an enemy's mana network, disrupting their magical abilities.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12647,8 +13644,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"If concentrating, that spell ends immediately",
 				"Forces Legendary Resistance expenditure if resisted",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -12656,17 +13658,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "guild-ops", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Denies the concept of defeat. A brutal surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12674,7 +13679,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "shadow", "utility", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12685,7 +13690,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "active",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -12734,8 +13739,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12745,13 +13750,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You channel raw mana through heavy weapons, trading accuracy for catastrophic damage.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You channel raw mana through heavy weapons, trading accuracy for catastrophic damage.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12771,8 +13778,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"After reducing to 0 HP, make one bonus action attack",
 				"Proficient with all Gate-Forged Weapons",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -12780,9 +13792,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -12790,8 +13803,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Absorbs the fragile limits of flesh. A brutal breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12799,7 +13814,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "damage", "mobility", "defensive", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12810,7 +13825,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "active",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -12859,8 +13874,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12870,13 +13885,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift feeds targeting data into your instincts, eliminating range penalties.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift feeds targeting data into your instincts, eliminating range penalties.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -12896,8 +13913,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"-5 attack for +10 damage on ranged attacks",
 				"+2 to damage with ranged weapons",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -12905,17 +13927,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "black-market", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Shatters the architect's design. A chaotic roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12923,7 +13948,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12934,7 +13959,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -12983,8 +14008,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -12994,13 +14019,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You anchor your position with mana-reinforced resolve, locking down enemies that try to bypass you.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You anchor your position with mana-reinforced resolve, locking down enemies that try to bypass you.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13016,8 +14043,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"When adjacent creature attacks an ally, use reaction to attack it",
 				"Opportunity attacks against you have disadvantage",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -13025,17 +14057,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "shadow-domain", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Weaves the dimensional divide. A subtle symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13043,7 +14078,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "single-target", "perception", "fire", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13054,7 +14089,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -13103,8 +14138,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13114,13 +14149,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You split mana flow into twin channels, wielding paired weapons with perfect sync.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You split mana flow into twin channels, wielding paired weapons with perfect sync.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13140,8 +14177,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"+2 AC while wielding two weapons",
 				"Add ability modifier to off-hand damage",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -13149,17 +14191,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "classified", "black-market"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Reflects the architect's design. A chaotic death of hesitation.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13167,7 +14212,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "shadow", "single-target", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13178,7 +14223,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 reaction",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -13227,8 +14272,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13238,13 +14283,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your mana circuits remain stable under combat stress.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "Your mana circuits remain stable under combat stress.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13259,8 +14304,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Can cast a spell as an opportunity attack",
 				"Spells as reactions don't consume opportunity attack reaction",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -13268,9 +14318,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -13278,8 +14329,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the dimensional divide. A triumphant symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13287,7 +14340,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13298,7 +14351,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -13347,8 +14400,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13358,13 +14411,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You wield reach weapons with the discipline of a gate-zone sentinel, controlling space.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You wield reach weapons with the discipline of a gate-zone sentinel, controlling space.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13384,8 +14439,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"+1 to damage with polearms",
 				"Can use polearm one-handed",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -13393,9 +14453,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "rift-energy", "classified"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -13403,8 +14464,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Bends the quiet space between breaths. An intricate roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13412,7 +14475,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "necrotic", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13423,7 +14486,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -13472,8 +14535,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13483,13 +14546,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"The Rift reinforced your cellular structure, increasing your capacity to absorb punishment.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"The Rift reinforced your cellular structure, increasing your capacity to absorb punishment.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13505,8 +14570,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Withstand extreme conditions without penalty",
 				"Healing effects restore additional HP equal to proficiency bonus",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -13514,9 +14584,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "monarch-era", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -13524,8 +14595,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reclaims the concept of defeat. A devastating surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13533,7 +14606,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "necrotic", "control", "psychic", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13544,7 +14617,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -13593,8 +14666,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13604,13 +14677,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Repeated threat exposure triggered a System adaptation, hardening your defenses.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Repeated threat exposure triggered a System adaptation, hardening your defenses.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13626,8 +14701,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Reroll a failed save of that type once per long rest",
 				"Immunity to minor effects of that type",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -13635,9 +14715,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "guild-ops", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -13645,8 +14726,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Commands the flow of time itself. A desperate symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13654,7 +14737,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "utility", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13665,7 +14748,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -13714,8 +14797,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13725,13 +14808,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Mana-reinforced muscle density lets you wear heavy plating as a second skin.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Mana-reinforced muscle density lets you wear heavy plating as a second skin.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13751,8 +14836,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Heavy Carapace Armor doesn't reduce speed",
 				"Sleep in Heavy Carapace Armor without penalty",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -13760,9 +14850,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "survival"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -13770,8 +14861,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the quiet space between breaths. A sorrowful death of hesitation.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13779,7 +14872,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "stealth", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13790,7 +14883,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -13839,8 +14932,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13850,13 +14943,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Synchronize your System with allies, sharing real-time tactical data.",
+			secondary: "Grants advantage on related ability checks.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Synchronize your System with allies, sharing real-time tactical data.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -13877,8 +14972,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Once per long rest, when synced ally drops to 0 HP, grant them temp HP equal to your level",
 				"+1 to initiative for synced allies",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You gain advantage on saving throws related to this feat's domain.",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -13886,17 +14986,20 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "experimental"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "Absorbs the dimensional divide. An ancient symphony of violence.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13904,7 +15007,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "defensive", "buff", "void", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13964,8 +15067,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -13975,13 +15078,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"At the brink, the Rift activates emergency combat mode â€” defense traded for offense.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"At the brink, the Rift activates emergency combat mode â€” defense traded for offense.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14002,8 +15107,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Killing while in Last Stand heals 1d10 + Con modifier",
 				"Ends when HP above 50% or combat ends",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"The range or area of effect increases by 50%.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -14011,9 +15121,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "survival"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14021,8 +15132,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the flow of time itself. A chaotic testament to absolute power.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14030,7 +15143,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "perception", "psychic", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14090,8 +15203,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14101,13 +15214,14 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "Your System calculates escape routes from collapsing gates.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your System calculates escape routes from collapsing gates.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14127,8 +15241,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Evacuated allies stabilized at 1 HP if at 0",
 				"Does not count as quest failure",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"The range or area of effect increases by 50%.",
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+			],
+			master: [
+				"You can use this feat as a legendary action (1/round, outside your turn).",
+			],
 		},
 	},
 	{
@@ -14136,9 +15255,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "dungeon-core", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14146,8 +15266,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the remnants of humanity. A sorrowful surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14155,7 +15277,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "mobility", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14166,7 +15288,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -14215,8 +15337,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14226,13 +15348,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your martial awakening forged an iron will that refuses to yield, even at death's threshold.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your martial awakening forged an iron will that refuses to yield, even at death's threshold.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14251,8 +15375,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Gain temporary HP when reduced to 0 HP",
 				"Cannot be reduced below 1 HP by failed death saves",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"You become immune to the damage type most associated with this feat.",
+			],
 		},
 	},
 	{
@@ -14260,9 +15389,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "gate-zone", "survival"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14270,8 +15400,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Reclaims the remnants of humanity. A silent surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14279,7 +15411,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "mobility", "area", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14290,7 +15422,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "1 bonus action",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -14339,8 +15471,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14350,13 +15482,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Rift-tracking instincts grant supernatural grace and perception honed in gate-zone hunting.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Rift-tracking instincts grant supernatural grace and perception honed in gate-zone hunting.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14375,8 +15509,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Advantage on Perception checks",
 				"Immunity to magical sleep effects",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Add your proficiency bonus to the damage or healing of this feat's primary effect.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -14384,9 +15523,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "black-market", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14394,8 +15534,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Shatters the quiet space between breaths. A chaotic roar of raw mana.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14403,7 +15545,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "area", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14414,7 +15556,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -14463,8 +15605,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "N/A (passive)",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14474,13 +15616,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your awakening triggered twice, granting abilities from a second job.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your awakening triggered twice, granting abilities from a second job.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14499,8 +15643,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"System displays both job titles",
 				"Gain one cantrip or at-will ability from second job",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"You can use this feat's benefit one additional time before requiring a rest.",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -14508,9 +15657,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "elite-tier", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14518,8 +15668,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the arrogant and the mighty. A triumphant beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14527,7 +15679,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "debuff", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14538,7 +15690,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -14587,8 +15739,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "2/short rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14598,13 +15750,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your growth rate exceeds System predictions. Each level-up grants more than expected.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your growth rate exceeds System predictions. Each level-up grants more than expected.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14625,8 +15779,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Carry capacity doubles",
 				'System classifies you as "high-growth" â€” displayed rank treated as one tier higher',
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 	{
@@ -14634,9 +15793,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "system-glitch", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14644,8 +15804,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys all who stand in opposition. A triumphant beautiful catastrophe.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14653,7 +15815,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "buff", "mobility", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14713,8 +15875,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14724,13 +15886,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"You project a sphere of absolute shadow that empowers your army and weakens all others.",
+			secondary: "Reduces resource costs for related actions by half.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"You project a sphere of absolute shadow that empowers your army and weakens all others.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14750,8 +15914,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Hostiles inside: disadvantage on attacks, halved speed",
 				"Teleport to any point within as a bonus action",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -14759,9 +15928,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "experimental", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14769,8 +15939,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Weaves the fragile limits of flesh. A subtle breaking point of the world.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14778,7 +15950,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "buff", "area", "psychic", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14838,8 +16010,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14849,13 +16021,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary: "You have gained partial admin access to the Rift itself.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect: "You have gained partial admin access to the Rift itself.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14873,8 +16045,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				'Once per long rest, System Command: "Heal" (50 HP), "Silence" (no casting 1 round), or "Reveal" (invisible in 120 ft)',
 				"System addresses you as [ADMINISTRATOR]",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can apply this feat's benefit to one ally within 30 feet as a bonus action.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"The DC for any saving throws imposed by this feat increases by your proficiency bonus.",
+			],
 		},
 	},
 	{
@@ -14882,9 +16059,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -14892,8 +16070,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Ignites the arrogant and the mighty. A sorrowful whisper in the shadows.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14901,7 +16081,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "ice", "shadow", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14912,7 +16092,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "None (passive)",
 			ability: "",
 			save: "",
 			dc: 0,
@@ -14961,8 +16141,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -14972,13 +16152,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your body has evolved beyond mortal limits. The Rift no longer classifies you as human.",
+			secondary: "Provides resistance to associated damage types.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your body has evolved beyond mortal limits. The Rift no longer classifies you as human.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -14997,8 +16179,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Immune to disease, poison, and aging",
 				"Once ever: when you would die, return at 1 HP with 4 exhaustion levels instead",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"Critical hits with this feat's associated actions deal triple damage instead of double.",
+				"Reduce the action cost by one step (action → bonus action, bonus action → free).",
+			],
+			master: [
+				"This feat's effect persists for 1 additional round/minute after the normal duration ends.",
+			],
 		},
 	},
 	{
@@ -15006,9 +16193,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
-		discovery_lore: "Unearthed from the archives.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		concentration: false,
 		image: "/images/compendium/placeholder.webp",
 		image_url: "/images/compendium/placeholder.webp",
@@ -15016,8 +16204,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		flavor:
 			"Destroys the concept of defeat. A desperate surge of lethal intent.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15025,7 +16215,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		},
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["feat", "fire", "area", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15036,7 +16226,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			lattice_interaction: "",
 			type: "passive",
 			frequency: "at-will",
-			action: "",
+			action: "Free action",
 			ability: "",
 			save: "Sense",
 			dc: "ability-modifier",
@@ -15085,8 +16275,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			},
 		},
 		limitations: {
-			uses: "",
-			recharge: "",
+			uses: "Passive",
+			recharge: "Short rest",
 			requires_attunement: false,
 			conditions: [],
 			charges: 0,
@@ -15096,13 +16286,15 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			cost: 0,
 		},
 		effects: {
-			primary: "",
-			secondary: "",
-			tertiary: "",
+			primary:
+				"Your mana pressure is so overwhelming that weaker creatures cannot raise a hand against you.",
+			secondary: "Enables a bonus action follow-up once per short rest.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
 			passive: [],
 			active: [],
-			primaryEffect: "",
-			secondaryEffect: "",
+			primaryEffect:
+				"Your mana pressure is so overwhelming that weaker creatures cannot raise a hand against you.",
+			secondaryEffect: "See secondary effect.",
 			passiveBonuses: [],
 		},
 		rarity: "common",
@@ -15123,8 +16315,13 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 				"Can suppress aura as a free action",
 				"Fail by 10+: paralyzed 1 round instead",
 			],
-			expert: [],
-			master: [],
+			expert: [
+				"You can use this feat's benefit one additional time before requiring a rest.",
+				"You gain advantage on saving throws related to this feat's domain.",
+			],
+			master: [
+				"The feat's primary effect is maximized (treat all dice as rolling maximum) once per long rest.",
+			],
 		},
 	},
 ];

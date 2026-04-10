@@ -1,4 +1,4 @@
-﻿import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 // Import Compendium Data
@@ -22,10 +22,10 @@ import type {
 } from "../src/types/vtt";
 
 const allItemsAndRelics: Array<CompendiumRelic | CompendiumItem> = [
-	...(comprehensiveRelics as any[]),
-	...(items_part1 as any[]),
-	...(items_part2 as any[]),
-	...(items_part3 as any[]),
+	...(comprehensiveRelics as Array<CompendiumRelic | CompendiumItem>),
+	...(items_part1 as Array<CompendiumRelic | CompendiumItem>),
+	...(items_part2 as Array<CompendiumRelic | CompendiumItem>),
+	...(items_part3 as Array<CompendiumRelic | CompendiumItem>),
 ];
 
 const currentDir = dirname(fileURLToPath(import.meta.url));

@@ -6,7 +6,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "dungeon-core", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15,8 +15,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24,7 +26,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "radiant", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -120,7 +122,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "post-awakening", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -129,8 +131,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -138,7 +142,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "debuff", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -234,7 +238,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "classified", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -243,8 +247,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -252,7 +258,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "damage", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -353,7 +359,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -362,8 +368,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -371,7 +379,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "area", "burst", "sustained", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -477,7 +485,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "classified", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -486,8 +494,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -495,7 +505,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "stealth", "healing", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -591,7 +601,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -600,8 +610,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -609,7 +621,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "shadow", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -710,7 +722,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -719,8 +731,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -728,7 +742,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -824,7 +838,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "post-awakening", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -833,8 +847,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -842,7 +858,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "healing", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -938,7 +954,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "post-awakening", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -947,8 +963,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -956,7 +974,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "support", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1057,7 +1075,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "gate-zone", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1066,8 +1084,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1075,7 +1095,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "shadow", "offensive", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1176,7 +1196,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "system-glitch", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1185,8 +1205,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1194,7 +1216,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "area", "damage", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1295,7 +1317,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1304,8 +1326,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1313,7 +1337,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "void", "psychic", "utility", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1414,7 +1438,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1423,8 +1447,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1432,7 +1458,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "mobility", "buff", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1528,7 +1554,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "urban-combat", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1537,8 +1563,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1546,7 +1574,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1647,7 +1675,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1656,8 +1684,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1665,7 +1695,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1771,7 +1801,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1780,8 +1810,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1789,7 +1821,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "perception", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -1890,7 +1922,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "monarch-era", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1899,8 +1931,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1908,7 +1942,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "defensive", "single-target", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2009,7 +2043,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "ancient-power", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2018,8 +2052,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2027,7 +2063,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "sustained", "lightning", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2128,7 +2164,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2137,8 +2173,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2146,7 +2184,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "area", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2242,7 +2280,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2251,8 +2289,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2260,7 +2300,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "area", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2366,7 +2406,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "classified", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2375,8 +2415,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2384,7 +2426,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "mobility", "offensive", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2485,7 +2527,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2494,8 +2536,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2503,7 +2547,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "control", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2599,7 +2643,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2608,8 +2652,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2617,7 +2663,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "stealth", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2713,7 +2759,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2722,8 +2768,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2731,7 +2779,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "damage", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2832,7 +2880,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "guild-ops", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2841,8 +2889,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2850,7 +2900,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "area", "burst", "void", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -2956,7 +3006,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "system-glitch", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2965,8 +3015,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2974,7 +3026,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3075,7 +3127,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "shadow-domain", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3084,8 +3136,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3093,7 +3147,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3194,7 +3248,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3203,8 +3257,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3212,7 +3268,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "sustained", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3313,7 +3369,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3322,8 +3378,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3331,7 +3389,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3432,7 +3490,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "survival", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3441,8 +3499,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3450,7 +3510,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3551,7 +3611,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3560,8 +3620,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3569,7 +3631,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "utility", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3670,7 +3732,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3679,8 +3741,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3688,7 +3752,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "mobility", "void", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3789,7 +3853,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "mana-overflow", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3798,8 +3862,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3807,7 +3873,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "defensive", "void", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -3913,7 +3979,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3922,8 +3988,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3931,7 +3999,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4027,7 +4095,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "hunter-bureau", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4036,8 +4104,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4045,7 +4115,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "damage", "radiant", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4141,7 +4211,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "modern-warfare", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4150,8 +4220,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4159,7 +4231,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "offensive", "stealth", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4255,7 +4327,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4264,8 +4336,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4273,7 +4347,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4374,7 +4448,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "dungeon-core", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4383,8 +4457,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4392,7 +4468,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4493,7 +4569,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4502,8 +4578,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4511,7 +4589,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4607,7 +4685,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4616,8 +4694,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4625,7 +4705,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "single-target", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4731,7 +4811,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "survival", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4740,8 +4820,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4749,7 +4831,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "single-target", "damage", "void", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4855,7 +4937,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "mana-overflow", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4864,8 +4946,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4873,7 +4957,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "damage", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -4969,7 +5053,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4978,8 +5062,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4987,7 +5073,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "utility", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5088,7 +5174,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "dungeon-core", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5097,8 +5183,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5106,7 +5194,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "single-target", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5202,7 +5290,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "urban-combat", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5211,8 +5299,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5220,7 +5310,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5316,7 +5406,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5325,8 +5415,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5334,7 +5426,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "fire", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5430,7 +5522,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "survival", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5439,8 +5531,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5448,7 +5542,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5549,7 +5643,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5558,8 +5652,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5567,7 +5663,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5668,7 +5764,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5677,8 +5773,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5686,7 +5784,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5787,7 +5885,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "dimensional-bleed", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5796,8 +5894,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5805,7 +5905,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "single-target", "shadow", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -5906,7 +6006,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5915,8 +6015,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5924,7 +6026,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6025,7 +6127,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "forbidden", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6034,8 +6136,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6043,7 +6147,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6139,7 +6243,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6148,8 +6252,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6157,7 +6263,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6253,7 +6359,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6262,8 +6368,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6271,7 +6379,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6367,7 +6475,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "modern-warfare", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6376,8 +6484,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6385,7 +6495,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "utility", "offensive", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6486,7 +6596,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6495,8 +6605,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6504,7 +6616,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "utility", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6600,7 +6712,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "guild-ops", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6609,8 +6721,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6618,7 +6732,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "mobility", "utility", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6719,7 +6833,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6728,8 +6842,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6737,7 +6853,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "mobility", "defensive", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6833,7 +6949,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6842,8 +6958,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6851,7 +6969,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "damage", "healing", "control", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -6952,7 +7070,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6961,8 +7079,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6970,7 +7090,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "support", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7071,7 +7191,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "post-awakening", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7080,8 +7200,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7089,7 +7211,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "defensive", "radiant", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7195,7 +7317,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7204,8 +7326,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7213,7 +7337,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7309,7 +7433,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "survival", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7318,8 +7442,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7327,7 +7453,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7423,7 +7549,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "classified", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7432,8 +7558,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7441,7 +7569,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "single-target", "fire", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7537,7 +7665,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7546,8 +7674,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7555,7 +7685,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "perception", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7661,7 +7791,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "classified", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7670,8 +7800,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7679,7 +7811,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7775,7 +7907,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7784,8 +7916,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7793,7 +7927,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "mobility", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -7894,7 +8028,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7903,8 +8037,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7912,7 +8048,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "void", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8008,7 +8144,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8017,8 +8153,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8026,7 +8164,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "area", "sustained", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8122,7 +8260,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "mana-overflow", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8131,8 +8269,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8140,7 +8280,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8236,7 +8376,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "forbidden", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8245,8 +8385,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8254,7 +8396,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8350,7 +8492,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "mana-overflow", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8359,8 +8501,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8368,7 +8512,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "ice", "mobility", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8469,7 +8613,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8478,8 +8622,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8487,7 +8633,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "burst", "defensive", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8588,7 +8734,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8597,8 +8743,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8606,7 +8754,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8702,7 +8850,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8711,8 +8859,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8720,7 +8870,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "fire", "mobility", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8821,7 +8971,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "system-glitch", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8830,8 +8980,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8839,7 +8991,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "support", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -8935,7 +9087,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "shadow-domain", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8944,8 +9096,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8953,7 +9107,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "void", "fire", "single-target", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9054,7 +9208,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "elite-tier", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9063,8 +9217,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9072,7 +9228,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "offensive", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9173,7 +9329,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "gate-zone", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9182,8 +9338,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9191,7 +9349,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "lightning", "control", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9287,7 +9445,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "urban-combat", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9296,8 +9454,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9305,7 +9465,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9401,7 +9561,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "hunter-bureau", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9410,8 +9570,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9419,7 +9581,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "void", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9515,7 +9677,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "guild-ops", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9524,8 +9686,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9533,7 +9697,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9629,7 +9793,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9638,8 +9802,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9647,7 +9813,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9743,7 +9909,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "dungeon-core", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9752,8 +9918,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9761,7 +9929,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "area", "offensive", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9862,7 +10030,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9871,8 +10039,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9880,7 +10050,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "fire", "defensive", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -9976,7 +10146,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9985,8 +10155,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9994,7 +10166,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10090,7 +10262,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10099,8 +10271,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10108,7 +10282,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10214,7 +10388,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "mana-overflow", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10223,8 +10397,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10232,7 +10408,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "radiant", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10333,7 +10509,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10342,8 +10518,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10351,7 +10529,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "void", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10447,7 +10625,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "rift-energy", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10456,8 +10634,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10465,7 +10645,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "control", "fire", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10561,7 +10741,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "elite-tier", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10570,8 +10750,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10579,7 +10761,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "control", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10675,7 +10857,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10684,8 +10866,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10693,7 +10877,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "damage", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10794,7 +10978,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10803,8 +10987,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10812,7 +10998,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "buff", "offensive", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -10913,7 +11099,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "monarch-era", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10922,8 +11108,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10931,7 +11119,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "stealth", "perception", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11032,7 +11220,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11041,8 +11229,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11050,7 +11240,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "support", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11151,7 +11341,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11160,8 +11350,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11169,7 +11361,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "utility", "shadow", "sustained", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11270,7 +11462,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "urban-combat", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11279,8 +11471,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11288,7 +11482,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11389,7 +11583,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11398,8 +11592,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11407,7 +11603,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "fire", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11503,7 +11699,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "elite-tier", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11512,8 +11708,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11521,7 +11719,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "debuff", "necrotic", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11622,7 +11820,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "gate-zone", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11631,8 +11829,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11640,7 +11840,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "void", "support", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11741,7 +11941,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11750,8 +11950,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11759,7 +11961,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "defensive", "support", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11855,7 +12057,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "survival", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11864,8 +12066,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11873,7 +12077,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "offensive", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -11969,7 +12173,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "black-market", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11978,8 +12182,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11987,7 +12193,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "single-target", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12083,7 +12289,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "survival", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12092,8 +12298,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12101,7 +12309,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "perception", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12197,7 +12405,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12206,8 +12414,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12215,7 +12425,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "single-target", "fire", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12316,7 +12526,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12325,8 +12535,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12334,7 +12546,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "void", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12430,7 +12642,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12439,8 +12651,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12448,7 +12662,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "control", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12544,7 +12758,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "shadow-domain", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12553,8 +12767,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12562,7 +12778,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12663,7 +12879,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "forbidden", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12672,8 +12888,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12681,7 +12899,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "perception", "sustained", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12782,7 +13000,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12791,8 +13009,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12800,7 +13020,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -12901,7 +13121,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12910,8 +13130,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12919,7 +13141,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "utility", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13015,7 +13237,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13024,8 +13246,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13033,7 +13257,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "single-target", "defensive", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13134,7 +13358,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13143,8 +13367,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13152,7 +13378,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "buff", "healing", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13248,7 +13474,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13257,8 +13483,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13266,7 +13494,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "stealth", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13367,7 +13595,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "elite-tier", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13376,8 +13604,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13385,7 +13615,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13486,7 +13716,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "mana-overflow", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13495,8 +13725,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13504,7 +13736,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "shadow", "area", "perception", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13600,7 +13832,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13609,8 +13841,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13618,7 +13852,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "defensive", "necrotic", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13714,7 +13948,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "monarch-era", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13723,8 +13957,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13732,7 +13968,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "necrotic", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13838,7 +14074,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "post-awakening", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13847,8 +14083,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13856,7 +14094,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "defensive", "lightning", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -13957,7 +14195,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "dungeon-core", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13966,8 +14204,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13975,7 +14215,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14076,7 +14316,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "gate-zone", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14085,8 +14325,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14094,7 +14336,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14200,7 +14442,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14209,8 +14451,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14218,7 +14462,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14314,7 +14558,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14323,8 +14567,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14332,7 +14578,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "support", "sustained", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14433,7 +14679,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14442,8 +14688,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14451,7 +14699,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "stealth", "sustained"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14547,7 +14795,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14556,8 +14804,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14565,7 +14815,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "debuff", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14661,7 +14911,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "modern-warfare", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14670,8 +14920,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14679,7 +14931,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "offensive", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14780,7 +15032,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "shadow-domain", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14789,8 +15041,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14798,7 +15052,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "healing", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -14904,7 +15158,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14913,8 +15167,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14922,7 +15178,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "perception", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15023,7 +15279,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15032,8 +15288,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15041,7 +15299,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "support", "control", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15137,7 +15395,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "experimental", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15146,8 +15404,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15155,7 +15415,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "ice", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15256,7 +15516,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "forbidden", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15265,8 +15525,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15274,7 +15536,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15380,7 +15642,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "gate-zone", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15389,8 +15651,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15398,7 +15662,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "utility", "radiant", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15494,7 +15758,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "ancient-power", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15503,8 +15767,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15512,7 +15778,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "area", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15608,7 +15874,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "forbidden", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15617,8 +15883,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15626,7 +15894,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15722,7 +15990,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "system-glitch", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15731,8 +15999,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15740,7 +16010,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "defensive", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15836,7 +16106,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "hunter-bureau", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15845,8 +16115,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15854,7 +16126,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "damage", "sustained", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -15955,7 +16227,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "shadow-domain", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -15964,8 +16236,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15973,7 +16247,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "defensive", "offensive", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16069,7 +16343,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16078,8 +16352,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16087,7 +16363,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16183,7 +16459,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "urban-combat", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16192,8 +16468,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16201,7 +16479,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16302,7 +16580,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16311,8 +16589,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16320,7 +16600,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "damage", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16421,7 +16701,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "gate-zone", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16430,8 +16710,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16439,7 +16721,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "perception", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16535,7 +16817,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "dimensional-bleed", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16544,8 +16826,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16553,7 +16837,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "damage", "fire", "offensive", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16654,7 +16938,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16663,8 +16947,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16672,7 +16958,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "necrotic", "support", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16773,7 +17059,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16782,8 +17068,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16791,7 +17079,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "ice", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -16887,7 +17175,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16896,8 +17184,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16905,7 +17195,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "stealth", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17006,7 +17296,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["classified", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17015,8 +17305,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17024,7 +17316,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17125,7 +17417,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17134,8 +17426,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17143,7 +17437,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "area", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17239,7 +17533,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17248,8 +17542,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17257,7 +17553,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "shadow", "debuff", "single-target", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17353,7 +17649,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17362,8 +17658,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17371,7 +17669,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17472,7 +17770,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "dimensional-bleed", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17481,8 +17779,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17490,7 +17790,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "shadow", "psychic", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17586,7 +17886,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17595,8 +17895,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17604,7 +17906,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "perception", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17700,7 +18002,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17709,8 +18011,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17718,7 +18022,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "stealth", "offensive", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17814,7 +18118,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "classified", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17823,8 +18127,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17832,7 +18138,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "fire", "defensive", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -17933,7 +18239,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "black-market", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17942,8 +18248,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17951,7 +18259,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18047,7 +18355,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "experimental", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18056,8 +18364,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18065,7 +18375,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "area", "utility", "perception", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18161,7 +18471,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18170,8 +18480,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18179,7 +18491,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18280,7 +18592,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18289,8 +18601,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18298,7 +18612,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "sustained", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18399,7 +18713,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18408,8 +18722,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18417,7 +18733,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "area", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18523,7 +18839,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "survival", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18532,8 +18848,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18541,7 +18859,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "necrotic", "defensive", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18637,7 +18955,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18646,8 +18964,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18655,7 +18975,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18756,7 +19076,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "shadow-domain", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18765,8 +19085,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18774,7 +19096,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "stealth", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18875,7 +19197,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18884,8 +19206,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18893,7 +19217,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "utility", "debuff", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -18994,7 +19318,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "dimensional-bleed", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19003,8 +19327,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19012,7 +19338,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19108,7 +19434,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19117,8 +19443,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19126,7 +19454,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "fire", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19227,7 +19555,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19236,8 +19564,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19245,7 +19575,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "void", "defensive", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19341,7 +19671,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "post-awakening", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19350,8 +19680,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19359,7 +19691,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "single-target", "perception", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19455,7 +19787,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "shadow-domain", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19464,8 +19796,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19473,7 +19807,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "necrotic", "single-target", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19574,7 +19908,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19583,8 +19917,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19592,7 +19928,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "defensive", "lightning", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19688,7 +20024,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19697,8 +20033,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19706,7 +20044,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "void", "radiant", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19807,7 +20145,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19816,8 +20154,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19825,7 +20165,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "defensive", "radiant", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -19926,7 +20266,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -19935,8 +20275,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19944,7 +20286,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20040,7 +20382,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "dungeon-core", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20049,8 +20391,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20058,7 +20402,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20154,7 +20498,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "black-market", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20163,8 +20507,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20172,7 +20518,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20273,7 +20619,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20282,8 +20628,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20291,7 +20639,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "support", "offensive", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20387,7 +20735,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "dungeon-core"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20396,8 +20744,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20405,7 +20755,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "single-target", "fire", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20506,7 +20856,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "rift-energy", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20515,8 +20865,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20524,7 +20876,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "sustained", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20630,7 +20982,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "gate-zone", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20639,8 +20991,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20648,7 +21002,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "sustained", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20749,7 +21103,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "gate-zone", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20758,8 +21112,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20767,7 +21123,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20868,7 +21224,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "modern-warfare", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20877,8 +21233,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20886,7 +21244,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -20982,7 +21340,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "post-awakening", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20991,8 +21349,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21000,7 +21360,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "mobility", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21096,7 +21456,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21105,8 +21465,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21114,7 +21476,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "necrotic", "lightning", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21215,7 +21577,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "system-glitch", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21224,8 +21586,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21233,7 +21597,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "sustained", "void", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21329,7 +21693,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21338,8 +21702,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21347,7 +21713,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "perception", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21443,7 +21809,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "survival", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21452,8 +21818,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21461,7 +21829,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "defensive", "support", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21562,7 +21930,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21571,8 +21939,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21580,7 +21950,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21676,7 +22046,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21685,8 +22055,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21694,7 +22066,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "single-target", "sustained", "fire", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21795,7 +22167,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["gate-zone", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21804,8 +22176,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21813,7 +22187,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "damage", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -21919,7 +22293,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "post-awakening", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21928,8 +22302,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21937,7 +22313,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "healing", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22038,7 +22414,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22047,8 +22423,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22056,7 +22434,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "offensive", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22157,7 +22535,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22166,8 +22544,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22175,7 +22555,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "lightning", "damage", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22271,7 +22651,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "urban-combat", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22280,8 +22660,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22289,7 +22671,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "radiant", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22385,7 +22767,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["mana-overflow", "survival", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22394,8 +22776,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22403,7 +22787,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "necrotic", "defensive", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22509,7 +22893,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "dimensional-bleed", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22518,8 +22902,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22527,7 +22913,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "single-target", "damage"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22623,7 +23009,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "forbidden"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22632,8 +23018,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22641,7 +23029,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "void", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22737,7 +23125,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "gate-zone", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22746,8 +23134,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22755,7 +23145,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22856,7 +23246,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22865,8 +23255,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22874,7 +23266,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "lightning", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -22975,7 +23367,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22984,8 +23376,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22993,7 +23387,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23094,7 +23488,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "system-glitch", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23103,8 +23497,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23112,7 +23508,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "defensive", "ice"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23213,7 +23609,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23222,8 +23618,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23231,7 +23629,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "mobility", "area", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23327,7 +23725,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23336,8 +23734,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23345,7 +23745,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "single-target", "utility", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23451,7 +23851,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23460,8 +23860,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23469,7 +23871,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "sustained", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23565,7 +23967,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23574,8 +23976,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23583,7 +23987,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "perception", "sustained", "necrotic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23684,7 +24088,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23693,8 +24097,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
+			history:
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23702,7 +24108,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "utility", "stealth", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23803,7 +24209,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "forbidden", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23812,8 +24218,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23821,7 +24229,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "shadow", "sustained", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -23922,7 +24330,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "monarch-era", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23931,8 +24339,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23940,7 +24350,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24036,7 +24446,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "guild-ops", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24045,8 +24455,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24054,7 +24466,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "void", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24155,7 +24567,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "black-market", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24164,8 +24576,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24173,7 +24587,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "damage", "lightning", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24274,7 +24688,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "mana-overflow", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24283,8 +24697,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24292,7 +24708,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "mobility", "debuff", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24388,7 +24804,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "forbidden", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24397,8 +24813,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24406,7 +24824,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "void", "utility", "mobility", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24502,7 +24920,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["urban-combat", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24511,8 +24929,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24520,7 +24940,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "shadow", "ice", "fire"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24621,7 +25041,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24630,8 +25050,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24639,7 +25061,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "void", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24745,7 +25167,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24754,8 +25176,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24763,7 +25187,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "buff", "support", "perception", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24864,7 +25288,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24873,8 +25297,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24882,7 +25308,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "necrotic", "healing"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -24978,7 +25404,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "survival", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24987,8 +25413,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24996,7 +25424,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "area", "burst", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25097,7 +25525,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25106,8 +25534,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25115,7 +25545,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "radiant", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25216,7 +25646,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "monarch-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25225,8 +25655,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25234,7 +25666,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "psychic", "ice", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25340,7 +25772,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["elite-tier", "shadow-domain", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25349,8 +25781,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25358,7 +25792,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "perception", "area", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25459,7 +25893,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dungeon-core", "monarch-era", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25468,8 +25902,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25477,7 +25913,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25578,7 +26014,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25587,8 +26023,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25596,7 +26034,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "damage", "necrotic", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25697,7 +26135,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["rift-energy", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25706,8 +26144,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25715,7 +26155,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "void", "damage", "control"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25816,7 +26256,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["black-market", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25825,8 +26265,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25834,7 +26276,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "fire", "defensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -25935,7 +26377,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "mana-overflow", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25944,8 +26386,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25953,7 +26397,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "defensive", "single-target", "support", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26054,7 +26498,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["modern-warfare", "dungeon-core", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26063,8 +26507,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26072,7 +26518,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "utility", "buff", "stealth"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26168,7 +26614,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["ancient-power", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26177,8 +26623,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26186,7 +26634,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "support", "burst"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26282,7 +26730,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26291,8 +26739,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26300,7 +26750,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "lightning", "necrotic", "fire", "single-target"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26401,7 +26851,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "black-market", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26410,8 +26860,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
+			history:
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26419,7 +26871,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "control", "mobility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26515,7 +26967,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "guild-ops", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26524,8 +26976,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26533,7 +26987,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "radiant", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26629,7 +27083,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26638,8 +27092,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26647,7 +27103,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "offensive", "radiant", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26743,7 +27199,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["dimensional-bleed", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26752,8 +27208,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26761,7 +27219,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "defensive", "necrotic", "debuff", "psychic"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26857,7 +27315,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26866,8 +27324,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26875,7 +27335,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "control", "perception"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -26976,7 +27436,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "system-glitch", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26985,8 +27445,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26994,7 +27456,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "lightning", "fire", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27100,7 +27562,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["post-awakening", "hunter-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27109,8 +27571,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+			history:
+				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27118,7 +27582,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "burst", "debuff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27224,7 +27688,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27233,8 +27697,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27242,7 +27708,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "offensive", "utility"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27338,7 +27804,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["shadow-domain", "post-awakening", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27347,8 +27813,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27356,7 +27824,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "sustained", "ice", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27452,7 +27920,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["guild-ops", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27461,8 +27929,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27470,7 +27940,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "stealth", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27571,7 +28041,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["forbidden", "shadow-domain", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27580,8 +28050,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27589,7 +28061,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "debuff", "buff"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27690,7 +28162,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "mana-overflow", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27699,8 +28171,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
+			history:
+				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27708,7 +28182,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "buff", "control", "shadow"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27809,7 +28283,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "monarch-era", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27818,8 +28292,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+			history:
+				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27827,7 +28303,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "lightning"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -27928,7 +28404,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["survival", "dungeon-core", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27937,8 +28413,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+			history:
+				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27946,7 +28424,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "psychic", "damage", "defensive", "offensive"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -28042,7 +28520,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["system-glitch", "guild-ops", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -28051,8 +28529,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28060,7 +28540,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "ice", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -28161,7 +28641,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["hunter-bureau", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -28170,8 +28650,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
+			history:
+				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28179,7 +28661,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "ice", "lightning", "radiant"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -28275,7 +28757,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["monarch-era", "guild-ops", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -28284,8 +28766,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+			history:
+				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28293,7 +28777,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "healing", "support"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -28400,7 +28884,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "modern-warfare", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -28409,8 +28893,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+			history:
+				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28418,7 +28904,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "radiant", "perception", "stealth", "void"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",
@@ -28525,7 +29011,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: [],
+		theme_tags: ["experimental", "gate-zone", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -28534,8 +29020,10 @@ export const locations: CompendiumLocation[] = [
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
-			origin: "",
-			history: "",
+			origin:
+				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+			history:
+				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28543,7 +29031,7 @@ export const locations: CompendiumLocation[] = [
 		},
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
-		tags: [],
+		tags: ["location", "burst", "area"],
 		system_interaction: "Standard",
 		mechanics: {
 			action_type: "",

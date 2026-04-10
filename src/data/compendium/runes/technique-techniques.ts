@@ -8,11 +8,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-umbral-strike",
 		name: "Rune of Umbral Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Umbral Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Umbral Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Attack with advantage and deal extra damage equal to your proficiency bonus.",
 		source: "Rift Ascendant Canon",
@@ -20,6 +20,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/umbral-strike.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -28,17 +43,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-dragon-fist",
 		name: "Rune of Dragon Fist",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dragon Fist Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dragon Fist Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Deal 3d10 force damage plus your Strength modifier.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/dragon-fist.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -47,17 +77,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-void-slash",
 		name: "Rune of Void Slash",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void Slash Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void Slash Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Attack ignores all armor and resistance.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/void-slash.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -66,11 +111,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-multi-shot",
 		name: "Rune of Multi-Shot",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Multi-Shot Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Multi-Shot Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Make three ranged attacks against different targets within range.",
 		source: "Rift Ascendant Canon",
@@ -78,6 +123,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/multi-shot.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -86,11 +146,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-whirlwind-strike",
 		name: "Rune of Whirlwind Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Whirlwind Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Whirlwind Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Make one melee attack against each creature within 10 feet.",
 		source: "Rift Ascendant Canon",
@@ -98,6 +158,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/whirlwind-strike.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -106,11 +181,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-umbral-dodge",
 		name: "Rune of Umbral Dodge",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Umbral Dodge Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Umbral Dodge Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"When targeted by an attack, teleport to an unoccupied space within 30 feet in dim light or darkness.",
 		source: "Rift Ascendant Canon",
@@ -118,6 +193,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/umbral-dodge.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -126,11 +216,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-iron-wall",
 		name: "Rune of Iron Wall",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Iron Wall Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Iron Wall Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Gain resistance to bludgeoning, piercing, and slashing damage until your next turn.",
 		source: "Rift Ascendant Canon",
@@ -138,6 +228,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/iron-wall.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -146,11 +251,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-counter-strike",
 		name: "Rune of Counter Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Counter Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Counter Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"When a creature misses you with a melee attack, you can make an immediate melee attack against them.",
 		source: "Rift Ascendant Canon",
@@ -158,6 +263,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/counter-strike.webp",
+		discovery_lore:
+			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -166,11 +286,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-deflect-arrows",
 		name: "Rune of Deflect Arrows",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Deflect Arrows Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Deflect Arrows Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"When targeted by a ranged weapon attack, you can deflect it with your weapon.",
 		source: "Rift Ascendant Canon",
@@ -178,6 +298,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/deflect-arrows.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -186,17 +321,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-guardian-stance",
 		name: "Rune of Guardian Stance",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Guardian Stance Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Guardian Stance Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Allies within 10 feet gain +2 to AC.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/guardian-stance.webp",
+		discovery_lore:
+			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -205,11 +355,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-wind-dash",
 		name: "Rune of Wind Dash",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Wind Dash Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Wind Dash Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Move up to your movement speed without provoking opportunity attacks.",
 		source: "Rift Ascendant Canon",
@@ -217,6 +367,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/wind-dash.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -225,11 +390,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-wall-run",
 		name: "Rune of Wall Run",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Wall Run Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Wall Run Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Can run along vertical surfaces and ceilings as if they were horizontal.",
 		source: "Rift Ascendant Canon",
@@ -237,6 +402,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/wall-run.webp",
+		discovery_lore:
+			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -245,11 +425,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-phase-walk",
 		name: "Rune of Phase Walk",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Phase Walk Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Phase Walk Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Can move through solid objects and creatures as if they were difficult terrain.",
 		source: "Rift Ascendant Canon",
@@ -257,6 +437,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/phase-walk.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -265,11 +460,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-leap-strike",
 		name: "Rune of Leap Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Leap Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Leap Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Jump up to 60 feet horizontally or 30 feet vertically.",
 		source: "Rift Ascendant Canon",
@@ -277,6 +472,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/leap-strike.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -285,11 +495,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-umbral-bind",
 		name: "Rune of Umbral Bind",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Umbral Bind Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Umbral Bind Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target must make Presence saving throw or be restrained by umbral tendrils.",
 		source: "Rift Ascendant Canon",
@@ -297,6 +507,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/umbral-bind.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -305,11 +530,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-disarming-strike",
 		name: "Rune of Disarming Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Disarming Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Disarming Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Make a melee attack against a creature holding a weapon.",
 		source: "Rift Ascendant Canon",
@@ -317,6 +542,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/disarming-strike.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -325,17 +565,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-trip-attack",
 		name: "Rune of Trip Attack",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Trip Attack Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Trip Attack Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Make a melee attack against a creature.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/trip-attack.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -344,17 +599,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-grappling-strike",
 		name: "Rune of Grappling Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Grappling Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Grappling Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Make an unarmed strike against a creature.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/grappling-strike.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -363,11 +633,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-intimidating-presence",
 		name: "Rune of Intimidating Presence",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Intimidating Presence Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Intimidating Presence Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Each creature of your choice within 30 feet must make Sense saving throw.",
 		source: "Rift Ascendant Canon",
@@ -375,6 +645,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/intimidating-presence.webp",
+		discovery_lore:
+			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -383,11 +668,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-umbral-termination",
 		name: "Rune of Umbral Termination",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Umbral Termination Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Umbral Termination Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Attack with advantage and automatically score a critical hit.",
 		source: "Rift Ascendant Canon",
@@ -395,6 +680,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/umbral-termination.webp",
+		discovery_lore:
+			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -403,17 +703,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-dragon-slaying-blow",
 		name: "Rune of Dragon-Slaying Blow",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dragon-Slaying Blow Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dragon-Slaying Blow Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Attack with advantage and deal triple damage.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/dragon-slaying-blow.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -422,17 +737,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-void-annihilation",
 		name: "Rune of Void Annihilation",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void Annihilation Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void Annihilation Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Attack ignores all defenses and deals maximum damage.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/void-annihilation.webp",
+		discovery_lore:
+			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -441,17 +771,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-divine-execution",
 		name: "Rune of Divine Execution",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Divine Execution Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Divine Execution Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Attack with advantage and add 8d8 radiant damage.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/divine-execution.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -460,11 +805,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-arcane-overload",
 		name: "Rune of Arcane Overload",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Arcane Overload Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Arcane Overload Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Attack with advantage and add damage equal to 3d8 per spell slot level.",
 		source: "Rift Ascendant Canon",
@@ -472,6 +817,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/arcane-overload.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -480,11 +840,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-meteor-strike",
 		name: "Rune of Meteor Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Meteor Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Meteor Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Leap up to 30 feet into the air and strike a target. Deals an additional 6d6 fire damage.",
 		source: "Rift Ascendant Canon",
@@ -492,6 +852,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/meteor-strike.webp",
+		discovery_lore:
+			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -500,11 +875,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-phantom-step",
 		name: "Rune of Phantom Step",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Phantom Step Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Phantom Step Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Until the end of your turn, you can move through creatures and objects as if they were difficult terrain.",
 		source: "Rift Ascendant Canon",
@@ -512,6 +887,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/phantom-step.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -520,11 +910,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-thousand-cuts",
 		name: "Rune of Thousand Cuts",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Thousand Cuts Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Thousand Cuts Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Make 10 melee attacks against one target. Each hit deals 1d4 + Dex damage.",
 		source: "Rift Ascendant Canon",
@@ -532,6 +922,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/thousand-cuts.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -540,11 +945,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-absolute-defense",
 		name: "Rune of Absolute Defense",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Absolute Defense Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Absolute Defense Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"When hit by an attack (including spells), reduce the damage to 0.",
 		source: "Rift Ascendant Canon",
@@ -552,6 +957,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/absolute-defense.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -560,11 +980,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-gravity-bind",
 		name: "Rune of Gravity Bind",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Gravity Bind Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Gravity Bind Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"One creature must make a Strength save or be restrained and knocked prone.",
 		source: "Rift Ascendant Canon",
@@ -572,6 +992,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/gravity-bind.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -580,17 +1015,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-sonic-boom",
 		name: "Rune of Sonic Boom",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Sonic Boom Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Sonic Boom Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Creatures in a 15ft cone take 3d8 thunder damage.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/sonic-boom.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -599,11 +1049,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-infinite-riposte",
 		name: "Rune of Infinite Riposte",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Infinite Riposte Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Infinite Riposte Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Gain unlimited reactions for the purpose of making opportunity attacks or parries until your next turn.",
 		source: "Rift Ascendant Canon",
@@ -611,6 +1061,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/infinite-riposte.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -619,11 +1084,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-dragon-ascent",
 		name: "Rune of Dragon Ascent",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dragon Ascent Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dragon Ascent Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Jump 30ft vertically. All creatures within 5ft of your path take weapon damage.",
 		source: "Rift Ascendant Canon",
@@ -631,6 +1096,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/dragon-ascent.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -639,11 +1119,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-nerve-strike",
 		name: "Rune of Nerve Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Nerve Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Nerve Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target must make a Vitality save or be paralyzed until the end of your next turn.",
 		source: "Rift Ascendant Canon",
@@ -651,6 +1131,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/nerve-strike.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -659,11 +1154,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-bladeshim-storm",
 		name: "Rune of Bladeshim Storm",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Bladeshim Storm Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Bladeshim Storm Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Creatures in a 30ft radius must make a Dex save or take 5d10 force damage.",
 		source: "Rift Ascendant Canon",
@@ -671,6 +1166,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/bladeshim-storm.webp",
+		discovery_lore:
+			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -679,17 +1189,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-immovable-object",
 		name: "Rune of Immovable Object",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Immovable Object Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Immovable Object Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Gain advantage on all Strength and Vitality saves.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/immovable-object.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -698,11 +1223,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-echo-step",
 		name: "Rune of Echo Step",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Echo Step Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Echo Step Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Until the start of your next turn, attacks against you have disadvantage.",
 		source: "Rift Ascendant Canon",
@@ -710,6 +1235,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/echo-step.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -718,11 +1258,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-vortex-pull",
 		name: "Rune of Vortex Pull",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Vortex Pull Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Vortex Pull Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Creatures within 20ft must make a Strength save or be pulled adjacent to you.",
 		source: "Rift Ascendant Canon",
@@ -730,6 +1270,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/vortex-pull.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -738,11 +1293,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-blood-tithe",
 		name: "Rune of Blood Tithe",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Blood Tithe Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Blood Tithe Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Expend any number of Hit Dice. Add double the total to your next damage roll.",
 		source: "Rift Ascendant Canon",
@@ -750,6 +1305,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/blood-tithe.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -758,11 +1328,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-quaking-stomp",
 		name: "Rune of Quaking Stomp",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Quaking Stomp Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Quaking Stomp Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Creatures in a 20ft radius must make a Dex save or take 4d8 bludgeoning and be knocked prone.",
 		source: "Rift Ascendant Canon",
@@ -770,6 +1340,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/quaking-stomp.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -778,17 +1363,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-blade-dance",
 		name: "Rune of Blade Dance",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Blade Dance Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Blade Dance Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Gain +2 AC and your movement speed increases by 20ft.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/blade-dance.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -797,17 +1397,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-grand-slam",
 		name: "Rune of Grand Slam",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Grand Slam Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Grand Slam Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Strike one target. If hit, they are pushed 30ft away.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/grand-slam.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -816,11 +1431,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-sky-piercer",
 		name: "Rune of Sky Piercer",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Sky Piercer Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Sky Piercer Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Strike a target. Attack ignores all damage resistance.",
 		source: "Rift Ascendant Canon",
@@ -828,6 +1443,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/sky-piercer.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -836,11 +1466,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-unbreakable-will",
 		name: "Rune of Unbreakable Will",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Unbreakable Will Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Unbreakable Will Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"End one condition currently affecting you: Charmed, Frightened, or Stunned.",
 		source: "Rift Ascendant Canon",
@@ -848,6 +1478,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/unbreakable-will.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -856,17 +1501,32 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-finishing-blast",
 		name: "Rune of Final Reckoning",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Final Reckoning Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Final Reckoning Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Deal 10d10 + Str + Dex + Int damage.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/finishing-blast.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -875,11 +1535,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-dimensional-step",
 		name: "Rune of Dimensional Step",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dimensional Step Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dimensional Step Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"When you move, you can teleport between any 5ft squares of your movement path.",
 		source: "Rift Ascendant Canon",
@@ -887,6 +1547,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/dimensional-step.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -895,11 +1570,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-execute",
 		name: "Rune of Execution Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Execution Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Execution Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"If the target is below 25% health, they must make a Vitality save or be reduced to 0 HP.",
 		source: "Rift Ascendant Canon",
@@ -907,6 +1582,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/execute.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -915,11 +1605,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-iron-wall-stance",
 		name: "Rune of Iron Wall Stance",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Iron Wall Stance Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Iron Wall Stance Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You gain total cover from the front. Any melee attacker that hits you takes 2d6 bludgeoning damage from the impact.",
 		source: "Rift Ascendant Canon",
@@ -927,6 +1617,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/iron-wall-stance.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -935,11 +1640,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-whirlwind-slash",
 		name: "Rune of Whirlwind Slash",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Whirlwind Slash Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Whirlwind Slash Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"All creatures within 10ft must make a Dex save or take weapon damage + 2d8.",
 		source: "Rift Ascendant Canon",
@@ -947,6 +1652,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/whirlwind-slash.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -955,11 +1675,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-zen-archery",
 		name: "Rune of Zen Archery",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Zen Archery Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Zen Archery Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Your next ranged attack ignores cover and has advantage.",
 		source: "Rift Ascendant Canon",
@@ -967,6 +1687,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/zen-archery.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -975,11 +1710,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-disarming-flourish",
 		name: "Rune of Disarming Flourish",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Disarming Flourish Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Disarming Flourish Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"On a hit, the target must make a Strength save or drop one item they are holding.",
 		source: "Rift Ascendant Canon",
@@ -987,6 +1722,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/disarming-flourish.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -995,11 +1745,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-fist-of-the-north-star",
 		name: "Rune of Seven Star Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Seven Star Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Seven Star Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target takes 10d6 internal damage and is stunned for 1 minute.",
 		source: "Rift Ascendant Canon",
@@ -1007,6 +1757,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/fist-of-the-north-star.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1015,11 +1780,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-dragons-tail-sweep",
 		name: "Rune of Dragon's Tail Sweep",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dragon's Tail Sweep Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dragon's Tail Sweep Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"All adjacent creatures must make a Dex save or take 3d8 bludgeoning and be knocked prone.",
 		source: "Rift Ascendant Canon",
@@ -1027,6 +1792,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/dragons-tail-sweep.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1035,11 +1815,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-heavenly-piercing-arrow",
 		name: "Rune of Heaven-Piercer",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Heaven-Piercer Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Heaven-Piercer Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"A 5ft wide line 600ft long. All targets take weapon damage + 5d10 piercing.",
 		source: "Rift Ascendant Canon",
@@ -1047,6 +1827,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/heavenly-piercing-arrow.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1055,11 +1850,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-mirror-shield-parry",
 		name: "Rune of Mirror Parry",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Mirror Parry Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Mirror Parry Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Reduce damage from a ranged attack to 0. You can then make a ranged attack with the same project back at the attacker.",
 		source: "Rift Ascendant Canon",
@@ -1067,6 +1862,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/mirror-shield-parry.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1075,11 +1885,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-vipers-kiss",
 		name: "Rune of Viper's Kiss",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Viper's Kiss Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Viper's Kiss Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target takes 1d6 poison damage and has disadvantage on their next attack.",
 		source: "Rift Ascendant Canon",
@@ -1087,6 +1897,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/vipers-kiss.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1095,11 +1920,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-mountain-breaker",
 		name: "Rune of Mountain Breaker",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Mountain Breaker Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Mountain Breaker Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Deal 6d12 bludgeoning damage. Target is knocked back 30ft.",
 		source: "Rift Ascendant Canon",
@@ -1107,6 +1932,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/mountain-breaker.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1115,11 +1955,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-blade-storm",
 		name: "Rune of Blade Storm",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Blade Storm Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Blade Storm Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"All targets in a 30ft cone take 6d4 piercing damage. Dex save for half.",
 		source: "Rift Ascendant Canon",
@@ -1127,6 +1967,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/blade-storm.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1135,11 +1990,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "defensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-guardians-rebuke",
 		name: "Rune of Guardian's Rebuke",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Guardian's Rebuke Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Guardian's Rebuke Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"If an ally within 5ft is hit, you make a melee attack against the attacker with advantage.",
 		source: "Rift Ascendant Canon",
@@ -1147,6 +2002,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/guardians-rebuke.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1155,11 +2025,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-gravity-stomp",
 		name: "Rune of Gravity Stomp",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Gravity Stomp Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Gravity Stomp Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"15ft radius becomes difficult terrain. Moving through it costs 4x movement.",
 		source: "Rift Ascendant Canon",
@@ -1167,6 +2037,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/gravity-stomp.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1175,11 +2060,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-eagles-eye",
 		name: "Rune of Eagle's Eye",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Eagle's Eye Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Eagle's Eye Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You can see clearly up to 2 miles and ignore disadvantage from long range.",
 		source: "Rift Ascendant Canon",
@@ -1187,6 +2072,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/eagles-eye.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1195,11 +2095,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-dragon-claw-rend",
 		name: "Rune of Dragon Claw Rend",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dragon Claw Rend Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dragon Claw Rend Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Deal 8d8 slashing damage. This attack ignores all resistances and treats immunity as resistance.",
 		source: "Rift Ascendant Canon",
@@ -1207,6 +2107,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/dragon-claw-rend.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1215,11 +2130,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-temporal-feint",
 		name: "Rune of Temporal Feint",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Temporal Feint Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Temporal Feint Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"If your attack misses, you can instantly retry it with advantage as a 'temporal correction'.",
 		source: "Rift Ascendant Canon",
@@ -1227,6 +2142,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/temporal-feint.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1235,11 +2165,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-titan-slam",
 		name: "Rune of Titan Slam",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Titan Slam Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Titan Slam Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Requires falling at least 20ft. Deal 1d6 per 10ft fallen to all creatures in 15ft radius.",
 		source: "Rift Ascendant Canon",
@@ -1247,6 +2177,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/titan-slam.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1255,11 +2200,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-ice-path-skate",
 		name: "Rune of Frost Runner",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Frost Runner Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Frost Runner Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You gain +20ft movement and can move across water or thin air (max 10ft high).",
 		source: "Rift Ascendant Canon",
@@ -1267,6 +2212,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/ice-path-skate.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1275,11 +2235,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-venom-spray-technique",
 		name: "Rune of Venom Spray",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Venom Spray Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Venom Spray Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"15ft cone of toxic gas. Targets must make a Con save or be 'Poisoned' for 1 minute.",
 		source: "Rift Ascendant Canon",
@@ -1287,6 +2247,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/venom-spray-technique.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1295,11 +2270,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-blood-boil-strike",
 		name: "Rune of Blood-Boil Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Blood-Boil Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Blood-Boil Strike Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target takes 6d10 fire damage and has disadvantage on all checks due to intense pain.",
 		source: "Rift Ascendant Canon",
@@ -1307,6 +2282,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/blood-boil-strike.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1315,11 +2305,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "mobility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-ancient-hebrew-strings-step-technique",
 		name: "Rune of Ancient Hebrew Strings Step",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Ancient Hebrew Strings Step Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Ancient Hebrew Strings Step Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You can teleport anywhere within 120ft that you have seen before.",
 		source: "Rift Ascendant Canon",
@@ -1328,6 +2318,21 @@ export const technique_runes: CompendiumRune[] = [
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image:
 			"/generated/compendium/runes/ancient-hebrew-strings-step-technique.webp",
+		discovery_lore:
+			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1336,11 +2341,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "finishing",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-infinity-slash",
 		name: "Rune of Infinity Slash",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Infinity Slash Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Infinity Slash Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Deal 100 untyped damage. This damage cannot be reduced, reflected, or avoided.",
 		source: "Rift Ascendant Canon",
@@ -1348,6 +2353,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/infinity-slash.webp",
+		discovery_lore:
+			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1356,11 +2376,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "utility",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-bone-breaker-lock",
 		name: "Rune of Bone Breaker",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Bone Breaker Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Bone Breaker Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"If target is grappled, you deal 4d10 damage and reduce their movement by 15ft permanently (until magically healed).",
 		source: "Rift Ascendant Canon",
@@ -1368,6 +2388,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/bone-breaker-lock.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1376,11 +2411,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-gale-force-kick",
 		name: "Rune of Gale-Force Kick",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Gale-Force Kick Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Gale-Force Kick Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Deal 2d8 bludgeoning damage and push the target 15ft away.",
 		source: "Rift Ascendant Canon",
@@ -1388,6 +2423,21 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/gale-force-kick.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1396,11 +2446,11 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "offensive",
 		rune_category: "Technique",
-		tags: ["rune", "consumable", "technique"],
+		tags: ["rune", "consumable", "technique", "one-time-use", "learning-item"],
 		id: "rune-void-touch-manual",
 		name: "Rune of Void Touch",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void Touch Level 1 technique. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void Touch Level 1 technique. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned technique is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target takes 5d6 void damage and is 'Silenced' for 2 rounds.",
 		source: "Rift Ascendant Canon",
@@ -1408,5 +2458,20 @@ export const technique_runes: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.788Z",
 		image: "/generated/compendium/runes/void-touch-manual.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 ];

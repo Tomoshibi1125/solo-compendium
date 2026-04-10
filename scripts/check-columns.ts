@@ -1,4 +1,4 @@
-﻿import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -22,7 +22,11 @@ async function checkColumns() {
 	const { data, error } = await supabase.rpc("exec_sql_return_data", {
 		sql_string: sql,
 	});
-	// Note: exec_sql_return_data might not exist. I'll just try to select 1 row.
+	if (error) {
+		console.warn("RPC exec_sql_return_data failed:", error.message);
+	} else if (data) {
+		console.log("RPC result:", data);
+	}
 	const { data: row, error: selectError } = await supabase
 		.from("compendium_equipment")
 		.select("*")

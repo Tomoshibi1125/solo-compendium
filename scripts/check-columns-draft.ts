@@ -1,4 +1,4 @@
-﻿import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -44,10 +44,9 @@ async function _checkColumns() {
 
 		if (error) {
 			console.error(`Error checking columns for ${table}:`, error.message);
+		} else if (data) {
+			console.log(`Columns for ${table}:`, data);
 		}
-
-		// Since exec_sql (void) doesn't return data, we need a different approach or just assume we need to add them.
-		// Wait, exec_sql in this project returns void.
 	}
 }
 

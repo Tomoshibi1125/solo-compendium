@@ -2,9 +2,9 @@
 /**
  * Appends chapters 2-5 and all appendices to the adventure file.
  */
-import { appendFileSync, readFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { appendFileSync, readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT = resolve(__dirname, "..", "docs", "adventure-protocol-zero.md");
@@ -21,7 +21,7 @@ const additions = [
 	appendices(),
 ].join("\n");
 
-appendFileSync(OUTPUT, "\n" + additions, "utf8");
+appendFileSync(OUTPUT, `\n${additions}`, "utf8");
 
 const full = readFileSync(OUTPUT, "utf8");
 const lines = full.split("\n").length;

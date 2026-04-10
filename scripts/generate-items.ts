@@ -1,4 +1,4 @@
-﻿import * as fs from "node:fs";
+import * as fs from "node:fs";
 import * as path from "node:path";
 
 const targetCount = 650;
@@ -183,7 +183,9 @@ function generateNameAndType(): {
 	base: string;
 } {
 	const typeRoll = Math.random();
-	let type, name, base;
+	let type = "",
+		name = "",
+		base = "";
 	if (typeRoll < 0.4) {
 		type = "weapon";
 		base = randomArray(weapons);
@@ -224,8 +226,16 @@ function generateDetailedDescription(
 	return desc;
 }
 
-interface ActiveAbility { name: string; description: string; action: string; frequency: string; }
-interface ItemEffect { passive: string[]; active?: ActiveAbility[]; }
+interface ActiveAbility {
+	name: string;
+	description: string;
+	action: string;
+	frequency: string;
+}
+interface ItemEffect {
+	passive: string[];
+	active?: ActiveAbility[];
+}
 
 function generateEffect(rarity: string, _type: string): ItemEffect {
 	const passiveCount =
@@ -247,7 +257,11 @@ function generateEffect(rarity: string, _type: string): ItemEffect {
 	const effect: ItemEffect = { passive: passives };
 	if (Math.random() > 0.5 && rarity !== "common") {
 		const cost =
-			rarity === "uncommon" ? "10 Mana" : rarity === "rare" ? "25 Mana" : "50 Mana";
+			rarity === "uncommon"
+				? "10 Mana"
+				: rarity === "rare"
+					? "25 Mana"
+					: "50 Mana";
 		effect.active = [
 			{
 				name: "Arcane Overchannel",
@@ -261,9 +275,18 @@ function generateEffect(rarity: string, _type: string): ItemEffect {
 }
 
 interface GeneratedItem {
-	id: string; name: string; description: string; rarity: string;
-	type: string; image: string; effects: ItemEffect; attunement: boolean;
-	weight: number; value: number; source: string; lore: string;
+	id: string;
+	name: string;
+	description: string;
+	rarity: string;
+	type: string;
+	image: string;
+	effects: ItemEffect;
+	attunement: boolean;
+	weight: number;
+	value: number;
+	source: string;
+	lore: string;
 }
 
 const items: GeneratedItem[] = [];

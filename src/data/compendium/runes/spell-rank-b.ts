@@ -8,11 +8,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-1",
 		name: "Rune of Entropy lance",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Entropy lance (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Entropy lance (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Critical hits pull the target 10 feet toward the caster.",
 		source: "Rift Ascendant Core",
@@ -20,6 +20,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-1.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -28,11 +43,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-2",
 		name: "Rune of Ichor edge",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Ichor edge (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Ichor edge (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Critical hits pull the target 10 feet toward the caster.",
 		source: "Rift Ascendant Core",
@@ -40,6 +55,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-2.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -48,17 +78,32 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-3",
 		name: "Rune of Glacial tomb",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Glacial tomb (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Glacial tomb (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Target's movement speed is reduced by 10 feet.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-3.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -67,11 +112,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-4",
 		name: "Rune of Dawn spike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dawn spike (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dawn spike (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Undead have disadvantage on Decree checks against this spell.",
 		source: "Rift Ascendant Core",
@@ -79,6 +124,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-4.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -87,11 +147,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-5",
 		name: "Rune of Solar burst",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Solar burst (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Solar burst (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Undead have disadvantage on Decree checks against this spell.",
 		source: "Rift Ascendant Core",
@@ -99,6 +159,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-5.webp",
+		discovery_lore:
+			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -107,11 +182,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-6",
 		name: "Rune of Void edge",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void edge (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void edge (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Critical hits pull the target 10 feet toward the caster.",
 		source: "Rift Ascendant Core",
@@ -119,6 +194,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-6.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -127,17 +217,32 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-7",
 		name: "Rune of Pulse spike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Pulse spike (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Pulse spike (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "The caster regains HP equal to half the damage dealt.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-7.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -146,11 +251,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-8",
 		name: "Rune of Tempest shackle",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Tempest shackle (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Tempest shackle (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target cannot take reactions until the start of its next turn.",
 		source: "Rift Ascendant Core",
@@ -158,6 +263,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-8.webp",
+		discovery_lore:
+			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -166,17 +286,32 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-9",
 		name: "Rune of Heart tear",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Heart tear (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Heart tear (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "The caster regains HP equal to half the damage dealt.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-9.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -185,17 +320,32 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-10",
 		name: "Rune of Arctic burst",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Arctic burst (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Arctic burst (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Target's movement speed is reduced by 10 feet.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-10.webp",
+		discovery_lore:
+			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -204,11 +354,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-11",
 		name: "Rune of Void tomb",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void tomb (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void tomb (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Critical hits pull the target 10 feet toward the caster.",
 		source: "Rift Ascendant Core",
@@ -216,6 +366,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-11.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -224,11 +389,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-12",
 		name: "Rune of Bolt pulse",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Bolt pulse (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Bolt pulse (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target cannot take reactions until the start of its next turn.",
 		source: "Rift Ascendant Core",
@@ -236,6 +401,21 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-12.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -244,17 +424,32 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-13",
 		name: "Rune of Sanguine burst",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Sanguine burst (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Sanguine burst (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "The caster regains HP equal to half the damage dealt.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-13.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -263,17 +458,32 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-14",
 		name: "Rune of Rime blast",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Rime blast (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Rime blast (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Target's movement speed is reduced by 10 feet.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-14.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -282,11 +492,11 @@ export const runes_b: CompendiumRune[] = [
 		rune_level: 0,
 		rune_type: "Combat",
 		rune_category: "Spell",
-		tags: ["rune", "consumable", "spell"],
+		tags: ["rune", "consumable", "spell", "one-time-use", "learning-item"],
 		id: "rune-spell-b-15",
 		name: "Rune of Void lance",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void lance (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void lance (Rank B) Level 0 spell. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Critical hits pull the target 10 feet toward the caster.",
 		source: "Rift Ascendant Core",
@@ -294,5 +504,20 @@ export const runes_b: CompendiumRune[] = [
 		created_at: "2024-04-06",
 		updated_at: "2026-04-08T07:38:29.767Z",
 		image: "/generated/compendium/runes/spell-b-15.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 ];

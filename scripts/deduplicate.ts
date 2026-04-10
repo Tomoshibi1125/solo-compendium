@@ -1,4 +1,4 @@
-﻿import fs from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 
 const DATA_DIR = path.join(process.cwd(), "src/data/compendium");
@@ -41,7 +41,7 @@ async function main() {
 			continue;
 		}
 
-		let moduleData;
+		let moduleData: Record<string, unknown> = {};
 		try {
 			moduleData = await import(`file:///${filePath.replace(/\\/g, "/")}`);
 		} catch (e) {
@@ -54,7 +54,7 @@ async function main() {
 		);
 		if (!exportKey) continue;
 
-		const originalArray = moduleData[exportKey];
+		const originalArray = moduleData[exportKey] as Record<string, unknown>[];
 		const deduplicatedArray = [];
 
 		for (const item of originalArray) {
@@ -63,10 +63,10 @@ async function main() {
 				continue;
 			}
 
-			if (localSeenNames.has(item.name)) {
+			if (localSeenNames.has(item.name as string)) {
 				removedCount++;
 			} else {
-				localSeenNames.add(item.name);
+				localSeenNames.add(item.name as string);
 				deduplicatedArray.push(item);
 			}
 		}

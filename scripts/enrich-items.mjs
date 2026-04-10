@@ -29,18 +29,18 @@ function parseItemsFile(filePath) {
 	let depth = 0,
 		current = "",
 		inString = false,
-		escape = false;
+		isEscaped = false;
 
 	for (let i = 0; i < arrayBody.length; i++) {
 		const ch = arrayBody[i];
-		if (escape) {
+		if (isEscaped) {
 			current += ch;
-			escape = false;
+			isEscaped = false;
 			continue;
 		}
 		if (ch === "\\") {
 			current += ch;
-			escape = true;
+			isEscaped = true;
 			continue;
 		}
 		if (ch === '"') {

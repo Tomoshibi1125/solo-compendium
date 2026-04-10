@@ -8,11 +8,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-shadow-step",
 		name: "Rune of Shadow Step",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Shadow Step Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Shadow Step Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Teleport up to 30 feet to an unoccupied space you can see that is in dim light or darkness.",
 		source: "Rift Ascendant Canon",
@@ -20,6 +20,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/shadow-step.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -28,11 +43,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-demonic-aura",
 		name: "Rune of Demonic Aura",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Demonic Aura Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Demonic Aura Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Enemies within 10 feet must make Sense saving throws or be frightened.",
 		source: "Rift Ascendant Canon",
@@ -40,6 +55,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/demonic-aura.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -48,11 +78,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-regeneration",
 		name: "Rune of Regeneration",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Regeneration Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Regeneration Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Regain 1 hit point at the start of your turn if you have at least 1 hit point.",
 		source: "Rift Ascendant Canon",
@@ -60,6 +90,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/regeneration.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -68,17 +113,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-true-sight",
 		name: "Rune of True Sight",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the True Sight Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the True Sight Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Can see in normal and magical darkness.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/true-sight.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -87,17 +147,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-shadow-essence",
 		name: "Rune of Shadow Essence",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Shadow Essence Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Shadow Essence Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Become incorporeal while in dim light or darkness.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/shadow-essence.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -106,17 +181,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-dragon-breath",
 		name: "Rune of Dragon Breath",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dragon Breath Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dragon Breath Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Exhale destructive energy in a 15-foot cone.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/dragon-breath.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -125,17 +215,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-arcane-charm",
 		name: "Rune of Arcane Charm",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Arcane Charm Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Arcane Charm Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Target must make Sense saving throw or be charmed.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/arcane-charm.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -144,17 +249,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-bulwark-resilience",
 		name: "Rune of Bulwark Resilience",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Bulwark Resilience Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Bulwark Resilience Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Advantage on saving throws against poison.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/bulwark-resilience.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -163,11 +283,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-assassin-luck",
 		name: "Rune of Assassin's Luck",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Assassin's Luck Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Assassin's Luck Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Reroll a 1 on an attack roll, ability check, or saving throw.",
 		source: "Rift Ascendant Canon",
@@ -175,6 +295,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/assassin-luck.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -183,17 +318,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-warrior-rage",
 		name: "Rune of Warrior's Rage",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Warrior's Rage Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Warrior's Rage Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Advantage on Strength checks and saving throws.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/warrior-rage.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -202,11 +352,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-ki-point",
 		name: "Rune of Ki Point",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Ki Point Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Ki Point Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Gain a pool of ki points equal to your martial artist level.",
 		source: "Rift Ascendant Canon",
@@ -214,6 +364,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/ki-point.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -222,11 +387,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-divine-smite",
 		name: "Rune of Divine Smite",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Divine Smite Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Divine Smite Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Add radiant damage equal to 2d8 + herald level to a melee weapon hit.",
 		source: "Rift Ascendant Canon",
@@ -234,6 +399,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/divine-smite.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -242,11 +422,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-wild-shape",
 		name: "Rune of Primal Shift",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Primal Shift Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Primal Shift Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Transform into a beast with challenge rating no higher than your summoner level divided by 3.",
 		source: "Rift Ascendant Canon",
@@ -254,6 +434,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/wild-shape.webp",
+		discovery_lore:
+			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -262,11 +457,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-arcane-recovery",
 		name: "Rune of Arcane Recovery",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Arcane Recovery Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Arcane Recovery Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Recover expended spell slots with a total level equal to half your mage level.",
 		source: "Rift Ascendant Canon",
@@ -274,6 +469,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/arcane-recovery.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -282,11 +492,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-sneak-attack",
 		name: "Rune of Precision Kill",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Precision Kill Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Precision Kill Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Add extra damage to attacks when you have advantage or target has an ally adjacent.",
 		source: "Rift Ascendant Canon",
@@ -294,6 +504,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/sneak-attack.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -302,11 +527,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-vampiric-touch",
 		name: "Rune of Vampiric Touch",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Vampiric Touch Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Vampiric Touch Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Touch deals necrotic damage and heals you for the same amount.",
 		source: "Rift Ascendant Canon",
@@ -314,6 +539,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/vampiric-touch.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -322,17 +562,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-lycanthropy",
 		name: "Rune of Lycanthropy",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Lycanthropy Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Lycanthropy Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Transform into a hybrid werewolf form.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/lycanthropy.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -341,11 +596,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-gaze-of-petrification",
 		name: "Rune of Gaze of Petrification",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Gaze of Petrification Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Gaze of Petrification Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target must make Vitality saving throw or begin turning to stone.",
 		source: "Rift Ascendant Canon",
@@ -353,6 +608,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/gaze-of-petrification.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -361,11 +631,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-telepathy",
 		name: "Rune of Telepathy",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Telepathy Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Telepathy Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Communicate telepathically with any creature you can see within 120 feet.",
 		source: "Rift Ascendant Canon",
@@ -373,6 +643,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/telepathy.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -381,17 +666,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-invisibility",
 		name: "Rune of Invisibility",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Invisibility Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Invisibility Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Become invisible to all sight.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/invisibility.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -400,17 +700,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-divine-intervention",
 		name: "Rune of System Override",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the System Override Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the System Override Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Request direct intervention from the Rift architects.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/divine-intervention.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -419,11 +734,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-angelic-wings",
 		name: "Rune of Essence Wings",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Essence Wings Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Essence Wings Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Manifest spectral wings that grant a fly speed of 60 feet.",
 		source: "Rift Ascendant Canon",
@@ -431,6 +746,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/angelic-wings.webp",
+		discovery_lore:
+			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -439,17 +769,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-holy-aura",
 		name: "Rune of Sanctified Aura",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Sanctified Aura Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Sanctified Aura Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Allies in aura have advantage on saving throws.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/holy-aura.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -458,17 +803,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-avatar-of-battle",
 		name: "Rune of Avatar of Battle",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Avatar of Battle Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Avatar of Battle Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Gain two additional attacks per turn.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/avatar-of-battle.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -477,11 +837,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-arcane-ascension",
 		name: "Rune of Arcane Ascension",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Arcane Ascension Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Arcane Ascension Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Can cast any spell of 8th level or lower without expending a spell slot.",
 		source: "Rift Ascendant Canon",
@@ -489,6 +849,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/arcane-ascension.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -497,11 +872,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-void-collapse",
 		name: "Rune of Void Collapse",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void Collapse Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void Collapse Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Create a 20-foot radius sphere of crushing gravity. Creatures inside take 8d10 force damage and are knocked prone and restrained.",
 		source: "Rift Ascendant Canon",
@@ -509,6 +884,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/void-collapse.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -517,11 +907,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-chronos-shift",
 		name: "Rune of Chronos Shift",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Chronos Shift Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Chronos Shift Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"When a creature takes damage or fails a save, rewind time for them to completely undo the event.",
 		source: "Rift Ascendant Canon",
@@ -529,6 +919,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/chronos-shift.webp",
+		discovery_lore:
+			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -537,11 +942,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-mana-burn",
 		name: "Rune of Mana Burn",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Mana Burn Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Mana Burn Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target loses an unexpended resource (spell slot, ki, mana) and takes 1d8 psychic damage per level of resource lost.",
 		source: "Rift Ascendant Canon",
@@ -549,6 +954,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/mana-burn.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -557,11 +977,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-obsidian-carapace",
 		name: "Rune of Obsidian Carapace",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Obsidian Carapace Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Obsidian Carapace Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Gain 30 temporary hit points. While you have these, attackers taking melee swings at you take 1d6 piercing damage.",
 		source: "Rift Ascendant Canon",
@@ -569,6 +989,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/obsidian-carapace.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -577,11 +1012,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-soul-rend",
 		name: "Rune of Soul Rend",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Soul Rend Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Soul Rend Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Deal 4d10 necrotic damage and reduce the target's maximum hit points by the same amount.",
 		source: "Rift Ascendant Canon",
@@ -589,6 +1024,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/soul-rend.webp",
+		discovery_lore:
+			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -597,11 +1047,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-aegis-of-light",
 		name: "Rune of Aegis of Light",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Aegis of Light Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Aegis of Light Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Gain immunity to magical damage until the start of your next turn.",
 		source: "Rift Ascendant Canon",
@@ -609,6 +1059,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/aegis-of-light.webp",
+		discovery_lore:
+			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -617,11 +1082,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-phantom-barrage",
 		name: "Rune of Phantom Barrage",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Phantom Barrage Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Phantom Barrage Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Make 5 ranged spell attacks. Each deals 1d10 force damage.",
 		source: "Rift Ascendant Canon",
@@ -629,6 +1094,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/phantom-barrage.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -637,11 +1117,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-venom-blood",
 		name: "Rune of Venom Blood",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Venom Blood Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Venom Blood Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Whenever you take piercing or slashing damage, the attacker takes 2d6 poison damage.",
 		source: "Rift Ascendant Canon",
@@ -649,6 +1129,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/venom-blood.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -657,11 +1152,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-absolute-zero",
 		name: "Rune of Absolute Zero",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Absolute Zero Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Absolute Zero Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"All creatures in a 20-foot sphere take 6d8 cold damage and are paralyzed for 1 minute (Con save ends).",
 		source: "Rift Ascendant Canon",
@@ -669,6 +1164,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/absolute-zero.webp",
+		discovery_lore:
+			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -677,11 +1187,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-kinetic-absorption",
 		name: "Rune of Kinetic Absorption",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Kinetic Absorption Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Kinetic Absorption Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Reduce incoming physical damage by 1d10 + attribute. Store this energy.",
 		source: "Rift Ascendant Canon",
@@ -689,6 +1199,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/kinetic-absorption.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -697,17 +1222,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-infernal-forge",
 		name: "Rune of Infernal Forge",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Infernal Forge Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Infernal Forge Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Manifest a weapon of pure fire in your empty hand.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/infernal-forge.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -716,11 +1256,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-celestial-judgment",
 		name: "Rune of Celestial Judgment",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Celestial Judgment Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Celestial Judgment Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target loses all damage resistances and immunities for 1 minute.",
 		source: "Rift Ascendant Canon",
@@ -728,6 +1268,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/celestial-judgment.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -736,11 +1291,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-mind-control",
 		name: "Rune of Dominate Will",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dominate Will Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dominate Will Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You dictate the creature's actions completely. Adapts to your highest applicable attribute.",
 		source: "Rift Ascendant Canon",
@@ -748,6 +1303,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/mind-control.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -756,11 +1326,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-warp-strike",
 		name: "Rune of Warp Strike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Warp Strike Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Warp Strike Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Make a ranged attack with a melee weapon. Hit or miss, you teleport to an unoccupied space adjacent to the target.",
 		source: "Rift Ascendant Canon",
@@ -768,6 +1338,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.794Z",
 		updated_at: "2026-04-08T07:38:29.794Z",
 		image: "/generated/compendium/runes/warp-strike.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -776,11 +1361,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-life-transfer",
 		name: "Rune of Life Transfer",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Life Transfer Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Life Transfer Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Take 4d8 necrotic damage (ignores resistance/immunity).",
 		source: "Rift Ascendant Canon",
@@ -788,6 +1373,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/life-transfer.webp",
+		discovery_lore:
+			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -796,11 +1396,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-gravity-crush",
 		name: "Rune of Gravity Crush",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Gravity Crush Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Gravity Crush Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target takes 5d10 force damage and has its movement speed reduced to 5 feet.",
 		source: "Rift Ascendant Canon",
@@ -808,6 +1408,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/gravity-crush.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -816,11 +1431,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "monstrous",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-echo-clone",
 		name: "Rune of Echo Clone",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Echo Clone Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Echo Clone Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Create a clone with 1 HP and your exact AC and stats. It shares your turn and can attack.",
 		source: "Rift Ascendant Canon",
@@ -828,6 +1443,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/echo-clone.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -836,11 +1466,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-storm-call",
 		name: "Rune of Storm Call",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Storm Call Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Storm Call Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Call down lightning bolts every turn as a bonus action (6d10 damage).",
 		source: "Rift Ascendant Canon",
@@ -848,6 +1478,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/storm-call.webp",
+		discovery_lore:
+			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -856,11 +1501,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-blight-touch",
 		name: "Rune of Blight Touch",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Blight Touch Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Blight Touch Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Deal 8d8 necrotic damage. Plants and non-magical structures instantly wither or degrade.",
 		source: "Rift Ascendant Canon",
@@ -868,6 +1513,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/blight-touch.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -876,11 +1536,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-starfall",
 		name: "Rune of Starfall",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Starfall Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Starfall Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"A blazing meteorite impacts a 40-foot radius. Deals 15d6 fire and 15d6 bludgeoning damage.",
 		source: "Rift Ascendant Canon",
@@ -888,6 +1548,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/starfall.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -896,11 +1571,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-reality-glitch",
 		name: "Rune of Reality Glitch",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Reality Glitch Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Reality Glitch Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target is removed from reality for 1d4 rounds. When they return, they take 10d10 force damage.",
 		source: "Rift Ascendant Canon",
@@ -908,6 +1583,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/reality-glitch.webp",
+		discovery_lore:
+			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -916,11 +1606,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-solar-flare",
 		name: "Rune of Solar Flare",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Solar Flare Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Solar Flare Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"All creatures in a 20ft radius take 6d8 fire damage and are blinded for 1 minute.",
 		source: "Rift Ascendant Canon",
@@ -928,6 +1618,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/solar-flare.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -936,11 +1641,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-void-singularity",
 		name: "Rune of Void Singularity",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Void Singularity Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Void Singularity Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Create a singularity that pulls all creatures within 50ft toward it. Deals 20d10 force damage.",
 		source: "Rift Ascendant Canon",
@@ -948,6 +1653,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/void-singularity.webp",
+		discovery_lore:
+			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -956,11 +1676,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-aeon-shield",
 		name: "Rune of Aeon Shield",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Aeon Shield Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Aeon Shield Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"For 1 minute, you are immune to all damage as attacks simply stop in time before hitting you.",
 		source: "Rift Ascendant Canon",
@@ -968,6 +1688,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/aeon-shield.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -976,11 +1711,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-nebula-drift",
 		name: "Rune of Nebula Drift",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Nebula Drift Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Nebula Drift Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You become incorporeal and can pass through objects. You gain a fly speed of 60ft.",
 		source: "Rift Ascendant Canon",
@@ -988,6 +1723,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/nebula-drift.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -996,11 +1746,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-gravity-well",
 		name: "Rune of Gravity Well",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Gravity Well Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Gravity Well Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Creatures in a 20ft radius have their speed reduced to 0 and take 4d6 bludgeoning damage.",
 		source: "Rift Ascendant Canon",
@@ -1008,6 +1758,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/gravity-well.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1016,11 +1781,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-quantum-entanglement",
 		name: "Rune of Quantum Entanglement",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Quantum Entanglement Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Quantum Entanglement Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Choose two targets. Any damage or healing received by one is shared by the other.",
 		source: "Rift Ascendant Canon",
@@ -1028,6 +1793,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/quantum-entanglement.webp",
+		discovery_lore:
+			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1036,17 +1816,32 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-supernova-blast",
 		name: "Rune of Supernova Blast",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Supernova Blast Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Supernova Blast Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description: "Deals 15d12 fire and radiant damage in a 40ft radius.",
 		source: "Rift Ascendant Canon",
 		source_book: "Manual of Ascension",
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/supernova-blast.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -1055,11 +1850,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-nanite-swarm",
 		name: "Rune of Nanite Swarm",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Nanite Swarm Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Nanite Swarm Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"The swarm deals 2d8 piercing damage to a target each turn and grants you half-cover.",
 		source: "Rift Ascendant Canon",
@@ -1067,6 +1862,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/nanite-swarm.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1075,11 +1885,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-titan-strength",
 		name: "Rune of Titan's Strength",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Titan's Strength Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Titan's Strength Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Your next melee attack deals triple damage and knocks the target prone.",
 		source: "Rift Ascendant Canon",
@@ -1087,6 +1897,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/titan-strength.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1095,11 +1920,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-echoes-of-the-past",
 		name: "Rune of Echoes of the Past",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Echoes of the Past Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Echoes of the Past Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Create 1d4 echoes that mimic your movements and attacks, dealing 25% damage each.",
 		source: "Rift Ascendant Canon",
@@ -1107,6 +1932,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/echoes-of-the-past.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1115,11 +1955,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-glacier-prison",
 		name: "Rune of Glacier Prison",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Glacier Prison Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Glacier Prison Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target is frozen solid, becoming paralyzed and immune to all damage for 3 rounds.",
 		source: "Rift Ascendant Canon",
@@ -1127,6 +1967,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/glacier-prison.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1135,11 +1990,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-bio-luminescence",
 		name: "Rune of Bio-Luminescence",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Bio-Luminescence Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Bio-Luminescence Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Shed bright light in a 20ft radius and dim light for another 20ft.",
 		source: "Rift Ascendant Canon",
@@ -1147,6 +2002,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/bio-luminescence.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1155,11 +2025,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-neuro-spike",
 		name: "Rune of Neuro Spike",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Neuro Spike Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Neuro Spike Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target takes 1d10 psychic damage and cannot take reactions until their next turn.",
 		source: "Rift Ascendant Canon",
@@ -1167,6 +2037,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/neuro-spike.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1175,11 +2060,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-plasma-whip",
 		name: "Rune of Plasma Whip",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Plasma Whip Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Plasma Whip Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Melee spell attack dealing 3d8 fire damage. Target is pulled 10ft toward you.",
 		source: "Rift Ascendant Canon",
@@ -1187,6 +2072,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/plasma-whip.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1195,11 +2095,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-spectral-blade",
 		name: "Rune of Spectral Blade",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Spectral Blade Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Spectral Blade Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"A blade appears in your hand. Attacks deal 2d10 force damage and ignore non-magical armor.",
 		source: "Rift Ascendant Canon",
@@ -1207,6 +2107,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/spectral-blade.webp",
+		discovery_lore:
+			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1215,11 +2130,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-dimensional-rift",
 		name: "Rune of Dimensional Rift",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Dimensional Rift Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Dimensional Rift Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Access a private storage dimension (up to 500 lbs of gear).",
 		source: "Rift Ascendant Canon",
@@ -1227,6 +2142,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/dimensional-rift.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1235,11 +2165,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-soul-binding",
 		name: "Rune of Soul Binding",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Soul Binding Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Soul Binding Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Choose a 'Sanctuary'. You can teleport back to it from anywhere on the same plane.",
 		source: "Rift Ascendant Canon",
@@ -1247,6 +2177,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/soul-binding.webp",
+		discovery_lore:
+			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -1255,11 +2200,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-entropy-field",
 		name: "Rune of Entropy Field",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Entropy Field Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Entropy Field Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"All non-living objects in range rot or rust instantly. Living targets take 5d8 necrotic damage.",
 		source: "Rift Ascendant Canon",
@@ -1267,6 +2212,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/entropy-field.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1275,11 +2235,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-celestial-communion",
 		name: "Rune of Celestial Communion",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Celestial Communion Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Celestial Communion Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You can ask three questions and receive cryptic but 100% accurate answers.",
 		source: "Rift Ascendant Canon",
@@ -1287,6 +2247,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/celestial-communion.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1295,11 +2270,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-shadow-puppetry",
 		name: "Rune of Shadow Puppetry",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Shadow Puppetry Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Shadow Puppetry Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target must make a Sense save or become your puppet. You control its movement and actions.",
 		source: "Rift Ascendant Canon",
@@ -1307,6 +2282,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/shadow-puppetry.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -1315,11 +2305,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-thermal-vent",
 		name: "Rune of Thermal Vent",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Thermal Vent Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Thermal Vent Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Triggered when you take damage. Deals 3d10 fire damage to all adjacent enemies.",
 		source: "Rift Ascendant Canon",
@@ -1327,6 +2317,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/thermal-vent.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1335,11 +2340,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-gravity-leap",
 		name: "Rune of Gravity Leap",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Gravity Leap Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Gravity Leap Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"You can jump up to 60ft as part of your movement. You do not take falling damage.",
 		source: "Rift Ascendant Canon",
@@ -1347,6 +2352,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/gravity-leap.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
+		rank: "D",
 	},
 	{
 		source_kind: "Consumable",
@@ -1355,11 +2375,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-obsidian-wall",
 		name: "Rune of Obsidian Wall",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Obsidian Wall Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Obsidian Wall Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Create a wall 20ft long, 10ft high, and 1ft thick. It has 50 HP.",
 		source: "Rift Ascendant Canon",
@@ -1367,6 +2387,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/obsidian-wall.webp",
+		discovery_lore:
+			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1375,11 +2410,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-star-fire-lance",
 		name: "Rune of Star-Fire Lance",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Star-Fire Lance Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Star-Fire Lance Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"A 5ft wide line deals 8d8 radiant damage. Penetrates targets.",
 		source: "Rift Ascendant Canon",
@@ -1387,6 +2422,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/star-fire-lance.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1395,11 +2445,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "innate",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-vortex-shield",
 		name: "Rune of Vortex Shield",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Vortex Shield Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Vortex Shield Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Ranged attacks against you have disadvantage. Any creature that enters adjacent space is pushed 10ft away.",
 		source: "Rift Ascendant Canon",
@@ -1407,6 +2457,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/vortex-shield.webp",
+		discovery_lore:
+			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "C",
 	},
 	{
 		source_kind: "Consumable",
@@ -1415,11 +2480,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-seraph-call",
 		name: "Rune of Seraph's Call",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Seraph's Call Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Seraph's Call Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"An angelic guardian appears and grants all allies +4 AC and resistance to necrotic damage.",
 		source: "Rift Ascendant Canon",
@@ -1427,6 +2492,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/seraph-call.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -1435,11 +2515,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "class",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-necrotic-tether",
 		name: "Rune of Necrotic Tether",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Necrotic Tether Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Necrotic Tether Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Target takes 4d6 necrotic damage each turn. You heal for the same amount.",
 		source: "Rift Ascendant Canon",
@@ -1447,6 +2527,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/necrotic-tether.webp",
+		discovery_lore:
+			"Found floating in the spatial void between two Gates that briefly overlapped.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
+		rank: "B",
 	},
 	{
 		source_kind: "Consumable",
@@ -1455,11 +2550,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-glacial-fortress",
 		name: "Rune of Glacial Fortress",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Glacial Fortress Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Glacial Fortress Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"Create a 30ft radius dome. It has 200 HP and grants total cover to those inside.",
 		source: "Rift Ascendant Canon",
@@ -1467,6 +2562,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/glacial-fortress.webp",
+		discovery_lore:
+			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "A",
 	},
 	{
 		source_kind: "Consumable",
@@ -1475,11 +2585,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "awakening",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-reality-shear",
 		name: "Rune of Reality Shear",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Reality Shear Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Reality Shear Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"A 10ft tear appears. It sucks in all air and light, dealing 12d12 force damage.",
 		source: "Rift Ascendant Canon",
@@ -1487,6 +2597,21 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/reality-shear.webp",
+		discovery_lore:
+			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
+		rank: "S",
 	},
 	{
 		source_kind: "Consumable",
@@ -1495,11 +2620,11 @@ export const runes_power_powers: CompendiumRune[] = [
 		rune_level: 1,
 		rune_type: "divine",
 		rune_category: "Power",
-		tags: ["rune", "consumable", "power"],
+		tags: ["rune", "consumable", "power", "one-time-use", "learning-item"],
 		id: "rune-omega-pulse",
 		name: "Rune of Omega Pulse",
 		description:
-			"A resonant lattice-stone containing the compressed knowledge of the Omega Pulse Level 1 power. When absorbed, it permanently teaches the character this ability.",
+			"A resonant lattice-stone containing the compressed knowledge of the Omega Pulse Level 1 power. When absorbed, it permanently teaches the character this ability.\n\nCross-Class Adaptation: If the learned power is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		effect_description:
 			"All enemies in 100ft must make a Sense save or be reduced to 1 HP.",
 		source: "Rift Ascendant Canon",
@@ -1507,5 +2632,20 @@ export const runes_power_powers: CompendiumRune[] = [
 		created_at: "2026-04-08T07:38:29.795Z",
 		updated_at: "2026-04-08T07:38:29.795Z",
 		image: "/generated/compendium/runes/omega-pulse.webp",
+		discovery_lore:
+			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
+		activation_action:
+			"Consume — crush the rune and absorb its knowledge (1 action)",
+		activation_cost:
+			"Consumed on use — the rune shatters and the knowledge is permanently absorbed",
+		activation_cost_amount: 1,
+		duration: "Permanent — the learned ability persists indefinitely",
+		range: "Self",
+		concentration: false,
+		uses_per_rest: "One-time use (destroyed after absorption)",
+		recharge: "N/A — consumable",
+		higher_levels:
+			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
+		rank: "S",
 	},
 ];
