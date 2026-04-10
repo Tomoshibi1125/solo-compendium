@@ -145,7 +145,26 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 		queryKey: ["character-rune-knowledge", characterId],
 		queryFn: async () => {
 			if (!characterId) return [];
-			if (isLocalCharacterId(characterId)) return [];
+			if (isLocalCharacterId(characterId)) {
+				const { listLocalRuneKnowledge } = await import("@/lib/guestStore");
+				const localEntries = listLocalRuneKnowledge(characterId);
+
+				// Fetch compendium info for local runes
+				const { data: compendiumData, error: compError } = await supabase
+					.from("compendium_runes")
+					.select("*")
+					.in(
+						"id",
+						localEntries.map((e) => e.rune_id),
+					);
+
+				if (compError) throw compError;
+
+				return localEntries.map((e) => ({
+					...e,
+					rune: compendiumData?.find((cr) => cr.id === e.rune_id),
+				}));
+			}
 
 			const {
 				data: { user },
@@ -212,6 +231,15 @@ export function useLearnRune() {
 			runeId: string;
 			isMastered?: boolean;
 		}) => {
+			if (isLocalCharacterId(characterId)) {
+				const { addLocalRuneKnowledge } = await import("@/lib/guestStore");
+				return addLocalRuneKnowledge(characterId, {
+					rune_id: runeId,
+					mastery_level: isMastered ? 5 : 1,
+					can_teach: isMastered,
+				});
+			}
+
 			const { data, error } = await supabase
 				.from("character_rune_knowledge")
 				.upsert(

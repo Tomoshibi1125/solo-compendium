@@ -38,6 +38,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useFavorites } from "@/hooks/useFavorites";
+import type { CompendiumEntry } from "@/hooks/useStartupData";
 import {
 	type CompendiumEntity,
 	type EntryType,
@@ -535,27 +536,14 @@ const CompendiumDetail = () => {
 						<>
 							<QuickReference
 								entry={{
-									display_name: entryDisplayName,
+									id: id || "",
 									name: (entryData as { name: string }).name,
-									type: (entryData as { type: string }).type,
-									source_book:
-										(entryData as { source_book?: string | null })
-											.source_book || undefined,
-									tags: Array.isArray(
-										(entryData as { tags?: string[] | null }).tags,
-									)
-										? ((entryData as { tags?: string[] | null })
-												.tags as string[])
-										: undefined,
-									rarity:
-										(entryData as { rarity?: string | null }).rarity ||
-										undefined,
-									gate_rank:
-										(entryData as { gate_rank?: string | null }).gate_rank ||
-										undefined,
-									level:
-										(entryData as { level?: number | null }).level || undefined,
-									cr: (entryData as { cr?: string | null }).cr || undefined,
+									type: (entryData as { type: string })
+										.type as CompendiumEntry["type"],
+									description:
+										(entryData as { description?: string | null })
+											.description ?? null,
+									isFavorite: isFavorite,
 								}}
 								isFavorite={isFavorite}
 								onToggleFavorite={handleToggleFavorite}

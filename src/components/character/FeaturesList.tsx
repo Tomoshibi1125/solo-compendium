@@ -22,6 +22,7 @@ import { useRecordRoll } from "@/hooks/useRollHistory";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
+import { AddFeatDialog } from "./AddFeatDialog";
 
 export function FeaturesList({
 	characterId,
@@ -30,6 +31,7 @@ export function FeaturesList({
 	characterId: string;
 	onSelectDetail?: (detail: DetailData) => void;
 }) {
+	const [isAddFeatDialogOpen, setIsAddFeatDialogOpen] = useState(false);
 	const { features, updateFeature, reorderFeatures } = useFeatures(characterId);
 	const { toast } = useToast();
 	const [filterSource, setFilterSource] = useState<string>("all");
@@ -162,35 +164,46 @@ export function FeaturesList({
 	return (
 		<AscendantWindow title="FEATURES">
 			<div className="space-y-4">
-				<div className="flex items-center gap-2">
-					<Select value={filterSource} onValueChange={setFilterSource}>
-						<SelectTrigger className="w-[140px]">
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="all">All Sources</SelectItem>
-							<SelectItem value="Job">Job</SelectItem>
-							<SelectItem value="Path">Path</SelectItem>
-							<SelectItem value="Awakening">Awakening</SelectItem>
-							<SelectItem value="Background">Background</SelectItem>
-						</SelectContent>
-					</Select>
-					<Select value={filterLevel} onValueChange={setFilterLevel}>
-						<SelectTrigger className="w-[120px]">
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="all">All Levels</SelectItem>
-							{[
-								1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-								19, 20,
-							].map((level) => (
-								<SelectItem key={level} value={level.toString()}>
-									Level {level}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
+				<div className="flex items-center justify-between gap-2">
+					<div className="flex items-center gap-2">
+						<Select value={filterSource} onValueChange={setFilterSource}>
+							<SelectTrigger className="w-[140px]">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="all">All Sources</SelectItem>
+								<SelectItem value="Job">Job</SelectItem>
+								<SelectItem value="Path">Path</SelectItem>
+								<SelectItem value="Awakening">Awakening</SelectItem>
+								<SelectItem value="Background">Background</SelectItem>
+							</SelectContent>
+						</Select>
+						<Select value={filterLevel} onValueChange={setFilterLevel}>
+							<SelectTrigger className="w-[120px]">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="all">All Levels</SelectItem>
+								{[
+									1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+									19, 20,
+								].map((level) => (
+									<SelectItem key={level} value={level.toString()}>
+										Level {level}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+					<Button
+						size="sm"
+						variant="outline"
+						className="gap-2 border-solar-glow/30 hover:bg-solar-glow/10 text-xs"
+						onClick={() => setIsAddFeatDialogOpen(true)}
+					>
+						<Plus className="h-4 w-4" />
+						Add Feat
+					</Button>
 				</div>
 
 				{features.length === 0 ? (
@@ -348,6 +361,12 @@ export function FeaturesList({
 					))
 				)}
 			</div>
+
+			<AddFeatDialog
+				open={isAddFeatDialogOpen}
+				onOpenChange={setIsAddFeatDialogOpen}
+				characterId={characterId}
+			/>
 		</AscendantWindow>
 	);
 }

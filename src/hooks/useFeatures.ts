@@ -1,9 +1,10 @@
-﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
+	addLocalFeature,
 	isLocalCharacterId,
 	listLocalFeatures,
 	updateLocalFeature,
@@ -78,6 +79,39 @@ export const useFeatures = (characterId: string) => {
 				writeCachedFeatures(cacheKey, next);
 			}
 			return next;
+		},
+	});
+
+	const addFeature = useMutation({
+		mutationFn: async (
+			feature: Database["public"]["Tables"]["character_features"]["Insert"],
+		) => {
+			if (isLocalCharacterId(characterId)) {
+				return addLocalFeature(characterId, feature);
+			}
+
+			const { data, error } = await supabase
+				.from("character_features")
+				.insert({ ...feature, character_id: characterId })
+				.select()
+				.single();
+
+			if (error) {
+				logErrorWithContext(error, "useFeatures.addFeature");
+				throw error;
+			}
+			return data;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["features", characterId] });
+		},
+		onError: (error) => {
+			logErrorWithContext(error, "useFeatures.addFeature");
+			toast({
+				title: "Failed to add feature",
+				description: getErrorMessage(error),
+				variant: "destructive",
+			});
 		},
 	});
 
@@ -201,9 +235,31 @@ export const useFeatures = (characterId: string) => {
 	return {
 		features,
 		isLoading,
+		addFeature: addFeature.mutateAsync,
 		updateFeature: updateFeature.mutateAsync,
 		reorderFeatures: reorderFeatures.mutateAsync,
 		activeFeatures,
 		featuresWithUses,
 	};
+};
+
+/**
+ * Hook to browse all feats in the compendium
+ */
+export const useCompendiumFeats = () => {
+	return useQuery({
+		queryKey: ["compendium-feats"],
+		queryFn: async () => {
+			const { data, error } = await supabase
+				.from("compendium_feats")
+				.select("*")
+				.order("name", { ascending: true });
+
+			if (error) {
+				console.error("Error fetching compendium feats:", error);
+				throw error;
+			}
+			return data;
+		},
+	});
 };

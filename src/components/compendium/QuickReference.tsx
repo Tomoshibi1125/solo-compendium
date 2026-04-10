@@ -1,23 +1,25 @@
-import { BookOpen, Download, FileText, Heart, Share2 } from "lucide-react";
+import {
+	BookOpen,
+	Download,
+	FileText,
+	Heart,
+	Plus,
+	Share2,
+} from "lucide-react";
+import { useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useCharacters } from "@/hooks/useCharacters";
+import { usePreferredCampaignSelection } from "@/hooks/usePreferredCampaignSelection";
+import type { CompendiumEntry } from "@/hooks/useStartupData";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { NotesManager } from "./NotesManager";
+import { SendToInventoryDialog } from "./SendToInventoryDialog";
 
 interface QuickReferenceProps {
-	entry: {
-		name: string;
-		display_name?: string | null;
-		type: string;
-		source_book?: string | null;
-		tags?: string[] | null;
-		rarity?: string | null;
-		gate_rank?: string | null;
-		level?: number | null;
-		cr?: string | null;
-	};
+	entry: CompendiumEntry;
 	isFavorite?: boolean;
 	onToggleFavorite?: () => void;
 	onShare?: () => void;
@@ -33,12 +35,27 @@ export function QuickReference({
 	onExport,
 	className,
 }: QuickReferenceProps) {
-	const displayName = formatRegentVernacular(entry.display_name || entry.name);
+	const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
+	const { data: characters = [] } = useCharacters();
+	const { campaignId } = usePreferredCampaignSelection("compendium");
+
+	const displayName = formatRegentVernacular(entry.name);
 	return (
 		<div className={cn("space-y-4", className)}>
 			{/* Actions */}
 			<AscendantWindow title="ACTIONS" compact>
 				<div className="flex flex-col gap-2">
+					<Button
+						variant="default"
+						size="sm"
+						onClick={() => setIsSendDialogOpen(true)}
+						className="w-full justify-start bg-solar-glow text-black hover:bg-solar-glow/80"
+						title="Add to a character sheet or party stash"
+					>
+						<Plus className="w-4 h-4 mr-2" />
+						Send to Destination
+					</Button>
+
 					{onToggleFavorite && (
 						<Button
 							variant={isFavorite ? "default" : "outline"}
@@ -169,6 +186,15 @@ export function QuickReference({
 					entryName={displayName}
 				/>
 			</div>
+
+			{/* Side Dialog */}
+			<SendToInventoryDialog
+				isOpen={isSendDialogOpen}
+				onClose={() => setIsSendDialogOpen(false)}
+				item={entry}
+				characters={characters.map((c) => ({ id: c.id, name: c.name }))}
+				campaignId={campaignId}
+			/>
 		</div>
 	);
 }

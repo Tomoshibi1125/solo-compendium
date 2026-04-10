@@ -18,7 +18,11 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
 import { useEquipment } from "@/hooks/useEquipment";
+import { useFeatures } from "@/hooks/useFeatures";
+import { usePowers } from "@/hooks/usePowers";
+import { useLearnRune } from "@/hooks/useRunes";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
+import { useTechniques } from "@/hooks/useTechniques";
 import type { Database } from "@/integrations/supabase/types";
 
 interface SendToInventoryDialogProps {
@@ -43,10 +47,18 @@ export function SendToInventoryDialog({
 	const [isSending, setIsSending] = useState(false);
 	const { toast } = useToast();
 
-	// Hook for the selected character
+	// Hooks for various targets
 	const { addEquipment } = useEquipment(
 		targetType === "character" ? targetId : "",
 	);
+	const { addPower } = usePowers(targetType === "character" ? targetId : "");
+	const { addTechnique } = useTechniques(
+		targetType === "character" ? targetId : "",
+	);
+	const { addFeature } = useFeatures(
+		targetType === "character" ? targetId : "",
+	);
+	const learnRune = useLearnRune();
 	const { addItem: addToParty } = useCampaignInventory(campaignId);
 
 	const handleSend = async () => {
@@ -63,22 +75,85 @@ export function SendToInventoryDialog({
 		setIsSending(true);
 		try {
 			if (targetType === "character") {
-				await addEquipment({
-					character_id: targetId,
-					name: item.name,
-					description: item.description,
-					item_type: item.type,
-					rarity: item.rarity as Database["public"]["Enums"]["rarity"] | null,
-					weight: item.weight || 0,
-					value_credits: item.value || 0,
-					properties: Array.isArray(item.properties) ? item.properties : null,
-					requires_attunement: item.attunement || false,
-				});
+				// Routing based on type
+				switch (item.type) {
+					case "spells":
+					case "powers":
+						await addPower({
+							character_id: targetId,
+							name: item.name,
+							description: item.description,
+							power_level: item.level || 0,
+							source: item.source_book || "Compendium",
+						});
+						break;
+
+					case "techniques":
+						await addTechnique.mutateAsync(item.id);
+						break;
+
+					case "feats":
+						await addFeature({
+							character_id: targetId,
+							name: item.name,
+							description: item.description,
+							source: "feat",
+							level_acquired: 1,
+						});
+						break;
+
+					case "runes":
+						await learnRune.mutateAsync({
+							characterId: targetId,
+							runeId: item.id,
+						});
+						break;
+
+					default:
+						// Items, Sigils, Tattoos, Relics, etc go to equipment
+						await addEquipment({
+							character_id: targetId,
+							name: item.name,
+							description: item.description,
+							item_type: item.type,
+							rarity: item.rarity as
+								| Database["public"]["Enums"]["rarity"]
+								| null,
+							weight: item.weight || 0,
+							value_credits: item.value || 0,
+							properties: Array.isArray(item.properties)
+								? item.properties
+								: null,
+							requires_attunement: item.attunement || false,
+						});
+				}
+
 				toast({
-					title: "Item Sent",
-					description: `${item.name} has been added to ${characters.find((c) => c.id === targetId)?.name}'s inventory.`,
+					title: "Added to Character",
+					description: `${item.name} has been added to ${characters.find((c) => c.id === targetId)?.name}'s sheet.`,
 				});
 			} else {
+				// Party Stash - Only for Items, Runes, Sigils, Tattoos
+				const allowedPartyTypes = [
+					"items",
+					"equipment",
+					"runes",
+					"sigils",
+					"tattoos",
+					"relics",
+					"artifacts",
+				];
+
+				if (!allowedPartyTypes.includes(item.type)) {
+					toast({
+						title: "Cannot Add to Stash",
+						description: `${item.type} cannot be added to the party stash.`,
+						variant: "destructive",
+					});
+					setIsSending(false);
+					return;
+				}
+
 				await addToParty({
 					name: item.name,
 					description: item.description,
@@ -86,15 +161,18 @@ export function SendToInventoryDialog({
 					quantity: 1,
 				});
 				toast({
-					title: "Item Sent",
+					title: "Sent to Stash",
 					description: `${item.name} has been added to the Party Stash.`,
 				});
 			}
 			onClose();
-		} catch (_error) {
+		} catch (error: unknown) {
+			console.error("Send error:", error);
+			const message =
+				error instanceof Error ? error.message : "Failed to send entry.";
 			toast({
 				title: "Error",
-				description: "Failed to send item to inventory.",
+				description: message,
 				variant: "destructive",
 			});
 		} finally {

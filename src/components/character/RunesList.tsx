@@ -3,12 +3,13 @@ import {
 	BookOpen,
 	CheckCircle,
 	Flame,
+	Plus,
 	Scroll,
 	Shield,
 	Sparkles,
 	Zap,
 } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,7 @@ import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
 import { getProficiencyBonus } from "@/types/core-rules";
+import { AddRuneDialog } from "./AddRuneDialog";
 
 const RUNE_TYPE_COLORS: Record<string, string> = {
 	martial: "bg-red-500/20 text-red-400 border-red-500/30",
@@ -63,10 +65,14 @@ export function RunesList({
 	const recordRoll = useRecordRoll();
 	const ascendantTools = useAscendantTools();
 	const { rollInCampaign } = ascendantTools;
+	const [addRuneOpen, setAddRuneOpen] = useState(false);
 
-	const unabsorbedRunes = runeKnowledge.filter(
-		(rk) => (rk.mastery_level || 0) < 5,
-	);
+	const unabsorbedRunes = useMemo(() => {
+		return runeKnowledge.filter(
+			(rk): rk is typeof rk & { rune: NonNullable<typeof rk.rune> } =>
+				(rk.mastery_level || 0) < 5 && !!rk.rune,
+		);
+	}, [runeKnowledge]);
 	const absorbedFeatures = features.filter((f) =>
 		f.source?.startsWith("Rune:"),
 	);
@@ -142,7 +148,21 @@ export function RunesList({
 	};
 
 	return (
-		<AscendantWindow title="RUNES" variant="resurge">
+		<AscendantWindow
+			title="RUNES"
+			variant="resurge"
+			actions={
+				<Button
+					variant="ghost"
+					size="sm"
+					className="h-8 gap-1 text-resurge hover:text-resurge hover:bg-resurge/20 font-heading tracking-widest"
+					onClick={() => setAddRuneOpen(true)}
+				>
+					<Plus className="w-4 h-4" />
+					Add Rune
+				</Button>
+			}
+		>
 			<div className="space-y-4">
 				{unabsorbedRunes.length > 0 && (
 					<div>
@@ -316,6 +336,12 @@ export function RunesList({
 					</div>
 				)}
 			</div>
+
+			<AddRuneDialog
+				open={addRuneOpen}
+				onOpenChange={setAddRuneOpen}
+				characterId={characterId}
+			/>
 		</AscendantWindow>
 	);
 }

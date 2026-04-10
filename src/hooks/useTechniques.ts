@@ -112,3 +112,24 @@ export const useTechniques = (characterId: string) => {
 		removeTechnique,
 	};
 };
+
+/**
+ * Hook to browse all techniques in the compendium
+ */
+export const useCompendiumTechniques = () => {
+	return useQuery({
+		queryKey: ["compendium-techniques"],
+		queryFn: async () => {
+			const { data, error } = await supabase
+				.from("compendium_techniques")
+				.select("*")
+				.order("name", { ascending: true });
+
+			if (error) {
+				console.error("Error fetching compendium techniques:", error);
+				throw error;
+			}
+			return data as CompendiumTechnique[];
+		},
+	});
+};

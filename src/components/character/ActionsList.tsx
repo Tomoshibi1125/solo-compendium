@@ -1,8 +1,12 @@
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCombatActions } from "@/hooks/useCombatActions";
 import { useEquipment } from "@/hooks/useEquipment";
 import type { DetailData } from "@/types/character";
 import { ActionCard } from "./ActionCard";
+import { AddTechniqueDialog } from "./AddTechniqueDialog";
 
 export function ActionsList({
 	characterId,
@@ -13,6 +17,7 @@ export function ActionsList({
 	campaignId?: string;
 	onSelectDetail?: (detail: DetailData) => void;
 }) {
+	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 	const { actions, isLoading } = useCombatActions(characterId);
 	const { updateEquipment } = useEquipment(characterId);
 
@@ -64,8 +69,8 @@ export function ActionsList({
 
 	return (
 		<div className="space-y-4">
-			<Tabs defaultValue="all" className="w-full">
-				<TabsList className="grid w-full grid-cols-5 h-10">
+			<div className="flex items-center justify-between gap-4">
+				<TabsList className="grid flex-1 grid-cols-5 h-10">
 					<TabsTrigger value="all" className="text-xs">
 						All
 					</TabsTrigger>
@@ -82,7 +87,18 @@ export function ActionsList({
 						Other
 					</TabsTrigger>
 				</TabsList>
+				<Button
+					size="sm"
+					variant="outline"
+					className="flex-shrink-0 gap-2 border-solar-glow/30 hover:bg-solar-glow/10"
+					onClick={() => setIsAddDialogOpen(true)}
+				>
+					<Plus className="h-4 w-4" />
+					Discover Technique
+				</Button>
+			</div>
 
+			<Tabs defaultValue="all" className="w-full">
 				<TabsContent value="all" className="mt-4 space-y-4">
 					{actions.map((action) => (
 						<ActionCard
@@ -161,6 +177,12 @@ export function ActionsList({
 					</TabsContent>
 				))}
 			</Tabs>
+
+			<AddTechniqueDialog
+				open={isAddDialogOpen}
+				onOpenChange={setIsAddDialogOpen}
+				characterId={characterId}
+			/>
 		</div>
 	);
 }

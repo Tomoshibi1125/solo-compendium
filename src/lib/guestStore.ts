@@ -805,6 +805,55 @@ export function removeLocalTechnique(techniqueId: string): void {
 	throw new AppError("Technique not found", "NOT_FOUND");
 }
 
+// Rune Knowledge helpers
+export function listLocalRuneKnowledge(
+	characterId: string,
+): RuneKnowledgeRow[] {
+	const entry = getLocalCharacterState(characterId);
+	return entry?.runeKnowledge || [];
+}
+
+export function addLocalRuneKnowledge(
+	characterId: string,
+	data: { rune_id: string; mastery_level?: number; can_teach?: boolean },
+): RuneKnowledgeRow {
+	const entry = getLocalCharacterState(characterId);
+	if (!entry) throw new AppError("Local character not found", "NOT_FOUND");
+
+	const now = nowIso();
+	const existingIdx = entry.runeKnowledge.findIndex(
+		(rk) => rk.rune_id === data.rune_id,
+	);
+
+	const row: RuneKnowledgeRow = {
+		id: createLocalId("local_rk"),
+		character_id: characterId,
+		rune_id: data.rune_id,
+		mastery_level: data.mastery_level ?? 1,
+		can_teach: data.can_teach ?? false,
+		learned_date: now,
+		created_at: now,
+		learned_from: "local",
+		learned_from_character_id: null,
+	};
+
+	const state = loadGuestState();
+	const nextKnowledge =
+		existingIdx >= 0
+			? entry.runeKnowledge.map((rk, i) => (i === existingIdx ? row : rk))
+			: [...entry.runeKnowledge, row];
+
+	state.characters[characterId] = {
+		...state.characters[characterId],
+		runeKnowledge: nextKnowledge,
+		character: { ...entry.character, updated_at: now },
+	};
+	state.updatedAt = now;
+	saveGuestState(state);
+
+	return row;
+}
+
 // Roll history (optional in guest mode)
 export function listLocalRollHistory(characterId?: string): RollHistoryRow[] {
 	const state = loadGuestState();
