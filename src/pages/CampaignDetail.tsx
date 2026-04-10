@@ -145,12 +145,22 @@ const CampaignDetail = () => {
 		});
 	};
 
-	if (loadingCampaign) {
+	if (loadingCampaign || (!campaign && id)) {
 		return (
 			<Layout>
 				<div className="container mx-auto px-4 py-8">
-					<div className="flex items-center justify-center py-12">
-						<Loader2 className="w-8 h-8 animate-spin text-primary" />
+					<div className="flex flex-col items-center justify-center py-12 gap-4">
+						<div className="relative">
+							<div className="w-12 h-12 border-4 border-primary/20 rounded-full" />
+							<div className="absolute inset-0 w-12 h-12 border-4 border-t-primary rounded-full animate-spin" />
+						</div>
+						<ManaFlowText
+							variant="rift"
+							speed="fast"
+							className="text-muted-foreground font-heading animate-pulse"
+						>
+							Syncing Campaign Archives...
+						</ManaFlowText>
 					</div>
 				</div>
 			</Layout>
@@ -162,12 +172,14 @@ const CampaignDetail = () => {
 			<Layout>
 				<div className="container mx-auto px-4 py-8">
 					<AscendantWindow title="CAMPAIGN NOT FOUND" variant="alert">
-						<p className="text-destructive mb-4">
+						<p className="text-destructive mb-4 text-center">
 							This campaign does not exist or you don't have access to it.
 						</p>
-						<Button asChild>
-							<Link to="/campaigns">Back to Campaigns</Link>
-						</Button>
+						<div className="flex justify-center">
+							<Button asChild>
+								<Link to="/campaigns">Back to Campaigns</Link>
+							</Button>
+						</div>
 					</AscendantWindow>
 				</div>
 			</Layout>

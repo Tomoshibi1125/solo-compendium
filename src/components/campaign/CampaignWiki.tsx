@@ -4,10 +4,12 @@ import {
 	FileText,
 	Globe,
 	HelpCircle,
+	Loader2,
 	Lock,
 	MapPin,
 	Plus,
 	Search,
+	Sparkles,
 	Trash2,
 	Users,
 } from "lucide-react";
@@ -35,6 +37,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
 import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useCampaignWiki, type WikiArticle } from "@/hooks/useCampaignWiki";
 import { cn } from "@/lib/utils";
@@ -51,6 +54,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 	const { articles, isLoading, addArticle, updateArticle, removeArticle } =
 		useCampaignWiki(campaignId);
 	const { data: hasWardenAccess } = useHasWardenAccess(campaignId);
+	const { injectSandbox, isInjecting } = useCampaignSandboxInjector(campaignId);
 
 	const [search, setSearch] = useState("");
 	const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -335,16 +339,50 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 						</ScrollArea>
 					</>
 				) : (
-					<div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-hatching opacity-50">
-						<Globe className="w-16 h-16 text-muted-foreground mb-4 opacity-50" />
-						<h2 className="font-display text-xl text-foreground">
-							The Rift Lore Hub
-						</h2>
-						<p className="text-sm text-muted-foreground max-w-md mt-2 font-heading">
-							Select an article from the index to read. Wrap titles in double
-							brackets to create cross-links (e.g.{" "}
-							<code>[[Shadow Regent]]</code>).
-						</p>
+					<div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-hatching opacity-90 overflow-y-auto">
+						<div className="max-w-md space-y-6">
+							<Globe className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
+							<h2 className="font-display text-2xl text-foreground uppercase tracking-widest">
+								CAMPAIGN LORE ARCHIVES
+							</h2>
+							<p className="text-sm text-muted-foreground font-heading leading-relaxed">
+								The Rift database is currently empty of local lore. Secure the
+								narrative by recording your own articles or by importing the
+								standardized Sandbox module.
+							</p>
+
+							{hasWardenAccess && (
+								<div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+									<Button
+										onClick={handleCreateNew}
+										className="btn-umbral gap-2"
+									>
+										<Plus className="w-4 h-4" />
+										Create Article
+									</Button>
+									<Button
+										variant="outline"
+										onClick={() => injectSandbox()}
+										disabled={isInjecting}
+										className="border-primary/40 hover:border-primary hover:bg-primary/10 gap-2"
+									>
+										{isInjecting ? (
+											<Loader2 className="w-4 h-4 animate-spin text-primary" />
+										) : (
+											<Sparkles className="w-4 h-4 text-primary" />
+										)}
+										{isInjecting
+											? "Syncing archives..."
+											: "Import 'The Shadow of the Regent'"}
+									</Button>
+								</div>
+							)}
+							{!hasWardenAccess && (
+								<p className="text-xs text-muted-foreground italic">
+									Only the Warden can initialize the campaign archives.
+								</p>
+							)}
+						</div>
 					</div>
 				)}
 			</div>

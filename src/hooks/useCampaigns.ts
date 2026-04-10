@@ -220,6 +220,7 @@ export const useJoinedCampaigns = () => {
 
 // Fetch single campaign by ID
 export const useCampaign = (campaignId: string) => {
+	const { user: authUser, loading: authLoading } = useAuth();
 	return useQuery({
 		queryKey: ["campaigns", campaignId],
 		queryFn: async () => {
@@ -229,25 +230,44 @@ export const useCampaign = (campaignId: string) => {
 					null
 				);
 			}
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
+
+			// If Supabase is configured, we SHOULD have a user or be intentional about being a guest.
+			// However, calling supabase.auth.getUser() here is a bit risky if it races.
+			// We'll use the authUser from hook if available, otherwise fetch.
+			const user = authUser || (await supabase.auth.getUser()).data.user;
+
 			if (!user && guestEnabled) {
 				return (
 					loadLocalCampaigns().find((campaign) => campaign.id === campaignId) ||
 					null
 				);
 			}
+
+			if (!user) {
+				throw new AppError(
+					"Authentication required to view campaign",
+					"AUTH_REQUIRED",
+				);
+			}
+
 			const { data, error } = await supabase
 				.from("campaigns")
 				.select("*")
 				.eq("id", campaignId)
 				.single();
 
-			if (error) throw error;
+			if (error) {
+				if (error.code === "PGRST116") return null; // Not found
+				throw error;
+			}
 			return (data || null) as Campaign;
 		},
-		enabled: !!campaignId,
+		enabled: !!campaignId && !authLoading,
+		retry: (failureCount, error) => {
+			// Retry once for RLS/propagation delays
+			if (failureCount < 2) return true;
+			return false;
+		},
 	});
 };
 

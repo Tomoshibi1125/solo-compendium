@@ -418,7 +418,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 								variant="outline"
 								className="border-shadow-blue/50 text-shadow-blue font-heading"
 							>
-								Guild Master
+								Warden
 							</Badge>
 						)}
 					</div>

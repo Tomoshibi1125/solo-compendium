@@ -1,7 +1,10 @@
-import { FileText } from "lucide-react";
+import { FileText, Loader2, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
+import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
@@ -58,6 +61,8 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 	const [entries, setEntries] = useState<HandoutEntry[]>([]);
 	const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const { data: hasWardenAccess } = useHasWardenAccess(campaignId);
+	const { injectSandbox, isInjecting } = useCampaignSandboxInjector(campaignId);
 
 	useEffect(() => {
 		if (!campaignId) {
@@ -147,13 +152,32 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 				<AscendantWindow title="HANDOUTS & LORE">
 					<div className="space-y-2 max-h-[520px] overflow-y-auto">
 						{isLoading ? (
-							<p className="text-xs text-muted-foreground text-center py-4">
-								Loading handouts...
-							</p>
+							<div className="flex items-center justify-center py-8 text-primary animate-pulse">
+								<Loader2 className="w-6 h-6 animate-spin mr-2" />
+								<span className="text-xs">Accessing archives...</span>
+							</div>
 						) : visibleEntries.length === 0 ? (
-							<p className="text-xs text-muted-foreground text-center py-4">
-								No handouts shared yet.
-							</p>
+							<div className="text-center py-8 space-y-4">
+								<p className="text-xs text-muted-foreground italic">
+									No handouts shared yet.
+								</p>
+								{hasWardenAccess && (
+									<Button
+										variant="outline"
+										size="sm"
+										className="w-full border-primary/40 hover:border-primary hover:bg-primary/10 gap-2 text-[10px]"
+										onClick={() => injectSandbox()}
+										disabled={isInjecting}
+									>
+										{isInjecting ? (
+											<Loader2 className="w-3 h-3 animate-spin text-primary" />
+										) : (
+											<Sparkles className="w-3 h-3 text-primary" />
+										)}
+										{isInjecting ? "Importing..." : "Import Sandbox Handouts"}
+									</Button>
+								)}
+							</div>
 						) : (
 							visibleEntries.map((entry) => (
 								<button

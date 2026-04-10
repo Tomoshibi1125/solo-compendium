@@ -14,6 +14,14 @@ export interface SandboxModule {
 	description: string;
 	chapters: SandboxChapter[];
 	scenes: (VTTScene & { audioTracks?: { url: string; name: string }[] })[];
+	handouts: SandboxHandout[];
+}
+
+export interface SandboxHandout {
+	title: string;
+	content: string;
+	visibleToPlayers: boolean;
+	category: string;
 }
 
 export interface SandboxChapter {
@@ -129,6 +137,31 @@ An unstoppable S-Rank anomaly known as The Executioner roams the lower-level map
 
 **Mechanic**: Every 24 in-game hours, or whenever the players use a massive burst of Aetheric Energy, roll 1d20. On a 1, The Executioner enters the region. 
 The players are not meant to fight it early on—they MUST run and hide. It moves at 60ft per round and can sense aetheric signatures.`,
+	},
+];
+
+// ----------------------------------------------------------------------------
+// HANDOUTS GENERATION (SANDBOX LORE & CLUES)
+// ----------------------------------------------------------------------------
+
+export const sandboxHandouts: SandboxHandout[] = [
+	{
+		title: "Bounty: The Executioner",
+		content: `# B-RANK BOUNTY: ANOMALY-UNCLASSIFIED\n\n**Target Alias**: 'The Executioner'\n**Threat Level**: S-Rank Potential (Unconfirmed)\n**Reward**: 5,000,000 Credits, Alive or Dead (Preferably Dead).\n\n**Warning**: Target is highly mobile and tracks Aetheric signatures. Ascendants below Rank B are ordered to retreat on sight. Do not engage.`,
+		visibleToPlayers: true,
+		category: "handout",
+	},
+	{
+		title: "Vermillion Guild Manifesto",
+		content: `*A crumpled flyer found near the bazaar...*\n\nThe Bureau wants you to think the Gate Quotas are for your own good. They take the cores, they horde the Runes, and they let the D-Ranks die in the outer sectors.\n\nThe Vermillion Guild offers a different path. Bring your cores to us. We pay 50% above market, no questions asked. \n\n*Survive First. Obey Later.*`,
+		visibleToPlayers: true,
+		category: "note",
+	},
+	{
+		title: "Corrupted Cipher (Regent Lore)",
+		content: `*A heavy stone tablet etched with glowing, necrotic script...*\n\n"The Regent does not slumber. It waits. The three Relics are not keys to free it—they are the locks that bind its power. He who gathers the relic of Void, the relic of Abyss, and the relic of Blood shall either inherit the throne or burn in its wake."`,
+		visibleToPlayers: false,
+		category: "lore",
 	},
 ];
 
@@ -303,4 +336,5 @@ export const massiveSandboxModule: SandboxModule = {
 	description: "A dynamic 1-10 level sandbox campaign.",
 	chapters: sandboxWikiChapters,
 	scenes: sandboxVTTScenes,
+	handouts: sandboxHandouts,
 };

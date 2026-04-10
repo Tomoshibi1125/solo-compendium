@@ -19,8 +19,9 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		progressString: "",
 	});
 
-	const injectSandbox = async () => {
-		if (!campaignId || !user) return;
+	const injectSandbox = async (overrideCampaignId?: string) => {
+		const targetId = overrideCampaignId || campaignId;
+		if (!targetId || !user) return;
 
 		setInjectionState({
 			isInjecting: true,
@@ -38,13 +39,13 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				const { data: existing } = await supabase
 					.from("campaign_wiki_articles")
 					.select("id")
-					.eq("campaign_id", campaignId)
+					.eq("campaign_id", targetId)
 					.eq("title", chapter.title)
 					.maybeSingle();
 
 				if (!existing) {
 					await supabase.from("campaign_wiki_articles").insert({
-						campaign_id: campaignId,
+						campaign_id: targetId,
 						title: chapter.title,
 						content: chapter.content,
 					});
@@ -66,7 +67,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				// Insert Active Session
 				await supabase.from("active_sessions").insert({
 					id: newSessionId,
-					campaign_id: campaignId,
+					campaign_id: targetId,
 					created_by: user.id,
 					title: sessionTitle,
 					status: "prep",
@@ -138,6 +139,35 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						is_playing: true,
 					}));
 					await supabase.from("vtt_audio_tracks").insert(audioInserts);
+				}
+			}
+
+			// 3. Inject Handouts
+			setInjectionState({
+				isInjecting: true,
+				progressString: "Sowing Campaign Handouts...",
+			});
+
+			if (massiveSandboxModule.handouts && massiveSandboxModule.handouts.length > 0) {
+				// We check against titles to prevent duplicates if Warden clicks 'Import Sandbox' multiple times
+				for (const h of massiveSandboxModule.handouts) {
+					const { data: existingHandout } = await supabase
+						.from("vtt_journal_entries")
+						.select("id")
+						.eq("campaign_id", targetId)
+						.eq("title", h.title)
+						.maybeSingle();
+
+					if (!existingHandout) {
+						await supabase.from("vtt_journal_entries").insert({
+							campaign_id: targetId,
+							user_id: user.id,
+							title: h.title,
+							content: h.content,
+							visible_to_players: h.visibleToPlayers,
+							category: h.category,
+						});
+					}
 				}
 			}
 

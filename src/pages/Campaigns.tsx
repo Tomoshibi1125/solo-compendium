@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	Dialog,
 	DialogContent,
@@ -32,6 +33,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
 import {
 	useCreateCampaign,
 	useJoinedCampaigns,
@@ -46,12 +48,15 @@ const Campaigns = () => {
 	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 	const [campaignName, setCampaignName] = useState("");
 	const [campaignDescription, setCampaignDescription] = useState("");
+	const [importSandbox, setImportSandbox] = useState(false);
 
 	const { data: myCampaigns = [], isLoading: loadingMy } = useMyCampaigns();
 	const { data: joinedCampaigns = [], isLoading: loadingJoined } =
 		useJoinedCampaigns();
 	const createCampaign = useCreateCampaign();
 	const leaveCampaign = useLeaveCampaign();
+	const [targetCampaignId, setTargetCampaignId] = useState<string | null>(null);
+	const { injectSandbox } = useCampaignSandboxInjector(targetCampaignId);
 
 	const handleCreateCampaign = async () => {
 		if (!campaignName.trim()) {
@@ -68,9 +73,21 @@ const Campaigns = () => {
 				name: campaignName,
 				description: campaignDescription || undefined,
 			});
+
+			if (importSandbox) {
+				setTargetCampaignId(campaignId);
+				// Fire and forget sandbox injection
+				void injectSandbox(campaignId);
+				toast({
+					title: "Campaign Established",
+					description: "Importing sandbox module in the background...",
+				});
+			}
+
 			setCreateDialogOpen(false);
 			setCampaignName("");
 			setCampaignDescription("");
+			setImportSandbox(false);
 			navigate(`/campaigns/${campaignId}`);
 		} catch {
 			// Error handled by mutation
@@ -103,14 +120,14 @@ const Campaigns = () => {
 							dimensional
 							className="mb-2 leading-tight"
 						>
-							Guild Registry
+							Campaign Registry
 						</RiftHeading>
 						<ManaFlowText
 							variant="rift"
 							speed="slow"
 							className="text-sm sm:text-base"
 						>
-							Establish or join guilds to hunt across the Rift's domain
+							Establish or join campaigns to hunt across the Rift's domain
 						</ManaFlowText>
 					</div>
 					<Button
@@ -118,7 +135,7 @@ const Campaigns = () => {
 						className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all min-h-[44px] px-4 sm:px-6"
 					>
 						<Plus className="w-4 h-4" />
-						<span className="hidden sm:inline">Create Guild</span>
+						<span className="hidden sm:inline">Create Campaign</span>
 						<span className="sm:hidden">Create</span>
 					</Button>
 				</div>
@@ -131,7 +148,7 @@ const Campaigns = () => {
 						className="mb-4 flex items-center gap-2"
 					>
 						<Crown className="w-5 h-5 text-amber-400" />
-						Guilds I Lead
+						Campaigns I Lead
 					</RiftHeading>
 					{loadingMy ? (
 						<div className="flex flex-col items-center justify-center py-12 gap-4">
@@ -144,12 +161,12 @@ const Campaigns = () => {
 								speed="fast"
 								className="text-muted-foreground font-heading animate-pulse"
 							>
-								Loading guilds...
+								Loading campaigns...
 							</ManaFlowText>
 						</div>
 					) : myCampaigns.length === 0 ? (
 						<AscendantWindow
-							title="NO GUILDS FOUND"
+							title="NO CAMPAIGNS FOUND"
 							className="text-center py-8 border-amber-500/30"
 						>
 							<Crown className="w-12 h-12 mx-auto text-amber-400/50 mb-4" />
@@ -158,7 +175,7 @@ const Campaigns = () => {
 								speed="slow"
 								className="text-muted-foreground mb-4"
 							>
-								You haven't established any guilds yet. Create one to unite
+								You haven't established any campaigns yet. Create one to unite
 								Ascendants under your banner.
 							</ManaFlowText>
 							<Button
@@ -166,8 +183,10 @@ const Campaigns = () => {
 								className="bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg min-h-[44px]"
 							>
 								<Crown className="w-4 h-4 mr-2" />
-								<span className="hidden sm:inline">Establish Your Guild</span>
-								<span className="sm:hidden">Create Guild</span>
+								<span className="hidden sm:inline">
+									Establish Your Campaign
+								</span>
+								<span className="sm:hidden">Create Campaign</span>
 							</Button>
 						</AscendantWindow>
 					) : (
@@ -192,7 +211,7 @@ const Campaigns = () => {
 											</h3>
 										</div>
 										<span className="text-xs font-resurge text-amber-400 bg-amber-500/10 px-2 py-1 rounded whitespace-nowrap">
-											GUILD MASTER
+											WARDEN
 										</span>
 									</div>
 
@@ -246,7 +265,7 @@ const Campaigns = () => {
 						className="mb-4 flex items-center gap-2"
 					>
 						<Users className="w-5 h-5 text-resurge" />
-						Guilds I've Joined
+						Campaigns I've Joined
 					</RiftHeading>
 					{loadingJoined ? (
 						<div className="flex flex-col items-center justify-center py-12 gap-4">
@@ -255,23 +274,23 @@ const Campaigns = () => {
 								<div className="absolute inset-0 w-12 h-12 border-4 border-t-resurge rounded-full animate-spin" />
 							</div>
 							<AscendantText className="block text-muted-foreground font-heading animate-pulse">
-								Searching guilds...
+								Searching campaigns...
 							</AscendantText>
 						</div>
 					) : joinedCampaigns.length === 0 ? (
 						<AscendantWindow
-							title="NO JOINED GUILDS"
+							title="NO JOINED CAMPAIGNS"
 							className="text-center py-8"
 						>
 							<Shield className="w-12 h-12 mx-auto text-resurge/50 mb-4" />
 							<AscendantText className="block text-muted-foreground mb-4">
-								You haven't joined any guilds yet. Ask your Guild Master for a
+								You haven't joined any campaigns yet. Ask your Warden for a
 								share code or link.
 							</AscendantText>
 							<Link to="/campaigns/join">
 								<Button className="bg-gradient-to-r from-resurge to-shadow-purple min-h-[44px]">
 									<UserPlus className="w-4 h-4 mr-2" />
-									<span className="hidden sm:inline">Join Guild</span>
+									<span className="hidden sm:inline">Join Campaign</span>
 									<span className="sm:hidden">Join</span>
 								</Button>
 							</Link>
@@ -356,17 +375,17 @@ const Campaigns = () => {
 						<DialogHeader>
 							<DialogTitle className="font-resurge text-xl flex items-center gap-2 tracking-wide">
 								<Sparkles className="w-5 h-5 text-resurge" />
-								CREATE NEW GUILD
+								CREATE NEW CAMPAIGN
 							</DialogTitle>
 							<DialogDescription>
-								Establish your guild and share the code with your Ascendants.
+								Establish your campaign and share the code with your Ascendants.
 								They can join from anywhere in the realm.
 							</DialogDescription>
 						</DialogHeader>
 						<div className="space-y-4 py-4">
 							<div>
 								<Label htmlFor="campaign-name" className="font-heading">
-									Guild Name
+									Campaign Name
 								</Label>
 								<Input
 									id="campaign-name"
@@ -384,10 +403,32 @@ const Campaigns = () => {
 									id="campaign-description"
 									value={campaignDescription}
 									onChange={(e) => setCampaignDescription(e.target.value)}
-									placeholder="A guild dedicated to clearing the highest rank rifts..."
+									placeholder="A campaign dedicated to clearing the highest rank rifts..."
 									className="mt-1 border-resurge/30 focus:border-resurge/50"
 									rows={3}
 								/>
+							</div>
+							<div className="flex flex-row items-center space-x-3 space-y-0 rounded-md border border-resurge/20 bg-resurge/5 p-4 mt-2">
+								<Checkbox
+									id="import-sandbox"
+									checked={importSandbox}
+									onCheckedChange={(checked) =>
+										setImportSandbox(checked === true)
+									}
+									className="border-resurge data-[state=checked]:bg-resurge"
+								/>
+								<div className="space-y-1 leading-none">
+									<Label
+										htmlFor="import-sandbox"
+										className="text-sm font-heading font-medium leading-none cursor-pointer flex items-center gap-2"
+									>
+										<Sparkles className="w-3.5 h-3.5 text-resurge" />
+										IMPORT "THE SHADOW OF THE REGENT"
+									</Label>
+									<p className="text-[10px] text-muted-foreground font-mono">
+										Pre-populate with full lore, maps, and encounters.
+									</p>
+								</div>
 							</div>
 						</div>
 						<DialogFooter className="flex-col sm:flex-row gap-2">
@@ -411,7 +452,7 @@ const Campaigns = () => {
 								) : (
 									<>
 										<Crown className="w-4 h-4 mr-2" />
-										Establish Guild
+										Establish Campaign
 									</>
 								)}
 							</Button>

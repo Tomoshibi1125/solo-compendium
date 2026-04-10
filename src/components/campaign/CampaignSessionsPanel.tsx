@@ -1,5 +1,13 @@
 import { formatDistanceToNow } from "date-fns";
-import { Calendar, Plus, Save, ScrollText, Trash2 } from "lucide-react";
+import {
+	Calendar,
+	Loader2,
+	Plus,
+	Save,
+	ScrollText,
+	Sparkles,
+	Trash2,
+} from "lucide-react";
 import { useMemo, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +25,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
+import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
 import {
 	type CampaignSessionLogType,
 	type CampaignSessionStatus,
@@ -60,6 +69,7 @@ export function CampaignSessionsPanel({
 	const deleteSession = useDeleteCampaignSession();
 	const addLog = useAddCampaignSessionLog();
 	const sendMessage = useSendCampaignMessage();
+	const { injectSandbox, isInjecting } = useCampaignSandboxInjector(campaignId);
 
 	const [sessionTitle, setSessionTitle] = useState("");
 	const [sessionDescription, setSessionDescription] = useState("");
@@ -230,11 +240,37 @@ export function CampaignSessionsPanel({
 				)}
 
 				{sessionsLoading ? (
-					<p className="text-sm text-muted-foreground">Loading sessions...</p>
+					<div className="flex items-center gap-2 text-sm text-muted-foreground animate-pulse">
+						<Loader2 className="w-4 h-4 animate-spin" />
+						Syncing schedules...
+					</div>
 				) : sessions.length === 0 ? (
-					<p className="text-sm text-muted-foreground">
-						No scheduled sessions yet.
-					</p>
+					<div className="text-center py-8 rounded-lg border border-dashed border-border bg-muted/5">
+						<Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-30" />
+						<p className="text-sm text-muted-foreground font-heading mb-4">
+							No scheduled sessions yet.
+						</p>
+						{canManage && (
+							<div className="flex items-center justify-center gap-3">
+								<Button
+									variant="outline"
+									size="sm"
+									className="border-primary/40 hover:border-primary hover:bg-primary/10 gap-2"
+									onClick={() => injectSandbox()}
+									disabled={isInjecting}
+								>
+									{isInjecting ? (
+										<Loader2 className="w-4 h-4 animate-spin text-primary" />
+									) : (
+										<Sparkles className="w-4 h-4 text-primary" />
+									)}
+									{isInjecting
+										? "Processing Sandbox..."
+										: "Import Sandbox Sessions"}
+								</Button>
+							</div>
+						)}
+					</div>
 				) : (
 					<div className="space-y-3">
 						{sessions.map((session) => (
