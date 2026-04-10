@@ -3908,7 +3908,7 @@ export const regents: Regent[] = [
 		title: "Blood Regent (Regent of Blood)",
 		theme: "Hemomancy & Sanguine Regentty",
 		description:
-			"The ultimate authority of biological evolution and living mana-ichor, sharing the adaptive power of Lyra, the Queen of the Swarm. You control the fluid of life, turning it into a monarch weapon that ignores the limitations of mortal biology. As a node of the Swarm-Heart, your presence accelerates the evolution of reality and cleanses the bloodlines of the world.",
+			"The ultimate authority of biological evolution and living mana-ichor, sharing the adaptive power of Lyra, the Queen of the Swarm. You control the fluid of life, turning it into a regent weapon that ignores the limitations of mortal biology. As a node of the Swarm-Heart, your presence accelerates the evolution of reality and cleanses the bloodlines of the world.",
 		rank: "S",
 		image: "/generated/compendium/Regents/blood-regent.webp",
 		type: "ascendant-class-overlay",

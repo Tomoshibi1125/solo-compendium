@@ -1,98 +1,38 @@
-// Comprehensive Relics Compendium - Authoritative Rift Ascendant Content
-// ALL relics needed for the complete compendium system
-// Based on Rift Ascendant mechanics
-
 export interface Relic {
 	id: string;
 	name: string;
 	description: string;
-	type:
-		| "weapon"
-		| "armor"
-		| "accessory"
-		| "consumable"
-		| "artifact"
-		| "tool"
-		| "material";
-	rarity: "uncommon" | "rare" | "very_rare" | "epic" | "legendary" | "mythic";
+	type: "weapon" | "armor" | "accessory" | "wondrous" | "consumable" | "tool";
+	tier?: string;
+	rarity: string;
+	cost?: number;
+	attunement?: boolean | { required: boolean; requirements: string };
+	mechanics: Record<string, unknown>;
+	quirks?: string[];
+	corruption_risk?: string;
+	properties: Record<string, boolean> | string[];
+	abilities: Array<{
+		name: string;
+		description: string;
+		usage?: string;
+		type?: string;
+		frequency?: string;
+		action?: string;
+		dc?: number;
+		charges?: number;
+	}>;
+	lore: Record<string, string | string[]>;
+	flavor: string;
 	damage?: string;
 	damage_type?: string;
 	armor_class?: number;
 	armor_type?: string;
-	attunement?: boolean;
-	requirements?: {
-		level?: number;
-		alignment?: string;
-		class?: string;
-		ability?: string;
-		score?: number;
-		job?: string;
-		background?: string;
-	};
-	properties: {
-		protocol_enhanced?: boolean;
-		sentient?: boolean;
-		cursed?: boolean;
-		unique?: boolean;
-		legendary?: boolean;
-		legendary_actions?: boolean;
-	};
-	abilities: {
-		name: string;
-		description: string;
-		type:
-			| "passive"
-			| "active"
-			| "command"
-			| "consumable"
-			| "triggered"
-			| "reaction";
-		frequency?:
-			| "at-will"
-			| "short-rest"
-			| "long-rest"
-			| "once-per-day"
-			| "once-per-week"
-			| "once-per-turn"
-			| "when-critical-hit"
-			| "when-creature-dies"
-			| "reaction"
-			| "action";
-		action?: "action" | "bonus-action" | "reaction" | "free";
-		dc?: number;
-		charges?: number;
-	}[];
-	lore: {
-		origin: string;
-		history: string;
-		currentOwner?: string;
-		priorOwners?: string[];
-	};
-	mechanics: {
-		bonus?: {
-			type:
-				| "attack"
-				| "damage"
-				| "AC"
-				| "saving-throws"
-				| "ability-checks"
-				| "skill-checks";
-			value: number;
-			ability?: string;
-			skills?: string[];
-		};
-		resistance?: string[];
-		immunity?: string[];
-		vulnerabilities?: string[];
-		stat_bonuses?: Record<string, number>;
-		special?: string;
-	};
-	source: string;
-	image?: string;
+	requirements?: Record<string, string | number>;
+	source?: string;
+	effects?: Record<string, string>;
 }
 
 export const comprehensiveRelics: Relic[] = [
-	// LEGENDARY WEAPONS
 	{
 		id: "regents-shadow-dagger",
 		name: "Regent's Shadow Dagger",
@@ -154,6 +94,10 @@ export const comprehensiveRelics: Relic[] = [
 				"First Regent",
 				"Various Umbral Regents",
 			],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -161,8 +105,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			damage_profile: "1d8",
+			condition: "Fear",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Tread carefully; magic like this has a cost.",
+		effects: {
+			primary: "Deals 1d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+		},
 	},
 	{
 		id: "bloodthirsty-greatsword",
@@ -214,6 +166,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Warlord Kael",
 				"Countless fallen warriors",
 			],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -221,8 +177,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Blood resonance.",
+			damage_profile: "4d10",
+			condition: "Lethargy",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Some items tell stories. This one ends them.",
+		effects: {
+			primary: "Deals 4d10 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+		},
 	},
 	{
 		id: "lightning-blade",
@@ -271,6 +235,10 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This blade was wielded by the Storm King, who could command the very weather with its power.",
 			priorOwners: ["Storm King", "Lightning Warrior", "Tempest Knight"],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -278,8 +246,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["radiant"],
 			special: "Aligned with Solar resonance.",
+			damage_profile: "1d6",
+			condition: "Lethargy",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Tread carefully; magic like this has a cost.",
+		effects: {
+			primary: "Deals 1d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+		},
 	},
 	{
 		id: "frost-axe",
@@ -328,6 +304,10 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This axe has been passed down through generations of winter warriors, each adding to its icy power.",
 			priorOwners: ["Frost Giant King", "Winter Warrior", "Ice Berserker"],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -335,11 +315,17 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["cold"],
 			special: "Aligned with Glacial resonance.",
+			damage_profile: "2d4",
+			condition: "Blindness",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Tread carefully; magic like this has a cost.",
+		effects: {
+			primary: "Deals 2d4 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+		},
 	},
-
-	// LEGENDARY ARMOR
 	{
 		id: "skywyrms-gauntlet",
 		name: "Skywyrm's Gauntlet",
@@ -397,6 +383,10 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This gauntlet represents the pinnacle of shadow power, containing the authority to command all shadows and reshape reality itself.",
 			currentOwner: "Current Umbral Regent",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -404,8 +394,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Absolute resonance.",
+			damage_profile: "3d6",
+			condition: "Fear",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Power lies not in the object, but the will of its master.",
+		effects: {
+			primary: "Deals 3d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+		},
 	},
 	{
 		id: "abyssal-plate",
@@ -458,6 +456,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Dark Herald Vorlag",
 				"Shadow Warlord Zara",
 			],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -465,8 +467,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			damage_profile: "2d8",
+			condition: "Fear",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "A masterpiece of destructive intent.",
+		effects: {
+			primary: "Deals 2d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+		},
 	},
 	{
 		id: "dragon-scale-mail",
@@ -513,6 +523,10 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This armor was worn by the Dragon Knight who defeated Ignis, inheriting its power.",
 			priorOwners: ["Dragon Knight", "Dragon Slayer", "Scale Lord"],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -520,11 +534,17 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Absolute resonance.",
+			damage_profile: "1d6",
+			condition: "Stunning",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Reforged from the ashes of a fallen Regent.",
+		effects: {
+			primary: "Deals 1d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+		},
 	},
-
-	// LEGENDARY ACCESSORIES
 	{
 		id: "rulers-authority",
 		name: "Architect's Authority",
@@ -582,6 +602,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Queen of Shadows",
 				"Emperor of Night",
 			],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -589,8 +613,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Absolute resonance.",
+			damage_profile: "3d12 + 6",
+			condition: "Blindness",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Tread carefully; magic like this has a cost.",
+		effects: {
+			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+		},
 	},
 	{
 		id: "bloodstone-amulet",
@@ -643,6 +675,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Dark Sage Marina",
 				"Shadow Cultist Kael",
 			],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -650,8 +686,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Blood resonance.",
+			damage_profile: "1d8",
+			condition: "Stunning",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "A masterpiece of destructive intent.",
+		effects: {
+			primary: "Deals 1d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+		},
 	},
 	{
 		id: "dimensional-compass",
@@ -702,6 +746,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Rift Tracker Marcus",
 				"Shadow Walker Lena",
 			],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -709,8 +757,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Aetheric resonance.",
+			damage_profile: "1d12",
+			condition: "Stunning",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Reforged from the ashes of a fallen Regent.",
+		effects: {
+			primary: "Deals 1d12 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+		},
 	},
 	{
 		id: "crown-of-sense",
@@ -767,6 +823,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Wise Emperor Marcus",
 				"Oracle Queen Elena",
 			],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -774,11 +834,17 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Absolute resonance.",
+			damage_profile: "2d6",
+			condition: "Paralysis",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Power lies not in the object, but the will of its master.",
+		effects: {
+			primary: "Deals 2d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+		},
 	},
-
-	// EPIC ITEMS
 	{
 		id: "shadow-orb",
 		name: "Shadow Orb",
@@ -827,6 +893,10 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This orb has been used by countless shadow users who needed portable power.",
 			priorOwners: ["Shadow Archmage", "Dark Esper", "Shadow Warlock"],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -834,8 +904,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			damage_profile: "2d4",
+			condition: "Fear",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Tread carefully; magic like this has a cost.",
+		effects: {
+			primary: "Deals 2d4 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+		},
 	},
 	{
 		id: "time-turner",
@@ -890,6 +968,10 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This device is one of the few objects that can truly affect the flow of time.",
 			priorOwners: ["Time Master Chronos", "Temporal Mage", "Hourglass Keeper"],
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -897,11 +979,17 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Chrono resonance.",
+			damage_profile: "2d6",
+			condition: "Stunning",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Reforged from the ashes of a fallen Regent.",
+		effects: {
+			primary: "Deals 2d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+		},
 	},
-
-	// CONSUMABLES
 	{
 		id: "essence-potion",
 		name: "Essence Potion",
@@ -925,6 +1013,10 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Brewed by shadow alchemists using extracted life essence",
 			history:
 				"These potions are highly valued by shadow users for their healing and enhancing properties.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -932,8 +1024,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Absolute resonance.",
+			damage_profile: "3d6",
+			condition: "Lethargy",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Tread carefully; magic like this has a cost.",
+		effects: {
+			primary: "Deals 3d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+		},
 	},
 	{
 		id: "shadow-elixir",
@@ -957,6 +1057,10 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Created by shadow alchemists from pure shadow essence",
 			history:
 				"These elixirs are used by those who wish to temporarily gain shadow powers.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -964,8 +1068,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			damage_profile: "4d10",
+			condition: "Stunning",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Reforged from the ashes of a fallen Regent.",
+		effects: {
+			primary: "Deals 4d10 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+		},
 	},
 	{
 		id: "dragon-blood-potion",
@@ -990,6 +1102,10 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Brewed from the blood of an ancient dragon",
 			history:
 				"These potions are extremely rare and grant the drinker temporary draconic powers.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -997,11 +1113,17 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Blood resonance.",
+			damage_profile: "1d6",
+			condition: "Stunning",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Reforged from the ashes of a fallen Regent.",
+		effects: {
+			primary: "Deals 1d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+		},
 	},
-
-	// TOOLS
 	{
 		id: "shadow-lens",
 		name: "Shadow Lens",
@@ -1037,6 +1159,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Created by a shadow mage who wanted to see what others could not",
 			history:
 				"This lens has helped many adventurers discover hidden dangers and secrets.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -1044,8 +1170,16 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["necrotic"],
 			special: "Aligned with Void resonance.",
+			damage_profile: "2d8",
+			condition: "Lethargy",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "Power lies not in the object, but the will of its master.",
+		effects: {
+			primary: "Deals 2d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+		},
 	},
 	{
 		id: "essence-collector",
@@ -1084,6 +1218,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Invented by a shadow scientist who wanted to harness the power of life essence",
 			history:
 				"This device has revolutionized the way shadow users collect and use essence.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -1091,7 +1229,15 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			resistance: ["force"],
 			special: "Aligned with Absolute resonance.",
+			damage_profile: "2d8",
+			condition: "Stunning",
 		},
 		source: "Rift Ascendant Canon",
+		flavor: "A masterpiece of destructive intent.",
+		effects: {
+			primary: "Deals 2d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+		},
 	},
 ];

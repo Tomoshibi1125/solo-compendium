@@ -1,5 +1,5 @@
 ﻿/**
- * Canonical Asset Mapping System
+ * Canonical Asset Mapping Order
  *
  * Provides deterministic URL generation for compendium entry assets.
  * Zero-import: generates paths from ID + type without loading any compendium data.

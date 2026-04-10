@@ -64,7 +64,11 @@ export const EquipmentChapter = () => {
 												<h5 className="text-sm font-bold text-white mb-1 flex items-center justify-between">
 													<span>{ability.name}</span>
 													<span className="text-[10px] font-mono text-slate-500 uppercase">
-														{ability.type} • {ability.frequency || "Passive"}
+														{(ability as unknown as Record<string, string>)
+															.type ?? "Active"}{" "}
+														•{" "}
+														{(ability as unknown as Record<string, string>)
+															.frequency ?? "Passive"}
 													</span>
 												</h5>
 												<p className="text-xs text-muted-foreground leading-relaxed">

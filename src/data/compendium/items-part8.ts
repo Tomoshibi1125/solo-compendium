@@ -23,10 +23,10 @@ export const items_part8: Item[] = [
 				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Fractures the concept of distance. Proof that some things cannot be survived.",
@@ -58,10 +58,10 @@ export const items_part8: Item[] = [
 				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Sanctifies the threshold of human potential. The line between Hunter and monster.",
@@ -90,13 +90,13 @@ export const items_part8: Item[] = [
 		weapon_type: "martial melee",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"Historical analysis suggests this predates the modern Gate Order by several centuries.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Ignites the laws of physics. A whisper from the edge of oblivion.",
 		discovery_lore:
@@ -126,16 +126,16 @@ export const items_part8: Item[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Purges the architecture of the soul. The breaking point of all resistance.",
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Gifted by the Order itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "support", "damage", "necrotic"],
 		theme_tags: ["elite-tier", "rift-energy", "forbidden"],
 	},
@@ -161,17 +161,17 @@ export const items_part8: Item[] = [
 				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
 			history:
 				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Mirrors the silence between heartbeats. The reason S-Rank Gates are feared.",
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Gifted by the Order itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "shadow", "lightning", "burst", "stealth"],
-		theme_tags: ["modern-warfare", "monarch-era"],
+		theme_tags: ["modern-warfare", "regent-era"],
 	},
 	{
 		id: "item_p8_5",
@@ -196,17 +196,17 @@ export const items_part8: Item[] = [
 				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Absorbs the flow of causality. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Gifted by the Order itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "debuff", "lightning", "damage"],
-		theme_tags: ["mana-overflow", "elite-tier", "monarch-era"],
+		theme_tags: ["mana-overflow", "elite-tier", "regent-era"],
 	},
 	{
 		id: "item_p8_6",
@@ -227,18 +227,18 @@ export const items_part8: Item[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Purges the flow of causality. The death of hesitation, made manifest.",
 		discovery_lore:
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "necrotic", "psychic", "defensive", "fire"],
-		theme_tags: ["modern-warfare", "elite-tier", "monarch-era"],
+		theme_tags: ["modern-warfare", "elite-tier", "regent-era"],
 	},
 	{
 		id: "item_p8_7",
@@ -260,10 +260,10 @@ export const items_part8: Item[] = [
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Shatters the laws of physics. Evolution compressed into a single, violent instant.",
@@ -292,13 +292,13 @@ export const items_part8: Item[] = [
 				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
-			"Inverts the threshold of human potential. A reminder that the System has no mercy.",
+			"Inverts the threshold of human potential. A reminder that the Order has no mercy.",
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		tags: ["equipment", "sustained", "void", "necrotic", "offensive"],
@@ -326,10 +326,10 @@ export const items_part8: Item[] = [
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
 				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Erases the dimensional barrier. The reason S-Rank Gates are feared.",
@@ -360,11 +360,11 @@ export const items_part8: Item[] = [
 			origin:
 				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Eclipses the remnants of a dead world. A testament to what Hunters have become.",
@@ -397,9 +397,9 @@ export const items_part8: Item[] = [
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse:
 				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Eclipses the silence between heartbeats. Proof that some things cannot be survived.",
@@ -428,10 +428,10 @@ export const items_part8: Item[] = [
 				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Reclaims the remnants of a dead world. A testament to what Hunters have become.",
@@ -463,10 +463,10 @@ export const items_part8: Item[] = [
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
 				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Eclipses the boundary between life and death. Evolution compressed into a single, violent instant.",
@@ -498,10 +498,10 @@ export const items_part8: Item[] = [
 				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Inverts the chains of mortality. The last thing many anomalies ever see.",
@@ -533,15 +533,15 @@ export const items_part8: Item[] = [
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Ignites the dimensional barrier. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Gifted by the Order itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "utility", "void", "healing", "stealth"],
 		theme_tags: ["urban-combat", "ancient-power"],
 	},
@@ -565,10 +565,10 @@ export const items_part8: Item[] = [
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
 				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Ignites the dimensional barrier. The breaking point of all resistance.",
@@ -596,12 +596,12 @@ export const items_part8: Item[] = [
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse:
 				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Rends the concept of distance. The death of hesitation, made manifest.",
@@ -629,11 +629,11 @@ export const items_part8: Item[] = [
 			origin:
 				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Absorbs the architect's design. Evolution compressed into a single, violent instant.",
@@ -665,10 +665,10 @@ export const items_part8: Item[] = [
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Absorbs the laws of physics. The last thing many anomalies ever see.",
@@ -697,13 +697,13 @@ export const items_part8: Item[] = [
 		weapon_type: "martial melee",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Ignites the concept of distance. A beautiful catastrophe measured in milliseconds.",
@@ -737,9 +737,9 @@ export const items_part8: Item[] = [
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse:
 				"Corrupts nearby healing magic by 10%, causing heals to occasionally deal damage instead.",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Fractures the last defense of the unprepared. Proof that some things cannot be survived.",
@@ -768,13 +768,13 @@ export const items_part8: Item[] = [
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
-			"Inverts the certainty of outcomes. A reminder that the System has no mercy.",
+			"Inverts the certainty of outcomes. A reminder that the Order has no mercy.",
 		discovery_lore:
 			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		tags: ["equipment", "support", "radiant", "lightning", "damage"],
@@ -803,10 +803,10 @@ export const items_part8: Item[] = [
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
 				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Binds the boundary between life and death. Evolution compressed into a single, violent instant.",
@@ -835,10 +835,10 @@ export const items_part8: Item[] = [
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Annihilates the silence between heartbeats. Evolution compressed into a single, violent instant.",
@@ -864,13 +864,13 @@ export const items_part8: Item[] = [
 		},
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Commands the certainty of outcomes. The final equation in a war without end.",
@@ -898,11 +898,11 @@ export const items_part8: Item[] = [
 			origin:
 				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Inverts the last defense of the unprepared. Proof that some things cannot be survived.",
@@ -931,13 +931,13 @@ export const items_part8: Item[] = [
 		weapon_type: "martial melee",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Crushes the silence between heartbeats. The reason S-Rank Gates are feared.",
@@ -968,10 +968,10 @@ export const items_part8: Item[] = [
 				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Sanctifies the illusion of safety. The breaking point of all resistance.",
@@ -1003,10 +1003,10 @@ export const items_part8: Item[] = [
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
 				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Annihilates the chains of mortality. Evolution compressed into a single, violent instant.",
@@ -1037,10 +1037,10 @@ export const items_part8: Item[] = [
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Fractures the threshold of human potential. A testament to what Hunters have become.",
@@ -1071,10 +1071,10 @@ export const items_part8: Item[] = [
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Absorbs the fabric of reality. The line between Hunter and monster.",
@@ -1103,10 +1103,10 @@ export const items_part8: Item[] = [
 				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
 			history:
 				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Condemns the dimensional barrier. A testament to what Hunters have become.",
@@ -1136,16 +1136,16 @@ export const items_part8: Item[] = [
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Absorbs the architecture of the soul. The breaking point of all resistance.",
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Gifted by the Order itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "fire", "sustained"],
 		theme_tags: ["dimensional-bleed", "forbidden"],
 	},
@@ -1169,13 +1169,13 @@ export const items_part8: Item[] = [
 		weapon_type: "martial melee",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Commands the illusion of safety. Evolution compressed into a single, violent instant.",
@@ -1206,10 +1206,10 @@ export const items_part8: Item[] = [
 				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
 			history:
 				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Reclaims the fabric of reality. The final equation in a war without end.",
@@ -1241,15 +1241,15 @@ export const items_part8: Item[] = [
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Binds the remnants of a dead world. A testament to what Hunters have become.",
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Gifted by the Order itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "lightning", "damage", "offensive", "support"],
 		theme_tags: ["guild-ops", "hunter-bureau"],
 	},
@@ -1275,11 +1275,11 @@ export const items_part8: Item[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"Historical analysis suggests this predates the modern Gate Order by several centuries.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Unravels the silence between heartbeats. The reason S-Rank Gates are feared.",
@@ -1309,11 +1309,11 @@ export const items_part8: Item[] = [
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Mirrors the chains of mortality. The line between Hunter and monster.",
@@ -1345,10 +1345,10 @@ export const items_part8: Item[] = [
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
 				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Mirrors the remnants of a dead world. The reason S-Rank Gates are feared.",
@@ -1377,13 +1377,13 @@ export const items_part8: Item[] = [
 				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
 			history:
 				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
-			"Unravels the last defense of the unprepared. A reminder that the System has no mercy.",
+			"Unravels the last defense of the unprepared. A reminder that the Order has no mercy.",
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		tags: ["equipment", "healing", "single-target"],
@@ -1412,17 +1412,17 @@ export const items_part8: Item[] = [
 				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
 			history:
 				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Annihilates the fabric of reality. Evolution compressed into a single, violent instant.",
 		discovery_lore:
 			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "perception", "shadow", "fire", "lightning"],
-		theme_tags: ["monarch-era", "classified"],
+		theme_tags: ["regent-era", "classified"],
 	},
 	{
 		id: "item_p8_42",
@@ -1447,13 +1447,13 @@ export const items_part8: Item[] = [
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
 				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
-			"Inverts the concept of distance. A reminder that the System has no mercy.",
+			"Inverts the concept of distance. A reminder that the Order has no mercy.",
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "void", "radiant", "utility"],
@@ -1482,10 +1482,10 @@ export const items_part8: Item[] = [
 				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Overrides the architect's design. The death of hesitation, made manifest.",
@@ -1519,12 +1519,12 @@ export const items_part8: Item[] = [
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse:
 				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
-			"Dissolves the laws of physics. A reminder that the System has no mercy.",
+			"Dissolves the laws of physics. A reminder that the Order has no mercy.",
 		discovery_lore:
 			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "radiant", "buff"],
@@ -1550,13 +1550,13 @@ export const items_part8: Item[] = [
 		weapon_type: "martial melee",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Condemns the illusion of safety. The breaking point of all resistance.",
@@ -1588,10 +1588,10 @@ export const items_part8: Item[] = [
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Devours the flow of causality. The breaking point of all resistance.",
@@ -1620,10 +1620,10 @@ export const items_part8: Item[] = [
 				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Commands the concept of distance. The reason S-Rank Gates are feared.",
@@ -1654,16 +1654,16 @@ export const items_part8: Item[] = [
 				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
 			curse:
 				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Silences the chains of mortality. Evolution compressed into a single, violent instant.",
 		discovery_lore:
 			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		tags: ["equipment", "area", "burst", "stealth", "shadow"],
-		theme_tags: ["monarch-era", "modern-warfare", "urban-combat"],
+		theme_tags: ["regent-era", "modern-warfare", "urban-combat"],
 	},
 	{
 		id: "item_p8_49",
@@ -1685,10 +1685,10 @@ export const items_part8: Item[] = [
 				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
-			curse: "",
-			personality: "",
-			current_owner: "",
-			prior_owners: [],
+			curse: "Emanates a faint aura of dread.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
 			"Fractures the concept of distance. The line between Hunter and monster.",

@@ -6,7 +6,7 @@ export const backgrounds: CompendiumBackground[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["survival", "monarch-era"],
+		theme_tags: ["survival", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18,7 +18,7 @@ export const backgrounds: CompendiumBackground[] = [
 			origin:
 				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -114,7 +114,7 @@ export const backgrounds: CompendiumBackground[] = [
 		rank: "C",
 		skill_proficiencies: ["Stealth", "Perception", "Survival", "Investigation"],
 		tool_proficiencies: ["Security Specialist Kit"],
-		languages: ["Common", "System Dialect"],
+		languages: ["Common", "Order Dialect"],
 		equipment: [
 			"A set of tactical dark clothes",
 			"A gate-shard combat knife",
@@ -158,7 +158,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"I owe my survival to a high-rank hunter who pulled me from the rubble.",
 		],
 		flaws: [
-			"I am paranoid about System-monitored surveillance and tracking chips.",
+			"I am paranoid about Order-monitored surveillance and tracking chips.",
 			"I have flashbacks of the city's collapse that cloud my tactical judgment.",
 			"I prioritize the mission over the safety of those I don't know.",
 			"I am willing to bypass ethical mandates to secure a high-tier drop.",
@@ -167,7 +167,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"A former professionalâ€”contractor, engineer, or investigatorâ€”whose life was shattered when a gate opened in their workplace. You didn't just survive the cataclysm; you learned to navigate the new world of rifts and hunters as an independent operator.",
 		dangers: [
 			"Post-Traumatic Stress",
-			"System Desync",
+			"Order Desync",
 			"Regulatory Audit",
 			"Rift Attraction",
 		],
@@ -527,7 +527,7 @@ export const backgrounds: CompendiumBackground[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -693,7 +693,7 @@ export const backgrounds: CompendiumBackground[] = [
 			origin:
 				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -847,7 +847,7 @@ export const backgrounds: CompendiumBackground[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["survival", "monarch-era", "shadow-domain"],
+		theme_tags: ["survival", "regent-era", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1004,7 +1004,7 @@ export const backgrounds: CompendiumBackground[] = [
 		dangers: [
 			"Resonance Overload",
 			"Guild Kidnapping",
-			"System Desync",
+			"Order Desync",
 			"Essence Burnout",
 		],
 	},
@@ -1025,7 +1025,7 @@ export const backgrounds: CompendiumBackground[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1120,12 +1120,12 @@ export const backgrounds: CompendiumBackground[] = [
 		type: "Background",
 		rank: "B",
 		skill_proficiencies: ["Intimidation", "Arcana", "Insight"],
-		tool_proficiencies: ["System-Decoder Kit"],
+		tool_proficiencies: ["Order-Decoder Kit"],
 		languages: ["Common", "Elder Glyphics"],
 		equipment: [
 			"A dark coat bearing a spectral sigil",
 			"A set of high-tier functional clothes",
-			"A System-decoder kit",
+			"A Order-decoder kit",
 			"A digital mandate of authority recognized by the guilds",
 			"A belt pouch containing 20 Credits",
 		],
@@ -1166,7 +1166,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"I look down on those who haven't been 'seen' by the high-rank lords.",
 		],
 		description:
-			"You have been touched by a Regentâ€”the absolute kings of the umbral domains. This isn't a fantasy pact; it's a System-directive written into your soul-signature. You were a modern person whose awakening was 'sponsored' by a being of unimaginable power. You are their eyes, their hands, and potentially their successor in the city you call home.",
+			"You have been touched by a Regentâ€”the absolute kings of the umbral domains. This isn't a fantasy pact; it's a Order-directive written into your soul-signature. You were a modern person whose awakening was 'sponsored' by a being of unimaginable power. You are their eyes, their hands, and potentially their successor in the city you call home.",
 		dangers: [
 			"Regent Possession",
 			"Rival Assassination",
@@ -1329,7 +1329,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"I follow any order from a superior, even if it's tactically suicide.",
 			"I ignore injuries to maintain the 'Front-Line' image.",
 			"I am dismissive of non-combatant Hunters as 'baggage'.",
-			"I solve every System-hitch with force before thinking.",
+			"I solve every Order-hitch with force before thinking.",
 		],
 		description:
 			"You served in the Guardian Legionâ€”the modern-day paramilitary force established to hold the line during Gate Ruptures. You weren't a fantasy knight; you were a soldier in a high-tech armor suit, holding a tactical shield against things that shouldn't exist. You've seen the rubble of fallen cities and the bravery of those who stayed to fight.",
@@ -1337,7 +1337,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"Battle Trauma",
 			"Legion Debts",
 			"Combat Addiction",
-			"System Desync",
+			"Order Desync",
 		],
 	},
 	{
@@ -1448,7 +1448,7 @@ export const backgrounds: CompendiumBackground[] = [
 		rarity: "common",
 		cr: "0",
 		id: "system-inscriber",
-		name: "System Inscriber",
+		name: "Order Inscriber",
 		type: "Background",
 		rank: "B",
 		skill_proficiencies: ["Arcana", "History", "Investigation"],
@@ -1465,22 +1465,22 @@ export const backgrounds: CompendiumBackground[] = [
 			{
 				name: "Decree Lore",
 				description:
-					"You can identify and read aetheric inscriptions of any origin. When you encounter a rune, you automatically know its source-domain and general Mandate. You have advantage on Intelligence (Arcana) checks to understand, activate, or disable System-wards and enchantments.",
+					"You can identify and read aetheric inscriptions of any origin. When you encounter a rune, you automatically know its source-domain and general Mandate. You have advantage on Intelligence (Arcana) checks to understand, activate, or disable Order-wards and enchantments.",
 			},
 			{
 				name: "Master Technician",
 				description:
-					"During a long rest, you can inscribe a temporary System-ward on a surface or object. The ward lasts for 24 hours and provides one effect: a faint proximity alert, aetheric illumination, or resistance to one damage type for the first breach.",
+					"During a long rest, you can inscribe a temporary Order-ward on a surface or object. The ward lasts for 24 hours and provides one effect: a faint proximity alert, aetheric illumination, or resistance to one damage type for the first breach.",
 			},
 		],
 		personalityTraits: [
-			"I absentmindedly trace geometric System-patterns on surfaces with my finger.",
+			"I absentmindedly trace geometric Order-patterns on surfaces with my finger.",
 			"I examine every aetheric inscription I encounter, even in active combat.",
-			"I speak about the ancient rune-smiths as if they were early System-architects.",
+			"I speak about the ancient rune-smiths as if they were early Order-architects.",
 			"I become frustrated when people treat Inscription as 'magic' instead of logic.",
 		],
 		ideals: [
-			"Preservation. System-knowledge must be archived for the future. (Lawful)",
+			"Preservation. Order-knowledge must be archived for the future. (Lawful)",
 			"Discovery. Ancient Decrees hold secrets that could stabilize the gates. (Neutral)",
 			"Access. Knowledge should be available to every Awakened soul. (Good)",
 			"Optimization. I will craft codes more efficient than the Rift itself. (Any)",
@@ -1492,13 +1492,13 @@ export const backgrounds: CompendiumBackground[] = [
 			"I possess a Codex that the high-tier guilds would kill to obtain.",
 		],
 		flaws: [
-			"I become obsessive when studying new System-codes, ignoring my own safety.",
+			"I become obsessive when studying new Order-codes, ignoring my own safety.",
 			"I'm possessive of rare decryption data and reluctant to share my findings.",
 			"I underestimate the danger of unstable Decrees, assuming my math is perfect.",
 			"I feel vulnerable without my set of calibrated inscription-pens.",
 		],
 		description:
-			"You are a System Inscriberâ€”a modern intellectual who has mastered the art of applying System-logic to physical objects. You weren't a medieval rune-smith; you were a programmer, a linguist, or a calligrapher whose skills became the primary interface for enchanting Hunter equipment. Your knowledge of System-marks and Aetheric-loops makes you the backbone of any serious guild operation.",
+			"You are a Order Inscriberâ€”a modern intellectual who has mastered the art of applying Order-logic to physical objects. You weren't a medieval rune-smith; you were a programmer, a linguist, or a calligrapher whose skills became the primary interface for enchanting Hunter equipment. Your knowledge of Order-marks and Aetheric-loops makes you the backbone of any serious guild operation.",
 		dangers: [
 			"Logic Backlash",
 			"Data Corruption",
@@ -1619,7 +1619,7 @@ export const backgrounds: CompendiumBackground[] = [
 		rank: "S",
 		skill_proficiencies: ["Arcana", "History", "Investigation"],
 		tool_proficiencies: ["Tinker's Tools"],
-		languages: ["Common", "System High-Protocol"],
+		languages: ["Common", "Order High-Protocol"],
 		equipment: [
 			"A set of reinforced technician's clothes",
 			"Tinker's tools",
@@ -1631,17 +1631,17 @@ export const backgrounds: CompendiumBackground[] = [
 			{
 				name: "Relic Sensitivity",
 				description:
-					"Your long exposure to System-artifacts has made you sensitive to their auras. You can determine whether an object is high-tier by handling it for 1 minute (no Aether-Sight required). You also have advantage on Intelligence checks to identify the properties and System-history of Awakened items.",
+					"Your long exposure to Order-artifacts has made you sensitive to their auras. You can determine whether an object is high-tier by handling it for 1 minute (no Aether-Sight required). You also have advantage on Intelligence checks to identify the properties and Order-history of Awakened items.",
 			},
 			{
 				name: "Containment Mandates",
 				description:
-					"You know the proper Decrees for safely handling volatile gate-born items. You have advantage on saving throws against cursed System-relics, and when you examine a tainted item, you become aware of its hidden logic before it takes effect on you.",
+					"You know the proper Decrees for safely handling volatile gate-born items. You have advantage on saving throws against cursed Order-relics, and when you examine a tainted item, you become aware of its hidden logic before it takes effect on you.",
 			},
 		],
 		personalityTraits: [
 			"I handle all objectsâ€”magical or notâ€”with extreme care and clinical reverence.",
-			"I catalog every System-hitch obsessively, cross-referencing logs and histories.",
+			"I catalog every Order-hitch obsessively, cross-referencing logs and histories.",
 			"I get visibly distressed when someone mishandles a stable aether-cell.",
 			"I speak about relics as if they were complex programs with their own agendas.",
 		],
@@ -1655,7 +1655,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"I am the last warden of a private vault that must never be bridged.",
 			"An artifact I was monitoring was extracted by a rogue guild; I must recover it.",
 			"My predecessor entrusted me with a Master Key that accesses the Academy's inner vault.",
-			"A particular relic whispers System-logs to me in my sleep.",
+			"A particular relic whispers Order-logs to me in my sleep.",
 		],
 		flaws: [
 			"I trust archived relics more than peopleâ€”they are consistent.",
@@ -1664,7 +1664,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"I am rigid about security Decrees and become unreasonable in high-stress breaches.",
 		],
 		description:
-			"You are a Vault Wardenâ€”a specialist in the containment and study of System-artifacts. You weren't a temple guardian; you were a high-security professional, a museum archivist, or a laboratory technician whose job changed when 'artifacts' replaced art. You've managed enough high-rank resonance to know that sometimes the items are studying you as much as you are studying them.",
+			"You are a Vault Wardenâ€”a specialist in the containment and study of Order-artifacts. You weren't a temple guardian; you were a high-security professional, a museum archivist, or a laboratory technician whose job changed when 'artifacts' replaced art. You've managed enough high-rank resonance to know that sometimes the items are studying you as much as you are studying them.",
 		dangers: [
 			"Relic Corruption",
 			"Guild Infiltration",
@@ -1689,7 +1689,7 @@ export const backgrounds: CompendiumBackground[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1808,7 +1808,7 @@ export const backgrounds: CompendiumBackground[] = [
 		personalityTraits: [
 			"I recount my cleared gates in tactical termsâ€”every scar is a data-point.",
 			"I instinctively scan the ceiling and the shadows when I enter an un-cleared zone.",
-			"I am clinical and methodical in combatâ€”panic is a System-error.",
+			"I am clinical and methodical in combatâ€”panic is a Order-error.",
 			"I harvest high-value materials and know the market value of every essence-shard.",
 		],
 		ideals: [
@@ -1950,12 +1950,12 @@ export const backgrounds: CompendiumBackground[] = [
 		type: "Background",
 		rank: "D",
 		skill_proficiencies: ["Religion", "Insight", "Investigation"],
-		tool_proficiencies: ["System-Analysis Kit"],
+		tool_proficiencies: ["Order-Analysis Kit"],
 		languages: ["Common", "Umbral Frequencies"],
 		equipment: [
 			"A set of dark-stained professional clothes",
 			"A vial of stabilized aetheric-wash",
-			"A collection of System-signatures",
+			"A collection of Order-signatures",
 			"A journal of high-rank Regent-servants (partial)",
 			"A belt pouch containing 10 Credits",
 		],
@@ -1972,7 +1972,7 @@ export const backgrounds: CompendiumBackground[] = [
 			},
 		],
 		personalityTraits: [
-			"I check every corner and every mirror for System-shadows.",
+			"I check every corner and every mirror for Order-shadows.",
 			"I examine a person's aether-signature when I meet them, looking for taint.",
 			"I carry a specialized detection-chip and check its frequency without thinking.",
 			"I speak bluntly about the darknessâ€”I've seen too much to play at hope.",
@@ -1987,7 +1987,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"An umbral-beast killed my partner during a precinct investigation; I hunt its print.",
 			"My unit of spectral-investigators was wiped out in a redacted operation.",
 			"I salvaged a unique piece of Regent-tech that I must keep hidden from the guilds.",
-			"A particular System-echo has been following me since my awakening.",
+			"A particular Order-echo has been following me since my awakening.",
 		],
 		flaws: [
 			"I see Regent influence behind every act of corporate cruelty.",
@@ -2121,7 +2121,7 @@ export const backgrounds: CompendiumBackground[] = [
 		equipment: [
 			"A set of chronally-displaced clothes",
 			"A temporal-resonance scanner",
-			"A stopped watch that ticks at System-Ruptures",
+			"A stopped watch that ticks at Order-Ruptures",
 			"A journal of events that haven't happened yet (fragmented)",
 			"A belt pouch containing 15 Credits",
 		],
@@ -2507,7 +2507,7 @@ export const backgrounds: CompendiumBackground[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["post-awakening", "mana-overflow", "monarch-era"],
+		theme_tags: ["post-awakening", "mana-overflow", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3513,7 +3513,7 @@ export const backgrounds: CompendiumBackground[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -3681,7 +3681,7 @@ export const backgrounds: CompendiumBackground[] = [
 			origin:
 				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4011,7 +4011,7 @@ export const backgrounds: CompendiumBackground[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -4975,7 +4975,7 @@ export const backgrounds: CompendiumBackground[] = [
 			"My former Rift-Leagues team was my real familyâ€”I'd queue into an S-Rank gate for them.",
 			"My biggest rival in gaming awakened the same day I did, and we're still competing.",
 			"I was scouted by a ascendant guild specifically because they saw my tactical ability in tournaments.",
-			"My gaming sponsor is secretly a front for an organization researching System mechanics.",
+			"My gaming sponsor is secretly a front for an organization researching Order mechanics.",
 		],
 		flaws: [
 			"I sometimes forget that death in real life doesn't have a respawn timer.",

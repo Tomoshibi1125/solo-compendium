@@ -22,7 +22,7 @@ import type {
 } from "../src/types/vtt";
 
 const allItemsAndRelics: Array<CompendiumRelic | CompendiumItem> = [
-	...(comprehensiveRelics as Array<CompendiumRelic | CompendiumItem>),
+	...(comprehensiveRelics as unknown as Array<CompendiumRelic | CompendiumItem>),
 	...(items_part1 as Array<CompendiumRelic | CompendiumItem>),
 	...(items_part2 as Array<CompendiumRelic | CompendiumItem>),
 	...(items_part3 as Array<CompendiumRelic | CompendiumItem>),

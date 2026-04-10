@@ -1656,7 +1656,7 @@ export const jobs: Job[] = [
 		source: "Ascendant Compendium",
 	},
 
-	// 9. HERALD â€” Divine Radiance / System Decree Conduit
+	// 9. HERALD â€” Divine Radiance / Order Decree Conduit
 	{
 		id: "herald",
 		name: "Herald",
@@ -2223,7 +2223,7 @@ export const jobs: Job[] = [
 		source: "Ascendant Compendium",
 	},
 
-	// 12. HOLY KNIGHT â€” Oath-Bound Enforcer / System Covenant Warrior
+	// 12. HOLY KNIGHT â€” Oath-Bound Enforcer / Order Covenant Warrior
 	{
 		id: "holy-knight",
 		name: "Holy Knight",

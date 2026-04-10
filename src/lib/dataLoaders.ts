@@ -85,7 +85,7 @@ export const loadRegents = (): Promise<CompendiumRegent[]> =>
 	});
 export const loadRelics = (): Promise<CompendiumRelic[]> =>
 	import("@/data/compendium/relics-comprehensive").then(
-		(m) => m.comprehensiveRelics as CompendiumRelic[],
+		(m) => m.comprehensiveRelics as unknown as CompendiumRelic[],
 	);
 export const loadSigils = (): Promise<CompendiumRune[]> =>
 	import("@/data/compendium/sigils").then((m) => m.sigils as CompendiumRune[]);

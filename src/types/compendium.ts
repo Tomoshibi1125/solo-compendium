@@ -417,7 +417,10 @@ export interface CompendiumRelic extends BaseCompendiumItem {
 }
 
 export interface CompendiumFeat extends BaseCompendiumItem {
-	prerequisites?: Record<string, string | number | string[] | boolean> | string;
+	prerequisites?:
+		| Record<string, string | number | string[] | boolean>
+		| string
+		| string[];
 	benefits?:
 		| string[]
 		| {

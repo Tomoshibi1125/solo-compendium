@@ -120,7 +120,7 @@ export const expandedBackgrounds = [
 		],
 		image: "/generated/compendium/backgrounds/office-worker.webp",
 		description:
-			"You spent your days in a climate-controlled office, navigating spreadsheets and email chains. Then the world broke open and your cubicle dissolved into aetheric fire. The skills that made you a reliable employee—attention to detail, pattern recognition, and sheer stubbornness—turned out to be exactly what the System values.",
+			"You spent your days in a climate-controlled office, navigating spreadsheets and email chains. Then the world broke open and your cubicle dissolved into aetheric fire. The skills that made you a reliable employee—attention to detail, pattern recognition, and sheer stubbornness—turned out to be exactly what the Order values.",
 		dangers: ["Analysis Paralysis", "Imposter Syndrome", "Physical Fragility"],
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -415,7 +415,7 @@ export const expandedBackgrounds = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -546,7 +546,7 @@ export const expandedBackgrounds = [
 		],
 		image: "/generated/compendium/backgrounds/teacher.webp",
 		description:
-			"You shaped young minds, managed chaos in a classroom, and made the mundane feel meaningful. When the System activated and your school became a gate zone, the same qualities that made you a great teacher—patience, authority, and the refusal to leave anyone behind—made you a natural leader in the new world.",
+			"You shaped young minds, managed chaos in a classroom, and made the mundane feel meaningful. When the Order activated and your school became a gate zone, the same qualities that made you a great teacher—patience, authority, and the refusal to leave anyone behind—made you a natural leader in the new world.",
 		dangers: ["Overprotectiveness", "Emotional Exhaustion", "Guilt"],
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -829,7 +829,7 @@ export const expandedBackgrounds = [
 			origin:
 				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",

@@ -1110,7 +1110,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Nyx embodies the raw, animalistic survival instinct that the Rift cannot quantify. Stats, ranks, skills — none of it matters if your instincts are dull. He teaches that the hunter's gut is faster than any System notification, and that the kill comes not from power but from patience. He is the master of umbral-walking and beast-transformation, able to become one with the darkness and strike without warning. The Ascendant Bureau's most elite Stalkers revere Nyx. They say the best ascendants don't rely on their Aether-sight — they rely on the cold feeling at the back of their neck.",
+		lore: "Nyx embodies the raw, animalistic survival instinct that the Rift cannot quantify. Stats, ranks, skills — none of it matters if your instincts are dull. He teaches that the hunter's gut is faster than any Order notification, and that the kill comes not from power but from patience. He is the master of umbral-walking and beast-transformation, able to become one with the darkness and strike without warning. The Ascendant Bureau's most elite Stalkers revere Nyx. They say the best ascendants don't rely on their Aether-sight — they rely on the cold feeling at the back of their neck.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		tags: [],
@@ -1199,7 +1199,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		name: "Nyx",
 		display_name: "The Eternal of Fangs",
 		description:
-			"Nyx is the Essence of Instinctual Might — the primal force that reminds every ascendant that beneath all their System enhancements, they are still predator and prey.",
+			"Nyx is the Essence of Instinctual Might — the primal force that reminds every ascendant that beneath all their Order enhancements, they are still predator and prey.",
 	},
 	{
 		avatar_id: "none-yet",

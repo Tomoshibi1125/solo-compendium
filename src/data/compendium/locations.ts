@@ -6,7 +6,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "dungeon-core", "monarch-era"],
+		theme_tags: ["hunter-bureau", "dungeon-core", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -248,7 +248,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -601,7 +601,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "post-awakening"],
+		theme_tags: ["regent-era", "post-awakening"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -734,7 +734,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -848,7 +848,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
 			history:
 				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
@@ -954,7 +954,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["gate-zone", "post-awakening", "monarch-era"],
+		theme_tags: ["gate-zone", "post-awakening", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1075,7 +1075,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "gate-zone", "urban-combat"],
+		theme_tags: ["regent-era", "gate-zone", "urban-combat"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1087,7 +1087,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1317,7 +1317,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["survival", "monarch-era"],
+		theme_tags: ["survival", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -1564,7 +1564,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -1922,7 +1922,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["survival", "monarch-era", "dimensional-bleed"],
+		theme_tags: ["survival", "regent-era", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2055,7 +2055,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3016,7 +3016,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
 			curse: "",
@@ -3127,7 +3127,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["black-market", "shadow-domain", "monarch-era"],
+		theme_tags: ["black-market", "shadow-domain", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3865,7 +3865,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4107,7 +4107,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4460,7 +4460,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4685,7 +4685,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "rift-energy"],
+		theme_tags: ["regent-era", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4949,7 +4949,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5174,7 +5174,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["gate-zone", "dungeon-core", "monarch-era"],
+		theme_tags: ["gate-zone", "dungeon-core", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5184,7 +5184,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -5416,7 +5416,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -5643,7 +5643,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["black-market", "monarch-era"],
+		theme_tags: ["black-market", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5774,7 +5774,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
@@ -6137,7 +6137,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
 			history:
 				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
@@ -6961,7 +6961,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7203,7 +7203,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7329,7 +7329,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7549,7 +7549,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["urban-combat", "classified", "monarch-era"],
+		theme_tags: ["urban-combat", "classified", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8504,7 +8504,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8862,7 +8862,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9087,7 +9087,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["dungeon-core", "shadow-domain", "monarch-era"],
+		theme_tags: ["dungeon-core", "shadow-domain", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9339,7 +9339,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -9457,7 +9457,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10040,7 +10040,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
 			curse: "",
@@ -10274,7 +10274,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11099,7 +11099,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["experimental", "monarch-era", "modern-warfare"],
+		theme_tags: ["experimental", "regent-era", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11353,7 +11353,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11593,7 +11593,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -11699,7 +11699,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "elite-tier", "survival"],
+		theme_tags: ["regent-era", "elite-tier", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11709,7 +11709,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -12173,7 +12173,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["experimental", "black-market", "monarch-era"],
+		theme_tags: ["experimental", "black-market", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -12770,7 +12770,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12879,7 +12879,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "forbidden", "black-market"],
+		theme_tags: ["regent-era", "forbidden", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -13948,7 +13948,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["urban-combat", "monarch-era", "black-market"],
+		theme_tags: ["urban-combat", "regent-era", "black-market"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14452,7 +14452,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
 			history:
 				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
 			curse: "",
@@ -14570,7 +14570,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14689,7 +14689,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -15291,7 +15291,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15652,7 +15652,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
@@ -16227,7 +16227,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["dimensional-bleed", "shadow-domain", "monarch-era"],
+		theme_tags: ["dimensional-bleed", "shadow-domain", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16592,7 +16592,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16938,7 +16938,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["post-awakening", "monarch-era"],
+		theme_tags: ["post-awakening", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17417,7 +17417,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "gate-zone"],
+		theme_tags: ["regent-era", "gate-zone"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -17782,7 +17782,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18249,7 +18249,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -20145,7 +20145,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["urban-combat", "monarch-era"],
+		theme_tags: ["urban-combat", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -20394,7 +20394,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20745,7 +20745,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -22424,9 +22424,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22651,7 +22651,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "urban-combat", "guild-ops"],
+		theme_tags: ["regent-era", "urban-combat", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22893,7 +22893,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "dimensional-bleed", "ancient-power"],
+		theme_tags: ["regent-era", "dimensional-bleed", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23488,7 +23488,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["ancient-power", "system-glitch", "monarch-era"],
+		theme_tags: ["ancient-power", "system-glitch", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23725,7 +23725,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "survival"],
+		theme_tags: ["regent-era", "survival"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -23737,7 +23737,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"A-Rank appraiser Yoo Myung-Han personally verified its authenticity before it entered general circulation.",
+				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24088,7 +24088,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "modern-warfare"],
+		theme_tags: ["regent-era", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24330,7 +24330,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["rift-energy", "monarch-era", "system-glitch"],
+		theme_tags: ["rift-energy", "regent-era", "system-glitch"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -24340,7 +24340,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Monarch's throne room.",
+				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
 				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
@@ -24700,7 +24700,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24932,7 +24932,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25288,7 +25288,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "monarch-era"],
+		theme_tags: ["hunter-bureau", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25298,9 +25298,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25416,7 +25416,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25646,7 +25646,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["dungeon-core", "monarch-era"],
+		theme_tags: ["dungeon-core", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25893,7 +25893,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["dungeon-core", "monarch-era", "rift-energy"],
+		theme_tags: ["dungeon-core", "regent-era", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -26510,7 +26510,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26742,7 +26742,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27093,7 +27093,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the Jeju Island Raid.",
+				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -27448,7 +27448,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27572,9 +27572,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a System glitch that briefly merged two overlapping Gate instances.",
+				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"Originally developed as a countermeasure against Monarch-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28283,7 +28283,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["survival", "monarch-era", "dimensional-bleed"],
+		theme_tags: ["survival", "regent-era", "dimensional-bleed"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -28532,7 +28532,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28653,7 +28653,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"Intelligence reports link this to the Shadow Monarch's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28757,7 +28757,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["monarch-era", "guild-ops", "classified"],
+		theme_tags: ["regent-era", "guild-ops", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,

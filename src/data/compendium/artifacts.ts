@@ -24,7 +24,19 @@ export const artifacts: Item[] = [
 				"Attacks ignore resistance to slashing damage.",
 				"On critical hit, inflicts a bleeding condition that deals 1d6 damage per turn.",
 			],
+			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
+		lore: {
+			origin: "Recovered from a collapsed Guild Vault.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "A masterpiece of destructive intent.",
 	},
 	{
 		id: "artifact_2",
@@ -49,12 +61,24 @@ export const artifacts: Item[] = [
 				"Deals an additional 2d6 lightning damage.",
 				"Grants resistance to fire and lightning damage.",
 			],
+			primary: "Deals 1d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
+		lore: {
+			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "A masterpiece of destructive intent.",
 	},
 	{
 		id: "artifact_3",
-		name: "Shadow Monarch's Mantle",
-		display_name: "Shadow Monarch's Mantle",
+		name: "Shadow Regent's Mantle",
+		display_name: "Shadow Regent's Mantle",
 		description:
 			"Woven from pure abyssal mana, this pitch-black cloak billows silently even when there is no wind.",
 		rarity: "legendary",
@@ -72,7 +96,19 @@ export const artifacts: Item[] = [
 				"Grants immunity to necrotic damage.",
 				"Advantage on stealth checks in dim light or darkness.",
 			],
+			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 		},
+		lore: {
+			origin: "Forged by the Bureau's most elite artificers.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "A masterpiece of destructive intent.",
 	},
 	{
 		id: "artifact_4",
@@ -90,10 +126,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Tread carefully; magic like this has a cost.",
 	},
 	{
 		id: "artifact_5",
@@ -111,9 +159,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 2d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "An ancient artifact of the First Awakenings.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "A masterpiece of destructive intent.",
 	},
 	{
 		id: "artifact_6",
@@ -131,10 +191,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Tread carefully; magic like this has a cost.",
 	},
 	{
 		id: "artifact_7",
@@ -152,9 +224,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Some items tell stories. This one ends them.",
 	},
 	{
 		id: "artifact_8",
@@ -172,10 +256,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 2d4 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "Smuggled out of the Shadow Legion's armory.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Power lies not in the object, but the will of its master.",
 	},
 	{
 		id: "artifact_9",
@@ -193,9 +289,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d12 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "Forged by the Bureau's most elite artificers.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Tread carefully; magic like this has a cost.",
 	},
 	{
 		id: "artifact_10",
@@ -213,10 +321,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "Smuggled out of the Shadow Legion's armory.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Power lies not in the object, but the will of its master.",
 	},
 	{
 		id: "artifact_11",
@@ -234,9 +354,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 2d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "An ancient artifact of the First Awakenings.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Tread carefully; magic like this has a cost.",
 	},
 	{
 		id: "artifact_12",
@@ -254,10 +386,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 2d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "An ancient artifact of the First Awakenings.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Reforged from the ashes of a fallen Regent.",
 	},
 	{
 		id: "artifact_13",
@@ -275,9 +419,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "Forged by the Bureau's most elite artificers.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Tread carefully; magic like this has a cost.",
 	},
 	{
 		id: "artifact_14",
@@ -295,10 +451,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d12 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Reforged from the ashes of a fallen Regent.",
 	},
 	{
 		id: "artifact_15",
@@ -316,9 +484,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 4d10 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "An ancient artifact of the First Awakenings.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Power lies not in the object, but the will of its master.",
 	},
 	{
 		id: "artifact_16",
@@ -336,10 +516,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 2d8 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "An ancient artifact of the First Awakenings.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "A masterpiece of destructive intent.",
 	},
 	{
 		id: "artifact_17",
@@ -357,13 +549,25 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Reforged from the ashes of a fallen Regent.",
 	},
 	{
 		id: "artifact_18",
-		name: "Monarch's Edge",
+		name: "Regent's Edge",
 		display_name: "Mythic Rank S Item",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
@@ -377,10 +581,22 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 3d6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "Forged by the Bureau's most elite artificers.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Power lies not in the object, but the will of its master.",
 	},
 	{
 		id: "artifact_19",
@@ -398,9 +614,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 4d10 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		armor_type: "Heavy",
 		armor_class: "20",
+		lore: {
+			origin: "Smuggled out of the Shadow Legion's armory.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Reforged from the ashes of a fallen Regent.",
 	},
 	{
 		id: "artifact_20",
@@ -418,9 +646,21 @@ export const artifacts: Item[] = [
 		source: "Rift Ascendant Canon",
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
+			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			secondary:
+				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		weapon_type: "martial melee",
 		damage: "3d8",
 		damage_type: "force",
+		lore: {
+			origin: "Forged by the Bureau's most elite artificers.",
+			history: "Its true history remains a protected Guild secret.",
+			curse: "Slowly drains ambient stamina from the wielder.",
+			personality: "Silent, waiting.",
+			current_owner: "Held by the Vanguard Guild.",
+			prior_owners: ["A rogue Awakened"],
+		},
+		flavor: "Reforged from the ashes of a fallen Regent.",
 	},
 ];
