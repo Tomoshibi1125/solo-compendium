@@ -15,6 +15,7 @@ import { TechniquesChapter } from "@/components/compendium/players-book/Techniqu
 import { SourceBookLayout } from "@/components/compendium/SourceBookLayout";
 import { GameRulesChapter } from "@/components/compendium/wardens-directive/GameRulesChapter";
 import { PantheonChapter } from "@/components/compendium/wardens-directive/PantheonChapter";
+import { SandboxModuleChapter } from "@/components/compendium/wardens-directive/SandboxModuleChapter";
 import { WorldGuide } from "@/components/compendium/wardens-directive/WorldGuide";
 // Warden's Directive
 import { WorldOverview } from "@/components/compendium/wardens-directive/WorldOverview";
@@ -60,6 +61,8 @@ const SourceBook = () => {
 				return <PantheonChapter />;
 			case "gamerules":
 				return <GameRulesChapter />;
+			case "module":
+				return <SandboxModuleChapter />;
 
 			// Anomaly Manifest
 			case "ecologies":

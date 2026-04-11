@@ -50,6 +50,11 @@ const BOOKS = [
 				label: "Running the Game",
 				path: "/source-book/gamerules",
 			},
+			{
+				id: "module",
+				label: "The Shadow of the Regent",
+				path: "/source-book/module",
+			},
 		],
 	},
 	{
