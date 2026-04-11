@@ -29,6 +29,28 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		});
 
 		try {
+			// Pre-flight: verify the campaign actually exists in Supabase
+			const { data: campaign, error: campaignError } = await supabase
+				.from("campaigns")
+				.select("id")
+				.eq("id", targetId)
+				.single();
+
+			if (campaignError || !campaign) {
+				console.error(
+					"[SandboxInjector] Campaign does not exist in database:",
+					targetId,
+					campaignError,
+				);
+				toast({
+					title: "Sandbox Injection Skipped",
+					description:
+						"Campaign has not finished saving. Try importing from Campaign Settings later.",
+					variant: "destructive",
+				});
+				return;
+			}
+
 			// 1. Inject Wiki Chapters
 			setInjectionState({
 				isInjecting: true,
@@ -44,11 +66,20 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 					.maybeSingle();
 
 				if (!existing) {
-					await supabase.from("campaign_wiki_articles").insert({
-						campaign_id: targetId,
-						title: chapter.title,
-						content: chapter.content,
-					});
+					const { error: wikiError } = await supabase
+						.from("campaign_wiki_articles")
+						.insert({
+							campaign_id: targetId,
+							title: chapter.title,
+							content: chapter.content,
+						});
+					if (wikiError) {
+						console.error(
+							"[SandboxInjector] Wiki insert failed:",
+							chapter.title,
+							wikiError,
+						);
+					}
 				}
 			}
 

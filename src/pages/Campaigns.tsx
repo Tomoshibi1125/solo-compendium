@@ -81,6 +81,7 @@ const Campaigns = () => {
 			// Optimistically seed query cache so CampaignDetail loads instantly
 			// without waiting for Supabase RLS propagation
 			const wardenId = user?.id || getLocalUserId();
+			const now = new Date().toISOString();
 			queryClient.setQueryData(["campaigns", campaignId], {
 				id: campaignId,
 				name: campaignName,
@@ -88,27 +89,49 @@ const Campaigns = () => {
 				warden_id: wardenId,
 				share_code: "------",
 				is_active: true,
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
+				created_at: now,
+				updated_at: now,
 				settings: { leveling_mode: "milestone" },
 			});
 
-			if (importSandbox) {
-				if (user) {
-					// Pass campaignId directly — don't rely on setState which is async
-					void injectSandbox(campaignId);
-					toast({
-						title: "Campaign Established",
-						description:
-							'Importing "The Shadow of the Regent" sandbox module in the background...',
-					});
-				} else {
-					toast({
-						title: "Campaign Established",
-						description:
-							"Sign in to import the sandbox module with full wiki, maps, and encounters.",
-					});
-				}
+			// Seed warden access so CampaignDetail shows share code immediately
+			queryClient.setQueryData(
+				["campaigns", campaignId, "has-system-access"],
+				true,
+			);
+			queryClient.setQueryData(
+				["campaigns", campaignId, "role"],
+				"rift" as const,
+			);
+			queryClient.setQueryData(
+				["campaigns", campaignId, "members"],
+				[
+					{
+						id: crypto.randomUUID(),
+						campaign_id: campaignId,
+						user_id: wardenId,
+						character_id: null,
+						role: "warden",
+						joined_at: now,
+					},
+				],
+			);
+
+			// Inject sandbox module if requested — only for authenticated users
+			// whose campaign was verified by the RPC + post-check
+			if (importSandbox && user) {
+				void injectSandbox(campaignId);
+				toast({
+					title: "Campaign Established",
+					description:
+						'Importing "The Shadow of the Regent" sandbox module in the background...',
+				});
+			} else if (importSandbox && !user) {
+				toast({
+					title: "Campaign Established",
+					description:
+						"Sign in to import the sandbox module with full wiki, maps, and encounters.",
+				});
 			}
 
 			setCreateDialogOpen(false);

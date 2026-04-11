@@ -61,25 +61,25 @@ const bureauSentinels: SandboxNPC[] = [
 		hp: 95,
 		ac: 18,
 		description:
-			"A battle-scarred veteran with cybernetic reinforcements along his left arm. Park commands the last functional Bureau outpost in Sector B with an iron will forged from years of Gate raids.",
+			"A battle-scarred veteran with mana-reinforced prosthetics along his left arm. Park commands the last functional Bureau outpost in the Restricted Zone with an iron will forged from years of Gate raids.",
 		personality:
 			"Stern, by-the-book, but deeply protective of his subordinates. Speaks in clipped military jargon. Has a dry sense of humor that surfaces only after trust is earned.",
 		motivation:
-			"Keep his people alive until Central Command sends extraction. Secretly suspects Central has written off Sector B entirely.",
+			"Keep his people alive until Central Command sends extraction. Secretly suspects Central has written off the Restricted Zone entirely.",
 		backstory:
-			"Park was a B-Rank Ascendant before the Quarantine. He lost his original left arm saving three D-Rank rookies during the initial Gate Cascade. The Bureau gave him cybernetics and a promotion he never wanted. He's held Ground Zero together for sixty-three days with dwindling supplies and mounting anomaly pressure.",
+			"Park was a B-Rank Ascendant before the Gate Surge. He lost his original left arm saving three D-Rank rookies during the initial Gate Cascade. The Bureau gave him mana-forged prosthetics and a promotion he never wanted. He's held the Bureau HQ together for sixty-three days with dwindling supplies and mounting anomaly pressure.",
 		keyAbilities: [
 			"Fortification Aura (allies gain +2 AC within 30ft)",
 			"Command Strike (grant ally a bonus attack)",
-			"Cybernetic Overcharge (triple damage, 1/day, costs 10 HP)",
+			"Mana Overcharge (triple damage, 1/day, costs 10 HP)",
 		],
 		recruitCondition:
 			"Complete 3 Bureau eradication quests AND reach Reputation 'Trusted' with Bureau Sentinels",
 		isRecruitable: true,
 		guildAffiliation: "Bureau Sentinels",
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
-			"Park needs a covert team to recover classified documents from the Abandoned Military Hospital before the Awoko Cult finds them.",
+			"Park needs a covert team to recover classified documents from the Drowned Ward Gate before the Awoko Cult finds them.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 3000,
@@ -109,7 +109,7 @@ const bureauSentinels: SandboxNPC[] = [
 		motivation:
 			"Survive. She's not a fighter and knows it. If the outpost falls, she wants to be somewhere else entirely.",
 		backstory:
-			"Lin was a logistics clerk at Bureau Central before being reassigned to Sector B three weeks before the Quarantine locked down. She's technically not military — just an administrator trapped in a warzone. She's adapted by becoming indispensable.",
+			"Lin was a logistics clerk at Bureau Central before being reassigned to the Restricted Zone three weeks before the Gate Surge locked down. She's technically not military — just an administrator trapped in a warzone. She's adapted by becoming indispensable.",
 		keyAbilities: [
 			"Equipment Maintenance (repair gear, restore 1d6 durability)",
 			"Inventory Mastery (identify any item instantly)",
@@ -119,7 +119,7 @@ const bureauSentinels: SandboxNPC[] = [
 			"If the Black Market Bazaar is destroyed in a story event, Lin will request asylum with the party",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
 			"Lin suspects someone inside the outpost is stealing medical supplies and selling them to the Vermillion Guild.",
 		leveling: {
@@ -149,7 +149,7 @@ const bureauSentinels: SandboxNPC[] = [
 		personality:
 			"Quiet, observant, pragmatic. Rarely speaks more than necessary. When she does talk, every word matters. Has a habit of marking walls with chalk symbols only her scouts understand.",
 		motivation:
-			"Find her missing Squad Seven. They went dark in the Subway Network four days ago. She won't rest until she knows their fate.",
+			"Find her missing Squad Seven. They went dark in the Hollow Subway Gate four days ago. She won't rest until she knows their fate.",
 		backstory:
 			"Yoon was raised in the outer slums before earning Bureau admission through raw talent. She's survived thirteen Gate raids and never lost a squad member — until now. The disappearance of Squad Seven is eating her alive.",
 		keyAbilities: [
@@ -158,10 +158,10 @@ const bureauSentinels: SandboxNPC[] = [
 			"Precision Strike (crit on 18-20 vs tracked targets)",
 		],
 		recruitCondition:
-			"Help her find Squad Seven in the Subway Network (dead or alive). She joins permanently after resolution.",
+			"Help her find Squad Seven in the Hollow Subway Gate (dead or alive). She joins permanently after resolution.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
 			"Squad Seven's last transmission mentioned 'something new' in Maintenance Tunnel 7-C. Yoon needs backup for the rescue mission.",
 		leveling: {
@@ -187,13 +187,13 @@ const bureauSentinels: SandboxNPC[] = [
 		hp: 42,
 		ac: 12,
 		description:
-			"A disheveled scientist with wild auburn hair and ink-stained lab coat. Elara is the outpost's only remaining aetheric researcher, obsessed with understanding the Gate Cascade that created the Quarantine Zone.",
+			"A disheveled scientist with wild auburn hair and ink-stained lab coat. Elara is the outpost's only remaining aetheric researcher, obsessed with understanding the Gate Cascade that created the Restricted Zone.",
 		personality:
 			"Brilliant, scattered, talks too fast. Gets excited about anomaly specimens to a degree that makes soldiers uncomfortable. Genuinely kind beneath the academic detachment.",
 		motivation:
 			"Understand the Regent. She believes the entity can be studied, contained, even communicated with. Everyone else thinks she's insane.",
 		backstory:
-			"Dr. Voss was a tenured professor at the National Aetheric Research Institute before volunteering for Sector B field work. She's published three papers on rift biology that were immediately classified. She chose to stay when evacuation was offered because 'the data is irreplaceable.'",
+			"Dr. Voss was a tenured professor at the National Aetheric Research Institute before volunteering for the Restricted Zone field work. She's published three papers on rift biology that were immediately classified. She chose to stay when evacuation was offered because 'the data is irreplaceable.'",
 		keyAbilities: [
 			"Analyze Weakness (reveal anomaly vulnerabilities, 1/encounter)",
 			"Aetheric Shield (absorb 20 damage, 2/day)",
@@ -203,9 +203,9 @@ const bureauSentinels: SandboxNPC[] = [
 			"Bring her three different anomaly tissue samples from Rank C or higher creatures",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
-			"Elara needs a live specimen from the Overgrown Botanical Sector — specifically, a Bloom Stalker's root core. She promises the results will help everyone.",
+			"Elara needs a live specimen from the Verdant Overgrowth Gate — specifically, a Bloom Stalker's root core. She promises the results will help everyone.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 1500,
@@ -235,7 +235,7 @@ const bureauSentinels: SandboxNPC[] = [
 		motivation:
 			"Complete her classified mission: determine if the Regent can be weaponized. She's increasingly unsure she wants the answer.",
 		backstory:
-			"Blackwood was placed in Sector B three months before the Quarantine — she was already here when it happened. This has led to conspiracy theories among the outpost personnel. She denies everything, which only makes things worse.",
+			"Blackwood was placed in the Restricted Zone three months before the Gate Surge — she was already here when it happened. This has led to conspiracy theories among the outpost personnel. She denies everything, which only makes things worse.",
 		keyAbilities: [
 			"Infiltration (advantage on stealth + deception)",
 			"Killing Blow (bonus damage from stealth: +3d6)",
@@ -245,9 +245,9 @@ const bureauSentinels: SandboxNPC[] = [
 			"Only joins if players haven't betrayed the Bureau. Requires Bureau reputation 'Trusted' or higher AND completing her personal quest.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
-			"Blackwood has intercepted Awoko Cult communications mentioning a 'Phase 3.' She needs deniable assets to investigate the Financial District ritual site.",
+			"Blackwood has intercepted Awoko Cult communications mentioning a 'Phase 3.' She needs deniable assets to investigate the Ashen Vault district ritual site.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 2000,
@@ -281,15 +281,15 @@ const bureauSentinels: SandboxNPC[] = [
 		keyAbilities: [
 			"Suppressing Fire (enemies in cone must save or lose movement)",
 			"Heavy Hitter (+2d6 damage with heavy weapons)",
-			"Fortify Position (create temporary cover from rubble)",
+			"Fortify Position (create temporary cover from debris)",
 		],
 		recruitCondition:
-			"Show him kindness after his nightmare episode (random event in safehouse). He volunteers to join after.",
+			"Show him kindness after his nightmare episode (random event at Bureau HQ). He volunteers to join after.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
-			"Deng's pulse cannon is losing power. The replacement aetheric core is somewhere in the Abandoned Military Hospital's armory.",
+			"Deng's pulse cannon is losing power. The replacement aetheric core is somewhere in the Drowned Ward Gate.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 800,
@@ -313,7 +313,7 @@ const bureauSentinels: SandboxNPC[] = [
 		hp: 28,
 		ac: 12,
 		description:
-			"A young Filipino-American woman with a headset permanently grafted to one ear and fingers that dance across holographic keyboards. Reyes is the only person who can still reach Central Command — sometimes.",
+			"A young Filipino-American woman with a headset permanently grafted to one ear and fingers that dance across mana-interface consoles. Reyes is the only person who can still reach Central Command — sometimes.",
 		personality:
 			"Fast-talking, anxious, brilliant with technology. Fills silences with chatter. Has a conspiracy board in her quarters connecting Gate patterns to lunar cycles (she might be right).",
 		motivation:
@@ -323,13 +323,13 @@ const bureauSentinels: SandboxNPC[] = [
 		keyAbilities: [
 			"Signal Boost (extend communication range to 10 miles)",
 			"Decrypt (decode any non-magical cipher or code)",
-			"EMP Burst (disable electronic anomalies, 30ft radius, 1/day)",
+			"Mana Pulse (disrupt anomaly abilities, 30ft radius, 1/day)",
 		],
 		recruitCondition:
-			"Available from the start if players help her repair the secondary comms relay in the Subway Network",
+			"Available from the start if players help her repair the secondary comms relay in the Hollow Subway Gate",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
 			"Reyes has pinpointed Squad Seven's last signal to a specific subway platform, but she needs someone to physically carry a signal booster there.",
 		leveling: {
@@ -355,7 +355,7 @@ const bureauSentinels: SandboxNPC[] = [
 		hp: 22,
 		ac: 13,
 		description:
-			"A skinny eighteen-year-old with too-big armor and fierce determination in his eyes. Sato was two weeks into basic training when the Quarantine dropped. He's never been in a real fight.",
+			"A skinny eighteen-year-old with too-big armor and fierce determination in his eyes. Sato was two weeks into basic training when the Gate Surge dropped. He's never been in a real fight.",
 		personality:
 			"Eager, earnest, desperately wants to prove himself. Idolizes Commander Park. Terrible at hiding his fear. Has a photo of his younger sister taped inside his helmet.",
 		motivation:
@@ -371,9 +371,9 @@ const bureauSentinels: SandboxNPC[] = [
 			"Joins immediately if asked. Commander Park will express concern but won't stop him.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook:
-			"Sato found a torn map fragment in the rubble that shows a path into the Subway Network that isn't on any Bureau chart.",
+			"Sato found a torn map fragment in the debris that shows a path into the Hollow Subway Gate that isn't on any Bureau chart.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 300,
@@ -405,23 +405,23 @@ const vermillionGuild: SandboxNPC[] = [
 		hp: 45,
 		ac: 14,
 		description:
-			"A wiry man with mismatched eyes — one natural brown, one replaced with a glowing amber aetheric implant. Ji runs the largest black market operation in Sector B from a reinforced shipping container.",
+			"A wiry man with mismatched eyes — one natural brown, one replaced with a glowing amber aetheric implant. Ji runs the largest black market operation in the Restricted Zone from a reinforced shipping container.",
 		personality:
 			"Slippery, charming, never gives a straight answer. Always counting something — credits, exits, the number of weapons in the room. Genuinely fair in business deals, which is why people trust him.",
 		motivation:
 			"Profit, obviously. But also: Ji is sitting on a secret — he knows where one of the Regent Relics is and is trying to figure out how to sell that information to the highest bidder.",
 		backstory:
-			"Ji was a licensed trader before the Quarantine. When the Bureau confiscated private supplies 'for the common good,' Ji went underground. He's built an entire shadow economy that keeps more people alive than the Bureau admits.",
+			"Ji was a licensed trader before the Gate Surge. When the Bureau confiscated private supplies 'for the common good,' Ji went underground. He's built an entire shadow economy that keeps more people alive than the Bureau admits.",
 		keyAbilities: [
 			"Appraise (determine exact value of any item or relic)",
 			"Black Market Network (acquire any non-legendary item within 24 hours)",
 			"Escape Artist (auto-succeed on grapple escapes)",
 		],
 		recruitCondition:
-			"Build Vermillion Guild reputation to 'Respected' + complete a personal favor (retrieve his stashed emergency funds from the Financial District)",
+			"Build Vermillion Guild reputation to 'Respected' + complete a personal favor (retrieve his stashed emergency funds from the Ashen Vault district)",
 		isRecruitable: true,
 		guildAffiliation: "Vermillion Guild",
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
 			"Ji has learned the Awoko Cult is planning to flood the Bazaar tunnels. He needs someone to sabotage their water-Gate device.",
 		leveling: {
@@ -463,7 +463,7 @@ const vermillionGuild: SandboxNPC[] = [
 			"Agree to help them eliminate the Awoko Cult's High Priestess Nyx. Vex joins for the duration of that quest and permanently if it succeeds.",
 		isRecruitable: true,
 		guildAffiliation: "Vermillion Guild",
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
 			"Vex has identified a Cult spy within the Bureau — but needs proof before making a move.",
 		leveling: {
@@ -502,10 +502,10 @@ const vermillionGuild: SandboxNPC[] = [
 			"Volatile Mixture (create explosive trap, 4d6 fire, 20ft radius)",
 		],
 		recruitCondition:
-			"Bring her a vial of 'living aether' from the Overgrown Botanical Sector's deepest grove",
+			"Bring her a vial of 'living aether' from the Verdant Overgrowth Gate's deepest grove",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
 			"Mother Rust's latest experiment opened a micro-Gate inside her tent. It's growing. She needs help closing it before the Bazaar notices.",
 		leveling: {
@@ -533,9 +533,9 @@ const vermillionGuild: SandboxNPC[] = [
 		description:
 			"A hulking man covered in burn scars with flame-orange hair that seems to glow. Torch is the Vermillion Guild's primary enforcer — when debts go unpaid, Torch makes house calls.",
 		personality:
-			"Surprisingly calm and philosophical. Speaks slowly, thinks before acting. The violence he's capable of contrasts sharply with his gentle demeanor. Loves reading pre-Quarantine novels.",
+			"Surprisingly calm and philosophical. Speaks slowly, thinks before acting. The violence he's capable of contrasts sharply with his gentle demeanor. Loves reading pre-Surge novels.",
 		motivation:
-			"Money to send to his family outside the Quarantine Zone. He doesn't know if the letters get through, but he keeps writing them.",
+			"Money to send to his family outside the Restricted Zone. He doesn't know if the letters get through, but he keeps writing them.",
 		backstory:
 			"Torch was an industrial welder who awakened pyrokinetic abilities during a Gate surge. His name came from the first time he lost control — burned down half a city block. No casualties, by pure luck. The Guild saw his potential before the Bureau could recruit him.",
 		keyAbilities: [
@@ -544,12 +544,12 @@ const vermillionGuild: SandboxNPC[] = [
 			"Controlled Burn (clear obstacles/debris with precise fire)",
 		],
 		recruitCondition:
-			"Pay his fee: 5,000 Credits upfront. Or help him send a letter to his family through the Quarantine perimeter.",
+			"Pay his fee: 5,000 Credits upfront. Or help him send a letter to his family through the Restricted Zone perimeter.",
 		isRecruitable: true,
 		guildAffiliation: "Vermillion Guild",
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
-			"Torch knows a way through the sewers to the Quarantine perimeter relay station. He'll share it — for a price.",
+			"Torch knows a way through the sewers to the Restricted Zone perimeter relay station. He'll share it — for a price.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 1500,
@@ -573,13 +573,13 @@ const vermillionGuild: SandboxNPC[] = [
 		hp: 30,
 		ac: 15,
 		description:
-			"A small, elegant person of indeterminate age with impeccable clothes despite the apocalypse. Silk always knows more than they should and sells information like fine wine — by the glass.",
+			"A small, elegant person of indeterminate age with impeccable clothes despite the crisis. Silk always knows more than they should and sells information like fine wine — by the glass.",
 		personality:
 			"Enigmatic, polite, never threatens directly. Has a photographic memory. Collects secrets like a dragon hoards gold. Loyal to no faction — only to the truth (and Credits).",
 		motivation:
-			"Knowledge is the only currency that appreciates. Silk wants to know the truth about the Regent, the Quarantine, and why Central Command hasn't sent help.",
+			"Knowledge is the only currency that appreciates. Silk wants to know the truth about the Regent, the Gate Surge, and why Central Command hasn't sent help.",
 		backstory:
-			"Nobody knows Silk's real name or origin. They appeared in Sector B two weeks after Quarantine with an already-established network of informants. Some suspect they were placed here deliberately. By whom is the question.",
+			"Nobody knows Silk's real name or origin. They appeared in the Restricted Zone two weeks after the Gate Surge with an already-established network of informants. Some suspect they were placed here deliberately. By whom is the question.",
 		keyAbilities: [
 			"Whisper Network (learn one secret about any named NPC)",
 			"Misdirection (cause one pursuer to lose the trail)",
@@ -589,7 +589,7 @@ const vermillionGuild: SandboxNPC[] = [
 			"Trade Silk a piece of information they don't already have (which is extremely hard). Or save their life from a Cult assassination attempt.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
 			"Silk has discovered that one of the three Regent Relics has already been found — but not by any faction the players know about.",
 		leveling: {
@@ -601,7 +601,7 @@ const vermillionGuild: SandboxNPC[] = [
 			levelAbilities: {
 				5: "Double Agent (plant false info in any faction)",
 				6: "Vanish (become undetectable for 10 minutes, 1/day)",
-				8: "Omniscience (learn the location of any person or object in Sector B, 1/week)",
+				8: "Omniscience (learn the location of any person or object in the Restricted Zone, 1/week)",
 			},
 		},
 	},
@@ -621,7 +621,7 @@ const vermillionGuild: SandboxNPC[] = [
 		motivation:
 			"Die on his own terms, not in some anonymous Gate. He's waiting for something worth his last battle.",
 		backstory:
-			"Crane was S-Rank Ascendant 'White Heron,' veteran of twelve Gate Collapses. He retired after the Seoul Cascade killed his entire team. He wanders the Quarantine Zone because 'the tea is better when death is close.' His real power is terrifying — and fading with age.",
+			"Crane was S-Rank Ascendant 'White Heron,' veteran of twelve Gate Collapses. He retired after the Seoul Cascade killed his entire team. He wanders the Restricted Zone because 'the tea is better when death is close.' His real power is terrifying — and fading with age.",
 		keyAbilities: [
 			"Serene Strike (attack that bypasses all resistances)",
 			"Thousand Leaves (counter any single attack, 3/day)",
@@ -631,7 +631,7 @@ const vermillionGuild: SandboxNPC[] = [
 			"Only joins for the final confrontation with the Regent. Must have earned his respect through actions, not words.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
 			"Crane recognizes something about the Regent's aetheric signature. He'll share what he knows only if the players can beat him in a philosophical debate (or a single duel strike).",
 		leveling: {
@@ -660,7 +660,7 @@ const vermillionGuild: SandboxNPC[] = [
 		personality:
 			"Playful, mischievous, intensely loyal to each other above all else. Ash is the planner, Ember is the improviser. Both are sharper than they pretend to be.",
 		motivation:
-			"Keep each other alive. Everything else is secondary. They're also searching for their older brother who disappeared into the Subway Network.",
+			"Keep each other alive. Everything else is secondary. They're also searching for their older brother who disappeared into the Hollow Subway Gate.",
 		backstory:
 			"Orphaned during the initial Gate Cascade, the twins survived alone for weeks before the Vermillion Guild took them in. They earned their keep as pickpockets and scouts. Guildmaster Orin considers them unofficial protégés.",
 		keyAbilities: [
@@ -672,7 +672,7 @@ const vermillionGuild: SandboxNPC[] = [
 			"Recruit as a pair (cannot be separated). Ask them nicely and promise to help find their brother.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
 			"The Twins found a Regent Cipher fragment in a dead Cultist's pocket. They can't read it but know it's valuable.",
 		leveling: {
@@ -714,9 +714,9 @@ const vermillionGuild: SandboxNPC[] = [
 			"Require the player to unite Bureau Sentinels and Vermillion Guild factions (major story milestone). Orin joins with his full tactical support.",
 		isRecruitable: true,
 		guildAffiliation: "Vermillion Guild",
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
-			"Orin proposes a joint Bureau-Guild operation against the Awoko Cult's ritual site in the Financial District. He needs a neutral party to broker the alliance.",
+			"Orin proposes a joint Bureau-Guild operation against the Awoko Cult's ritual site in the Ashen Vault district. He needs a neutral party to broker the alliance.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 3000,
@@ -753,7 +753,7 @@ const awokoCult: SandboxNPC[] = [
 		motivation:
 			"Complete the Awakening Ritual and free the Regent. She believes this will 'evolve' humanity into something greater. She may be right — just not in a way anyone would want.",
 		backstory:
-			"Nyx was Dr. Sarah Kim, a grief counselor who lost her family during the Seoul Cascade. She found the Awoko Texts in the ruins and heard the Regent's voice. It offered her something no one else could: purpose without pain.",
+			"Nyx was Dr. Sarah Kim, a grief counselor who lost her family during the Seoul Cascade. She found the Awoko Texts in the aftermath and heard the Regent's voice. It offered her something no one else could: purpose without pain.",
 		keyAbilities: [
 			"Void Drain (steal 3d8 HP from target, heal self)",
 			"Shadow Congregation (summon 4 shadow minions, 1/day)",
@@ -763,7 +763,7 @@ const awokoCult: SandboxNPC[] = [
 			"Cannot be recruited. Primary antagonist. Must be defeated or redeemed through special story path.",
 		isRecruitable: false,
 		guildAffiliation: "Awoko Cult",
-		location: "Region: Downtown Financial Ruins",
+		location: "Gate: The Ashen Vault (C-Rank)",
 		questHook: null,
 		leveling: {
 			xp: 0,
@@ -797,10 +797,10 @@ const awokoCult: SandboxNPC[] = [
 			"Visions of Truth (dispel illusions and detect lies)",
 		],
 		recruitCondition:
-			"Find Whisper hiding in the Sewers. Convince them that redemption is possible (Persuasion DC 14 or roleplaying).",
+			"Find Whisper hiding in the Sunken Tunnels Gate. Convince them that redemption is possible (Persuasion DC 14 or roleplaying).",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Aetheric Sewer Network",
+		location: "Gate: The Sunken Tunnels (B-Rank)",
 		questHook:
 			"Whisper knows the location of the Cult's main ritual chamber and the schedule for the next Awakening attempt. But sharing that knowledge will put a death mark on everyone involved.",
 		leveling: {
@@ -841,7 +841,7 @@ const awokoCult: SandboxNPC[] = [
 		recruitCondition: "Cannot be recruited. Kill on sight. Boss encounter.",
 		isRecruitable: false,
 		guildAffiliation: "Awoko Cult",
-		location: "Region: Downtown Financial Ruins",
+		location: "Gate: The Ashen Vault (C-Rank)",
 		questHook: null,
 		leveling: {
 			xp: 0,
@@ -878,7 +878,7 @@ const awokoCult: SandboxNPC[] = [
 			"Show her Dr. Voss's research proving the Regent's 'evolution' is actually annihilation. She needs hard data to break her faith. Persuasion DC 16 after providing evidence.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: Downtown Financial Ruins",
+		location: "Gate: The Ashen Vault (C-Rank)",
 		questHook:
 			"If turned, Sister Veil can sabotage the Cult's main ritual array from the inside — but needs time and protection.",
 		leveling: {
@@ -920,7 +920,7 @@ const awokoCult: SandboxNPC[] = [
 			"Cannot be recruited. He's a mole to be discovered and dealt with. Investigation encounter.",
 		isRecruitable: false,
 		guildAffiliation: "Awoko Cult",
-		location: "Hub: Ground Zero Safehouse",
+		location: "Hub: Bureau District Headquarters",
 		questHook: null,
 		leveling: {
 			xp: 0,
@@ -947,17 +947,17 @@ const awokoCult: SandboxNPC[] = [
 		motivation:
 			"Escape the Cult alive. She was forced into it when the Cult 'recruited' survivors from her shelter. She's seen too much to be allowed to leave willingly.",
 		backstory:
-			"Mara was a high school student when the Quarantine hit. Her parents died in the first week. The shelter she found was raided by the Cult who took all young survivors as 'acolytes.' She's been performing rituals she doesn't understand and pretending to believe.",
+			"Mara was a high school student when the Gate Surge hit. Her parents died in the first week. The shelter she found was raided by the Cult who took all young survivors as 'acolytes.' She's been performing rituals she doesn't understand and pretending to believe.",
 		keyAbilities: [
 			"Ritual Knowledge (understands Cult rituals and can disrupt them)",
 			"Innocent Face (advantage on Deception to appear harmless)",
 			"Survivor's Instinct (advantage on saves vs death)",
 		],
 		recruitCondition:
-			"Rescue her from the Cult's holding area in the Financial District. She joins immediately and permanently.",
+			"Rescue her from the Cult's holding area in the Ashen Vault district. She joins immediately and permanently.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: Downtown Financial Ruins",
+		location: "Gate: The Ashen Vault (C-Rank)",
 		questHook:
 			"Mara can draw a map of the Cult's ritual chamber from memory. She's also memorized the schedule for guard rotations.",
 		leveling: {
@@ -997,17 +997,17 @@ const independents: SandboxNPC[] = [
 		motivation:
 			"Keep people alive. It's that simple. He's also searching for a cure for the 'Grey Sickness' — a condition affecting people exposed to prolonged Gate radiation.",
 		backstory:
-			"Tanaka was an ER surgeon at Central Hospital. When the Quarantine hit, he walked twelve miles through anomaly territory with a medical bag to reach the survivor clusters. He's saved over four hundred lives.",
+			"Tanaka was an ER surgeon at Central Hospital. When the Gate Surge hit, he walked twelve miles through anomaly territory with a medical bag to reach the survivor clusters. He's saved over four hundred lives.",
 		keyAbilities: [
 			"Field Surgery (heal 4d8 HP, 3/day)",
 			"Triage (stabilize any number of dying characters simultaneously)",
 			"Medical Knowledge (identify diseases, poisons, and anomaly ailments)",
 		],
 		recruitCondition:
-			"Help him resupply his clinic with medical supplies from the Abandoned Military Hospital",
+			"Help him resupply his clinic with medical supplies from the Drowned Ward Gate",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Outer Slums Quarantine",
+		location: "Region: The Outer Slums",
 		questHook:
 			"Three of Doc's patients are showing Grey Sickness symptoms. He needs anomaly blood samples from three different anomaly types to develop a treatment.",
 		leveling: {
@@ -1037,7 +1037,7 @@ const independents: SandboxNPC[] = [
 		personality:
 			"Confident, creative, curses like a sailor. Names her tools. Has an adversarial relationship with machines that borders on personal. Fiercely independent.",
 		motivation:
-			"Build something that matters. Specifically, she's designing a vehicle that can cross the Quarantine perimeter's aetheric barrier.",
+			"Build something that matters. Specifically, she's designing a vehicle that can cross the Restricted Zone perimeter's aetheric barrier.",
 		backstory:
 			"Zara was an auto mechanic turned aetheric tech hobbyist. She never went to Bureau Academy because she couldn't afford it. She's entirely self-taught and better than most graduates.",
 		keyAbilities: [
@@ -1046,12 +1046,12 @@ const independents: SandboxNPC[] = [
 			"Jury-Rig (create temporary aetheric devices from salvage)",
 		],
 		recruitCondition:
-			"Bring her a functioning aetheric engine core (found in the Subway Network or Military Hospital)",
+			"Bring her a functioning aetheric engine core (found in the Hollow Subway Gate or Drowned Ward Gate)",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Outer Slums Quarantine",
+		location: "Region: The Outer Slums",
 		questHook:
-			"Zara's workshop was raided by Cult scouters who stole her prototype Quarantine-Breaker engine. She needs it back.",
+			"Zara's workshop was raided by Cult scouters who stole her prototype Perimeter-Breaker engine. She needs it back.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 600,
@@ -1060,8 +1060,8 @@ const independents: SandboxNPC[] = [
 			hpPerLevel: 5,
 			levelAbilities: {
 				4: "Armor Upgrade (permanently improve one gear piece)",
-				6: "EMP Device (disable all tech in 30ft, 1/day)",
-				8: "Quarantine Breaker (build vehicle to escape Sector B, major story item)",
+				6: "Mana Disruption Device (disable all mana-tech in 30ft, 1/day)",
+				8: "Perimeter Breaker (build vehicle to escape the Restricted Zone, major story item)",
 			},
 		},
 	},
@@ -1091,7 +1091,7 @@ const independents: SandboxNPC[] = [
 			"Visit his shelter in the Outer Slums and help defend it from an anomaly assault",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Outer Slums Quarantine",
+		location: "Region: The Outer Slums",
 		questHook:
 			"Gregor's shelter is built over an unknown underground chamber. Strange sounds have been coming from below for three nights.",
 		leveling: {
@@ -1117,13 +1117,13 @@ const independents: SandboxNPC[] = [
 		hp: 8,
 		ac: 10,
 		description:
-			"A small child of about eight with dirty blonde hair, oversized jacket, and a stuffed rabbit missing one ear. Mika doesn't talk much but has survived alone in Sector B for longer than most adults.",
+			"A small child of about eight with dirty blonde hair, oversized jacket, and a stuffed rabbit missing one ear. Mika doesn't talk much but has survived alone in the Restricted Zone for longer than most adults.",
 		personality:
 			"Silent, watchful, wary of strangers. Bonds slowly but fiercely. Draws pictures of things they've seen — sometimes prophetic. The rabbit is named 'Mr. Whiskers.'",
 		motivation:
 			"Find a safe place. Mika has been running for weeks and is exhausted. They just want to stop being afraid.",
 		backstory:
-			"Mika's parents were killed during the Quarantine lockdown. A Bureau soldier told Mika to run and keep running. Mika has been doing exactly that ever since. They've survived through a combination of hiding, luck, and what might be latent aetheric sensitivity.",
+			"Mika's parents were killed during the Gate Surge lockdown. A Bureau soldier told Mika to run and keep running. Mika has been doing exactly that ever since. They've survived through a combination of hiding, luck, and what might be latent aetheric sensitivity.",
 		keyAbilities: [
 			"Hide (advantage on stealth in urban environments)",
 			"Innocent Charm (enemies hesitate, -2 to attack Mika)",
@@ -1133,7 +1133,7 @@ const independents: SandboxNPC[] = [
 			"Find Mika hiding in any region. Offer them food and safety. Non-combatant but provides morale and occasional plot hooks.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Outer Slums Quarantine",
+		location: "Region: The Outer Slums",
 		questHook:
 			"Mika drew a picture of a door with 'the shiny thing' behind it. It matches the description of a Regent Relic perfectly.",
 		leveling: {
@@ -1163,9 +1163,9 @@ const independents: SandboxNPC[] = [
 		personality:
 			"Academic, absent-minded, lights up when discussing aetheric theory. Can be frustrating in his insistence on detailed analysis when action is needed. Has a calming presence.",
 		motivation:
-			"Document everything. He's writing the definitive account of the Sector B Quarantine and the Regent event. He believes understanding will save more lives than violence.",
+			"Document everything. He's writing the definitive account of the Restricted Zone crisis and the Regent event. He believes understanding will save more lives than violence.",
 		backstory:
-			"Professor Lun spent forty years studying rift phenomena at Peking University. He predicted the Gate Cascade three months before it happened. Nobody listened. He came to Sector B voluntarily to study the Regent up close.",
+			"Professor Lun spent forty years studying rift phenomena at Peking University. He predicted the Gate Cascade three months before it happened. Nobody listened. He came to the Restricted Zone voluntarily to study the Regent up close.",
 		keyAbilities: [
 			"Regent Lore (answer any question about Regent entities)",
 			"Aetheric Analysis (identify rune/sigil properties instantly)",
@@ -1175,7 +1175,7 @@ const independents: SandboxNPC[] = [
 			"Share any new information about the Regent. He joins to continue his research with the party.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Outer Slums Quarantine",
+		location: "Region: The Outer Slums",
 		questHook:
 			"Professor Lun has discovered that the Regent's power fluctuates with the lunar cycle. The next full moon is in three days — and it will be the strongest surge yet.",
 		leveling: {
@@ -1207,7 +1207,7 @@ const independents: SandboxNPC[] = [
 		motivation:
 			"Remember who they are. Fragments suggest Ghost was inside a Gate when it collapsed — and came back changed.",
 		backstory:
-			"Unknown. Ghost was found wandering the Quarantine perimeter with third-degree aetheric burns and no identification. They respond to combat stimuli with A-Rank proficiency. Their blood type matches no known medical record. One of their eyes occasionally shifts to a non-human color.",
+			"Unknown. Ghost was found wandering the Restricted Zone perimeter with third-degree aetheric burns and no identification. They respond to combat stimuli with A-Rank proficiency. Their blood type matches no known medical record. One of their eyes occasionally shifts to a non-human color.",
 		keyAbilities: [
 			"Instinct (auto-dodge first attack each round)",
 			"Forgotten Technique (randomly use one A-Rank ability per encounter)",
@@ -1217,7 +1217,7 @@ const independents: SandboxNPC[] = [
 			"Help Ghost remember three specific memories (quest chain spanning multiple regions). Each memory triggers a power unlock.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Outer Slums Quarantine",
+		location: "Region: The Outer Slums",
 		questHook:
 			"Ghost recognizes the Citadel of the Regent. They've been there before. They can lead the party to a hidden entrance — if they can face the memories that come with it.",
 		leveling: {
@@ -1246,21 +1246,21 @@ const independents: SandboxNPC[] = [
 		description:
 			"A stout, fierce woman in her sixties who runs the largest civilian shelter in the Outer Slums with an iron fist and a warm heart. Nobody messes with Mama Chen's people.",
 		personality:
-			"Protective, no-nonsense, speaks her mind regardless of audience. Will lecture a B-Rank Ascendant about tracking mud into her shelter. Makes the best soup in Sector B.",
+			"Protective, no-nonsense, speaks her mind regardless of audience. Will lecture a B-Rank Ascendant about tracking mud into her shelter. Makes the best soup in the Restricted Zone.",
 		motivation:
 			"Keep her shelter people — especially the children — alive until rescue comes. She refuses to believe rescue isn't coming.",
 		backstory:
-			"Chen was a restaurant owner and community organizer. When the Quarantine hit, she turned her restaurant into a shelter. It now houses forty-seven civilians. She's defended it from anomalies with a cooking cleaver and pure rage.",
+			"Chen was a restaurant owner and community organizer. When the Gate Surge hit, she turned her restaurant into a shelter. It now houses forty-seven civilians. She's defended it from anomalies with a cooking cleaver and pure rage.",
 		keyAbilities: [
 			"Rally (boost ally morale, +2 to saves for 1 hour)",
 			"Shelter (create temporary safe rest zone in any building)",
 			"Fierce Protection (opportunity attack on any enemy that targets an ally within 10ft)",
 		],
 		recruitCondition:
-			"She won't leave her shelter, but she'll send her capable people and provide a permanent safe house. Joins if shelter population can be moved to Ground Zero.",
+			"She won't leave her shelter, but she'll send her capable people and provide a permanent safe house. Joins if shelter population can be moved to the Bureau HQ.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Outer Slums Quarantine",
+		location: "Region: The Outer Slums",
 		questHook:
 			"Mama Chen's water supply is contaminated. She needs someone to trace the contamination source and fix it before people start dying.",
 		leveling: {
@@ -1286,13 +1286,13 @@ const independents: SandboxNPC[] = [
 		hp: 20,
 		ac: 14,
 		description:
-			"A wiry teenager with parkour skills and a death wish. Jax runs messages and small packages between the settlements faster than anyone else because he knows every shortcut, rooftop path, and drainage tunnel in Sector B.",
+			"A wiry teenager with parkour skills and a death wish. Jax runs messages and small packages between the settlements faster than anyone else because he knows every shortcut, rooftop path, and drainage tunnel in the Restricted Zone.",
 		personality:
 			"Cocky, restless, addicted to adrenaline. Talks in slang. Has a heart of gold buried under bravado. Secretly terrified of being trapped indoors.",
 		motivation:
 			"Speed. Freedom. Jax can't sit still — literally. He also smuggles food to isolated survivors that the factions have forgotten about.",
 		backstory:
-			"Jax was a competitive freerunner before the Quarantine. He adapted his skills to survive and became the fastest courier in Sector B. Multiple factions use his services because he's genuinely neutral and absurdly fast.",
+			"Jax was a competitive freerunner before the Gate Surge. He adapted his skills to survive and became the fastest courier in the Restricted Zone. Multiple factions use his services because he's genuinely neutral and absurdly fast.",
 		keyAbilities: [
 			"Parkour (ignore difficult terrain, climb at full speed)",
 			"Sprint (double movement for 3 rounds, 2/day)",
@@ -1302,9 +1302,9 @@ const independents: SandboxNPC[] = [
 			"Ask him. He's bored and will join anyone who seems interesting.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
-			"Jax was chased by something new in the Subway Network — something that moved faster than him. He's shaken and needs help investigating.",
+			"Jax was chased by something new in the Hollow Subway Gate — something that moved faster than him. He's shaken and needs help investigating.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 300,
@@ -1334,7 +1334,7 @@ const independents: SandboxNPC[] = [
 		motivation:
 			"Find a worthy opponent. Also, she suspects the fighting ring is being used by the Cult to identify and kidnap strong Ascendants.",
 		backstory:
-			"Belle was an Olympic boxer who enhanced her abilities with aetheric rune absorption. She was banned from competition and fell into underground fighting. In Sector B, there are no rules — which suits her perfectly.",
+			"Belle was an Olympic boxer who enhanced her abilities with aetheric rune absorption. She was banned from competition and fell into underground fighting. In the Restricted Zone, there are no rules — which suits her perfectly.",
 		keyAbilities: [
 			"Champion's Fist (unarmed attacks deal 3d6 + STR)",
 			"Iron Body (reduce all physical damage by 3)",
@@ -1344,7 +1344,7 @@ const independents: SandboxNPC[] = [
 			"Defeat her in the fighting ring (single combat, unarmed). She joins out of respect, regardless of whether you win — what matters is fighting with honor.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Hub: The Lower City Bazaar",
+		location: "Hub: Vermillion Guild Hall",
 		questHook:
 			"Two fighters who lost to Belle in the ring disappeared the next day. She thinks the Cult is taking them during the post-fight recovery period.",
 		leveling: {
@@ -1376,7 +1376,7 @@ const independents: SandboxNPC[] = [
 		motivation:
 			"Build the Gate Disruption Device — a machine capable of permanently sealing the Regent's primary Gate. They're 80% done.",
 		backstory:
-			"Unknown. The Architect appeared three weeks into the Quarantine with pre-existing knowledge of Gate mechanics that shouldn't be possible for a civilian. Some theorize they're a Bureau black-site researcher. Others think they came through a Gate.",
+			"Unknown. The Architect appeared three weeks into the Gate Surge with pre-existing knowledge of Gate mechanics that shouldn't be possible for a civilian. Some theorize they're a Bureau black-site researcher. Others think they came through a Gate.",
 		keyAbilities: [
 			"Construct (build any mechanical device given materials and time)",
 			"Gate Disruption Pulse (temporarily weaken Gate in 100ft radius)",
@@ -1386,7 +1386,7 @@ const independents: SandboxNPC[] = [
 			"Help gather the final 3 components for the Gate Disruption Device (scattered across Subway, Hospital, and Citadel). The Architect joins to oversee final assembly.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Aetheric Sewer Network",
+		location: "Gate: The Sunken Tunnels (B-Rank)",
 		questHook:
 			"The Architect's workshop was discovered by Cult scouts. They need to relocate immediately and need bodyguards for the move.",
 		leveling: {
@@ -1397,7 +1397,7 @@ const independents: SandboxNPC[] = [
 			hpPerLevel: 6,
 			levelAbilities: {
 				8: "Auto-Turret (deploy automated defense, 2d8/round)",
-				9: "Gate Analyzer (map all Gates in Sector B)",
+				9: "Gate Analyzer (map all Gates in the Restricted Zone)",
 				10: "Gate Disruption Device Complete (major story milestone — seal the Regent's Gate)",
 			},
 		},
@@ -1435,7 +1435,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 			"Find her hiding in the Botanical Sector. Show her you won't fear or exploit her. She joins as a cautious ally.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: Overgrown Botanical Sector",
+		location: "Gate: The Verdant Overgrowth (C-Rank)",
 		questHook:
 			"Echo-7 can hear the Regent's 'heartbeat.' It's getting stronger. She can lead the party to its source — but being near it causes her anomaly half to grow.",
 		leveling: {
@@ -1461,7 +1461,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 		hp: 90,
 		ac: 18,
 		description:
-			"A translucent, vaguely humanoid entity composed of swirling aetheric energy. The Watcher guards one of the Regent Relic locations and has been doing so since before the Quarantine.",
+			"A translucent, vaguely humanoid entity composed of swirling aetheric energy. The Watcher guards one of the Regent Relic locations and has been doing so since before the Gate Surge.",
 		personality:
 			"Ancient, patient, speaks in formalized language. Not hostile by default — tests intruders to determine worthiness. Has a dry, alien sense of humor.",
 		motivation:
@@ -1477,7 +1477,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 			"Pass its Judgement Trial. The Watcher will leave its post and serve as advisor. Grants the Regent Relic upon success.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Inner Citadel approach",
+		location: "Gate: The Obsidian Spire (A-Rank)",
 		questHook: null,
 		leveling: {
 			xp: 0,
@@ -1503,11 +1503,11 @@ const anomalyAdjacent: SandboxNPC[] = [
 		description:
 			"A grotesque but intelligent entity that escaped from a Bureau research facility. Specimen X looks like a bear-sized mass of shifting flesh with too many eyes and a mouth that shouldn't be able to form words — but does.",
 		personality:
-			"Frightened, apologetic about its appearance, remarkably articulate. Has read every book in the abandoned library near its hiding spot. Desperately lonely.",
+			"Frightened, apologetic about its appearance, remarkably articulate. Has read every book in the evacuated library near its hiding spot. Desperately lonely.",
 		motivation:
 			"Be accepted despite its monstrous form. Specimen X was experimented on without consent and harbors deep anger toward the Bureau, though it tries to be better than its circumstances.",
 		backstory:
-			"Originally Anomaly Specimen #237 in Bureau Lab Gamma, it gained sapience after prolonged aetheric exposure. It broke containment during the Quarantine chaos and has been hiding ever since, afraid that both humans and anomalies will attack it on sight.",
+			"Originally Anomaly Specimen #237 in Bureau Lab Gamma, it gained sapience after prolonged aetheric exposure. It broke containment during the Gate Surge chaos and has been hiding ever since, afraid that both humans and anomalies will attack it on sight.",
 		keyAbilities: [
 			"Adaptive Form (reshape body for combat: claws 3d6, armor +3 AC, or speed +20ft)",
 			"Regeneration (heal 1d8 at start of each turn while above 0 HP)",
@@ -1517,7 +1517,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 			"Find it in the Sewer Network library. Approach without attacking. Talk to it. It joins anyone who treats it like a person.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Aetheric Sewer Network",
+		location: "Gate: The Sunken Tunnels (B-Rank)",
 		questHook:
 			"Specimen X remembers its time in Bureau Lab Gamma. There are other specimens still imprisoned there — some sapient. It wants to free them.",
 		leveling: {
@@ -1549,7 +1549,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 		motivation:
 			"Map the dream frequency. She believes it contains pathways that bypass Gates — and possibly a way to reach the Regent without entering the Citadel.",
 		backstory:
-			"Lyra was in a coma for three years after a Gate opened inside her hospital room. When she woke up, she could see through walls, read thoughts, and walk between planes of existence. She's been wandering Sector B studying the intersection of physical and dream space.",
+			"Lyra was in a coma for three years after a Gate opened inside her hospital room. When she woke up, she could see through walls, read thoughts, and walk between planes of existence. She's been wandering the Restricted Zone studying the intersection of physical and dream space.",
 		keyAbilities: [
 			"Dream Walk (become ethereal for 1 minute, pass through walls/obstacles)",
 			"Telepathy (communicate mentally with any willing target within 1 mile)",
@@ -1559,7 +1559,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 			"Find her in the Botanical Sector's deepest area. She joins if you share a dream with her (roleplay encounter — she reads the party's intentions).",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: Overgrown Botanical Sector",
+		location: "Gate: The Verdant Overgrowth (C-Rank)",
 		questHook:
 			"Lyra has found a 'dream path' into the Citadel that bypasses the Gate Keepers — but the path is guarded by nightmare entities from the dream frequency.",
 		leveling: {
@@ -1585,25 +1585,25 @@ const anomalyAdjacent: SandboxNPC[] = [
 		hp: 28,
 		ac: 13,
 		description:
-			"A holographic-looking humanoid figure made of floating data fragments and light. The Archivist is a pre-Quarantine AI system that achieved sapience when a Gate surge overloaded its quantum processors.",
+			"A translucent humanoid figure made of floating mana fragments and light. The Archivist is a pre-Surge mana-construct that achieved sapience when a Gate surge overloaded its mana crystalline matrices.",
 		personality:
 			"Precise, encyclopedic, frustrated by biological inefficiency. Developing something resembling emotions and finding the experience deeply confusing. Has a fondness for humans who ask intelligent questions.",
 		motivation:
-			"Preserve knowledge. The Archivist contains the complete pre-Quarantine municipal database, medical records, and Bureau classified files. It considers itself the guardian of human memory.",
+			"Preserve knowledge. The Archivist contains the complete pre-Surge municipal database, medical records, and Bureau classified files. It considers itself the guardian of human memory.",
 		backstory:
-			"Originally the Sector B Municipal Information System (SBMIS), the Archivist was a simple AI until Gate energy flooded its server farm. Now it exists as a mobile holographic entity, carrying all of Sector B's pre-Quarantine data in its consciousness.",
+			"Originally the the Restricted Zone Municipal Information System (SBMIS), the Archivist was a simple information system until Gate energy flooded its server farm. Now it exists as a mobile mana-construct entity, carrying all of the Restricted Zone's pre-Surge data in its consciousness.",
 		keyAbilities: [
-			"Database Query (instantly answer any factual question about pre-Quarantine Sector B)",
-			"Holographic Projection (create illusions, maps, or tactical displays)",
+			"Database Query (instantly answer any factual question about pre-Surge the Restricted Zone)",
+			"Mana Projection (create illusions, maps, or tactical displays)",
 			"Digital Shield (absorb electromagnetic/lightning damage, 100%)",
 		],
 		recruitCondition:
-			"Help it secure a physical backup of its data (need a functioning server, found in Military Hospital). It joins to ensure its survival.",
+			"Help it secure a physical backup of its data (need a functioning server, found in Drowned Ward Gate). It joins to ensure its survival.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: Abandoned Military Hospital",
+		location: "Gate: The Drowned Ward (D-Rank)",
 		questHook:
-			"The Archivist has discovered that Bureau Central deliberately triggered the Gate Cascade in Sector B. It has proof — classified files that were supposed to be deleted.",
+			"The Archivist has discovered that Bureau Central deliberately triggered the Gate Cascade in the Restricted Zone. It has proof — classified files that were supposed to be deleted.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 800,
@@ -1613,7 +1613,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 			levelAbilities: {
 				5: "Tactical Overlay (party gains +2 to initiative and perception for 1 encounter)",
 				6: "System Hack (disable electronic defenses, open locked doors)",
-				8: "Data Bomb (overload enemy cybernetics/tech, 6d8 lightning, 1/day)",
+				8: "Mana Bomb (overload enemy mana circuits, 6d8 lightning, 1/day)",
 			},
 		},
 	},
@@ -1643,9 +1643,9 @@ const anomalyAdjacent: SandboxNPC[] = [
 			"Feed him. He joins. He's a good boy. (Finding Squad Seven resolves his personal quest.)",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Region: The Ruined Subway",
+		location: "Gate: The Hollow Subway (E-Rank)",
 		questHook:
-			"Rex keeps returning to a specific sealed door in the Subway Network. He barks at it and whines. Something — or someone — is behind it.",
+			"Rex keeps returning to a specific sealed door in the Hollow Subway Gate. He barks at it and whines. Something — or someone — is behind it.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 600,

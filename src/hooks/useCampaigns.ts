@@ -505,10 +505,32 @@ export const useCreateCampaign = () => {
 			});
 
 			if (error) {
-				// Error is handled by React Query's error state
+				console.error("[useCreateCampaign] RPC failed:", error);
 				throw error;
 			}
-			return data as string; // Returns campaign ID
+
+			const campaignId = data as string;
+
+			// Verify the campaign was actually persisted — guards against
+			// silent RPC failures or RLS issues hiding the new row.
+			const { data: verified, error: verifyError } = await supabase
+				.from("campaigns")
+				.select("*")
+				.eq("id", campaignId)
+				.single();
+
+			if (verifyError || !verified) {
+				console.error(
+					"[useCreateCampaign] Post-creation verification failed:",
+					verifyError,
+				);
+				throw new AppError(
+					"Campaign was created but could not be verified. Please refresh.",
+					"UNKNOWN",
+				);
+			}
+
+			return campaignId;
 		},
 		onSuccess: () => {
 			// Invalidate ONLY list queries — avoid wiping the optimistic
