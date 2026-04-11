@@ -268,6 +268,7 @@ export const useCampaign = (campaignId: string) => {
 			if (failureCount < 2) return true;
 			return false;
 		},
+		retryDelay: (attempt) => Math.min(500 * 2 ** attempt, 3000),
 	});
 };
 
@@ -329,14 +330,41 @@ export const useCampaignByShareCode = (shareCode: string) => {
 					) || null
 				);
 			}
-			await supabase.auth.getUser();
-			const { data, error } = await supabase.rpc("get_campaign_by_share_code", {
+			const { data: authData } = await supabase.auth.getUser();
+			if (!authData.user && guestEnabled) {
+				return (
+					loadLocalCampaigns().find(
+						(campaign) => campaign.share_code === shareCode.toUpperCase(),
+					) || null
+				);
+			}
+
+			const rpcResult = await supabase.rpc("get_campaign_by_share_code", {
 				p_share_code: shareCode.toUpperCase(),
 			});
 
-			if (error) throw error;
-			const campaign = Array.isArray(data) ? data[0] : data;
-			return (campaign || null) as Campaign;
+			if (rpcResult.error) {
+				const msg = String(rpcResult.error.message ?? "").toLowerCase();
+				const isRpcMissing =
+					msg.includes("does not exist") || msg.includes("no function matches");
+
+				if (!isRpcMissing) throw rpcResult.error;
+
+				// Fallback: direct SELECT when RPC doesn't exist
+				const { data: directData, error: directError } = await supabase
+					.from("campaigns")
+					.select("*")
+					.eq("share_code", shareCode.toUpperCase())
+					.maybeSingle();
+
+				if (directError) throw directError;
+				return (directData || null) as Campaign | null;
+			}
+
+			const campaign = Array.isArray(rpcResult.data)
+				? rpcResult.data[0]
+				: rpcResult.data;
+			return (campaign || null) as Campaign | null;
 		},
 		enabled: !!shareCode && shareCode.length === 6,
 	});
@@ -497,25 +525,66 @@ export const useCreateCampaign = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			// Call the database function to create campaign with share code
-			const { data, error } = await supabase.rpc("create_campaign_with_code", {
+			// Try the RPC first; fall back to direct INSERT if the function
+			// doesn't exist (e.g. newly provisioned Supabase project).
+			const shareCode = createShareCode();
+			let campaignId: string;
+
+			const rpcResult = await supabase.rpc("create_campaign_with_code", {
 				p_name: name,
 				p_description: description || "",
 				p_warden_id: user.id,
 			});
 
-			if (error) {
-				console.error("[useCreateCampaign] RPC failed:", error);
-				throw error;
-			}
+			if (rpcResult.error) {
+				const msg = String(rpcResult.error.message ?? "").toLowerCase();
+				const isRpcMissing =
+					msg.includes("does not exist") || msg.includes("no function matches");
 
-			const campaignId = data as string;
+				if (!isRpcMissing) {
+					console.error("[useCreateCampaign] RPC failed:", rpcResult.error);
+					throw rpcResult.error;
+				}
 
-			if (!campaignId) {
-				throw new AppError(
-					"RPC succeeded but returned no campaign ID.",
-					"UNKNOWN",
-				);
+				// Fallback: direct INSERT when RPC doesn't exist
+				const now = new Date().toISOString();
+				const { data: inserted, error: insertError } = await supabase
+					.from("campaigns")
+					.insert({
+						name,
+						description: description || null,
+						warden_id: user.id,
+						share_code: shareCode,
+						is_active: true,
+						settings: {
+							leveling_mode: "milestone",
+						} as unknown as Database["public"]["Tables"]["campaigns"]["Row"]["settings"],
+						created_at: now,
+						updated_at: now,
+					})
+					.select("id")
+					.single();
+
+				if (insertError || !inserted) {
+					console.error(
+						"[useCreateCampaign] Direct INSERT failed:",
+						insertError,
+					);
+					throw (
+						insertError ?? new AppError("Failed to create campaign", "UNKNOWN")
+					);
+				}
+
+				campaignId = inserted.id;
+
+				// Add the warden as a member
+				await supabase.from("campaign_members").insert({
+					campaign_id: campaignId,
+					user_id: user.id,
+					role: "warden",
+				});
+			} else {
+				campaignId = rpcResult.data as string;
 			}
 
 			return campaignId;

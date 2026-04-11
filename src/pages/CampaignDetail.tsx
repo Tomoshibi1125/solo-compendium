@@ -209,16 +209,30 @@ const CampaignDetail = () => {
 				</Button>
 
 				<div className="mb-6 sm:mb-8">
-					<div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-2">
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="leading-tight"
-						>
-							{campaign.name.toUpperCase()}
-						</RiftHeading>
-						{!loadingRole && userRole && <RoleBadge role={userRole} />}
+					<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-2">
+						<div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+							<RiftHeading
+								level={1}
+								variant="sovereign"
+								dimensional
+								className="leading-tight"
+							>
+								{campaign.name.toUpperCase()}
+							</RiftHeading>
+							{!loadingRole && userRole && <RoleBadge role={userRole} />}
+						</div>
+						{hasWardenAccess && (
+							<Button
+								variant="outline"
+								className="border-primary/50 hover:border-primary hover:bg-primary/10 gap-2"
+								asChild
+							>
+								<Link to={`/campaigns/${id}/book`}>
+									<BookOpen className="w-4 h-4" />
+									Module Book
+								</Link>
+							</Button>
+						)}
 					</div>
 					{campaign.description && (
 						<ManaFlowText

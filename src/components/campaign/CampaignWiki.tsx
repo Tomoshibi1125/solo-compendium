@@ -143,14 +143,28 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 							LORE HUB
 						</h3>
 						{hasWardenAccess && (
-							<Button
-								size="icon"
-								variant="ghost"
-								className="h-8 w-8 text-primary"
-								onClick={handleCreateNew}
-							>
-								<Plus className="w-4 h-4" />
-							</Button>
+							<div className="flex gap-2 items-center">
+								<Button
+									size="icon"
+									variant="ghost"
+									className="h-8 w-8 text-primary"
+									title="Open Module Book"
+									onClick={() => {
+										window.location.href = `/campaigns/${campaignId}/book`;
+									}}
+								>
+									<BookOpen className="w-4 h-4" />
+								</Button>
+								<Button
+									size="icon"
+									variant="ghost"
+									className="h-8 w-8 text-primary"
+									title="Create Article"
+									onClick={handleCreateNew}
+								>
+									<Plus className="w-4 h-4" />
+								</Button>
+							</div>
 						)}
 					</div>
 					<div className="relative">

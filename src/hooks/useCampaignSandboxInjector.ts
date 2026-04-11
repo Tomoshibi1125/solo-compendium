@@ -29,27 +29,8 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		});
 
 		try {
-			// Pre-flight: verify the campaign actually exists in Supabase
-			const { data: campaign, error: campaignError } = await supabase
-				.from("campaigns")
-				.select("id")
-				.eq("id", targetId)
-				.single();
-
-			if (campaignError || !campaign) {
-				console.error(
-					"[SandboxInjector] Campaign does not exist in database:",
-					targetId,
-					campaignError,
-				);
-				toast({
-					title: "Sandbox Injection Skipped",
-					description:
-						"Campaign has not finished saving. Try importing from Campaign Settings later.",
-					variant: "destructive",
-				});
-				return;
-			}
+			// Wait briefly for RLS propagation after campaign creation
+			await new Promise((resolve) => setTimeout(resolve, 800));
 
 			// 1. Inject Wiki Chapters
 			setInjectionState({
