@@ -148,7 +148,10 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				progressString: "Sowing Campaign Handouts...",
 			});
 
-			if (massiveSandboxModule.handouts && massiveSandboxModule.handouts.length > 0) {
+			if (
+				massiveSandboxModule.handouts &&
+				massiveSandboxModule.handouts.length > 0
+			) {
 				// We check against titles to prevent duplicates if Warden clicks 'Import Sandbox' multiple times
 				for (const h of massiveSandboxModule.handouts) {
 					const { data: existingHandout } = await supabase

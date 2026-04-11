@@ -197,10 +197,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 
 	return (
 		<>
-			<AscendantWindow
-				title="CAMPAIGN SETTINGS"
-				className="flex flex-col"
-			>
+			<AscendantWindow title="CAMPAIGN SETTINGS" className="flex flex-col">
 				<div className="flex-1 overflow-y-auto space-y-4">
 					<div>
 						<Label htmlFor="campaign-name">Campaign Name</Label>
@@ -308,7 +305,9 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							disabled={regenerateShareCode.isPending}
 							className="gap-2"
 						>
-							<RefreshCw className={`w-4 h-4 ${regenerateShareCode.isPending ? "animate-spin" : ""}`} />
+							<RefreshCw
+								className={`w-4 h-4 ${regenerateShareCode.isPending ? "animate-spin" : ""}`}
+							/>
 							{regenerateShareCode.isPending ? "Regenerating..." : "Regenerate"}
 						</Button>
 					</div>
@@ -320,7 +319,11 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 			</AscendantWindow>
 
 			{/* Danger Zone */}
-			<AscendantWindow title="DANGER ZONE" variant="alert" className="flex flex-col">
+			<AscendantWindow
+				title="DANGER ZONE"
+				variant="alert"
+				className="flex flex-col"
+			>
 				<div className="space-y-4">
 					<div className="flex items-center justify-between p-3 bg-destructive/5 border border-destructive/20 rounded">
 						<div>
@@ -354,10 +357,9 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							DELETE CAMPAIGN
 						</DialogTitle>
 						<DialogDescription>
-							This will permanently delete{" "}
-							<strong>{campaign.name}</strong> and all associated data
-							(wiki, sessions, VTT maps, handouts, notes, chat, members).
-							This action is irreversible.
+							This will permanently delete <strong>{campaign.name}</strong> and
+							all associated data (wiki, sessions, VTT maps, handouts, notes,
+							chat, members). This action is irreversible.
 						</DialogDescription>
 					</DialogHeader>
 					<div className="py-4">
@@ -386,8 +388,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							variant="destructive"
 							onClick={handleDeleteCampaign}
 							disabled={
-								deleteConfirmText !== campaign.name ||
-								deleteCampaign.isPending
+								deleteConfirmText !== campaign.name || deleteCampaign.isPending
 							}
 						>
 							{deleteCampaign.isPending ? (

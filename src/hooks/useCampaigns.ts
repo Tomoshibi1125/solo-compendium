@@ -263,7 +263,7 @@ export const useCampaign = (campaignId: string) => {
 			return (data || null) as Campaign;
 		},
 		enabled: !!campaignId && !authLoading,
-		retry: (failureCount, error) => {
+		retry: (failureCount) => {
 			// Retry once for RLS/propagation delays
 			if (failureCount < 2) return true;
 			return false;
@@ -511,7 +511,11 @@ export const useCreateCampaign = () => {
 			return data as string; // Returns campaign ID
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			// Invalidate ONLY list queries — avoid wiping the optimistic
+			// ["campaigns", campaignId] cache entry seeded by the caller,
+			// which CampaignDetail needs immediately after navigate().
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
 			toast({
 				title: "Campaign Created",
 				description: "Your campaign has been created with a share code.",
@@ -1191,7 +1195,7 @@ export const useRegenerateShareCode = () => {
 			const newCode = createShareCode();
 
 			if (isLocalMode()) {
-				const updated = updateLocalCampaign(campaignId, {});
+				updateLocalCampaign(campaignId, {});
 				// Manually update share_code in local storage
 				const campaigns = loadLocalCampaigns();
 				const idx = campaigns.findIndex((c) => c.id === campaignId);
@@ -1232,7 +1236,8 @@ export const useRegenerateShareCode = () => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
 			toast({
 				title: "Share Code Regenerated",
-				description: "The old share code has been invalidated. Share the new one with your Ascendants.",
+				description:
+					"The old share code has been invalidated. Share the new one with your Ascendants.",
 			});
 		},
 		onError: (error: Error) => {

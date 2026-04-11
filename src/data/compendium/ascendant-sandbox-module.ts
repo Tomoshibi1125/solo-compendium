@@ -1,8 +1,8 @@
-import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
 import {
-	sandboxRecruitableNPCs,
 	type SandboxNPC,
+	sandboxRecruitableNPCs,
 } from "@/data/compendium/sandbox-npcs";
+import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
 
 // ============================================================================
 // RIFT ASCENDANT: SANDBOX CAMPAIGN MODULE

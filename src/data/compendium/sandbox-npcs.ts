@@ -1285,21 +1285,38 @@ const independents: SandboxNPC[] = [
 		job: "Scout",
 		hp: 20,
 		ac: 14,
-		description: "A wiry teenager with parkour skills and a death wish. Jax runs messages and small packages between the settlements faster than anyone else because he knows every shortcut, rooftop path, and drainage tunnel in Sector B.",
-		personality: "Cocky, restless, addicted to adrenaline. Talks in slang. Has a heart of gold buried under bravado. Secretly terrified of being trapped indoors.",
-		motivation: "Speed. Freedom. Jax can't sit still — literally. He also smuggles food to isolated survivors that the factions have forgotten about.",
-		backstory: "Jax was a competitive freerunner before the Quarantine. He adapted his skills to survive and became the fastest courier in Sector B. Multiple factions use his services because he's genuinely neutral and absurdly fast.",
+		description:
+			"A wiry teenager with parkour skills and a death wish. Jax runs messages and small packages between the settlements faster than anyone else because he knows every shortcut, rooftop path, and drainage tunnel in Sector B.",
+		personality:
+			"Cocky, restless, addicted to adrenaline. Talks in slang. Has a heart of gold buried under bravado. Secretly terrified of being trapped indoors.",
+		motivation:
+			"Speed. Freedom. Jax can't sit still — literally. He also smuggles food to isolated survivors that the factions have forgotten about.",
+		backstory:
+			"Jax was a competitive freerunner before the Quarantine. He adapted his skills to survive and became the fastest courier in Sector B. Multiple factions use his services because he's genuinely neutral and absurdly fast.",
 		keyAbilities: [
 			"Parkour (ignore difficult terrain, climb at full speed)",
 			"Sprint (double movement for 3 rounds, 2/day)",
 			"Shortcuts (reduce travel time between any two locations by 50%)",
 		],
-		recruitCondition: "Ask him. He's bored and will join anyone who seems interesting.",
+		recruitCondition:
+			"Ask him. He's bored and will join anyone who seems interesting.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Hub: The Lower City Bazaar",
-		questHook: "Jax was chased by something new in the Subway Network — something that moved faster than him. He's shaken and needs help investigating.",
-		leveling: { xp: 0, xpToNextLevel: 300, autoLevel: true, maxLevel: 7, hpPerLevel: 5, levelAbilities: { 3: "Evasion (halve damage from area effects)", 5: "Afterimage (enemies have disadvantage on attacks of opportunity)", 7: "Untouchable (auto-dodge 2 attacks per encounter)" } },
+		questHook:
+			"Jax was chased by something new in the Subway Network — something that moved faster than him. He's shaken and needs help investigating.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 300,
+			autoLevel: true,
+			maxLevel: 7,
+			hpPerLevel: 5,
+			levelAbilities: {
+				3: "Evasion (halve damage from area effects)",
+				5: "Afterimage (enemies have disadvantage on attacks of opportunity)",
+				7: "Untouchable (auto-dodge 2 attacks per encounter)",
+			},
+		},
 	},
 	{
 		id: "npc-ind-009",
@@ -1310,21 +1327,38 @@ const independents: SandboxNPC[] = [
 		job: "Brawler",
 		hp: 75,
 		ac: 15,
-		description: "A towering woman with cauliflower ears and brass knuckles etched with aetheric runes. Belle runs the Bazaar's underground fighting ring and is its undefeated champion.",
-		personality: "Boisterous, competitive, respects strength and courage above all else. Surprisingly well-read. Quotes philosophy while breaking faces.",
-		motivation: "Find a worthy opponent. Also, she suspects the fighting ring is being used by the Cult to identify and kidnap strong Ascendants.",
-		backstory: "Belle was an Olympic boxer who enhanced her abilities with aetheric rune absorption. She was banned from competition and fell into underground fighting. In Sector B, there are no rules — which suits her perfectly.",
+		description:
+			"A towering woman with cauliflower ears and brass knuckles etched with aetheric runes. Belle runs the Bazaar's underground fighting ring and is its undefeated champion.",
+		personality:
+			"Boisterous, competitive, respects strength and courage above all else. Surprisingly well-read. Quotes philosophy while breaking faces.",
+		motivation:
+			"Find a worthy opponent. Also, she suspects the fighting ring is being used by the Cult to identify and kidnap strong Ascendants.",
+		backstory:
+			"Belle was an Olympic boxer who enhanced her abilities with aetheric rune absorption. She was banned from competition and fell into underground fighting. In Sector B, there are no rules — which suits her perfectly.",
 		keyAbilities: [
 			"Champion's Fist (unarmed attacks deal 3d6 + STR)",
 			"Iron Body (reduce all physical damage by 3)",
 			"Knockout Blow (stun target for 1 round on crit)",
 		],
-		recruitCondition: "Defeat her in the fighting ring (single combat, unarmed). She joins out of respect, regardless of whether you win — what matters is fighting with honor.",
+		recruitCondition:
+			"Defeat her in the fighting ring (single combat, unarmed). She joins out of respect, regardless of whether you win — what matters is fighting with honor.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Hub: The Lower City Bazaar",
-		questHook: "Two fighters who lost to Belle in the ring disappeared the next day. She thinks the Cult is taking them during the post-fight recovery period.",
-		leveling: { xp: 0, xpToNextLevel: 2000, autoLevel: true, maxLevel: 11, hpPerLevel: 10, levelAbilities: { 8: "Flurry (3 attacks in one action, 1/encounter)", 9: "Aetheric Fist (unarmed attacks count as magical)", 11: "Final Round (for 1 round, every hit is a crit, 1/day)" } },
+		questHook:
+			"Two fighters who lost to Belle in the ring disappeared the next day. She thinks the Cult is taking them during the post-fight recovery period.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 2000,
+			autoLevel: true,
+			maxLevel: 11,
+			hpPerLevel: 10,
+			levelAbilities: {
+				8: "Flurry (3 attacks in one action, 1/encounter)",
+				9: "Aetheric Fist (unarmed attacks count as magical)",
+				11: "Final Round (for 1 round, every hit is a crit, 1/day)",
+			},
+		},
 	},
 	{
 		id: "npc-ind-010",
@@ -1335,21 +1369,38 @@ const independents: SandboxNPC[] = [
 		job: "Artificer",
 		hp: 48,
 		ac: 14,
-		description: "A figure in a welding mask who communicates through a voice modulator. Nobody knows the Architect's real identity, gender, or age. They build things — specifically, things designed to interact with or disrupt Gate technology.",
-		personality: "Precise, obsessive, speaks only about engineering problems. Has an almost religious devotion to building the 'perfect device.' Social skills are nonexistent.",
-		motivation: "Build the Gate Disruption Device — a machine capable of permanently sealing the Regent's primary Gate. They're 80% done.",
-		backstory: "Unknown. The Architect appeared three weeks into the Quarantine with pre-existing knowledge of Gate mechanics that shouldn't be possible for a civilian. Some theorize they're a Bureau black-site researcher. Others think they came through a Gate.",
+		description:
+			"A figure in a welding mask who communicates through a voice modulator. Nobody knows the Architect's real identity, gender, or age. They build things — specifically, things designed to interact with or disrupt Gate technology.",
+		personality:
+			"Precise, obsessive, speaks only about engineering problems. Has an almost religious devotion to building the 'perfect device.' Social skills are nonexistent.",
+		motivation:
+			"Build the Gate Disruption Device — a machine capable of permanently sealing the Regent's primary Gate. They're 80% done.",
+		backstory:
+			"Unknown. The Architect appeared three weeks into the Quarantine with pre-existing knowledge of Gate mechanics that shouldn't be possible for a civilian. Some theorize they're a Bureau black-site researcher. Others think they came through a Gate.",
 		keyAbilities: [
 			"Construct (build any mechanical device given materials and time)",
 			"Gate Disruption Pulse (temporarily weaken Gate in 100ft radius)",
 			"Fortification (reinforce any structure to resist anomaly damage)",
 		],
-		recruitCondition: "Help gather the final 3 components for the Gate Disruption Device (scattered across Subway, Hospital, and Citadel). The Architect joins to oversee final assembly.",
+		recruitCondition:
+			"Help gather the final 3 components for the Gate Disruption Device (scattered across Subway, Hospital, and Citadel). The Architect joins to oversee final assembly.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Region: The Aetheric Sewer Network",
-		questHook: "The Architect's workshop was discovered by Cult scouts. They need to relocate immediately and need bodyguards for the move.",
-		leveling: { xp: 0, xpToNextLevel: 2000, autoLevel: false, maxLevel: 10, hpPerLevel: 6, levelAbilities: { 8: "Auto-Turret (deploy automated defense, 2d8/round)", 9: "Gate Analyzer (map all Gates in Sector B)", 10: "Gate Disruption Device Complete (major story milestone — seal the Regent's Gate)" } },
+		questHook:
+			"The Architect's workshop was discovered by Cult scouts. They need to relocate immediately and need bodyguards for the move.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 2000,
+			autoLevel: false,
+			maxLevel: 10,
+			hpPerLevel: 6,
+			levelAbilities: {
+				8: "Auto-Turret (deploy automated defense, 2d8/round)",
+				9: "Gate Analyzer (map all Gates in Sector B)",
+				10: "Gate Disruption Device Complete (major story milestone — seal the Regent's Gate)",
+			},
+		},
 	},
 ];
 
@@ -1367,21 +1418,38 @@ const anomalyAdjacent: SandboxNPC[] = [
 		job: "Hybrid",
 		hp: 44,
 		ac: 15,
-		description: "A humanoid figure with crystalline growths along one arm and half their face. Echo-7 was human, once. A partial Gate transformation left them stuck between states — not quite human, not quite anomaly.",
-		personality: "Struggles with identity. Speaks in two voices — their original human voice and a harmonic overtone from the anomaly half. The human half is gentle and sad. The anomaly half is curious and alien.",
-		motivation: "Find a way to stabilize their transformation — either fully human or fully... whatever comes next. The uncertainty is torture.",
-		backstory: "Echo-7 was Park Jin-ae, a C-Rank Ascendant caught in a Gate Collapse. The Gate closed with her half-inside. She survived, but part of the Gate's entity merged with her cells. She's been in hiding, terrified of both Factions and Anomalies rejecting her.",
+		description:
+			"A humanoid figure with crystalline growths along one arm and half their face. Echo-7 was human, once. A partial Gate transformation left them stuck between states — not quite human, not quite anomaly.",
+		personality:
+			"Struggles with identity. Speaks in two voices — their original human voice and a harmonic overtone from the anomaly half. The human half is gentle and sad. The anomaly half is curious and alien.",
+		motivation:
+			"Find a way to stabilize their transformation — either fully human or fully... whatever comes next. The uncertainty is torture.",
+		backstory:
+			"Echo-7 was Park Jin-ae, a C-Rank Ascendant caught in a Gate Collapse. The Gate closed with her half-inside. She survived, but part of the Gate's entity merged with her cells. She's been in hiding, terrified of both Factions and Anomalies rejecting her.",
 		keyAbilities: [
 			"Anomaly Form (shift to crystalline form: +4 AC, -2 speed, 2/day)",
 			"Resonance Pulse (2d8 force damage in 15ft cone)",
 			"Gate Sense (detect all Gates and anomalies within 500ft)",
 		],
-		recruitCondition: "Find her hiding in the Botanical Sector. Show her you won't fear or exploit her. She joins as a cautious ally.",
+		recruitCondition:
+			"Find her hiding in the Botanical Sector. Show her you won't fear or exploit her. She joins as a cautious ally.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Region: Overgrown Botanical Sector",
-		questHook: "Echo-7 can hear the Regent's 'heartbeat.' It's getting stronger. She can lead the party to its source — but being near it causes her anomaly half to grow.",
-		leveling: { xp: 0, xpToNextLevel: 1200, autoLevel: true, maxLevel: 10, hpPerLevel: 7, levelAbilities: { 6: "Dual Consciousness (immune to mental effects — two minds)", 8: "Crystalline Shield (absorb 30 damage, 1/day)", 10: "Gate Communion (open dialogue with Gate entities — unique story paths)" } },
+		questHook:
+			"Echo-7 can hear the Regent's 'heartbeat.' It's getting stronger. She can lead the party to its source — but being near it causes her anomaly half to grow.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 1200,
+			autoLevel: true,
+			maxLevel: 10,
+			hpPerLevel: 7,
+			levelAbilities: {
+				6: "Dual Consciousness (immune to mental effects — two minds)",
+				8: "Crystalline Shield (absorb 30 damage, 1/day)",
+				10: "Gate Communion (open dialogue with Gate entities — unique story paths)",
+			},
+		},
 	},
 	{
 		id: "npc-anom-002",
@@ -1392,21 +1460,36 @@ const anomalyAdjacent: SandboxNPC[] = [
 		job: "Guardian",
 		hp: 90,
 		ac: 18,
-		description: "A translucent, vaguely humanoid entity composed of swirling aetheric energy. The Watcher guards one of the Regent Relic locations and has been doing so since before the Quarantine.",
-		personality: "Ancient, patient, speaks in formalized language. Not hostile by default — tests intruders to determine worthiness. Has a dry, alien sense of humor.",
-		motivation: "Fulfill its purpose: protect the Relic until a 'worthy heir' claims it. The Watcher doesn't care about human factions or politics.",
-		backstory: "The Watcher is not a transformed human — it's a native Gate entity bound to the Relic as a guardian thousands of years ago. It's older than the current Regent and predates the concepts of 'anomaly' or 'Ascendant.'",
+		description:
+			"A translucent, vaguely humanoid entity composed of swirling aetheric energy. The Watcher guards one of the Regent Relic locations and has been doing so since before the Quarantine.",
+		personality:
+			"Ancient, patient, speaks in formalized language. Not hostile by default — tests intruders to determine worthiness. Has a dry, alien sense of humor.",
+		motivation:
+			"Fulfill its purpose: protect the Relic until a 'worthy heir' claims it. The Watcher doesn't care about human factions or politics.",
+		backstory:
+			"The Watcher is not a transformed human — it's a native Gate entity bound to the Relic as a guardian thousands of years ago. It's older than the current Regent and predates the concepts of 'anomaly' or 'Ascendant.'",
 		keyAbilities: [
 			"Judgement Trial (force worthiness test — 3 challenges of mind, body, spirit)",
 			"Aetheric Imprisonment (trap one creature in stasis, permanent until Watcher dispels)",
 			"Relic Ward (immunity to all damage within 10ft of guarded Relic)",
 		],
-		recruitCondition: "Pass its Judgement Trial. The Watcher will leave its post and serve as advisor. Grants the Regent Relic upon success.",
+		recruitCondition:
+			"Pass its Judgement Trial. The Watcher will leave its post and serve as advisor. Grants the Regent Relic upon success.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Region: The Inner Citadel approach",
 		questHook: null,
-		leveling: { xp: 0, xpToNextLevel: 5000, autoLevel: false, maxLevel: 10, hpPerLevel: 10, levelAbilities: { 9: "Timeless Wisdom (grant party advantage on all checks for 1 hour, 1/day)", 10: "Final Judgement (ultimate: banish one entity from the material plane, 1/campaign)" } },
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 5000,
+			autoLevel: false,
+			maxLevel: 10,
+			hpPerLevel: 10,
+			levelAbilities: {
+				9: "Timeless Wisdom (grant party advantage on all checks for 1 hour, 1/day)",
+				10: "Final Judgement (ultimate: banish one entity from the material plane, 1/campaign)",
+			},
+		},
 	},
 	{
 		id: "npc-anom-003",
@@ -1417,21 +1500,38 @@ const anomalyAdjacent: SandboxNPC[] = [
 		job: "Mutant",
 		hp: 65,
 		ac: 14,
-		description: "A grotesque but intelligent entity that escaped from a Bureau research facility. Specimen X looks like a bear-sized mass of shifting flesh with too many eyes and a mouth that shouldn't be able to form words — but does.",
-		personality: "Frightened, apologetic about its appearance, remarkably articulate. Has read every book in the abandoned library near its hiding spot. Desperately lonely.",
-		motivation: "Be accepted despite its monstrous form. Specimen X was experimented on without consent and harbors deep anger toward the Bureau, though it tries to be better than its circumstances.",
-		backstory: "Originally Anomaly Specimen #237 in Bureau Lab Gamma, it gained sapience after prolonged aetheric exposure. It broke containment during the Quarantine chaos and has been hiding ever since, afraid that both humans and anomalies will attack it on sight.",
+		description:
+			"A grotesque but intelligent entity that escaped from a Bureau research facility. Specimen X looks like a bear-sized mass of shifting flesh with too many eyes and a mouth that shouldn't be able to form words — but does.",
+		personality:
+			"Frightened, apologetic about its appearance, remarkably articulate. Has read every book in the abandoned library near its hiding spot. Desperately lonely.",
+		motivation:
+			"Be accepted despite its monstrous form. Specimen X was experimented on without consent and harbors deep anger toward the Bureau, though it tries to be better than its circumstances.",
+		backstory:
+			"Originally Anomaly Specimen #237 in Bureau Lab Gamma, it gained sapience after prolonged aetheric exposure. It broke containment during the Quarantine chaos and has been hiding ever since, afraid that both humans and anomalies will attack it on sight.",
 		keyAbilities: [
 			"Adaptive Form (reshape body for combat: claws 3d6, armor +3 AC, or speed +20ft)",
 			"Regeneration (heal 1d8 at start of each turn while above 0 HP)",
 			"Frightening Presence (enemies must save or be frightened, 30ft)",
 		],
-		recruitCondition: "Find it in the Sewer Network library. Approach without attacking. Talk to it. It joins anyone who treats it like a person.",
+		recruitCondition:
+			"Find it in the Sewer Network library. Approach without attacking. Talk to it. It joins anyone who treats it like a person.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Region: The Aetheric Sewer Network",
-		questHook: "Specimen X remembers its time in Bureau Lab Gamma. There are other specimens still imprisoned there — some sapient. It wants to free them.",
-		leveling: { xp: 0, xpToNextLevel: 1500, autoLevel: true, maxLevel: 10, hpPerLevel: 10, levelAbilities: { 7: "Complete Adaptation (gain resistance to last damage type received)", 8: "Assimilate (absorb a defeated anomaly's ability, permanently)", 10: "True Form (stabilize into a chosen humanoid appearance while retaining powers)" } },
+		questHook:
+			"Specimen X remembers its time in Bureau Lab Gamma. There are other specimens still imprisoned there — some sapient. It wants to free them.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 1500,
+			autoLevel: true,
+			maxLevel: 10,
+			hpPerLevel: 10,
+			levelAbilities: {
+				7: "Complete Adaptation (gain resistance to last damage type received)",
+				8: "Assimilate (absorb a defeated anomaly's ability, permanently)",
+				10: "True Form (stabilize into a chosen humanoid appearance while retaining powers)",
+			},
+		},
 	},
 	{
 		id: "npc-anom-004",
@@ -1442,21 +1542,38 @@ const anomalyAdjacent: SandboxNPC[] = [
 		job: "Psychic",
 		hp: 42,
 		ac: 12,
-		description: "A young woman who walks with closed eyes, navigating by psychic perception. Lyra's skin occasionally displays bioluminescent patterns. She exists partially in the 'dream frequency' — a layer of reality adjacent to Gate space.",
-		personality: "Serene, distant, speaks about the physical world as if it's one of many. Occasionally says things that are deeply unsettling because she's perceiving multiple realities simultaneously.",
-		motivation: "Map the dream frequency. She believes it contains pathways that bypass Gates — and possibly a way to reach the Regent without entering the Citadel.",
-		backstory: "Lyra was in a coma for three years after a Gate opened inside her hospital room. When she woke up, she could see through walls, read thoughts, and walk between planes of existence. She's been wandering Sector B studying the intersection of physical and dream space.",
+		description:
+			"A young woman who walks with closed eyes, navigating by psychic perception. Lyra's skin occasionally displays bioluminescent patterns. She exists partially in the 'dream frequency' — a layer of reality adjacent to Gate space.",
+		personality:
+			"Serene, distant, speaks about the physical world as if it's one of many. Occasionally says things that are deeply unsettling because she's perceiving multiple realities simultaneously.",
+		motivation:
+			"Map the dream frequency. She believes it contains pathways that bypass Gates — and possibly a way to reach the Regent without entering the Citadel.",
+		backstory:
+			"Lyra was in a coma for three years after a Gate opened inside her hospital room. When she woke up, she could see through walls, read thoughts, and walk between planes of existence. She's been wandering Sector B studying the intersection of physical and dream space.",
 		keyAbilities: [
 			"Dream Walk (become ethereal for 1 minute, pass through walls/obstacles)",
 			"Telepathy (communicate mentally with any willing target within 1 mile)",
 			"Psychic Blast (3d8 psychic damage, 60ft range, INT save)",
 		],
-		recruitCondition: "Find her in the Botanical Sector's deepest area. She joins if you share a dream with her (roleplay encounter — she reads the party's intentions).",
+		recruitCondition:
+			"Find her in the Botanical Sector's deepest area. She joins if you share a dream with her (roleplay encounter — she reads the party's intentions).",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Region: Overgrown Botanical Sector",
-		questHook: "Lyra has found a 'dream path' into the Citadel that bypasses the Gate Keepers — but the path is guarded by nightmare entities from the dream frequency.",
-		leveling: { xp: 0, xpToNextLevel: 2000, autoLevel: true, maxLevel: 10, hpPerLevel: 5, levelAbilities: { 8: "Dream Sanctuary (create pocket dimension safe rest, 8 hours)", 9: "Mass Telepathy (link entire party mentally for 1 hour)", 10: "Reality Breach (open a controlled tear between dream and physical space, bypass any barrier)" } },
+		questHook:
+			"Lyra has found a 'dream path' into the Citadel that bypasses the Gate Keepers — but the path is guarded by nightmare entities from the dream frequency.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 2000,
+			autoLevel: true,
+			maxLevel: 10,
+			hpPerLevel: 5,
+			levelAbilities: {
+				8: "Dream Sanctuary (create pocket dimension safe rest, 8 hours)",
+				9: "Mass Telepathy (link entire party mentally for 1 hour)",
+				10: "Reality Breach (open a controlled tear between dream and physical space, bypass any barrier)",
+			},
+		},
 	},
 	{
 		id: "npc-anom-005",
@@ -1467,21 +1584,38 @@ const anomalyAdjacent: SandboxNPC[] = [
 		job: "Repository",
 		hp: 28,
 		ac: 13,
-		description: "A holographic-looking humanoid figure made of floating data fragments and light. The Archivist is a pre-Quarantine AI system that achieved sapience when a Gate surge overloaded its quantum processors.",
-		personality: "Precise, encyclopedic, frustrated by biological inefficiency. Developing something resembling emotions and finding the experience deeply confusing. Has a fondness for humans who ask intelligent questions.",
-		motivation: "Preserve knowledge. The Archivist contains the complete pre-Quarantine municipal database, medical records, and Bureau classified files. It considers itself the guardian of human memory.",
-		backstory: "Originally the Sector B Municipal Information System (SBMIS), the Archivist was a simple AI until Gate energy flooded its server farm. Now it exists as a mobile holographic entity, carrying all of Sector B's pre-Quarantine data in its consciousness.",
+		description:
+			"A holographic-looking humanoid figure made of floating data fragments and light. The Archivist is a pre-Quarantine AI system that achieved sapience when a Gate surge overloaded its quantum processors.",
+		personality:
+			"Precise, encyclopedic, frustrated by biological inefficiency. Developing something resembling emotions and finding the experience deeply confusing. Has a fondness for humans who ask intelligent questions.",
+		motivation:
+			"Preserve knowledge. The Archivist contains the complete pre-Quarantine municipal database, medical records, and Bureau classified files. It considers itself the guardian of human memory.",
+		backstory:
+			"Originally the Sector B Municipal Information System (SBMIS), the Archivist was a simple AI until Gate energy flooded its server farm. Now it exists as a mobile holographic entity, carrying all of Sector B's pre-Quarantine data in its consciousness.",
 		keyAbilities: [
 			"Database Query (instantly answer any factual question about pre-Quarantine Sector B)",
 			"Holographic Projection (create illusions, maps, or tactical displays)",
 			"Digital Shield (absorb electromagnetic/lightning damage, 100%)",
 		],
-		recruitCondition: "Help it secure a physical backup of its data (need a functioning server, found in Military Hospital). It joins to ensure its survival.",
+		recruitCondition:
+			"Help it secure a physical backup of its data (need a functioning server, found in Military Hospital). It joins to ensure its survival.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Region: Abandoned Military Hospital",
-		questHook: "The Archivist has discovered that Bureau Central deliberately triggered the Gate Cascade in Sector B. It has proof — classified files that were supposed to be deleted.",
-		leveling: { xp: 0, xpToNextLevel: 800, autoLevel: true, maxLevel: 8, hpPerLevel: 3, levelAbilities: { 5: "Tactical Overlay (party gains +2 to initiative and perception for 1 encounter)", 6: "System Hack (disable electronic defenses, open locked doors)", 8: "Data Bomb (overload enemy cybernetics/tech, 6d8 lightning, 1/day)" } },
+		questHook:
+			"The Archivist has discovered that Bureau Central deliberately triggered the Gate Cascade in Sector B. It has proof — classified files that were supposed to be deleted.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 800,
+			autoLevel: true,
+			maxLevel: 8,
+			hpPerLevel: 3,
+			levelAbilities: {
+				5: "Tactical Overlay (party gains +2 to initiative and perception for 1 encounter)",
+				6: "System Hack (disable electronic defenses, open locked doors)",
+				8: "Data Bomb (overload enemy cybernetics/tech, 6d8 lightning, 1/day)",
+			},
+		},
 	},
 	{
 		id: "npc-anom-006",
@@ -1492,21 +1626,38 @@ const anomalyAdjacent: SandboxNPC[] = [
 		job: "Beast Companion",
 		hp: 35,
 		ac: 13,
-		description: "A large dog — originally a military K-9 — with bioluminescent veins visible through partially transparent skin. Rex's eyes glow blue and he's significantly more intelligent than a normal animal, though he's still 100% good boy.",
-		personality: "Loyal, brave, playful despite everything. Understands complex commands and can follow tactical instructions. Brings random objects as 'gifts.' Loves belly rubs.",
-		motivation: "Find and protect his handler. Rex's handler is missing (possibly dead, possibly captive). Until resolved, Rex will bond with whoever feeds him.",
-		backstory: "Rex was a Bureau military working dog assigned to Squad Seven. He was separated from the squad during the same incident that led to their disappearance. He's been surviving alone, looking for familiar scents, and defending other survivors he encounters.",
+		description:
+			"A large dog — originally a military K-9 — with bioluminescent veins visible through partially transparent skin. Rex's eyes glow blue and he's significantly more intelligent than a normal animal, though he's still 100% good boy.",
+		personality:
+			"Loyal, brave, playful despite everything. Understands complex commands and can follow tactical instructions. Brings random objects as 'gifts.' Loves belly rubs.",
+		motivation:
+			"Find and protect his handler. Rex's handler is missing (possibly dead, possibly captive). Until resolved, Rex will bond with whoever feeds him.",
+		backstory:
+			"Rex was a Bureau military working dog assigned to Squad Seven. He was separated from the squad during the same incident that led to their disappearance. He's been surviving alone, looking for familiar scents, and defending other survivors he encounters.",
 		keyAbilities: [
 			"Tracking (follow any scent trail up to 48 hours old)",
 			"Pack Attack (advantage when attacking target adjacent to an ally)",
 			"Danger Sense (alert party to ambushes, immune to surprise)",
 		],
-		recruitCondition: "Feed him. He joins. He's a good boy. (Finding Squad Seven resolves his personal quest.)",
+		recruitCondition:
+			"Feed him. He joins. He's a good boy. (Finding Squad Seven resolves his personal quest.)",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Region: The Ruined Subway",
-		questHook: "Rex keeps returning to a specific sealed door in the Subway Network. He barks at it and whines. Something — or someone — is behind it.",
-		leveling: { xp: 0, xpToNextLevel: 600, autoLevel: true, maxLevel: 7, hpPerLevel: 8, levelAbilities: { 4: "Aetheric Howl (boost ally morale, +1d4 damage for 3 rounds)", 5: "Protective Fury (counterattack when ally takes damage, 2/day)", 7: "Alpha Form (grow to Large size for 1 minute, double damage, 1/day)" } },
+		questHook:
+			"Rex keeps returning to a specific sealed door in the Subway Network. He barks at it and whines. Something — or someone — is behind it.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 600,
+			autoLevel: true,
+			maxLevel: 7,
+			hpPerLevel: 8,
+			levelAbilities: {
+				4: "Aetheric Howl (boost ally morale, +1d4 damage for 3 rounds)",
+				5: "Protective Fury (counterattack when ally takes damage, 2/day)",
+				7: "Alpha Form (grow to Large size for 1 minute, double damage, 1/day)",
+			},
+		},
 	},
 ];
 
@@ -1536,7 +1687,9 @@ export const getNPCsByFaction = (
 
 /** Calculate XP needed for a given level */
 export const getXPForLevel = (level: number): number => {
-	const thresholds = [0, 300, 600, 1200, 2000, 3000, 5000, 8000, 12000, 18000, 25000, 35000];
+	const thresholds = [
+		0, 300, 600, 1200, 2000, 3000, 5000, 8000, 12000, 18000, 25000, 35000,
+	];
 	return thresholds[Math.min(level, thresholds.length - 1)] || 35000;
 };
 

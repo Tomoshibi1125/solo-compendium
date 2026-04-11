@@ -1,7 +1,6 @@
 import {
 	ArrowLeft,
 	ArrowUp,
-	ChevronDown,
 	Copy,
 	Crown,
 	Loader2,
@@ -31,8 +30,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import {
 	Select,
 	SelectContent,
@@ -41,6 +39,10 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+	getUnaffiliatedNPCs,
+	type SandboxNPC,
+} from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
 import {
 	useDeleteGuild,
@@ -50,10 +52,6 @@ import {
 	useRecruitNPC,
 	useSetNPCLevelingMode,
 } from "@/hooks/useGuilds";
-import {
-	getUnaffiliatedNPCs,
-	type SandboxNPC,
-} from "@/data/compendium/sandbox-npcs";
 import { useAuth } from "@/lib/auth/authContext";
 import { getLocalUserId } from "@/lib/guestStore";
 
@@ -77,9 +75,7 @@ const GuildDetail = () => {
 	const currentUserId = user?.id || getLocalUserId();
 	const isLeader = guild?.leader_user_id === currentUserId;
 
-	const recruitedNPCIds = members
-		.filter((m) => m.npc_id)
-		.map((m) => m.npc_id);
+	const recruitedNPCIds = members.filter((m) => m.npc_id).map((m) => m.npc_id);
 	const availableNPCs = getUnaffiliatedNPCs().filter(
 		(npc) => !recruitedNPCIds.includes(npc.id),
 	);
@@ -200,22 +196,38 @@ const GuildDetail = () => {
 					)}
 				</div>
 
-				<Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+				<Tabs
+					value={activeTab}
+					onValueChange={setActiveTab}
+					className="space-y-6"
+				>
 					<TabsList className="grid w-full grid-cols-3 sm:grid-cols-4">
-						<TabsTrigger value="roster" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+						<TabsTrigger
+							value="roster"
+							className="gap-2 text-xs sm:text-sm min-h-[44px]"
+						>
 							<Users className="w-3 h-3 sm:w-4 sm:h-4" />
 							Roster
 						</TabsTrigger>
-						<TabsTrigger value="recruitment" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+						<TabsTrigger
+							value="recruitment"
+							className="gap-2 text-xs sm:text-sm min-h-[44px]"
+						>
 							<UserPlus className="w-3 h-3 sm:w-4 sm:h-4" />
 							Recruit
 						</TabsTrigger>
-						<TabsTrigger value="info" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+						<TabsTrigger
+							value="info"
+							className="gap-2 text-xs sm:text-sm min-h-[44px]"
+						>
 							<Shield className="w-3 h-3 sm:w-4 sm:h-4" />
 							Info
 						</TabsTrigger>
 						{isLeader && (
-							<TabsTrigger value="settings" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+							<TabsTrigger
+								value="settings"
+								className="gap-2 text-xs sm:text-sm min-h-[44px]"
+							>
 								<Settings className="w-3 h-3 sm:w-4 sm:h-4" />
 								Settings
 							</TabsTrigger>
@@ -279,7 +291,6 @@ const GuildDetail = () => {
 										const currentLevel = member.npc_level || npc?.level || 1;
 										const maxLevel = npc?.leveling.maxLevel || 10;
 										const canLevelUp = currentLevel < maxLevel;
-										const isAutoLevel = member.npc_leveling_mode === "auto";
 
 										return (
 											<div
@@ -310,15 +321,17 @@ const GuildDetail = () => {
 																	{npc.personality}
 																</p>
 																<div className="flex flex-wrap gap-1 mt-2">
-																	{npc.keyAbilities.slice(0, 3).map((ability) => (
-																		<Badge
-																			key={ability}
-																			variant="secondary"
-																			className="text-xs"
-																		>
-																			{ability.split("(")[0].trim()}
-																		</Badge>
-																	))}
+																	{npc.keyAbilities
+																		.slice(0, 3)
+																		.map((ability) => (
+																			<Badge
+																				key={ability}
+																				variant="secondary"
+																				className="text-xs"
+																			>
+																				{ability.split("(")[0].trim()}
+																			</Badge>
+																		))}
 																</div>
 															</>
 														)}
@@ -346,7 +359,9 @@ const GuildDetail = () => {
 																	</SelectTrigger>
 																	<SelectContent>
 																		<SelectItem value="auto">Auto</SelectItem>
-																		<SelectItem value="manual">Manual</SelectItem>
+																		<SelectItem value="manual">
+																			Manual
+																		</SelectItem>
 																	</SelectContent>
 																</Select>
 															</div>
@@ -373,13 +388,26 @@ const GuildDetail = () => {
 												{/* Stats bar */}
 												<div className="flex gap-4 mt-3 pt-2 border-t border-border/50 text-xs text-muted-foreground">
 													<span>
-														HP: <strong className="text-foreground">{npc ? npc.hp + (currentLevel - npc.level) * npc.leveling.hpPerLevel : "?"}</strong>
+														HP:{" "}
+														<strong className="text-foreground">
+															{npc
+																? npc.hp +
+																	(currentLevel - npc.level) *
+																		npc.leveling.hpPerLevel
+																: "?"}
+														</strong>
 													</span>
 													<span>
-														AC: <strong className="text-foreground">{npc?.ac ?? "?"}</strong>
+														AC:{" "}
+														<strong className="text-foreground">
+															{npc?.ac ?? "?"}
+														</strong>
 													</span>
 													<span>
-														Level: <strong className="text-foreground">{currentLevel}/{maxLevel}</strong>
+														Level:{" "}
+														<strong className="text-foreground">
+															{currentLevel}/{maxLevel}
+														</strong>
 													</span>
 												</div>
 											</div>
@@ -408,9 +436,10 @@ const GuildDetail = () => {
 							) : (
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 									{availableNPCs.map((npc) => (
-										<div
+										<button
+											type="button"
 											key={npc.id}
-											className="rounded-lg border border-border bg-muted/30 p-3 hover:border-primary/50 transition-colors cursor-pointer"
+											className="rounded-lg border border-border bg-muted/30 p-3 hover:border-primary/50 transition-colors cursor-pointer text-left w-full"
 											onClick={() => {
 												setSelectedNPC(npc);
 												setRecruitDialogOpen(true);
@@ -438,7 +467,7 @@ const GuildDetail = () => {
 													{npc.recruitCondition}
 												</span>
 											</div>
-										</div>
+										</button>
 									))}
 								</div>
 							)}
@@ -583,8 +612,8 @@ const GuildDetail = () => {
 								</div>
 								<div className="mt-3 text-xs text-muted-foreground">
 									<p>
-										Max Level: {selectedNPC.leveling.maxLevel} ·
-										HP/Level: +{selectedNPC.leveling.hpPerLevel}
+										Max Level: {selectedNPC.leveling.maxLevel} · HP/Level: +
+										{selectedNPC.leveling.hpPerLevel}
 									</p>
 								</div>
 							</div>
@@ -622,7 +651,9 @@ const GuildDetail = () => {
 			<Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
 				<DialogContent className="border-destructive/30">
 					<DialogHeader>
-						<DialogTitle className="text-destructive">DISBAND GUILD</DialogTitle>
+						<DialogTitle className="text-destructive">
+							DISBAND GUILD
+						</DialogTitle>
 						<DialogDescription>
 							Are you sure you want to permanently disband{" "}
 							<strong>{guild.name}</strong>? All members and NPC recruits will
@@ -630,7 +661,10 @@ const GuildDetail = () => {
 						</DialogDescription>
 					</DialogHeader>
 					<DialogFooter>
-						<Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+						<Button
+							variant="outline"
+							onClick={() => setDeleteDialogOpen(false)}
+						>
 							Cancel
 						</Button>
 						<Button

@@ -1,12 +1,4 @@
-import {
-	Crown,
-	Loader2,
-	LogOut,
-	Plus,
-	Shield,
-	Users,
-	UserPlus,
-} from "lucide-react";
+import { Crown, Loader2, LogOut, Plus, Shield, Users } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -35,7 +27,6 @@ import {
 	useLeaveGuild,
 	useMyGuilds,
 } from "@/hooks/useGuilds";
-import { cn } from "@/lib/utils";
 
 const Guilds = () => {
 	const navigate = useNavigate();
@@ -196,14 +187,8 @@ const Guilds = () => {
 										)}
 									</div>
 									<div className="flex gap-2 mt-4 pt-4 border-t border-border">
-										<Button
-											className="flex-1"
-											variant="outline"
-											asChild
-										>
-											<Link to={`/guilds/${guild.id}`}>
-												View Guild
-											</Link>
+										<Button className="flex-1" variant="outline" asChild>
+											<Link to={`/guilds/${guild.id}`}>View Guild</Link>
 										</Button>
 										{!isLeader && (
 											<Button
@@ -232,8 +217,8 @@ const Guilds = () => {
 							ESTABLISH GUILD
 						</DialogTitle>
 						<DialogDescription>
-							Found a new guild. Recruit NPCs from your campaigns, invite
-							other players, and build your organization.
+							Found a new guild. Recruit NPCs from your campaigns, invite other
+							players, and build your organization.
 						</DialogDescription>
 					</DialogHeader>
 					<div className="space-y-4">

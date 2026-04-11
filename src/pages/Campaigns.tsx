@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import {
 	Copy,
 	Crown,
@@ -10,7 +11,6 @@ import {
 	UserPlus,
 	Users,
 } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -41,6 +41,8 @@ import {
 	useLeaveCampaign,
 	useMyCampaigns,
 } from "@/hooks/useCampaigns";
+import { useAuth } from "@/lib/auth/authContext";
+import { getLocalUserId } from "@/lib/guestStore";
 import { cn } from "@/lib/utils";
 
 const Campaigns = () => {
@@ -52,6 +54,7 @@ const Campaigns = () => {
 	const [campaignDescription, setCampaignDescription] = useState("");
 	const [importSandbox, setImportSandbox] = useState(false);
 
+	const { user } = useAuth();
 	const { data: myCampaigns = [], isLoading: loadingMy } = useMyCampaigns();
 	const { data: joinedCampaigns = [], isLoading: loadingJoined } =
 		useJoinedCampaigns();
@@ -77,11 +80,12 @@ const Campaigns = () => {
 
 			// Optimistically seed query cache so CampaignDetail loads instantly
 			// without waiting for Supabase RLS propagation
+			const wardenId = user?.id || getLocalUserId();
 			queryClient.setQueryData(["campaigns", campaignId], {
 				id: campaignId,
 				name: campaignName,
 				description: campaignDescription || null,
-				warden_id: "optimistic",
+				warden_id: wardenId,
 				share_code: "------",
 				is_active: true,
 				created_at: new Date().toISOString(),
@@ -90,12 +94,21 @@ const Campaigns = () => {
 			});
 
 			if (importSandbox) {
-				// Pass campaignId directly — don't rely on setState which is async
-				void injectSandbox(campaignId);
-				toast({
-					title: "Campaign Established",
-					description: "Importing \"The Shadow of the Regent\" sandbox module in the background...",
-				});
+				if (user) {
+					// Pass campaignId directly — don't rely on setState which is async
+					void injectSandbox(campaignId);
+					toast({
+						title: "Campaign Established",
+						description:
+							'Importing "The Shadow of the Regent" sandbox module in the background...',
+					});
+				} else {
+					toast({
+						title: "Campaign Established",
+						description:
+							"Sign in to import the sandbox module with full wiki, maps, and encounters.",
+					});
+				}
 			}
 
 			setCreateDialogOpen(false);

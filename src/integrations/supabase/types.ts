@@ -6462,6 +6462,116 @@ export type Database = {
 					},
 				];
 			};
+			guild_members: {
+				Row: {
+					character_id: string | null;
+					guild_id: string;
+					id: string;
+					joined_at: string;
+					npc_data: Json | null;
+					npc_id: string | null;
+					npc_level: number | null;
+					npc_leveling_mode: string | null;
+					npc_name: string | null;
+					npc_xp: number | null;
+					role: string;
+					user_id: string | null;
+				};
+				Insert: {
+					character_id?: string | null;
+					guild_id: string;
+					id?: string;
+					joined_at?: string;
+					npc_data?: Json | null;
+					npc_id?: string | null;
+					npc_level?: number | null;
+					npc_leveling_mode?: string | null;
+					npc_name?: string | null;
+					npc_xp?: number | null;
+					role: string;
+					user_id?: string | null;
+				};
+				Update: {
+					character_id?: string | null;
+					guild_id?: string;
+					id?: string;
+					joined_at?: string;
+					npc_data?: Json | null;
+					npc_id?: string | null;
+					npc_level?: number | null;
+					npc_leveling_mode?: string | null;
+					npc_name?: string | null;
+					npc_xp?: number | null;
+					role?: string;
+					user_id?: string | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "guild_members_guild_id_fkey";
+						columns: ["guild_id"];
+						isOneToOne: false;
+						referencedRelation: "guilds";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "guild_members_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			guilds: {
+				Row: {
+					campaign_id: string | null;
+					created_at: string;
+					description: string | null;
+					id: string;
+					is_active: boolean;
+					leader_user_id: string;
+					motto: string | null;
+					name: string;
+					settings: Json;
+					share_code: string;
+					updated_at: string;
+				};
+				Insert: {
+					campaign_id?: string | null;
+					created_at?: string;
+					description?: string | null;
+					id?: string;
+					is_active?: boolean;
+					leader_user_id: string;
+					motto?: string | null;
+					name: string;
+					settings?: Json;
+					share_code: string;
+					updated_at?: string;
+				};
+				Update: {
+					campaign_id?: string | null;
+					created_at?: string;
+					description?: string | null;
+					id?: string;
+					is_active?: boolean;
+					leader_user_id?: string;
+					motto?: string | null;
+					name?: string;
+					settings?: Json;
+					share_code?: string;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "guilds_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			marketplace_downloads: {
 				Row: {
 					created_at: string;
@@ -7861,6 +7971,16 @@ export type Database = {
 			};
 			create_campaign_with_code: {
 				Args: { p_description: string; p_warden_id: string; p_name: string };
+				Returns: string;
+			};
+			create_guild_with_code: {
+				Args: {
+					p_name: string;
+					p_description: string | null;
+					p_motto: string | null;
+					p_leader_user_id: string;
+					p_campaign_id?: string | null;
+				};
 				Returns: string;
 			};
 			create_session_quest: {

@@ -1,14 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { SandboxNPC } from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
 import { getLocalUserId } from "@/lib/guestStore";
-import type { SandboxNPC } from "@/data/compendium/sandbox-npcs";
-
-// biome-ignore lint: Guild tables are not yet in generated Supabase types
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const guildDb = supabase as any;
 
 // ============================================================================
 // Types
@@ -126,7 +122,7 @@ export const useMyGuilds = () => {
 				}
 				return [];
 			}
-			const { data, error } = await guildDb
+			const { data, error } = await supabase
 				.from("guilds")
 				.select("*")
 				.eq("leader_user_id", user.id)
@@ -150,8 +146,7 @@ export const useJoinedGuilds = () => {
 					.filter((m) => m.user_id === userId)
 					.map((m) => m.guild_id);
 				return loadLocalGuilds().filter(
-					(g) =>
-						memberGuildIds.includes(g.id) && g.leader_user_id !== userId,
+					(g) => memberGuildIds.includes(g.id) && g.leader_user_id !== userId,
 				);
 			}
 			if (!user) {
@@ -161,22 +156,20 @@ export const useJoinedGuilds = () => {
 						.filter((m) => m.user_id === userId)
 						.map((m) => m.guild_id);
 					return loadLocalGuilds().filter(
-						(g) =>
-							memberGuildIds.includes(g.id) &&
-							g.leader_user_id !== userId,
+						(g) => memberGuildIds.includes(g.id) && g.leader_user_id !== userId,
 					);
 				}
 				return [];
 			}
 			// Get guilds user is a member of via guild_members
-			const { data: memberRows, error: memberError } = await guildDb
+			const { data: memberRows, error: memberError } = await supabase
 				.from("guild_members")
 				.select("guild_id")
 				.eq("user_id", user.id);
 			if (memberError) throw memberError;
 			if (!memberRows || memberRows.length === 0) return [];
 			const guildIds = memberRows.map((m: { guild_id: string }) => m.guild_id);
-			const { data, error } = await guildDb
+			const { data, error } = await supabase
 				.from("guilds")
 				.select("*")
 				.in("id", guildIds)
@@ -195,11 +188,9 @@ export const useGuild = (guildId: string) => {
 		queryKey: ["guilds", guildId],
 		queryFn: async (): Promise<Guild | null> => {
 			if (isLocalMode()) {
-				return (
-					loadLocalGuilds().find((g) => g.id === guildId) ?? null
-				);
+				return loadLocalGuilds().find((g) => g.id === guildId) ?? null;
 			}
-			const { data, error } = await guildDb
+			const { data, error } = await supabase
 				.from("guilds")
 				.select("*")
 				.eq("id", guildId)
@@ -217,11 +208,9 @@ export const useGuildMembers = (guildId: string) => {
 		queryKey: ["guilds", guildId, "members"],
 		queryFn: async (): Promise<GuildMember[]> => {
 			if (isLocalMode()) {
-				return loadLocalGuildMembers().filter(
-					(m) => m.guild_id === guildId,
-				);
+				return loadLocalGuildMembers().filter((m) => m.guild_id === guildId);
 			}
-			const { data, error } = await guildDb
+			const { data, error } = await supabase
 				.from("guild_members")
 				.select("*, characters(name, level, job)")
 				.eq("guild_id", guildId)
@@ -338,16 +327,13 @@ export const useCreateGuild = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			const { data, error } = await guildDb.rpc(
-				"create_guild_with_code",
-				{
-					p_name: params.name,
-					p_description: params.description ?? null,
-					p_motto: params.motto ?? null,
-					p_leader_user_id: user.id,
-					p_campaign_id: params.campaignId ?? null,
-				},
-			);
+			const { data, error } = await supabase.rpc("create_guild_with_code", {
+				p_name: params.name,
+				p_description: params.description ?? null,
+				p_motto: params.motto ?? null,
+				p_leader_user_id: user.id,
+				p_campaign_id: params.campaignId ?? null,
+			});
 			if (error) throw error;
 			return data as string;
 		},
@@ -401,11 +387,11 @@ export const useRecruitNPC = () => {
 				return;
 			}
 
-			const { error } = await guildDb.from("guild_members").insert({
+			const { error } = await supabase.from("guild_members").insert({
 				guild_id: params.guildId,
 				npc_id: params.npc.id,
 				npc_name: params.npc.name,
-				npc_data: params.npc as unknown as Record<string, unknown>,
+				npc_data: JSON.parse(JSON.stringify(params.npc)),
 				role: "recruit",
 				npc_level: params.npc.level,
 				npc_xp: 0,
@@ -438,18 +424,17 @@ export const useLevelUpNPC = () => {
 	const { toast } = useToast();
 
 	return useMutation({
-		mutationFn: async (params: {
-			guildId: string;
-			memberId: string;
-		}) => {
+		mutationFn: async (params: { guildId: string; memberId: string }) => {
 			if (isLocalMode() || !isSupabaseConfigured) {
 				const members = loadLocalGuildMembers();
 				const idx = members.findIndex((m) => m.id === params.memberId);
 				if (idx === -1) throw new Error("Member not found");
 				const member = members[idx];
-				if (!member.npc_data || !member.npc_level) throw new Error("Not an NPC");
+				if (!member.npc_data || !member.npc_level)
+					throw new Error("Not an NPC");
 				const maxLevel = member.npc_data.leveling.maxLevel;
-				if (member.npc_level >= maxLevel) throw new Error("Already at max level");
+				if (member.npc_level >= maxLevel)
+					throw new Error("Already at max level");
 				members[idx] = {
 					...member,
 					npc_level: member.npc_level + 1,
@@ -459,14 +444,14 @@ export const useLevelUpNPC = () => {
 				return members[idx];
 			}
 
-			const { data: memberRow, error: fetchError } = await guildDb
+			const { data: memberRow, error: fetchError } = await supabase
 				.from("guild_members")
 				.select("npc_level, npc_data")
 				.eq("id", params.memberId)
 				.single();
 			if (fetchError) throw fetchError;
 			const currentLevel = (memberRow as { npc_level: number }).npc_level || 1;
-			const { error } = await guildDb
+			const { error } = await supabase
 				.from("guild_members")
 				.update({ npc_level: currentLevel + 1, npc_xp: 0 })
 				.eq("id", params.memberId);
@@ -505,7 +490,7 @@ export const useDeleteGuild = () => {
 				);
 				return;
 			}
-			const { error } = await guildDb
+			const { error } = await supabase
 				.from("guilds")
 				.delete()
 				.eq("id", guildId);
@@ -548,7 +533,7 @@ export const useLeaveGuild = () => {
 				data: { user },
 			} = await supabase.auth.getUser();
 			if (!user) throw new AppError("Not authenticated", "AUTH_REQUIRED");
-			const { error } = await guildDb
+			const { error } = await supabase
 				.from("guild_members")
 				.delete()
 				.eq("guild_id", guildId)
@@ -591,7 +576,7 @@ export const useSetNPCLevelingMode = () => {
 				}
 				return;
 			}
-			const { error } = await guildDb
+			const { error } = await supabase
 				.from("guild_members")
 				.update({ npc_leveling_mode: params.mode })
 				.eq("id", params.memberId);
