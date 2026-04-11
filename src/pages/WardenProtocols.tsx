@@ -148,6 +148,22 @@ const wardenProtocols = [
 		priority: 6,
 	},
 	{
+		id: "sandbox-module",
+		name: "Regent's Shadow",
+		description:
+			"The official Shadow of the Regent sandbox module. Comprehensive guide to the district, anomalies, and plot.",
+		icon: BookOpen,
+		status: "available",
+		color:
+			"from-fuchsia-500/20 to-fuchsia-600/10 border-fuchsia-500/30 hover:border-fuchsia-500/60",
+		iconColor: "text-fuchsia-400",
+		glow: "group-hover:shadow-fuchsia-500/20",
+		category: "content",
+		priority: 6.5,
+		path: "/source-book/module",
+		buttonText: "Read Module",
+	},
+	{
 		id: "directive-lattice",
 		name: "Directive Lattice",
 		description:

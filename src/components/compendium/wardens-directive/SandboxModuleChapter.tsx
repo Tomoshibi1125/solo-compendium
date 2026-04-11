@@ -28,7 +28,7 @@ export const SandboxModuleChapter = () => {
 				<section
 					key={chapter.title}
 					className="space-y-6 scroll-mt-24"
-					id={chapter.title.replace(/\s+/g, '-').toLowerCase()}
+					id={chapter.title.replace(/\s+/g, "-").toLowerCase()}
 				>
 					<div className="flex items-center justify-between border-b border-fuchsia-500/10 pb-4">
 						<h2 className="text-4xl font-display text-white uppercase tracking-wider">
