@@ -1,9 +1,11 @@
 import {
 	AlertTriangle,
+	Download,
 	Loader2,
 	RefreshCw,
 	Save,
 	Shield,
+	Sparkles,
 	Trash2,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -31,6 +33,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
+import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
 import {
 	useCampaign,
 	useDeleteCampaign,
@@ -67,6 +70,9 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 	);
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 	const [deleteConfirmText, setDeleteConfirmText] = useState("");
+
+	const { injectSandbox, isInjecting, progressString } =
+		useCampaignSandboxInjector(campaignId);
 
 	// Update when campaign data loads
 	useEffect(() => {
@@ -315,6 +321,48 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 						Regenerating the share code invalidates the old one. Anyone with the
 						old code or link will no longer be able to join.
 					</p>
+				</div>
+			</AscendantWindow>
+
+			{/* Module Management */}
+			<AscendantWindow title="MODULE MANAGEMENT" className="flex flex-col">
+				<div className="space-y-4">
+					<div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-muted/50 rounded gap-3">
+						<div>
+							<p className="font-heading font-semibold text-primary flex items-center gap-2">
+								<Sparkles className="w-4 h-4" />
+								The Shadow of the Regent
+							</p>
+							<p className="text-xs text-muted-foreground mt-1">
+								Import or re-import the sandbox module into this campaign.
+								Populates VTT maps, wiki, and encounters.
+							</p>
+						</div>
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => injectSandbox(campaignId)}
+							disabled={isInjecting}
+							className="gap-2 min-w-[140px]"
+						>
+							{isInjecting ? (
+								<>
+									<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+									Injecting...
+								</>
+							) : (
+								<>
+									<Download className="w-4 h-4 mr-2" />
+									Import Module
+								</>
+							)}
+						</Button>
+					</div>
+					{isInjecting && (
+						<p className="text-xs text-primary animate-pulse text-right">
+							{progressString || "Processing..."}
+						</p>
+					)}
 				</div>
 			</AscendantWindow>
 

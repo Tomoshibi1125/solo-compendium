@@ -148,13 +148,22 @@ export function AudioLibrary({ onTrackSelect }: AudioLibraryProps) {
 							<DialogTitle>Upload Audio</DialogTitle>
 						</DialogHeader>
 						<div className="space-y-4">
-							<Input
-								type="file"
-								accept="audio/*"
-								onChange={(e) => setPendingFile(e.target.files?.[0] ?? null)}
-								disabled={isUploading}
+							<label
+								className="w-full flex items-center justify-center p-0 cursor-pointer"
 								aria-label="Upload audio file"
-							/>
+							>
+								<div className="w-full h-10 flex items-center justify-center border border-dashed border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium rounded-md transition-colors">
+									<Plus className="w-4 h-4 mr-2" />
+									{pendingFile ? pendingFile.name : "Select Audio File"}
+								</div>
+								<input
+									type="file"
+									accept="audio/*"
+									onChange={(e) => setPendingFile(e.target.files?.[0] ?? null)}
+									disabled={isUploading}
+									className="hidden"
+								/>
+							</label>
 							<Input
 								placeholder="Title"
 								value={uploadMetadata.title}

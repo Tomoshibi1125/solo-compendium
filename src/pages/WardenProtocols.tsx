@@ -232,12 +232,12 @@ const wardenProtocols = [
 		priority: 12,
 	},
 
-	// VTT & Visual Tools
+	// Campaign Context Tools (VTT & Visual)
 	{
 		id: "vtt-enhanced",
-		name: "VTT Enhanced",
+		name: "Shared Battlemaps",
 		description:
-			"Virtual tabletop with maps, tokens, and real-time collaboration.",
+			"Virtual tabletop with maps, tokens, and real-time collaboration for your campaigns.",
 		icon: MapIcon,
 		status: "available",
 		color:
@@ -246,11 +246,14 @@ const wardenProtocols = [
 		glow: "group-hover:shadow-violet-500/20",
 		category: "vtt",
 		priority: 13,
+		path: "/campaigns",
+		buttonText: "Select Campaign",
 	},
 	{
 		id: "token-library",
-		name: "Token Library",
-		description: "Manage and organize your token collection.",
+		name: "Entity Manifestations",
+		description:
+			"Manage and organize your custom token collection for Anomalies and NPCs.",
 		icon: Target,
 		status: "available",
 		color:
@@ -262,7 +265,7 @@ const wardenProtocols = [
 	},
 	{
 		id: "vtt-journal",
-		name: "VTT Journal",
+		name: "Localized Journals",
 		description: "Campaign wiki and knowledge base for your world.",
 		icon: BookOpen,
 		status: "available",
@@ -272,6 +275,8 @@ const wardenProtocols = [
 		glow: "group-hover:shadow-rose-500/20",
 		category: "vtt",
 		priority: 15,
+		path: "/campaigns",
+		buttonText: "Select Campaign",
 	},
 
 	// Creative Tools
@@ -712,8 +717,14 @@ const WardenToolCard = ({
 							variant="outline"
 							asChild
 						>
-							<Link to={`/warden-directives/${tool.id}`}>
-								<ChevronRight className="w-3 h-3" />
+							<Link
+								to={
+									(tool as { path?: string; buttonText?: string }).path ||
+									`/warden-directives/${tool.id}`
+								}
+							>
+								{(tool as { path?: string; buttonText?: string }).buttonText ||
+									"Launch"}
 							</Link>
 						</Button>
 					</div>
@@ -785,8 +796,14 @@ const WardenToolCard = ({
 					)}
 					asChild
 				>
-					<Link to={`/warden-directives/${tool.id}`}>
-						Launch
+					<Link
+						to={
+							(tool as { path?: string; buttonText?: string }).path ||
+							`/warden-directives/${tool.id}`
+						}
+					>
+						{(tool as { path?: string; buttonText?: string }).buttonText ||
+							"Launch"}
 						<ChevronRight className="w-3 h-3" />
 					</Link>
 				</Button>

@@ -22,6 +22,117 @@ type StoredAudioTrack = AudioTrack & { storagePath?: string };
 type AudioTrackRow = Database["public"]["Tables"]["audio_tracks"]["Row"];
 type AudioPlaylistRow = Database["public"]["Tables"]["audio_playlists"]["Row"];
 
+const DEFAULT_TRACKS: StoredAudioTrack[] = [
+	{
+		id: "default-bleeding-out",
+		title: "Bleeding Out",
+		artist: "System",
+		category: "combat",
+		duration: 120,
+		url: "/audio/music/bleeding-out.ogg",
+		volume: 0.7,
+		loop: true,
+		tags: ["tension", "combat", "boss"],
+		mood: "tense",
+		license: "CC0",
+		source: "System",
+		isLocal: true,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+		mimeType: "audio/ogg",
+	},
+	{
+		id: "default-cold-silence",
+		title: "Cold Silence",
+		artist: "System",
+		category: "ambient",
+		duration: 120,
+		url: "/audio/music/cold-silence.ogg",
+		volume: 0.7,
+		loop: true,
+		tags: ["cold", "silence", "creepy"],
+		mood: "dark",
+		license: "CC0",
+		source: "System",
+		isLocal: true,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+		mimeType: "audio/ogg",
+	},
+	{
+		id: "default-dark-cavern-1",
+		title: "Dark Cavern Ambient 1",
+		artist: "System",
+		category: "exploration",
+		duration: 120,
+		url: "/audio/music/dark-cavern-ambient-1.ogg",
+		volume: 0.7,
+		loop: true,
+		tags: ["cavern", "dark", "dungeon"],
+		mood: "mysterious",
+		license: "CC0",
+		source: "System",
+		isLocal: true,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+		mimeType: "audio/ogg",
+	},
+	{
+		id: "default-dark-cavern-2",
+		title: "Dark Cavern Ambient 2",
+		artist: "System",
+		category: "exploration",
+		duration: 120,
+		url: "/audio/music/dark-cavern-ambient-2.ogg",
+		volume: 0.7,
+		loop: true,
+		tags: ["cavern", "dark", "dungeon"],
+		mood: "mysterious",
+		license: "CC0",
+		source: "System",
+		isLocal: true,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+		mimeType: "audio/ogg",
+	},
+	{
+		id: "default-dungeon-ambience",
+		title: "Dungeon Ambience",
+		artist: "System",
+		category: "ambient",
+		duration: 120,
+		url: "/audio/music/dungeon-ambience.ogg",
+		volume: 0.7,
+		loop: true,
+		tags: ["dungeon", "creepy"],
+		mood: "dark",
+		license: "CC0",
+		source: "System",
+		isLocal: true,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+		mimeType: "audio/ogg",
+	},
+	{
+		id: "default-town-theme",
+		title: "Town Theme",
+		artist: "System",
+		category: "social",
+		duration: 120,
+		url: "/audio/music/town-theme-rpg.mp3",
+		volume: 0.7,
+		loop: true,
+		tags: ["town", "peaceful", "rpg"],
+		mood: "calm",
+		license: "CC0",
+		source: "System",
+		isLocal: true,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+		mimeType: "audio/mpeg",
+	},
+];
+
 /**
  * Hook for accessing audio player state and controls
  */
@@ -163,10 +274,18 @@ export function useAudioLibrary() {
 
 				if (savedTracks) {
 					try {
-						setTracks(JSON.parse(savedTracks));
+						const parsed = JSON.parse(savedTracks);
+						const existingIds = new Set(
+							parsed.map((t: { id: string }) => t.id),
+						);
+						const toAdd = DEFAULT_TRACKS.filter((t) => !existingIds.has(t.id));
+						setTracks([...toAdd, ...parsed]);
 					} catch (parseError) {
 						logger.warn("Failed to parse saved tracks:", parseError);
+						setTracks([...DEFAULT_TRACKS]);
 					}
+				} else {
+					setTracks([...DEFAULT_TRACKS]);
 				}
 
 				if (savedPlaylists) {
@@ -247,7 +366,10 @@ export function useAudioLibrary() {
 				}),
 			) as Playlist[];
 
-			setTracks(mappedTracks);
+			const existingIds = new Set(mappedTracks.map((t) => t.id));
+			const toAdd = DEFAULT_TRACKS.filter((t) => !existingIds.has(t.id));
+
+			setTracks([...toAdd, ...mappedTracks]);
 			setPlaylists(mappedPlaylists);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Failed to load library");

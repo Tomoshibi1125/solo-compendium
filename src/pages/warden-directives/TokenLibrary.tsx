@@ -408,7 +408,7 @@ const TokenLibrary = () => {
 						</AscendantWindow>
 					</div>
 
-					<div className="lg:col-span-1 space-y-6">
+					<div className="lg:col-span-2 space-y-6">
 						{isCreating ? (
 							<AscendantWindow title="CREATE TOKEN" id="token-create-window">
 								<div className="space-y-4">
@@ -747,13 +747,30 @@ const TokenLibrary = () => {
 
 					<div className="lg:col-span-1 space-y-6">
 						<AscendantWindow title="LIBRARY ACTIONS" variant="quest">
-							<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-								<Button onClick={handleExport} variant="outline" size="sm">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+								<Button
+									onClick={handleExport}
+									variant="outline"
+									size="sm"
+									className="w-full"
+								>
 									<Download className="w-4 h-4 mr-2" />
 									Export Library
 								</Button>
-								<label className="w-full" aria-label="Import token library">
-									<input type="file" accept=".json" onChange={handleImport} />
+								<label
+									className="w-full flex items-center justify-center p-0 cursor-pointer"
+									aria-label="Import token library"
+								>
+									<div className="w-full h-9 flex items-center justify-center border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium rounded-md">
+										<Plus className="w-4 h-4 mr-2" />
+										Import JSON
+									</div>
+									<input
+										type="file"
+										accept=".json"
+										onChange={handleImport}
+										className="hidden"
+									/>
 								</label>
 							</div>
 						</AscendantWindow>

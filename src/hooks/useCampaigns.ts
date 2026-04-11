@@ -488,7 +488,7 @@ export const useCreateCampaign = () => {
 						campaign_id: campaign.id,
 						user_id: userId,
 						character_id: null,
-						role: "co-warden",
+						role: "warden",
 						joined_at: now,
 					});
 					saveLocalMembers(members);

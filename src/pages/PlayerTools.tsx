@@ -123,8 +123,8 @@ const playerTools = [
 	},
 	{
 		id: "quest-log",
-		name: "Quest Log",
-		description: "Track active quests, completed missions, and rewards.",
+		name: "Contract Log",
+		description: "Track active Contracts, completed anomalies, and rewards.",
 		icon: Target,
 		status: "available",
 		color:
@@ -175,8 +175,9 @@ const playerTools = [
 	},
 	{
 		id: "potions",
-		name: "Potions & Consumables",
-		description: "Manage your potions, elixirs, and consumable items.",
+		name: "Essences & Consumables",
+		description:
+			"Manage your recovery essences, elixirs, and consumable items.",
 		icon: FlaskConical,
 		status: "available",
 		color:
@@ -558,10 +559,10 @@ const PlayerTools = () => {
 								<Button
 									variant="outline"
 									className="justify-start"
-									onClick={() => navigate("/warden-directives/vtt")}
+									onClick={() => navigate("/campaigns")}
 								>
 									<MapIcon className="w-4 h-4 mr-2" />
-									VTT Map
+									Shared Maps
 								</Button>
 							</div>
 						</CardContent>

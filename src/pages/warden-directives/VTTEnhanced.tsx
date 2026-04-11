@@ -558,7 +558,9 @@ const VTTEnhanced = () => {
 		data?: CampaignMemberWithCharacter[];
 	};
 	const { data: role } = useCampaignRole(campaignId || "");
-	const isWarden = role === "rift" || role === "co-warden";
+	const [simulatePlayerView, setSimulatePlayerView] = useState(false);
+	const isActualWarden = role === "rift" || role === "co-warden";
+	const isWarden = isActualWarden && !simulatePlayerView;
 
 	// --- Multi-user realtime ---
 	const vttRealtime = useVTTRealtime({
@@ -1881,6 +1883,22 @@ const VTTEnhanced = () => {
 			</div>
 
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-[1920px]">
+				{isActualWarden && (
+					<div className="flex justify-end mb-4">
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => setSimulatePlayerView(!simulatePlayerView)}
+							className={
+								simulatePlayerView
+									? "border-primary text-primary"
+									: "text-muted-foreground"
+							}
+						>
+							{simulatePlayerView ? "Exit Player View" : "Simulate Player View"}
+						</Button>
+					</div>
+				)}
 				{!isWarden ? (
 					<EmbeddedProvider>
 						<PlayerMapView
