@@ -416,9 +416,9 @@ const WardenProtocols = () => {
 									level={1}
 									variant="gate"
 									dimensional
-									className="warden-directives-title ascendant-text-glow"
+									className="warden-protocols-title ascendant-text-glow"
 								>
-									Warden Registry
+									Warden Protocols
 								</RiftHeading>
 								<ManaFlowText
 									variant="rift"

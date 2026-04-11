@@ -470,7 +470,7 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-directives"
+					path="/warden-protocols"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
@@ -478,6 +478,10 @@ const AppContent = () => {
 							</Suspense>
 						</ProtectedRoute>
 					}
+				/>
+				<Route
+					path="/warden-directives"
+					element={<Navigate to="/warden-protocols" replace />}
 				/>
 				<Route
 					path="/warden-directives/encounter-builder"

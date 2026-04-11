@@ -572,7 +572,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 													4-5
 												</Badge>
 											</div>
-											<div className="flex justify-between items-center">
+											<div className="flex justify-between items-center border-b border-border/50 pb-2 mb-2">
 												<span className="text-xs">Difficulty</span>
 												<Select defaultValue="medium">
 													<SelectTrigger className="h-8 text-xs">
@@ -586,6 +586,18 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 													</SelectContent>
 												</Select>
 											</div>
+
+											{/* Module Book Link */}
+											<Button
+												variant="secondary"
+												className="w-full h-10 gap-2 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500/10"
+												onClick={() =>
+													window.open("/source-book/module", "_blank")
+												}
+											>
+												<BookOpen className="w-4 h-4" />
+												Read Module Book
+											</Button>
 										</div>
 									</AscendantWindow>
 								</div>
