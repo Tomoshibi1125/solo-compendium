@@ -150,7 +150,11 @@ export const useMyCampaigns = () => {
 			if (error) throw error;
 			return (data || []) as Campaign[];
 		},
-		retry: false, // Don't retry if not authenticated
+		retry: (failureCount) => {
+			if (failureCount < 2) return true;
+			return false;
+		},
+		retryDelay: (attempt) => Math.min(500 * 2 ** attempt, 3000),
 	});
 };
 
@@ -214,7 +218,11 @@ export const useJoinedCampaigns = () => {
 				member_role: member.role,
 			})) as (Campaign & { member_role: string })[];
 		},
-		retry: false, // Don't retry if not authenticated
+		retry: (failureCount) => {
+			if (failureCount < 2) return true;
+			return false;
+		},
+		retryDelay: (attempt) => Math.min(500 * 2 ** attempt, 3000),
 	});
 };
 
@@ -257,7 +265,8 @@ export const useCampaign = (campaignId: string) => {
 				.single();
 
 			if (error) {
-				if (error.code === "PGRST116") return null; // Not found
+				// If RLS hasn't propagated, PGRST116 means not found. Throw to trigger React Query's retry mechanism!
+				if (error.code === "PGRST116") throw new Error("CAMPAIGN_NOT_READY");
 				throw error;
 			}
 			return (data || null) as Campaign;

@@ -220,14 +220,17 @@ export const useCampaignToolState = <T>(
 		if (loading) return;
 		let active = true;
 		const loadState = async () => {
-			if (!campaignId) {
-				setIsLoading(false);
-				return;
-			}
-			setIsLoading(true);
 			const fallback = allowLocalFallback
 				? readLocalToolState<T>(storageKey)
 				: null;
+
+			if (!campaignId) {
+				if (active && fallback !== null) setState(fallback);
+				setIsLoading(false);
+				return;
+			}
+
+			setIsLoading(true);
 			if (!isAuthed) {
 				if (active && fallback !== null) setState(fallback);
 				setIsLoading(false);
