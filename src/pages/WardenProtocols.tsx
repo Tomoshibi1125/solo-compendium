@@ -262,8 +262,6 @@ const wardenProtocols = [
 		glow: "group-hover:shadow-violet-500/20",
 		category: "vtt",
 		priority: 13,
-		path: "/campaigns",
-		buttonText: "Select Campaign",
 	},
 	{
 		id: "token-library",
@@ -291,8 +289,6 @@ const wardenProtocols = [
 		glow: "group-hover:shadow-rose-500/20",
 		category: "vtt",
 		priority: 15,
-		path: "/campaigns",
-		buttonText: "Select Campaign",
 	},
 
 	// Creative Tools

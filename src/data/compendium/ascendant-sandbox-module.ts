@@ -24,7 +24,7 @@ import {
 // 23 Chapters • 11 Handouts • 11 VTT Scenes • 40+ NPCs • 3 Factions
 // ============================================================================
 
-export interface SandboxModule {
+interface SandboxModule {
 	id: string;
 	title: string;
 	description: string;

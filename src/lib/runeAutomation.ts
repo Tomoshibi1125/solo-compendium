@@ -43,59 +43,6 @@ export async function autoLearnRunes(
 	}
 }
 
-/**
- * Check if character can learn/consume a rune
- * Validates if the character already knows the rune's contents
- */
-export async function canLearnRune(
-	characterId: string,
-	runeId: string,
-): Promise<{ canLearn: boolean; reason?: string }> {
-	try {
-		// Get character data
-		const { data: character, error: charError } = await supabase
-			.from("characters")
-			.select("id")
-			.eq("id", characterId)
-			.single();
-
-		if (charError || !character) {
-			return { canLearn: false, reason: "Character not found" };
-		}
-
-		// Get rune data
-		const { data: rune, error: runeError } = await supabase
-			.from("compendium_runes")
-			.select("id, name")
-			.eq("id", runeId)
-			.single();
-
-		if (runeError || !rune) {
-			return { canLearn: false, reason: "Rune not found" };
-		}
-
-		// Check if rune already learned
-		const { data: existing } = await supabase
-			.from("character_rune_knowledge")
-			.select("id")
-			.eq("character_id", characterId)
-			.eq("rune_id", runeId)
-			.single();
-
-		if (existing) {
-			return {
-				canLearn: false,
-				reason: "You have already absorbed the knowledge of this rune.",
-			};
-		}
-
-		return { canLearn: true };
-	} catch (error) {
-		logger.error("Failed to check rune learning status:", error);
-		return { canLearn: false, reason: "Error checking requirements" };
-	}
-}
-
 // ---------------------------------------------------------------------------
 // Rift Ascendant Rune Absorption — cross-type resolution
 // ---------------------------------------------------------------------------
@@ -234,7 +181,7 @@ export function resolveRuneAbsorption(
  * Calculate max uses from uses_per_rest string
  * Examples: 'at-will', '1', '2', 'proficiency bonus', 'level', 'proficiency bonus + level'
  */
-export function calculateRuneMaxUses(
+function calculateRuneMaxUses(
 	usesPerRest: string | null | undefined,
 	characterLevel: number,
 	proficiencyBonus: number,

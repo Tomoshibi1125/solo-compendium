@@ -11,15 +11,15 @@ import {
 } from "@/lib/sourcebookAccess";
 import { getProficiencyBonus } from "@/types/core-rules";
 
-export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
-export type RuneInscription =
+type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
+type RuneInscription =
 	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"] & {
 		rune?: Rune;
 		equipment?: EquipmentRow;
 	};
 export type RuneKnowledge =
 	Database["public"]["Tables"]["character_rune_knowledge"]["Row"];
-export type EquipmentRow =
+type EquipmentRow =
 	Database["public"]["Tables"]["character_equipment"]["Row"];
 
 const buildRuneKnowledgeCacheKey = (userId: string, characterId: string) => {
@@ -397,7 +397,7 @@ export function useAbsorbRune() {
 }
 
 // Check if character meets rune requirements
-export function checkRuneRequirements(
+function checkRuneRequirements(
 	_rune: Rune,
 	_characterAbilities: Record<string, number>,
 	_characterJob: string | null,

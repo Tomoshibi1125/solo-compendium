@@ -10,7 +10,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -22,6 +22,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -29,6 +33,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -36,6 +43,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["dimensional-bleed", "survival"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "essence-absorption",
@@ -46,7 +57,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -58,6 +69,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -65,6 +80,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -72,6 +90,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["system-glitch", "black-market"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "shadow-dance",
@@ -82,7 +104,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -94,6 +116,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -101,6 +127,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -108,6 +137,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["experimental", "modern-warfare", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "critical-shadow",
@@ -118,18 +151,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Annihilates the threshold of human potential. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -137,6 +175,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -144,6 +185,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["dimensional-bleed", "guild-ops"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-blade-resonance",
@@ -154,18 +199,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Condemns the remnants of a dead world. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -173,6 +223,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Passive",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -180,6 +233,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["rift-energy", "post-awakening", "classified"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "shadow-step-reflex",
@@ -190,7 +247,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -202,6 +259,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -209,6 +270,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -216,6 +280,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["survival", "guild-ops"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "system-diagnostic-medic",
@@ -226,7 +294,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -238,6 +306,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -245,6 +317,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -252,6 +327,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["rift-energy", "forbidden", "hunter-bureau"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "phantom-algorithm-strike",
@@ -262,7 +341,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -274,6 +353,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -281,6 +364,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Passive",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -288,6 +374,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["hunter-bureau", "dungeon-core"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "heavy-plating-integration",
@@ -298,7 +388,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -310,6 +400,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -317,6 +411,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -324,6 +421,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["rift-energy", "urban-combat", "system-glitch"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "neural-duelist-sync",
@@ -334,7 +435,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -346,6 +447,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -353,6 +458,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -360,6 +468,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["monarch-era", "survival", "modern-warfare"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "logic-payload-hack",
@@ -370,18 +482,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Overrides the dimensional barrier. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -389,6 +506,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -396,6 +516,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["classified", "rift-energy", "forbidden"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-well-font",
@@ -406,18 +530,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Erases the threshold of human potential. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -425,6 +554,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -432,6 +564,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["post-awakening", "monarch-era", "classified"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "apex-scent-tracking",
@@ -442,7 +578,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -454,6 +590,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -461,6 +601,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -468,6 +611,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["ancient-power", "mana-overflow", "classified"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "kinetic-force-shover",
@@ -478,7 +625,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -490,6 +637,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -497,6 +648,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -504,6 +658,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["ancient-power", "forbidden", "dungeon-core"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "arcane-overseer-eye",
@@ -514,7 +672,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -526,6 +684,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -533,6 +695,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Passive",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -540,6 +705,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["monarch-era", "ancient-power", "hunter-bureau"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "heavy-weapon-calibration",
@@ -550,7 +719,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -562,6 +731,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -569,6 +742,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -576,6 +752,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["ancient-power", "classified"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "void-shifter-reflex",
@@ -586,18 +766,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Crushes the concept of distance. A whisper from the edge of oblivion.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -605,6 +790,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -612,6 +800,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["experimental", "rift-energy", "system-glitch"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "regent-command-protocol",
@@ -622,18 +814,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Condemns the last defense of the unprepared. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -641,6 +838,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -648,6 +848,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["black-market", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-leech-fangs",
@@ -658,7 +862,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -670,6 +874,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -677,6 +885,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -684,6 +895,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["dungeon-core", "classified", "forbidden"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "endurance-optimization",
@@ -694,18 +909,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Corrodes the architect's design. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -713,6 +933,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -720,6 +943,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["monarch-era", "dungeon-core"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "combat-hud-analyzer",
@@ -730,18 +957,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Reclaims the chains of mortality. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -749,6 +981,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -756,6 +991,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["forbidden", "rift-energy"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "cognitive-firewall",
@@ -766,18 +1005,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Purges the chains of mortality. The final equation in a war without end.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -785,6 +1029,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -792,6 +1039,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["shadow-domain", "rift-energy", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "kinetic-redirection",
@@ -802,7 +1053,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -814,6 +1066,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -821,6 +1077,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -828,6 +1087,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["urban-combat", "monarch-era", "gate-zone"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-leech-algorithm",
@@ -838,7 +1101,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -850,6 +1113,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -857,6 +1124,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -864,6 +1134,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["shadow-domain", "urban-combat"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "ghost-recon-drone-link",
@@ -874,18 +1148,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Fractures the flow of causality. The final equation in a war without end.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -893,6 +1172,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -900,6 +1182,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["experimental", "black-market", "hunter-bureau"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "dimensional-vault-optimization",
@@ -910,18 +1196,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Fractures the last defense of the unprepared. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -929,6 +1220,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -936,6 +1230,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["black-market", "guild-ops"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "adrenaline-overdrive-limiter",
@@ -946,7 +1244,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -958,6 +1256,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -965,6 +1267,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -972,6 +1277,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["survival", "mana-overflow"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "urban-parkour-specialist",
@@ -982,7 +1291,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -994,6 +1303,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1001,6 +1314,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1008,6 +1324,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["mana-overflow", "shadow-domain"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-shield-capacitor-link",
@@ -1018,18 +1338,22 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor: "Binds the laws of physics. The line between Hunter and monster.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1037,6 +1361,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1044,6 +1371,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["survival", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "apex-negotiator-algorithm",
@@ -1054,18 +1385,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Annihilates the architect's design. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1073,6 +1409,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Passive",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1080,6 +1419,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["experimental", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "sonar-pulse-echo",
@@ -1090,7 +1433,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1102,6 +1445,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1109,6 +1456,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1116,6 +1466,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["dungeon-core", "modern-warfare"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "gate-structural-engineer",
@@ -1126,7 +1480,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1138,6 +1492,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1145,6 +1503,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1152,6 +1513,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["dimensional-bleed", "rift-energy"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "berserker-blood-frenzy",
@@ -1162,7 +1527,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1174,6 +1539,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1181,6 +1550,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1188,6 +1560,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["urban-combat", "elite-tier", "post-awakening"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "system-data-analyst",
@@ -1198,7 +1574,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1210,6 +1586,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1217,6 +1597,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1224,6 +1607,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["mana-overflow", "monarch-era", "dungeon-core"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "phantom-limb-manifestation",
@@ -1234,18 +1621,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Dissolves the boundary between life and death. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1253,6 +1645,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Passive",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1260,6 +1655,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["classified", "modern-warfare", "forbidden"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "heavy-armor-specialist-v2",
@@ -1270,7 +1669,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1282,6 +1681,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1289,6 +1692,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "1/short rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1296,6 +1702,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["post-awakening", "elite-tier", "shadow-domain"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "dimensional-teleport-expert",
@@ -1306,7 +1716,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1318,6 +1728,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1325,6 +1739,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1332,6 +1749,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["classified", "hunter-bureau", "dimensional-bleed"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "internal-mana-battery",
@@ -1342,18 +1763,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Fractures the boundary between life and death. The line between Hunter and monster.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1361,6 +1787,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1368,6 +1797,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["dimensional-bleed", "experimental", "ancient-power"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "guild-command-protocol",
@@ -1378,18 +1811,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Binds the remnants of a dead world. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1397,6 +1835,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1404,6 +1845,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["dimensional-bleed", "experimental", "guild-ops"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "reality-sunder-blade",
@@ -1414,18 +1859,24 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"The user becomes unable to dream, replaced by visions of the void between Gates.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Commands the architect's design. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1433,6 +1884,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1440,6 +1894,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["hunter-bureau", "system-glitch", "gate-zone"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "system-omniscience-eyes",
@@ -1450,7 +1908,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1462,6 +1920,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1469,6 +1931,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1476,6 +1941,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["forbidden", "ancient-power"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "gate-vanguard-stance",
@@ -1486,7 +1955,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1498,6 +1967,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1505,6 +1978,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1512,6 +1988,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["experimental", "forbidden"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "umbral-binding-expert",
@@ -1522,7 +2002,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1534,6 +2014,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1541,6 +2025,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1548,6 +2035,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["mana-overflow", "shadow-domain", "experimental"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-leech-strike",
@@ -1558,7 +2049,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1570,6 +2061,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1577,6 +2072,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1584,6 +2082,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["black-market", "elite-tier"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "ghost-recon-drone",
@@ -1594,7 +2096,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1606,6 +2108,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1613,6 +2119,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1620,6 +2129,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["survival", "dimensional-bleed"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "dimensional-vault-master",
@@ -1630,7 +2143,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1642,6 +2155,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1649,6 +2166,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1656,6 +2176,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["dungeon-core", "forbidden"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "adrenaline-overdrive",
@@ -1666,7 +2190,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1678,6 +2202,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1685,6 +2213,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1692,6 +2223,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["hunter-bureau", "classified"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "urban-parkour-expert",
@@ -1702,18 +2237,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Dissolves the flow of causality. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1721,6 +2261,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1728,6 +2271,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["forbidden", "survival"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-shield-capacitor",
@@ -1738,18 +2285,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Overrides the concept of distance. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1757,6 +2309,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1764,6 +2319,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["post-awakening", "shadow-domain", "rift-energy"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "apex-negotiator-protocol",
@@ -1774,7 +2333,8 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Prolonged use causes the wielder's shadow to move independently, whispering in dead languages.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1786,6 +2346,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1793,6 +2357,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1800,6 +2367,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["mana-overflow", "modern-warfare"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "echo-location-sonar",
@@ -1810,7 +2381,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1822,6 +2393,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1829,6 +2404,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1836,6 +2414,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["guild-ops", "urban-combat", "mana-overflow"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "gate-engineer",
@@ -1846,7 +2428,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1858,6 +2440,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1865,6 +2451,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1872,6 +2461,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["hunter-bureau", "survival", "mana-overflow"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "berserker-bloodlust",
@@ -1882,7 +2475,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1894,6 +2487,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1901,6 +2498,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1908,6 +2508,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["dungeon-core", "shadow-domain", "classified"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "system-analyst",
@@ -1918,18 +2522,24 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Purges the remnants of a dead world. A beautiful catastrophe measured in milliseconds.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1937,6 +2547,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1944,6 +2557,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["system-glitch", "urban-combat"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "phantom-limb-technique",
@@ -1954,7 +2571,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1966,6 +2583,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -1973,6 +2594,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -1980,6 +2604,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["dimensional-bleed", "classified"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "heavy-armor-mastery-v2",
@@ -1990,7 +2618,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2002,6 +2630,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2009,6 +2641,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2016,6 +2651,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["system-glitch", "survival", "ancient-power"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "dimensional-step-expert",
@@ -2026,18 +2665,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Condemns the dimensional barrier. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2045,6 +2689,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2052,6 +2699,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["dimensional-bleed", "urban-combat"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-battery-core",
@@ -2062,7 +2713,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2074,6 +2725,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2081,6 +2736,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2088,6 +2746,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["dimensional-bleed", "post-awakening", "forbidden"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "ascendant-guild-leader",
@@ -2098,18 +2760,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Silences the flow of causality. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2117,6 +2784,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2124,6 +2794,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["classified", "dungeon-core", "black-market"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "void-blade-mastery",
@@ -2134,18 +2808,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Mirrors the remnants of a dead world. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2153,6 +2832,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2160,6 +2842,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["survival", "classified"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "system-overseer-eyes",
@@ -2170,18 +2856,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Eclipses the architect's design. A whisper from the edge of oblivion.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2189,6 +2880,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "1/short rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2196,6 +2890,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["dimensional-bleed", "system-glitch", "forbidden"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "gate-guardian-stance",
@@ -2206,18 +2904,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Mirrors the last defense of the unprepared. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2225,6 +2928,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2232,6 +2938,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["black-market", "urban-combat"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "kinetic-redirection-expert",
@@ -2242,18 +2952,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Corrodes the architecture of the soul. The last thing many anomalies ever see.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2261,6 +2976,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2268,6 +2986,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["shadow-domain", "urban-combat", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-surge-catalyst",
@@ -2278,18 +3000,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Purges the remnants of a dead world. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2297,6 +3024,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2304,6 +3034,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["classified", "monarch-era", "black-market"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "dimensional-shifter-dodge",
@@ -2314,7 +3048,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2326,6 +3060,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2333,6 +3071,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2340,6 +3081,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["ancient-power", "shadow-domain"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "system-scholar",
@@ -2350,7 +3095,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2362,6 +3107,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2369,6 +3118,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2376,6 +3128,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["post-awakening", "dimensional-bleed", "shadow-domain"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "heavy-weapon-annihilator",
@@ -2386,7 +3142,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2398,6 +3154,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2405,6 +3165,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2412,6 +3175,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["modern-warfare", "ancient-power"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "aetheric-reflex-augment",
@@ -2422,7 +3189,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2434,6 +3201,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2441,6 +3212,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2448,6 +3222,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["post-awakening", "dungeon-core", "guild-ops"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-burn-specialist",
@@ -2458,18 +3236,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Eclipses the remnants of a dead world. The last thing many anomalies ever see.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2477,6 +3260,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2484,6 +3270,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["post-awakening", "urban-combat"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "gate-raid-veteran",
@@ -2494,7 +3284,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2506,6 +3296,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2513,6 +3307,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2520,6 +3317,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["dungeon-core", "mana-overflow"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "neural-network-hacker",
@@ -2530,18 +3331,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Sanctifies the fabric of reality. The last thing many anomalies ever see.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2549,6 +3355,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2556,6 +3365,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["post-awakening", "guild-ops"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "dimensional-step-evader",
@@ -2566,18 +3379,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Absorbs the silence between heartbeats. A whisper from the edge of oblivion.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2585,6 +3403,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2592,6 +3413,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["modern-warfare", "rift-energy"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-capacitor-armor",
@@ -2602,7 +3427,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2614,6 +3439,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2621,6 +3450,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2628,6 +3460,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["ancient-power", "forbidden"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "apex-assassin-strike",
@@ -2638,18 +3474,24 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Silences the threshold of human potential. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2657,6 +3499,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2664,6 +3509,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["dungeon-core", "system-glitch"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "system-fortress-body",
@@ -2674,7 +3523,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2686,6 +3535,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2693,6 +3546,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2700,6 +3556,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["survival", "gate-zone"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-weaver-ritualist",
@@ -2710,7 +3570,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2722,6 +3582,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2729,6 +3593,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2736,6 +3603,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["elite-tier", "ancient-power", "dungeon-core"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "gate-master-navigator",
@@ -2746,7 +3617,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2758,6 +3629,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2765,6 +3640,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2772,6 +3650,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["system-glitch", "shadow-domain", "modern-warfare"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "neural-sync-sharpshooter",
@@ -2782,18 +3664,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Unravels the fabric of reality. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2801,6 +3688,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2808,6 +3698,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["survival", "ancient-power"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "void-step-striker",
@@ -2818,18 +3712,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Commands the illusion of safety. The final equation in a war without end.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2837,6 +3736,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "1/short rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2844,6 +3746,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["elite-tier", "shadow-domain", "urban-combat"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "system-executioner",
@@ -2854,18 +3760,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Annihilates the last defense of the unprepared. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2873,6 +3784,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Passive",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2880,6 +3794,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["mana-overflow", "urban-combat"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "system-interface-optimization",
@@ -2890,18 +3808,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Absorbs the certainty of outcomes. The last thing many anomalies ever see.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2909,6 +3832,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2916,6 +3842,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["ancient-power", "guild-ops"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "gate-anchor-specialist",
@@ -2926,7 +3856,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2938,6 +3868,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2945,6 +3879,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2952,6 +3889,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["elite-tier", "black-market", "mana-overflow"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-blade-dancer",
@@ -2962,7 +3903,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2974,6 +3915,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -2981,6 +3926,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -2988,6 +3936,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["mana-overflow", "urban-combat"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "system-recon-specialist",
@@ -2998,18 +3950,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Annihilates the architect's design. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3017,6 +3974,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3024,6 +3984,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["forbidden", "rift-energy", "survival"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "neural-link-tactician",
@@ -3034,18 +3998,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Crushes the architect's design. A beautiful catastrophe measured in milliseconds.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3053,6 +4022,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "1/short rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3060,6 +4032,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["monarch-era", "classified"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-surge-vanguard",
@@ -3070,7 +4046,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3082,6 +4058,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3089,6 +4069,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3096,6 +4079,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["rift-energy", "gate-zone"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-medic-expert",
@@ -3106,7 +4093,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3118,6 +4105,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3125,6 +4116,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3132,6 +4126,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["mana-overflow", "gate-zone", "urban-combat"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "void-rifter",
@@ -3142,18 +4140,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Annihilates the certainty of outcomes. The final equation in a war without end.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3161,6 +4164,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Passive",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3168,6 +4174,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["mana-overflow", "guild-ops", "experimental"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "system-interceptor",
@@ -3178,7 +4188,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3190,6 +4200,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3197,6 +4211,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3204,6 +4221,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["gate-zone", "guild-ops"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "dimensional-scavenger",
@@ -3214,18 +4235,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Rends the last defense of the unprepared. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3233,6 +4259,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Proficiency/long rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3240,6 +4269,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["rift-energy", "forbidden", "dimensional-bleed"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "shadow-weapon-mastery",
@@ -3250,7 +4283,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3262,6 +4295,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3269,6 +4306,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3276,6 +4316,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["dungeon-core", "monarch-era", "classified"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "shadow-armor",
@@ -3286,7 +4330,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3298,6 +4342,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3305,6 +4353,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3312,6 +4363,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["guild-ops", "elite-tier", "hunter-bureau"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "system-overclock",
@@ -3322,7 +4377,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3334,6 +4389,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3341,6 +4400,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Passive",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3348,6 +4410,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["dungeon-core", "gate-zone"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "threat-ping",
@@ -3358,7 +4424,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3370,6 +4436,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3377,6 +4447,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3384,6 +4457,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["experimental", "survival"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "quest-log-intuition",
@@ -3394,18 +4471,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Warps the dimensional barrier. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3413,6 +4495,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3420,6 +4505,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["guild-ops", "rift-energy"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "kill-count-momentum",
@@ -3430,7 +4519,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3442,6 +4531,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3449,6 +4542,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3456,6 +4552,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["dungeon-core", "guild-ops", "mana-overflow"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "daily-quest-discipline",
@@ -3466,18 +4566,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Overrides the last defense of the unprepared. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3485,6 +4590,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3492,6 +4600,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["rift-energy", "survival"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "gate-sense",
@@ -3502,7 +4614,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3514,6 +4626,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3521,6 +4637,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3528,6 +4647,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["classified", "gate-zone", "monarch-era"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "gate-hardened",
@@ -3538,18 +4661,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Warps the threshold of human potential. A reminder that the System has no mercy.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3557,6 +4685,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3564,6 +4695,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["dimensional-bleed", "monarch-era", "mana-overflow"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "boss-reader",
@@ -3574,7 +4709,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3586,6 +4721,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3593,6 +4732,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3600,6 +4742,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["survival", "rift-energy", "black-market"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "mana-overflow",
@@ -3610,18 +4756,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Commands the architect's design. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3629,6 +4780,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3636,6 +4790,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["mana-overflow", "shadow-domain", "guild-ops"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "mana-siphon",
@@ -3646,7 +4804,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3658,6 +4816,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3665,6 +4827,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "Passive",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3672,6 +4837,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["elite-tier", "dungeon-core"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "circuit-breaker",
@@ -3682,7 +4851,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3694,6 +4863,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3701,6 +4874,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3708,6 +4884,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["system-glitch", "black-market", "hunter-bureau"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "annihilation-style",
@@ -3718,7 +4898,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3730,6 +4910,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3737,6 +4921,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3744,6 +4931,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["forbidden", "gate-zone", "mana-overflow"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "deadeye-protocol",
@@ -3754,7 +4945,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3766,6 +4957,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3773,6 +4968,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3780,6 +4978,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["mana-overflow", "shadow-domain"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "iron-vanguard",
@@ -3790,7 +4992,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3802,6 +5004,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3809,6 +5015,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3816,6 +5025,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["system-glitch", "mana-overflow"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "twin-fang-technique",
@@ -3826,7 +5039,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3838,6 +5051,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3845,6 +5062,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3852,6 +5072,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["modern-warfare", "system-glitch", "ancient-power"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "battle-channeler",
@@ -3862,7 +5086,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3874,6 +5098,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3881,6 +5109,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Passive",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3888,6 +5119,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["post-awakening", "mana-overflow"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "gatekeepers-reach",
@@ -3898,18 +5133,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Devours the boundary between life and death. The final equation in a war without end.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3917,6 +5157,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3924,6 +5167,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["dimensional-bleed", "survival"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "iron-vitality",
@@ -3934,18 +5181,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Absorbs the flow of causality. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3953,6 +5205,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3960,6 +5215,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["modern-warfare", "ancient-power"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "adaptive-resistance",
@@ -3970,7 +5229,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3982,6 +5241,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -3989,6 +5252,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -3996,6 +5262,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["forbidden", "black-market"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "fortress-conditioning",
@@ -4006,7 +5276,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4018,6 +5288,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4025,6 +5299,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4032,6 +5309,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["mana-overflow", "monarch-era", "black-market"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "party-sync",
@@ -4042,7 +5323,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4054,6 +5335,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Provides a permanent +1 to an associated ability score.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4061,6 +5346,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4068,6 +5356,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["shadow-domain", "classified", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "last-stand-protocol",
@@ -4078,7 +5370,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4090,6 +5382,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4097,6 +5393,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4104,6 +5403,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["modern-warfare", "experimental", "shadow-domain"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "emergency-extraction",
@@ -4114,7 +5417,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4126,6 +5429,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4133,6 +5440,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "passive",
+			frequency: "At will",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4140,6 +5450,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["experimental", "monarch-era"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "destroyer-resolve",
@@ -4150,7 +5464,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4162,6 +5476,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4169,6 +5487,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Passive",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4176,6 +5497,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["urban-combat", "shadow-domain"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "stalker-grace",
@@ -4186,7 +5511,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4198,6 +5523,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4205,6 +5534,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "None (passive)",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4212,6 +5544,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["hunter-bureau", "shadow-domain"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "double-awakening",
@@ -4222,7 +5558,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4234,6 +5570,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4241,6 +5581,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "At will",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4248,6 +5591,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["shadow-domain", "modern-warfare"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "latent-potential",
@@ -4258,7 +5605,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4270,6 +5617,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4277,6 +5628,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "triggered",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4284,6 +5638,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["dimensional-bleed", "urban-combat", "experimental"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "domain-of-shadows",
@@ -4294,7 +5652,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4306,6 +5664,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4313,6 +5675,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4320,6 +5685,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["forbidden", "experimental"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "system-administrator",
@@ -4330,18 +5699,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Fractures the certainty of outcomes. The line between Hunter and monster.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4349,6 +5723,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4356,6 +5733,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["urban-combat", "elite-tier"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "transcendent-vessel",
@@ -4366,7 +5747,7 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -4378,6 +5759,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Grants a once-per-long-rest emergency activation.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4385,6 +5770,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "stance",
+			frequency: "1/short rest",
+			action: "Free action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4392,6 +5780,10 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["modern-warfare", "post-awakening"],
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "rulers-authority",
@@ -4402,18 +5794,23 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Warps the certainty of outcomes. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "feat"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Grants utility scaling with the user's level.",
 			secondary: "Applies a lingering magical pressure to the area.",
+			tertiary: "Unlocks a passive aura affecting allies within 10 feet.",
+			primaryEffect:
+				"A subtle manipulation of the magical weave, granting immense utility and control over the environmen",
+			secondaryEffect: "See secondary effect.",
 		},
 		repeatable: false,
 		mechanics: {
@@ -4421,6 +5818,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			duration: "Permanent",
 			damage_profile: "N/A",
 			range: "Self",
+			type: "active",
+			frequency: "1/short rest",
+			action: "1 bonus action",
 		},
 		limitations: {
 			uses: "Permanent",
@@ -4428,5 +5828,9 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 			requires_attunement: false,
 			conditions: [],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["black-market", "dungeon-core", "monarch-era"],
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 ];

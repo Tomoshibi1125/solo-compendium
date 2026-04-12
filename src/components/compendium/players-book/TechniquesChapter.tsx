@@ -1,7 +1,9 @@
 import { Target } from "lucide-react";
 import { RiftHeading } from "@/components/ui/AscendantText";
-import { techniques } from "@/data/compendium/techniques";
+import { techniques as rawTechniques } from "@/data/compendium/techniques";
+import type { CompendiumTechnique } from "@/types/compendium";
 
+const techniques = rawTechniques as unknown as CompendiumTechnique[];
 export const TechniquesChapter = () => {
 	// Group by style for organization
 	const styles = Array.from(new Set(techniques.map((t) => t.style)));
@@ -57,10 +59,9 @@ export const TechniquesChapter = () => {
 													Activation
 												</h4>
 												<p className="font-mono text-white">
-													{tech.activation &&
-													typeof tech.activation === "object"
-														? `${tech.activation.cost || tech.activation.type}`
-														: `${tech.activation}`}
+													{tech.activation && typeof tech.activation === "object" && tech.activation !== null
+														? `${"cost" in tech.activation && tech.activation.cost ? tech.activation.cost : ("type" in tech.activation ? tech.activation.type : "")}`
+														: String(tech.activation || "")}
 												</p>
 											</div>
 											{tech.range && (
@@ -69,11 +70,11 @@ export const TechniquesChapter = () => {
 														Range
 													</h4>
 													<p className="font-mono text-white">
-														{typeof tech.range === "object"
-															? tech.range.distance
+														{typeof tech.range === "object" && tech.range !== null
+															? "distance" in tech.range && tech.range.distance
 																? `${tech.range.distance} ft`
-																: tech.range.type
-															: tech.range}
+																: "type" in tech.range ? tech.range.type : String(tech.range)
+															: String(tech.range)}
 													</p>
 												</div>
 											)}
@@ -82,63 +83,42 @@ export const TechniquesChapter = () => {
 										<div className="bg-void/80 p-3 rounded-sm border border-white/5 space-y-2">
 											{typeof tech.effects === "object" &&
 												!Array.isArray(tech.effects) &&
-												(tech.effects as unknown as Record<string, string>)
-													.primary && (
+												tech.effects !== null &&
+												"primary" in tech.effects && (
 													<div className="flex gap-2">
 														<span className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 shrink-0" />
 														<p className="text-slate-300">
-															{
-																(
-																	tech.effects as unknown as Record<
-																		string,
-																		string
-																	>
-																).primary
-															}
+															{tech.effects.primary}
 														</p>
 													</div>
 												)}
 											{typeof tech.effects === "object" &&
 												!Array.isArray(tech.effects) &&
-												(tech.effects as unknown as Record<string, string>)
-													.secondary && (
+												tech.effects !== null &&
+												"secondary" in tech.effects && (
 													<div className="flex gap-2">
 														<span className="w-1.5 h-1.5 bg-red-400/70 rounded-full mt-1 shrink-0" />
 														<p className="text-slate-300">
-															{
-																(
-																	tech.effects as unknown as Record<
-																		string,
-																		string
-																	>
-																).secondary
-															}
+															{tech.effects.secondary}
 														</p>
 													</div>
 												)}
 											{typeof tech.effects === "object" &&
 												!Array.isArray(tech.effects) &&
-												(tech.effects as unknown as Record<string, string>)
-													.tertiary && (
+												tech.effects !== null &&
+												"tertiary" in tech.effects && (
 													<div className="flex gap-2">
 														<span className="w-1.5 h-1.5 bg-slate-500 rounded-full mt-1 shrink-0" />
 														<p className="text-slate-300">
-															{
-																(
-																	tech.effects as unknown as Record<
-																		string,
-																		string
-																	>
-																).tertiary
-															}
+															{tech.effects.tertiary}
 														</p>
 													</div>
 												)}
 										</div>
 
 										<div className="flex justify-between items-center text-[10px] font-mono text-slate-500 pt-3 border-t border-white/10">
-											<span>{tech.limitations.uses}</span>
-											{tech.limitations.recharge && (
+											<span>{tech.limitations?.uses}</span>
+											{tech.limitations?.recharge && (
 												<span>Refresh: {tech.limitations.recharge}</span>
 											)}
 										</div>

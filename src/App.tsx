@@ -661,21 +661,46 @@ const AppContent = () => {
 						</ProtectedRoute>
 					}
 				/>
+				{/* Standalone VTT routes — no campaign required */}
 				<Route
 					path="/warden-directives/vtt"
-					element={<Navigate to="/campaigns" replace />}
+					element={
+						<ProtectedRoute requireWarden>
+							<Suspense fallback={<PageLoader />}>
+								<VTTEnhanced />
+							</Suspense>
+						</ProtectedRoute>
+					}
 				/>
 				<Route
 					path="/warden-directives/journal"
-					element={<Navigate to="/campaigns" replace />}
+					element={
+						<ProtectedRoute requireWarden>
+							<Suspense fallback={<PageLoader />}>
+								<VTTJournal />
+							</Suspense>
+						</ProtectedRoute>
+					}
 				/>
 				<Route
 					path="/warden-directives/vtt-enhanced"
-					element={<Navigate to="/campaigns" replace />}
+					element={
+						<ProtectedRoute requireWarden>
+							<Suspense fallback={<PageLoader />}>
+								<VTTEnhanced />
+							</Suspense>
+						</ProtectedRoute>
+					}
 				/>
 				<Route
 					path="/warden-directives/vtt-journal"
-					element={<Navigate to="/campaigns" replace />}
+					element={
+						<ProtectedRoute requireWarden>
+							<Suspense fallback={<PageLoader />}>
+								<VTTJournal />
+							</Suspense>
+						</ProtectedRoute>
+					}
 				/>
 				<Route
 					path="/campaigns/:campaignId/vtt"

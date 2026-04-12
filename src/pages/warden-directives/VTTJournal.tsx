@@ -46,9 +46,11 @@ const VTTJournal = () => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
 	const { data: role } = useCampaignRole(campaignId || "");
-	const isWarden = role === "rift" || role === "co-warden";
+	// In standalone mode (no campaign), default to warden
+	const isWarden = !campaignId || role === "warden" || role === "co-warden";
 	const { user, loading } = useAuth();
 	const isAuthed = isSupabaseConfigured && !!user?.id;
+	const journalStorageKey = `vtt-journal-${campaignId || "standalone"}`;
 
 	const [entries, setEntries] = useState<JournalEntry[]>([]);
 	const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
@@ -76,7 +78,7 @@ const VTTJournal = () => {
 		let active = true;
 
 		const loadLocal = () => {
-			const saved = localStorage.getItem(`vtt-journal-${campaignId}`);
+			const saved = localStorage.getItem(journalStorageKey);
 			if (!saved) return [];
 			try {
 				return JSON.parse(saved) as JournalEntry[];
@@ -86,10 +88,7 @@ const VTTJournal = () => {
 		};
 
 		const saveLocal = (nextEntries: JournalEntry[]) => {
-			localStorage.setItem(
-				`vtt-journal-${campaignId}`,
-				JSON.stringify(nextEntries),
-			);
+			localStorage.setItem(journalStorageKey, JSON.stringify(nextEntries));
 		};
 
 		const loadRemote = async () => {
@@ -134,7 +133,7 @@ const VTTJournal = () => {
 		return () => {
 			active = false;
 		};
-	}, [campaignId, isAuthed, loading]);
+	}, [campaignId, isAuthed, loading, journalStorageKey]);
 
 	const handleCreateEntry = async () => {
 		if (!newEntry.title.trim()) {
@@ -158,10 +157,7 @@ const VTTJournal = () => {
 			};
 			const updated = [entry, ...entries];
 			setEntries(updated);
-			localStorage.setItem(
-				`vtt-journal-${campaignId}`,
-				JSON.stringify(updated),
-			);
+			localStorage.setItem(journalStorageKey, JSON.stringify(updated));
 			setNewEntry({
 				title: "",
 				content: "",
@@ -209,7 +205,10 @@ const VTTJournal = () => {
 		};
 		const updated = [entry, ...entries];
 		setEntries(updated);
-		localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
+		localStorage.setItem(
+			`vtt-journal-${campaignId || "standalone"}`,
+			JSON.stringify(updated),
+		);
 		setNewEntry({
 			title: "",
 			content: "",
@@ -237,7 +236,7 @@ const VTTJournal = () => {
 			setEntries(updated);
 			setSelectedEntry(updatedEntry);
 			localStorage.setItem(
-				`vtt-journal-${campaignId}`,
+				`vtt-journal-${campaignId || "standalone"}`,
 				JSON.stringify(updated),
 			);
 			setIsEditing(false);
@@ -283,7 +282,10 @@ const VTTJournal = () => {
 		);
 		setEntries(updated);
 		setSelectedEntry(updatedEntry);
-		localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
+		localStorage.setItem(
+			`vtt-journal-${campaignId || "standalone"}`,
+			JSON.stringify(updated),
+		);
 		setIsEditing(false);
 		toast({
 			title: "Updated!",
@@ -300,7 +302,7 @@ const VTTJournal = () => {
 				setSelectedEntry(null);
 			}
 			localStorage.setItem(
-				`vtt-journal-${campaignId}`,
+				`vtt-journal-${campaignId || "standalone"}`,
 				JSON.stringify(updated),
 			);
 			toast({
@@ -324,7 +326,10 @@ const VTTJournal = () => {
 		}
 		const updated = entries.filter((e) => e.id !== id);
 		setEntries(updated);
-		localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
+		localStorage.setItem(
+			`vtt-journal-${campaignId || "standalone"}`,
+			JSON.stringify(updated),
+		);
 		if (selectedEntry?.id === id) {
 			setSelectedEntry(null);
 		}
@@ -348,11 +353,15 @@ const VTTJournal = () => {
 				<div className="mb-6">
 					<Button
 						variant="ghost"
-						onClick={() => navigate(`/campaigns/${campaignId}`)}
+						onClick={() =>
+							navigate(
+								campaignId ? `/campaigns/${campaignId}` : "/warden-directives",
+							)
+						}
 						className="mb-4"
 					>
 						<ArrowLeft className="w-4 h-4 mr-2" />
-						Back to Campaign
+						{campaignId ? "Back to Campaign" : "Back to Warden Tools"}
 					</Button>
 					<RiftHeading
 						level={1}

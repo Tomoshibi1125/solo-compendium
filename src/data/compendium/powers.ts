@@ -10,7 +10,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -36,8 +36,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d10 necrotic",
 			range: "60-foot line",
+			type: "innate",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "necrotic",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Presence",
+				damage: "2d10",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 20,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -45,6 +63,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["dungeon-core", "elite-tier"],
 	},
 	{
 		id: "demonic-aura",
@@ -55,12 +76,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Ignites the remnants of a dead world. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -81,8 +103,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "6d6 lightning",
 			range: "Touch",
+			type: "class",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "6d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 10,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -90,6 +130,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["elite-tier", "monarch-era"],
 	},
 	{
 		id: "regeneration",
@@ -100,7 +143,8 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -126,8 +170,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "3d10 radiant",
 			range: "30-foot cone",
+			type: "divine",
+			frequency: "At will",
+			action: "1 action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Intelligence",
+				damage: "3d10",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -135,6 +197,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["dungeon-core", "rift-energy", "dimensional-bleed"],
 	},
 	{
 		id: "true-sight",
@@ -145,12 +210,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Inverts the silence between heartbeats. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -171,8 +237,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "5d6 acid",
 			range: "Self",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "acid",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "5d6",
+				damage_type: "acid",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 12,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -180,6 +264,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["shadow-domain", "gate-zone", "dungeon-core"],
 	},
 	{
 		id: "shadow-essence",
@@ -190,7 +277,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -216,8 +303,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "3d8 necrotic",
 			range: "120 feet",
+			type: "class",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "necrotic",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Strength",
+				damage: "3d8",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -225,6 +330,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["dimensional-bleed", "experimental"],
 	},
 	{
 		id: "dragon-breath",
@@ -235,7 +343,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -261,8 +369,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d12 psychic",
 			range: "Self",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "psychic",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Sense",
+				damage: "2d12",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 17,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -270,6 +396,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["black-market", "classified", "post-awakening"],
 	},
 	{
 		id: "arcane-charm",
@@ -280,7 +409,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -306,8 +435,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d12 radiant",
 			range: "20-foot radius burst",
+			type: "awakening",
+			frequency: "2/short rest",
+			action: "1 action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "radiant",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "2d12",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 15,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -315,6 +462,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["mana-overflow", "experimental", "gate-zone"],
 	},
 	{
 		id: "bulwark-resilience",
@@ -325,12 +475,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Commands the remnants of a dead world. The last thing many anomalies ever see.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -351,8 +502,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "6d6 necrotic",
 			range: "Self",
+			type: "monstrous",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "necrotic",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "6d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 21,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -360,6 +529,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["forbidden", "monarch-era", "elite-tier"],
 	},
 	{
 		id: "assassin-luck",
@@ -370,12 +542,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Devours the last defense of the unprepared. The line between Hunter and monster.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -396,8 +569,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "4d8 fire",
 			range: "Touch",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "fire",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -405,6 +596,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["elite-tier", "shadow-domain"],
 	},
 	{
 		id: "warrior-rage",
@@ -415,7 +609,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -441,8 +635,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "3d6 force",
 			range: "30-foot cone",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "spell_attack",
+				modifier: "Presence",
+				damage: "3d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 13,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -450,6 +662,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["forbidden", "ancient-power"],
 	},
 	{
 		id: "ki-point",
@@ -460,12 +675,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Corrodes the threshold of human potential. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -486,8 +702,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "5d6 psychic",
 			range: "60 feet",
+			type: "monstrous",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "psychic",
+				mode: "ranged",
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "5d6",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -495,6 +729,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["dungeon-core", "monarch-era"],
 	},
 	{
 		id: "divine-smite",
@@ -505,12 +742,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Fractures the fabric of reality. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -531,8 +769,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d8 radiant",
 			range: "Sight",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "radiant",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 21,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -540,6 +796,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["system-glitch", "ancient-power"],
 	},
 	{
 		id: "wild-shape",
@@ -550,12 +809,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Corrodes the flow of causality. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -576,8 +836,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "2d12 psychic",
 			range: "Self",
+			type: "monstrous",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "psychic",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "2d12",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 21,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -585,6 +863,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["ancient-power", "gate-zone"],
 	},
 	{
 		id: "arcane-recovery",
@@ -595,12 +876,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Shatters the illusion of safety. A beautiful catastrophe measured in milliseconds.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -621,8 +903,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "3d8 fire",
 			range: "120 feet",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "fire",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "3d8",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -630,6 +930,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["hunter-bureau", "experimental"],
 	},
 	{
 		id: "sneak-attack",
@@ -640,7 +943,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -666,8 +969,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d10 psychic",
 			range: "Self",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "psychic",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "3d10",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 14,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -675,6 +996,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["guild-ops", "gate-zone", "mana-overflow"],
 	},
 	{
 		id: "vampiric-touch",
@@ -685,7 +1009,8 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Corrupts nearby healing magic by 10%, causing heals to occasionally deal damage instead.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -711,8 +1036,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "4d6 thunder",
 			range: "20-foot radius burst",
+			type: "divine",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "thunder",
+				mode: "melee",
+				resolution: "ability_check",
+				modifier: "Sense",
+				damage: "4d6",
+				damage_type: "thunder",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 18,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -720,6 +1063,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["dimensional-bleed", "gate-zone"],
 	},
 	{
 		id: "lycanthropy",
@@ -730,7 +1076,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -756,8 +1102,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "2d12 cold",
 			range: "120 feet",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "cold",
+				mode: "melee",
+				resolution: "automatic",
+				modifier: "Sense",
+				damage: "2d12",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 14,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -765,6 +1129,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["urban-combat", "post-awakening", "guild-ops"],
 	},
 	{
 		id: "gaze-of-petrification",
@@ -775,12 +1142,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Mirrors the flow of causality. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -801,8 +1169,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d12 thunder",
 			range: "120 feet",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "thunder",
+				mode: "melee",
+				resolution: "ability_check",
+				modifier: "Strength",
+				damage: "2d12",
+				damage_type: "thunder",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 18,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -810,6 +1196,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["survival", "post-awakening"],
 	},
 	{
 		id: "telepathy",
@@ -820,7 +1209,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -846,8 +1235,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "4d8 psychic",
 			range: "20-foot radius burst",
+			type: "awakening",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "psychic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "4d8",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 11,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -855,6 +1262,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["urban-combat", "guild-ops", "hunter-bureau"],
 	},
 	{
 		id: "invisibility",
@@ -865,12 +1275,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Dissolves the laws of physics. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -891,8 +1302,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "3d6 acid",
 			range: "120 feet",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "acid",
+				mode: "ranged",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "acid",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 10,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -900,6 +1329,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["guild-ops", "ancient-power"],
 	},
 	{
 		id: "divine-intervention",
@@ -910,7 +1342,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -936,8 +1368,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 acid",
 			range: "20-foot radius burst",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "acid",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "2d10",
+				damage_type: "acid",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -945,6 +1395,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["black-market", "urban-combat"],
 	},
 	{
 		id: "angelic-wings",
@@ -955,12 +1408,14 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Leaves a faint mark on the soul visible to Monarchs and entities of comparable power.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Warps the certainty of outcomes. A whisper from the edge of oblivion.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -981,8 +1436,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d10 radiant",
 			range: "20-foot radius burst",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "radiant",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Sense",
+				damage: "3d10",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 15,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -990,6 +1463,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["monarch-era", "gate-zone", "mana-overflow"],
 	},
 	{
 		id: "holy-aura",
@@ -1000,7 +1476,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1026,8 +1502,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "3d6 lightning",
 			range: "Touch",
+			type: "innate",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 11,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1035,6 +1529,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["survival", "black-market"],
 	},
 	{
 		id: "avatar-of-battle",
@@ -1045,7 +1542,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1071,8 +1568,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d10 cold",
 			range: "30-foot cone",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "cold",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d10",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 20,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1080,6 +1595,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["system-glitch", "hunter-bureau", "ancient-power"],
 	},
 	{
 		id: "arcane-ascension",
@@ -1090,7 +1608,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1116,8 +1634,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d12 cold",
 			range: "20-foot radius burst",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "cold",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 15,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1125,6 +1661,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["gate-zone", "hunter-bureau", "experimental"],
 	},
 	{
 		id: "void-collapse",
@@ -1135,7 +1674,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1161,8 +1700,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "4d8 psychic",
 			range: "Touch",
+			type: "class",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "psychic",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 18,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1170,6 +1727,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["modern-warfare", "classified", "hunter-bureau"],
 	},
 	{
 		id: "chronos-shift",
@@ -1180,7 +1740,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1206,8 +1766,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "4d6 necrotic",
 			range: "30-foot cone",
+			type: "divine",
+			frequency: "1/short rest",
+			action: "1 action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "spell_attack",
+				modifier: "Intelligence",
+				damage: "4d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 20,
+				success: "Half damage",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1215,6 +1793,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["experimental", "modern-warfare"],
 	},
 	{
 		id: "mana-burn",
@@ -1225,7 +1806,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1251,8 +1832,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d10 poison",
 			range: "60 feet",
+			type: "awakening",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "poison",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "2d10",
+				damage_type: "poison",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1260,6 +1859,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["elite-tier", "mana-overflow"],
 	},
 	{
 		id: "obsidian-carapace",
@@ -1270,7 +1872,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1296,8 +1898,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "3d8 necrotic",
 			range: "Sight",
+			type: "monstrous",
+			frequency: "3/long rest",
+			action: "1 action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "necrotic",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "3d8",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 20,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1305,6 +1925,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["urban-combat", "hunter-bureau"],
 	},
 	{
 		id: "soul-rend",
@@ -1315,12 +1938,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Mirrors the chains of mortality. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1341,8 +1965,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d12 thunder",
 			range: "Self",
+			type: "innate",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "thunder",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "thunder",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1350,6 +1992,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["elite-tier", "monarch-era"],
 	},
 	{
 		id: "aegis-of-light",
@@ -1360,12 +2005,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Inverts the remnants of a dead world. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1386,8 +2032,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "6d6 acid",
 			range: "120 feet",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "acid",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Sense",
+				damage: "6d6",
+				damage_type: "acid",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 10,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1395,6 +2059,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["dimensional-bleed", "shadow-domain", "rift-energy"],
 	},
 	{
 		id: "phantom-barrage",
@@ -1405,7 +2072,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1431,8 +2098,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d10 psychic",
 			range: "60-foot line",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "psychic",
+				mode: "ranged",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1440,6 +2125,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["gate-zone", "experimental"],
 	},
 	{
 		id: "venom-blood",
@@ -1450,7 +2138,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1476,8 +2164,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d8 force",
 			range: "Touch",
+			type: "awakening",
+			frequency: "3/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "3d8",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 12,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1485,6 +2191,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["mana-overflow", "dimensional-bleed"],
 	},
 	{
 		id: "absolute-zero",
@@ -1495,12 +2204,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Erases the laws of physics. The final equation in a war without end.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1521,8 +2231,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d8 poison",
 			range: "60-foot line",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "poison",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 16,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1530,6 +2258,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["guild-ops", "system-glitch"],
 	},
 	{
 		id: "kinetic-absorption",
@@ -1540,7 +2271,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1566,8 +2297,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "3d8 psychic",
 			range: "120 feet",
+			type: "class",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "psychic",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d8",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 21,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1575,6 +2324,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["black-market", "dimensional-bleed"],
 	},
 	{
 		id: "infernal-forge",
@@ -1585,7 +2337,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1611,8 +2363,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "3d6 lightning",
 			range: "120 feet",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "spell_attack",
+				modifier: "Sense",
+				damage: "3d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 11,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1620,6 +2390,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["dimensional-bleed", "classified"],
 	},
 	{
 		id: "celestial-judgment",
@@ -1630,7 +2403,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1656,8 +2429,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "4d8 fire",
 			range: "20-foot radius burst",
+			type: "monstrous",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "fire",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 11,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1665,6 +2456,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["survival", "modern-warfare", "dungeon-core"],
 	},
 	{
 		id: "mind-control",
@@ -1675,7 +2469,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1701,8 +2495,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "4d8 psychic",
 			range: "Touch",
+			type: "innate",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "psychic",
+				mode: "self",
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "4d8",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 21,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1710,6 +2522,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["gate-zone", "mana-overflow", "classified"],
 	},
 	{
 		id: "warp-strike",
@@ -1720,7 +2535,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1746,8 +2561,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "2d12 poison",
 			range: "20-foot radius burst",
+			type: "awakening",
+			frequency: "3/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "poison",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1755,6 +2588,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["modern-warfare", "system-glitch", "post-awakening"],
 	},
 	{
 		id: "life-transfer",
@@ -1765,12 +2601,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Absorbs the architect's design. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1791,8 +2628,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d10 force",
 			range: "20-foot radius burst",
+			type: "class",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "force",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 15,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1800,6 +2655,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["dimensional-bleed", "gate-zone", "experimental"],
 	},
 	{
 		id: "gravity-crush",
@@ -1810,12 +2668,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Condemns the chains of mortality. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1836,8 +2695,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d12 poison",
 			range: "60 feet",
+			type: "awakening",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "poison",
+				mode: "ranged",
+				resolution: "spell_attack",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "poison",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1845,6 +2722,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["rift-energy", "dungeon-core"],
 	},
 	{
 		id: "echo-clone",
@@ -1855,7 +2735,8 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1881,8 +2762,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "3d10 poison",
 			range: "Self",
+			type: "monstrous",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "poison",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "3d10",
+				damage_type: "poison",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 10,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1890,6 +2789,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["dimensional-bleed", "experimental", "black-market"],
 	},
 	{
 		id: "storm-call",
@@ -1900,7 +2802,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1926,8 +2828,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "6d6 radiant",
 			range: "Touch",
+			type: "divine",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "radiant",
+				mode: "aura",
+				resolution: "spell_attack",
+				modifier: "Sense",
+				damage: "6d6",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 19,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1935,6 +2855,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["guild-ops", "black-market", "experimental"],
 	},
 	{
 		id: "blight-touch",
@@ -1945,12 +2868,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Corrodes the architecture of the soul. A whisper from the edge of oblivion.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1971,8 +2895,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "6d6 psychic",
 			range: "30-foot cone",
+			type: "class",
+			frequency: "3/long rest",
+			action: "1 action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "psychic",
+				mode: "ranged",
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "6d6",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 21,
+				success: "Half damage",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -1980,6 +2922,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["dimensional-bleed", "gate-zone"],
 	},
 	{
 		id: "starfall",
@@ -1990,12 +2935,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Devours the silence between heartbeats. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2016,8 +2962,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "5d6 cold",
 			range: "60-foot line",
+			type: "class",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "cold",
+				mode: "self",
+				resolution: "spell_attack",
+				modifier: "Agility",
+				damage: "5d6",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 10,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2025,6 +2989,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["post-awakening", "hunter-bureau", "experimental"],
 	},
 	{
 		id: "reality-glitch",
@@ -2035,12 +3002,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Annihilates the laws of physics. A reminder that the System has no mercy.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2061,8 +3029,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "3d6 radiant",
 			range: "30-foot cone",
+			type: "divine",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 12,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2070,6 +3056,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["monarch-era", "dimensional-bleed"],
 	},
 	{
 		id: "solar-flare",
@@ -2080,7 +3069,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2106,8 +3095,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "6d6 radiant",
 			range: "Sight",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "6d6",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 20,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2115,6 +3122,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["elite-tier", "gate-zone", "post-awakening"],
 	},
 	{
 		id: "void-singularity",
@@ -2125,12 +3135,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Eclipses the chains of mortality. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2151,8 +3162,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d12 cold",
 			range: "60-foot line",
+			type: "awakening",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "cold",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "2d12",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 19,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2160,6 +3189,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["classified", "gate-zone"],
 	},
 	{
 		id: "aeon-shield",
@@ -2170,12 +3202,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Mirrors the concept of distance. The final equation in a war without end.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2196,8 +3229,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "4d6 thunder",
 			range: "60 feet",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "thunder",
+				mode: "aura",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "4d6",
+				damage_type: "thunder",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 21,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2205,6 +3256,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["modern-warfare", "experimental", "classified"],
 	},
 	{
 		id: "nebula-drift",
@@ -2215,7 +3269,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2241,8 +3295,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "6d6 fire",
 			range: "20-foot radius burst",
+			type: "class",
+			frequency: "At will",
+			action: "1 action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "fire",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "6d6",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 14,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2250,6 +3322,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["shadow-domain", "post-awakening", "experimental"],
 	},
 	{
 		id: "gravity-well",
@@ -2260,7 +3335,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2286,8 +3361,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d6 necrotic",
 			range: "30-foot cone",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "necrotic",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2295,6 +3388,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["post-awakening", "experimental"],
 	},
 	{
 		id: "quantum-entanglement",
@@ -2305,12 +3401,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Crushes the concept of distance. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2331,8 +3428,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "4d6 lightning",
 			range: "20-foot radius burst",
+			type: "divine",
+			frequency: "2/short rest",
+			action: "1 action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "Half damage",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2340,6 +3455,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["monarch-era", "black-market", "experimental"],
 	},
 	{
 		id: "supernova-blast",
@@ -2350,7 +3468,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2376,8 +3494,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d6 force",
 			range: "Self",
+			type: "innate",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "force",
+				mode: "aura",
+				resolution: "spell_attack",
+				modifier: "Presence",
+				damage: "3d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2385,6 +3521,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["hunter-bureau", "urban-combat"],
 	},
 	{
 		id: "nanite-swarm",
@@ -2395,12 +3534,14 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Inverts the flow of causality. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2421,8 +3562,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d12 acid",
 			range: "60-foot line",
+			type: "divine",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "acid",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "acid",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 21,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2430,6 +3589,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["hunter-bureau", "system-glitch"],
 	},
 	{
 		id: "titan-strength",
@@ -2440,7 +3602,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2466,8 +3628,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "4d6 force",
 			range: "Touch",
+			type: "class",
+			frequency: "2/short rest",
+			action: "1 action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "4d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 17,
+				success: "Half damage",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2475,6 +3655,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["guild-ops", "survival"],
 	},
 	{
 		id: "echoes-of-the-past",
@@ -2485,12 +3668,14 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Overrides the threshold of human potential. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2511,8 +3696,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "5d6 force",
 			range: "60-foot line",
+			type: "divine",
+			frequency: "Proficiency/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Intelligence",
+				damage: "5d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 20,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2520,6 +3723,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["dungeon-core", "urban-combat"],
 	},
 	{
 		id: "glacier-prison",
@@ -2530,7 +3736,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2556,8 +3762,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "6d6 psychic",
 			range: "Touch",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "psychic",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "6d6",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 11,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2565,6 +3789,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["forbidden", "guild-ops", "experimental"],
 	},
 	{
 		id: "bio-luminescence",
@@ -2575,7 +3802,8 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2601,8 +3829,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "3d6 lightning",
 			range: "60 feet",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "lightning",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Sense",
+				damage: "3d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 17,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2610,6 +3856,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["rift-energy", "dungeon-core"],
 	},
 	{
 		id: "neuro-spike",
@@ -2620,7 +3869,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2646,8 +3895,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d8 fire",
 			range: "Sight",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "fire",
+				mode: "self",
+				resolution: "ability_check",
+				modifier: "Intelligence",
+				damage: "3d8",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 12,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2655,6 +3922,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["forbidden", "dungeon-core"],
 	},
 	{
 		id: "plasma-whip",
@@ -2665,7 +3935,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2691,8 +3961,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d10 lightning",
 			range: "Sight",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "lightning",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Intelligence",
+				damage: "2d10",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2700,6 +3988,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["urban-combat", "classified"],
 	},
 	{
 		id: "spectral-blade",
@@ -2710,7 +4001,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2736,8 +4027,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "3d6 acid",
 			range: "20-foot radius burst",
+			type: "monstrous",
+			frequency: "1/short rest",
+			action: "1 action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "acid",
+				mode: "ranged",
+				resolution: "ability_check",
+				modifier: "Strength",
+				damage: "3d6",
+				damage_type: "acid",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2745,6 +4054,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["modern-warfare", "urban-combat"],
 	},
 	{
 		id: "dimensional-rift",
@@ -2755,12 +4067,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Annihilates the flow of causality. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2781,8 +4094,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d12 radiant",
 			range: "30-foot cone",
+			type: "class",
+			frequency: "At will",
+			action: "1 action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "radiant",
+				mode: "ranged",
+				resolution: "automatic",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2790,6 +4121,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["rift-energy", "classified"],
 	},
 	{
 		id: "soul-binding",
@@ -2800,7 +4134,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2826,8 +4160,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "3d6 thunder",
 			range: "Self",
+			type: "monstrous",
+			frequency: "Proficiency/long rest",
+			action: "1 action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "thunder",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Strength",
+				damage: "3d6",
+				damage_type: "thunder",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 14,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2835,6 +4187,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["monarch-era", "experimental"],
 	},
 	{
 		id: "entropy-field",
@@ -2845,7 +4200,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2871,8 +4226,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "3d10 thunder",
 			range: "30-foot cone",
+			type: "innate",
+			frequency: "At will",
+			action: "1 action",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "thunder",
+				mode: "ranged",
+				resolution: "saving_throw",
+				modifier: "Presence",
+				damage: "3d10",
+				damage_type: "thunder",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 13,
+				success: "Partial effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2880,6 +4253,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["rift-energy", "ancient-power", "dungeon-core"],
 	},
 	{
 		id: "celestial-communion",
@@ -2890,12 +4266,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Unravels the threshold of human potential. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2916,8 +4293,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "4d8 fire",
 			range: "30-foot cone",
+			type: "innate",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "fire",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2925,6 +4320,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["dimensional-bleed", "modern-warfare"],
 	},
 	{
 		id: "shadow-puppetry",
@@ -2935,7 +4333,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2961,8 +4359,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "4d8 lightning",
 			range: "Touch",
+			type: "class",
+			frequency: "3/long rest",
+			action: "1 bonus action",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "lightning",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "Presence",
+				damage: "4d8",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "Half damage",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -2970,6 +4386,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["urban-combat", "ancient-power", "modern-warfare"],
 	},
 	{
 		id: "thermal-vent",
@@ -2980,7 +4399,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3006,8 +4425,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "5d6 poison",
 			range: "120 feet",
+			type: "class",
+			frequency: "1/short rest",
+			action: "1 action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "poison",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Strength",
+				damage: "5d6",
+				damage_type: "poison",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 11,
+				success: "No effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3015,6 +4452,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["elite-tier", "hunter-bureau", "dungeon-core"],
 	},
 	{
 		id: "gravity-leap",
@@ -3025,7 +4465,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3051,8 +4491,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d12 necrotic",
 			range: "60-foot line",
+			type: "divine",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "necrotic",
+				mode: "aura",
+				resolution: "spell_attack",
+				modifier: "Presence",
+				damage: "2d12",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 17,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3060,6 +4518,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["post-awakening", "rift-energy", "shadow-domain"],
 	},
 	{
 		id: "obsidian-wall",
@@ -3070,7 +4531,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3096,8 +4557,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 cold",
 			range: "60-foot line",
+			type: "innate",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "cold",
+				mode: "aura",
+				resolution: "automatic",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 19,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3105,6 +4584,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["elite-tier", "experimental"],
 	},
 	{
 		id: "star-fire-lance",
@@ -3115,7 +4597,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3141,8 +4623,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "3d8 acid",
 			range: "60 feet",
+			type: "awakening",
+			frequency: "At will",
+			action: "1 bonus action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "acid",
+				mode: "ranged",
+				resolution: "saving_throw",
+				modifier: "Intelligence",
+				damage: "3d8",
+				damage_type: "acid",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "Half damage",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3150,6 +4650,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["forbidden", "post-awakening"],
 	},
 	{
 		id: "vortex-shield",
@@ -3160,7 +4663,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3186,8 +4689,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "4d8 cold",
 			range: "Sight",
+			type: "innate",
+			frequency: "At will",
+			action: "1 action",
+			lattice_interaction: "Direct mana circuit injection",
+			attack: {
+				type: "cold",
+				mode: "self",
+				resolution: "saving_throw",
+				modifier: "Agility",
+				damage: "4d8",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 15,
+				success: "Partial effect",
+				failure: "Full effect and stunned 1 round",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3195,6 +4716,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["mana-overflow", "hunter-bureau", "rift-energy"],
 	},
 	{
 		id: "seraph-call",
@@ -3205,7 +4729,7 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3231,8 +4755,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d10 radiant",
 			range: "Self",
+			type: "monstrous",
+			frequency: "Proficiency/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Resonance amplification",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "ability_check",
+				modifier: "Presence",
+				damage: "3d10",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3240,6 +4782,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["post-awakening", "dimensional-bleed", "system-glitch"],
 	},
 	{
 		id: "necrotic-tether",
@@ -3250,7 +4795,8 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -3276,8 +4822,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d12 poison",
 			range: "20-foot radius burst",
+			type: "innate",
+			frequency: "2/short rest",
+			action: "1 action",
+			lattice_interaction: "Standard channel",
+			attack: {
+				type: "poison",
+				mode: "aura",
+				resolution: "spell_attack",
+				modifier: "Agility",
+				damage: "2d12",
+				damage_type: "poison",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 10,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3285,6 +4849,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["dimensional-bleed", "system-glitch", "dungeon-core"],
 	},
 	{
 		id: "glacial-fortress",
@@ -3295,12 +4862,14 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Corrodes the last defense of the unprepared. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -3321,8 +4890,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "4d8 psychic",
 			range: "60 feet",
+			type: "monstrous",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			lattice_interaction: "Ambient mana absorption",
+			attack: {
+				type: "psychic",
+				mode: "melee",
+				resolution: "saving_throw",
+				modifier: "Intelligence",
+				damage: "4d8",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 19,
+				success: "No effect",
+				failure: "Full effect and prone",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3330,6 +4917,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["ancient-power", "shadow-domain"],
 	},
 	{
 		id: "reality-shear",
@@ -3340,12 +4930,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Reclaims the certainty of outcomes. A beautiful catastrophe measured in milliseconds.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -3366,8 +4957,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d10 necrotic",
 			range: "Sight",
+			type: "awakening",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "necrotic",
+				mode: "melee",
+				resolution: "spell_attack",
+				modifier: "Strength",
+				damage: "3d10",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Presence",
+				dc: 19,
+				success: "Partial effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3375,6 +4984,9 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["mana-overflow", "hunter-bureau", "monarch-era"],
 	},
 	{
 		id: "omega-pulse",
@@ -3385,12 +4997,13 @@ export const powers: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Binds the architect's design. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -3411,8 +5024,26 @@ export const powers: CompendiumPower[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d10 force",
 			range: "120 feet",
+			type: "awakening",
+			frequency: "2/short rest",
+			action: "1 action",
+			lattice_interaction: "Lattice bypass — raw power",
+			attack: {
+				type: "force",
+				mode: "aura",
+				resolution: "saving_throw",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "3/long rest",
@@ -3420,5 +5051,8 @@ export const powers: CompendiumPower[] = [
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["monarch-era", "experimental", "survival"],
 	},
 ];

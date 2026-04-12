@@ -554,18 +554,21 @@ const VTTEnhanced = () => {
 		storageKey: "vtt-tokens",
 	});
 
+	const isStandalone = !campaignId;
 	const { data: members } = useCampaignMembers(campaignId || "") as {
 		data?: CampaignMemberWithCharacter[];
 	};
 	const { data: role } = useCampaignRole(campaignId || "");
 	const [simulatePlayerView, setSimulatePlayerView] = useState(false);
-	const isActualWarden = role === "rift" || role === "co-warden";
+	// In standalone mode (no campaign), default to warden
+	const isActualWarden =
+		isStandalone || role === "warden" || role === "co-warden";
 	const isWarden = isActualWarden && !simulatePlayerView;
 
-	// --- Multi-user realtime ---
+	// --- Multi-user realtime (disabled in standalone mode) ---
 	const vttRealtime = useVTTRealtime({
 		campaignId: campaignId || "",
-		sessionId,
+		sessionId: isStandalone ? null : sessionId,
 		isWarden,
 	});
 	const effectiveVisibleLayers: Record<number, boolean> = useMemo(
@@ -712,8 +715,7 @@ const VTTEnhanced = () => {
 	}, [scenes.length]);
 
 	useEffect(() => {
-		if (!campaignId || isStateLoading || (hydratedRef.current && isWarden))
-			return;
+		if (isStateLoading || (hydratedRef.current && isWarden)) return;
 		const legacyState =
 			readLocalToolState<LegacyVTTScenesState>(legacyStorageKey);
 		const legacyScenes = Array.isArray(legacyState?.scenes)
@@ -751,7 +753,6 @@ const VTTEnhanced = () => {
 			setIsHydrated(true);
 		}
 	}, [
-		campaignId,
 		createNewScene,
 		isWarden,
 		isStateLoading,
@@ -762,13 +763,13 @@ const VTTEnhanced = () => {
 	]);
 
 	useEffect(() => {
-		if (!campaignId || isStateLoading || currentScene) return;
+		if (isStateLoading || currentScene) return;
 		if (scenes.length > 0) {
 			setCurrentScene(scenes[0]);
 			return;
 		}
 		createNewScene();
-	}, [campaignId, createNewScene, currentScene, isStateLoading, scenes]);
+	}, [createNewScene, currentScene, isStateLoading, scenes]);
 
 	useEffect(() => {
 		if (!campaignId || !isHydrated || !isWarden) return;

@@ -221,7 +221,7 @@ export function VttPixiStage({
 
 	useEffect(() => {
 		const app = appRef.current;
-		if (!app) return;
+		if (!app?.renderer) return;
 		app.renderer.resize(
 			Math.max(1, Math.floor(worldSize.w)),
 			Math.max(1, Math.floor(worldSize.h)),

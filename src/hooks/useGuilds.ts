@@ -10,7 +10,7 @@ import { getLocalUserId } from "@/lib/guestStore";
 // Types
 // ============================================================================
 
-export interface Guild {
+interface Guild {
 	id: string;
 	name: string;
 	description: string | null;
@@ -24,7 +24,7 @@ export interface Guild {
 	updated_at: string;
 }
 
-export interface GuildMember {
+interface GuildMember {
 	id: string;
 	guild_id: string;
 	user_id: string | null;

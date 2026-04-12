@@ -24,7 +24,7 @@ import type {
 	CompendiumTechnique,
 } from "@/types/compendium";
 
-export interface TechniqueData extends CompendiumTechnique {}
+interface TechniqueData extends CompendiumTechnique {}
 
 export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 	const navigate = useNavigate();

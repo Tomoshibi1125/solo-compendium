@@ -1,4 +1,4 @@
-﻿// D-Rank Anomalies
+// D-Rank Anomalies
 // Generally equivalent to CR 1/8 to 1
 
 export const anomalies_d = [

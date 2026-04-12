@@ -86,15 +86,9 @@ import {
 import { toast } from "@/components/ui/sonner";
 import { ToastAction } from "@/components/ui/toast";
 import { VTTSandbox } from "@/components/vtt/VTTSandbox";
-import {
-	_ArchitecturalProof,
-	_RegistryWitness,
-	type ProtocolWiringLattice,
-	ProtocolWiringLatticeUsage,
-	SystemManifest,
-	useProtocolAudit,
-	verifyArchitecturalIntegrity,
-} from "@/components/warden-directives/WardenDirectiveMatrix";
+// WardenDirectiveMatrix imports are loaded lazily to avoid circular
+// dependency (WardenDirectiveMatrix imports WardenWiringHub at top level).
+import type { ProtocolWiringLattice } from "@/components/warden-directives/WardenDirectiveMatrix";
 import {
 	assetManifest,
 	createAssetManifest,
@@ -589,7 +583,12 @@ export const WardenWiringSeal = {
 			getFallback: () => import("@/data/compendium/staticDataProvider"),
 		},
 		rapier: { initRapier, getRapier },
-		lattice: { ProtocolWiringLatticeUsage },
+		lattice: {
+			load: () =>
+				import("@/components/warden-directives/WardenDirectiveMatrix").then(
+					(m) => m.ProtocolWiringLatticeUsage,
+				),
+		},
 	},
 	rules: {
 		abilityNames: ABILITY_NAMES,
@@ -1095,9 +1094,8 @@ export const MasterArchitecturalWitness = {
 	proofs: {
 		plugins: SUPPORTED_LEGACY_PLUGINS,
 		verify: verifyCoreDependencies,
-		registry: _RegistryWitness,
-		proof: _ArchitecturalProof,
-		integrity: verifyArchitecturalIntegrity,
+		loadMatrix: () =>
+			import("@/components/warden-directives/WardenDirectiveMatrix"),
 	},
 	/**
 	 * ZERO-LEGACY TYPE REIFICATION
@@ -1236,19 +1234,14 @@ export const MasterArchitecturalWitness = {
  * Component variant for Suspense-based injection
  */
 export function WardenWiringHub() {
-	const { verify, manifest } = useProtocolAudit();
-
-	// Virtual wiring proof - no runtime side effects in production
+	// Virtual wiring proof - no runtime side effects in production.
+	// All WardenDirectiveMatrix symbols are loaded lazily to avoid circular deps.
 	const _proof = {
 		seal: WardenWiringSeal,
 		witness: MasterArchitecturalWitness,
 		audit: {
-			verify,
-			manifest,
-			authoritativeManifest: SystemManifest,
-			legacy: _RegistryWitness,
-			proof: _ArchitecturalProof,
-			integrity: verifyArchitecturalIntegrity,
+			load: () =>
+				import("@/components/warden-directives/WardenDirectiveMatrix"),
 			typeProof: {} as ProtocolWiringLattice,
 		},
 	};

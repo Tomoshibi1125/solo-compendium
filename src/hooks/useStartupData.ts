@@ -3,6 +3,7 @@ import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
+import type { ArtifactAbility, CompendiumProperties } from "@/types/compendium";
 
 // Define the interface to match Compendium.tsx exactly
 export interface CompendiumEntry {
@@ -52,14 +53,8 @@ export interface CompendiumEntry {
 	flavor?: string | null;
 	higher_levels?: string | null;
 	atHigherLevels?: string | null;
-	properties?:
-		| string[]
-		| import("@/types/compendium").CompendiumProperties
-		| null;
-	abilities?: Record<
-		string,
-		import("@/types/compendium").ArtifactAbility
-	> | null;
+	properties?: string[] | CompendiumProperties | null;
+	abilities?: Record<string, ArtifactAbility> | null;
 	school?: string | null;
 	title?: string | null;
 	theme?: string | null;

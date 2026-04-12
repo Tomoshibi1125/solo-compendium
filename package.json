@@ -162,7 +162,6 @@
 	},
 	"knip": {
 		"entry": [
-			"src/main.tsx",
 			"src/entry-source-book.tsx",
 			"supabase/functions/*/index.ts",
 			"scripts/**/*.{ts,js,mjs}",

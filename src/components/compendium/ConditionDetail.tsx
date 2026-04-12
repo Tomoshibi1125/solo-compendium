@@ -4,7 +4,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumCondition } from "@/types/compendium";
 
-export interface ConditionData extends CompendiumCondition {}
+interface ConditionData extends CompendiumCondition {}
 
 export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);

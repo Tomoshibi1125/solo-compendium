@@ -1,6 +1,9 @@
-import type { CompendiumTechnique } from "../../types/compendium";
+// Techniques Compendium - Authoritative System Ascendant Content
+// Combat maneuvers and martial techniques
+// Based on System Ascendant mechanics
+// Deduplicated and Lore-Enriched
 
-export const techniques: CompendiumTechnique[] = [
+export const techniques = [
 	{
 		id: "umbral-strike",
 		name: "Umbral Strike",
@@ -10,7 +13,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -35,8 +39,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 force",
 			range: "Self",
+			type: "Unarmed Strike",
+			frequency: "At will",
+			action: "1 bonus action",
+			ability: "Vitality",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 9,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -44,6 +67,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["survival", "guild-ops"],
 	},
 	{
 		id: "dragon-fist",
@@ -54,12 +80,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Inverts the last defense of the unprepared. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -79,8 +106,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d6+3 lightning",
 			range: "30-foot cone",
+			type: "Counter Stance",
+			frequency: "At will",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "lightning",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d6+3",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 8,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -88,6 +134,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["dungeon-core", "forbidden"],
 	},
 	{
 		id: "void-slash",
@@ -98,7 +147,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -123,8 +173,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "2d10 lightning",
 			range: "Self",
+			type: "Breath Control",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 9,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -132,6 +201,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["experimental", "dungeon-core", "guild-ops"],
 	},
 	{
 		id: "multi-shot",
@@ -142,7 +214,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -167,8 +239,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d8 slashing",
 			range: "60 feet",
+			type: "Assassination Art",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			ability: "Agility",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "slashing",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "1d8",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -176,6 +267,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["experimental", "hunter-bureau"],
 	},
 	{
 		id: "whirlwind-strike",
@@ -186,7 +280,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -211,8 +305,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 piercing",
 			range: "Sight",
+			type: "Breath Control",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			ability: "Agility",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "piercing",
+				mode: "both",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "piercing",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 14,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -220,6 +333,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["black-market", "guild-ops"],
 	},
 	{
 		id: "umbral-dodge",
@@ -230,7 +346,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -255,8 +371,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d6 fire",
 			range: "30-foot cone",
+			type: "Breath Control",
+			frequency: "1/long rest",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "fire",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "2d6",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 11,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -264,6 +399,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["ancient-power", "elite-tier"],
 	},
 	{
 		id: "iron-wall",
@@ -274,7 +412,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -299,8 +437,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d10 fire",
 			range: "60 feet",
+			type: "Movement Technique",
+			frequency: "Proficiency bonus/long rest",
+			action: "Movement action",
+			ability: "Intelligence",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "fire",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 10,
+				success: "Half damage",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -308,6 +465,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["modern-warfare", "classified"],
 	},
 	{
 		id: "counter-strike",
@@ -318,12 +478,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Commands the last defense of the unprepared. A reminder that the System has no mercy.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -343,8 +504,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "1d12 lightning",
 			range: "Self",
+			type: "Assassination Art",
+			frequency: "At will",
+			action: "Part of an attack",
+			ability: "Strength",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "1d12",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 12,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -352,6 +532,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["ancient-power", "mana-overflow"],
 	},
 	{
 		id: "deflect-arrows",
@@ -362,12 +545,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Binds the architect's design. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -387,8 +571,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d8 piercing",
 			range: "Touch",
+			type: "Movement Technique",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 action",
+			ability: "Vitality",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "piercing",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "piercing",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -396,6 +599,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["modern-warfare", "experimental"],
 	},
 	{
 		id: "guardian-stance",
@@ -406,7 +612,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -431,8 +637,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d6+3 fire",
 			range: "Sight",
+			type: "Ranged Discipline",
+			frequency: "1/long rest",
+			action: "1 action",
+			ability: "Agility",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "fire",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "2d6+3",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 8,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -440,6 +665,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["system-glitch", "post-awakening", "rift-energy"],
 	},
 	{
 		id: "wind-dash",
@@ -450,7 +678,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -475,8 +704,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d10 radiant",
 			range: "60-foot line",
+			type: "Defensive Form",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 reaction",
+			ability: "Intelligence",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "weapon_attack",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -484,6 +732,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["ancient-power", "hunter-bureau", "classified"],
 	},
 	{
 		id: "wall-run",
@@ -494,7 +745,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -519,8 +770,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "1d8 radiant",
 			range: "Self",
+			type: "Ranged Discipline",
+			frequency: "1/short rest",
+			action: "1 reaction",
+			ability: "Vitality",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "radiant",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Agility",
+				damage: "1d8",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 10,
+				success: "No effect",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -528,6 +798,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["rift-energy", "modern-warfare", "survival"],
 	},
 	{
 		id: "phase-walk",
@@ -538,7 +811,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -563,8 +836,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "1d8+4 bludgeoning",
 			range: "60 feet",
+			type: "Assassination Art",
+			frequency: "2/short rest",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "bludgeoning",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "1d8+4",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 8,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -572,6 +864,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["forbidden", "urban-combat"],
 	},
 	{
 		id: "leap-strike",
@@ -582,7 +877,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -607,8 +902,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "2d10 force",
 			range: "Touch",
+			type: "Assassination Art",
+			frequency: "1/short rest",
+			action: "Movement action",
+			ability: "Agility",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "weapon_attack",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 9,
+				success: "Pushed 5 feet",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -616,6 +930,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["forbidden", "black-market"],
 	},
 	{
 		id: "umbral-bind",
@@ -626,7 +943,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -651,8 +968,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "1d8 slashing",
 			range: "Sight",
+			type: "Defensive Form",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 action",
+			ability: "Vitality",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "slashing",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "1d8",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -660,6 +996,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["forbidden", "dungeon-core"],
 	},
 	{
 		id: "disarming-strike",
@@ -670,7 +1009,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -695,8 +1034,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d8 lightning",
 			range: "120 feet",
+			type: "Defensive Form",
+			frequency: "2/short rest",
+			action: "Movement action",
+			ability: "Strength",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "lightning",
+				mode: "both",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "1d8",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 10,
+				success: "No effect",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -704,6 +1062,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["modern-warfare", "rift-energy", "forbidden"],
 	},
 	{
 		id: "trip-attack",
@@ -714,7 +1075,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -739,8 +1100,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d10 bludgeoning",
 			range: "60-foot line",
+			type: "Defensive Form",
+			frequency: "3/long rest",
+			action: "Movement action",
+			ability: "Strength",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "bludgeoning",
+				mode: "melee",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "1d10",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "Half damage",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -748,6 +1128,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["post-awakening", "hunter-bureau"],
 	},
 	{
 		id: "grappling-strike",
@@ -758,7 +1141,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -783,8 +1166,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "2d8 force",
 			range: "Sight",
+			type: "Defensive Form",
+			frequency: "1/short rest",
+			action: "1 bonus action",
+			ability: "Strength",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "force",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "2d8",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -792,6 +1194,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["modern-warfare", "guild-ops"],
 	},
 	{
 		id: "intimidating-presence",
@@ -802,12 +1207,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Overrides the threshold of human potential. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -827,8 +1233,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d8+4 lightning",
 			range: "60 feet",
+			type: "Ranged Discipline",
+			frequency: "At will",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "lightning",
+				mode: "melee",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "1d8+4",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 8,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -836,6 +1261,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["mana-overflow", "hunter-bureau", "shadow-domain"],
 	},
 	{
 		id: "umbral-termination",
@@ -846,7 +1274,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Corrupts nearby healing magic by 10%, causing heals to occasionally deal damage instead.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -871,8 +1300,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d8+4 force",
 			range: "120 feet",
+			type: "Counter Stance",
+			frequency: "At will",
+			action: "Movement action",
+			ability: "Agility",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "1d8+4",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 11,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -880,6 +1328,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		theme_tags: ["survival", "forbidden"],
 	},
 	{
 		id: "dragon-slaying-blow",
@@ -890,7 +1341,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -915,8 +1366,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "1d8+4 slashing",
 			range: "Sight",
+			type: "Counter Stance",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			ability: "Agility",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "slashing",
+				mode: "both",
+				resolution: "thrown_attack",
+				modifier: "Agility",
+				damage: "1d8+4",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 14,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -924,6 +1394,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["dimensional-bleed", "hunter-bureau"],
 	},
 	{
 		id: "void-annihilation",
@@ -934,7 +1407,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -959,8 +1432,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d10 lightning",
 			range: "Self",
+			type: "Movement Technique",
+			frequency: "1/long rest",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "lightning",
+				mode: "melee",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -968,6 +1460,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["hunter-bureau", "ancient-power", "elite-tier"],
 	},
 	{
 		id: "divine-execution",
@@ -978,12 +1473,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Dissolves the fabric of reality. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1003,8 +1499,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d8 slashing",
 			range: "20-foot radius burst",
+			type: "Ranged Discipline",
+			frequency: "3/long rest",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "slashing",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 13,
+				success: "Half damage",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1012,6 +1527,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["monarch-era", "rift-energy"],
 	},
 	{
 		id: "arcane-overload",
@@ -1022,12 +1540,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Unravels the illusion of safety. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1047,8 +1566,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "1d8 force",
 			range: "Touch",
+			type: "Assassination Art",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "1d8",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 9,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1056,6 +1594,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["post-awakening", "gate-zone"],
 	},
 	{
 		id: "meteor-strike",
@@ -1066,7 +1607,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1091,8 +1632,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d10 radiant",
 			range: "60-foot line",
+			type: "Movement Technique",
+			frequency: "Proficiency bonus/long rest",
+			action: "Movement action",
+			ability: "Intelligence",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "radiant",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 11,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1100,6 +1660,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		theme_tags: ["hunter-bureau", "monarch-era", "urban-combat"],
 	},
 	{
 		id: "phantom-step",
@@ -1110,12 +1673,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Warps the chains of mortality. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1135,8 +1699,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d8 fire",
 			range: "Touch",
+			type: "Defensive Form",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 action",
+			ability: "Vitality",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "fire",
+				mode: "melee",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "1d8",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 10,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1144,6 +1727,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["rift-energy", "dimensional-bleed"],
 	},
 	{
 		id: "thousand-cuts",
@@ -1154,12 +1740,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Fractures the fabric of reality. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1179,8 +1766,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "3d6 slashing",
 			range: "30-foot cone",
+			type: "Weapon Art",
+			frequency: "2/short rest",
+			action: "1 action",
+			ability: "Vitality",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "slashing",
+				mode: "melee",
+				resolution: "thrown_attack",
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "No effect",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1188,6 +1794,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["urban-combat", "mana-overflow", "ancient-power"],
 	},
 	{
 		id: "absolute-defense",
@@ -1198,7 +1807,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1223,8 +1832,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 necrotic",
 			range: "20-foot radius burst",
+			type: "Movement Technique",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 bonus action",
+			ability: "Strength",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1232,6 +1860,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["system-glitch", "elite-tier", "shadow-domain"],
 	},
 	{
 		id: "gravity-bind",
@@ -1242,12 +1873,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Annihilates the fabric of reality. The line between Hunter and monster.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1267,8 +1899,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d6+3 slashing",
 			range: "Self",
+			type: "Weapon Art",
+			frequency: "3/long rest",
+			action: "Movement action",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "slashing",
+				mode: "both",
+				resolution: "thrown_attack",
+				modifier: "Agility",
+				damage: "2d6+3",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 8,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1276,6 +1927,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["urban-combat", "survival", "dimensional-bleed"],
 	},
 	{
 		id: "sonic-boom",
@@ -1286,7 +1940,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1311,8 +1965,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "1d8+4 cold",
 			range: "60 feet",
+			type: "Defensive Form",
+			frequency: "2/short rest",
+			action: "Movement action",
+			ability: "Vitality",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "cold",
+				mode: "melee",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "1d8+4",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1320,6 +1993,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["guild-ops", "dimensional-bleed", "ancient-power"],
 	},
 	{
 		id: "infinite-riposte",
@@ -1330,7 +2006,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1355,8 +2031,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d10 bludgeoning",
 			range: "Self",
+			type: "Defensive Form",
+			frequency: "3/long rest",
+			action: "Part of an attack",
+			ability: "Strength",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "bludgeoning",
+				mode: "both",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 13,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1364,6 +2059,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["forbidden", "elite-tier"],
 	},
 	{
 		id: "dragon-ascent",
@@ -1374,7 +2072,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1399,8 +2097,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "3d6 piercing",
 			range: "60 feet",
+			type: "Defensive Form",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 reaction",
+			ability: "Intelligence",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "piercing",
+				mode: "both",
+				resolution: "thrown_attack",
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "piercing",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 14,
+				success: "Pushed 5 feet",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1408,6 +2125,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["dimensional-bleed", "monarch-era"],
 	},
 	{
 		id: "nerve-strike",
@@ -1418,12 +2138,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Condemns the flow of causality. A whisper from the edge of oblivion.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1443,8 +2164,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d10 cold",
 			range: "60 feet",
+			type: "Weapon Art",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 reaction",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "cold",
+				mode: "melee",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 12,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1452,6 +2192,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["black-market", "gate-zone", "hunter-bureau"],
 	},
 	{
 		id: "bladeshim-storm",
@@ -1462,7 +2205,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1487,8 +2230,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d8+4 radiant",
 			range: "20-foot radius burst",
+			type: "Counter Stance",
+			frequency: "1/long rest",
+			action: "1 reaction",
+			ability: "Intelligence",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "1d8+4",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 8,
+				success: "Half damage",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1496,6 +2258,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["guild-ops", "black-market", "experimental"],
 	},
 	{
 		id: "immovable-object",
@@ -1506,7 +2271,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1531,8 +2296,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d8 slashing",
 			range: "Sight",
+			type: "Movement Technique",
+			frequency: "At will",
+			action: "Movement action",
+			ability: "Agility",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "slashing",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "1d8",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 10,
+				success: "Pushed 5 feet",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1540,6 +2324,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["shadow-domain", "urban-combat"],
 	},
 	{
 		id: "echo-step",
@@ -1550,7 +2337,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1575,8 +2362,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d8 piercing",
 			range: "30-foot cone",
+			type: "Unarmed Strike",
+			frequency: "1/long rest",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "piercing",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "piercing",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 8,
+				success: "No effect",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1584,6 +2390,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		theme_tags: ["ancient-power", "experimental"],
 	},
 	{
 		id: "vortex-pull",
@@ -1594,7 +2403,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1619,8 +2429,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "2d8 slashing",
 			range: "Sight",
+			type: "Defensive Form",
+			frequency: "At will",
+			action: "Part of an attack",
+			ability: "Strength",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "slashing",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 9,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1628,6 +2457,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		theme_tags: ["rift-energy", "post-awakening"],
 	},
 	{
 		id: "blood-tithe",
@@ -1638,12 +2470,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Crushes the architecture of the soul. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1663,8 +2496,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d8 radiant",
 			range: "60-foot line",
+			type: "Unarmed Strike",
+			frequency: "Proficiency bonus/long rest",
+			action: "Part of an attack",
+			ability: "Strength",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "radiant",
+				mode: "both",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1672,6 +2524,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["monarch-era", "gate-zone"],
 	},
 	{
 		id: "quaking-stomp",
@@ -1682,7 +2537,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1707,8 +2563,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d10 piercing",
 			range: "120 feet",
+			type: "Weapon Art",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			ability: "Intelligence",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "piercing",
+				mode: "ranged",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "piercing",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1716,6 +2591,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["shadow-domain", "dimensional-bleed"],
 	},
 	{
 		id: "blade-dance",
@@ -1726,7 +2604,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1751,8 +2629,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d6 fire",
 			range: "30-foot cone",
+			type: "Counter Stance",
+			frequency: "3/long rest",
+			action: "Movement action",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "fire",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Agility",
+				damage: "2d6",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1760,6 +2657,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["survival", "forbidden"],
 	},
 	{
 		id: "grand-slam",
@@ -1770,7 +2670,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1795,8 +2695,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d8 slashing",
 			range: "60-foot line",
+			type: "Defensive Form",
+			frequency: "1/long rest",
+			action: "1 action",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "slashing",
+				mode: "both",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 11,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1804,6 +2723,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		theme_tags: ["survival", "classified"],
 	},
 	{
 		id: "sky-piercer",
@@ -1814,7 +2736,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1839,8 +2761,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d6+3 force",
 			range: "Self",
+			type: "Defensive Form",
+			frequency: "At will",
+			action: "1 action",
+			ability: "Agility",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "2d6+3",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 14,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1848,6 +2789,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["modern-warfare", "dimensional-bleed"],
 	},
 	{
 		id: "unbreakable-will",
@@ -1858,7 +2802,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1883,8 +2827,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d8 piercing",
 			range: "60-foot line",
+			type: "Movement Technique",
+			frequency: "1/short rest",
+			action: "Part of an attack",
+			ability: "Strength",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "piercing",
+				mode: "both",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "2d8",
+				damage_type: "piercing",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 11,
+				success: "Half damage",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1892,6 +2855,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["elite-tier", "dimensional-bleed"],
 	},
 	{
 		id: "finishing-blast",
@@ -1902,12 +2868,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Dissolves the remnants of a dead world. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -1927,8 +2894,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "3d6 radiant",
 			range: "Sight",
+			type: "Defensive Form",
+			frequency: "At will",
+			action: "Movement action",
+			ability: "Vitality",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "3d6",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 9,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1936,6 +2922,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["system-glitch", "survival"],
 	},
 	{
 		id: "dimensional-step",
@@ -1946,7 +2935,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -1971,8 +2960,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "1d12 force",
 			range: "Touch",
+			type: "Counter Stance",
+			frequency: "1/short rest",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "1d12",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 17,
+				success: "Half damage",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -1980,6 +2988,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["dungeon-core", "survival"],
 	},
 	{
 		id: "execute",
@@ -1990,7 +3001,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2015,8 +3026,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d8 radiant",
 			range: "60 feet",
+			type: "Ranged Discipline",
+			frequency: "3/long rest",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "radiant",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "1d8",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 12,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2024,6 +3054,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["urban-combat", "shadow-domain", "dungeon-core"],
 	},
 	{
 		id: "iron-wall-stance",
@@ -2034,7 +3067,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2059,8 +3092,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 cold",
 			range: "20-foot radius burst",
+			type: "Weapon Art",
+			frequency: "2/short rest",
+			action: "1 reaction",
+			ability: "Intelligence",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "cold",
+				mode: "melee",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2068,6 +3120,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["gate-zone", "forbidden", "hunter-bureau"],
 	},
 	{
 		id: "whirlwind-slash",
@@ -2078,12 +3133,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Ignites the remnants of a dead world. A testament to what Hunters have become.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2103,8 +3159,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "1d8 radiant",
 			range: "Sight",
+			type: "Ranged Discipline",
+			frequency: "1/long rest",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "radiant",
+				mode: "melee",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "1d8",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2112,6 +3187,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["monarch-era", "urban-combat"],
 	},
 	{
 		id: "zen-archery",
@@ -2122,7 +3200,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2147,8 +3225,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d12 necrotic",
 			range: "60-foot line",
+			type: "Breath Control",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 bonus action",
+			ability: "Vitality",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "necrotic",
+				mode: "both",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "1d12",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 13,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2156,6 +3253,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["post-awakening", "rift-energy", "dungeon-core"],
 	},
 	{
 		id: "disarming-flourish",
@@ -2166,7 +3266,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2191,8 +3291,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d12 lightning",
 			range: "Touch",
+			type: "Assassination Art",
+			frequency: "3/long rest",
+			action: "Movement action",
+			ability: "Agility",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "lightning",
+				mode: "melee",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "1d12",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Pushed 5 feet",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2200,6 +3319,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["dimensional-bleed", "rift-energy", "ancient-power"],
 	},
 	{
 		id: "fist-of-the-north-star",
@@ -2210,12 +3332,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "When words fail, this speaks.",
+		flavor:
+			"Dissolves the last defense of the unprepared. Proof that some things cannot be survived.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2235,8 +3358,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "3d6 lightning",
 			range: "30-foot cone",
+			type: "Breath Control",
+			frequency: "1/short rest",
+			action: "Movement action",
+			ability: "Strength",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "3d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 14,
+				success: "No effect",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2244,6 +3386,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["guild-ops", "modern-warfare", "gate-zone"],
 	},
 	{
 		id: "dragons-tail-sweep",
@@ -2254,12 +3399,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Condemns the flow of causality. The final equation in a war without end.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2279,8 +3425,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d6 cold",
 			range: "60 feet",
+			type: "Assassination Art",
+			frequency: "At will",
+			action: "Part of an attack",
+			ability: "Strength",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "cold",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Agility",
+				damage: "2d6",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2288,6 +3453,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["ancient-power", "system-glitch", "black-market"],
 	},
 	{
 		id: "heavenly-piercing-arrow",
@@ -2298,12 +3466,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Absorbs the fabric of reality. The final equation in a war without end.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2323,8 +3492,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d8 slashing",
 			range: "Self",
+			type: "Ranged Discipline",
+			frequency: "1/short rest",
+			action: "Movement action",
+			ability: "Agility",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "slashing",
+				mode: "ranged",
+				resolution: "weapon_attack",
+				modifier: "Agility",
+				damage: "1d8",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 14,
+				success: "Pushed 5 feet",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2332,6 +3520,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		theme_tags: ["dimensional-bleed", "gate-zone", "monarch-era"],
 	},
 	{
 		id: "mirror-shield-parry",
@@ -2342,7 +3533,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2367,8 +3559,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d6+3 necrotic",
 			range: "120 feet",
+			type: "Ranged Discipline",
+			frequency: "At will",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "necrotic",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d6+3",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 17,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2376,6 +3587,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		theme_tags: ["rift-energy", "monarch-era", "dimensional-bleed"],
 	},
 	{
 		id: "vipers-kiss",
@@ -2386,7 +3600,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2411,8 +3626,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "3d6 slashing",
 			range: "Touch",
+			type: "Defensive Form",
+			frequency: "2/short rest",
+			action: "Part of an attack",
+			ability: "Intelligence",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "slashing",
+				mode: "both",
+				resolution: "weapon_attack",
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 10,
+				success: "Pushed 5 feet",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2420,6 +3654,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["modern-warfare", "rift-energy"],
 	},
 	{
 		id: "mountain-breaker",
@@ -2430,7 +3667,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2455,8 +3692,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "3d8",
+			damage_profile: "2d8 radiant",
 			range: "60-foot line",
+			type: "Assassination Art",
+			frequency: "1/long rest",
+			action: "1 reaction",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "radiant",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "Pushed 5 feet",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2464,6 +3720,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["dimensional-bleed", "gate-zone", "elite-tier"],
 	},
 	{
 		id: "blade-storm",
@@ -2474,12 +3733,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Commands the boundary between life and death. A whisper from the edge of oblivion.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2499,8 +3759,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 bludgeoning",
 			range: "60 feet",
+			type: "Weapon Art",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "bludgeoning",
+				mode: "ranged",
+				resolution: "weapon_attack",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 12,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2508,6 +3787,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		theme_tags: ["dungeon-core", "ancient-power"],
 	},
 	{
 		id: "guardians-rebuke",
@@ -2518,7 +3800,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2543,8 +3826,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d10 slashing",
 			range: "60 feet",
+			type: "Breath Control",
+			frequency: "At will",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "slashing",
+				mode: "melee",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "1d10",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 12,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2552,6 +3854,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["post-awakening", "dimensional-bleed"],
 	},
 	{
 		id: "gravity-stomp",
@@ -2562,7 +3867,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2587,8 +3892,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d12 force",
 			range: "120 feet",
+			type: "Counter Stance",
+			frequency: "3/long rest",
+			action: "Movement action",
+			ability: "Intelligence",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "1d12",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 16,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2596,6 +3920,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["gate-zone", "post-awakening"],
 	},
 	{
 		id: "eagles-eye",
@@ -2606,7 +3933,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2631,8 +3958,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d8 radiant",
 			range: "60-foot line",
+			type: "Unarmed Strike",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			ability: "Vitality",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "radiant",
+				mode: "both",
+				resolution: "grapple_check",
+				modifier: "Agility",
+				damage: "2d8",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 8,
+				success: "No effect",
+				failure: "Full damage and prone",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2640,6 +3986,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		theme_tags: ["modern-warfare", "dimensional-bleed", "elite-tier"],
 	},
 	{
 		id: "dragon-claw-rend",
@@ -2650,12 +3999,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Mirrors the silence between heartbeats. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2675,8 +4025,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d8 cold",
 			range: "120 feet",
+			type: "Counter Stance",
+			frequency: "1/long rest",
+			action: "1 reaction",
+			ability: "Vitality",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "cold",
+				mode: "melee",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "2d8",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2684,6 +4053,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["elite-tier", "system-glitch"],
 	},
 	{
 		id: "temporal-feint",
@@ -2694,7 +4066,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2719,8 +4091,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "2d10 bludgeoning",
 			range: "60-foot line",
+			type: "Assassination Art",
+			frequency: "2/short rest",
+			action: "Movement action",
+			ability: "Vitality",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "bludgeoning",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "2d10",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 9,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2728,6 +4119,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["rift-energy", "ancient-power"],
 	},
 	{
 		id: "titan-slam",
@@ -2738,7 +4132,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2763,8 +4157,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "3d6 bludgeoning",
 			range: "Touch",
+			type: "Breath Control",
+			frequency: "At will",
+			action: "Part of an attack",
+			ability: "Vitality",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "bludgeoning",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 16,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2772,6 +4185,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		theme_tags: ["hunter-bureau", "ancient-power"],
 	},
 	{
 		id: "ice-path-skate",
@@ -2782,7 +4198,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2807,8 +4223,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "1d10 force",
 			range: "Sight",
+			type: "Weapon Art",
+			frequency: "1/long rest",
+			action: "1 action",
+			ability: "Vitality",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "force",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "1d10",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 8,
+				success: "No effect",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2816,6 +4251,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["hunter-bureau", "gate-zone"],
 	},
 	{
 		id: "venom-spray-technique",
@@ -2826,12 +4264,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Crushes the boundary between life and death. The breaking point of all resistance.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -2851,8 +4290,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "1d12 bludgeoning",
 			range: "30-foot cone",
+			type: "Weapon Art",
+			frequency: "2/short rest",
+			action: "Part of an attack",
+			ability: "Strength",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "bludgeoning",
+				mode: "melee",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "1d12",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 14,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2860,6 +4318,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["mana-overflow", "dimensional-bleed"],
 	},
 	{
 		id: "blood-boil-strike",
@@ -2870,7 +4331,8 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse:
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2895,8 +4357,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d12",
+			damage_profile: "1d10 slashing",
 			range: "Touch",
+			type: "Movement Technique",
+			frequency: "At will",
+			action: "1 action",
+			ability: "Vitality",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "slashing",
+				mode: "melee",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "1d10",
+				damage_type: "slashing",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Pushed 5 feet",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2904,6 +4385,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["dimensional-bleed", "black-market"],
 	},
 	{
 		id: "ancient-hebrew-strings-step-technique",
@@ -2914,7 +4398,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2939,8 +4423,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "2d10 cold",
 			range: "30-foot cone",
+			type: "Movement Technique",
+			frequency: "2/short rest",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction: "Raw muscle enhanced by System buffs",
+			attack: {
+				type: "cold",
+				mode: "both",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "2d10",
+				damage_type: "cold",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 12,
+				success: "Half damage",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2948,6 +4451,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		theme_tags: ["urban-combat", "black-market", "dimensional-bleed"],
 	},
 	{
 		id: "infinity-slash",
@@ -2958,7 +4464,7 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
@@ -2983,8 +4489,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "1d12 bludgeoning",
 			range: "Sight",
+			type: "Weapon Art",
+			frequency: "3/long rest",
+			action: "1 reaction",
+			ability: "Intelligence",
+			lattice_interaction: "Physical reinforcement via mana flow",
+			attack: {
+				type: "bludgeoning",
+				mode: "ranged",
+				resolution: "thrown_attack",
+				modifier: "Strength",
+				damage: "1d12",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "No effect",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -2992,6 +4517,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		theme_tags: ["dimensional-bleed", "post-awakening"],
 	},
 	{
 		id: "bone-breaker-lock",
@@ -3002,12 +4530,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Fractures the architecture of the soul. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -3027,8 +4556,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "5d4",
+			damage_profile: "1d8+4 radiant",
 			range: "Self",
+			type: "Movement Technique",
+			frequency: "At will",
+			action: "Part of an attack",
+			ability: "Intelligence",
+			lattice_interaction: "Body-lattice synchronization",
+			attack: {
+				type: "radiant",
+				mode: "both",
+				resolution: "unarmed_strike",
+				modifier: "Agility",
+				damage: "1d8+4",
+				damage_type: "radiant",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 12,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -3036,6 +4584,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		theme_tags: ["gate-zone", "monarch-era", "system-glitch"],
 	},
 	{
 		id: "gale-force-kick",
@@ -3046,12 +4597,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "Elegant. Lethal. Absolute.",
+		flavor:
+			"Corrodes the threshold of human potential. Evolution compressed into a single, violent instant.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -3071,8 +4623,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "2d10 + 4",
+			damage_profile: "2d6+3 lightning",
 			range: "120 feet",
+			type: "Movement Technique",
+			frequency: "Proficiency bonus/long rest",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction: "Ki-channeled strike",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "unarmed_strike",
+				modifier: "Strength",
+				damage: "2d6+3",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "Half damage",
+				failure: "Full damage",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -3080,6 +4651,9 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		theme_tags: ["mana-overflow", "classified"],
 	},
 	{
 		id: "void-touch-manual",
@@ -3090,12 +4664,13 @@ export const techniques: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history: "Recorded in the darkest archives of the Hunter Guilds.",
-			curse: "Strains the core of those who channel it too frequently.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Known only to an elite few.",
 			prior_owners: ["A dead Guild Master", "The First Ascendant"],
 		},
-		flavor: "The world itself shudders.",
+		flavor:
+			"Fractures the threshold of human potential. A reminder that the System has no mercy.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -3115,8 +4690,27 @@ export const techniques: CompendiumTechnique[] = [
 		mechanics: {
 			action_type: "Action",
 			duration: "Instant",
-			damage_profile: "4d6",
+			damage_profile: "1d12 lightning",
 			range: "30-foot cone",
+			type: "Movement Technique",
+			frequency: "At will",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction: "Weapon-mana fusion technique",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "grapple_check",
+				modifier: "Strength",
+				damage: "1d12",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 10,
+				success: "No effect",
+				failure: "Disarmed and staggered",
+			},
 		},
 		limitations: {
 			uses: "Unlimited as long as Stamina permits",
@@ -3124,5 +4718,8 @@ export const techniques: CompendiumTechnique[] = [
 			requires_attunement: false,
 			conditions: ["Requires a melee weapon"],
 		},
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		theme_tags: ["shadow-domain", "experimental", "ancient-power"],
 	},
 ];

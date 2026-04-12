@@ -2,7 +2,7 @@ import { Crown, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface RoleBadgeProps {
-	role: "rift" | "co-warden" | "ascendant" | null;
+	role: "warden" | "co-warden" | "ascendant" | null;
 	variant?: "default" | "compact" | "inline";
 	className?: string;
 }
@@ -16,19 +16,22 @@ export function RoleBadge({
 
 	const variants = {
 		default: {
-			rift: "px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/30 gap-2",
+			warden:
+				"px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/30 gap-2",
 			"co-warden":
 				"px-3 py-1.5 rounded-lg bg-accent/10 border border-accent/30 gap-2",
 			ascendant: "px-3 py-1.5 rounded-lg bg-muted border border-border gap-2",
 		},
 		compact: {
-			rift: "px-2 py-0.5 rounded-md bg-primary/10 border border-primary/30 gap-1.5",
+			warden:
+				"px-2 py-0.5 rounded-md bg-primary/10 border border-primary/30 gap-1.5",
 			"co-warden":
 				"px-2 py-0.5 rounded-md bg-accent/10 border border-accent/30 gap-1.5",
 			ascendant: "px-2 py-0.5 rounded-md bg-muted border border-border gap-1.5",
 		},
 		inline: {
-			rift: "px-2 py-0.5 rounded text-xs bg-primary/10 border border-primary/20 gap-1",
+			warden:
+				"px-2 py-0.5 rounded text-xs bg-primary/10 border border-primary/20 gap-1",
 			"co-warden":
 				"px-2 py-0.5 rounded text-xs bg-accent/10 border border-accent/20 gap-1",
 			ascendant:
@@ -49,9 +52,9 @@ export function RoleBadge({
 	};
 
 	const roleConfig = {
-		rift: {
+		warden: {
 			icon: Crown,
-			text: variant === "inline" ? "RIFT" : "PROTOCOL WARDEN (RIFT)",
+			text: variant === "inline" ? "WARDEN" : "PROTOCOL WARDEN",
 			color: "text-primary",
 		},
 		"co-warden": {

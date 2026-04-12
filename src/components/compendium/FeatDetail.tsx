@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumFeat } from "@/types/compendium";
 
-export interface FeatData extends CompendiumFeat {}
+interface FeatData extends CompendiumFeat {}
 
 export const FeatDetail = ({ data }: { data: FeatData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);

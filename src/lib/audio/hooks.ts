@@ -274,12 +274,13 @@ export function useAudioLibrary() {
 
 				if (savedTracks) {
 					try {
-						const parsed = JSON.parse(savedTracks);
-						const existingIds = new Set(
-							parsed.map((t: { id: string }) => t.id),
+						const parsed = JSON.parse(savedTracks) as StoredAudioTrack[];
+						// Always include ALL default tracks first, then user-uploaded tracks
+						const defaultIds = new Set(DEFAULT_TRACKS.map((t) => t.id));
+						const userTracks = (Array.isArray(parsed) ? parsed : []).filter(
+							(t: { id: string }) => !defaultIds.has(t.id),
 						);
-						const toAdd = DEFAULT_TRACKS.filter((t) => !existingIds.has(t.id));
-						setTracks([...toAdd, ...parsed]);
+						setTracks([...DEFAULT_TRACKS, ...userTracks]);
 					} catch (parseError) {
 						logger.warn("Failed to parse saved tracks:", parseError);
 						setTracks([...DEFAULT_TRACKS]);

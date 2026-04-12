@@ -61,7 +61,11 @@ export default function AcousticResonanceManager() {
 		void saveNow(debouncedPayload);
 	}, [debouncedPayload, isLoading, saveNow]);
 
-	const { getTracksByCategory, getTracksByMood } = useAudioLibrary();
+	const {
+		tracks: libraryTracks,
+		getTracksByCategory,
+		getTracksByMood,
+	} = useAudioLibrary();
 	const {
 		loadTrack,
 		play,
@@ -171,9 +175,11 @@ export default function AcousticResonanceManager() {
 							<div className="flex items-center gap-2">
 								<Music className="w-5 h-5 text-blue-500" />
 								<div>
-									<div className="text-2xl font-bold">Audio Library</div>
+									<div className="text-2xl font-bold">
+										{libraryTracks.length}
+									</div>
 									<AscendantText className="block text-sm text-muted-foreground">
-										Manage your sound collection
+										Total Tracks
 									</AscendantText>
 								</div>
 							</div>
@@ -184,9 +190,11 @@ export default function AcousticResonanceManager() {
 							<div className="flex items-center gap-2">
 								<PlayCircle className="w-5 h-5 text-green-500" />
 								<div>
-									<div className="text-2xl font-bold">Player</div>
+									<div className="text-2xl font-bold">
+										{getTracksByCategory("combat").length}
+									</div>
 									<AscendantText className="block text-sm text-muted-foreground">
-										Control playback
+										Combat Tracks
 									</AscendantText>
 								</div>
 							</div>
@@ -197,9 +205,12 @@ export default function AcousticResonanceManager() {
 							<div className="flex items-center gap-2">
 								<Volume2 className="w-5 h-5 text-purple-500" />
 								<div>
-									<div className="text-2xl font-bold">Settings</div>
+									<div className="text-2xl font-bold">
+										{getTracksByCategory("ambient").length +
+											getTracksByCategory("exploration").length}
+									</div>
 									<AscendantText className="block text-sm text-muted-foreground">
-										Audio preferences
+										Ambient / Exploration
 									</AscendantText>
 								</div>
 							</div>
@@ -210,9 +221,11 @@ export default function AcousticResonanceManager() {
 							<div className="flex items-center gap-2">
 								<Sparkles className="w-5 h-5 text-orange-500" />
 								<div>
-									<div className="text-2xl font-bold">AI Analysis</div>
+									<div className="text-2xl font-bold">
+										{getTracksByCategory("social").length}
+									</div>
 									<AscendantText className="block text-sm text-muted-foreground">
-										Tag and categorize audio
+										Social / Town
 									</AscendantText>
 								</div>
 							</div>

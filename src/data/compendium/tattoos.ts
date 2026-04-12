@@ -19,48 +19,98 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Commands the certainty of outcomes. The line between Hunter and monster.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			frequency: "1/long rest",
+			duration: "Permanent (passive)",
+			action: "Focus your intent on the glyph",
 			ability: "Vitality",
-			damage_profile: "1d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Neck tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "acid",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Starfall Residue, DC 16 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
+			primary:
+				"Deal 1d8 acid damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: [
+				"Deal 1d8 acid damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d8 acid damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "acid aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive + 1 active/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Neck)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_2",
@@ -80,48 +130,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Devours the concept of distance. Proof that some things cannot be survived.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "Permanent (passive)",
+			action: "Channel mana through the ink circuits",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Spine tattoo slot",
+				"Occupies neck tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "necrotic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Phoenix Ash Emulsion, DC 11 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary: "You can see in magical darkness out to 60 feet.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "necrotic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive + 1 active/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Spine)",
+				"Requires tattoo attunement slot (neck)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_3",
@@ -141,48 +236,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Inverts the dimensional barrier. A testament to what Hunters have become.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "Permanent (passive)",
+			action: "Flex the tattooed muscle group",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Temple tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "lightning",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Mana-Crystal Pigment, DC 16 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "lightning aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive only",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Temple)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 5000,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_4",
@@ -202,48 +343,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Ignites the last defense of the unprepared. The breaking point of all resistance.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			frequency: "1/long rest",
+			duration: "1 minute",
+			action: "Channel mana through the ink circuits",
 			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Void Ink resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Chest tattoo slot",
+				"Occupies hands tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Void Ink, DC 14 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Chest)",
+				"Requires tattoo attunement slot (hands)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_5",
@@ -263,48 +450,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor: "Warps the laws of physics. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			frequency: "2/short rest",
+			duration: "10 minutes",
+			action: "Press your palm against the design",
 			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "2d4 fire",
+			lattice_interaction:
+				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Left Forearm tattoo slot",
+				"Occupies right leg tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "fire",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Phoenix Ash Emulsion, DC 10 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary: "Gain +2 to Vitality while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain +2 to Vitality while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Vitality while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "fire aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Proficiency/long rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Left Forearm)",
+				"Requires tattoo attunement slot (right leg)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 5000,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_6",
@@ -324,48 +556,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Purges the chains of mortality. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "2d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Passive",
+			duration: "1 minute",
+			action: "Speak the tattoo's true name",
+			ability: "Presence",
+			damage_profile: "1d10 force",
+			lattice_interaction:
+				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Around Eyes tattoo slot",
+				"Occupies left arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Storm Essence Distillate, DC 18 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Proficiency/long rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Around Eyes)",
+				"Requires tattoo attunement slot (left arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_7",
@@ -385,48 +662,98 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Mirrors the threshold of human potential. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "1 hour",
+			action: "Focus your intent on the glyph",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Ribs tattoo slot",
+				"Occupies hands tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Abyssal Ichor, DC 17 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
+			primary:
+				"Deal 1d6 force damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: [
+				"Deal 1d6 force damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d6 force damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "2/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Ribs)",
+				"Requires tattoo attunement slot (hands)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_8",
@@ -446,48 +773,97 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Erases the boundary between life and death. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "10 minutes",
+			action: "Speak the tattoo's true name",
+			ability: "Intelligence",
+			damage_profile: "1d10 psychic",
+			lattice_interaction:
+				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Legs tattoo slot",
+				"Occupies left leg tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "psychic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Storm Essence Distillate, DC 13 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary:
+				"Deal 2d4 psychic damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: [
+				"Deal 2d4 psychic damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 2d4 psychic damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "psychic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive + 1 active/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Legs)",
+				"Requires tattoo attunement slot (left leg)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_9",
@@ -507,48 +883,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Absorbs the threshold of human potential. The breaking point of all resistance.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			frequency: "2/short rest",
+			duration: "1 hour",
+			action: "Channel mana through the ink circuits",
 			ability: "Vitality",
-			damage_profile: "2d4",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Titan Marrow Blend resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Heart tattoo slot",
+				"Occupies left arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "cold",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Titan Marrow Blend, DC 18 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
+			primary: "Gain +2 to Sense while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Gain +2 to Sense while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Sense while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "cold aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive + 1 active/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Heart)",
+				"Requires tattoo attunement slot (left arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 5000,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_10",
@@ -568,48 +990,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Warps the dimensional barrier. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			duration: "10 minutes",
+			action: "Speak the tattoo's true name",
 			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "2d6 poison",
+			lattice_interaction:
+				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Forehead tattoo slot",
+				"Occupies right arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Phoenix Ash Emulsion, DC 21 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "poison aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Forehead)",
+				"Requires tattoo attunement slot (right arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_11",
@@ -629,48 +1096,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Dissolves the silence between heartbeats. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d8",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "10 minutes",
+			action: "Speak the tattoo's true name",
+			ability: "Presence",
+			damage_profile: "2d6 acid",
+			lattice_interaction:
+				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Throat tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "acid",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Shadowblood Tincture, DC 20 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "acid aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive only",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Throat)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_12",
@@ -690,48 +1202,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Rends the certainty of outcomes. A testament to what Hunters have become.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Passive",
+			duration: "10 minutes",
+			action: "Focus your intent on the glyph",
+			ability: "Presence",
+			damage_profile: "2d4 cold",
+			lattice_interaction:
+				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Palms tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "cold",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Starfall Residue, DC 21 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "cold aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Palms)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_13",
@@ -751,48 +1309,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Purges the concept of distance. Proof that some things cannot be survived.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "2d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Passive",
+			duration: "Permanent (passive)",
+			action: "Channel mana through the ink circuits",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Stomach tattoo slot",
+				"Occupies left arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "radiant",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 20 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "radiant aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Stomach)",
+				"Requires tattoo attunement slot (left arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_14",
@@ -812,48 +1416,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Erases the chains of mortality. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "1 hour",
+			action: "Channel mana through the ink circuits",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Feet tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "acid",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Storm Essence Distillate, DC 11 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "acid aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "2/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Feet)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_15",
@@ -874,47 +1524,98 @@ export const tattoos: CompendiumTattoo[] = [
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
 			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+				"The user becomes unable to dream, replaced by visions of the void between Gates.",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Purges the chains of mortality. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "Permanent (passive)",
+			action: "Press your palm against the design",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Throat tattoo slot",
+				"Occupies hands tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "acid",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Starfall Residue, DC 19 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary:
+				"Deal 2d4 acid damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: [
+				"Deal 2d4 acid damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 2d4 acid damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "acid aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive only",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Throat)",
+				"Requires tattoo attunement slot (hands)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_16",
@@ -935,47 +1636,94 @@ export const tattoos: CompendiumTattoo[] = [
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
 			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Corrodes the threshold of human potential. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "1 minute",
+			action: "Channel mana through the ink circuits",
+			ability: "Intelligence",
+			damage_profile: "1d8 fire",
+			lattice_interaction:
+				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Biceps tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "fire",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Starfall Residue, DC 18 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
+			primary: "Gain resistance to fire damage.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Gain resistance to fire damage."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain resistance to fire damage.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "fire aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive + 1 active/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Biceps)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_17",
@@ -995,48 +1743,96 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Eclipses the illusion of safety. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "Permanent (passive)",
+			action: "Speak the tattoo's true name",
+			ability: "Presence",
+			damage_profile: "2d4 necrotic",
+			lattice_interaction:
+				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Shoulders tattoo slot",
+				"Occupies spine tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "necrotic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Mana-Crystal Pigment, DC 12 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"Deal 1d6 necrotic damage to creatures that hit you with melee attacks.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: [
+				"Deal 1d6 necrotic damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d6 necrotic damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "necrotic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Proficiency/long rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Shoulders)",
+				"Requires tattoo attunement slot (spine)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_18",
@@ -1056,48 +1852,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Reclaims the illusion of safety. A testament to what Hunters have become.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Passive",
+			duration: "1 minute",
+			action: "Flex the tattooed muscle group",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Full Back tattoo slot",
+				"Occupies ribs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "thunder",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 14 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "thunder aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Proficiency/long rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Full Back)",
+				"Requires tattoo attunement slot (ribs)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_19",
@@ -1117,48 +1959,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Binds the silence between heartbeats. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "1 minute",
+			action: "Flex the tattooed muscle group",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Neck tattoo slot",
+				"Occupies left arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "cold",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Abyssal Ichor, DC 20 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary: "You can see in magical darkness out to 60 feet.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "cold aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Proficiency/long rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Neck)",
+				"Requires tattoo attunement slot (left arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_20",
@@ -1178,48 +2065,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Warps the architect's design. The breaking point of all resistance.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "1 minute",
+			action: "Press your palm against the design",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Luminite Extract resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Chest tattoo slot",
+				"Occupies hands tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "necrotic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Luminite Extract, DC 21 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary: "Gain +2 to Sense while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain +2 to Sense while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Sense while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "necrotic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Chest)",
+				"Requires tattoo attunement slot (hands)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 5000,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_21",
@@ -1239,48 +2172,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Crushes the architecture of the soul. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d12 + 6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "1 hour",
+			action: "Focus your intent on the glyph",
+			ability: "Intelligence",
+			damage_profile: "1d10 thunder",
+			lattice_interaction:
+				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Feet tattoo slot",
+				"Occupies ribs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "thunder",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Abyssal Ichor, DC 18 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "thunder aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive only",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Feet)",
+				"Requires tattoo attunement slot (ribs)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_22",
@@ -1300,48 +2279,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Inverts the boundary between life and death. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d8",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Passive",
+			duration: "10 minutes",
+			action: "Focus your intent on the glyph",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Collarbone tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "radiant",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Storm Essence Distillate, DC 15 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
+			primary: "Gain resistance to radiant damage.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Gain resistance to radiant damage."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain resistance to radiant damage.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "radiant aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive + 1 active/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Collarbone)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_23",
@@ -1361,48 +2386,97 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Ignites the laws of physics. The death of hesitation, made manifest.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			frequency: "Proficiency/long rest",
+			duration: "1 hour",
+			action: "Speak the tattoo's true name",
 			ability: "Vitality",
-			damage_profile: "2d4",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Shoulders tattoo slot",
+				"Occupies left arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "acid",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Shadowblood Tincture, DC 16 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
+			primary:
+				"Deal 1d6 acid damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: [
+				"Deal 1d6 acid damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d6 acid damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "acid aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Shoulders)",
+				"Requires tattoo attunement slot (left arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_24",
@@ -1422,48 +2496,98 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Reclaims the laws of physics. Proof that some things cannot be survived.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d10 + 2",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "10 minutes",
+			action: "Channel mana through the ink circuits",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Lungs tattoo slot",
+				"Occupies hands tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "psychic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Storm Essence Distillate, DC 12 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			primary:
+				"Deal 1d6 psychic damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: [
+				"Deal 1d6 psychic damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d6 psychic damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "psychic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Lungs)",
+				"Requires tattoo attunement slot (hands)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_25",
@@ -1483,48 +2607,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Corrodes the fabric of reality. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "2d8",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Passive",
+			duration: "1 minute",
+			action: "Flex the tattooed muscle group",
+			ability: "Intelligence",
+			damage_profile: "1d8 acid",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Temple tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "acid",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 14 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
+			primary: "Gain resistance to acid damage.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain resistance to acid damage."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain resistance to acid damage.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "acid aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Temple)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_26",
@@ -1544,48 +2714,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Rends the flow of causality. The breaking point of all resistance.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d10 + 2",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "10 minutes",
+			action: "Press your palm against the design",
+			ability: "Presence",
+			damage_profile: "1d8 poison",
+			lattice_interaction:
+				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Heart tattoo slot",
+				"Occupies left arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Phoenix Ash Emulsion, DC 12 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			primary: "Gain +2 to Strength while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain +2 to Strength while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Strength while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "poison aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Heart)",
+				"Requires tattoo attunement slot (left arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_27",
@@ -1605,48 +2821,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Silences the last defense of the unprepared. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "Permanent (passive)",
+			action: "Speak the tattoo's true name",
+			ability: "Presence",
+			damage_profile: "1d8 force",
+			lattice_interaction:
+				"Luminite Extract resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Forehead tattoo slot",
+				"Occupies face tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Luminite Extract, DC 21 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
+			primary: "Gain +2 to Vitality while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Gain +2 to Vitality while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Vitality while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive only",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Forehead)",
+				"Requires tattoo attunement slot (face)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_28",
@@ -1666,48 +2927,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Dissolves the remnants of a dead world. The death of hesitation, made manifest.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d12 + 6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "Permanent (passive)",
+			action: "Flex the tattooed muscle group",
+			ability: "Presence",
+			damage_profile: "1d8 necrotic",
+			lattice_interaction:
+				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Wrists tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "necrotic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Shadowblood Tincture, DC 14 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary: "You can see in magical darkness out to 60 feet.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "necrotic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Wrists)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_29",
@@ -1727,48 +3033,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Shatters the remnants of a dead world. A testament to what Hunters have become.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d12 + 6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "1 hour",
+			action: "Flex the tattooed muscle group",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Palms tattoo slot",
+				"Occupies hands tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Mana-Crystal Pigment, DC 11 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			primary: "Gain +2 to Intelligence while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Gain +2 to Intelligence while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Intelligence while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Palms)",
+				"Requires tattoo attunement slot (hands)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_30",
@@ -1788,48 +3140,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor: "Rends the laws of physics. The line between Hunter and monster.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			duration: "Permanent (passive)",
+			action: "Flex the tattooed muscle group",
 			ability: "Vitality",
-			damage_profile: "2d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Chest tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "acid",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Mana-Crystal Pigment, DC 19 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
+			primary: "Gain +2 to Sense while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain +2 to Sense while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Sense while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "acid aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Chest)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_31",
@@ -1850,47 +3247,93 @@ export const tattoos: CompendiumTattoo[] = [
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
 			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Purges the dimensional barrier. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d12 + 6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "1 hour",
+			action: "Speak the tattoo's true name",
+			ability: "Intelligence",
+			damage_profile: "1d10 poison",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Spine tattoo slot",
+				"Occupies left arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 20 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			primary: "Gain resistance to poison damage.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Gain resistance to poison damage."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain resistance to poison damage.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "poison aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "2/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Spine)",
+				"Requires tattoo attunement slot (left arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_32",
@@ -1910,48 +3353,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Warps the remnants of a dead world. A testament to what Hunters have become.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			duration: "10 minutes",
+			action: "Channel mana through the ink circuits",
 			ability: "Vitality",
-			damage_profile: "3d12 + 6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Void Ink resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Full Torso tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "fire",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Void Ink, DC 19 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "fire aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Full Torso)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 5000,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_33",
@@ -1971,48 +3460,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Annihilates the threshold of human potential. The death of hesitation, made manifest.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			frequency: "1/long rest",
+			duration: "1 minute",
+			action: "Speak the tattoo's true name",
 			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "1d6 lightning",
+			lattice_interaction:
+				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Forearms tattoo slot",
+				"Occupies right arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "lightning",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Storm Essence Distillate, DC 19 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
+			primary: "Gain +2 to Intelligence while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain +2 to Intelligence while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Intelligence while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "lightning aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Forearms)",
+				"Requires tattoo attunement slot (right arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_34",
@@ -2033,47 +3567,93 @@ export const tattoos: CompendiumTattoo[] = [
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
 			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Inverts the last defense of the unprepared. A beautiful catastrophe measured in milliseconds.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "1 hour",
+			action: "Press your palm against the design",
+			ability: "Intelligence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Knuckles tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Mana-Crystal Pigment, DC 20 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary: "Gain +2 to Presence while the tattoo is active.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain +2 to Presence while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Presence while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Knuckles)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_35",
@@ -2093,48 +3673,98 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Shatters the remnants of a dead world. The breaking point of all resistance.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "Permanent (passive)",
+			action: "Focus your intent on the glyph",
+			ability: "Presence",
+			damage_profile: "2d4 poison",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Back tattoo slot",
+				"Occupies ribs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
+			attack: {
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 17 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
+			primary:
+				"Deal 1d8 poison damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: [
+				"Deal 1d8 poison damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d8 poison damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "poison aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive + 1 active/short rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Back)",
+				"Requires tattoo attunement slot (ribs)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_36",
@@ -2154,48 +3784,92 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Rends the illusion of safety. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "2d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "10 minutes",
+			action: "Speak the tattoo's true name",
+			ability: "Presence",
+			damage_profile: "2d4 force",
+			lattice_interaction:
+				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Thigh tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Starfall Residue, DC 12 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary: "You can see in magical darkness out to 60 feet.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Proficiency/long rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Thigh)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_37",
@@ -2215,48 +3889,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Mirrors the flow of causality. The breaking point of all resistance.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d8",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "1 minute",
+			action: "Channel mana through the ink circuits",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Chest tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "thunder",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Shadowblood Tincture, DC 14 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
+			primary: "Gain +2 to Intelligence while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Gain +2 to Intelligence while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Intelligence while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "thunder aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive only",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Chest)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_38",
@@ -2276,48 +3996,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Annihilates the threshold of human potential. A testament to what Hunters have become.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "1 minute",
+			action: "Channel mana through the ink circuits",
+			ability: "Intelligence",
+			damage_profile: "2d4 poison",
+			lattice_interaction:
+				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Calves tattoo slot",
+				"Occupies ribs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "poison",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Shadowblood Tincture, DC 10 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "poison aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "2/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Calves)",
+				"Requires tattoo attunement slot (ribs)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_39",
@@ -2337,48 +4103,98 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Mirrors the illusion of safety. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "2d8",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "1 hour",
+			action: "Press your palm against the design",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Titan Marrow Blend resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Full Body tattoo slot",
+				"Occupies neck tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "thunder",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Titan Marrow Blend, DC 10 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
+			primary:
+				"Deal 1d6 thunder damage to creatures that hit you with melee attacks.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: [
+				"Deal 1d6 thunder damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d6 thunder damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "thunder aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive only",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Full Body)",
+				"Requires tattoo attunement slot (neck)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_40",
@@ -2398,48 +4214,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Eclipses the architect's design. A testament to what Hunters have become.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d10 + 2",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "10 minutes",
+			action: "Channel mana through the ink circuits",
+			ability: "Intelligence",
+			damage_profile: "1d10 psychic",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Palms tattoo slot",
+				"Occupies hands tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "psychic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 19 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			primary: "Gain resistance to psychic damage.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Gain resistance to psychic damage."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain resistance to psychic damage.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "psychic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "2/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Palms)",
+				"Requires tattoo attunement slot (hands)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_41",
@@ -2460,47 +4322,93 @@ export const tattoos: CompendiumTattoo[] = [
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
 			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Erases the boundary between life and death. A whisper from the edge of oblivion.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Speak the tattoo's true name",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d8",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Passive",
+			duration: "1 hour",
+			action: "Speak the tattoo's true name",
+			ability: "Presence",
+			damage_profile: "2d6 force",
+			lattice_interaction:
+				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Right Arm tattoo slot",
+				"Occupies spine tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "force",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Phoenix Ash Emulsion, DC 16 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description: "Speak the tattoo's true name to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "force aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Passive only",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Right Arm)",
+				"Requires tattoo attunement slot (spine)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_42",
@@ -2520,48 +4428,97 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Corrodes the architecture of the soul. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d8",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "2/short rest",
+			duration: "1 minute",
+			action: "Flex the tattooed muscle group",
+			ability: "Intelligence",
+			damage_profile: "2d6 radiant",
+			lattice_interaction:
+				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Shoulder Blades tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "radiant",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Starfall Residue, DC 18 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary:
+				"Deal 1d6 radiant damage to creatures that hit you with melee attacks.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: [
+				"Deal 1d6 radiant damage to creatures that hit you with melee attacks.",
+			],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect:
+				"Deal 1d6 radiant damage to creatures that hit you with melee attacks.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "radiant aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive + 1 active/short rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Shoulder Blades)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_43",
@@ -2581,48 +4538,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Eclipses the threshold of human potential. The breaking point of all resistance.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			duration: "1 hour",
+			action: "Press your palm against the design",
 			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "1d8 fire",
+			lattice_interaction:
+				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Chest tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "fire",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Shadowblood Tincture, DC 12 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary: "You can see in magical darkness out to 60 feet.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "fire aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Chest)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
 			cost: 500,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_44",
@@ -2642,48 +4644,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Devours the dimensional barrier. Evolution compressed into a single, violent instant.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "2d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "1 hour",
+			action: "Focus your intent on the glyph",
+			ability: "Presence",
+			damage_profile: "1d8 necrotic",
+			lattice_interaction:
+				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Legs tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "necrotic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Abyssal Ichor, DC 18 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "necrotic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Legs)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_45",
@@ -2703,48 +4751,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Condemns the fabric of reality. The breaking point of all resistance.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d12",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "1 hour",
+			action: "Press your palm against the design",
+			ability: "Intelligence",
+			damage_profile: "1d8 thunder",
+			lattice_interaction:
+				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Heart tattoo slot",
+				"Occupies ribs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
+			attack: {
+				type: "thunder",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Mana-Crystal Pigment, DC 20 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "thunder aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "2/short rest",
+			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Heart)",
+				"Requires tattoo attunement slot (ribs)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_46",
@@ -2764,48 +4858,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Sanctifies the silence between heartbeats. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d10 + 2",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "1/long rest",
+			duration: "1 hour",
+			action: "Focus your intent on the glyph",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Titan Marrow Blend resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Face tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "necrotic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Titan Marrow Blend, DC 14 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary: "Gain resistance to necrotic damage.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Overcharge: Once per long rest, double the primary effect for 1 round.",
+			passive: ["Gain resistance to necrotic damage."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain resistance to necrotic damage.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "necrotic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Proficiency/long rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Face)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_47",
@@ -2825,48 +4964,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Inverts the silence between heartbeats. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			duration: "Permanent (passive)",
+			action: "Channel mana through the ink circuits",
 			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "1d10 radiant",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Forehead tattoo slot",
+				"Occupies left leg tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "radiant",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 19 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
+			primary: "Gain resistance to radiant damage.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Gain resistance to radiant damage."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain resistance to radiant damage.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "radiant aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Forehead)",
+				"Requires tattoo attunement slot (left leg)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_48",
@@ -2886,48 +5071,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Shatters the certainty of outcomes. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
 			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "4d10",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			duration: "1 hour",
+			action: "Press your palm against the design",
+			ability: "Presence",
+			damage_profile: "N/A (utility/defensive)",
+			lattice_interaction:
+				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Spine tattoo slot",
+				"Occupies right arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
+			attack: {
+				type: "radiant",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Phoenix Ash Emulsion, DC 21 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "radiant aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Spine)",
+				"Requires tattoo attunement slot (right arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_49",
@@ -2947,48 +5178,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Rends the chains of mortality. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Focus your intent on the glyph",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "1 minute",
+			action: "Focus your intent on the glyph",
+			ability: "Presence",
+			damage_profile: "1d8 cold",
+			lattice_interaction:
+				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Third Eye tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
+			attack: {
+				type: "cold",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Mana-Crystal Pigment, DC 12 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
+			primary: "Your movement speed increases by 10 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"Your unarmed strikes deal an additional 1d4 of the tattoo's element.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Your movement speed increases by 10 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Focus your intent on the glyph to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Your movement speed increases by 10 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "cold aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive only",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Third Eye)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 1000,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_50",
@@ -3008,48 +5285,93 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor: "Rends the illusion of safety. The reason S-Rank Gates are feared.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Press your palm against the design",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
+			frequency: "Passive",
+			duration: "Permanent (passive)",
+			action: "Press your palm against the design",
 			ability: "Vitality",
-			damage_profile: "3d6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			damage_profile: "1d10 thunder",
+			lattice_interaction:
+				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Chest tattoo slot",
+				"Occupies neck tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "thunder",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Starfall Residue, DC 17 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
+			primary: "Gain +2 to Strength while the tattoo is active.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"You ignore the first instance of this damage type each combat.",
 			tertiary:
-				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+				"Emergency Pulse: When reduced to 0 HP, the tattoo activates automatically (1/long rest).",
+			passive: ["Gain +2 to Strength while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Press your palm against the design to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Strength while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "thunder aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
-			recharge: "Short rest",
+			uses: "Proficiency/long rest",
+			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Chest)",
+				"Requires tattoo attunement slot (neck)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 250,
+			charges: 0,
+			uses_per_rest: 1,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/arcane-sigil.webp",
 	},
 	{
 		id: "tattoo_s_1",
@@ -3069,48 +5391,94 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Erases the flow of causality. Proof that some things cannot be survived.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Flex the tattooed muscle group",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "1d10 + 2",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "10 minutes",
+			action: "Flex the tattooed muscle group",
+			ability: "Presence",
+			damage_profile: "2d6 cold",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Neck tattoo slot",
+				"Occupies right arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "cold",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 16 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			primary: "You can see in magical darkness out to 60 feet.",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+				"The ink glows faintly, granting advantage on Intimidation checks.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["You can see in magical darkness out to 60 feet."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Flex the tattooed muscle group to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "You can see in magical darkness out to 60 feet.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "cold aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Proficiency/long rest",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Neck)",
+				"Requires tattoo attunement slot (right arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 2500,
+			charges: 0,
+			uses_per_rest: 2,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 	{
 		id: "tattoo_s_2",
@@ -3130,47 +5498,92 @@ export const tattoos: CompendiumTattoo[] = [
 			origin:
 				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 			history: "Highly regulated by the International Guild Association.",
-			curse:
-				"Occasionally burns the skin when raw magical flow is too intense.",
+			curse: "",
 			personality: "Silent, hungry.",
 			current_owner: "Widespread among underground syndicates.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
-		flavor: "A monster's strength, chained to a human soul.",
-		discovery_lore: "Obtained from an underground Guild black market.",
+		flavor:
+			"Mirrors the boundary between life and death. The last thing many anomalies ever see.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Varies",
+			action_type: "Channel mana through the ink circuits",
 			type: "Tattoo",
-			frequency: "1/short rest",
-			duration: "Varies",
-			action: "Varies",
-			ability: "Vitality",
-			damage_profile: "3d12 + 6",
-			lattice_interaction: "Bonds permanently with the flesh and aura.",
+			frequency: "Proficiency/long rest",
+			duration: "10 minutes",
+			action: "Channel mana through the ink circuits",
+			ability: "Intelligence",
+			damage_profile: "1d10 psychic",
+			lattice_interaction:
+				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies Right Arm tattoo slot",
+				"Occupies right arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
+			attack: {
+				type: "psychic",
+				mode: "self",
+				resolution: "automatic",
+				modifier: "",
+				damage: "0",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			stat_bonuses: {},
+			special_abilities: [
+				"Inscription requires: Rift Essence Suspension, DC 21 tattooing check, 4 hours of uninterrupted work",
+			],
 		},
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary: "Gain +2 to Strength while the tattoo is active.",
+			secondary: "Allies within 5 feet gain +1 to saving throws.",
 			tertiary:
 				"Resonance: When multiple tattoos are active, gain +1 AC per active tattoo.",
+			passive: ["Gain +2 to Strength while the tattoo is active."],
+			active: [
+				{
+					name: "Tattoo Activation",
+					description:
+						"Channel mana through the ink circuits to activate for 1 minute.",
+					action: "Bonus Action",
+					frequency: "1/short rest",
+				},
+			],
+			primaryEffect: "Gain +2 to Strength while the tattoo is active.",
+			secondaryEffect: "",
+			passiveBonuses: [
+				{
+					stat: "psychic aura",
+					value: 1,
+				},
+			],
 		},
 		limitations: {
-			uses: "1 active/short rest",
+			uses: "Passive only",
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (Right Arm)",
+				"Requires tattoo attunement slot (right arm)",
 				"Tattoo attunement is independent from equipment attunement",
+				"Max tattoos = Proficiency Bonus",
 			],
 			consumable: false,
-			cost: 500,
+			cost: 100,
+			charges: 0,
+			uses_per_rest: 3,
+			prerequisites: [
+				"Awakened status",
+				"Tattooing kit proficiency or professional tattoo artist",
+			],
 		},
+		image: "/generated/effects/darkness-shroud.webp",
 	},
 ];

@@ -11,7 +11,7 @@ export const baseEquipment: Item[] = [
 		stealth_disadvantage: true,
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 8,
 		value: 5,
 		effects: {
@@ -24,12 +24,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["equipment", "offensive", "ice", "defensive", "debuff"],
+		theme_tags: ["dimensional-bleed", "monarch-era"],
 	},
 	{
 		id: "base-armor-leather",
@@ -40,7 +44,7 @@ export const baseEquipment: Item[] = [
 		armor_class: "11 + Dex modifier",
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 10,
 		value: 10,
 		effects: {
@@ -53,12 +57,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "fire", "shadow"],
+		theme_tags: ["ancient-power", "survival", "monarch-era"],
 	},
 	{
 		id: "base-armor-studded-leather",
@@ -69,7 +77,7 @@ export const baseEquipment: Item[] = [
 		armor_class: "12 + Dex modifier",
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 13,
 		value: 45,
 		effects: {
@@ -82,12 +90,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["equipment", "utility", "perception"],
+		theme_tags: ["urban-combat", "black-market"],
 	},
 	{
 		id: "base-armor-hide",
@@ -99,7 +111,7 @@ export const baseEquipment: Item[] = [
 		armor_class: "12 + Dex modifier (max 2)",
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 12,
 		value: 10,
 		effects: {
@@ -112,12 +124,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "perception", "healing", "debuff", "single-target"],
+		theme_tags: ["post-awakening", "modern-warfare", "monarch-era"],
 	},
 	{
 		id: "base-armor-chain-shirt",
@@ -129,7 +145,7 @@ export const baseEquipment: Item[] = [
 		armor_class: "13 + Dex modifier (max 2)",
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 20,
 		value: 50,
 		effects: {
@@ -142,12 +158,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "defensive", "mobility", "utility"],
+		theme_tags: ["dungeon-core", "shadow-domain", "experimental"],
 	},
 	{
 		id: "base-armor-scale-mail",
@@ -159,7 +179,7 @@ export const baseEquipment: Item[] = [
 		stealth_disadvantage: true,
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 45,
 		value: 50,
 		effects: {
@@ -172,12 +192,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["equipment", "buff", "void"],
+		theme_tags: ["guild-ops", "urban-combat", "dungeon-core"],
 	},
 	{
 		id: "base-armor-breastplate",
@@ -188,7 +212,7 @@ export const baseEquipment: Item[] = [
 		armor_class: "14 + Dex modifier (max 2)",
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 20,
 		value: 400,
 		effects: {
@@ -201,12 +225,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "buff", "lightning"],
+		theme_tags: ["dungeon-core", "rift-energy"],
 	},
 	{
 		id: "base-armor-half-plate",
@@ -219,7 +247,7 @@ export const baseEquipment: Item[] = [
 		stealth_disadvantage: true,
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 40,
 		value: 750,
 		effects: {
@@ -232,12 +260,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "buff", "stealth"],
+		theme_tags: ["survival", "rift-energy"],
 	},
 	{
 		id: "base-armor-ring-mail",
@@ -249,7 +281,7 @@ export const baseEquipment: Item[] = [
 		stealth_disadvantage: true,
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 40,
 		value: 30,
 		effects: {
@@ -262,12 +294,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		tags: ["equipment", "control", "area", "radiant"],
+		theme_tags: ["experimental", "dungeon-core", "urban-combat"],
 	},
 	{
 		id: "base-armor-chain-mail",
@@ -281,7 +317,7 @@ export const baseEquipment: Item[] = [
 		strength_requirement: 13,
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 55,
 		value: 75,
 		effects: {
@@ -294,12 +330,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "defensive", "damage", "necrotic"],
+		theme_tags: ["dimensional-bleed", "shadow-domain", "monarch-era"],
 	},
 	{
 		id: "base-armor-splint",
@@ -313,7 +353,7 @@ export const baseEquipment: Item[] = [
 		strength_requirement: 15,
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 60,
 		value: 200,
 		effects: {
@@ -326,12 +366,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "single-target", "offensive", "fire"],
+		theme_tags: ["guild-ops", "gate-zone"],
 	},
 	{
 		id: "base-armor-plate",
@@ -345,7 +389,7 @@ export const baseEquipment: Item[] = [
 		strength_requirement: 15,
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 65,
 		value: 1500,
 		effects: {
@@ -358,12 +402,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "damage", "control"],
+		theme_tags: ["mana-overflow", "system-glitch", "shadow-domain"],
 	},
 	{
 		id: "base-armor-shield",
@@ -374,7 +422,7 @@ export const baseEquipment: Item[] = [
 		armor_class: "+2",
 		rarity: "common",
 		type: "armor",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 6,
 		value: 10,
 		effects: {
@@ -387,12 +435,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "area", "utility", "stealth", "single-target"],
+		theme_tags: ["urban-combat", "elite-tier"],
 	},
 	{
 		id: "base-weapon-club",
@@ -406,7 +458,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["light"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 2,
 		value: 0.1,
 		effects: {
@@ -425,12 +477,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["equipment", "shadow", "void", "debuff", "fire"],
+		theme_tags: ["hunter-bureau", "ancient-power", "mana-overflow"],
 	},
 	{
 		id: "base-weapon-dagger",
@@ -445,7 +501,7 @@ export const baseEquipment: Item[] = [
 		range: "20/60",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 1,
 		value: 2,
 		effects: {
@@ -465,12 +521,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "single-target", "defensive"],
+		theme_tags: ["dimensional-bleed", "experimental", "gate-zone"],
 	},
 	{
 		id: "base-weapon-greatclub",
@@ -484,7 +544,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["two-handed"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 10,
 		value: 0.2,
 		effects: {
@@ -503,12 +563,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "psychic", "radiant", "mobility"],
+		theme_tags: ["monarch-era", "classified"],
 	},
 	{
 		id: "base-weapon-handaxe",
@@ -522,7 +586,7 @@ export const baseEquipment: Item[] = [
 		range: "20/60",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 2,
 		value: 5,
 		effects: {
@@ -542,12 +606,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["equipment", "mobility", "support", "radiant"],
+		theme_tags: ["hunter-bureau", "elite-tier", "gate-zone"],
 	},
 	{
 		id: "base-weapon-javelin",
@@ -562,7 +630,7 @@ export const baseEquipment: Item[] = [
 		range: "30/120",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 0.5,
 		effects: {
@@ -582,12 +650,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["equipment", "debuff", "buff", "lightning"],
+		theme_tags: ["modern-warfare", "system-glitch", "gate-zone"],
 	},
 	{
 		id: "base-weapon-light-hammer",
@@ -602,7 +674,7 @@ export const baseEquipment: Item[] = [
 		range: "20/60",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 2,
 		effects: {
@@ -622,12 +694,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "control", "void", "damage", "psychic"],
+		theme_tags: ["forbidden", "survival", "rift-energy"],
 	},
 	{
 		id: "base-weapon-mace",
@@ -640,7 +716,7 @@ export const baseEquipment: Item[] = [
 		weapon_type: "simple melee",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 4,
 		value: 5,
 		effects: {
@@ -658,12 +734,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "utility", "support", "stealth"],
+		theme_tags: ["guild-ops", "urban-combat"],
 	},
 	{
 		id: "base-weapon-quarterstaff",
@@ -677,7 +757,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 4,
 		value: 0.2,
 		effects: {
@@ -696,12 +776,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "sustained", "fire", "area", "buff"],
+		theme_tags: ["shadow-domain", "rift-energy"],
 	},
 	{
 		id: "base-weapon-sickle",
@@ -714,7 +798,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["light"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 1,
 		effects: {
@@ -733,12 +817,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "necrotic", "perception", "stealth"],
+		theme_tags: ["rift-energy", "gate-zone", "post-awakening"],
 	},
 	{
 		id: "base-weapon-spear",
@@ -753,7 +841,7 @@ export const baseEquipment: Item[] = [
 		range: "20/60",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 3,
 		value: 1,
 		effects: {
@@ -773,12 +861,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "shadow", "necrotic", "fire"],
+		theme_tags: ["black-market", "classified", "ancient-power"],
 	},
 	{
 		id: "base-weapon-light-crossbow",
@@ -793,7 +885,7 @@ export const baseEquipment: Item[] = [
 		range: "80/320",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 5,
 		value: 25,
 		effects: {
@@ -813,12 +905,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "stealth", "radiant"],
+		theme_tags: ["forbidden", "modern-warfare", "urban-combat"],
 	},
 	{
 		id: "base-weapon-dart",
@@ -833,7 +929,7 @@ export const baseEquipment: Item[] = [
 		range: "20/60",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 0.25,
 		value: 0.05,
 		effects: {
@@ -853,12 +949,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["equipment", "control", "single-target", "utility", "defensive"],
+		theme_tags: ["elite-tier", "dimensional-bleed", "post-awakening"],
 	},
 	{
 		id: "base-weapon-shortbow",
@@ -872,7 +972,7 @@ export const baseEquipment: Item[] = [
 		range: "80/320",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 2,
 		value: 25,
 		effects: {
@@ -892,12 +992,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "sustained", "healing", "defensive", "mobility"],
+		theme_tags: ["system-glitch", "classified"],
 	},
 	{
 		id: "base-weapon-sling",
@@ -911,7 +1015,7 @@ export const baseEquipment: Item[] = [
 		range: "30/120",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 0,
 		value: 0.1,
 		effects: {
@@ -931,12 +1035,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "shadow", "fire", "buff", "ice"],
+		theme_tags: ["shadow-domain", "rift-energy", "forbidden"],
 	},
 	{
 		id: "base-weapon-battleaxe",
@@ -950,7 +1058,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 4,
 		value: 10,
 		effects: {
@@ -969,12 +1077,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["equipment", "lightning", "support", "void", "defensive"],
+		theme_tags: ["modern-warfare", "shadow-domain", "ancient-power"],
 	},
 	{
 		id: "base-weapon-flail",
@@ -986,7 +1098,7 @@ export const baseEquipment: Item[] = [
 		weapon_type: "martial melee",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 10,
 		effects: {
@@ -1004,12 +1116,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "damage", "sustained", "single-target", "buff"],
+		theme_tags: ["survival", "ancient-power"],
 	},
 	{
 		id: "base-weapon-glaive",
@@ -1022,7 +1138,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "reach", "two-handed"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 6,
 		value: 20,
 		effects: {
@@ -1041,12 +1157,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["equipment", "necrotic", "burst", "sustained", "shadow"],
+		theme_tags: ["classified", "urban-combat", "shadow-domain"],
 	},
 	{
 		id: "base-weapon-greataxe",
@@ -1060,7 +1180,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "two-handed"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 7,
 		value: 30,
 		effects: {
@@ -1079,12 +1199,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "mobility", "control", "fire", "healing"],
+		theme_tags: ["ancient-power", "rift-energy"],
 	},
 	{
 		id: "base-weapon-greatsword",
@@ -1098,7 +1222,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "two-handed"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 6,
 		value: 50,
 		effects: {
@@ -1117,12 +1241,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "burst", "support", "single-target", "radiant"],
+		theme_tags: ["survival", "elite-tier"],
 	},
 	{
 		id: "base-weapon-halberd",
@@ -1136,7 +1264,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "reach", "two-handed"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 6,
 		value: 20,
 		effects: {
@@ -1155,12 +1283,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "burst", "ice", "shadow", "mobility"],
+		theme_tags: ["ancient-power", "post-awakening"],
 	},
 	{
 		id: "base-weapon-lance",
@@ -1173,7 +1305,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["reach", "special"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 6,
 		value: 10,
 		effects: {
@@ -1192,12 +1324,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["equipment", "area", "burst", "perception", "lightning"],
+		theme_tags: ["guild-ops", "ancient-power"],
 	},
 	{
 		id: "base-weapon-longsword",
@@ -1211,7 +1347,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 3,
 		value: 15,
 		effects: {
@@ -1230,12 +1366,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["equipment", "radiant", "ice", "shadow", "fire"],
+		theme_tags: ["urban-combat", "system-glitch"],
 	},
 	{
 		id: "base-weapon-maul",
@@ -1249,7 +1389,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "two-handed"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 10,
 		value: 10,
 		effects: {
@@ -1268,12 +1408,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "single-target", "damage", "radiant", "sustained"],
+		theme_tags: ["post-awakening", "black-market"],
 	},
 	{
 		id: "base-weapon-morningstar",
@@ -1285,7 +1429,7 @@ export const baseEquipment: Item[] = [
 		weapon_type: "martial melee",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 4,
 		value: 15,
 		effects: {
@@ -1303,12 +1447,17 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse:
+				"Prolonged use causes the wielder's shadow to move independently, whispering in dead languages.",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["equipment", "debuff", "control"],
+		theme_tags: ["gate-zone", "modern-warfare", "survival"],
 	},
 	{
 		id: "base-weapon-pike",
@@ -1321,7 +1470,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "reach", "two-handed"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 18,
 		value: 5,
 		effects: {
@@ -1340,12 +1489,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "burst", "support"],
+		theme_tags: ["survival", "ancient-power"],
 	},
 	{
 		id: "base-weapon-rapier",
@@ -1359,7 +1512,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 25,
 		effects: {
@@ -1378,12 +1531,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "ice", "buff", "offensive", "control"],
+		theme_tags: ["urban-combat", "dimensional-bleed", "rift-energy"],
 	},
 	{
 		id: "base-weapon-scimitar",
@@ -1397,7 +1554,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse", "light"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 3,
 		value: 25,
 		effects: {
@@ -1416,12 +1573,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "burst", "area", "damage", "offensive"],
+		theme_tags: ["experimental", "post-awakening", "guild-ops"],
 	},
 	{
 		id: "base-weapon-shortsword",
@@ -1435,7 +1596,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse", "light"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 2,
 		value: 10,
 		effects: {
@@ -1454,12 +1615,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "buff", "void"],
+		theme_tags: ["urban-combat", "classified", "monarch-era"],
 	},
 	{
 		id: "base-weapon-trident",
@@ -1473,7 +1638,7 @@ export const baseEquipment: Item[] = [
 		range: "20/60",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 4,
 		value: 5,
 		effects: {
@@ -1493,12 +1658,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "burst", "lightning", "single-target"],
+		theme_tags: ["ancient-power", "black-market", "system-glitch"],
 	},
 	{
 		id: "base-weapon-war-pick",
@@ -1511,7 +1680,7 @@ export const baseEquipment: Item[] = [
 		weapon_type: "martial melee",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 5,
 		effects: {
@@ -1529,12 +1698,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["equipment", "necrotic", "offensive", "perception"],
+		theme_tags: ["rift-energy", "elite-tier"],
 	},
 	{
 		id: "base-weapon-warhammer",
@@ -1548,7 +1721,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 15,
 		effects: {
@@ -1567,12 +1740,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+		tags: ["equipment", "damage", "defensive", "area"],
+		theme_tags: ["survival", "elite-tier", "ancient-power"],
 	},
 	{
 		id: "base-weapon-whip",
@@ -1585,7 +1762,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse", "reach"],
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 3,
 		value: 2,
 		effects: {
@@ -1604,12 +1781,17 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse:
+				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "defensive", "damage"],
+		theme_tags: ["post-awakening", "black-market"],
 	},
 	{
 		id: "base-weapon-blowgun",
@@ -1623,7 +1805,7 @@ export const baseEquipment: Item[] = [
 		range: "25/100",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 1,
 		value: 10,
 		effects: {
@@ -1643,12 +1825,17 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse:
+				"The user becomes unable to dream, replaced by visions of the void between Gates.",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["equipment", "sustained", "mobility", "fire", "buff"],
+		theme_tags: ["rift-energy", "system-glitch"],
 	},
 	{
 		id: "base-weapon-hand-crossbow",
@@ -1663,7 +1850,7 @@ export const baseEquipment: Item[] = [
 		range: "30/120",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 3,
 		value: 75,
 		effects: {
@@ -1683,12 +1870,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "offensive", "buff"],
+		theme_tags: ["forbidden", "system-glitch"],
 	},
 	{
 		id: "base-weapon-heavy-crossbow",
@@ -1702,7 +1893,7 @@ export const baseEquipment: Item[] = [
 		range: "100/400",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 18,
 		value: 50,
 		effects: {
@@ -1722,12 +1913,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "sustained", "stealth"],
+		theme_tags: ["ancient-power", "survival", "shadow-domain"],
 	},
 	{
 		id: "base-weapon-longbow",
@@ -1741,7 +1936,7 @@ export const baseEquipment: Item[] = [
 		range: "150/600",
 		rarity: "common",
 		type: "weapon",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 2,
 		value: 50,
 		effects: {
@@ -1761,12 +1956,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["equipment", "control", "single-target", "healing", "burst"],
+		theme_tags: ["guild-ops", "classified"],
 	},
 	{
 		id: "base-ammo-arrows-20",
@@ -1775,7 +1974,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 1,
 		value: 1,
 		effects: {
@@ -1788,12 +1987,17 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse:
+				"Corrupts nearby healing magic by 10%, causing heals to occasionally deal damage instead.",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		tags: ["equipment", "control", "radiant"],
+		theme_tags: ["survival", "black-market", "rift-energy"],
 	},
 	{
 		id: "base-ammo-bolts-20",
@@ -1802,7 +2006,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 1.5,
 		value: 1,
 		effects: {
@@ -1815,12 +2019,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["equipment", "burst", "fire"],
+		theme_tags: ["guild-ops", "experimental", "hunter-bureau"],
 	},
 	{
 		id: "base-ammo-darts-10",
@@ -1829,7 +2037,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2.5,
 		value: 0.5,
 		effects: {
@@ -1842,12 +2050,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "radiant", "lightning", "healing"],
+		theme_tags: ["hunter-bureau", "modern-warfare"],
 	},
 	{
 		id: "base-gear-explorers-pack",
@@ -1857,7 +2069,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 59,
 		value: 10,
 		effects: {
@@ -1870,12 +2082,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "perception", "healing"],
+		theme_tags: ["elite-tier", "survival", "gate-zone"],
 	},
 	{
 		id: "base-gear-dungeoneers-pack",
@@ -1885,7 +2101,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 61.5,
 		value: 12,
 		effects: {
@@ -1898,12 +2114,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Smuggled out of the Shadow Legion's armory.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		tags: ["equipment", "buff", "sustained"],
+		theme_tags: ["dimensional-bleed", "urban-combat"],
 	},
 	{
 		id: "base-gear-priests-pack",
@@ -1913,7 +2133,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 24,
 		value: 19,
 		effects: {
@@ -1926,12 +2146,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["equipment", "support", "control", "necrotic", "stealth"],
+		theme_tags: ["classified", "monarch-era", "shadow-domain"],
 	},
 	{
 		id: "base-gear-scholars-pack",
@@ -1941,7 +2165,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 10,
 		value: 40,
 		effects: {
@@ -1954,12 +2178,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+		tags: ["equipment", "sustained", "damage"],
+		theme_tags: ["ancient-power", "post-awakening", "dungeon-core"],
 	},
 	{
 		id: "base-gear-burglars-pack",
@@ -1969,7 +2197,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 44.5,
 		value: 16,
 		effects: {
@@ -1982,12 +2210,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["equipment", "stealth", "ice"],
+		theme_tags: ["gate-zone", "survival", "dungeon-core"],
 	},
 	{
 		id: "base-gear-diplomats-pack",
@@ -1997,7 +2229,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 36,
 		value: 39,
 		effects: {
@@ -2010,12 +2242,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "lightning", "debuff"],
+		theme_tags: ["post-awakening", "dimensional-bleed", "forbidden"],
 	},
 	{
 		id: "base-gear-entertainers-pack",
@@ -2025,7 +2261,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 38,
 		value: 40,
 		effects: {
@@ -2038,12 +2274,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+		tags: ["equipment", "psychic", "void", "control", "mobility"],
+		theme_tags: ["ancient-power", "mana-overflow"],
 	},
 	{
 		id: "base-focus-arcane",
@@ -2052,7 +2292,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 1,
 		value: 10,
 		effects: {
@@ -2065,12 +2305,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "support", "stealth", "mobility", "damage"],
+		theme_tags: ["shadow-domain", "survival"],
 	},
 	{
 		id: "base-focus-component-pouch",
@@ -2079,7 +2323,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 2,
 		value: 25,
 		effects: {
@@ -2092,12 +2336,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "lightning", "support"],
+		theme_tags: ["classified", "guild-ops", "monarch-era"],
 	},
 	{
 		id: "base-focus-primal",
@@ -2107,7 +2355,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 1,
 		value: 5,
 		effects: {
@@ -2120,12 +2368,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "necrotic", "lightning", "healing", "shadow"],
+		theme_tags: ["mana-overflow", "experimental", "monarch-era"],
 	},
 	{
 		id: "base-focus-system",
@@ -2135,7 +2387,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 1,
 		value: 5,
 		effects: {
@@ -2148,12 +2400,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		tags: ["equipment", "debuff", "sustained"],
+		theme_tags: ["monarch-era", "classified", "shadow-domain"],
 	},
 	{
 		id: "base-focus-grimoire",
@@ -2163,7 +2419,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 3,
 		value: 50,
 		effects: {
@@ -2176,12 +2432,17 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse:
+				"Leaves a faint mark on the soul visible to Monarchs and entities of comparable power.",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Recovered from a time-locked chest that required three different elemental keys to open.",
+		tags: ["equipment", "healing", "defensive"],
+		theme_tags: ["gate-zone", "dimensional-bleed", "urban-combat"],
 	},
 	{
 		id: "base-tool-thieves",
@@ -2191,7 +2452,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 1,
 		value: 25,
 		effects: {
@@ -2204,12 +2465,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+		tags: ["equipment", "support", "stealth", "single-target"],
+		theme_tags: ["black-market", "monarch-era"],
 	},
 	{
 		id: "base-tool-tinker",
@@ -2219,7 +2484,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 10,
 		value: 50,
 		effects: {
@@ -2232,12 +2497,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
+		discovery_lore:
+			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+		tags: ["equipment", "control", "fire"],
+		theme_tags: ["dungeon-core", "ancient-power", "system-glitch"],
 	},
 	{
 		id: "base-tool-instrument",
@@ -2246,7 +2515,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 3,
 		value: 25,
 		effects: {
@@ -2259,12 +2528,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Some items tell stories. This one ends them.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "sustained", "single-target"],
+		theme_tags: ["system-glitch", "black-market"],
 	},
 	{
 		id: "base-tool-streaming-laptop",
@@ -2274,7 +2547,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 4,
 		value: 1500,
 		effects: {
@@ -2288,12 +2561,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+		tags: ["equipment", "support", "perception", "utility", "necrotic"],
+		theme_tags: ["shadow-domain", "gate-zone"],
 	},
 	{
 		id: "base-tool-ring-light",
@@ -2303,7 +2580,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 2,
 		value: 60,
 		effects: {
@@ -2317,12 +2594,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["equipment", "support", "perception", "void", "offensive"],
+		theme_tags: ["gate-zone", "system-glitch", "black-market"],
 	},
 	{
 		id: "base-tool-portable-camera",
@@ -2332,7 +2613,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 1,
 		value: 400,
 		effects: {
@@ -2346,12 +2627,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
+		discovery_lore:
+			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+		tags: ["equipment", "mobility", "perception"],
+		theme_tags: ["ancient-power", "post-awakening"],
 	},
 	{
 		id: "base-tool-wifi-hotspot",
@@ -2361,7 +2646,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 0.5,
 		value: 120,
 		effects: {
@@ -2375,12 +2660,17 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse:
+				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "ice", "healing"],
+		theme_tags: ["hunter-bureau", "monarch-era"],
 	},
 	{
 		id: "base-tool-burner-phone",
@@ -2390,7 +2680,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-armor.webp",
 		weight: 0.5,
 		value: 50,
 		effects: {
@@ -2404,12 +2694,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "An ancient artifact of the First Awakenings.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
+		tags: ["equipment", "stealth", "sustained", "debuff", "area"],
+		theme_tags: ["hunter-bureau", "survival", "forbidden"],
 	},
 	{
 		id: "base-tool-custom-laptop",
@@ -2419,7 +2713,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/health-potion.webp",
 		weight: 5,
 		value: 2000,
 		effects: {
@@ -2433,12 +2727,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Recovered from a collapsed Guild Vault.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		tags: ["equipment", "stealth", "buff"],
+		theme_tags: ["dimensional-bleed", "experimental"],
 	},
 	{
 		id: "base-tool-hacking-tools",
@@ -2448,7 +2746,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 3,
 		value: 250,
 		effects: {
@@ -2462,12 +2760,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+		tags: ["equipment", "sustained", "single-target", "lightning"],
+		theme_tags: ["guild-ops", "dungeon-core", "black-market"],
 	},
 	{
 		id: "base-tool-usb-drives",
@@ -2477,7 +2779,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-blade.webp",
 		weight: 0.2,
 		value: 25,
 		effects: {
@@ -2491,12 +2793,16 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "A masterpiece of destructive intent.",
+		discovery_lore:
+			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+		tags: ["equipment", "shadow", "burst"],
+		theme_tags: ["modern-warfare", "rift-energy", "black-market"],
 	},
 	{
 		id: "base-tool-smartphone-camera",
@@ -2505,7 +2811,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		rarity: "common",
 		type: "wondrous",
-		image: "",
+		image: "/generated/items/shadow-ring.webp",
 		weight: 0.4,
 		value: 900,
 		effects: {
@@ -2519,11 +2825,15 @@ export const baseEquipment: Item[] = [
 		lore: {
 			origin: "Forged by the Bureau's most elite artificers.",
 			history: "Its true history remains a protected Guild secret.",
-			curse: "Slowly drains ambient stamina from the wielder.",
+			curse: "",
 			personality: "Silent, waiting.",
 			current_owner: "Held by the Vanguard Guild.",
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
+		discovery_lore:
+			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
+		tags: ["equipment", "void", "shadow", "sustained", "offensive"],
+		theme_tags: ["hunter-bureau", "urban-combat"],
 	},
 ];

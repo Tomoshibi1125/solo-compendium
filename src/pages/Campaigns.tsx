@@ -101,7 +101,7 @@ const Campaigns = () => {
 			);
 			queryClient.setQueryData(
 				["campaigns", campaignId, "role"],
-				"rift" as const,
+				"warden" as const,
 			);
 			queryClient.setQueryData(
 				["campaigns", campaignId, "members"],

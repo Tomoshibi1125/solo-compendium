@@ -590,11 +590,15 @@ export const useCreateCampaign = () => {
 			return campaignId;
 		},
 		onSuccess: () => {
-			// Invalidate ONLY list queries — avoid wiping the optimistic
-			// ["campaigns", campaignId] cache entry seeded by the caller,
-			// which CampaignDetail needs immediately after navigate().
-			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
-			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			// Delay list-query invalidation so the optimistic cache entry
+			// seeded by the caller survives long enough for CampaignDetail
+			// to read it after navigate().  Without this delay, React Query
+			// refetches the list immediately and the new campaign may not
+			// appear in the Supabase result yet (RLS propagation lag).
+			setTimeout(() => {
+				queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
+				queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			}, 1000);
 			toast({
 				title: "Campaign Created",
 				description: "Your campaign has been created with a share code.",
@@ -1094,13 +1098,13 @@ export const useCampaignRole = (campaignId: string) => {
 	const { user, loading } = useAuth();
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "role"],
-		queryFn: async (): Promise<"rift" | "co-warden" | "ascendant" | null> => {
+		queryFn: async (): Promise<"warden" | "co-warden" | "ascendant" | null> => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
 				const campaign = loadLocalCampaigns().find(
 					(entry) => entry.id === campaignId,
 				);
-				if (campaign && campaign.warden_id === userId) return "rift";
+				if (campaign && campaign.warden_id === userId) return "warden";
 				const member = loadLocalMembers().find(
 					(entry) =>
 						entry.campaign_id === campaignId && entry.user_id === userId,
@@ -1115,7 +1119,7 @@ export const useCampaignRole = (campaignId: string) => {
 					const campaign = loadLocalCampaigns().find(
 						(entry) => entry.id === campaignId,
 					);
-					if (campaign && campaign.warden_id === userId) return "rift";
+					if (campaign && campaign.warden_id === userId) return "warden";
 					const member = loadLocalMembers().find(
 						(entry) =>
 							entry.campaign_id === campaignId && entry.user_id === userId,
@@ -1140,7 +1144,7 @@ export const useCampaignRole = (campaignId: string) => {
 				(campaign as Database["public"]["Tables"]["campaigns"]["Row"])
 					.warden_id === user.id
 			) {
-				return "rift";
+				return "warden";
 			}
 
 			// Check member role

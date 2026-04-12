@@ -1,4 +1,4 @@
-export interface CompendiumValue {
+interface CompendiumValue {
 	type?: string;
 	value?: number | string;
 	unit?: string;
