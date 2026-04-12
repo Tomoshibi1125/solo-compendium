@@ -1,6 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
 import {
-	Copy,
 	Download,
 	PackageOpen,
 	Plus,
@@ -13,7 +12,6 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,12 +31,7 @@ import {
 	useDeployCampaignEncounter,
 } from "@/hooks/useCampaignEncounters";
 import { useCampaignExport } from "@/hooks/useCampaignExport";
-import {
-	useCampaignInviteAuditLogs,
-	useCampaignInvites,
-	useCreateCampaignInvite,
-	useDeleteCampaignInvite,
-} from "@/hooks/useCampaignInvites";
+
 import {
 	useAssignCampaignLoot,
 	useAssignCampaignRelic,
@@ -55,12 +48,6 @@ import {
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
-import {
-	buildCampaignInviteUrl,
-	campaignInviteStatusLabel,
-	campaignInviteStatusMessage,
-	deriveCampaignInviteStatus,
-} from "@/lib/campaignInviteUtils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 const downloadJson = (payload: Json, filename: string) => {
@@ -99,12 +86,6 @@ export function CampaignProtocolControls({
 	const navigate = useNavigate();
 	const { toast } = useToast();
 	const { data: members = [] } = useCampaignMembers(campaignId);
-	const { data: invites = [], isLoading: invitesLoading } =
-		useCampaignInvites(campaignId);
-	const { data: inviteAuditLogs = [], isLoading: inviteAuditLoading } =
-		useCampaignInviteAuditLogs(campaignId);
-	const createInvite = useCreateCampaignInvite();
-	const deleteInvite = useDeleteCampaignInvite();
 
 	const { data: rulesData } = useCampaignRules(campaignId);
 	const { data: ruleEvents = [] } = useCampaignRuleEvents(campaignId);
@@ -121,14 +102,6 @@ export function CampaignProtocolControls({
 	const assignRelic = useAssignCampaignRelic();
 
 	const exportCampaign = useCampaignExport();
-
-	const [inviteRole, setInviteRole] = useState<"ascendant" | "co-system">(
-		"ascendant",
-	);
-	const [inviteExpiresAt, setInviteExpiresAt] = useState("");
-	const [inviteMaxUses, setInviteMaxUses] = useState(1);
-	const [inviteEmail, setInviteEmail] = useState("");
-	const [revokeReason, setRevokeReason] = useState("");
 
 	const [rules, setRules] = useState(DEFAULT_RULES);
 
@@ -162,37 +135,6 @@ export function CampaignProtocolControls({
 			level: member.characters?.level || 1,
 		}));
 	}, [members]);
-
-	const handleCreateInvite = async () => {
-		const expiresAt = inviteExpiresAt
-			? new Date(inviteExpiresAt).toISOString()
-			: null;
-		await createInvite.mutateAsync({
-			campaignId,
-			role: inviteRole,
-			expiresAt,
-			maxUses: inviteMaxUses,
-			inviteEmail: inviteEmail.trim() || undefined,
-		});
-		setInviteEmail("");
-	};
-
-	const handleCopyInvite = async (token: string) => {
-		const url = buildCampaignInviteUrl(window.location.origin, token);
-		await navigator.clipboard.writeText(url);
-		toast({
-			title: "Invite link copied",
-			description: "Share this link to invite a new Ascendant.",
-		});
-	};
-
-	const handleCopyJoinCode = async (joinCode: string) => {
-		await navigator.clipboard.writeText(joinCode);
-		toast({
-			title: "Join code copied",
-			description: "Share this code for quick campaign joining.",
-		});
-	};
 
 	const handleExportEncounter = async (
 		encounterId: string,
@@ -332,250 +274,6 @@ export function CampaignProtocolControls({
 
 	return (
 		<div className="space-y-6" data-testid="campaign-protocol-controls">
-			<AscendantWindow
-				title="INVITES & PERMISSIONS"
-				data-testid="campaign-invites-panel"
-			>
-				<div className="space-y-4">
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-						<div>
-							<Label htmlFor="invite-role">Role</Label>
-							<Select
-								value={inviteRole}
-								onValueChange={(value) =>
-									setInviteRole(value as "ascendant" | "co-system")
-								}
-							>
-								<SelectTrigger id="invite-role">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="ascendant">Ascendant</SelectItem>
-									<SelectItem value="co-system">Co-System</SelectItem>
-								</SelectContent>
-							</Select>
-						</div>
-						<div>
-							<Label htmlFor="invite-expire">Expires At</Label>
-							<Input
-								id="invite-expire"
-								type="datetime-local"
-								value={inviteExpiresAt}
-								onChange={(event) => setInviteExpiresAt(event.target.value)}
-							/>
-						</div>
-						<div>
-							<Label htmlFor="invite-uses">Max Uses</Label>
-							<Input
-								id="invite-uses"
-								type="number"
-								min={1}
-								value={inviteMaxUses}
-								onChange={(event) =>
-									setInviteMaxUses(Math.max(1, Number(event.target.value) || 1))
-								}
-							/>
-						</div>
-					</div>
-					<div>
-						<Label htmlFor="invite-email">Invite Email (optional)</Label>
-						<Input
-							id="invite-email"
-							type="email"
-							value={inviteEmail}
-							onChange={(event) => setInviteEmail(event.target.value)}
-							placeholder="player@example.com"
-						/>
-						<p className="text-xs text-muted-foreground mt-1">
-							If provided, the app will attempt to send an auth invite email and
-							still generate a copyable link.
-						</p>
-					</div>
-					<Button
-						onClick={handleCreateInvite}
-						className="w-full"
-						disabled={createInvite.isPending}
-						data-testid="campaign-invite-create"
-					>
-						<Plus className="w-4 h-4 mr-2" />
-						Create Invite
-					</Button>
-				</div>
-
-				<div className="mt-6 space-y-3">
-					<div className="flex items-center justify-between">
-						<h3 className="font-heading font-semibold">Active Invites</h3>
-						{invitesLoading && (
-							<span className="text-xs text-muted-foreground">Loading…</span>
-						)}
-					</div>
-					{invites.length === 0 ? (
-						<p className="text-sm text-muted-foreground">
-							No active invites yet.
-						</p>
-					) : (
-						invites.map((invite) => {
-							const inviteStatus = deriveCampaignInviteStatus(invite);
-							const isExpired = inviteStatus === "expired";
-							const isRevoked = inviteStatus === "revoked";
-							const isUsedUp = inviteStatus === "used_up";
-							const remainingUses = Math.max(
-								invite.max_uses - invite.used_count,
-								0,
-							);
-							const joinCode = invite.join_code;
-							const joinCodeValue = joinCode ?? "";
-							return (
-								<div
-									key={invite.id}
-									className="rounded-lg border border-border bg-muted/30 p-3"
-								>
-									<div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-										<div>
-											<div className="flex items-center gap-2">
-												<Badge variant="outline" className="text-xs">
-													{invite.role === "co-system"
-														? "Co-System"
-														: "Ascendant"}
-												</Badge>
-												{inviteStatus !== "active" && (
-													<Badge variant="destructive">
-														{campaignInviteStatusLabel(inviteStatus)}
-													</Badge>
-												)}
-												{inviteStatus === "active" && (
-													<Badge className="bg-emerald-600 text-white">
-														Active
-													</Badge>
-												)}
-											</div>
-											<p className="text-xs text-muted-foreground mt-1">
-												Uses {invite.used_count}/{invite.max_uses} · Remaining{" "}
-												{remainingUses}
-											</p>
-											{invite.expires_at && (
-												<p className="text-xs text-muted-foreground">
-													Expires{" "}
-													{formatDistanceToNow(new Date(invite.expires_at), {
-														addSuffix: true,
-													})}
-												</p>
-											)}
-											<p className="text-xs text-muted-foreground">
-												Join code{" "}
-												<span
-													className="font-mono text-foreground"
-													data-testid="campaign-invite-join-code"
-												>
-													{joinCode ?? "N/A"}
-												</span>
-											</p>
-											{invite.invite_email && (
-												<p className="text-xs text-muted-foreground">
-													Sent to {invite.invite_email}
-												</p>
-											)}
-											<p className="text-xs text-muted-foreground mt-1">
-												{campaignInviteStatusMessage(inviteStatus)}
-											</p>
-										</div>
-										<div className="flex flex-wrap gap-2">
-											{joinCodeValue && (
-												<Button
-													size="sm"
-													variant="outline"
-													onClick={() => handleCopyJoinCode(joinCodeValue)}
-													data-testid="campaign-invite-code-copy"
-												>
-													<Copy className="w-4 h-4 mr-2" />
-													Copy Code
-												</Button>
-											)}
-											<Button
-												size="sm"
-												variant="outline"
-												onClick={() =>
-													handleCopyInvite(joinCodeValue || invite.token)
-												}
-												data-testid="campaign-invite-copy"
-											>
-												<Copy className="w-4 h-4 mr-2" />
-												Copy Link
-											</Button>
-											<Button
-												size="sm"
-												variant="destructive"
-												disabled={isRevoked}
-												onClick={() =>
-													deleteInvite.mutate({
-														campaignId,
-														inviteId: invite.id,
-														reason: revokeReason.trim() || undefined,
-													})
-												}
-												data-testid="campaign-invite-revoke"
-											>
-												<Trash2 className="w-4 h-4 mr-2" />
-												{isRevoked ? "Revoked" : "Revoke"}
-											</Button>
-										</div>
-									</div>
-									{(isExpired || isUsedUp) && !isRevoked && (
-										<p className="text-xs text-amber-500 mt-2">
-											Reissue by creating a new invite link or join code.
-										</p>
-									)}
-								</div>
-							);
-						})
-					)}
-				</div>
-
-				<div className="mt-4 space-y-2">
-					<Label htmlFor="invite-revoke-reason">Revoke reason (optional)</Label>
-					<Input
-						id="invite-revoke-reason"
-						value={revokeReason}
-						onChange={(event) => setRevokeReason(event.target.value)}
-						placeholder="Compromised link, replaced with new invite"
-					/>
-				</div>
-
-				<div className="mt-6 space-y-3" data-testid="campaign-invite-audit-log">
-					<div className="flex items-center justify-between">
-						<h3 className="font-heading font-semibold">Invite Audit Trail</h3>
-						{inviteAuditLoading && (
-							<span className="text-xs text-muted-foreground">Loading…</span>
-						)}
-					</div>
-					{inviteAuditLogs.length === 0 ? (
-						<p className="text-sm text-muted-foreground">
-							No invite audit events yet.
-						</p>
-					) : (
-						<div className="space-y-2">
-							{inviteAuditLogs.slice(0, 8).map((entry) => (
-								<div
-									key={entry.id}
-									className="rounded border border-border px-3 py-2 text-xs"
-								>
-									<div className="flex items-center justify-between gap-2">
-										<span className="font-heading text-foreground">
-											{entry.action.replace(/_/g, " ")}
-										</span>
-										<span className="text-muted-foreground">
-											{formatDistanceToNow(new Date(entry.created_at), {
-												addSuffix: true,
-											})}
-										</span>
-									</div>
-								</div>
-							))}
-						</div>
-					)}
-				</div>
-			</AscendantWindow>
-
 			<AscendantWindow
 				title="PROTOCOL RULES & ENFORCEMENT"
 				data-testid="campaign-rules-panel"

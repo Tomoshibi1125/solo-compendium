@@ -10,7 +10,7 @@ import {
 	listLocalCharacters,
 } from "@/lib/guestStore";
 
-interface Campaign {
+export interface Campaign {
 	id: string;
 	name: string;
 	description: string | null;
@@ -41,7 +41,7 @@ type CampaignUpdate = {
 const CAMPAIGNS_KEY = "solo-compendium.campaigns.v1";
 const MEMBERS_KEY = "solo-compendium.campaigns.members.v1";
 
-const loadLocalCampaigns = (): Campaign[] => {
+export const loadLocalCampaigns = (): Campaign[] => {
 	if (typeof window === "undefined") return [];
 	const raw = window.localStorage.getItem(CAMPAIGNS_KEY);
 	if (!raw) return [];
@@ -53,7 +53,7 @@ const loadLocalCampaigns = (): Campaign[] => {
 	}
 };
 
-const saveLocalCampaigns = (campaigns: Campaign[]) => {
+export const saveLocalCampaigns = (campaigns: Campaign[]) => {
 	if (typeof window === "undefined") return;
 	window.localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(campaigns));
 };
@@ -76,7 +76,7 @@ const updateLocalCampaign = (
 	return next;
 };
 
-const loadLocalMembers = (): CampaignMember[] => {
+export const loadLocalMembers = (): CampaignMember[] => {
 	if (typeof window === "undefined") return [];
 	const raw = window.localStorage.getItem(MEMBERS_KEY);
 	if (!raw) return [];
@@ -88,7 +88,7 @@ const loadLocalMembers = (): CampaignMember[] => {
 	}
 };
 
-const saveLocalMembers = (members: CampaignMember[]) => {
+export const saveLocalMembers = (members: CampaignMember[]) => {
 	if (typeof window === "undefined") return;
 	window.localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
 };
@@ -596,6 +596,54 @@ export const useCreateCampaign = () => {
 				campaignId = rpcResult.data as string;
 			}
 
+			// Dual persistence constraint for Warden account:
+			// Ensure it saves to local cache simultaneously so offline mode and guest cache remains synced
+			const { data: latestCampaign, error: fetchError } = await supabase
+				.from("campaigns")
+				.select("*")
+				.eq("id", campaignId)
+				.maybeSingle();
+
+			if (!fetchError && latestCampaign) {
+				const localCampaigns = loadLocalCampaigns();
+				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
+				saveLocalCampaigns([latestCampaign as Campaign, ...filtered]);
+			} else {
+				// Optimistic local save if DB read fails (e.g., RLS propagation delay)
+				const now = new Date().toISOString();
+				const optimisticCampaign: Campaign = {
+					id: campaignId,
+					name,
+					description: description || null,
+					warden_id: user.id,
+					share_code: shareCode || "------",
+					is_active: true,
+					settings: { leveling_mode: "milestone" },
+					created_at: now,
+					updated_at: now,
+				};
+				const localCampaigns = loadLocalCampaigns();
+				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
+				saveLocalCampaigns([optimisticCampaign, ...filtered]);
+			}
+
+			const members = loadLocalMembers();
+			if (
+				!members.some(
+					(m) => m.campaign_id === campaignId && m.user_id === user.id,
+				)
+			) {
+				members.push({
+					id: crypto.randomUUID(),
+					campaign_id: campaignId,
+					user_id: user.id,
+					character_id: null,
+					role: "warden",
+					joined_at: new Date().toISOString(),
+				});
+				saveLocalMembers(members);
+			}
+
 			return campaignId;
 		},
 		onSuccess: () => {
@@ -799,6 +847,38 @@ export const useJoinCampaign = () => {
 						.eq("user_id", user.id);
 
 					if (legacyError) throw legacyError;
+				}
+			}
+
+			// Dual persistence constraint for joining:
+			const { data: joinedCampaign, error: fetchError } = await supabase
+				.from("campaigns")
+				.select("*")
+				.eq("id", campaignId)
+				.maybeSingle();
+
+			if (!fetchError && joinedCampaign) {
+				const localCampaigns = loadLocalCampaigns();
+				if (!localCampaigns.some((c) => c.id === campaignId)) {
+					saveLocalCampaigns([joinedCampaign as Campaign, ...localCampaigns]);
+				}
+				const localMembers = loadLocalMembers();
+				const memberIdx = localMembers.findIndex(
+					(m) => m.campaign_id === campaignId && m.user_id === user.id,
+				);
+				if (memberIdx === -1) {
+					localMembers.push({
+						id: crypto.randomUUID(),
+						campaign_id: campaignId,
+						user_id: user.id,
+						character_id: characterId || null,
+						role: "ascendant",
+						joined_at: new Date().toISOString(),
+					});
+					saveLocalMembers(localMembers);
+				} else if (characterId) {
+					localMembers[memberIdx].character_id = characterId;
+					saveLocalMembers(localMembers);
 				}
 			}
 		},

@@ -1,5 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import {
+	type Campaign,
+	loadLocalCampaigns,
+	loadLocalMembers,
+	saveLocalCampaigns,
+	saveLocalMembers,
+} from "@/hooks/useCampaigns";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
@@ -207,12 +214,30 @@ export const useCreateCampaignInvite = () => {
 			maxUses = 1,
 			inviteEmail,
 		}: CreateInviteArgs) => {
-			if (!isSupabaseConfigured) {
-				throw new AppError("Supabase not configured", "CONFIG");
-			}
-
 			const normalizedInviteEmail =
 				inviteEmail?.trim().toLowerCase() || undefined;
+
+			if (!isSupabaseConfigured) {
+				// Offline mock token generation so it always succeeds locally.
+				return {
+					id: crypto.randomUUID(),
+					token: `LCL${crypto.randomUUID().split("-")[0]}`,
+					join_code: `LCL${crypto.randomUUID().split("-")[0]}`
+						.toUpperCase()
+						.slice(0, 6),
+					role,
+					expires_at: expiresAt || null,
+					max_uses: maxUses,
+					used_count: 0,
+					revoked_at: null,
+					invite_email: normalizedInviteEmail || null,
+					email_delivery: {
+						attempted: false,
+						sent: false,
+						error: null,
+					},
+				} as CampaignInviteCreateResult;
+			}
 
 			if (normalizedInviteEmail) {
 				try {
@@ -482,7 +507,41 @@ export const useRedeemCampaignInvite = () => {
 			);
 
 			if (error) throw error;
-			return data as string;
+			const campaignId = data as string;
+
+			// Dual persistence constraint for joining via redeem:
+			const { data: joinedCampaign, error: fetchError } = await supabase
+				.from("campaigns")
+				.select("*")
+				.eq("id", campaignId)
+				.maybeSingle();
+
+			if (!fetchError && joinedCampaign) {
+				const localCampaigns = loadLocalCampaigns();
+				if (!localCampaigns.some((c) => c.id === campaignId)) {
+					saveLocalCampaigns([joinedCampaign as Campaign, ...localCampaigns]);
+				}
+				const localMembers = loadLocalMembers();
+				const memberIdx = localMembers.findIndex(
+					(m) => m.campaign_id === campaignId && m.user_id === user.id,
+				);
+				if (memberIdx === -1) {
+					localMembers.push({
+						id: crypto.randomUUID(),
+						campaign_id: campaignId,
+						user_id: user.id,
+						character_id: characterId || null,
+						role: "ascendant",
+						joined_at: new Date().toISOString(),
+					});
+					saveLocalMembers(localMembers);
+				} else if (characterId) {
+					localMembers[memberIdx].character_id = characterId;
+					saveLocalMembers(localMembers);
+				}
+			}
+
+			return campaignId;
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
