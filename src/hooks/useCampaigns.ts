@@ -161,10 +161,15 @@ export const useMyCampaigns = () => {
 				...localCampaigns.filter((lc) => !supabaseIds.has(lc.id)),
 			];
 
-			// Sync local cache with fresh Supabase data
+			// Sync local cache with fresh Supabase data.
+			// Remove any local campaign owned by this user that Supabase no longer returns
+			// (i.e. it was deleted). Supabase is the source of truth for authenticated wardens.
 			const allLocal = loadLocalCampaigns();
 			const freshMap = new Map(supabaseCampaigns.map((c) => [c.id, c]));
-			const synced = allLocal.map((lc) => freshMap.get(lc.id) || lc);
+			const synced = allLocal
+				.map((lc) => freshMap.get(lc.id) || lc)
+				// Purge campaigns belonging to this warden that Supabase no longer has
+				.filter((lc) => lc.warden_id !== user.id || freshMap.has(lc.id));
 			for (const sc of supabaseCampaigns) {
 				if (!synced.some((s) => s.id === sc.id)) synced.push(sc);
 			}
