@@ -5,9 +5,12 @@ import {
 	ExternalLink,
 	Loader2,
 	LogOut,
+	MoreVertical,
 	Plus,
+	RefreshCw,
 	Shield,
 	Sparkles,
+	Trash2,
 	UserPlus,
 	Users,
 } from "lucide-react";
@@ -30,6 +33,12 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -37,9 +46,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
 import {
 	useCreateCampaign,
+	useDeleteCampaign,
 	useJoinedCampaigns,
 	useLeaveCampaign,
 	useMyCampaigns,
+	useRegenerateShareCode,
 } from "@/hooks/useCampaigns";
 import { useAuth } from "@/lib/auth/authContext";
 import { getLocalUserId } from "@/lib/guestStore";
@@ -60,7 +71,21 @@ const Campaigns = () => {
 		useJoinedCampaigns();
 	const createCampaign = useCreateCampaign();
 	const leaveCampaign = useLeaveCampaign();
+	const deleteCampaign = useDeleteCampaign();
+	const regenerateShareCode = useRegenerateShareCode();
 	const { injectSandbox } = useCampaignSandboxInjector(null);
+
+	const handleDeleteCampaign = async (campaignId: string) => {
+		if (confirm("Are you sure you want to permanently delete this campaign? This cannot be undone.")) {
+			await deleteCampaign.mutateAsync(campaignId);
+		}
+	};
+
+	const handleRegenerateCode = async (campaignId: string) => {
+		if (confirm("Are you sure you want to regenerate the share code? The old code will no longer work.")) {
+			await regenerateShareCode.mutateAsync(campaignId);
+		}
+	};
 
 	const handleCreateCampaign = async () => {
 		if (!campaignName.trim()) {
@@ -312,6 +337,33 @@ const Campaigns = () => {
 													<span className="sm:hidden">View</span>
 												</Button>
 											</Link>
+											<DropdownMenu>
+												<DropdownMenuTrigger asChild>
+													<Button
+														variant="outline"
+														size="sm"
+														className="px-2 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 min-h-[36px]"
+													>
+														<MoreVertical className="w-4 h-4 text-amber-400" />
+													</Button>
+												</DropdownMenuTrigger>
+												<DropdownMenuContent align="end" className="w-48 bg-black/95 border-amber-500/30">
+													<DropdownMenuItem 
+														onClick={() => handleRegenerateCode(campaign.id)}
+														className="gap-2 cursor-pointer focus:bg-amber-500/20 focus:text-amber-400"
+													>
+														<RefreshCw className="w-4 h-4" />
+														Regenerate Code
+													</DropdownMenuItem>
+													<DropdownMenuItem 
+														onClick={() => handleDeleteCampaign(campaign.id)}
+														className="text-destructive gap-2 cursor-pointer focus:bg-destructive/20 focus:text-destructive"
+													>
+														<Trash2 className="w-4 h-4" />
+														Delete Campaign
+													</DropdownMenuItem>
+												</DropdownMenuContent>
+											</DropdownMenu>
 										</div>
 									</div>
 								</div>
