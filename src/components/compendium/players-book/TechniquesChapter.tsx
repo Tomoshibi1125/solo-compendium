@@ -59,8 +59,10 @@ export const TechniquesChapter = () => {
 													Activation
 												</h4>
 												<p className="font-mono text-white">
-													{tech.activation && typeof tech.activation === "object" && tech.activation !== null
-														? `${"cost" in tech.activation && tech.activation.cost ? tech.activation.cost : ("type" in tech.activation ? tech.activation.type : "")}`
+													{tech.activation &&
+													typeof tech.activation === "object" &&
+													tech.activation !== null
+														? `${"cost" in tech.activation && tech.activation.cost ? tech.activation.cost : "type" in tech.activation ? tech.activation.type : ""}`
 														: String(tech.activation || "")}
 												</p>
 											</div>
@@ -70,10 +72,13 @@ export const TechniquesChapter = () => {
 														Range
 													</h4>
 													<p className="font-mono text-white">
-														{typeof tech.range === "object" && tech.range !== null
+														{typeof tech.range === "object" &&
+														tech.range !== null
 															? "distance" in tech.range && tech.range.distance
 																? `${tech.range.distance} ft`
-																: "type" in tech.range ? tech.range.type : String(tech.range)
+																: "type" in tech.range
+																	? tech.range.type
+																	: String(tech.range)
 															: String(tech.range)}
 													</p>
 												</div>

@@ -53,6 +53,8 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 							campaign_id: targetId,
 							title: chapter.title,
 							content: chapter.content,
+							category: "lore",
+							is_public: true,
 						});
 					if (wikiError) {
 						console.error(
@@ -72,6 +74,16 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 			for (const scene of massiveSandboxModule.scenes) {
 				const sessionTitle = `Sandbox Region: ${scene.name}`;
+
+				// Dedup check: Avoid inserting the same scene session multiple times
+				const { data: existingSession } = await supabase
+					.from("active_sessions")
+					.select("id")
+					.eq("campaign_id", targetId)
+					.eq("title", sessionTitle)
+					.maybeSingle();
+
+				if (existingSession) continue;
 
 				// Generate a deterministic session_id or let supersbase make one
 				const newSessionId = crypto.randomUUID();
@@ -154,7 +166,37 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				}
 			}
 
-			// 3. Inject Handouts
+			// 3. Inject NPCs
+			setInjectionState({
+				isInjecting: true,
+				progressString: "Sowing NPC Roster...",
+			});
+
+			if (massiveSandboxModule.npcs && massiveSandboxModule.npcs.length > 0) {
+				for (const npc of massiveSandboxModule.npcs) {
+					const { data: existingNpc } = await supabase
+						.from("campaign_wiki_articles")
+						.select("id")
+						.eq("campaign_id", targetId)
+						.eq("title", npc.name)
+						.maybeSingle();
+
+					if (!existingNpc) {
+						// Build markdown stat block for NPC
+						const npcContent = `## ${npc.name}\n**Role:** ${npc.title}\n**Affiliation:** ${npc.affiliation}\n\n**Description:**\n${npc.description}\n\n### Traits\n- **Trait 1:** ${npc.trait1}\n- **Trait 2:** ${npc.trait2}\n\n### Motivations\n- ${npc.motivation1}\n- ${npc.motivation2}\n\n### Mechanics\n- **Base Level:** ${npc.baseLevel}\n- **Class/Job:** ${npc.assignedJob}\n- **Recruitable:** ${npc.recruitable ? "Yes" : "No"}`;
+
+						await supabase.from("campaign_wiki_articles").insert({
+							campaign_id: targetId,
+							title: npc.name,
+							content: npcContent,
+							category: "npc",
+							is_public: true, // NPCs in this module are generally known or encountered
+						});
+					}
+				}
+			}
+
+			// 4. Inject Handouts
 			setInjectionState({
 				isInjecting: true,
 				progressString: "Sowing Campaign Handouts...",
@@ -193,6 +235,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 			queryClient.invalidateQueries({ queryKey: ["campaign_wiki_articles"] });
 			queryClient.invalidateQueries({ queryKey: ["active_sessions"] });
+			queryClient.invalidateQueries({ queryKey: ["vtt_journal_entries"] });
 		} catch (error) {
 			console.error("Sandbox Injection Error:", error);
 			toast({

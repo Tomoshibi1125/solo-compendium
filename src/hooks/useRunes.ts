@@ -12,15 +12,14 @@ import {
 import { getProficiencyBonus } from "@/types/core-rules";
 
 type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
-type RuneInscription =
+type _RuneInscription =
 	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"] & {
 		rune?: Rune;
 		equipment?: EquipmentRow;
 	};
 export type RuneKnowledge =
 	Database["public"]["Tables"]["character_rune_knowledge"]["Row"];
-type EquipmentRow =
-	Database["public"]["Tables"]["character_equipment"]["Row"];
+type EquipmentRow = Database["public"]["Tables"]["character_equipment"]["Row"];
 
 const buildRuneKnowledgeCacheKey = (userId: string, characterId: string) => {
 	return `solo-compendium.cache.rune-knowledge.${userId}.char:${characterId}.v1`;
@@ -397,7 +396,7 @@ export function useAbsorbRune() {
 }
 
 // Check if character meets rune requirements
-function checkRuneRequirements(
+function _checkRuneRequirements(
 	_rune: Rune,
 	_characterAbilities: Record<string, number>,
 	_characterJob: string | null,

@@ -75,7 +75,6 @@ const WARDEN_TOOL_LABELS: Record<string, string> = {
 	"random-event-generator": "Random Event Generator",
 	"relic-workshop": "Relic Workshop",
 	"party-tracker": "Party Tracker",
-	"dungeon-map-generator": "Dungeon Map Generator",
 	"token-library": "Token Library",
 	"art-generator": "Art Generator",
 	"audio-manager": "Audio Manager",

@@ -69,8 +69,8 @@ export const SandboxModuleChapter = () => {
 				<p className="text-slate-300 mb-0 max-w-2xl mx-auto">
 					This module can be automatically imported into any campaign via the
 					Warden's Directive dashboard. Navigating there will allow you to
-					instantly scaffold all associated Wiki entries, NPCs, handouts, and VTT
-					maps.
+					instantly scaffold all associated Wiki entries, NPCs, handouts, and
+					VTT maps.
 				</p>
 			</section>
 		</div>

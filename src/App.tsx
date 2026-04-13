@@ -121,9 +121,7 @@ const PartyTracker = lazy(
 	() => import("./pages/warden-directives/PartyTracker"),
 );
 const PartyStash = lazy(() => import("./pages/PartyStash"));
-const DungeonMapGenerator = lazy(
-	() => import("./pages/warden-directives/DungeonMapGenerator"),
-);
+// Map generator was merged into gate-generator
 const TokenLibrary = lazy(
 	() => import("./pages/warden-directives/TokenLibrary"),
 );
@@ -613,13 +611,7 @@ const AppContent = () => {
 				/>
 				<Route
 					path="/warden-directives/dungeon-map-generator"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<DungeonMapGenerator />
-							</Suspense>
-						</ProtectedRoute>
-					}
+					element={<Navigate to="/warden-directives/gate-generator" replace />}
 				/>
 				<Route
 					path="/warden-directives/token-library"

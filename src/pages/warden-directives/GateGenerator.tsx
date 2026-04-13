@@ -12,6 +12,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { DungeonMapGenerator } from "@/components/warden-directives/DungeonMapGenerator";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -470,6 +471,21 @@ READ-ALOUD ENTRY:
 										</div>
 									</div>
 								</AscendantWindow>
+
+								{rift && (
+									<div className="pt-8">
+										<AscendantWindow title="RIFT MAP GENERATOR">
+											<DungeonMapGenerator
+												riftContext={{
+													rank: rift.rank,
+													theme: rift.theme,
+													biome: rift.biome,
+													boss: rift.boss,
+												}}
+											/>
+										</AscendantWindow>
+									</div>
+								)}
 							</div>
 						) : (
 							<AscendantWindow title="NO RIFT GENERATED">

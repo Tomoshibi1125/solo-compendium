@@ -95,7 +95,7 @@ const wardenProtocols = [
 		id: "gate-generator",
 		name: "Rift Generator",
 		description:
-			"Generate random rifts with themes, biomes, bosses, and complications.",
+			"Generate random rifts (theme, rank, biome, boss) and auto-generate procedural dungeon map layouts.",
 		icon: Flame,
 		status: "available",
 		color:
@@ -117,19 +117,6 @@ const wardenProtocols = [
 		glow: "group-hover:shadow-purple-500/20",
 		category: "world",
 		priority: 4,
-	},
-	{
-		id: "dungeon-map-generator",
-		name: "Rift Map Generator",
-		description: "Generate procedural rift layouts with room descriptions.",
-		icon: MapIcon,
-		status: "available",
-		color:
-			"from-green-500/20 to-green-600/10 border-green-500/30 hover:border-green-500/60",
-		iconColor: "text-green-400",
-		glow: "group-hover:shadow-green-500/20",
-		category: "world",
-		priority: 5,
 	},
 
 	// Content Tools

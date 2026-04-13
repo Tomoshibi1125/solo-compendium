@@ -360,11 +360,13 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 export interface DungeonMapGeneratorProps {
 	entityId?: string;
 	className?: string;
+	riftContext?: { rank: string; theme: string; biome: string; boss: string };
 }
 
 export function DungeonMapGenerator({
 	entityId,
 	className,
+	riftContext,
 }: DungeonMapGeneratorProps) {
 	const { toast } = useToast();
 	const [selectedRank, setSelectedRank] = useState<string>("C");
@@ -404,13 +406,20 @@ export function DungeonMapGenerator({
 	const hasHydratedRef = useRef(false);
 	useEffect(() => {
 		if (isLoading || hasHydratedRef.current) return;
-		setSelectedRank(hydratedState.selectedRank);
+		setSelectedRank(riftContext?.rank || hydratedState.selectedRank);
 		setMapSize(hydratedState.mapSize);
 		setDungeonMap(hydratedState.dungeonMap);
 		setSelectedCellType(hydratedState.selectedCellType);
 		setZoom(hydratedState.zoom);
 		hasHydratedRef.current = true;
-	}, [hydratedState, isLoading]);
+	}, [hydratedState, isLoading, riftContext?.rank]);
+
+	// Auto-update rank if context changes
+	useEffect(() => {
+		if (riftContext?.rank && hasHydratedRef.current) {
+			setSelectedRank(riftContext.rank);
+		}
+	}, [riftContext?.rank]);
 
 	const savePayload = useMemo(
 		() =>
@@ -449,7 +458,7 @@ export function DungeonMapGenerator({
 			.join("; ");
 		const seed = `Generate a complete dungeon key for a Rift Ascendant TTRPG Rift dungeon.
 Rift Rank: ${selectedRank}
-Map Size: ${mapSize.width}x${mapSize.height}
+${riftContext ? `Theme: ${riftContext.theme}\nBiome: ${riftContext.biome}\nBoss: ${riftContext.boss}\n` : ""}Map Size: ${mapSize.width}x${mapSize.height}
 Rooms: ${dungeonMap.rooms.length}
 Room Layout: ${roomSummary}`;
 		await enhance("dungeon", seed);
@@ -506,26 +515,50 @@ Room Layout: ${roomSummary}`;
 		Math.min(32, Math.floor(600 / Math.max(mapSize.width, mapSize.height))),
 	);
 
+	const dynamicStyles = `
+		.map-zoom-wrapper {
+			--zoom-scale: ${zoom};
+			transform: scale(var(--zoom-scale));
+			transform-origin: top left;
+		}
+		.map-grid-custom {
+			--grid-cols: ${mapSize.width};
+			--grid-rows: ${mapSize.height};
+			--cell-size: ${cellSize}px;
+			display: grid;
+			grid-template-columns: repeat(var(--grid-cols), var(--cell-size));
+			grid-template-rows: repeat(var(--grid-rows), var(--cell-size));
+		}
+		.map-cell-dimensions {
+			--cell-dim: ${cellSize}px;
+			width: var(--cell-dim);
+			height: var(--cell-dim);
+		}
+	`;
+
 	return (
 		<div className={cn("grid grid-cols-1 lg:grid-cols-4 gap-6", className)}>
+			<style>{dynamicStyles}</style>
 			<div className="lg:col-span-1 space-y-6">
 				<AscendantWindow title="MAP SETTINGS">
 					<div className="space-y-4">
-						<div>
-							<Label htmlFor="map-rank">Rift Rank</Label>
-							<Select value={selectedRank} onValueChange={setSelectedRank}>
-								<SelectTrigger id="map-rank" className="h-9">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									{GATE_RANKS.map((rank) => (
-										<SelectItem key={rank} value={rank}>
-											Rank {rank}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
+						{!riftContext && (
+							<div>
+								<Label htmlFor="map-rank">Rift Rank</Label>
+								<Select value={selectedRank} onValueChange={setSelectedRank}>
+									<SelectTrigger id="map-rank" className="h-9">
+										<SelectValue />
+									</SelectTrigger>
+									<SelectContent>
+										{GATE_RANKS.map((rank) => (
+											<SelectItem key={rank} value={rank}>
+												Rank {rank}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</div>
+						)}
 
 						<div className="grid grid-cols-2 gap-2">
 							<div>
@@ -680,31 +713,8 @@ Room Layout: ${roomSummary}`;
 							</div>
 						</div>
 					) : (
-						<div
-							className="p-8"
-							style={
-								{
-									"--zoom-scale": zoom.toString(),
-									transform: "scale(var(--zoom-scale))",
-									transformOrigin: "top left",
-								} as React.CSSProperties
-							}
-						>
-							<div
-								className="map-grid border border-primary/10"
-								style={
-									{
-										"--grid-cols": mapSize.width.toString(),
-										"--grid-rows": mapSize.height.toString(),
-										"--cell-size": `${cellSize}px`,
-										display: "grid",
-										gridTemplateColumns:
-											"repeat(var(--grid-cols), var(--cell-size))",
-										gridTemplateRows:
-											"repeat(var(--grid-rows), var(--cell-size))",
-									} as React.CSSProperties
-								}
-							>
+						<div className="p-8 map-zoom-wrapper">
+							<div className="map-grid border border-primary/10 map-grid-custom">
 								{Array.from({ length: mapSize.height }).map((_, y) =>
 									Array.from({ length: mapSize.width }).map((_, x) => {
 										const key = `${x},${y}`;
@@ -717,16 +727,9 @@ Room Layout: ${roomSummary}`;
 												key={key}
 												type="button"
 												className={cn(
-													"map-cell border-[0.5px] border-primary/5 relative group p-0 m-0",
+													"map-cell border-[0.5px] border-primary/5 relative group p-0 m-0 map-cell-dimensions",
 													getCellColor(type),
 												)}
-												style={
-													{
-														"--cell-dim": `${cellSize}px`,
-														width: "var(--cell-dim)",
-														height: "var(--cell-dim)",
-													} as React.CSSProperties
-												}
 												onClick={() => handleCellClick(x, y)}
 												aria-label={
 													label ? `${label} at ${key}` : `Cell ${key}`

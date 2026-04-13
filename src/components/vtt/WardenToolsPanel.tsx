@@ -11,7 +11,6 @@ import {
 	Eye,
 	EyeOff,
 	Heart,
-	MapPin,
 	Minus,
 	Settings,
 	Skull,
@@ -56,9 +55,6 @@ import {
 	saveMacrosToLocal,
 } from "@/lib/vtt/rollMacros";
 
-const DungeonMapGenerator = lazy(
-	() => import("@/pages/warden-directives/DungeonMapGenerator"),
-);
 const EncounterBuilder = lazy(
 	() => import("@/pages/warden-directives/EncounterBuilder"),
 );
@@ -359,15 +355,15 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									<Dialog>
 										<DialogTrigger asChild>
 											<Button variant="outline" className="h-12 flex-col gap-1">
-												<MapPin className="w-4 h-4" />
-												<span className="text-xs">Dungeon</span>
+												<DoorOpen className="w-4 h-4" />
+												<span className="text-xs">Rift</span>
 											</Button>
 										</DialogTrigger>
 										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
 											<DialogHeader>
-												<DialogTitle>Dungeon Map Generator</DialogTitle>
+												<DialogTitle>Rift Generator</DialogTitle>
 											</DialogHeader>
-											<DungeonMapGenerator />
+											<GateGenerator />
 										</DialogContent>
 									</Dialog>
 
@@ -403,21 +399,6 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								</div>
 
 								<div className="grid grid-cols-2 gap-4">
-									<Dialog>
-										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
-												<DoorOpen className="w-4 h-4" />
-												<span className="text-xs">Rift</span>
-											</Button>
-										</DialogTrigger>
-										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-											<DialogHeader>
-												<DialogTitle>Rift Generator</DialogTitle>
-											</DialogHeader>
-											<GateGenerator />
-										</DialogContent>
-									</Dialog>
-
 									<Dialog>
 										<DialogTrigger asChild>
 											<Button variant="outline" className="h-12 flex-col gap-1">

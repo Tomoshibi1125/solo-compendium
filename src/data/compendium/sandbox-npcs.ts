@@ -1680,9 +1680,7 @@ export const getUnaffiliatedNPCs = (): SandboxNPC[] =>
 	);
 
 /** Get NPCs by faction */
-const getNPCsByFaction = (
-	faction: SandboxNPC["faction"],
-): SandboxNPC[] =>
+const _getNPCsByFaction = (faction: SandboxNPC["faction"]): SandboxNPC[] =>
 	sandboxRecruitableNPCs.filter((npc) => npc.faction === faction);
 
 /** Calculate XP needed for a given level */
@@ -1694,7 +1692,7 @@ const getXPForLevel = (level: number): number => {
 };
 
 /** Level up an NPC, returning updated data */
-const levelUpNPC = (npc: SandboxNPC): SandboxNPC => {
+const _levelUpNPC = (npc: SandboxNPC): SandboxNPC => {
 	if (npc.level >= npc.leveling.maxLevel) return npc;
 	const newLevel = npc.level + 1;
 	const newAbility = npc.leveling.levelAbilities[newLevel];
