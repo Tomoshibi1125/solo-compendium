@@ -1,6 +1,7 @@
 project_id = "rhqrtowjgocwkncqcerm"
 
 
+
 [functions.signup]
 verify_jwt = false
 
