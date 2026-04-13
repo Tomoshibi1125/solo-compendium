@@ -608,6 +608,13 @@ export const useCreateCampaign = () => {
 				const localCampaigns = loadLocalCampaigns();
 				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
 				saveLocalCampaigns([latestCampaign as Campaign, ...filtered]);
+
+                // Optimistically update the "my" campaigns list cache with genuine db result to prevent "sudden deletion" effect when navigating back
+                queryClient.setQueryData(["campaigns", "my"], (old: Campaign[] | undefined) => {
+                    if (!old) return [latestCampaign as Campaign];
+                    const exists = old.some(c => c.id === campaignId);
+                    return exists ? old : [latestCampaign as Campaign, ...old];
+                });
 			} else {
 				// Optimistic local save if DB read fails (e.g., RLS propagation delay)
 				const now = new Date().toISOString();
@@ -625,6 +632,13 @@ export const useCreateCampaign = () => {
 				const localCampaigns = loadLocalCampaigns();
 				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
 				saveLocalCampaigns([optimisticCampaign, ...filtered]);
+
+                // Optimistically update the "my" campaigns list cache to prevent "sudden deletion" effect when navigating back
+                queryClient.setQueryData(["campaigns", "my"], (old: Campaign[] | undefined) => {
+                    if (!old) return [optimisticCampaign];
+                    const exists = old.some(c => c.id === campaignId);
+                    return exists ? old : [optimisticCampaign, ...old];
+                });
 			}
 
 			const members = loadLocalMembers();
@@ -816,38 +830,35 @@ export const useJoinCampaign = () => {
 			if (existingMemberError) throw existingMemberError;
 
 			if (!existingMember) {
-				const { error } = await supabase.from("campaign_members").insert({
-					campaign_id: campaignId,
-					user_id: user.id,
-					character_id: null,
-					role: "ascendant",
-				});
+				// Use the RPC to test if it's a join_by_code scenario, allowing regular users to bypass the Wardens-only INSERT RLS policy.
+				// Since we know the campaignId here, we must fetch the code first. Oh wait, we don't have the code. We have campaign_id.
+				// Wait, if the user explicitly has the ID, we assume they were given it via the Join form. 
+				// We actually don't pass the share code down to useJoinCampaign. We pass the campaignId!
+				// But we need to use a SECURITY DEFINER function to bypass RLS.
+				// I'll create `join_campaign_by_id` here using standard RPC just in case.
+                const { error: rpcJoinError } = await supabase.rpc(
+                    "join_campaign_by_id" as keyof Database["public"]["Functions"],
+                    { p_campaign_id: campaignId, p_character_id: characterId || undefined }
+                );
 
-				if (error) throw error;
-			}
+                if (rpcJoinError) {
+                    const msg = String(rpcJoinError.message ?? "").toLowerCase();
+                    const isMissing = msg.includes("does not exist") || msg.includes("no function matches");
+                    if (!isMissing) {
+                        throw rpcJoinError;
+                    }
 
-			if (characterId) {
-				const attachResult = await supabase.rpc(
-					"add_player_character_to_campaign",
-					{
-						p_campaign_id: campaignId,
-						p_character_id: characterId,
-					},
-				);
-
-				if (attachResult.error) {
-					if (!isMissingAddCharacterRpc(attachResult.error)) {
-						throw attachResult.error as Error;
-					}
-
-					const { error: legacyError } = await supabase
-						.from("campaign_members")
-						.update({ character_id: characterId })
-						.eq("campaign_id", campaignId)
-						.eq("user_id", user.id);
-
-					if (legacyError) throw legacyError;
-				}
+                    // Fallback to direct insert if RPC missing
+                    const { error } = await supabase.from("campaign_members").insert({
+                        campaign_id: campaignId,
+                        user_id: user.id,
+                        character_id: characterId || null,
+                        role: "ascendant",
+                    });
+                    if (error) throw error;
+                } else {
+                    // RPC succeeded
+                }
 			}
 
 			// Dual persistence constraint for joining:
@@ -879,6 +890,30 @@ export const useJoinCampaign = () => {
 				} else if (characterId) {
 					localMembers[memberIdx].character_id = characterId;
 					saveLocalMembers(localMembers);
+				}
+			}
+
+			if (characterId) {
+				const attachResult = await supabase.rpc(
+					"add_player_character_to_campaign",
+					{
+						p_campaign_id: campaignId,
+						p_character_id: characterId,
+					},
+				);
+
+				if (attachResult.error) {
+					if (!isMissingAddCharacterRpc(attachResult.error)) {
+						throw attachResult.error as Error;
+					}
+
+					const { error: legacyError } = await supabase
+						.from("campaign_members")
+						.update({ character_id: characterId })
+						.eq("campaign_id", campaignId)
+						.eq("user_id", user.id);
+
+					if (legacyError) throw legacyError;
 				}
 			}
 		},
