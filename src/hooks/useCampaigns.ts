@@ -677,6 +677,18 @@ export const useCreateCampaign = () => {
 			// so CampaignDetail and invite modals show the actual share code
 			queryClient.setQueryData(["campaigns", campaignId], resolvedCampaign);
 
+			// Synchronously update the list cache to deliver seamless DDB/Roll20 level persistence
+			// instantly without background refetch popping
+			queryClient.setQueryData(
+				["campaigns", "my"],
+				(old: Campaign[] | undefined) => {
+					const existing = old || [];
+					if (existing.some((c) => c.id === resolvedCampaign.id))
+						return existing;
+					return [resolvedCampaign, ...existing];
+				},
+			);
+
 			const members = loadLocalMembers();
 			if (
 				!members.some(
@@ -697,13 +709,9 @@ export const useCreateCampaign = () => {
 			return campaignId;
 		},
 		onSuccess: () => {
-			// Delay list-query invalidation so the local-merged cache entry
-			// survives long enough for CampaignDetail to read it after navigate().
-			// Use 3s to give Supabase RLS time to propagate.
-			setTimeout(() => {
-				queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
-				queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
-			}, 3000);
+			// Trigger a background invalidation to ensure sync with remote without relying on an arbitrary timeout
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
 			toast({
 				title: "Campaign Created",
 				description: "Your campaign has been created with a share code.",
@@ -914,13 +922,15 @@ export const useJoinCampaign = () => {
 				const memberIdx = localMembers.findIndex(
 					(m) => m.campaign_id === campaignId && m.user_id === user.id,
 				);
+
+				const newRole = "ascendant";
 				if (memberIdx === -1) {
 					localMembers.push({
 						id: crypto.randomUUID(),
 						campaign_id: campaignId,
 						user_id: user.id,
 						character_id: characterId || null,
-						role: "ascendant",
+						role: newRole,
 						joined_at: new Date().toISOString(),
 					});
 					saveLocalMembers(localMembers);
@@ -928,6 +938,22 @@ export const useJoinCampaign = () => {
 					localMembers[memberIdx].character_id = characterId;
 					saveLocalMembers(localMembers);
 				}
+
+				// Synchronously update list cache for instant UI rendering
+				queryClient.setQueryData(
+					["campaigns", "joined"],
+					(old: (Campaign & { member_role: string })[] | undefined) => {
+						const existing = old || [];
+						if (existing.some((c) => c.id === joinedCampaign.id))
+							return existing;
+						return [
+							{ ...joinedCampaign, member_role: newRole } as Campaign & {
+								member_role: string;
+							},
+							...existing,
+						];
+					},
+				);
 			}
 		},
 		onSuccess: () => {
@@ -1095,7 +1121,15 @@ export const useLeaveCampaign = () => {
 
 			if (error) throw error;
 		},
-		onSuccess: () => {
+		onSuccess: (_, campaignId) => {
+			// Synchronously remove from joined list cache
+			queryClient.setQueryData(
+				["campaigns", "joined"],
+				(old: (Campaign & { member_role: string })[] | undefined) => {
+					if (!old) return [];
+					return old.filter((c) => c.id !== campaignId);
+				},
+			);
 			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
 			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			toast({
@@ -1390,7 +1424,15 @@ export const useDeleteCampaign = () => {
 
 			if (error) throw error;
 		},
-		onSuccess: () => {
+		onSuccess: (_, campaignId) => {
+			// Synchronously purge from caches
+			queryClient.setQueryData(
+				["campaigns", "my"],
+				(old: Campaign[] | undefined) => {
+					if (!old) return [];
+					return old.filter((c) => c.id !== campaignId);
+				},
+			);
 			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
 			toast({
