@@ -18,29 +18,29 @@ $$ LANGUAGE plpgsql;
 -- Replace overly permissive (true) policies with proper auth.uid() checks for compendium_locations
 DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON public.compendium_locations;
 CREATE POLICY "Enable insert for authenticated users only" ON public.compendium_locations
-    FOR INSERT TO authenticated WITH CHECK (auth.uid() IS NOT NULL);
+    FOR INSERT TO authenticated WITH CHECK ((select auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Enable update for authenticated users only" ON public.compendium_locations;
 CREATE POLICY "Enable update for authenticated users only" ON public.compendium_locations
-    FOR UPDATE TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+    FOR UPDATE TO authenticated USING ((select auth.uid()) IS NOT NULL) WITH CHECK ((select auth.uid()) IS NOT NULL);
 
 -- Replace overly permissive (true) policies with proper auth.uid() checks for compendium_spells
 DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON public.compendium_spells;
 CREATE POLICY "Enable insert for authenticated users only" ON public.compendium_spells
-    FOR INSERT TO authenticated WITH CHECK (auth.uid() IS NOT NULL);
+    FOR INSERT TO authenticated WITH CHECK ((select auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Enable update for authenticated users only" ON public.compendium_spells;
 CREATE POLICY "Enable update for authenticated users only" ON public.compendium_spells
-    FOR UPDATE TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+    FOR UPDATE TO authenticated USING ((select auth.uid()) IS NOT NULL) WITH CHECK ((select auth.uid()) IS NOT NULL);
 
 -- Replace overly permissive (true) policies with proper auth.uid() checks for compendium_tattoos
 DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON public.compendium_tattoos;
 CREATE POLICY "Enable insert for authenticated users only" ON public.compendium_tattoos
-    FOR INSERT TO authenticated WITH CHECK (auth.uid() IS NOT NULL);
+    FOR INSERT TO authenticated WITH CHECK ((select auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Enable update for authenticated users only" ON public.compendium_tattoos;
 CREATE POLICY "Enable update for authenticated users only" ON public.compendium_tattoos
-    FOR UPDATE TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+    FOR UPDATE TO authenticated USING ((select auth.uid()) IS NOT NULL) WITH CHECK ((select auth.uid()) IS NOT NULL);
 
 
 
