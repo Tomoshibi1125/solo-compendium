@@ -508,8 +508,8 @@ const CampaignDetail = () => {
 															</div>
 														</div>
 														<span className="text-xs font-display text-muted-foreground">
-															{isWarden
-																? "System"
+															{isWarden || member.role === "warden"
+																? "Warden"
 																: member.role === "co-warden"
 																	? "Co-Warden"
 																	: "Ascendant"}

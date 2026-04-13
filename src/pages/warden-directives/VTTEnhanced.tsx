@@ -1863,23 +1863,7 @@ const VTTEnhanced = () => {
 				<React.Suspense fallback={null}>
 					<WardenDirectiveMatrix />
 				</React.Suspense>
-				VTT
-				<VttPixiStage
-					containerRef={mapRef}
-					scene={currentScene}
-					tokens={visibleTokens}
-					gridSize={gridSize}
-					zoom={zoom}
-					showGrid={showGrid}
-					isWarden={isWarden}
-					effectiveVisibleLayers={visibleLayers}
-					activeTokenId={activeTokenId}
-					setActiveTokenId={setActiveTokenId}
-					updateToken={updateToken}
-					onRequestZoom={setZoom}
-					onTokenDragStart={handlePixiTokenDragStart}
-					onTokenDragEnd={handlePixiTokenDragEnd}
-				/>
+
 				{/* VTT Sub-Engine Processor (Resolves Knip Warnings and natively wires mechanics to tokens) */}
 				{currentScene && (
 					<VTTSubEngineProcessor

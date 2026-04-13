@@ -276,6 +276,138 @@ const PREMADE_MAPS: PremadeMap[] = [
 		theme: "umbral",
 		tags: ["painterly", "battlemap", "arcane", "schematic", "umbral"],
 	},
+	{
+		id: "hunters-guild-tavern",
+		name: "Hunter's Guild Tavern",
+		description:
+			"Warm candlelit tavern interior with bar, tables, fireplace, and back rooms. A favorite haunt of Ascendants between Gate dives.",
+		path: "/generated/maps/premade/hunters-guild-tavern.png",
+		thumbnail: "/generated/maps/premade/hunters-guild-tavern.png",
+		grid: GRID_32,
+		theme: "verdant",
+		tags: ["painterly", "battlemap", "tavern", "social", "guild", "verdant"],
+	},
+	{
+		id: "rift-touched-forest",
+		name: "Rift-Touched Forest",
+		description:
+			"Dense corrupted forest clearing with a glowing dimensional rift tear at its center. Purple-tinted streams and twisted roots.",
+		path: "/generated/maps/premade/rift-touched-forest.png",
+		thumbnail: "/generated/maps/premade/rift-touched-forest.png",
+		grid: GRID_48,
+		theme: "verdant",
+		tags: ["painterly", "battlemap", "forest", "rift", "outdoor", "verdant"],
+	},
+	{
+		id: "coastal-gate-breach",
+		name: "Coastal Gate Breach",
+		description:
+			"Rocky seaside cliffs with a massive dimensional gate breach emerging from the sea. Broken docks and crashing waves.",
+		path: "/generated/maps/premade/coastal-gate-breach.png",
+		thumbnail: "/generated/maps/premade/coastal-gate-breach.png",
+		grid: GRID_48,
+		theme: "frost",
+		tags: ["painterly", "battlemap", "coastal", "gate", "outdoor", "frost"],
+	},
+	{
+		id: "underground-river-crossing",
+		name: "Underground River Crossing",
+		description:
+			"Subterranean waterway with rope bridges, carved docks, and glowing crystals providing dim illumination.",
+		path: "/generated/maps/premade/underground-river-crossing.png",
+		thumbnail: "/generated/maps/premade/underground-river-crossing.png",
+		grid: GRID_48,
+		theme: "umbral",
+		tags: ["painterly", "battlemap", "underground", "river", "cavern", "umbral"],
+	},
+	{
+		id: "shadow-temple-sanctum",
+		name: "Shadow Temple Sanctum",
+		description:
+			"Grand ceremonial hall with obsidian pillars and a central altar emanating shadow energy. Violet braziers line the walls.",
+		path: "/generated/maps/premade/shadow-temple-sanctum.png",
+		thumbnail: "/generated/maps/premade/shadow-temple-sanctum.png",
+		grid: GRID_32,
+		theme: "umbral",
+		tags: ["painterly", "battlemap", "temple", "shadow", "ritual", "umbral"],
+	},
+	{
+		id: "raider-ship-deck",
+		name: "Raider Ship Deck",
+		description:
+			"Weathered sailing vessel deck with masts, cargo holds, captain's cabin, and cannons. Surrounded by dark ocean.",
+		path: "/generated/maps/premade/raider-ship-deck.png",
+		thumbnail: "/generated/maps/premade/raider-ship-deck.png",
+		grid: GRID_32,
+		theme: "frost",
+		tags: ["painterly", "battlemap", "ship", "nautical", "deck", "frost"],
+	},
+	{
+		id: "gatewatch-marketplace",
+		name: "Gatewatch Marketplace",
+		description:
+			"Open-air hunter's market with vendor stalls, a central fountain plaza, and narrow alley exits between stone buildings.",
+		path: "/generated/maps/premade/gatewatch-marketplace.png",
+		thumbnail: "/generated/maps/premade/gatewatch-marketplace.png",
+		grid: GRID_48,
+		theme: "verdant",
+		tags: ["painterly", "battlemap", "market", "town", "social", "verdant"],
+	},
+	{
+		id: "rift-corrupted-swamp",
+		name: "Rift-Corrupted Swamp",
+		description:
+			"Toxic swampland tainted by rift energy. Raised plank paths cross murky water, with glowing mushrooms and dead trees.",
+		path: "/generated/maps/premade/rift-corrupted-swamp.png",
+		thumbnail: "/generated/maps/premade/rift-corrupted-swamp.png",
+		grid: GRID_48,
+		theme: "verdant",
+		tags: ["painterly", "battlemap", "swamp", "rift", "outdoor", "verdant"],
+	},
+	{
+		id: "mountain-gate-pass",
+		name: "Mountain Gate Pass",
+		description:
+			"Narrow mountain trail winding between cliff faces with a dimensional gate portal at the summit.",
+		path: "/generated/maps/premade/mountain-gate-pass.png",
+		thumbnail: "/generated/maps/premade/mountain-gate-pass.png",
+		grid: GRID_32,
+		theme: "frost",
+		tags: ["painterly", "battlemap", "mountain", "gate", "outdoor", "frost"],
+	},
+	{
+		id: "detention-sector",
+		name: "Detention Sector",
+		description:
+			"Stone cellblock with iron-bar cells, a central guard station, interrogation room, and exercise yard.",
+		path: "/generated/maps/premade/detention-sector.png",
+		thumbnail: "/generated/maps/premade/detention-sector.png",
+		grid: GRID_32,
+		theme: "umbral",
+		tags: ["painterly", "battlemap", "prison", "dungeon", "umbral"],
+	},
+	{
+		id: "arcane-research-lab",
+		name: "Arcane Research Lab",
+		description:
+			"Stone chamber with glowing arcane circles, bookshelves, alchemist workbenches, and crystalline containment units.",
+		path: "/generated/maps/premade/arcane-research-lab.png",
+		thumbnail: "/generated/maps/premade/arcane-research-lab.png",
+		grid: GRID_32,
+		theme: "ember",
+		tags: ["painterly", "battlemap", "lab", "arcane", "magic", "ember"],
+	},
+	{
+		id: "necropolis-grounds",
+		name: "Necropolis Grounds",
+		description:
+			"Foggy cemetery with rows of headstones, a central mausoleum, dead trees, and partially open crypts leading underground.",
+		path: "/generated/maps/premade/necropolis-grounds.png",
+		thumbnail: "/generated/maps/premade/necropolis-grounds.png",
+		grid: GRID_48,
+		theme: "umbral",
+		tags: ["painterly", "battlemap", "graveyard", "undead", "outdoor", "umbral"],
+	},
 ];
 
 export default PREMADE_MAPS;
