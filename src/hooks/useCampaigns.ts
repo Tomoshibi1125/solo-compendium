@@ -1120,6 +1120,13 @@ export const useLeaveCampaign = () => {
 				.eq("user_id", user.id);
 
 			if (error) throw error;
+
+			// Also purge from local storage cache to prevent it from reappearing due to optimistic merging
+			const members = loadLocalMembers().filter(
+				(member) =>
+					!(member.campaign_id === campaignId && member.user_id === user.id),
+			);
+			saveLocalMembers(members);
 		},
 		onSuccess: (_, campaignId) => {
 			// Synchronously remove from joined list cache
@@ -1423,6 +1430,16 @@ export const useDeleteCampaign = () => {
 				.eq("warden_id", user.id);
 
 			if (error) throw error;
+
+			// Also purge from local storage cache to prevent it from reappearing due to optimistic merging
+			const campaigns = loadLocalCampaigns().filter(
+				(campaign) => campaign.id !== campaignId,
+			);
+			saveLocalCampaigns(campaigns);
+			const members = loadLocalMembers().filter(
+				(member) => member.campaign_id !== campaignId,
+			);
+			saveLocalMembers(members);
 		},
 		onSuccess: (_, campaignId) => {
 			// Synchronously purge from caches
