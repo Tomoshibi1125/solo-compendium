@@ -199,7 +199,7 @@ export const useJoinedCampaigns = () => {
 					.filter((member) => member.user_id === userId)
 					.map((member) => {
 						const campaign = campaigns.find((c) => c.id === member.campaign_id);
-						if (!campaign) return null;
+						if (!campaign || campaign.warden_id === userId) return null;
 						return { ...campaign, member_role: member.role };
 					})
 					.filter(Boolean) as (Campaign & { member_role: string })[];
@@ -218,7 +218,7 @@ export const useJoinedCampaigns = () => {
 							const campaign = campaigns.find(
 								(c) => c.id === member.campaign_id,
 							);
-							if (!campaign) return null;
+							if (!campaign || campaign.warden_id === userId) return null;
 							return { ...campaign, member_role: member.role };
 						})
 						.filter(Boolean) as (Campaign & { member_role: string })[];
@@ -241,10 +241,15 @@ export const useJoinedCampaigns = () => {
 					campaigns: Database["public"]["Tables"]["campaigns"]["Row"];
 					role: string;
 				}>
-			).map((member) => ({
-				...member.campaigns,
-				member_role: member.role,
-			})) as (Campaign & { member_role: string })[];
+			)
+				.filter(
+					(member) =>
+						member.campaigns && member.campaigns.warden_id !== user.id,
+				)
+				.map((member) => ({
+					...member.campaigns,
+					member_role: member.role,
+				})) as (Campaign & { member_role: string })[];
 
 			// Merge with local cache to cover RLS propagation delays —
 			// freshly-joined campaigns may not appear in Supabase yet
@@ -257,7 +262,7 @@ export const useJoinedCampaigns = () => {
 				.filter((m) => !supabaseIds.has(m.campaign_id))
 				.map((m) => {
 					const campaign = localCampaigns.find((c) => c.id === m.campaign_id);
-					if (!campaign) return null;
+					if (!campaign || campaign.warden_id === user.id) return null;
 					return { ...campaign, member_role: m.role };
 				})
 				.filter(Boolean) as (Campaign & { member_role: string })[];

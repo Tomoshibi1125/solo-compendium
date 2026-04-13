@@ -2053,7 +2053,7 @@ const VTTEnhanced = () => {
 							{/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 md:col-span-2 space-y-4 md:overflow-y-auto",
+									"col-span-1 lg:col-span-2 space-y-4 lg:overflow-y-auto",
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
 								)}
@@ -3132,8 +3132,8 @@ const VTTEnhanced = () => {
 							<div
 								className={cn(
 									isMapExpanded
-										? "col-span-1 md:col-span-12"
-										: "col-span-1 md:col-span-7",
+										? "col-span-1 lg:col-span-12"
+										: "col-span-1 lg:col-span-7",
 								)}
 							>
 								<AscendantWindow
@@ -3669,7 +3669,7 @@ const VTTEnhanced = () => {
 							{/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 md:col-span-3 space-y-4 md:overflow-y-auto",
+									"col-span-1 lg:col-span-3 space-y-4 lg:overflow-y-auto",
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
 								)}
@@ -4115,7 +4115,7 @@ const VTTEnhanced = () => {
 								</Dialog>
 
 								<Tabs defaultValue="initiative" className="w-full">
-									<TabsList className="grid w-full grid-cols-7 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+									<TabsList className="flex flex-wrap items-center w-full h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
 										<TabsTrigger
 											value="initiative"
 											className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
