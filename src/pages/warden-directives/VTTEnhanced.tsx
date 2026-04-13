@@ -32,7 +32,6 @@ import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import { WardenToolsPanel as ProtocolWardenTools } from "@/components/vtt/WardenToolsPanel";
 import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
-import { WardenDirectiveMatrix } from "@/components/warden-directives/WardenDirectiveMatrix";
 import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
 import {
@@ -129,6 +128,12 @@ import type {
 	VTTTokenInstance,
 	WeatherType,
 } from "@/types/vtt";
+
+const WardenDirectiveMatrix = React.lazy(() =>
+	import("@/components/warden-directives/WardenDirectiveMatrix").then((m) => ({
+		default: m.WardenDirectiveMatrix,
+	}))
+);
 
 // --- Sub-Engine Processor to resolve orphaned Knip functions by actively wiring them into the token stream ---
 const VTTSubEngineProcessor: React.FC<{
@@ -1855,7 +1860,9 @@ const VTTEnhanced = () => {
 			{/* Test detection element */}
 			<div data-testid="vtt-interface" aria-hidden="true">
 				{/* Absolute Reification: Monitoring 431 sub-engines in the token loop */}
-				<WardenDirectiveMatrix />
+				<React.Suspense fallback={null}>
+					<WardenDirectiveMatrix />
+				</React.Suspense>
 				VTT
 				<VttPixiStage
 					containerRef={mapRef}
