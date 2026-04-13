@@ -28,6 +28,11 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 			progressString: "Starting Sandbox Injection...",
 		});
 
+		let wikiCount = 0;
+		let sceneCount = 0;
+		let npcCount = 0;
+		let handoutCount = 0;
+
 		try {
 			// Wait briefly for RLS propagation after campaign creation
 			await new Promise((resolve) => setTimeout(resolve, 800));
@@ -35,9 +40,12 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 			// 1. Inject Wiki Chapters
 			setInjectionState({
 				isInjecting: true,
-				progressString: "Generating Regional Wiki Lore...",
+				progressString: `Generating Regional Wiki Lore (0/${massiveSandboxModule.chapters.length})...`,
 			});
-			for (const chapter of massiveSandboxModule.chapters) {
+
+			for (let i = 0; i < massiveSandboxModule.chapters.length; i++) {
+				const chapter = massiveSandboxModule.chapters[i];
+
 				// Check if exists
 				const { data: existing } = await supabase
 					.from("campaign_wiki_articles")
@@ -56,23 +64,44 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 							category: "lore",
 							is_public: true,
 						});
+
 					if (wikiError) {
 						console.error(
 							"[SandboxInjector] Wiki insert failed:",
 							chapter.title,
 							wikiError,
 						);
+						// If the very first insert fails, it's likely an RLS issue — abort early
+						if (i === 0) {
+							toast({
+								title: "Module Import Failed — Permission Denied",
+								description:
+									"Could not write to campaign database. Please ensure you are the Warden of this campaign and that RLS policies are up to date.",
+								variant: "destructive",
+							});
+							return;
+						}
+					} else {
+						wikiCount++;
 					}
+				}
+
+				if (i % 5 === 0) {
+					setInjectionState({
+						isInjecting: true,
+						progressString: `Generating Regional Wiki Lore (${i + 1}/${massiveSandboxModule.chapters.length})...`,
+					});
 				}
 			}
 
 			// 2. Inject VTT Maps, Sessions, and Tokens
 			setInjectionState({
 				isInjecting: true,
-				progressString: "Constructing Sandbox Maps...",
+				progressString: `Constructing Sandbox Maps (0/${massiveSandboxModule.scenes.length})...`,
 			});
 
-			for (const scene of massiveSandboxModule.scenes) {
+			for (let i = 0; i < massiveSandboxModule.scenes.length; i++) {
+				const scene = massiveSandboxModule.scenes[i];
 				const sessionTitle = `Sandbox Region: ${scene.name}`;
 
 				// Dedup check: Avoid inserting the same scene session multiple times
@@ -85,33 +114,56 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 				if (existingSession) continue;
 
-				// Generate a deterministic session_id or let supersbase make one
+				// Generate a session_id
 				const newSessionId = crypto.randomUUID();
 
 				// Insert Active Session
-				await supabase.from("active_sessions").insert({
-					id: newSessionId,
-					campaign_id: targetId,
-					created_by: user.id,
-					title: sessionTitle,
-					status: "prep",
-					description: "Sandbox Map - Auto Generated",
-				});
+				const { error: sessionError } = await supabase
+					.from("active_sessions")
+					.insert({
+						id: newSessionId,
+						campaign_id: targetId,
+						created_by: user.id,
+						title: sessionTitle,
+						status: "prep",
+						description: "Sandbox Map - Auto Generated",
+					});
+
+				if (sessionError) {
+					console.error(
+						"[SandboxInjector] Session insert failed:",
+						sessionTitle,
+						sessionError,
+					);
+					continue;
+				}
+
+				sceneCount++;
 
 				// Insert Settings
-				await supabase.from("vtt_settings").insert({
-					session_id: newSessionId,
-					created_by: user.id,
-					background_color: "#18181b",
-					background_image_url: scene.backgroundImage || null,
-					dynamic_lighting_enabled: false,
-					fog_of_war_enabled: scene.fogOfWar,
-					grid_size: scene.gridSize,
-					grid_visible: true,
-					pan_x: 0,
-					pan_y: 0,
-					zoom_level: 1,
-				});
+				const { error: settingsError } = await supabase
+					.from("vtt_settings")
+					.insert({
+						session_id: newSessionId,
+						created_by: user.id,
+						background_color: "#18181b",
+						background_image_url: scene.backgroundImage || null,
+						dynamic_lighting_enabled: false,
+						fog_of_war_enabled: scene.fogOfWar,
+						grid_size: scene.gridSize,
+						grid_visible: true,
+						pan_x: 0,
+						pan_y: 0,
+						zoom_level: 1,
+					});
+
+				if (settingsError) {
+					console.error(
+						"[SandboxInjector] VTT settings insert failed:",
+						sessionTitle,
+						settingsError,
+					);
+				}
 
 				// Insert Tokens
 				setInjectionState({
@@ -146,7 +198,16 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 					});
 
 					// Bulk insert
-					await supabase.from("vtt_tokens").insert(tokenInserts);
+					const { error: tokenError } = await supabase
+						.from("vtt_tokens")
+						.insert(tokenInserts);
+					if (tokenError) {
+						console.error(
+							"[SandboxInjector] Token insert failed:",
+							scene.name,
+							tokenError,
+						);
+					}
 				}
 
 				// Insert Audio Tracks
@@ -162,18 +223,34 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						loop: true,
 						is_playing: true,
 					}));
-					await supabase.from("vtt_audio_tracks").insert(audioInserts);
+					const { error: audioError } = await supabase
+						.from("vtt_audio_tracks")
+						.insert(audioInserts);
+					if (audioError) {
+						console.error(
+							"[SandboxInjector] Audio insert failed:",
+							scene.name,
+							audioError,
+						);
+					}
 				}
+
+				setInjectionState({
+					isInjecting: true,
+					progressString: `Constructing Sandbox Maps (${i + 1}/${massiveSandboxModule.scenes.length})...`,
+				});
 			}
 
 			// 3. Inject NPCs
 			setInjectionState({
 				isInjecting: true,
-				progressString: "Sowing NPC Roster...",
+				progressString: `Sowing NPC Roster (0/${massiveSandboxModule.npcs?.length ?? 0})...`,
 			});
 
 			if (massiveSandboxModule.npcs && massiveSandboxModule.npcs.length > 0) {
-				for (const npc of massiveSandboxModule.npcs) {
+				for (let i = 0; i < massiveSandboxModule.npcs.length; i++) {
+					const npc = massiveSandboxModule.npcs[i];
+
 					const { data: existingNpc } = await supabase
 						.from("campaign_wiki_articles")
 						.select("id")
@@ -211,12 +288,31 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 							`- **Recruit Condition:** ${npc.recruitCondition}`,
 						].join("\n");
 
-						await supabase.from("campaign_wiki_articles").insert({
-							campaign_id: targetId,
-							title: npc.name,
-							content: npcContent,
-							category: "npc",
-							is_public: true, // NPCs in this module are generally known or encountered
+						const { error: npcError } = await supabase
+							.from("campaign_wiki_articles")
+							.insert({
+								campaign_id: targetId,
+								title: npc.name,
+								content: npcContent,
+								category: "npc",
+								is_public: true,
+							});
+
+						if (npcError) {
+							console.error(
+								"[SandboxInjector] NPC insert failed:",
+								npc.name,
+								npcError,
+							);
+						} else {
+							npcCount++;
+						}
+					}
+
+					if (i % 10 === 0) {
+						setInjectionState({
+							isInjecting: true,
+							progressString: `Sowing NPC Roster (${i + 1}/${massiveSandboxModule.npcs.length})...`,
 						});
 					}
 				}
@@ -225,15 +321,16 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 			// 4. Inject Handouts
 			setInjectionState({
 				isInjecting: true,
-				progressString: "Sowing Campaign Handouts...",
+				progressString: `Sowing Campaign Handouts (0/${massiveSandboxModule.handouts?.length ?? 0})...`,
 			});
 
 			if (
 				massiveSandboxModule.handouts &&
 				massiveSandboxModule.handouts.length > 0
 			) {
-				// We check against titles to prevent duplicates if Warden clicks 'Import Sandbox' multiple times
-				for (const h of massiveSandboxModule.handouts) {
+				for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
+					const h = massiveSandboxModule.handouts[i];
+
 					const { data: existingHandout } = await supabase
 						.from("vtt_journal_entries")
 						.select("id")
@@ -242,32 +339,76 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						.maybeSingle();
 
 					if (!existingHandout) {
-						await supabase.from("vtt_journal_entries").insert({
-							campaign_id: targetId,
-							user_id: user.id,
-							title: h.title,
-							content: h.content,
-							visible_to_players: h.visibleToPlayers,
-							category: h.category,
-						});
+						const { error: handoutError } = await supabase
+							.from("vtt_journal_entries")
+							.insert({
+								campaign_id: targetId,
+								user_id: user.id,
+								title: h.title,
+								content: h.content,
+								visible_to_players: h.visibleToPlayers,
+								category: h.category,
+							});
+
+						if (handoutError) {
+							console.error(
+								"[SandboxInjector] Handout insert failed:",
+								h.title,
+								handoutError,
+							);
+						} else {
+							handoutCount++;
+						}
 					}
 				}
 			}
 
-			toast({
-				title: "Sandbox Generated Successfully!",
-				description: "Wiki chapters and VTT Maps are fully populated.",
-			});
+			const summary = [
+				wikiCount > 0 ? `${wikiCount} wiki chapters` : null,
+				sceneCount > 0 ? `${sceneCount} VTT maps` : null,
+				npcCount > 0 ? `${npcCount} NPCs` : null,
+				handoutCount > 0 ? `${handoutCount} handouts` : null,
+			]
+				.filter(Boolean)
+				.join(", ");
 
-			queryClient.invalidateQueries({ queryKey: ["campaign_wiki_articles"] });
+			if (summary) {
+				toast({
+					title: "Sandbox Generated Successfully!",
+					description: `Imported: ${summary}.`,
+				});
+			} else {
+				toast({
+					title: "Sandbox Already Imported",
+					description:
+						"All module content was already present. No new data was added.",
+				});
+			}
+
+			// Invalidate queries with campaign-scoped keys
+			queryClient.invalidateQueries({
+				queryKey: ["campaign_wiki_articles", targetId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["campaign_wiki_articles"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["active_sessions", targetId],
+			});
 			queryClient.invalidateQueries({ queryKey: ["active_sessions"] });
+			queryClient.invalidateQueries({
+				queryKey: ["vtt_journal_entries", targetId],
+			});
 			queryClient.invalidateQueries({ queryKey: ["vtt_journal_entries"] });
+			queryClient.invalidateQueries({
+				queryKey: ["campaign_sessions", targetId],
+			});
 		} catch (error) {
 			console.error("Sandbox Injection Error:", error);
 			toast({
 				title: "Sandbox Injection Failed",
 				description:
-					"An error occurred while generating the sandbox. See console.",
+					"An error occurred while generating the sandbox. See console for details.",
 				variant: "destructive",
 			});
 		} finally {
