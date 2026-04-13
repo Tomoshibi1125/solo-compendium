@@ -114,6 +114,7 @@ CREATE POLICY "active_sessions_delete" ON public.active_sessions
 -- ============================================================================
 
 DROP POLICY IF EXISTS "Users can view wiki articles in their campaigns" ON public.campaign_wiki_articles;
+DROP POLICY IF EXISTS "wiki_articles_select" ON public.campaign_wiki_articles;
 CREATE POLICY "wiki_articles_select" ON public.campaign_wiki_articles
   FOR SELECT
   TO authenticated
@@ -131,6 +132,7 @@ CREATE POLICY "wiki_articles_select" ON public.campaign_wiki_articles
   );
 
 DROP POLICY IF EXISTS "Users can create wiki articles in their campaigns" ON public.campaign_wiki_articles;
+DROP POLICY IF EXISTS "wiki_articles_insert" ON public.campaign_wiki_articles;
 CREATE POLICY "wiki_articles_insert" ON public.campaign_wiki_articles
   FOR INSERT
   TO authenticated
@@ -148,6 +150,7 @@ CREATE POLICY "wiki_articles_insert" ON public.campaign_wiki_articles
   );
 
 DROP POLICY IF EXISTS "Users can update their own or DM can update any wiki articles" ON public.campaign_wiki_articles;
+DROP POLICY IF EXISTS "wiki_articles_update" ON public.campaign_wiki_articles;
 CREATE POLICY "wiki_articles_update" ON public.campaign_wiki_articles
   FOR UPDATE
   TO authenticated
@@ -161,6 +164,7 @@ CREATE POLICY "wiki_articles_update" ON public.campaign_wiki_articles
   );
 
 DROP POLICY IF EXISTS "Users can delete their own or DM can delete any wiki articles" ON public.campaign_wiki_articles;
+DROP POLICY IF EXISTS "wiki_articles_delete" ON public.campaign_wiki_articles;
 CREATE POLICY "wiki_articles_delete" ON public.campaign_wiki_articles
   FOR DELETE
   TO authenticated
@@ -532,6 +536,7 @@ CREATE POLICY "roll_history_delete" ON public.roll_history
 
 -- vtt_chat_messages
 DROP POLICY IF EXISTS "Campaign members can view chat messages" ON public.vtt_chat_messages;
+DROP POLICY IF EXISTS "vtt_chat_messages_select" ON public.vtt_chat_messages;
 CREATE POLICY "vtt_chat_messages_select" ON public.vtt_chat_messages
   FOR SELECT TO authenticated
   USING (
@@ -544,6 +549,7 @@ CREATE POLICY "vtt_chat_messages_select" ON public.vtt_chat_messages
   );
 
 DROP POLICY IF EXISTS "Campaign members can send chat messages" ON public.vtt_chat_messages;
+DROP POLICY IF EXISTS "vtt_chat_messages_insert" ON public.vtt_chat_messages;
 CREATE POLICY "vtt_chat_messages_insert" ON public.vtt_chat_messages
   FOR INSERT TO authenticated
   WITH CHECK (
@@ -556,6 +562,7 @@ CREATE POLICY "vtt_chat_messages_insert" ON public.vtt_chat_messages
   );
 
 DROP POLICY IF EXISTS "DMs can delete chat messages" ON public.vtt_chat_messages;
+DROP POLICY IF EXISTS "vtt_chat_messages_delete" ON public.vtt_chat_messages;
 CREATE POLICY "vtt_chat_messages_delete" ON public.vtt_chat_messages
   FOR DELETE TO authenticated
   USING (
