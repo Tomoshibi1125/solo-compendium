@@ -148,8 +148,31 @@ export const useMyCampaigns = () => {
 				.order("created_at", { ascending: false });
 
 			if (error) throw error;
-			return (data || []) as Campaign[];
+			const supabaseCampaigns = (data || []) as Campaign[];
+
+			// Merge with local cache to cover RLS propagation delays —
+			// newly-created campaigns may not appear in Supabase yet
+			const localCampaigns = loadLocalCampaigns().filter(
+				(lc) => lc.warden_id === user.id,
+			);
+			const supabaseIds = new Set(supabaseCampaigns.map((c) => c.id));
+			const merged = [
+				...supabaseCampaigns,
+				...localCampaigns.filter((lc) => !supabaseIds.has(lc.id)),
+			];
+
+			// Sync local cache with fresh Supabase data
+			const allLocal = loadLocalCampaigns();
+			const freshMap = new Map(supabaseCampaigns.map((c) => [c.id, c]));
+			const synced = allLocal.map((lc) => freshMap.get(lc.id) || lc);
+			for (const sc of supabaseCampaigns) {
+				if (!synced.some((s) => s.id === sc.id)) synced.push(sc);
+			}
+			saveLocalCampaigns(synced);
+
+			return merged.sort((a, b) => b.created_at.localeCompare(a.created_at));
 		},
+		staleTime: 30_000,
 		retry: (failureCount) => {
 			if (failureCount < 2) return true;
 			return false;
@@ -208,7 +231,7 @@ export const useJoinedCampaigns = () => {
 				.order("joined_at", { ascending: false });
 
 			if (error) throw error;
-			return (
+			const supabaseJoined = (
 				(data || []) as Array<{
 					campaigns: Database["public"]["Tables"]["campaigns"]["Row"];
 					role: string;
@@ -217,7 +240,26 @@ export const useJoinedCampaigns = () => {
 				...member.campaigns,
 				member_role: member.role,
 			})) as (Campaign & { member_role: string })[];
+
+			// Merge with local cache to cover RLS propagation delays —
+			// freshly-joined campaigns may not appear in Supabase yet
+			const localCampaigns = loadLocalCampaigns();
+			const localMembers = loadLocalMembers().filter(
+				(m) => m.user_id === user.id && m.role !== "warden",
+			);
+			const supabaseIds = new Set(supabaseJoined.map((c) => c.id));
+			const localJoined = localMembers
+				.filter((m) => !supabaseIds.has(m.campaign_id))
+				.map((m) => {
+					const campaign = localCampaigns.find((c) => c.id === m.campaign_id);
+					if (!campaign) return null;
+					return { ...campaign, member_role: m.role };
+				})
+				.filter(Boolean) as (Campaign & { member_role: string })[];
+
+			return [...supabaseJoined, ...localJoined];
 		},
+		staleTime: 30_000,
 		retry: (failureCount) => {
 			if (failureCount < 2) return true;
 			return false;
@@ -604,26 +646,23 @@ export const useCreateCampaign = () => {
 				.eq("id", campaignId)
 				.maybeSingle();
 
+			let resolvedCampaign: Campaign;
+
 			if (!fetchError && latestCampaign) {
+				resolvedCampaign = latestCampaign as Campaign;
 				const localCampaigns = loadLocalCampaigns();
 				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
-				saveLocalCampaigns([latestCampaign as Campaign, ...filtered]);
-
-                // Optimistically update the "my" campaigns list cache with genuine db result to prevent "sudden deletion" effect when navigating back
-                queryClient.setQueryData(["campaigns", "my"], (old: Campaign[] | undefined) => {
-                    if (!old) return [latestCampaign as Campaign];
-                    const exists = old.some(c => c.id === campaignId);
-                    return exists ? old : [latestCampaign as Campaign, ...old];
-                });
+				saveLocalCampaigns([resolvedCampaign, ...filtered]);
 			} else {
 				// Optimistic local save if DB read fails (e.g., RLS propagation delay)
+				// Always use the generated shareCode — never a placeholder
 				const now = new Date().toISOString();
-				const optimisticCampaign: Campaign = {
+				resolvedCampaign = {
 					id: campaignId,
 					name,
 					description: description || null,
 					warden_id: user.id,
-					share_code: shareCode || "------",
+					share_code: shareCode,
 					is_active: true,
 					settings: { leveling_mode: "milestone" },
 					created_at: now,
@@ -631,15 +670,12 @@ export const useCreateCampaign = () => {
 				};
 				const localCampaigns = loadLocalCampaigns();
 				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
-				saveLocalCampaigns([optimisticCampaign, ...filtered]);
-
-                // Optimistically update the "my" campaigns list cache to prevent "sudden deletion" effect when navigating back
-                queryClient.setQueryData(["campaigns", "my"], (old: Campaign[] | undefined) => {
-                    if (!old) return [optimisticCampaign];
-                    const exists = old.some(c => c.id === campaignId);
-                    return exists ? old : [optimisticCampaign, ...old];
-                });
+				saveLocalCampaigns([resolvedCampaign, ...filtered]);
 			}
+
+			// Update the per-campaign React Query cache with real data
+			// so CampaignDetail and invite modals show the actual share code
+			queryClient.setQueryData(["campaigns", campaignId], resolvedCampaign);
 
 			const members = loadLocalMembers();
 			if (
@@ -661,15 +697,13 @@ export const useCreateCampaign = () => {
 			return campaignId;
 		},
 		onSuccess: () => {
-			// Delay list-query invalidation so the optimistic cache entry
-			// seeded by the caller survives long enough for CampaignDetail
-			// to read it after navigate().  Without this delay, React Query
-			// refetches the list immediately and the new campaign may not
-			// appear in the Supabase result yet (RLS propagation lag).
+			// Delay list-query invalidation so the local-merged cache entry
+			// survives long enough for CampaignDetail to read it after navigate().
+			// Use 3s to give Supabase RLS time to propagate.
 			setTimeout(() => {
 				queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 				queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
-			}, 1000);
+			}, 3000);
 			toast({
 				title: "Campaign Created",
 				description: "Your campaign has been created with a share code.",
@@ -732,7 +766,7 @@ export const useUpdateCampaign = () => {
 			queryClient.invalidateQueries({
 				queryKey: ["campaigns", variables.campaignId],
 			});
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			toast({
 				title: "Campaign updated",
 				description: "Your changes have been saved.",
@@ -830,35 +864,38 @@ export const useJoinCampaign = () => {
 			if (existingMemberError) throw existingMemberError;
 
 			if (!existingMember) {
-				// Use the RPC to test if it's a join_by_code scenario, allowing regular users to bypass the Wardens-only INSERT RLS policy.
-				// Since we know the campaignId here, we must fetch the code first. Oh wait, we don't have the code. We have campaign_id.
-				// Wait, if the user explicitly has the ID, we assume they were given it via the Join form. 
-				// We actually don't pass the share code down to useJoinCampaign. We pass the campaignId!
-				// But we need to use a SECURITY DEFINER function to bypass RLS.
-				// I'll create `join_campaign_by_id` here using standard RPC just in case.
-                const { error: rpcJoinError } = await supabase.rpc(
-                    "join_campaign_by_id" as keyof Database["public"]["Functions"],
-                    { p_campaign_id: campaignId, p_character_id: characterId || undefined }
-                );
+				const { error } = await supabase.from("campaign_members").insert({
+					campaign_id: campaignId,
+					user_id: user.id,
+					character_id: null,
+					role: "ascendant",
+				});
 
-                if (rpcJoinError) {
-                    const msg = String(rpcJoinError.message ?? "").toLowerCase();
-                    const isMissing = msg.includes("does not exist") || msg.includes("no function matches");
-                    if (!isMissing) {
-                        throw rpcJoinError;
-                    }
+				if (error) throw error;
+			}
 
-                    // Fallback to direct insert if RPC missing
-                    const { error } = await supabase.from("campaign_members").insert({
-                        campaign_id: campaignId,
-                        user_id: user.id,
-                        character_id: characterId || null,
-                        role: "ascendant",
-                    });
-                    if (error) throw error;
-                } else {
-                    // RPC succeeded
-                }
+			if (characterId) {
+				const attachResult = await supabase.rpc(
+					"add_player_character_to_campaign",
+					{
+						p_campaign_id: campaignId,
+						p_character_id: characterId,
+					},
+				);
+
+				if (attachResult.error) {
+					if (!isMissingAddCharacterRpc(attachResult.error)) {
+						throw attachResult.error as Error;
+					}
+
+					const { error: legacyError } = await supabase
+						.from("campaign_members")
+						.update({ character_id: characterId })
+						.eq("campaign_id", campaignId)
+						.eq("user_id", user.id);
+
+					if (legacyError) throw legacyError;
+				}
 			}
 
 			// Dual persistence constraint for joining:
@@ -892,33 +929,9 @@ export const useJoinCampaign = () => {
 					saveLocalMembers(localMembers);
 				}
 			}
-
-			if (characterId) {
-				const attachResult = await supabase.rpc(
-					"add_player_character_to_campaign",
-					{
-						p_campaign_id: campaignId,
-						p_character_id: characterId,
-					},
-				);
-
-				if (attachResult.error) {
-					if (!isMissingAddCharacterRpc(attachResult.error)) {
-						throw attachResult.error as Error;
-					}
-
-					const { error: legacyError } = await supabase
-						.from("campaign_members")
-						.update({ character_id: characterId })
-						.eq("campaign_id", campaignId)
-						.eq("user_id", user.id);
-
-					if (legacyError) throw legacyError;
-				}
-			}
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
 			queryClient.invalidateQueries({ queryKey: ["characters"] });
 			toast({
 				title: "Joined Campaign",
@@ -1020,7 +1033,8 @@ export const useLinkCampaignCharacter = () => {
 			}
 		},
 		onSuccess: (_, variables) => {
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			queryClient.invalidateQueries({
 				queryKey: ["campaigns", variables.campaignId, "members"],
 			});
@@ -1082,7 +1096,8 @@ export const useLeaveCampaign = () => {
 			if (error) throw error;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			toast({
 				title: "Left Campaign",
 				description: "You have left the campaign.",
@@ -1376,7 +1391,8 @@ export const useDeleteCampaign = () => {
 			if (error) throw error;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
 			toast({
 				title: "Campaign Deleted",
 				description: "The campaign has been permanently deleted.",
@@ -1440,7 +1456,7 @@ export const useRegenerateShareCode = () => {
 		},
 		onSuccess: (_, campaignId) => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns", campaignId] });
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			toast({
 				title: "Share Code Regenerated",
 				description:

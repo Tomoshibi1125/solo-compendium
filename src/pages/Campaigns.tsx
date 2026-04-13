@@ -78,21 +78,34 @@ const Campaigns = () => {
 				description: campaignDescription || undefined,
 			});
 
-			// Optimistically seed query cache so CampaignDetail loads instantly
-			// without waiting for Supabase RLS propagation
+			// Seed optimistic cache with a temporary share code —
+			// the mutation itself will overwrite this with real data from Supabase
 			const wardenId = user?.id || getLocalUserId();
 			const now = new Date().toISOString();
-			queryClient.setQueryData(["campaigns", campaignId], {
-				id: campaignId,
-				name: campaignName,
-				description: campaignDescription || null,
-				warden_id: wardenId,
-				share_code: "------",
-				is_active: true,
-				created_at: now,
-				updated_at: now,
-				settings: { leveling_mode: "milestone" },
-			});
+			const tempShareCode = Array.from(
+				{ length: 6 },
+				() =>
+					"ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random() * 31)],
+			).join("");
+
+			// Only seed if the mutation hasn't already populated the cache
+			const existingCached = queryClient.getQueryData([
+				"campaigns",
+				campaignId,
+			]);
+			if (!existingCached) {
+				queryClient.setQueryData(["campaigns", campaignId], {
+					id: campaignId,
+					name: campaignName,
+					description: campaignDescription || null,
+					warden_id: wardenId,
+					share_code: tempShareCode,
+					is_active: true,
+					created_at: now,
+					updated_at: now,
+					settings: { leveling_mode: "milestone" },
+				});
+			}
 
 			// Seed warden access so CampaignDetail shows share code immediately
 			queryClient.setQueryData(

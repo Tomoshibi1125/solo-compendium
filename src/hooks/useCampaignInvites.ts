@@ -340,7 +340,8 @@ export const useAddPlayerCharacterToCampaign = () => {
 			return data as string;
 		},
 		onSuccess: (_, variables) => {
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			queryClient.invalidateQueries({
 				queryKey: ["campaigns", variables.campaignId, "members"],
 			});
@@ -544,7 +545,8 @@ export const useRedeemCampaignInvite = () => {
 			return campaignId;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			queryClient.invalidateQueries({ queryKey: ["characters"] });
 			toast({
 				title: "Invite accepted",

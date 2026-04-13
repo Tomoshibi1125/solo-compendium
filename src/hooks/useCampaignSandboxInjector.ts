@@ -183,7 +183,33 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 					if (!existingNpc) {
 						// Build markdown stat block for NPC
-						const npcContent = `## ${npc.name}\n**Role:** ${npc.title}\n**Affiliation:** ${npc.affiliation}\n\n**Description:**\n${npc.description}\n\n### Traits\n- **Trait 1:** ${npc.trait1}\n- **Trait 2:** ${npc.trait2}\n\n### Motivations\n- ${npc.motivation1}\n- ${npc.motivation2}\n\n### Mechanics\n- **Base Level:** ${npc.baseLevel}\n- **Class/Job:** ${npc.assignedJob}\n- **Recruitable:** ${npc.recruitable ? "Yes" : "No"}`;
+						const npcContent = [
+							`## ${npc.name}`,
+							`**Role:** ${npc.title}`,
+							`**Affiliation:** ${npc.guildAffiliation ?? "Unaffiliated"}`,
+							``,
+							`**Description:**`,
+							npc.description,
+							``,
+							`### Personality`,
+							npc.personality,
+							``,
+							`### Motivation`,
+							npc.motivation,
+							``,
+							`### Backstory`,
+							npc.backstory,
+							``,
+							`### Key Abilities`,
+							...npc.keyAbilities.map((a) => `- ${a}`),
+							``,
+							`### Mechanics`,
+							`- **Level:** ${npc.level}`,
+							`- **Class/Job:** ${npc.job}`,
+							`- **HP:** ${npc.hp} | **AC:** ${npc.ac}`,
+							`- **Recruitable:** ${npc.isRecruitable ? "Yes" : "No"}`,
+							`- **Recruit Condition:** ${npc.recruitCondition}`,
+						].join("\n");
 
 						await supabase.from("campaign_wiki_articles").insert({
 							campaign_id: targetId,
