@@ -34,8 +34,36 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		let handoutCount = 0;
 
 		try {
-			// Wait briefly for RLS propagation after campaign creation
-			await new Promise((resolve) => setTimeout(resolve, 800));
+			// 0. Verify RLS and propagation are settled before injecting
+			setInjectionState({
+				isInjecting: true,
+				progressString: "Verifying Database Connection & Permissions...",
+			});
+
+			let isReady = false;
+			for (let attempt = 0; attempt < 5; attempt++) {
+				const { data: campaignTest, error: testError } = await supabase
+					.from("campaigns")
+					.select("id")
+					.eq("id", targetId)
+					.maybeSingle();
+				
+				if (campaignTest) {
+					isReady = true;
+					break;
+				}
+				
+				await new Promise((resolve) => setTimeout(resolve, 800));
+			}
+
+			if (!isReady) {
+				toast({
+					title: "Pre-Flight Check Failed",
+					description: "Campaign database is not responsive or sync is delayed. Try again in a few moments.",
+					variant: "destructive"
+				});
+				return;
+			}
 
 			// 1. Inject Wiki Chapters
 			setInjectionState({
@@ -74,9 +102,9 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						// If the very first insert fails, it's likely an RLS issue — abort early
 						if (i === 0) {
 							toast({
-								title: "Module Import Failed — Permission Denied",
+								title: "Module Import Failed",
 								description:
-									"Could not write to campaign database. Please ensure you are the Warden of this campaign and that RLS policies are up to date.",
+									`Database error: ${wikiError.message || "Permission Denied"}. Please ensure you are the Warden.`,
 								variant: "destructive",
 							});
 							return;
