@@ -218,7 +218,9 @@
    ============================================================ */
 html,
 body {
+	height: 100dvh;
 	overflow-x: hidden;
+	font-size: clamp(14px, 1.2vw + 12px, 18px); /* Fluid typography */
 	touch-action: manipulation;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -464,7 +466,7 @@ h3 {
 	}
 }
 
-.system-overlay-chromatic {
+.ascendant-overlay-chromatic {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -477,13 +479,13 @@ h3 {
 
 @supports (backdrop-filter: contrast(1.05)) or
 	(-webkit-backdrop-filter: contrast(1.05)) {
-	.system-overlay-chromatic {
+	.ascendant-overlay-chromatic {
 		-webkit-backdrop-filter: contrast(1.05) saturate(1.1);
 		backdrop-filter: contrast(1.05) saturate(1.1);
 	}
 }
 
-.system-overlay-scanlines {
+.ascendant-overlay-scanlines {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -500,7 +502,7 @@ h3 {
 	opacity: 0.3;
 }
 
-.system-overlay-grain {
+.ascendant-overlay-grain {
 	position: fixed;
 	top: 0;
 	left: 0;

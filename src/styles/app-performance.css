@@ -164,9 +164,9 @@ img[loading="lazy"] {
 	}
 
 	html body .holographic-flicker,
-	html body .system-overlay-scanlines,
-	html body .system-overlay-chromatic,
-	html body .system-overlay-grain {
+	html body .ascendant-overlay-scanlines,
+	html body .ascendant-overlay-chromatic,
+	html body .ascendant-overlay-grain {
 		animation: none;
 		opacity: 0;
 	}
@@ -220,11 +220,6 @@ img[loading="lazy"] {
 /* ── 10. Mobile Typography Scaling ───────────────────────────────────── */
 
 @media (max-width: 475px) {
-	/* Slightly bump base font for readability on small screens */
-	html {
-		font-size: 15px;
-	}
-
 	/* Headings: scale down proportionally */
 	h1 {
 		font-size: 1.5rem;
@@ -254,12 +249,6 @@ img[loading="lazy"] {
 	}
 	.p-4 {
 		padding: 0.75rem;
-	}
-}
-
-@media (min-width: 476px) and (max-width: 768px) {
-	html {
-		font-size: 15.5px;
 	}
 }
 
@@ -332,9 +321,9 @@ img[loading="lazy"] {
 
 @media print {
 	/* Remove ALL decorative overlays */
-	html body .system-overlay-scanlines,
-	html body .system-overlay-chromatic,
-	html body .system-overlay-grain,
+	html body .ascendant-overlay-scanlines,
+	html body .ascendant-overlay-chromatic,
+	html body .ascendant-overlay-grain,
 	html body .holographic-flicker,
 	html body nav,
 	html body header,
