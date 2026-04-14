@@ -59,9 +59,9 @@ export const AIRequestSchema = z.object({
 		"generate-quests",
 		"generate-optimizations",
 	]),
-	input: z.any(),
-	context: z.record(z.string(), z.any()).optional(),
-	options: z.record(z.string(), z.any()).optional(),
+	input: z.unknown(),
+	context: z.record(z.string(), z.unknown()).optional(),
+	options: z.record(z.string(), z.unknown()).optional(),
 });
 
 export type AIRequest = z.infer<typeof AIRequestSchema>;
@@ -70,7 +70,7 @@ export type AIRequest = z.infer<typeof AIRequestSchema>;
 export const AIResponseSchema = z.discriminatedUnion("success", [
 	z.object({
 		success: z.literal(true),
-		data: z.any(),
+		data: z.unknown(),
 		error: z.string().optional(),
 		usage: z
 			.object({
@@ -79,11 +79,11 @@ export const AIResponseSchema = z.discriminatedUnion("success", [
 				totalTokens: z.number().optional(),
 			})
 			.optional(),
-		metadata: z.record(z.string(), z.any()).optional(),
+		metadata: z.record(z.string(), z.unknown()).optional(),
 	}),
 	z.object({
 		success: z.literal(false),
-		data: z.any().optional(),
+		data: z.unknown().optional(),
 		error: z.string(),
 		usage: z
 			.object({
@@ -92,7 +92,7 @@ export const AIResponseSchema = z.discriminatedUnion("success", [
 				totalTokens: z.number().optional(),
 			})
 			.optional(),
-		metadata: z.record(z.string(), z.any()).optional(),
+		metadata: z.record(z.string(), z.unknown()).optional(),
 	}),
 ]);
 

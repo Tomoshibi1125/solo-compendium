@@ -64,7 +64,6 @@ import {
 import { useCharacters } from "@/hooks/useCharacters";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
-import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 const CampaignDetail = () => {
@@ -206,10 +205,10 @@ const CampaignDetail = () => {
 						<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-2">
 							<div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
 								<RiftHeading
-									level={1}
+									level={2}
 									variant="sovereign"
 									dimensional
-									className="leading-tight"
+									className="leading-tight text-2xl sm:text-3xl md:text-4xl"
 								>
 									{campaign.name.toUpperCase()}
 								</RiftHeading>
@@ -218,7 +217,7 @@ const CampaignDetail = () => {
 							{hasWardenAccess && (
 								<Button
 									variant="outline"
-									className="border-primary/50 hover:border-primary hover:bg-primary/10 gap-2"
+									className="border-primary/80 hover:border-primary hover:bg-primary/10 gap-2 font-display text-xs tracking-wider shadow-[0_0_10px_rgba(157,78,221,0.2)]"
 									asChild
 								>
 									<Link to={`/campaigns/${id}/book`}>
@@ -244,13 +243,7 @@ const CampaignDetail = () => {
 						onValueChange={setActiveTab}
 						className="space-y-6"
 					>
-						<TabsList
-							className={cn(
-								hasWardenAccess
-									? "grid w-full grid-cols-4 sm:grid-cols-6 lg:grid-cols-8"
-									: "grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-7",
-							)}
-						>
+						<TabsList className="flex flex-wrap h-auto gap-1 p-1 bg-muted/20 border border-border">
 							<TabsTrigger
 								value="overview"
 								className="gap-2 text-xs sm:text-sm min-h-[44px]"
@@ -431,7 +424,7 @@ const CampaignDetail = () => {
 														</AscendantText>
 													</div>
 													<Button
-														className="w-full mt-2"
+														className="w-full mt-2 font-display text-xs tracking-widest bg-primary hover:bg-primary/80 text-primary-foreground shadow-lg shadow-primary/20"
 														onClick={() => setInviteModalOpen(true)}
 													>
 														<UserPlus className="w-4 h-4 mr-2" />
@@ -501,7 +494,7 @@ const CampaignDetail = () => {
 																	<Button
 																		size="sm"
 																		variant="outline"
-																		className="mt-1 h-7 text-xs"
+																		className="mt-1 h-7 text-[10px] border-primary/70 hover:border-primary"
 																		onClick={() => setAttachDialogOpen(true)}
 																	>
 																		Attach Ascendant

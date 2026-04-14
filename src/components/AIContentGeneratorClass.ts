@@ -134,7 +134,7 @@ export class AIContentGenerator {
 		return enhancedPrompt;
 	}
 
-	private resolveContentText(data: Json): string {
+	private resolveContentText(data: unknown): string {
 		if (typeof data === "string") {
 			return data;
 		}

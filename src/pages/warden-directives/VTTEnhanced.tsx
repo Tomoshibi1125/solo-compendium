@@ -298,7 +298,8 @@ type CharacterSummary = {
 	armor_class?: number;
 	portrait_url?: string | null;
 	level?: number;
-	job?: string;
+	job?: string | null;
+	hit_dice_size?: number;
 };
 
 /** Shape returned by useCampaignMembers – member row + joined character summary */
@@ -348,10 +349,13 @@ const _toRgba = (hex: string, alpha: number) => {
 
 const toSafeClassName = (value: string) => value.replace(/[^a-z0-9_-]/gi, "_");
 
-const isCharacterSummary = (
-	value: Record<string, unknown>,
-): value is CharacterSummary =>
-	typeof value.id === "string" && typeof value.name === "string";
+const isCharacterSummary = (value: unknown): value is CharacterSummary =>
+	typeof value === "object" &&
+	value !== null &&
+	"id" in value &&
+	"name" in value &&
+	typeof (value as { id: unknown }).id === "string" &&
+	typeof (value as { name: unknown }).name === "string";
 
 const normalizeScene = (scene: VTTScene): VTTScene => ({
 	...scene,
@@ -641,7 +645,7 @@ const VTTEnhanced = () => {
 				.map((member) => member.characters)
 				.filter((entry): entry is CharacterSummary => {
 					if (!entry || typeof entry !== "object") return false;
-					return isCharacterSummary(entry as Record<string, unknown>);
+					return isCharacterSummary(entry);
 				}),
 		[members],
 	);
@@ -659,7 +663,7 @@ const VTTEnhanced = () => {
 
 			if (!membersData) return [];
 			return membersData
-				.map((m: { characters: unknown | null }) => m.characters)
+				.map((m: { characters: CharacterSummary | null }) => m.characters)
 				.filter((entry): entry is CharacterSummary => {
 					if (!entry || typeof entry !== "object") return false;
 					return isCharacterSummary(entry as Record<string, unknown>);
@@ -1176,7 +1180,7 @@ const VTTEnhanced = () => {
 						campaignId || "global",
 						file,
 						"map",
-					)) as Record<string, unknown> | null;
+					)) as import("@/types/vtt").VTTAsset | null;
 					if (asset && typeof asset.imageUrl === "string") {
 						publicUrl = asset.imageUrl;
 					} else {
@@ -1721,7 +1725,12 @@ const VTTEnhanced = () => {
 			);
 
 			if (combatant) {
-				const stats = combatant.stats as Record<string, unknown>;
+				// Use a refined type for combatant stats
+				const stats = combatant.stats as {
+					hp?: number;
+					maxHp?: number;
+					ac?: number;
+				};
 				if (typeof stats?.hp === "number") hp = stats.hp;
 				if (typeof stats?.maxHp === "number") maxHp = stats.maxHp;
 				if (Array.isArray(combatant.conditions)) {

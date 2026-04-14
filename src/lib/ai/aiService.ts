@@ -264,7 +264,7 @@ export class AIServiceManager {
 			throw new AppError("Failed to generate tags", "AI_ERROR", response.error);
 		}
 
-		return response.data.tags || [];
+		return (response.data as { tags?: string[] }).tags || [];
 	}
 
 	/**
@@ -290,7 +290,7 @@ export class AIServiceManager {
 			throw new AppError("Failed to detect mood", "AI_ERROR", response.error);
 		}
 
-		return response.data.mood || "neutral";
+		return (response.data as { mood?: string }).mood || "neutral";
 	}
 
 	/**
@@ -324,7 +324,7 @@ export class AIServiceManager {
 			);
 		}
 
-		return response.data.variations || [];
+		return (response.data as { variations?: string[] }).variations || [];
 	}
 
 	/**
@@ -356,7 +356,11 @@ export class AIServiceManager {
 			);
 		}
 
-		return response.data;
+		return response.data as {
+			isAppropriate: boolean;
+			issues: string[];
+			suggestions: string[];
+		};
 	}
 
 	/**
@@ -387,7 +391,9 @@ export class AIServiceManager {
 			);
 		}
 
-		return response.data.variation || originalContent;
+		return (
+			(response.data as { variation?: string }).variation || originalContent
+		);
 	}
 
 	/**
@@ -504,8 +510,9 @@ export class AIServiceManager {
 				? request.input
 				: JSON.stringify(request.input ?? "");
 		const safeText = rawText?.trim() || inputText.trim();
-		const styleHint = request.context?.style || "Rift Ascendant";
-		const moodHint = request.context?.mood || "dramatic";
+		const context = (request.context || {}) as Record<string, unknown>;
+		const styleHint = (context.style as string) || "Rift Ascendant";
+		const moodHint = (context.mood as string) || "dramatic";
 
 		switch (request.type) {
 			case "enhance-prompt":
@@ -545,7 +552,17 @@ export class AIServiceManager {
 					suggestions: [],
 				};
 			case "analyze-audio": {
-				const features = request.context?.audioFeatures || {};
+				const features = (request.context?.audioFeatures || {}) as {
+					energy?: number;
+					mood?: string;
+					tempo?: number | null;
+					key?: string | null;
+					instruments?: string[];
+					genre?: string;
+					duration?: number;
+					loudness?: number | null;
+					spectralCentroid?: number | null;
+				};
 				const energy =
 					typeof features.energy === "number" ? features.energy : 0.5;
 				const mood =

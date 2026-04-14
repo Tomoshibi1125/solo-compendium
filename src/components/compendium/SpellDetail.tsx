@@ -21,6 +21,7 @@ import {
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type {
 	CompendiumEffects,
+	CompendiumLimitations,
 	CompendiumMechanics,
 	CompendiumSpell,
 } from "@/types/compendium";
@@ -345,74 +346,97 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{mechanics && (
 				<AscendantWindow title="MECHANICS">
 					<div className="space-y-4">
-						{mechanics.attack && (
-							<div className="flex items-start gap-2">
-								<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
-								<div>
-									<p className="font-heading capitalize">
-										{formatRegentVernacular(mechanics.attack.type || "")} attack
-									</p>
-									<p className="text-sm text-muted-foreground">
-										{mechanics.attack.damage
-											? formatRegentVernacular(
-													`Damage: ${typeof mechanics.attack.damage === "string" ? mechanics.attack.damage : mechanics.attack.damage.dice}`,
-												)
-											: "Damage varies"}
-										{mechanics.attack.modifier
-											? formatRegentVernacular(
-													` | Modifier: ${mechanics.attack.modifier}`,
-												)
-											: ""}
-									</p>
-								</div>
-							</div>
-						)}
-						{mechanics.saving_throw && (
-							<div className="flex items-start gap-2">
-								<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-								<div>
-									<p className="font-heading">
-										{formatRegentVernacular(
-											String(mechanics.saving_throw.ability || ""),
-										)}{" "}
-										Save
-									</p>
-									<p className="text-sm text-muted-foreground">
-										DC {mechanics.saving_throw.dc}
-									</p>
-									{mechanics.saving_throw.success && (
-										<p className="text-xs text-muted-foreground">
-											Success:{" "}
-											{formatRegentVernacular(mechanics.saving_throw.success)}
+						{(() => {
+							const m = mechanics as CompendiumMechanics;
+							const attack = m.attack;
+							if (!attack) return null;
+							return (
+								<div className="flex items-start gap-2">
+									<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading capitalize">
+											{formatRegentVernacular(attack.type || "")}
+											attack
 										</p>
-									)}
-								</div>
-							</div>
-						)}
-						{mechanics.movement && typeof mechanics.movement === "object" && (
-							<div className="flex items-start gap-2">
-								<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-								<div>
-									<p className="font-heading capitalize">
-										{formatRegentVernacular(mechanics.movement.type || "")}{" "}
-										movement
-									</p>
-									{mechanics.movement.distance !== undefined && (
 										<p className="text-sm text-muted-foreground">
-											{mechanics.movement.distance} ft
+											{attack.damage
+												? formatRegentVernacular(
+														`Damage: ${
+															typeof attack.damage === "string"
+																? attack.damage
+																: typeof attack.damage === "object" &&
+																		attack.damage !== null &&
+																		"dice" in (attack.damage as object)
+																	? (attack.damage as { dice: string }).dice
+																	: "Varies"
+														}`,
+													)
+												: "Damage varies"}
+											{attack.modifier
+												? formatRegentVernacular(
+														` | Modifier: ${attack.modifier}`,
+													)
+												: ""}
 										</p>
-									)}
+									</div>
 								</div>
-							</div>
-						)}
-						{Array.isArray(mechanics.condition) &&
-							mechanics.condition.length > 0 && (
+							);
+						})()}
+						{(() => {
+							const m = mechanics as CompendiumMechanics;
+							const st = m.saving_throw;
+							if (!st) return null;
+							return (
+								<div className="flex items-start gap-2">
+									<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading">
+											{formatRegentVernacular(String(st.ability || ""))} Save
+										</p>
+										<p className="text-sm text-muted-foreground">DC {st.dc}</p>
+										{st.success && (
+											<p className="text-xs text-muted-foreground">
+												Success: {formatRegentVernacular(st.success)}
+											</p>
+										)}
+									</div>
+								</div>
+							);
+						})()}
+						{(() => {
+							const movement = (mechanics as CompendiumMechanics).movement;
+							if (!movement) return null;
+							const isObj = typeof movement === "object";
+							return (
+								<div className="flex items-start gap-2">
+									<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading capitalize">
+											{formatRegentVernacular(
+												isObj ? movement.type || "" : (movement as string),
+											)}{" "}
+											movement
+										</p>
+										{isObj && movement.distance !== undefined && (
+											<p className="text-sm text-muted-foreground">
+												{movement.distance} ft
+											</p>
+										)}
+									</div>
+								</div>
+							);
+						})()}
+						{Array.isArray((mechanics as CompendiumMechanics).condition) &&
+							((mechanics as CompendiumMechanics).condition as string[])
+								.length > 0 && (
 								<div className="flex items-start gap-2">
 									<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
 									<div>
 										<p className="font-heading">Conditions</p>
 										<p className="text-sm text-muted-foreground">
-											{mechanics.condition
+											{(
+												(mechanics as CompendiumMechanics).condition as string[]
+											)
 												.map(formatRegentVernacular)
 												.join(", ")}
 										</p>
@@ -426,25 +450,36 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			{limitations && (
 				<AscendantWindow title="LIMITATIONS">
 					<ul className="space-y-2 text-sm">
-						{limitations.uses && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Uses: {formatRegentVernacular(limitations.uses)}</span>
-							</li>
-						)}
-						{limitations.recharge && (
+						{(limitations as CompendiumLimitations).uses && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Recharge: {formatRegentVernacular(limitations.recharge)}
+									Uses:{" "}
+									{formatRegentVernacular(
+										(limitations as CompendiumLimitations).uses || "",
+									)}
 								</span>
 							</li>
 						)}
-						{limitations.exhaustion && (
+						{(limitations as CompendiumLimitations).recharge && (
 							<li className="flex items-center gap-2">
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Exhaustion: {formatRegentVernacular(limitations.exhaustion)}
+									Recharge:{" "}
+									{formatRegentVernacular(
+										(limitations as CompendiumLimitations).recharge || "",
+									)}
+								</span>
+							</li>
+						)}
+						{(limitations as CompendiumLimitations).exhaustion && (
+							<li className="flex items-center gap-2">
+								<Shield className="w-4 h-4 text-muted-foreground" />
+								<span>
+									Exhaustion:{" "}
+									{formatRegentVernacular(
+										(limitations as CompendiumLimitations).exhaustion || "",
+									)}
 								</span>
 							</li>
 						)}

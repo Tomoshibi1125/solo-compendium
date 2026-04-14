@@ -98,11 +98,14 @@ Warden: ${userMessage.content}`;
 					timestamp: Date.now(),
 				};
 				setMessages((prev) => [...prev, assistantMessage]);
-			} else if (response.success && response.data?.content) {
+			} else if (
+				response.success &&
+				(response.data as { content?: string })?.content
+			) {
 				const assistantMessage: ChatMessage = {
 					id: (Date.now() + 1).toString(),
 					role: "assistant",
-					content: response.data.content,
+					content: (response.data as { content: string }).content,
 					timestamp: Date.now(),
 				};
 				setMessages((prev) => [...prev, assistantMessage]);

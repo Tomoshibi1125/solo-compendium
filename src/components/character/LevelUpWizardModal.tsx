@@ -57,6 +57,7 @@ import { getStaticRegents } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { CompendiumFeat, JobFeature } from "@/types/compendium";
 
 // Rift Ascendant XP Thresholds (cumulative XP needed to reach each level)
 const XP_THRESHOLDS = [
@@ -197,11 +198,17 @@ export const LevelUpWizardModal = ({
 			);
 
 			// Filter feats by prerequisites (level-based)
-			return accessible.filter((feat: unknown) => {
-				const prereqs = (feat as { prerequisites?: Record<string, unknown> })
-					.prerequisites;
-				if (!prereqs || typeof prereqs.level !== "number") return true;
-				return prereqs.level <= newLevel;
+			return accessible.filter((feat: CompendiumFeat) => {
+				const prereqs =
+					feat.prerequisites &&
+					typeof feat.prerequisites === "object" &&
+					!Array.isArray(feat.prerequisites)
+						? feat.prerequisites
+						: null;
+				if (!prereqs) return true;
+				const p = prereqs as Record<string, unknown>;
+				if (typeof p.level !== "number") return true;
+				return (p.level as number) <= newLevel;
 			});
 		},
 		enabled: !!character && isASILevel(newLevel, character?.job),
@@ -226,10 +233,18 @@ export const LevelUpWizardModal = ({
 				(m: { id: string }) => m.id === primaryRegentUnlock.regent_id,
 			)
 		: null;
-	const newRegentFeatures =
-		regentData?.class_features?.filter(
-			(f: Record<string, unknown>) => f.level === newLevel,
-		) ?? [];
+	const newRegentFeatures: JobFeature[] =
+		regentData?.class_features
+			?.filter((f) => f.level === newLevel)
+			.map((f, idx) => ({
+				id: `regent-lvl-${newLevel}-${idx}`,
+				name: f.name,
+				description: f.description,
+				level: f.level,
+				type: f.type,
+				frequency: f.frequency,
+				is_path_feature: false,
+			})) ?? [];
 
 	// Fetch features for the new level (DB first, static fallback)
 	const { data: newFeatures = [] } = useQuery({
@@ -1034,12 +1049,8 @@ export const LevelUpWizardModal = ({
 											features.
 										</p>
 										<div className="space-y-2 max-h-48 overflow-y-auto">
-											{availableFeats.map((_feat: unknown) => {
-												const feat = _feat as {
-													id: string;
-													name: string;
-													description?: string;
-												};
+											{availableFeats.map((_feat: CompendiumFeat) => {
+												const feat = _feat;
 												const isSelected = selectedFeats.includes(feat.id);
 												return (
 													<div
@@ -1108,15 +1119,7 @@ export const LevelUpWizardModal = ({
 											NEW ABILITIES UNLOCKED
 										</Label>
 										<div className="space-y-3">
-											{newFeatures.map((_feature) => {
-												const feature = _feature as {
-													id: string;
-													name: string;
-													action_type?: string;
-													uses_formula?: string;
-													description?: string;
-													prerequisites?: string;
-												};
+											{newFeatures.map((feature: JobFeature) => {
 												return (
 													<div
 														key={feature.id}
@@ -1187,14 +1190,7 @@ export const LevelUpWizardModal = ({
 										</Label>
 										<div className="space-y-3">
 											{newRegentFeatures.map(
-												(_feature: unknown, idx: number) => {
-													const feature = _feature as {
-														id?: string;
-														name: string;
-														type?: string;
-														frequency?: string;
-														description?: string;
-													};
+												(feature: JobFeature, idx: number) => {
 													return (
 														<div
 															key={

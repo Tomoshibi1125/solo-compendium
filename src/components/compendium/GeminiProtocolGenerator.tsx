@@ -29,7 +29,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
-import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
+import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import {
 	useCharacterSovereign,
@@ -286,19 +286,17 @@ export function GeminiProtocolGenerator() {
 	const primaryUnlockRegentId = useMemo(() => {
 		if (regentUnlocksLoading || regentUnlocks.length === 0) return null;
 		const primary =
-			regentUnlocks.find(
-				(unlock: unknown) => (unlock as { is_primary?: boolean }).is_primary,
-			) || regentUnlocks[0];
-		return (primary as { regent_id: string }).regent_id;
+			regentUnlocks.find((unlock: RegentUnlock) => unlock.is_primary) ||
+			regentUnlocks[0];
+		return (primary as RegentUnlock).regent_id;
 	}, [regentUnlocks, regentUnlocksLoading]);
 
 	const secondaryUnlockRegentId = useMemo(() => {
 		if (regentUnlocksLoading || regentUnlocks.length < 2) return null;
 		const secondary = regentUnlocks.find(
-			(unlock: unknown) =>
-				(unlock as { regent_id: string }).regent_id !== primaryUnlockRegentId,
+			(unlock: RegentUnlock) => unlock.regent_id !== primaryUnlockRegentId,
 		);
-		return (secondary as { regent_id: string })?.regent_id || null;
+		return (secondary as RegentUnlock)?.regent_id || null;
 	}, [regentUnlocks, regentUnlocksLoading, primaryUnlockRegentId]);
 
 	useEffect(() => {

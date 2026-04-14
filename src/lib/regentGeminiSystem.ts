@@ -31,12 +31,24 @@ interface GeminiSovereign {
 	specialAbilities: string[];
 }
 
-// AI-generated regent options
 interface RegentChoice {
 	regent: RegentPath;
 	aiReasoning: string;
 	adaptationNote?: string; // How the regent is adapted for martial/caster compatibility
 	compatibilityScore: number;
+}
+
+interface FusionResponseData {
+	id?: string;
+	name?: string;
+	description?: string;
+	abilities?: string[];
+	features?: Feature[];
+	spells?: Spell[];
+	techniques?: string[];
+	traits?: Trait[];
+	statBonuses?: Partial<Record<AbilityScore, number>>;
+	specialAbilities?: string[];
 }
 
 // Complete regent system implementation
@@ -457,7 +469,7 @@ export class RegentGeminiSystem {
 			});
 
 			if (response.success && response.data) {
-				const d = response.data;
+				const d = response.data as FusionResponseData;
 				return {
 					id:
 						d.id ||
@@ -679,7 +691,7 @@ export class RegentQuestManager {
 			});
 
 			if (response.success && response.data) {
-				const d = response.data;
+				const d = response.data as { name?: string; description?: string };
 				return {
 					id: `dynamic_${crypto.randomUUID()}`,
 					name: d.name || `Trial of ${regent?.name || "the Unknown"}`,

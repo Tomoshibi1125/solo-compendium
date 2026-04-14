@@ -163,10 +163,7 @@ export interface EncounterBuilderProps {
 	className?: string;
 }
 
-export function EncounterBuilder({
-	campaignId,
-	className,
-}: EncounterBuilderProps) {
+export function EncounterBuilder({ campaignId }: EncounterBuilderProps) {
 	const navigate = useNavigate();
 	const { toast } = useToast();
 
@@ -370,9 +367,9 @@ export function EncounterBuilder({
 	};
 
 	return (
-		<div className={cn("grid grid-cols-1 lg:grid-cols-12 gap-6", className)}>
+		<div className="flex flex-col xl:flex-row gap-6 h-full max-h-[calc(100vh-12rem)]">
 			{/* Left Column: Build & Anomalys */}
-			<div className="lg:col-span-8 space-y-6">
+			<div className="flex-1 min-w-0 overflow-hidden flex flex-col space-y-4">
 				<AscendantWindow title="MODEL SYNTHESIS: CONSTRUCTS">
 					<div className="space-y-4">
 						<div className="relative">
@@ -396,16 +393,18 @@ export function EncounterBuilder({
 										key={Anomaly.id}
 										className="group p-3 rounded-lg border border-primary/10 bg-primary/5 hover:bg-primary/10 transition-colors flex justify-between items-center"
 									>
-										<div>
-											<p className="font-heading text-sm">{Anomaly.name}</p>
-											<div className="flex gap-2 mt-1">
+										<div className="flex-1 min-w-0 pr-2">
+											<p className="font-heading text-sm truncate font-semibold">
+												{Anomaly.name}
+											</p>
+											<div className="flex flex-wrap gap-1 mt-1.5">
 												<Badge
 													variant="outline"
-													className="text-[10px] h-4 uppercase"
+													className="text-[9px] h-3.5 px-1 uppercase border-primary/30"
 												>
 													{Anomaly.creature_type}
 												</Badge>
-												<Badge className="text-[10px] h-4">
+												<Badge className="text-[9px] h-3.5 px-1 bg-primary/20 text-primary border-primary/30 hover:bg-primary/30">
 													CR {Anomaly.cr}
 												</Badge>
 											</div>
@@ -413,9 +412,9 @@ export function EncounterBuilder({
 										<Button
 											type="button"
 											variant="ghost"
-											size="sm"
+											size="icon"
 											onClick={() => addAnomaly(Anomaly)}
-											className="h-8 w-8 p-0 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity focus-within:opacity-100"
+											className="h-8 w-8 shrink-0 opacity-100 hover:bg-primary/20 hover:text-primary transition-all shadow-sm border border-primary/10"
 										>
 											<Plus className="w-4 h-4" />
 										</Button>
@@ -428,7 +427,7 @@ export function EncounterBuilder({
 			</div>
 
 			{/* Right Column: Calculations & Controls */}
-			<div className="lg:col-span-4 space-y-6">
+			<div className="w-full xl:w-96 shrink-0 space-y-4 overflow-y-auto pr-1 custom-scrollbar">
 				<AscendantWindow title="THREAT VECTOR ANALYSIS">
 					<div className="space-y-6">
 						<div className="grid grid-cols-2 gap-4">

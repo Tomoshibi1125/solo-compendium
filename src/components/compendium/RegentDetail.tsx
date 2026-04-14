@@ -3,7 +3,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
-import type { CompendiumRegent } from "@/types/compendium";
+import type { CompendiumMechanics, CompendiumRegent } from "@/types/compendium";
 
 interface RegentDetailProps {
 	data: CompendiumRegent;
@@ -299,33 +299,47 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 					>
 						<div className="space-y-4">
 							<div className="grid grid-cols-2 gap-2">
-								{data.mechanics.stat_bonuses &&
-									Object.entries(data.mechanics.stat_bonuses).map(
-										([stat, val]) => (
-											<div
-												key={stat}
-												className="flex justify-between items-center p-2 bg-white/5 rounded border border-white/10"
-											>
-												<span className="text-xs uppercase tracking-tighter text-muted-foreground">
-													{stat}
-												</span>
-												<span className="text-amber-400 font-bold">+{val}</span>
-											</div>
-										),
-									)}
+								{(() => {
+									const mechanics = data.mechanics as CompendiumMechanics;
+									return (
+										mechanics.stat_bonuses &&
+										Object.entries(mechanics.stat_bonuses).map(
+											([stat, val]) => (
+												<div
+													key={stat}
+													className="flex justify-between items-center p-2 bg-white/5 rounded border border-white/10"
+												>
+													<span className="text-xs uppercase tracking-tighter text-muted-foreground">
+														{stat}
+													</span>
+													<span className="text-amber-400 font-bold">
+														+{val}
+													</span>
+												</div>
+											),
+										)
+									);
+								})()}
 							</div>
 
-							{data.mechanics.restrictions &&
-								data.mechanics.restrictions.length > 0 && (
+							{(() => {
+								const mechanics = data.mechanics as CompendiumMechanics;
+								const restrictions = mechanics.restrictions;
+								const restrictionsArray = Array.isArray(restrictions)
+									? restrictions
+									: typeof restrictions === "string"
+										? [restrictions]
+										: [];
+
+								if (restrictionsArray.length === 0) return null;
+
+								return (
 									<div className="pt-2 border-t border-white/5">
 										<p className="text-[10px] uppercase text-muted-foreground mb-2">
 											Protocol Restrictions
 										</p>
 										<ul className="space-y-1">
-											{(Array.isArray(data.mechanics.restrictions)
-												? data.mechanics.restrictions
-												: []
-											).map((res) => (
+											{restrictionsArray.map((res: string) => (
 												<li
 													key={res}
 													className="text-xs text-red-400/80 flex gap-2 italic"
@@ -336,7 +350,8 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 											))}
 										</ul>
 									</div>
-								)}
+								);
+							})()}
 						</div>
 					</AscendantWindow>
 
@@ -345,20 +360,27 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 						className="border-purple-500/30"
 					>
 						<div className="space-y-3">
-							{(Array.isArray(data.mechanics.special_abilities)
-								? data.mechanics.special_abilities
-								: []
-							).map((ability) => (
-								<div
-									key={ability}
-									className="flex gap-3 text-sm border-b border-white/5 pb-2 last:border-0 last:pb-0"
-								>
-									<div className="w-2 h-2 rounded-full bg-purple-500 mt-1.5 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
-									<span className="text-foreground/90">
-										{formatRegentVernacular(ability)}
-									</span>
-								</div>
-							))}
+							{(() => {
+								const mechanics = data.mechanics as CompendiumMechanics | null;
+								const specialAbilities = mechanics?.special_abilities;
+								const abilitiesArray = Array.isArray(specialAbilities)
+									? specialAbilities
+									: typeof specialAbilities === "string"
+										? [specialAbilities]
+										: [];
+
+								return abilitiesArray.map((ability: string) => (
+									<div
+										key={ability}
+										className="flex gap-3 text-sm border-b border-white/5 pb-2 last:border-0 last:pb-0"
+									>
+										<div className="w-2 h-2 rounded-full bg-purple-500 mt-1.5 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
+										<span className="text-foreground/90">
+											{formatRegentVernacular(ability)}
+										</span>
+									</div>
+								));
+							})()}
 						</div>
 					</AscendantWindow>
 				</div>

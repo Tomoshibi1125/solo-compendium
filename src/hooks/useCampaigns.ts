@@ -1139,7 +1139,10 @@ export const useUpdateCampaignMemberRole = () => {
 			if (campaignError || !campaign)
 				throw new AppError("Campaign not found", "NOT_FOUND");
 			if (campaign.warden_id !== user.id) {
-				throw new AppError("Only the Warden can manage roles", "FORBIDDEN" as AppErrorCode);
+				throw new AppError(
+					"Only the Warden can manage roles",
+					"FORBIDDEN" as AppErrorCode,
+				);
 			}
 
 			const { error } = await supabase

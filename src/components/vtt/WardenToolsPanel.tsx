@@ -270,17 +270,19 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 	// Quick sound effects — Populated from SOUND_CATEGORIES
 	const quickSounds = [
-		{ id: "door-creak", name: "Door Creak", icon: "🚪" },
+		{ id: "default-magic-spell", name: "Magic Spell", icon: "✨" },
 		{ id: "sword-clash", name: "Sword Clash", icon: "⚔️" },
 		{ id: "fireball", name: "Fireball", icon: "🔥" },
-		{ id: "thunder", name: "Thunder", icon: "⛈️" },
 		{ id: "heal", name: "Healing", icon: "✨" },
-		{ id: "Anomaly-roar", name: "Anomaly Roar", icon: "👹" },
 	];
 
 	// Quick music moods — populated from MOOD_TAGS
 	const quickMusic = [
 		{ id: "stop", name: "Stop Music", mood: "stop" },
+		{ id: "default-epic-combat", name: "Epic Combat", mood: "combat" },
+		{ id: "default-tavern-ambience", name: "Tavern", mood: "social" },
+		{ id: "default-dungeon-ambience", name: "Dungeon", mood: "ambient" },
+		{ id: "default-town-theme", name: "Town Theme", mood: "social" },
 		...MOOD_TAGS.map((mood) => ({
 			id: mood,
 			name: mood.charAt(0).toUpperCase() + mood.slice(1),
@@ -464,7 +466,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										/>
 									</TabsContent>
 									<TabsContent value="tokens" className="pt-2">
-										<TokenLibrary />
+										<TokenLibrary isEmbedded={true} />
 									</TabsContent>
 								</Tabs>
 							</TabsContent>

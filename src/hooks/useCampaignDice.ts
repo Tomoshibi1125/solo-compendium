@@ -132,7 +132,7 @@ Generate a brief (1-2 sentences), hyper-flavorful, cinematic description of this
 									const content =
 										typeof response.data === "string"
 											? response.data
-											: response.data.content;
+											: (response.data as { content?: string }).content;
 									if (content) {
 										await supabase.from("campaign_messages").insert({
 											campaign_id: campaignId,

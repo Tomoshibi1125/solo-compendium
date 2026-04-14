@@ -86,19 +86,12 @@ export function CharacterEditDialog({
 
 			// the response.data might be a string, or an object containing .content or .output
 			let text = typeof response.data === "string" ? response.data : "";
-			if (
-				!text &&
-				response.data?.content &&
-				typeof response.data.content === "string"
-			) {
-				text = response.data.content;
+			const dataObj = response.data as { content?: string; output?: string };
+			if (!text && dataObj?.content && typeof dataObj.content === "string") {
+				text = dataObj.content;
 			}
-			if (
-				!text &&
-				response.data?.output &&
-				typeof response.data.output === "string"
-			) {
-				text = response.data.output;
+			if (!text && dataObj?.output && typeof dataObj.output === "string") {
+				text = dataObj.output;
 			}
 
 			if (text) {

@@ -1,5 +1,6 @@
 import { RiftHeading } from "@/components/ui/AscendantText";
 import { comprehensiveFeats } from "@/data/compendium/feats-comprehensive";
+import type { CompendiumMechanics } from "@/types/compendium";
 
 export const FeatsChapter = () => {
 	return (
@@ -28,7 +29,8 @@ export const FeatsChapter = () => {
 							</h2>
 							{feat.mechanics && (
 								<span className="text-[10px] font-mono text-cyan/70 uppercase tracking-widest mt-1 block">
-									{feat.mechanics.type} • {feat.mechanics.frequency}
+									{(feat.mechanics as CompendiumMechanics).type} •{" "}
+									{(feat.mechanics as CompendiumMechanics).frequency}
 								</span>
 							)}
 						</header>
@@ -43,64 +45,49 @@ export const FeatsChapter = () => {
 									? feat.benefits.map((benefit: string) => (
 											<li key={benefit}>{benefit}</li>
 										))
-									: (
-											feat.benefits as unknown as Record<string, string[]>
-										)?.basic?.map((benefit: string) => (
-											<li key={benefit}>{benefit}</li>
-										))}
+									: typeof feat.benefits === "object" &&
+											feat.benefits !== null &&
+											"basic" in feat.benefits
+										? (
+												(
+													feat.benefits as {
+														basic: string[];
+														expert?: string[];
+														master?: string[];
+													}
+												).basic || []
+											).map((benefit: string) => (
+												<li key={benefit}>{benefit}</li>
+											))
+										: null}
 							</ul>
 						</div>
 
 						{feat.prerequisites &&
+							typeof feat.prerequisites === "object" &&
+							!Array.isArray(feat.prerequisites) &&
 							Object.keys(feat.prerequisites).length > 0 && (
 								<div className="mt-4 pt-3 border-t border-white/5 text-[10px] font-mono text-muted-foreground flex gap-3 flex-wrap">
 									<span className="text-white/40">PREREQ:</span>
-									{(feat.prerequisites as unknown as Record<string, number>)
-										.level && (
-										<span>
-											Level{" "}
-											{
-												(
-													feat.prerequisites as unknown as Record<
-														string,
-														number
-													>
-												).level
-											}
-										</span>
-									)}
-									{(feat.prerequisites as unknown as Record<string, string>)
-										.ability && (
-										<span>
-											{
-												(
-													feat.prerequisites as unknown as Record<
-														string,
-														string
-													>
-												).ability
-											}{" "}
-											{
-												(
-													feat.prerequisites as unknown as Record<
-														string,
-														number
-													>
-												).score
-											}
-										</span>
-									)}
-									{(feat.prerequisites as unknown as Record<string, string[]>)
-										.feats && (
-										<span>
-											{(
-												feat.prerequisites as unknown as Record<
-													string,
-													string[]
-												>
-											).feats.join(", ")}
-										</span>
-									)}
+									{(() => {
+										const p = feat.prerequisites as Record<
+											string,
+											string | number | boolean | string[]
+										>;
+										return (
+											<>
+												{p.level && <span>Level {String(p.level)}</span>}
+												{p.ability && (
+													<span>
+														{String(p.ability)} {String(p.score ?? "")}
+													</span>
+												)}
+												{Array.isArray(p.feats) && (
+													<span>{p.feats.join(", ")}</span>
+												)}
+											</>
+										);
+									})()}
 								</div>
 							)}
 

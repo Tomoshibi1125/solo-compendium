@@ -54,7 +54,11 @@ const TOKEN_CATEGORIES = [
 	{ value: "effect", label: "Effects", icon: ImageIcon },
 ];
 
-const TokenLibrary = () => {
+export const TokenLibrary = ({
+	isEmbedded = false,
+}: {
+	isEmbedded?: boolean;
+}) => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
 	const [isCreating, setIsCreating] = useState(false);
@@ -360,9 +364,14 @@ const TokenLibrary = () => {
 		);
 	}
 
-	return (
-		<Layout>
-			<div className="container mx-auto px-4 py-8 max-w-7xl">
+	const Content = (
+		<div
+			className={cn(
+				"container mx-auto px-4 py-8 max-w-7xl",
+				isEmbedded && "p-0 max-w-none",
+			)}
+		>
+			{!isEmbedded && (
 				<div className="mb-6">
 					<Button
 						variant="ghost"
@@ -386,365 +395,376 @@ const TokenLibrary = () => {
 						categorize parameters, and sync local records.
 					</ManaFlowText>
 				</div>
+			)}
 
-				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-					<div className="lg:col-span-1 space-y-6">
-						<AscendantWindow title="SEARCH & FILTER">
+			<div
+				className={cn(
+					"grid gap-6",
+					isEmbedded ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-4",
+				)}
+			>
+				<div
+					className={cn("space-y-6", isEmbedded ? "order-2" : "lg:col-span-1")}
+				>
+					<AscendantWindow title="SEARCH & FILTER">
+						<div className="space-y-4">
+							<div>
+								<Label htmlFor="search">Search Tokens</Label>
+								<div className="relative">
+									<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+									<Input
+										id="search"
+										value={searchQuery || ""}
+										onChange={(e) => setSearchQuery(e.target.value)}
+										placeholder="Search tokens..."
+										className="pl-8"
+									/>
+								</div>
+							</div>
+						</div>
+					</AscendantWindow>
+				</div>
+
+				<div
+					className={cn("space-y-6", isEmbedded ? "order-1" : "lg:col-span-2")}
+				>
+					{isCreating ? (
+						<AscendantWindow title="CREATE TOKEN" id="token-create-window">
 							<div className="space-y-4">
 								<div>
-									<Label htmlFor="search">Search Tokens</Label>
-									<div className="relative">
-										<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+									<Label htmlFor="token-name">Token Name</Label>
+									<Input
+										id="token-name"
+										ref={nameInputRef}
+										value={newToken.name || ""}
+										onChange={(e) =>
+											setNewToken((prev: Partial<Token>) => ({
+												...prev,
+												name: e.target.value,
+											}))
+										}
+										placeholder="Token name"
+									/>
+								</div>
+								<div className="grid grid-cols-2 gap-4">
+									<div>
+										<Label htmlFor="token-type">Type</Label>
+										<Select
+											value={newToken.type}
+											onValueChange={(value) =>
+												setNewToken((prev: Partial<Token>) => ({
+													...prev,
+													type: value as Token["type"],
+												}))
+											}
+										>
+											<SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+												<SelectValue placeholder="Select type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="custom">Custom</SelectItem>
+												<SelectItem value="Anomaly">Anomaly</SelectItem>
+												<SelectItem value="npc">NPC</SelectItem>
+												<SelectItem value="object">Object</SelectItem>
+												<SelectItem value="effect">Effect</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+									<div>
+										<Label htmlFor="token-category">Category</Label>
+										<Select
+											value={newToken.category}
+											onValueChange={(value) =>
+												setNewToken((prev: Partial<Token>) => ({
+													...prev,
+													category: value as Token["category"],
+												}))
+											}
+										>
+											<SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+												<SelectValue placeholder="Select category" />
+											</SelectTrigger>
+											<SelectContent>
+												{TOKEN_CATEGORIES.map((cat) => (
+													<SelectItem key={cat.value} value={cat.value}>
+														{cat.label}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									</div>
+								</div>
+								<div className="grid grid-cols-2 gap-4">
+									<div>
+										<Label htmlFor="token-size">Size</Label>
+										<Select
+											value={newToken.size}
+											onValueChange={(value) =>
+												setNewToken((prev: Partial<Token>) => ({
+													...prev,
+													size: value as Token["size"],
+												}))
+											}
+										>
+											<SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+												<SelectValue placeholder="Select size" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="tiny">Tiny</SelectItem>
+												<SelectItem value="small">Small</SelectItem>
+												<SelectItem value="medium">Medium</SelectItem>
+												<SelectItem value="large">Large</SelectItem>
+												<SelectItem value="huge">Huge</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+									<div>
+										<Label htmlFor="token-emoji">Emoji/Icon</Label>
 										<Input
-											id="search"
-											value={searchQuery || ""}
-											onChange={(e) => setSearchQuery(e.target.value)}
-											placeholder="Search tokens..."
-											className="pl-8"
+											id="token-emoji"
+											value={newToken.emoji || ""}
+											onChange={(e) =>
+												setNewToken((prev: Partial<Token>) => ({
+													...prev,
+													emoji: e.target.value,
+												}))
+											}
+											placeholder="🗡️"
+											maxLength={2}
 										/>
 									</div>
+								</div>
+								<div>
+									<Label htmlFor="token-color">Color (hex)</Label>
+									<Input
+										id="token-color"
+										type="color"
+										value={newToken.color || "#3b82f6"}
+										onChange={(e) =>
+											setNewToken((prev: Partial<Token>) => ({
+												...prev,
+												color: e.target.value,
+											}))
+										}
+										className="h-10 w-full"
+									/>
+								</div>
+								<div className="flex gap-2">
+									<Button onClick={handleCreateToken} className="flex-1">
+										<Plus className="w-4 h-4 mr-2" />
+										Create Token
+									</Button>
+									<Button
+										onClick={() => {
+											setIsCreating(false);
+											setNewToken({
+												name: "",
+												type: "custom" as TokenType,
+												category: "other" as TokenCategory,
+												size: "medium",
+												tags: [],
+											});
+										}}
+										variant="outline"
+									>
+										Cancel
+									</Button>
 								</div>
 							</div>
 						</AscendantWindow>
-					</div>
+					) : (
+						<>
+							<AscendantWindow
+								title={`TOKENS (${filteredTokens.length})`}
+								id="token-list-window"
+							>
+								{filteredTokens.length === 0 ? (
+									<div className="text-center py-12">
+										<ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+										<AscendantText className="block text-muted-foreground font-heading mb-4">
+											No tokens found.{" "}
+											{searchQuery
+												? "Try a different search."
+												: "Create your first token!"}
+										</AscendantText>
+									</div>
+								) : (
+									<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+										{filteredTokens.map((token) => {
+											const CategoryIcon = getCategoryIcon(token.category);
+											const isSelected =
+												!!selectedToken && selectedToken.id === token.id;
 
-					<div className="lg:col-span-2 space-y-6">
-						{isCreating ? (
-							<AscendantWindow title="CREATE TOKEN" id="token-create-window">
-								<div className="space-y-4">
-									<div>
-										<Label htmlFor="token-name">Token Name</Label>
-										<Input
-											id="token-name"
-											ref={nameInputRef}
-											value={newToken.name || ""}
-											onChange={(e) =>
-												setNewToken((prev: Partial<Token>) => ({
-													...prev,
-													name: e.target.value,
-												}))
-											}
-											placeholder="Token name"
-										/>
-									</div>
-									<div className="grid grid-cols-2 gap-4">
-										<div>
-											<Label htmlFor="token-type">Type</Label>
-											<Select
-												value={newToken.type}
-												onValueChange={(value) =>
-													setNewToken((prev: Partial<Token>) => ({
-														...prev,
-														type: value as Token["type"],
-													}))
-												}
-											>
-												<SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-													<SelectValue placeholder="Select type" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectItem value="custom">Custom</SelectItem>
-													<SelectItem value="Anomaly">Anomaly</SelectItem>
-													<SelectItem value="npc">NPC</SelectItem>
-													<SelectItem value="object">Object</SelectItem>
-													<SelectItem value="effect">Effect</SelectItem>
-												</SelectContent>
-											</Select>
-										</div>
-										<div>
-											<Label htmlFor="token-category">Category</Label>
-											<Select
-												value={newToken.category}
-												onValueChange={(value) =>
-													setNewToken((prev: Partial<Token>) => ({
-														...prev,
-														category: value as Token["category"],
-													}))
-												}
-											>
-												<SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-													<SelectValue placeholder="Select category" />
-												</SelectTrigger>
-												<SelectContent>
-													{TOKEN_CATEGORIES.map((cat) => (
-														<SelectItem key={cat.value} value={cat.value}>
-															{cat.label}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
-										</div>
-									</div>
-									<div className="grid grid-cols-2 gap-4">
-										<div>
-											<Label htmlFor="token-size">Size</Label>
-											<Select
-												value={newToken.size}
-												onValueChange={(value) =>
-													setNewToken((prev: Partial<Token>) => ({
-														...prev,
-														size: value as Token["size"],
-													}))
-												}
-											>
-												<SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-													<SelectValue placeholder="Select size" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectItem value="tiny">Tiny</SelectItem>
-													<SelectItem value="small">Small</SelectItem>
-													<SelectItem value="medium">Medium</SelectItem>
-													<SelectItem value="large">Large</SelectItem>
-													<SelectItem value="huge">Huge</SelectItem>
-												</SelectContent>
-											</Select>
-										</div>
-										<div>
-											<Label htmlFor="token-emoji">Emoji/Icon</Label>
-											<Input
-												id="token-emoji"
-												value={newToken.emoji || ""}
-												onChange={(e) =>
-													setNewToken((prev: Partial<Token>) => ({
-														...prev,
-														emoji: e.target.value,
-													}))
-												}
-												placeholder="🗡️"
-												maxLength={2}
-											/>
-										</div>
-									</div>
-									<div>
-										<Label htmlFor="token-color">Color (hex)</Label>
-										<Input
-											id="token-color"
-											type="color"
-											value={newToken.color || "#3b82f6"}
-											onChange={(e) =>
-												setNewToken((prev: Partial<Token>) => ({
-													...prev,
-													color: e.target.value,
-												}))
-											}
-											className="h-10 w-full"
-										/>
-									</div>
-									<div className="flex gap-2">
-										<Button onClick={handleCreateToken} className="flex-1">
-											<Plus className="w-4 h-4 mr-2" />
-											Create Token
-										</Button>
-										<Button
-											onClick={() => {
-												setIsCreating(false);
-												setNewToken({
-													name: "",
-													type: "custom" as TokenType,
-													category: "other" as TokenCategory,
-													size: "medium",
-													tags: [],
-												});
-											}}
-											variant="outline"
-										>
-											Cancel
-										</Button>
-									</div>
-								</div>
-							</AscendantWindow>
-						) : (
-							<>
-								<AscendantWindow
-									title={`TOKENS (${filteredTokens.length})`}
-									id="token-list-window"
-								>
-									{filteredTokens.length === 0 ? (
-										<div className="text-center py-12">
-											<ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-											<AscendantText className="block text-muted-foreground font-heading mb-4">
-												No tokens found.{" "}
-												{searchQuery
-													? "Try a different search."
-													: "Create your first token!"}
-											</AscendantText>
-										</div>
-									) : (
-										<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-											{filteredTokens.map((token) => {
-												const CategoryIcon = getCategoryIcon(token.category);
-												const isSelected =
-													!!selectedToken && selectedToken.id === token.id;
-
-												return (
-													<button
-														type="button"
-														key={token.id}
-														className={cn(
-															"w-full text-left p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 transition-all cursor-pointer group",
-															isSelected && "ring-2 ring-primary",
-														)}
-														data-token-name={token.name}
-														data-selected={isSelected || undefined}
-														aria-label={`Token ${token.name}`}
-														aria-current={isSelected ? "true" : undefined}
-														onClick={() => setSelectedToken(token)}
-														onKeyDown={(e: React.KeyboardEvent) =>
-															handleTokenKeyDown(token, e)
-														}
-													>
-														<div className="flex flex-col items-center gap-3">
-															<DynamicStyle
-																className={cn(
-																	"token-display",
-																	`token-display-${token.size}`,
-																	token.color
-																		? `border-[${token.color}]`
-																		: "border-border",
-																)}
-																vars={{
-																	backgroundColor: token.color
-																		? `${token.color}20`
-																		: undefined,
-																}}
-															>
-																{token.imageUrl ? (
-																	<OptimizedImage
-																		src={token.imageUrl}
-																		alt={token.name}
-																		className="w-full h-full object-cover rounded-full"
-																		size="small"
-																	/>
-																) : (
-																	token.emoji || "TK"
-																)}
-															</DynamicStyle>
-															<div className="text-center w-full">
-																<div className="font-heading font-semibold text-sm mb-1 truncate">
-																	{token.name}
-																</div>
-																<div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-																	<CategoryIcon className="w-3 h-3" />
-																	<Badge variant="outline" className="text-xs">
-																		{token.size}
-																	</Badge>
-																	<Badge variant="outline">
-																		{getCategoryLabel(token.category)}
-																	</Badge>
-																	<Badge variant="outline">{token.type}</Badge>
-																</div>
+											return (
+												<button
+													type="button"
+													key={token.id}
+													className={cn(
+														"w-full text-left p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 transition-all cursor-pointer group",
+														isSelected && "ring-2 ring-primary",
+													)}
+													data-token-name={token.name}
+													data-selected={isSelected || undefined}
+													aria-label={`Token ${token.name}`}
+													aria-current={isSelected ? "true" : undefined}
+													onClick={() => setSelectedToken(token)}
+													onKeyDown={(e: React.KeyboardEvent) =>
+														handleTokenKeyDown(token, e)
+													}
+												>
+													<div className="flex flex-col items-center gap-3">
+														<DynamicStyle
+															className={cn(
+																"token-display",
+																`token-display-${token.size}`,
+																token.color
+																	? `border-[${token.color}]`
+																	: "border-border",
+															)}
+															vars={{
+																backgroundColor: token.color
+																	? `${token.color}20`
+																	: undefined,
+															}}
+														>
+															{token.imageUrl ? (
+																<OptimizedImage
+																	src={token.imageUrl}
+																	alt={token.name}
+																	className="w-full h-full object-cover rounded-full"
+																	size="small"
+																/>
+															) : (
+																token.emoji || "TK"
+															)}
+														</DynamicStyle>
+														<div className="text-center w-full">
+															<div className="font-heading font-semibold text-sm mb-1 truncate">
+																{token.name}
+															</div>
+															<div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+																<CategoryIcon className="w-3 h-3" />
+																<Badge variant="outline" className="text-xs">
+																	{token.size}
+																</Badge>
+																<Badge variant="outline">
+																	{getCategoryLabel(token.category)}
+																</Badge>
+																<Badge variant="outline">{token.type}</Badge>
 															</div>
 														</div>
-														<div className="flex gap-1 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity">
-															<Button
-																variant="ghost"
-																size="sm"
-																onClick={(e) => {
-																	e.stopPropagation();
-																	handleDeleteToken(token.id);
-																}}
-															>
-																<Trash2 className="w-3 h-3" />
-															</Button>
-														</div>
-													</button>
-												);
-											})}
-										</div>
-									)}
-								</AscendantWindow>
-
-								{selectedToken && (
-									<AscendantWindow
-										title="TOKEN DETAILS"
-										id="token-details-window"
-									>
-										<div className="space-y-4">
-											<div className="flex items-start justify-between">
-												<div className="flex items-center gap-4">
-													<DynamicStyle
-														className={cn(
-															"token-detail-display",
-															`token-detail-display-${selectedToken.size}`,
-															selectedToken.color
-																? `border-[${selectedToken.color}]`
-																: "border-border",
-														)}
-														vars={{
-															backgroundColor: selectedToken.color
-																? `${selectedToken.color}20`
-																: undefined,
-														}}
-													>
-														{selectedToken.imageUrl ? (
-															<OptimizedImage
-																src={selectedToken.imageUrl}
-																alt={selectedToken.name}
-																className="w-full h-full object-cover rounded-full"
-																size="small"
-															/>
-														) : (
-															selectedToken.emoji || "TK"
-														)}
-													</DynamicStyle>
-													<div>
-														<h3 className="font-heading font-semibold text-xl">
-															{selectedToken.name}
-														</h3>
-														<div className="flex items-center gap-2 mt-1">
-															<Badge variant="outline">
-																{selectedToken.type}
-															</Badge>
-															<Badge variant="outline">
-																{getCategoryLabel(selectedToken.category)}
-															</Badge>
-															<Badge variant="outline">
-																{selectedToken.size}
-															</Badge>
-														</div>
 													</div>
-												</div>
-												<Button
-													variant="ghost"
-													onClick={() => setSelectedToken(null)}
-												>
-													Close
-												</Button>
-											</div>
-
-											{selectedToken.tags.length > 0 && (
-												<div>
-													<Label>Tags</Label>
-													<div className="flex flex-wrap gap-2 mt-2">
-														{selectedToken.tags.map((tag) => (
-															<Badge key={`tag-${tag}`} variant="secondary">
-																{tag}
-															</Badge>
-														))}
+													<div className="flex gap-1 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity">
+														<Button
+															variant="ghost"
+															size="sm"
+															onClick={(e) => {
+																e.stopPropagation();
+																handleDeleteToken(token.id);
+															}}
+														>
+															<Trash2 className="w-3 h-3" />
+														</Button>
 													</div>
-												</div>
-											)}
-
-											{selectedToken.notes && (
-												<div>
-													<Label>Notes</Label>
-													<AscendantText className="block text-sm text-muted-foreground mt-1">
-														{selectedToken.notes}
-													</AscendantText>
-												</div>
-											)}
-
-											<div className="text-xs text-muted-foreground">
-												Created:{" "}
-												{new Date(selectedToken.createdAt).toLocaleDateString()}
-											</div>
-										</div>
-									</AscendantWindow>
+												</button>
+											);
+										})}
+									</div>
 								)}
-							</>
-						)}
-					</div>
+							</AscendantWindow>
 
+							{selectedToken && (
+								<AscendantWindow
+									title="TOKEN DETAILS"
+									id="token-details-window"
+								>
+									<div className="space-y-4">
+										<div className="flex items-start justify-between">
+											<div className="flex items-center gap-4">
+												<DynamicStyle
+													className={cn(
+														"token-detail-display",
+														`token-detail-display-${selectedToken.size}`,
+														selectedToken.color
+															? `border-[${selectedToken.color}]`
+															: "border-border",
+													)}
+													vars={{
+														backgroundColor: selectedToken.color
+															? `${selectedToken.color}20`
+															: undefined,
+													}}
+												>
+													{selectedToken.imageUrl ? (
+														<OptimizedImage
+															src={selectedToken.imageUrl}
+															alt={selectedToken.name}
+															className="w-full h-full object-cover rounded-full"
+															size="small"
+														/>
+													) : (
+														selectedToken.emoji || "TK"
+													)}
+												</DynamicStyle>
+												<div>
+													<h3 className="font-heading font-semibold text-xl">
+														{selectedToken.name}
+													</h3>
+													<div className="flex items-center gap-2 mt-1">
+														<Badge variant="outline">
+															{selectedToken.type}
+														</Badge>
+														<Badge variant="outline">
+															{getCategoryLabel(selectedToken.category)}
+														</Badge>
+														<Badge variant="outline">
+															{selectedToken.size}
+														</Badge>
+													</div>
+												</div>
+											</div>
+											<Button
+												variant="ghost"
+												onClick={() => setSelectedToken(null)}
+											>
+												Close
+											</Button>
+										</div>
+
+										{selectedToken.tags.length > 0 && (
+											<div>
+												<Label>Tags</Label>
+												<div className="flex flex-wrap gap-2 mt-2">
+													{selectedToken.tags.map((tag) => (
+														<Badge key={`tag-${tag}`} variant="secondary">
+															{tag}
+														</Badge>
+													))}
+												</div>
+											</div>
+										)}
+
+										{selectedToken.notes && (
+											<div>
+												<Label>Notes</Label>
+												<AscendantText className="block text-sm text-muted-foreground mt-1">
+													{selectedToken.notes}
+												</AscendantText>
+											</div>
+										)}
+
+										<div className="text-xs text-muted-foreground">
+											Created:{" "}
+											{new Date(selectedToken.createdAt).toLocaleDateString()}
+										</div>
+									</div>
+								</AscendantWindow>
+							)}
+						</>
+					)}
+				</div>
+
+				{!isEmbedded && (
 					<div className="lg:col-span-1 space-y-6">
 						<AscendantWindow title="LIBRARY ACTIONS" variant="quest">
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -775,10 +795,14 @@ const TokenLibrary = () => {
 							</div>
 						</AscendantWindow>
 					</div>
-				</div>
+				)}
 			</div>
-		</Layout>
+		</div>
 	);
+
+	if (isEmbedded) return Content;
+
+	return <Layout>{Content}</Layout>;
 };
 
 export default TokenLibrary;

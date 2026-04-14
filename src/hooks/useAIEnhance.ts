@@ -54,8 +54,8 @@ export function useAIEnhance() {
 				const text =
 					typeof response.data === "string"
 						? response.data
-						: response.data?.content ||
-							response.data?.text ||
+						: (response.data as { content?: string })?.content ||
+							(response.data as { text?: string })?.text ||
 							JSON.stringify(response.data);
 
 				setEnhancedText(text);

@@ -1,3 +1,5 @@
+import type { Json } from "@/integrations/supabase/types";
+
 interface CompendiumValue {
 	type?: string;
 	value?: number | string;
@@ -155,11 +157,24 @@ export interface BaseCompendiumItem {
 	source_book?: string | null;
 	tags?: string[] | null;
 	system_interaction?: string | null;
-	mechanics?: CompendiumMechanics | null;
-	limitations?: CompendiumLimitations | null;
-	effects?: CompendiumEffects | string[] | null;
-	rarity?: string | null;
-	cr?: string | null;
+	mechanics?: CompendiumMechanics | Json | null;
+	limitations?: CompendiumLimitations | Json | null;
+	effects?: CompendiumEffects | string[] | Json | null;
+	rarity?: null | string;
+	cr?: null | string;
+}
+
+export interface JobFeature extends BaseCompendiumItem {
+	level: number;
+	job_id?: string | null;
+	path_id?: string | null;
+	is_path_feature: boolean;
+	action_type?: string | null;
+	uses_formula?: string | null;
+	recharge?: string | null;
+	prerequisites?: string | null;
+	type?: string | null;
+	frequency?: string | null;
 }
 
 export interface CompendiumDeity extends BaseCompendiumItem {
@@ -420,14 +435,16 @@ export interface CompendiumFeat extends BaseCompendiumItem {
 	prerequisites?:
 		| Record<string, string | number | string[] | boolean>
 		| string
-		| string[];
+		| string[]
+		| null;
 	benefits?:
 		| string[]
 		| {
 				basic: string[];
 				expert?: string[];
 				master?: string[];
-		  };
+		  }
+		| null;
 	repeatable?: boolean;
 }
 

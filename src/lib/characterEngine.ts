@@ -19,6 +19,7 @@
  * - Abilities: STR, AGI (AGI), VIT (VIT), INT, SENSE (SENSE), PRE (PRE)
  */
 
+import type { Json } from "@/integrations/supabase/types";
 import {
 	getCasterType,
 	getRiftFavorDie,
@@ -100,7 +101,7 @@ export interface EffectSource {
 export interface Effect {
 	type: EffectType;
 	target: EffectTarget;
-	value: number | string | boolean | Record<string, unknown>;
+	value: Json;
 	condition?: string;
 	priority?: number;
 }
@@ -220,7 +221,6 @@ export interface CharacterJob {
 		features?: Array<{ name: string; description: string; type?: string }>;
 		traits?: Array<{ name: string; description: string; type?: string }>;
 		statBonuses?: Record<string, number>;
-		[key: string]: unknown;
 	}; // Full GeminiSovereign AI payload
 	level: number;
 	hitDie: number; // d6, d8, d10, d12
@@ -351,7 +351,7 @@ interface ComputedCharacterStats {
 interface ComputedEffect {
 	source: EffectSource;
 	target: EffectTarget;
-	value: number | string | boolean | Record<string, unknown>;
+	value: Json;
 	displayText: string; // Human-readable effect description
 	priority: number;
 }

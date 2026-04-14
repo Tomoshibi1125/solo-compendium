@@ -5,7 +5,7 @@ import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import type { CompendiumTattoo } from "@/types/compendium";
+import type { CompendiumEffects, CompendiumTattoo } from "@/types/compendium";
 
 interface TattooDetailProps {
 	data: CompendiumTattoo;
@@ -96,23 +96,27 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 					className="border-amethyst/30 shadow-[0_0_15px_-5px_rgba(168,85,247,0.3)]"
 				>
 					<div className="space-y-4 text-sm">
-						{data.effects.primary && (
+						{(data.effects as CompendiumEffects).primary && (
 							<div className="p-4 bg-muted/10 border-l border-cyan/40 rounded-r-lg">
 								<p className="font-heading text-cyan mb-2 uppercase text-xs tracking-wider">
 									Primary Effect
 								</p>
 								<p className="text-foreground leading-relaxed">
-									<AutoLinkText text={data.effects.primary} />
+									<AutoLinkText
+										text={(data.effects as CompendiumEffects).primary || ""}
+									/>
 								</p>
 							</div>
 						)}
-						{data.effects.secondary && (
+						{(data.effects as CompendiumEffects).secondary && (
 							<div className="p-4 bg-muted/10 border-l border-amethyst/40 rounded-r-lg">
 								<p className="font-heading text-amethyst mb-2 uppercase text-xs tracking-wider">
 									Secondary Effect
 								</p>
 								<p className="text-foreground leading-relaxed">
-									<AutoLinkText text={data.effects.secondary} />
+									<AutoLinkText
+										text={(data.effects as CompendiumEffects).secondary || ""}
+									/>
 								</p>
 							</div>
 						)}
