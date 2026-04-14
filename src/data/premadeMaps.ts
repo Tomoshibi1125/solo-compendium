@@ -318,7 +318,14 @@ const PREMADE_MAPS: PremadeMap[] = [
 		thumbnail: "/generated/maps/premade/underground-river-crossing.png",
 		grid: GRID_48,
 		theme: "umbral",
-		tags: ["painterly", "battlemap", "underground", "river", "cavern", "umbral"],
+		tags: [
+			"painterly",
+			"battlemap",
+			"underground",
+			"river",
+			"cavern",
+			"umbral",
+		],
 	},
 	{
 		id: "shadow-temple-sanctum",
@@ -406,7 +413,14 @@ const PREMADE_MAPS: PremadeMap[] = [
 		thumbnail: "/generated/maps/premade/necropolis-grounds.png",
 		grid: GRID_48,
 		theme: "umbral",
-		tags: ["painterly", "battlemap", "graveyard", "undead", "outdoor", "umbral"],
+		tags: [
+			"painterly",
+			"battlemap",
+			"graveyard",
+			"undead",
+			"outdoor",
+			"umbral",
+		],
 	},
 ];
 

@@ -76,13 +76,21 @@ const Campaigns = () => {
 	const { injectSandbox } = useCampaignSandboxInjector(null);
 
 	const handleDeleteCampaign = async (campaignId: string) => {
-		if (confirm("Are you sure you want to permanently delete this campaign? This cannot be undone.")) {
+		if (
+			confirm(
+				"Are you sure you want to permanently delete this campaign? This cannot be undone.",
+			)
+		) {
 			await deleteCampaign.mutateAsync(campaignId);
 		}
 	};
 
 	const handleRegenerateCode = async (campaignId: string) => {
-		if (confirm("Are you sure you want to regenerate the share code? The old code will no longer work.")) {
+		if (
+			confirm(
+				"Are you sure you want to regenerate the share code? The old code will no longer work.",
+			)
+		) {
 			await regenerateShareCode.mutateAsync(campaignId);
 		}
 	};
@@ -347,15 +355,18 @@ const Campaigns = () => {
 														<MoreVertical className="w-4 h-4 text-amber-400" />
 													</Button>
 												</DropdownMenuTrigger>
-												<DropdownMenuContent align="end" className="w-48 bg-black/95 border-amber-500/30">
-													<DropdownMenuItem 
+												<DropdownMenuContent
+													align="end"
+													className="w-48 bg-black/95 border-amber-500/30"
+												>
+													<DropdownMenuItem
 														onClick={() => handleRegenerateCode(campaign.id)}
 														className="gap-2 cursor-pointer focus:bg-amber-500/20 focus:text-amber-400"
 													>
 														<RefreshCw className="w-4 h-4" />
 														Regenerate Code
 													</DropdownMenuItem>
-													<DropdownMenuItem 
+													<DropdownMenuItem
 														onClick={() => handleDeleteCampaign(campaign.id)}
 														className="text-destructive gap-2 cursor-pointer focus:bg-destructive/20 focus:text-destructive"
 													>

@@ -903,3 +903,58 @@ export function addLocalRollHistory(
 	saveGuestState(state);
 	return record;
 }
+
+export type CampaignWikiArticleRow =
+	Database["public"]["Tables"]["campaign_wiki_articles"]["Row"];
+export type VttJournalEntryRow =
+	Database["public"]["Tables"]["vtt_journal_entries"]["Row"];
+
+export function readLocalWikiArticles(
+	campaignId: string,
+): CampaignWikiArticleRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(
+			`solo-compendium.wiki.${campaignId}`,
+		);
+		return raw ? (JSON.parse(raw) as CampaignWikiArticleRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalWikiArticles(
+	campaignId: string,
+	articles: CampaignWikiArticleRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`solo-compendium.wiki.${campaignId}`,
+			JSON.stringify(articles),
+		);
+	} catch {}
+}
+
+export function readLocalJournals(campaignId: string): VttJournalEntryRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(`vtt-journal-${campaignId}`);
+		return raw ? (JSON.parse(raw) as VttJournalEntryRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalJournals(
+	campaignId: string,
+	entries: VttJournalEntryRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`vtt-journal-${campaignId}`,
+			JSON.stringify(entries),
+		);
+	} catch {}
+}

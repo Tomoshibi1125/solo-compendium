@@ -62,7 +62,12 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const normalizeRole = (value?: string | null): UserRole => {
-	if (value === "warden" || value === "Warden" || value === "admin" || value === "dm")
+	if (
+		value === "warden" ||
+		value === "Warden" ||
+		value === "admin" ||
+		value === "dm"
+	)
 		return "warden";
 	if (value === "ascendant" || value === "player") return "ascendant";
 	if (value) {

@@ -132,7 +132,7 @@ import type {
 const WardenDirectiveMatrix = React.lazy(() =>
 	import("@/components/warden-directives/WardenDirectiveMatrix").then((m) => ({
 		default: m.WardenDirectiveMatrix,
-	}))
+	})),
 );
 
 // --- Sub-Engine Processor to resolve orphaned Knip functions by actively wiring them into the token stream ---
@@ -2053,7 +2053,7 @@ const VTTEnhanced = () => {
 							{/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 lg:col-span-2 space-y-4 lg:overflow-y-auto",
+									"col-span-1 lg:col-span-2 space-y-4 lg:overflow-y-auto order-2 lg:order-1",
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
 								)}
@@ -3131,6 +3131,7 @@ const VTTEnhanced = () => {
 							{/* Main Map Area */}
 							<div
 								className={cn(
+									"order-1 lg:order-2",
 									isMapExpanded
 										? "col-span-1 lg:col-span-12"
 										: "col-span-1 lg:col-span-7",
@@ -3669,7 +3670,7 @@ const VTTEnhanced = () => {
 							{/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 lg:col-span-3 space-y-4 lg:overflow-y-auto",
+									"col-span-1 lg:col-span-3 space-y-4 lg:overflow-y-auto order-3",
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
 								)}
@@ -4115,7 +4116,7 @@ const VTTEnhanced = () => {
 								</Dialog>
 
 								<Tabs defaultValue="initiative" className="w-full">
-									<TabsList className="flex flex-wrap items-center w-full h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+									<TabsList className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-1 w-full h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
 										<TabsTrigger
 											value="initiative"
 											className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"

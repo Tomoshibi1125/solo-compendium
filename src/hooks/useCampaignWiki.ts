@@ -1,8 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
+import { readLocalWikiArticles, saveLocalWikiArticles } from "@/lib/guestStore";
+
+const isLocalMode = () => !isSupabaseConfigured;
 
 export type WikiArticle =
 	Database["public"]["Tables"]["campaign_wiki_articles"]["Row"];
@@ -19,6 +22,10 @@ export const useCampaignWiki = (campaignId: string | null) => {
 		queryKey: ["campaign_wiki_articles", campaignId],
 		queryFn: async () => {
 			if (!campaignId) return [];
+
+			if (isLocalMode()) {
+				return readLocalWikiArticles(campaignId);
+			}
 
 			const { data, error } = await supabase
 				.from("campaign_wiki_articles")
@@ -39,6 +46,26 @@ export const useCampaignWiki = (campaignId: string | null) => {
 	const addArticle = useMutation({
 		mutationFn: async (article: Omit<WikiArticleInsert, "campaign_id">) => {
 			if (!campaignId) throw new Error("No active campaign");
+
+			if (isLocalMode()) {
+				const existing = readLocalWikiArticles(campaignId);
+				const now = new Date().toISOString();
+				const nextId = "local_wiki_" + crypto.randomUUID();
+				const newArticle: WikiArticle = {
+					id: nextId,
+					campaign_id: campaignId,
+					title: article.title,
+					content: article.content,
+					category: article.category,
+					is_public: article.is_public ?? false,
+					created_at: now,
+					updated_at: now,
+					created_by: "guest",
+				};
+				const updated = [...existing, newArticle];
+				saveLocalWikiArticles(campaignId, updated);
+				return newArticle;
+			}
 
 			const { data, error } = await supabase
 				.from("campaign_wiki_articles")
@@ -79,6 +106,23 @@ export const useCampaignWiki = (campaignId: string | null) => {
 			id: string;
 			updates: WikiArticleUpdate;
 		}) => {
+			if (isLocalMode()) {
+				if (!campaignId) return null;
+				const existing = readLocalWikiArticles(campaignId);
+				const targetIndex = existing.findIndex((a) => a.id === id);
+				if (targetIndex === -1) throw new Error("Not found locally");
+
+				const updatedArticle = {
+					...existing[targetIndex],
+					...updates,
+					updated_at: new Date().toISOString(),
+				} as WikiArticle;
+
+				existing[targetIndex] = updatedArticle;
+				saveLocalWikiArticles(campaignId, existing);
+				return updatedArticle;
+			}
+
 			const { data, error } = await supabase
 				.from("campaign_wiki_articles")
 				.update(updates)
@@ -109,6 +153,14 @@ export const useCampaignWiki = (campaignId: string | null) => {
 
 	const removeArticle = useMutation({
 		mutationFn: async (id: string) => {
+			if (isLocalMode()) {
+				if (!campaignId) return null;
+				const existing = readLocalWikiArticles(campaignId);
+				const filtered = existing.filter((a) => a.id !== id);
+				saveLocalWikiArticles(campaignId, filtered);
+				return;
+			}
+
 			const { error } = await supabase
 				.from("campaign_wiki_articles")
 				.delete()
