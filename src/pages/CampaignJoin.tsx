@@ -326,7 +326,7 @@ const CampaignJoin = () => {
 									ROLE
 								</span>
 								<span className="font-heading text-primary">
-									{invite.role === "co-system" ? "Co-System" : "Ascendant"}
+									{invite.role === "co-warden" ? "Co-Warden" : "Ascendant"}
 								</span>
 							</div>
 							<div className="flex items-center justify-between p-2 bg-muted/50 rounded">

@@ -59,6 +59,7 @@ import {
 	useCampaignRole,
 	useHasWardenAccess,
 	useLinkCampaignCharacter,
+	useUpdateCampaignMemberRole,
 } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
@@ -99,6 +100,7 @@ const CampaignDetail = () => {
 
 	const { data: myCharacters = [] } = useCharacters();
 	const linkCharacter = useLinkCampaignCharacter();
+	const updateMemberRole = useUpdateCampaignMemberRole();
 	const sendMessage = useSendCampaignMessage();
 
 	const handleAttachCharacter = async () => {
@@ -507,13 +509,41 @@ const CampaignDetail = () => {
 																)}
 															</div>
 														</div>
-														<span className="text-xs font-display text-muted-foreground">
-															{isWarden || member.role === "warden"
-																? "Warden"
-																: member.role === "co-warden"
-																	? "Co-Warden"
-																	: "Ascendant"}
-														</span>
+														{hasWardenAccess && !isWarden && (
+															<Select
+																value={member.role}
+																onValueChange={(
+																	value: "ascendant" | "co-warden",
+																) =>
+																	updateMemberRole.mutate({
+																		campaignId: id || "",
+																		memberId: member.id,
+																		role: value,
+																	})
+																}
+															>
+																<SelectTrigger className="w-[120px] h-8 text-[11px]">
+																	<SelectValue />
+																</SelectTrigger>
+																<SelectContent>
+																	<SelectItem value="ascendant">
+																		Ascendant
+																	</SelectItem>
+																	<SelectItem value="co-warden">
+																		Co-Warden
+																	</SelectItem>
+																</SelectContent>
+															</Select>
+														)}
+														{!hasWardenAccess || isWarden ? (
+															<span className="text-xs font-display text-muted-foreground">
+																{isWarden || member.role === "warden"
+																	? "Warden"
+																	: member.role === "co-warden"
+																		? "Co-Warden"
+																		: "Ascendant"}
+															</span>
+														) : null}
 													</div>
 												);
 											})}

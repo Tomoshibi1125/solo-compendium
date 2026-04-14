@@ -21,7 +21,7 @@ interface CampaignInviteRecord {
 	id: string;
 	campaign_id: string;
 	token: string;
-	role: "ascendant" | "co-system";
+	role: "ascendant" | "co-warden";
 	expires_at: string | null;
 	max_uses: number;
 	used_count: number;
@@ -42,7 +42,7 @@ interface CampaignInviteSummary {
 	campaign_id: string;
 	campaign_name: string;
 	campaign_description: string | null;
-	role: "ascendant" | "co-system";
+	role: "ascendant" | "co-warden";
 	expires_at: string | null;
 	max_uses: number;
 	used_count: number;
@@ -56,7 +56,7 @@ interface CampaignInviteCreateResult {
 	token: string;
 	join_code?: string | null;
 	invite_url?: string | null;
-	role: "ascendant" | "co-system";
+	role: "ascendant" | "co-warden";
 	expires_at: string | null;
 	max_uses: number;
 	used_count: number;
@@ -81,7 +81,7 @@ interface CampaignInviteAuditLog {
 
 type CreateInviteArgs = {
 	campaignId: string;
-	role?: "ascendant" | "co-system";
+	role?: "ascendant" | "co-warden";
 	expiresAt?: string | null;
 	maxUses?: number;
 	inviteEmail?: string;

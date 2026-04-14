@@ -82,7 +82,7 @@ export function Layout({ children, className }: LayoutProps) {
 
 	// Responsive layout classes
 	const layoutClasses = cn(
-		"min-h-dvh bg-background",
+		"min-h-full bg-background",
 		isMobile && "mobile-layout",
 		isTablet && "tablet-layout",
 		isDesktop && "desktop-layout",
@@ -108,10 +108,7 @@ export function Layout({ children, className }: LayoutProps) {
 	}
 
 	return (
-		<div
-			className={cn(layoutClasses, "relative overflow-hidden")}
-			data-sa-zone={saZone}
-		>
+		<div className={cn(layoutClasses, "relative")} data-sa-zone={saZone}>
 			{/* Offline connectivity banner */}
 			<OfflineBanner />
 			{/* Global Cosmic Architecture */}

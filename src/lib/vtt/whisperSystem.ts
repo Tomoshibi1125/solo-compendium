@@ -25,7 +25,7 @@ export interface WhisperMessage {
 export interface ChatParticipant {
 	id: string;
 	name: string;
-	role: "Warden" | "player" | "co-system";
+	role: "Warden" | "player" | "co-warden";
 	characterName?: string;
 }
 
@@ -57,7 +57,7 @@ export function parseWhisperCommand(
 	const gmMatch = trimmed.match(/^\/Warden\s+(.+)/i);
 	if (gmMatch) {
 		const gms = participants.filter(
-			(p) => p.role === "Warden" || p.role === "co-system",
+			(p) => p.role === "Warden" || p.role === "co-warden",
 		);
 		return {
 			isWhisper: true,
@@ -97,7 +97,7 @@ export function parseWhisperCommand(
 	const gmrollMatch = trimmed.match(/^\/wardenroll\s+(.+)/i);
 	if (gmrollMatch) {
 		const gms = participants.filter(
-			(p) => p.role === "Warden" || p.role === "co-system",
+			(p) => p.role === "Warden" || p.role === "co-warden",
 		);
 		return {
 			isWhisper: true,

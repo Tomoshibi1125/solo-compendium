@@ -142,7 +142,7 @@ const Campaigns = () => {
 
 			// Seed warden access so CampaignDetail shows share code immediately
 			queryClient.setQueryData(
-				["campaigns", campaignId, "has-system-access"],
+				["campaigns", campaignId, "has-warden-access"],
 				true,
 			);
 			queryClient.setQueryData(
@@ -456,13 +456,13 @@ const Campaigns = () => {
 											<span
 												className={cn(
 													"font-heading font-semibold px-2 py-1 rounded text-sm",
-													campaign.member_role === "co-system"
+													campaign.member_role === "co-warden"
 														? "text-amber-400 bg-amber-500/10"
 														: "text-resurge bg-resurge/10",
 												)}
 											>
-												{campaign.member_role === "co-system"
-													? "Co-System"
+												{campaign.member_role === "co-warden"
+													? "Co-Warden"
 													: "Ascendant"}
 											</span>
 										</div>

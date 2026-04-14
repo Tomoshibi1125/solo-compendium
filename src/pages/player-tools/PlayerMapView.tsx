@@ -519,7 +519,7 @@ const PlayerMapView = ({
 					<div
 						className={cn(
 							"grid grid-cols-1 xl:grid-cols-12 gap-4",
-							!isMobile && "xl:h-[calc(100dvh-180px)]",
+							"vtt-main-grid",
 						)}
 					>
 						{/* Main Map Area */}
@@ -528,7 +528,7 @@ const PlayerMapView = ({
 								title="MAP"
 								className={cn(
 									"min-h-[40vh] xl:min-h-0 xl:h-full",
-									isMobile && "h-screen",
+									isMobile && "h-[100dvh]",
 								)}
 								contentClassName="flex-1 flex flex-col"
 							>

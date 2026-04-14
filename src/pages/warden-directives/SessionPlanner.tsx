@@ -25,7 +25,7 @@ import { useHydratedPreferredCampaignId } from "@/hooks/usePreferredCampaignSele
 type CampaignWithRole = {
 	id: string;
 	name: string;
-	access: "owner" | "co-system";
+	access: "owner" | "co-warden";
 };
 
 const SessionPlanner = () => {
@@ -49,12 +49,12 @@ const SessionPlanner = () => {
 		}
 
 		for (const campaign of joinedCampaigns) {
-			if (campaign.member_role !== "co-system") continue;
+			if (campaign.member_role !== "co-warden") continue;
 			if (!byId.has(campaign.id)) {
 				byId.set(campaign.id, {
 					id: campaign.id,
 					name: campaign.name,
-					access: "co-system",
+					access: "co-warden",
 				});
 			}
 		}
@@ -164,7 +164,7 @@ const SessionPlanner = () => {
 										>
 											{selectedCampaign.access === "owner"
 												? "Owner"
-												: "Co-System"}
+												: "Co-Warden"}
 										</Badge>
 										<Button variant="outline" asChild>
 											<Link to={`/campaigns/${selectedCampaign.id}`}>

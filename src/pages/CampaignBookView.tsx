@@ -133,7 +133,7 @@ const CampaignBookView = () => {
 	};
 
 	return (
-		<div className="source-book-container flex min-h-screen bg-void text-slate-300 font-sans">
+		<div className="source-book-container flex min-h-[100dvh] bg-void text-slate-300 font-sans">
 			<aside className="w-72 bg-glass border-r border-fuchsia-500/20 flex flex-col shrink-0 relative overflow-y-auto">
 				<div className="p-6 border-b border-fuchsia-500/20 relative z-10 bg-black/40 backdrop-blur-md">
 					<Link

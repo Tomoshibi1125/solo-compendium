@@ -1,5 +1,6 @@
-type AppErrorCode =
+export type AppErrorCode =
 	| "AUTH_REQUIRED"
+	| "FORBIDDEN"
 	| "NOT_FOUND"
 	| "INVALID_INPUT"
 	| "UNSUPPORTED"

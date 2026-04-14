@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { AppError } from "@/lib/appError";
+import { AppError, type AppErrorCode } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
 import {
 	getLocalGuestRole,
@@ -1090,6 +1090,96 @@ export const useLinkCampaignCharacter = () => {
 	});
 };
 
+// Update campaign member role mutation
+export const useUpdateCampaignMemberRole = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async ({
+			campaignId,
+			memberId,
+			role,
+		}: {
+			campaignId: string;
+			memberId: string;
+			role: "ascendant" | "co-warden";
+		}) => {
+			if (isLocalMode()) {
+				const members = loadLocalMembers();
+				const idx = members.findIndex((m) => m.id === memberId);
+				if (idx === -1) throw new AppError("Member not found", "NOT_FOUND");
+				members[idx] = { ...members[idx], role };
+				saveLocalMembers(members);
+				return;
+			}
+
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+			if (!user) {
+				if (guestEnabled) {
+					const members = loadLocalMembers();
+					const idx = members.findIndex((m) => m.id === memberId);
+					if (idx === -1) throw new AppError("Member not found", "NOT_FOUND");
+					members[idx] = { ...members[idx], role };
+					saveLocalMembers(members);
+					return;
+				}
+				throw new AppError("Not authenticated", "AUTH_REQUIRED");
+			}
+
+			// Only the Warden can update roles
+			const { data: campaign, error: campaignError } = await supabase
+				.from("campaigns")
+				.select("warden_id")
+				.eq("id", campaignId)
+				.single();
+
+			if (campaignError || !campaign)
+				throw new AppError("Campaign not found", "NOT_FOUND");
+			if (campaign.warden_id !== user.id) {
+				throw new AppError("Only the Warden can manage roles", "FORBIDDEN" as AppErrorCode);
+			}
+
+			const { error } = await supabase
+				.from("campaign_members")
+				.update({ role })
+				.eq("id", memberId)
+				.eq("campaign_id", campaignId);
+
+			if (error) throw error;
+
+			// Sync local cache
+			const members = loadLocalMembers();
+			const idx = members.findIndex((m) => m.id === memberId);
+			if (idx !== -1) {
+				members[idx].role = role;
+				saveLocalMembers(members);
+			}
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["campaigns", variables.campaignId, "members"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["campaigns", variables.campaignId, "role"],
+			});
+			toast({
+				title: "Role Updated",
+				description: `Member role has been changed to ${variables.role}.`,
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to update role",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
 // Leave campaign mutation
 export const useLeaveCampaign = () => {
 	const queryClient = useQueryClient();
@@ -1208,10 +1298,10 @@ export const useIsCampaignWarden = (campaignId: string) => {
 	});
 };
 
-// Check if current user has System access (is System/Warden or co-System)
+// Check if current user has Warden access (is Warden or co-Warden)
 export const useHasWardenAccess = (campaignId: string) => {
 	return useQuery({
-		queryKey: ["campaigns", campaignId, "has-system-access"],
+		queryKey: ["campaigns", campaignId, "has-warden-access"],
 		queryFn: async () => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
@@ -1260,7 +1350,7 @@ export const useHasWardenAccess = (campaignId: string) => {
 				return true;
 			}
 
-			// Check if user is a co-System
+			// Check if user is a co-Warden
 			const { data: member, error: memberError } = await supabase
 				.from("campaign_members")
 				.select("role")

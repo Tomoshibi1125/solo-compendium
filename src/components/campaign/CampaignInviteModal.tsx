@@ -56,7 +56,7 @@ export function CampaignInviteModal({
 	const createInvite = useCreateCampaignInvite();
 	const deleteInvite = useDeleteCampaignInvite();
 
-	const [inviteRole, setInviteRole] = useState<"ascendant" | "co-system">(
+	const [inviteRole, setInviteRole] = useState<"ascendant" | "co-warden">(
 		"ascendant",
 	);
 	const [inviteExpiresAt, setInviteExpiresAt] = useState("");
@@ -166,7 +166,7 @@ export function CampaignInviteModal({
 									<Select
 										value={inviteRole}
 										onValueChange={(value) =>
-											setInviteRole(value as "ascendant" | "co-system")
+											setInviteRole(value as "ascendant" | "co-warden")
 										}
 									>
 										<SelectTrigger id="invite-role">
@@ -174,7 +174,7 @@ export function CampaignInviteModal({
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="ascendant">Ascendant</SelectItem>
-											<SelectItem value="co-system">Co-System</SelectItem>
+											<SelectItem value="co-warden">Co-Warden</SelectItem>
 										</SelectContent>
 									</Select>
 								</div>
@@ -249,8 +249,8 @@ export function CampaignInviteModal({
 												<div>
 													<div className="flex items-center gap-2 mb-1">
 														<Badge variant="outline" className="text-[10px]">
-															{invite.role === "co-system"
-																? "Co-System"
+															{invite.role === "co-warden"
+																? "Co-Warden"
 																: "Ascendant"}
 														</Badge>
 														{status === "active" ? (

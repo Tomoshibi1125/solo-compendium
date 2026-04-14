@@ -128,7 +128,7 @@
 
 	.vtt-main-grid {
 		grid-template-columns: 1fr;
-		height: calc(100vh - 8rem);
+		min-height: calc(100dvh - 8rem);
 	}
 
 	.vtt-sidebar {
@@ -138,8 +138,9 @@
 	.vtt-map-container {
 		min-height: 60vh;
 		touch-action: none; /* Prevent default pan/zoom — handled by JS gestures */
-		-webkit-overflow-scrolling: auto;
-		overscroll-behavior: contain;
+		@supports (overscroll-behavior: contain) {
+			overscroll-behavior: contain;
+		}
 	}
 
 	/* Safe area insets for notched phones */
@@ -589,7 +590,7 @@
 	}
 
 	.vtt-main-grid {
-		height: calc(100vh - 6rem);
+		min-height: calc(100dvh - 8rem);
 	}
 
 	.character-sheet-container {
@@ -2666,7 +2667,6 @@ html.reduce-motion {
 /* Horizontal scroll containers (tabs, etc.) */
 .overflow-x-auto,
 [role="tablist"] {
-	-webkit-overflow-scrolling: touch;
 	scroll-snap-type: x proximity;
 }
 
