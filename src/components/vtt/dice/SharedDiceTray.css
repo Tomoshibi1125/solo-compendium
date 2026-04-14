@@ -1,0 +1,214 @@
+/* SharedDiceTray — DDB-style fixed bottom-center overlay */
+
+.shared-dice-tray {
+	position: fixed;
+	bottom: 1.5rem;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 9999;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.25rem;
+
+	width: clamp(220px, calc(140px + var(--dice-count, 1) * 80px), 520px);
+
+	background: linear-gradient(
+		145deg,
+		rgba(8, 8, 14, 0.94) 0%,
+		rgba(14, 12, 22, 0.96) 60%,
+		rgba(8, 8, 14, 0.94) 100%
+	);
+	border: 1px solid rgba(147, 130, 220, 0.28);
+	border-radius: 16px;
+	box-shadow:
+		0 0 40px rgba(120, 80, 200, 0.15),
+		0 8px 32px rgba(0, 0, 0, 0.5),
+		inset 0 1px 0 rgba(255, 255, 255, 0.06);
+	backdrop-filter: blur(12px);
+
+	padding: 0.5rem;
+	overflow: hidden;
+
+	/* Entrance animation */
+	animation: sharedDiceTrayEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.shared-dice-tray--entering {
+	opacity: 0;
+	transform: translateX(-50%) translateY(20px) scale(0.92);
+}
+
+.shared-dice-tray--exiting {
+	animation: sharedDiceTrayExit 0.35s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+.shared-dice-tray--critical {
+	border-color: rgba(250, 204, 21, 0.5);
+	box-shadow:
+		0 0 50px rgba(250, 204, 21, 0.2),
+		0 8px 32px rgba(0, 0, 0, 0.5),
+		inset 0 1px 0 rgba(250, 204, 21, 0.1);
+}
+
+.shared-dice-tray--fumble {
+	border-color: rgba(239, 68, 68, 0.5);
+	box-shadow:
+		0 0 50px rgba(239, 68, 68, 0.2),
+		0 8px 32px rgba(0, 0, 0, 0.5),
+		inset 0 1px 0 rgba(239, 68, 68, 0.1);
+}
+
+/* Dismiss button */
+.shared-dice-tray__dismiss {
+	position: absolute;
+	top: 0.375rem;
+	right: 0.375rem;
+	z-index: 10;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.5rem;
+	height: 1.5rem;
+
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 6px;
+	color: rgba(255, 255, 255, 0.5);
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.shared-dice-tray__dismiss:hover {
+	background: rgba(255, 255, 255, 0.12);
+	color: rgba(255, 255, 255, 0.8);
+}
+
+/* Header */
+.shared-dice-tray__header {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	width: 100%;
+	padding: 0.125rem 0.5rem;
+}
+
+.shared-dice-tray__roller-name {
+	font-family: "Rajdhani", "Inter", system-ui, sans-serif;
+	font-size: 0.7rem;
+	font-weight: 700;
+	color: rgba(167, 139, 250, 0.9);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.shared-dice-tray__formula {
+	font-family: "JetBrains Mono", "Fira Code", monospace;
+	font-size: 0.65rem;
+	color: rgba(255, 255, 255, 0.45);
+}
+
+/* Canvas container */
+.shared-dice-tray__canvas {
+	width: 100%;
+	aspect-ratio: 2.2 / 1;
+	min-height: 100px;
+	max-height: 180px;
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+}
+
+.shared-dice-tray__roller {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+}
+
+/* Loading state */
+.shared-dice-tray__loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background: rgba(8, 8, 14, 0.6);
+}
+
+.shared-dice-tray__loading-spinner {
+	width: 24px;
+	height: 24px;
+	border: 2px solid rgba(147, 130, 220, 0.3);
+	border-top-color: rgba(147, 130, 220, 0.9);
+	border-radius: 50%;
+	animation: sharedDiceSpin 0.8s linear infinite;
+}
+
+/* Result display */
+.shared-dice-tray__result {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.25rem 0.75rem;
+	animation: sharedDiceResultPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.shared-dice-tray__result-value {
+	font-family: "Rajdhani", "Orbitron", system-ui, sans-serif;
+	font-size: 1.25rem;
+	font-weight: 900;
+	color: rgba(255, 255, 255, 0.95);
+	text-shadow: 0 0 12px rgba(147, 130, 220, 0.5);
+}
+
+.shared-dice-tray__result--critical .shared-dice-tray__result-value {
+	color: #fbbf24;
+	text-shadow: 0 0 16px rgba(251, 191, 36, 0.6);
+}
+
+.shared-dice-tray__result--fumble .shared-dice-tray__result-value {
+	color: #ef4444;
+	text-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+}
+
+/* Animations */
+@keyframes sharedDiceTrayEnter {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(30px) scale(0.88);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0) scale(1);
+	}
+}
+
+@keyframes sharedDiceTrayExit {
+	from {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0) scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(-50%) translateY(20px) scale(0.92);
+	}
+}
+
+@keyframes sharedDiceResultPop {
+	from {
+		opacity: 0;
+		transform: scale(0.6);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes sharedDiceSpin {
+	to {
+		transform: rotate(360deg);
+	}
+}

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
 import { PlayerToolsPanel } from "@/components/vtt/PlayerToolsPanel";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
@@ -20,6 +21,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
 import "@/styles/vtt-player-map.css";
+import "@/styles/vtt-performance.css";
 import "./PlayerMapView.css";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { DynamicStyle } from "@/components/ui/DynamicStyle";
@@ -516,15 +518,18 @@ const PlayerMapView = ({
 				) : (
 					<div
 						className={cn(
-							"grid grid-cols-1 md:grid-cols-12 gap-4",
-							!isMobile && "md:h-[calc(100vh-180px)]",
+							"grid grid-cols-1 xl:grid-cols-12 gap-4",
+							!isMobile && "xl:h-[calc(100dvh-180px)]",
 						)}
 					>
 						{/* Main Map Area */}
-						<div className="col-span-1 md:col-span-9">
+						<div className="col-span-1 xl:col-span-9 min-h-0">
 							<AscendantWindow
 								title="MAP"
-								className={cn("min-h-[60vh]", isMobile && "h-screen")}
+								className={cn(
+									"min-h-[40vh] xl:min-h-0 xl:h-full",
+									isMobile && "h-screen",
+								)}
 								contentClassName="flex-1 flex flex-col"
 							>
 								{/* Controls */}
@@ -1014,7 +1019,7 @@ const PlayerMapView = ({
 						{/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
 						<div
 							className={cn(
-								"col-span-1 md:col-span-3 space-y-4 md:overflow-y-auto",
+								"col-span-1 xl:col-span-3 flex flex-col gap-4 xl:overflow-y-auto min-h-0",
 								isMobile && "hidden",
 							)}
 						>
@@ -1697,6 +1702,11 @@ const PlayerMapView = ({
 					</div>
 				)}
 			</div>
+			{/* Shared 3D Dice Overlay (DDB parity) */}
+			<SharedDiceTray
+				roll={vttRealtime.sharedDiceRoll}
+				onDismiss={() => vttRealtime.setSharedDiceRoll(null)}
+			/>
 		</Layout>
 	);
 };

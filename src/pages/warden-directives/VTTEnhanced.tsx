@@ -25,6 +25,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
 import { VTTInitiativePanel } from "@/components/vtt/VTTInitiativePanel";
@@ -67,6 +68,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
 import {
+	type AmbientSoundZone,
 	computeAllZoneStates,
 	computeZoneVolume,
 	createAmbientSoundZone,
@@ -80,14 +82,17 @@ import {
 	type HexGridConfig,
 	isListenerInZone,
 	isPointInTerrainZone,
+	type LightSource,
 	type MusicMood,
 	snapToHexCenter,
+	type TerrainZone,
 	VttMusicEngine,
 	WEATHER_PRESETS,
 } from "@/lib/vtt";
 import PlayerMapView from "@/pages/player-tools/PlayerMapView";
 import "@/styles/vtt-enhanced-dynamic.css";
 import "@/styles/vtt-enhanced.css";
+import "@/styles/vtt-performance.css";
 import { useQuery } from "@tanstack/react-query";
 import {
 	ArrowLeft,
@@ -401,6 +406,7 @@ const VTTEnhanced = () => {
 	const [damageDialogOpen, setDamageDialogOpen] = useState(false);
 	const [damageAmount, setDamageAmount] = useState("");
 	const [currentScene, setCurrentScene] = useState<VTTScene | null>(null);
+	const [liveSceneId, setLiveSceneId] = useState<string | null>(null);
 
 	// Derive Active Initiative Token
 	const { data: combatData } = useCampaignCombatSession(
@@ -495,6 +501,17 @@ const VTTEnhanced = () => {
 	const legacyStorageKey = campaignId
 		? `vtt-scenes-${campaignId}${sessionId ? `-${sessionId}` : ""}`
 		: "vtt-scenes";
+	// ── Role determination (must come before savePayload memo) ──
+	const isStandalone = !campaignId;
+	const { data: members } = useCampaignMembers(campaignId || "") as {
+		data?: CampaignMemberWithCharacter[];
+	};
+	const { data: role } = useCampaignRole(campaignId || "");
+	const [simulatePlayerView, setSimulatePlayerView] = useState(false);
+	const isActualWarden =
+		isStandalone || role === "warden" || role === "co-warden";
+	const isWarden = isActualWarden && !simulatePlayerView;
+
 	const {
 		state: storedState,
 		isLoading: isStateLoading,
@@ -514,9 +531,9 @@ const VTTEnhanced = () => {
 	const savePayload = useMemo(
 		() => ({
 			scenes: mergedScenes,
-			currentSceneId: currentScene?.id ?? null,
+			currentSceneId: isWarden ? liveSceneId : (currentScene?.id ?? null),
 		}),
-		[currentScene?.id, mergedScenes],
+		[isWarden, liveSceneId, currentScene?.id, mergedScenes],
 	);
 	const debouncedState = useDebounce(savePayload, 800);
 	const fogPublishPayload = useDebounce(
@@ -559,23 +576,49 @@ const VTTEnhanced = () => {
 		storageKey: "vtt-tokens",
 	});
 
-	const isStandalone = !campaignId;
-	const { data: members } = useCampaignMembers(campaignId || "") as {
-		data?: CampaignMemberWithCharacter[];
-	};
-	const { data: role } = useCampaignRole(campaignId || "");
-	const [simulatePlayerView, setSimulatePlayerView] = useState(false);
-	// In standalone mode (no campaign), default to warden
-	const isActualWarden =
-		isStandalone || role === "warden" || role === "co-warden";
-	const isWarden = isActualWarden && !simulatePlayerView;
-
 	// --- Multi-user realtime (disabled in standalone mode) ---
 	const vttRealtime = useVTTRealtime({
 		campaignId: campaignId || "",
 		sessionId: isStandalone ? null : sessionId,
 		isWarden,
 	});
+
+	// Handle realtime events
+	useEffect(() => {
+		const unsubSceneChange = vttRealtime.on("scene_change", (payload) => {
+			if (!isWarden) {
+				const targetSceneId = payload.sceneId;
+				setLiveSceneId(targetSceneId);
+				const s = scenes.find((s) => s.id === targetSceneId);
+				if (s) setCurrentScene(s);
+			}
+		});
+
+		const unsubAudioSync = vttRealtime.on("audio_sync", (payload) => {
+			// Don't bounce it back to the warden who played it if they already played locally
+			if (payload.playedBy === vttRealtime.userId) return;
+
+			if (payload.action === "music_change" && payload.id) {
+				if (!musicEngineRef.current)
+					musicEngineRef.current = new VttMusicEngine();
+				musicEngineRef.current.play(payload.id as MusicMood);
+			} else if (payload.action === "music_stop") {
+				if (musicEngineRef.current) musicEngineRef.current.stop();
+			} else if (payload.action === "play_sound" && payload.id) {
+				// We can add logic to play specific sound IDs here
+				// E.g., a simple HTMLAudioElement wrapper
+				const audio = new Audio(`/audio/${payload.id}.mp3`); // Or wherever sound effects stream from
+				audio.volume = payload.volume ?? 0.8;
+				void audio.play().catch(() => {});
+			}
+		});
+
+		return () => {
+			unsubSceneChange();
+			unsubAudioSync();
+		};
+	}, [vttRealtime, isWarden, scenes]);
+
 	const effectiveVisibleLayers: Record<number, boolean> = useMemo(
 		() => ({
 			...visibleLayers,
@@ -740,13 +783,19 @@ const VTTEnhanced = () => {
 
 		if (nextScenes.length > 0) {
 			setScenes(nextScenes);
-			const selected =
+			if (nextCurrentId) setLiveSceneId(nextCurrentId);
+
+			// Only snap players to live scene, or Warden if they don't have a scene open
+			const hydratedScene =
 				nextScenes.find((scene) => scene.id === nextCurrentId) || nextScenes[0];
-			setCurrentScene(selected);
+			if (!isWarden || !currentSceneRef.current) {
+				setCurrentScene(hydratedScene);
+			}
+
 			if (isWarden && storedScenes.length === 0 && legacyScenes.length > 0) {
 				void saveNow({
 					scenes: nextScenes,
-					currentSceneId: selected?.id ?? null,
+					currentSceneId: hydratedScene?.id ?? null,
 				});
 			}
 		} else if (isWarden) {
@@ -2045,15 +2094,16 @@ const VTTEnhanced = () => {
 
 						<div
 							className={cn(
-								"grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4",
-								!isMobile && "lg:h-[calc(100vh-200px)]",
-								isMobile && "h-[calc(100vh-120px)]",
+								"grid grid-cols-1 xl:grid-cols-12 gap-3 sm:gap-4",
+								!isMobile && "xl:h-[calc(100dvh-180px)]",
+								isMobile && "h-[calc(100dvh-120px)]",
 							)}
 						>
 							{/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 lg:col-span-2 space-y-4 lg:overflow-y-auto order-2 lg:order-1",
+									"col-span-1 xl:col-span-2 flex flex-col gap-4 xl:overflow-y-auto order-2 xl:order-1",
+									"min-h-0", // Prevent CSS grid blowout
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
 								)}
@@ -2076,12 +2126,34 @@ const VTTEnhanced = () => {
 															type="button"
 															onClick={() => {
 																setCurrentScene(scene);
-																vttRealtime.broadcastSceneChange(scene.id);
+																if (!isWarden) {
+																	vttRealtime.broadcastSceneChange(scene.id);
+																}
 															}}
 															className="flex-1 p-2 text-left text-xs truncate"
 														>
 															{scene.name}
 														</button>
+														{isWarden && (
+															<button
+																type="button"
+																title="Make Live for Players"
+																onClick={() => {
+																	setLiveSceneId(scene.id);
+																	vttRealtime.broadcastSceneChange(scene.id);
+																}}
+																className={cn(
+																	"px-2 py-0.5 text-[9px] rounded font-bold uppercase mr-1",
+																	liveSceneId === scene.id
+																		? "bg-amber-500 text-black"
+																		: "bg-muted text-muted-foreground hover:bg-muted/80",
+																)}
+															>
+																{liveSceneId === scene.id
+																	? "Live"
+																	: "Make Live"}
+															</button>
+														)}
 														{currentScene?.id === scene.id && (
 															<div className="flex gap-0.5 pr-1">
 																<button
@@ -2927,44 +2999,170 @@ const VTTEnhanced = () => {
 										onRoll={vttRealtime.rollAndBroadcast}
 										onAddToken={(token: unknown) => {
 											const t = token as Record<string, unknown>;
-											// Add token to current scene
 											if (currentScene) {
+												const newToken = {
+													...t,
+													id: (t.id as string) || `token-${Date.now()}`,
+												} as PlacedToken;
 												updateScene({
-													tokens: [
-														...(currentScene.tokens || []),
-														{
-															...t,
-															id: (t.id as string) || `token-${Date.now()}`,
-														} as PlacedToken,
-													],
+													tokens: [...(currentScene.tokens || []), newToken],
 												});
+												vttRealtime.broadcastTokenAdd(newToken);
 											}
 										}}
 										onAddEffect={(effect: unknown) => {
 											const e = effect as Record<string, unknown>;
-											// Add effect to current scene (could be stored in annotations or a separate effects array)
+											if (!currentScene) return;
+											const cx = Math.floor((currentScene.width || 20) / 2);
+											const cy = Math.floor((currentScene.height || 20) / 2);
+
+											if (e.type === "magic") {
+												const newToken = {
+													id: (e.id as string) || `effect-${Date.now()}`,
+													name: (e.name as string) || "Effect",
+													tokenType: "effect",
+													x: (e.x as number) ?? cx,
+													y: (e.y as number) ?? cy,
+													size: "large",
+													color: e.color as string,
+													rotation: 0,
+													layer: 2,
+													locked: false,
+													visible: true,
+													render: {
+														mode: "overlay",
+														blendMode: "screen",
+														opacity: 0.8,
+													},
+												} as PlacedToken;
+												updateScene({
+													tokens: [...(currentScene.tokens || []), newToken],
+												});
+												vttRealtime.broadcastTokenAdd(newToken);
+											} else if (e.type === "light" || e.type === "dark") {
+												const lightRadius = (e.radius as number) || 10;
+												const newLight: LightSource = {
+													id: (e.id as string) || `light-${Date.now()}`,
+													x: (e.x as number) ?? cx,
+													y: (e.y as number) ?? cy,
+													brightRadius: Math.floor(lightRadius * 0.6),
+													dimRadius: lightRadius,
+													color: (e.color as string) || "#ffffff",
+													intensity: e.type === "dark" ? 0 : 0.8,
+													type: e.type === "dark" ? "ambient" : "torch",
+												};
+												const nextScene = {
+													...currentScene,
+													lights: [...(currentScene.lights || []), newLight],
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													nextScene.id,
+												);
+											} else if (e.type === "terrain") {
+												const terrainCenter = {
+													x: (e.x as number) ?? cx,
+													y: (e.y as number) ?? cy,
+												};
+												const terrainRadius = (e.radius as number) || 8;
+												const newTerrain: TerrainZone = {
+													id: (e.id as string) || `terrain-${Date.now()}`,
+													type: "difficult",
+													vertices: [
+														{
+															x: terrainCenter.x - terrainRadius,
+															y: terrainCenter.y - terrainRadius,
+														},
+														{
+															x: terrainCenter.x + terrainRadius,
+															y: terrainCenter.y - terrainRadius,
+														},
+														{
+															x: terrainCenter.x + terrainRadius,
+															y: terrainCenter.y + terrainRadius,
+														},
+														{
+															x: terrainCenter.x - terrainRadius,
+															y: terrainCenter.y + terrainRadius,
+														},
+													],
+													movementCost: 2,
+													fillColor:
+														(e.color as string) || "rgba(139,90,43,0.25)",
+													label: (e.name as string) || "Difficult Terrain",
+													visible: true,
+												};
+												const nextScene = {
+													...currentScene,
+													terrain: [
+														...(currentScene.terrain || []),
+														newTerrain,
+													],
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													nextScene.id,
+												);
+											} else if (e.type === "ambient") {
+												const newAmbient: AmbientSoundZone = {
+													id: (e.id as string) || `ambient-${Date.now()}`,
+													label: (e.name as string) || "Ambient",
+													audioUrl:
+														"library:" +
+														((e.name as string) || "")
+															.toLowerCase()
+															.replace(/\s/g, "-"),
+													x: (e.x as number) ?? cx,
+													y: (e.y as number) ?? cy,
+													shape: "circle",
+													radius: (e.radius as number) || 10,
+													volume: 0.8,
+													loop: true,
+													enabled: true,
+													gmOnly: true,
+													walledOcclusion: false,
+													falloff: "linear",
+													category: "ambient",
+												};
+												const nextScene = {
+													...currentScene,
+													ambientSounds: [
+														...(currentScene.ambientSounds || []),
+														newAmbient,
+													],
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													nextScene.id,
+												);
+											}
+
 											toast({
 												title: "Effect Added",
 												description: `${e.name as string} effect placed on map`,
 											});
 										}}
 										onPlaySound={(soundId) => {
-											// Play sound effect
+											vttRealtime.broadcastAudioSync("play_sound", soundId);
 											toast({
 												title: "Sound Played",
 												description: `Playing ${soundId} sound effect`,
 											});
 										}}
 										onMusicChange={(musicId) => {
-											// Use procedural ambient music engine
 											if (!musicEngineRef.current) {
 												musicEngineRef.current = new VttMusicEngine();
 											}
 											if (musicId === "stop") {
 												musicEngineRef.current.stop();
+												vttRealtime.broadcastAudioSync("music_stop", "stop");
 												toast({ title: "Music Stopped" });
 											} else {
 												musicEngineRef.current.play(musicId as MusicMood);
+												vttRealtime.broadcastAudioSync("music_change", musicId);
 												toast({
 													title: "Music Changed",
 													description: `Playing ${musicId} ambient music`,
@@ -3131,10 +3329,10 @@ const VTTEnhanced = () => {
 							{/* Main Map Area */}
 							<div
 								className={cn(
-									"order-1 lg:order-2",
+									"order-1 xl:order-2 min-h-0", // min-h-0 ensures map shrinks to fit grid area
 									isMapExpanded
-										? "col-span-1 lg:col-span-12"
-										: "col-span-1 lg:col-span-7",
+										? "col-span-1 xl:col-span-12"
+										: "col-span-1 xl:col-span-7",
 								)}
 							>
 								<AscendantWindow
@@ -3670,7 +3868,8 @@ const VTTEnhanced = () => {
 							{/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 lg:col-span-3 space-y-4 lg:overflow-y-auto order-3",
+									"col-span-1 xl:col-span-3 flex flex-col gap-4 xl:overflow-y-auto order-3",
+									"min-h-0", // Prevent CSS grid blowout
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
 								)}
@@ -5264,6 +5463,11 @@ const VTTEnhanced = () => {
 					</button>
 				)}
 			</div>
+			{/* Shared 3D Dice Overlay (DDB parity) */}
+			<SharedDiceTray
+				roll={vttRealtime.sharedDiceRoll}
+				onDismiss={() => vttRealtime.setSharedDiceRoll(null)}
+			/>
 		</Layout>
 	);
 };

@@ -16,6 +16,19 @@ export {
 	distanceToZone,
 	isListenerInZone,
 } from "./ambientSoundZone";
+// AoE templates (lingering spell effects — Roll20 parity)
+export {
+	AOE_BORDER_COLORS,
+	AOE_COLORS,
+	type AoEShape,
+	type AoETemplate,
+	createAoETemplate,
+	DEFAULT_CONE_WIDTH,
+	getAoEBounds,
+	getConeSVGPath,
+	getLineSVGPath,
+	isCellInAoE,
+} from "./aoeTemplates";
 // Drawing & measurement
 export {
 	circlePath,
@@ -30,6 +43,33 @@ export {
 	rectPath,
 	type VTTDrawing,
 } from "./drawingEngine";
+
+// Explorer mode fog (tri-state: unexplored / visible / previously explored)
+export {
+	createExplorerFog,
+	type ExplorerFogGrid,
+	eraseCells,
+	FOG_STATE_STYLES,
+	type FogState,
+	getFogCellStyle,
+	hideCells,
+	migrateFromBooleanFog,
+	revealCells,
+	toBooleanFog,
+	toggleFogCell,
+	updateFogFromVision,
+} from "./explorerFog";
+
+// Foreground layer (overhead tiles — Foundry VTT parity)
+export {
+	computeTileOpacity,
+	createForegroundTile,
+	type ForegroundTile,
+	type ForegroundTileMode,
+	getSceneForegroundTiles,
+	getTileTransformCSS,
+	isTokenUnderTile,
+} from "./foregroundLayer";
 
 // Hex grid
 export {
@@ -79,6 +119,20 @@ export {
 	type PingConfig,
 	pruneExpiredPings,
 } from "./mapPing";
+// Map pins (interactive markers — Roll20 parity)
+export {
+	createMapPin,
+	findPinAtPosition,
+	getPinEmoji,
+	getScenePins,
+	getVisiblePins,
+	type MapPin as VTTMapPin,
+	type MapPinIcon,
+	type MapPinLinkType,
+	PIN_COLORS,
+	PIN_ICON_EMOJIS,
+	PIN_SIZE_PX,
+} from "./mapPins";
 // Particle effects library (102+ presets)
 export {
 	getPreset as getParticlePreset,
@@ -115,7 +169,19 @@ export {
 	type WeatherEffect,
 	type WeatherType,
 } from "./terrainWeatherEngine";
-
+// Token status markers (Roll20 parity)
+export {
+	BUILT_IN_MARKERS,
+	getMarkerBadgeStyle,
+	getMarkerById,
+	getMarkerClipPath,
+	getMarkerDisplayText,
+	getMarkerPosition,
+	type MarkerShape,
+	type MarkerSlot,
+	type TokenMarkerAssignment,
+	type TokenStatusMarker,
+} from "./tokenStatusMarkers";
 // VTT Asset Manifest
 export {
 	ALL_ASSETS,

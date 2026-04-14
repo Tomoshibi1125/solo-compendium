@@ -31,7 +31,7 @@ export const useCampaignWiki = (campaignId: string | null) => {
 				.from("campaign_wiki_articles")
 				.select("*")
 				.eq("campaign_id", campaignId)
-				.order("title", { ascending: true });
+				.order("created_at", { ascending: true });
 
 			if (error) {
 				logErrorWithContext(error, "useCampaignWiki.query");
@@ -50,13 +50,13 @@ export const useCampaignWiki = (campaignId: string | null) => {
 			if (isLocalMode()) {
 				const existing = readLocalWikiArticles(campaignId);
 				const now = new Date().toISOString();
-				const nextId = "local_wiki_" + crypto.randomUUID();
+				const nextId = `local_wiki_${crypto.randomUUID()}`;
 				const newArticle: WikiArticle = {
 					id: nextId,
 					campaign_id: campaignId,
 					title: article.title,
-					content: article.content,
-					category: article.category,
+					content: article.content ?? "",
+					category: article.category ?? "General",
 					is_public: article.is_public ?? false,
 					created_at: now,
 					updated_at: now,

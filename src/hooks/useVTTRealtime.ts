@@ -132,6 +132,23 @@ interface VTTHandoutShare {
 	timestamp: number;
 }
 
+// Shared 3D dice roll — broadcast to all clients for DDB-style synchronized visualization
+export interface SharedDiceRollSpec {
+	id: string;
+	rollerId: string;
+	rollerName: string;
+	formula: string;
+	dice: Array<{ sides: number; value: number }>; // resolved values per die
+	theme?: string;
+	critical: boolean;
+	fumble: boolean;
+	result: number;
+	displayText: string;
+	timestamp: number;
+}
+
+export type DiceVisibility = "shared" | "self" | "disabled";
+
 type VTTBroadcastEvent =
 	| { type: "token_move"; payload: VTTTokenMove }
 	| {
@@ -154,6 +171,7 @@ type VTTBroadcastEvent =
 	| { type: "fog_update"; payload: VTTFogUpdate }
 	| { type: "chat_message"; payload: VTTChatMessage }
 	| { type: "dice_roll"; payload: VTTChatMessage }
+	| { type: "dice_roll_3d"; payload: SharedDiceRollSpec }
 	| { type: "initiative_update"; payload: VTTInitiativeState }
 	| { type: "ping"; payload: VTTPing }
 	| {
@@ -174,7 +192,16 @@ type VTTBroadcastEvent =
 	  }
 	| { type: "ruler"; payload: VTTRulerSegment }
 	| { type: "ruler_clear"; payload: { userId: string } }
-	| { type: "handout_share"; payload: VTTHandoutShare };
+	| { type: "handout_share"; payload: VTTHandoutShare }
+	| {
+			type: "audio_sync";
+			payload: {
+				action: "play_sound" | "music_change" | "music_stop";
+				id: string;
+				volume?: number;
+				playedBy: string;
+			};
+	  };
 
 type PresencePayload = {
 	user_id?: string;
@@ -232,6 +259,8 @@ interface DiceTermResult {
 	kept: number[];
 	dropped: number[];
 	subtotal: number;
+	successes?: number; // count of dice meeting a target threshold
+	successTarget?: string; // e.g. ">5", "<3"
 }
 
 interface VTTDiceRollDetailed {
@@ -243,6 +272,7 @@ interface VTTDiceRollDetailed {
 	critical: boolean;
 	fumble: boolean;
 	displayText: string; // e.g. "[3, 5, ~~1~~] + 4 = 12"
+	successes?: number; // total successes across all terms (WoD/Shadowrun)
 }
 
 function rollOneDie(sides: number): number {
@@ -250,25 +280,28 @@ function rollOneDie(sides: number): number {
 }
 
 function parseDiceTerm(term: string): DiceTermResult {
-	// Exploding: NdS!
-	const explodingMatch = term.match(
-		/^(\d+)d(\d+)(!)?(?:kh(\d+))?(?:kl(\d+))?(?:ro<(\d+))?$/i,
+	// Full Roll20-parity regex: NdS! + kh/kl + dh/dl + ro< + >N/<N/=N success counting
+	const diceMatch = term.match(
+		/^(\d+)d(\d+)(!)?(?:kh(\d+))?(?:kl(\d+))?(?:dh(\d+))?(?:dl(\d+))?(?:ro<(\d+))?(?:([><=])(\d+))?$/i,
 	);
-	if (!explodingMatch) {
+	if (!diceMatch) {
 		return { expression: term, rolls: [], kept: [], dropped: [], subtotal: 0 };
 	}
 
-	let count = parseInt(explodingMatch[1], 10);
-	const sides = parseInt(explodingMatch[2], 10);
-	const exploding = !!explodingMatch[3];
-	const keepHighest = explodingMatch[4]
-		? parseInt(explodingMatch[4], 10)
-		: undefined;
-	const keepLowest = explodingMatch[5]
-		? parseInt(explodingMatch[5], 10)
-		: undefined;
-	const rerollOnceBelow = explodingMatch[6]
-		? parseInt(explodingMatch[6], 10)
+	let count = parseInt(diceMatch[1], 10);
+	const sides = parseInt(diceMatch[2], 10);
+	const exploding = !!diceMatch[3];
+	const keepHighest = diceMatch[4] ? parseInt(diceMatch[4], 10) : undefined;
+	const keepLowest = diceMatch[5] ? parseInt(diceMatch[5], 10) : undefined;
+	// Drop highest N → equivalent to keep lowest (total - N)
+	const dropHighest = diceMatch[6] ? parseInt(diceMatch[6], 10) : undefined;
+	// Drop lowest N → equivalent to keep highest (total - N)
+	const dropLowest = diceMatch[7] ? parseInt(diceMatch[7], 10) : undefined;
+	const rerollOnceBelow = diceMatch[8] ? parseInt(diceMatch[8], 10) : undefined;
+	// Success counting: >N, <N, =N
+	const successOp = diceMatch[9] as ">" | "<" | "=" | undefined;
+	const successThreshold = diceMatch[10]
+		? parseInt(diceMatch[10], 10)
 		: undefined;
 
 	const rolls: number[] = [];
@@ -288,25 +321,70 @@ function parseDiceTerm(term: string): DiceTermResult {
 		}
 	}
 
-	// Keep highest / lowest
+	// Keep highest / lowest / drop highest / drop lowest
 	let kept = [...rolls];
 	let dropped: number[] = [];
 
-	if (keepHighest !== undefined && keepHighest < rolls.length) {
+	// Resolve effective keep from drop syntax:
+	// dh(N) → keep lowest (rolls.length - N)
+	// dl(N) → keep highest (rolls.length - N)
+	const effectiveKeepHighest =
+		keepHighest ??
+		(dropLowest !== undefined
+			? Math.max(0, rolls.length - dropLowest)
+			: undefined);
+	const effectiveKeepLowest =
+		keepLowest ??
+		(dropHighest !== undefined
+			? Math.max(0, rolls.length - dropHighest)
+			: undefined);
+
+	if (
+		effectiveKeepHighest !== undefined &&
+		effectiveKeepHighest < rolls.length
+	) {
 		const sorted = rolls.map((r, i) => ({ r, i })).sort((a, b) => b.r - a.r);
-		const keepSet = new Set(sorted.slice(0, keepHighest).map((s) => s.i));
+		const keepSet = new Set(
+			sorted.slice(0, effectiveKeepHighest).map((s) => s.i),
+		);
 		kept = rolls.filter((_, i) => keepSet.has(i));
 		dropped = rolls.filter((_, i) => !keepSet.has(i));
-	} else if (keepLowest !== undefined && keepLowest < rolls.length) {
+	} else if (
+		effectiveKeepLowest !== undefined &&
+		effectiveKeepLowest < rolls.length
+	) {
 		const sorted = rolls.map((r, i) => ({ r, i })).sort((a, b) => a.r - b.r);
-		const keepSet = new Set(sorted.slice(0, keepLowest).map((s) => s.i));
+		const keepSet = new Set(
+			sorted.slice(0, effectiveKeepLowest).map((s) => s.i),
+		);
 		kept = rolls.filter((_, i) => keepSet.has(i));
 		dropped = rolls.filter((_, i) => !keepSet.has(i));
 	}
 
-	const subtotal = kept.reduce((a, b) => a + b, 0);
+	// Success counting (WoD / Shadowrun style)
+	let successes: number | undefined;
+	let successTarget: string | undefined;
+	if (successOp !== undefined && successThreshold !== undefined) {
+		successes = kept.filter((r) => {
+			if (successOp === ">") return r >= successThreshold;
+			if (successOp === "<") return r <= successThreshold;
+			return r === successThreshold; // "="
+		}).length;
+		successTarget = `${successOp}${successThreshold}`;
+	}
 
-	return { expression: term, rolls, kept, dropped, subtotal };
+	const subtotal =
+		successes !== undefined ? successes : kept.reduce((a, b) => a + b, 0);
+
+	return {
+		expression: term,
+		rolls,
+		kept,
+		dropped,
+		subtotal,
+		successes,
+		successTarget,
+	};
 }
 
 function formatTermDisplay(term: DiceTermResult): string {
@@ -330,7 +408,12 @@ function formatTermDisplay(term: DiceTermResult): string {
 	const parts = term.rolls.map((r, i) =>
 		droppedSet.has(i) ? `~~${r}~~` : String(r),
 	);
-	return `[${parts.join(", ")}]`;
+	let display = `[${parts.join(", ")}]`;
+	// Append success count for target-based rolls
+	if (term.successes !== undefined && term.successTarget) {
+		display += ` ${term.successTarget} → **${term.successes} success${term.successes !== 1 ? "es" : ""}**`;
+	}
+	return display;
 }
 
 export function rollDiceFormula(formula: string): VTTDiceRoll {
@@ -353,8 +436,9 @@ function rollDiceFormulaDetailed(rawFormula: string): VTTDiceRollDetailed {
 
 	// Tokenize: split on + and - while preserving sign
 	// e.g. "2d6+1d4-3+5" → ["+2d6", "+1d4", "-3", "+5"]
+	// Supports: kh/kl (keep), dh/dl (drop), ! (exploding), ro< (reroll), >N/<N/=N (success)
 	const tokenRegex =
-		/([+-]?)(\d+d\d+(?:!)?(?:kh\d+)?(?:kl\d+)?(?:ro<\d+)?|\d+)/gi;
+		/([+-]?)(\d+d\d+(?:!)?(?:kh\d+)?(?:kl\d+)?(?:dh\d+)?(?:dl\d+)?(?:ro<\d+)?(?:[><=]\d+)?|\d+)/gi;
 	const tokens: { sign: number; raw: string; isDice: boolean }[] = [];
 	let m = tokenRegex.exec(formula);
 	while (m !== null) {
@@ -412,6 +496,11 @@ function rollDiceFormulaDetailed(rawFormula: string): VTTDiceRollDetailed {
 		? firstD20Term.kept.length === 1 && firstD20Term.kept[0] === 1
 		: false;
 
+	// Aggregate successes across all terms (for WoD/Shadowrun success-pool rolls)
+	const totalSuccesses = terms.some((t) => t.successes !== undefined)
+		? terms.reduce((sum, t) => sum + (t.successes ?? 0), 0)
+		: undefined;
+
 	const displayText = `${displayParts.join(" ")} = **${total}**`;
 
 	return {
@@ -423,6 +512,7 @@ function rollDiceFormulaDetailed(rawFormula: string): VTTDiceRollDetailed {
 		critical,
 		fumble,
 		displayText,
+		successes: totalSuccesses,
 	};
 }
 
@@ -512,6 +602,15 @@ export function useVTTRealtime({
 		round: 1,
 		active: false,
 	});
+
+	// Shared 3D dice visualization (DDB parity)
+	const [sharedDiceRoll, setSharedDiceRoll] =
+		useState<SharedDiceRollSpec | null>(null);
+	const [diceVisibility, setDiceVisibility] =
+		useState<DiceVisibility>("shared");
+	const sharedDiceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+		null,
+	);
 
 	const channelRef = useRef<RealtimeChannel | null>(null);
 	const eventHandlersRef = useRef<Map<string, Set<(payload: unknown) => void>>>(
@@ -657,6 +756,21 @@ export function useVTTRealtime({
 		[broadcast, userId],
 	);
 
+	// Audio Sync
+	const broadcastAudioSync = useCallback(
+		(
+			action: "play_sound" | "music_change" | "music_stop",
+			id: string,
+			volume?: number,
+		) => {
+			broadcast({
+				type: "audio_sync",
+				payload: { action, id, volume, playedBy: userId },
+			});
+		},
+		[broadcast, userId],
+	);
+
 	// Chat
 	const sendChatMessage = useCallback(
 		(
@@ -719,6 +833,42 @@ export function useVTTRealtime({
 			setChatMessages((prev) => [...prev, msg].slice(-200));
 			broadcast({ type: "dice_roll", payload: msg });
 
+			// Shared 3D dice visualization — broadcast dice specs so all clients
+			// can render the same 3D animation (DDB parity)
+			if (diceVisibility === "shared" && msgType !== "wardenroll") {
+				const diceSpecs = roll.terms.flatMap((term) =>
+					term.kept.map((value, _idx) => ({
+						sides: parseInt(term.expression.match(/d(\d+)/)?.[1] || "6", 10),
+						value,
+					})),
+				);
+
+				if (diceSpecs.length > 0) {
+					const sharedRoll: SharedDiceRollSpec = {
+						id: msg.id,
+						rollerId: userId,
+						rollerName: userName,
+						formula,
+						dice: diceSpecs,
+						critical: roll.critical,
+						fumble: roll.fumble,
+						result: roll.result,
+						displayText: roll.displayText,
+						timestamp: Date.now(),
+					};
+					// Show locally
+					setSharedDiceRoll(sharedRoll);
+					if (sharedDiceTimeoutRef.current)
+						clearTimeout(sharedDiceTimeoutRef.current);
+					sharedDiceTimeoutRef.current = setTimeout(
+						() => setSharedDiceRoll(null),
+						5000,
+					);
+					// Broadcast to other clients
+					broadcast({ type: "dice_roll_3d", payload: sharedRoll });
+				}
+			}
+
 			if (isSupabaseConfigured && campaignId) {
 				void supabase
 					.from("vtt_chat_messages")
@@ -736,7 +886,7 @@ export function useVTTRealtime({
 			}
 			return roll;
 		},
-		[broadcast, campaignId, sessionId, userId, userName],
+		[broadcast, campaignId, diceVisibility, sessionId, userId, userName],
 	);
 
 	// Process chat input with slash command support
@@ -1079,6 +1229,19 @@ export function useVTTRealtime({
 						case "initiative_update":
 							setInitiativeState(payload.payload as VTTInitiativeState);
 							break;
+						case "dice_roll_3d": {
+							if (diceVisibility !== "disabled") {
+								const incoming = payload.payload as SharedDiceRollSpec;
+								setSharedDiceRoll(incoming);
+								if (sharedDiceTimeoutRef.current)
+									clearTimeout(sharedDiceTimeoutRef.current);
+								sharedDiceTimeoutRef.current = setTimeout(
+									() => setSharedDiceRoll(null),
+									5000,
+								);
+							}
+							break;
+						}
 						case "ping": {
 							const ping = payload.payload as MapPing; // VTTPing / MapPing mismatch typing bridging
 							setPings((prev) => [...prev, ping].slice(-20));
@@ -1212,6 +1375,7 @@ export function useVTTRealtime({
 		userColor,
 		userId,
 		userName,
+		diceVisibility,
 	]);
 
 	const activeUsers = useMemo(
@@ -1246,13 +1410,22 @@ export function useVTTRealtime({
 		// Drawings
 		broadcastDrawingUpdate,
 
+		// Audio
+		broadcastAudioSync,
+
 		// Chat (with slash command support)
 		chatMessages,
 		sendChatMessage,
 		processChat,
 
-		// Dice (Roll20-class: adv/dis, kh/kl, exploding, multi-term)
+		// Dice (Roll20-class: adv/dis, kh/kl, dh/dl, exploding, success counting, multi-term)
 		rollAndBroadcast,
+
+		// Shared 3D dice visualization (DDB parity)
+		sharedDiceRoll,
+		setSharedDiceRoll,
+		diceVisibility,
+		setDiceVisibility,
 
 		// Initiative + turn management
 		initiativeState,

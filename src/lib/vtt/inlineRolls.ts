@@ -35,7 +35,7 @@ export type ChatSegment =
 // ─── Roll Parser ────────────────────────────────────────────
 
 const INLINE_ROLL_REGEX = /\[\[([^\]]+)\]\]/g;
-const DICE_REGEX = /^(\d*)d(\d+)(?:(kh|kl)(\d+))?(?:([+-]\d+))?$/i;
+const DICE_REGEX = /^(\d*)d(\d+)(?:(kh|kl|dh|dl)(\d+))?(?:([+-]\d+))?$/i;
 
 /**
  * Roll a single dice expression (e.g., "2d6+3", "4d6kh3")
@@ -47,7 +47,7 @@ export function rollDiceExpression(formula: string): InlineRollResult | null {
 
 	const count = parseInt(match[1], 10) || 1;
 	const sides = parseInt(match[2], 10);
-	const keepMode = match[3] as "kh" | "kl" | undefined;
+	const keepMode = match[3] as "kh" | "kl" | "dh" | "dl" | undefined;
 	const keepCount = match[4] ? parseInt(match[4], 10) : undefined;
 	const modifier = match[5] ? parseInt(match[5], 10) : 0;
 
@@ -57,13 +57,26 @@ export function rollDiceExpression(formula: string): InlineRollResult | null {
 		dice.push(Math.floor(Math.random() * sides) + 1);
 	}
 
-	// Apply keep highest/lowest
+	// Apply keep/drop highest/lowest
+	// dh(N) → keep lowest (count - N), dl(N) → keep highest (count - N)
 	let kept: number[];
 	if (keepMode && keepCount !== undefined) {
+		let effectiveMode: "kh" | "kl";
+		let effectiveCount: number;
+		if (keepMode === "dh") {
+			effectiveMode = "kl";
+			effectiveCount = Math.max(0, dice.length - keepCount);
+		} else if (keepMode === "dl") {
+			effectiveMode = "kh";
+			effectiveCount = Math.max(0, dice.length - keepCount);
+		} else {
+			effectiveMode = keepMode;
+			effectiveCount = keepCount;
+		}
 		const sorted = [...dice].sort((a, b) =>
-			keepMode === "kh" ? b - a : a - b,
+			effectiveMode === "kh" ? b - a : a - b,
 		);
-		kept = sorted.slice(0, keepCount);
+		kept = sorted.slice(0, effectiveCount);
 	} else {
 		kept = [...dice];
 	}

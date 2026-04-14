@@ -22,9 +22,34 @@ import {
 	useUpsertCombatants,
 } from "@/hooks/useCampaignCombat";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import type { Json } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 
 // ── Types ──────────────────────────────────────────────────────────────
+
+/** Condition with optional duration tracking (Roll20 parity) */
+interface ConditionWithDuration {
+	name: string;
+	duration?: number; // rounds remaining; undefined = indefinite
+}
+
+/** Normalize conditions from storage — supports both legacy string[] and new object[] */
+function normalizeConditions(raw: unknown): ConditionWithDuration[] {
+	if (!Array.isArray(raw)) return [];
+	return raw.map((c) => {
+		if (typeof c === "string") return { name: c };
+		if (c && typeof c === "object" && "name" in c) {
+			return {
+				name: String((c as Record<string, unknown>).name),
+				duration:
+					typeof (c as Record<string, unknown>).duration === "number"
+						? ((c as Record<string, unknown>).duration as number)
+						: undefined,
+			};
+		}
+		return { name: String(c) };
+	});
+}
 
 interface TrackerEntry {
 	id: string;
@@ -33,7 +58,7 @@ interface TrackerEntry {
 	hp?: number;
 	maxHp?: number;
 	ac?: number;
-	conditions: string[];
+	conditions: ConditionWithDuration[];
 	isHunter: boolean;
 	characterId?: string;
 }
@@ -58,7 +83,7 @@ function rowToEntry(row: CombatantRow): TrackerEntry {
 		hp: typeof stats.hp === "number" ? stats.hp : undefined,
 		maxHp: typeof stats.maxHp === "number" ? stats.maxHp : undefined,
 		ac: typeof stats.ac === "number" ? stats.ac : undefined,
-		conditions: Array.isArray(conds) ? (conds as string[]) : [],
+		conditions: normalizeConditions(conds),
 		isHunter: Boolean((row.flags as Record<string, unknown>)?.isHunter),
 		characterId: row.member_id ?? undefined,
 	};
@@ -132,6 +157,40 @@ export function VTTInitiativePanel({
 		if (!activeSessionId) return;
 		const nextIdx = (currentTurn + 1) % Math.max(sorted.length, 1);
 		const nextRound = nextIdx === 0 ? round + 1 : round;
+
+		// Auto-decrement condition durations when a new round starts (Roll20 parity)
+		if (nextIdx === 0 && sorted.length > 0) {
+			const updatedCombatants = sorted
+				.filter((entry) =>
+					entry.conditions.some(
+						(c) => c.duration !== undefined && c.duration > 0,
+					),
+				)
+				.map((entry) => {
+					const nextConds = entry.conditions
+						.map((c) => {
+							if (c.duration === undefined) return c;
+							return { ...c, duration: c.duration - 1 };
+						})
+						.filter((c) => c.duration === undefined || c.duration > 0);
+					return {
+						id: entry.id,
+						name: entry.name,
+						initiative: entry.initiative,
+						stats: { hp: entry.hp, maxHp: entry.maxHp, ac: entry.ac },
+						conditions: nextConds as unknown as Json,
+						flags: { isHunter: entry.isHunter },
+					};
+				});
+			if (updatedCombatants.length > 0) {
+				upsertCombatants.mutate({
+					campaignId,
+					sessionId: activeSessionId,
+					combatants: updatedCombatants,
+				});
+			}
+		}
+
 		updateSession.mutate({
 			campaignId,
 			sessionId: activeSessionId,
@@ -157,6 +216,7 @@ export function VTTInitiativePanel({
 		sorted,
 		updateSession,
 		ascendantTools,
+		upsertCombatants,
 	]);
 
 	const resetCombat = useCallback(() => {
@@ -184,7 +244,7 @@ export function VTTInitiativePanel({
 						name: entry.name,
 						initiative: entry.initiative,
 						stats: { hp: newHp, maxHp: entry.maxHp, ac: entry.ac },
-						conditions: entry.conditions,
+						conditions: entry.conditions as unknown as Json,
 						flags: { isHunter: entry.isHunter },
 					},
 				],
@@ -194,11 +254,12 @@ export function VTTInitiativePanel({
 	);
 
 	const toggleCondition = useCallback(
-		(entry: TrackerEntry, condition: string) => {
+		(entry: TrackerEntry, condition: string, duration?: number) => {
 			if (!activeSessionId) return;
-			const nextConds = entry.conditions.includes(condition)
-				? entry.conditions.filter((c) => c !== condition)
-				: [...entry.conditions, condition];
+			const hasCondition = entry.conditions.some((c) => c.name === condition);
+			const nextConds = hasCondition
+				? entry.conditions.filter((c) => c.name !== condition)
+				: [...entry.conditions, { name: condition, duration }];
 			upsertCombatants.mutate({
 				campaignId,
 				sessionId: activeSessionId,
@@ -208,7 +269,7 @@ export function VTTInitiativePanel({
 						name: entry.name,
 						initiative: entry.initiative,
 						stats: { hp: entry.hp, maxHp: entry.maxHp, ac: entry.ac },
-						conditions: nextConds,
+						conditions: nextConds as unknown as Json,
 						flags: { isHunter: entry.isHunter },
 					},
 				],
@@ -320,10 +381,15 @@ export function VTTInitiativePanel({
 								<div className="flex flex-wrap gap-0.5 mt-1 ml-6">
 									{entry.conditions.map((c) => (
 										<span
-											key={c}
-											className="text-[9px] bg-destructive/20 text-destructive-foreground px-1 rounded"
+											key={c.name}
+											className="text-[9px] bg-destructive/20 text-destructive-foreground px-1 rounded inline-flex items-center gap-0.5"
 										>
-											{c}
+											{c.name}
+											{c.duration !== undefined && (
+												<span className="text-[8px] font-mono bg-destructive/30 px-0.5 rounded">
+													{c.duration}r
+												</span>
+											)}
 										</span>
 									))}
 								</div>
@@ -366,7 +432,7 @@ export function VTTInitiativePanel({
 												onClick={() => toggleCondition(entry, c)}
 												className={cn(
 													"text-[9px] px-1 py-0.5 rounded border transition-colors",
-													entry.conditions.includes(c)
+													entry.conditions.some((ec) => ec.name === c)
 														? "bg-destructive/30 border-destructive/50 text-destructive-foreground"
 														: "border-border/50 text-muted-foreground hover:bg-muted/30",
 												)}
@@ -374,6 +440,41 @@ export function VTTInitiativePanel({
 												{c}
 											</button>
 										))}
+									</div>
+									{/* Duration-based condition (custom tracker entry) */}
+									<div className="flex items-center gap-1 mt-1">
+										<Input
+											placeholder="Effect name"
+											className="h-6 text-[10px] flex-1"
+											id={`cond-name-${entry.id}`}
+											onKeyDown={(e) => {
+												if (e.key === "Enter") {
+													const nameInput = e.currentTarget;
+													const durInput = document.getElementById(
+														`cond-dur-${entry.id}`,
+													) as HTMLInputElement | null;
+													if (nameInput.value.trim()) {
+														const dur = durInput?.value
+															? parseInt(durInput.value, 10)
+															: undefined;
+														toggleCondition(
+															entry,
+															nameInput.value.trim(),
+															dur && dur > 0 ? dur : undefined,
+														);
+														nameInput.value = "";
+														if (durInput) durInput.value = "";
+													}
+												}
+											}}
+										/>
+										<Input
+											placeholder="Rds"
+											type="number"
+											className="h-6 text-[10px] w-10"
+											id={`cond-dur-${entry.id}`}
+											title="Duration in rounds (leave empty for indefinite)"
+										/>
 									</div>
 								</div>
 							)}

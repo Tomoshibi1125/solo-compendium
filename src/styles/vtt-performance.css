@@ -1,0 +1,504 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   VTT Performance & Clarity Layer
+   ───────────────────────────────────────────────────────────────────────
+   GPU compositing, high-DPI sharpness, reduced repaints, touch UX,
+   and responsive layout refinements for PC + mobile.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. GPU Compositing & Containment ────────────────────────────────── */
+
+/* Promote the main scene to its own composite layer */
+.vtt-scene-container {
+	@supports (contain: layout style) {
+		contain: layout style;
+	}
+	will-change: transform;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+/* Tokens: individual layers for smooth drag */
+.vtt-token,
+.vtt-token-container {
+	will-change: transform, left, top;
+	@supports (contain: layout style paint) {
+		contain: layout style paint;
+	}
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+}
+
+/* Fog tiles: batch composited, no reflow */
+.vtt-fog-tile,
+.vtt-fog-cell {
+	@supports (contain: strict) {
+		contain: strict;
+	}
+	will-change: opacity;
+}
+
+/* Grid: static, never changes — isolate from paint tree */
+.vtt-grid,
+.vtt-grid-overlay {
+	@supports (contain: strict) {
+		contain: strict;
+	}
+	pointer-events: none;
+}
+
+/* AoE / drawing layers: paint containment */
+.vtt-aoe-circle,
+.vtt-aoe-cone,
+.vtt-aoe-cube,
+.vtt-drawing-line,
+.vtt-drawing-shape {
+	@supports (contain: layout style paint) {
+		contain: layout style paint;
+	}
+}
+
+/* Ping/cursor overlays: composited for animation perf */
+.vtt-ping-pulse,
+.vtt-ping {
+	will-change: transform, opacity;
+}
+
+/* ── 2. High-DPI / Retina Sharpness ──────────────────────────────────── */
+
+/* Crisp image rendering for pixel-art/isometric maps */
+.vtt-background,
+.vtt-background-image {
+	image-rendering: auto; /* Default: bicubic for painterly */
+}
+
+/* Opt-in crisp mode for pixel-art maps via data attribute */
+.vtt-background[data-render="crisp"],
+.vtt-background-image[data-render="crisp"] {
+	@supports (image-rendering: pixelated) {
+		image-rendering: pixelated;
+	}
+}
+
+/* Token images: high quality scaling for portraits */
+.vtt-token img,
+.vtt-token-inner img {
+	image-rendering: auto;
+	will-change: transform;
+	border-radius: inherit;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}
+
+/* Text anti-aliasing for all VTT overlays */
+.vtt-scene-container,
+.vtt-mobile-toolbar,
+.vtt-bottom-sheet,
+.vtt-context-menu,
+.shared-dice-tray {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+/* ── 3. Reduced Motion ───────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+	html body .vtt-token,
+	html body .vtt-token-container,
+	html body .vtt-token-inner,
+	html body .vtt-hp-bar,
+	html body .vtt-hp-bar-fill,
+	html body .vtt-ping-pulse,
+	html body .vtt-turn-active,
+	html body .shared-dice-tray,
+	html body .shared-dice-tray__result {
+		animation-duration: 0.01ms;
+		animation-iteration-count: 1;
+		transition-duration: 0.01ms;
+	}
+}
+
+/* ── 4. PC Desktop Clarity ───────────────────────────────────────────── */
+
+@media (min-width: 1025px) and (pointer: fine) {
+	/* Tighter grid for precision work */
+	.vtt-grid,
+	.vtt-grid-overlay {
+		opacity: 0.15;
+	}
+
+	/* Subtle hover previews */
+	.vtt-token:hover {
+		transition:
+			transform 0.12s ease,
+			box-shadow 0.15s ease;
+	}
+
+	/* HP bars slightly taller on desktop for readability */
+	.vtt-hp-bar-container {
+		height: 5px;
+	}
+
+	/* Annotations: compact, crisp */
+	.vtt-annotation {
+		font-size: 11px;
+		padding: 3px 8px;
+	}
+
+	/* Context menu: fast animations */
+	.vtt-context-menu {
+		animation-duration: 0.1s;
+	}
+
+	/* Dice tray: wider canvas on large screens */
+	.shared-dice-tray {
+		width: clamp(280px, calc(160px + var(--dice-count, 1) * 90px), 580px);
+	}
+
+	.shared-dice-tray__canvas {
+		max-height: 200px;
+	}
+
+	.shared-dice-tray__result-value {
+		font-size: 1.5rem;
+	}
+}
+
+/* ultrawide: keep VTT centered, prevent sidebar stretching */
+@media (min-width: 2560px) {
+	.shared-dice-tray {
+		bottom: 2rem;
+	}
+}
+
+/* ── 5. Tablet Optimization ──────────────────────────────────────────── */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	/* Slightly larger tokens for stylus/finger */
+	.vtt-token,
+	.vtt-token-container {
+		min-width: 36px;
+		min-height: 36px;
+	}
+
+	/* HP bars thicker for visibility */
+	.vtt-hp-bar-container {
+		height: 6px;
+		bottom: -7px;
+	}
+
+	/* Dice tray: constrained width */
+	.shared-dice-tray {
+		width: clamp(200px, 50vw, 440px);
+		bottom: 1rem;
+	}
+
+	.shared-dice-tray__canvas {
+		max-height: 140px;
+	}
+}
+
+/* ── 6. Mobile Phone Optimization ────────────────────────────────────── */
+
+@media (max-width: 768px) {
+	/* Map viewport: fill screen minus toolbar */
+	.vtt-mobile-map-fullscreen {
+		height: calc(100vh - env(safe-area-inset-bottom, 0px));
+		overflow: hidden;
+		touch-action: manipulation;
+		@supports (overscroll-behavior: contain) {
+			overscroll-behavior: contain;
+		}
+	}
+
+	/* Tokens: larger minimum for fat-finger accuracy */
+	.vtt-token,
+	.vtt-token-container {
+		min-width: 44px;
+		min-height: 44px;
+	}
+
+	/* Token text: bump up for readability */
+	html body .vtt-token-inner {
+		font-size: 14px;
+	}
+
+	/* HP bars: much thicker for mobile visibility */
+	html body .vtt-hp-bar-container {
+		height: 8px;
+		bottom: -9px;
+		border-radius: 4px;
+	}
+
+	html body .vtt-hp-bar {
+		border-radius: 4px;
+	}
+
+	/* Conditions: larger badges */
+	.vtt-condition-badge {
+		font-size: 10px;
+		padding: 2px 5px;
+		border-radius: 4px;
+	}
+
+	/* Grid: slightly more visible on small screens */
+	.vtt-grid,
+	.vtt-grid-overlay {
+		opacity: 0.22;
+	}
+
+	/* Annotations: larger, easier to read */
+	.vtt-annotation {
+		font-size: 13px;
+		padding: 8px 12px;
+		border-radius: 6px;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+	}
+
+	/* Fog tiles: remove border for cleaner dark zones */
+	.vtt-fog-tile {
+		border: none;
+	}
+
+	/* Measurement labels: larger */
+	.vtt-measurement-label {
+		font-size: 14px;
+		padding: 6px 14px;
+		border-radius: 6px;
+	}
+
+	/* Dice tray: full-width on mobile */
+	.shared-dice-tray {
+		left: 0.5rem;
+		right: 0.5rem;
+		transform: none;
+		width: auto;
+		bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+		border-radius: 14px;
+	}
+
+	.shared-dice-tray__canvas {
+		min-height: 80px;
+		max-height: 120px;
+		@supports (aspect-ratio: 2.4 / 1) {
+			aspect-ratio: 2.4 / 1;
+		}
+	}
+
+	.shared-dice-tray__roller-name {
+		font-size: 0.75rem;
+	}
+
+	.shared-dice-tray__result-value {
+		font-size: 1.1rem;
+	}
+
+	/* Bottom sheet: account for safe area */
+	.vtt-bottom-sheet {
+		padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+		border-radius: 20px 20px 0 0;
+	}
+
+	.vtt-bottom-sheet-content {
+		@supports (overscroll-behavior-y: contain) {
+			overscroll-behavior-y: contain;
+		}
+	}
+
+	/* Mobile toolbar: account for iPhone notch/pill */
+	.vtt-mobile-toolbar {
+		padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+		gap: 4px;
+	}
+
+	.vtt-mobile-toolbar button {
+		min-width: 48px;
+		min-height: 48px;
+		border-radius: 10px;
+		font-size: 10px;
+		gap: 3px;
+	}
+
+	.vtt-mobile-toolbar button svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	/* Context menu: full-width bottom sheet style */
+	.vtt-context-menu {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: auto;
+		min-width: 100vw;
+		border-radius: 16px 16px 0 0;
+		padding: 8px 0;
+		padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+		max-height: 60vh;
+		overflow-y: auto;
+		animation: vtt-mobile-sheet-up 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+	}
+
+	.vtt-context-menu button {
+		padding: 14px 20px;
+		font-size: 15px;
+		min-height: 48px;
+	}
+}
+
+@keyframes vtt-mobile-sheet-up {
+	from {
+		transform: translateY(100%);
+		opacity: 0.5;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+/* ── 7. Landscape Phone ──────────────────────────────────────────────── */
+
+@media (max-width: 900px) and (orientation: landscape) {
+	/* Compact toolbar in landscape */
+	.vtt-mobile-toolbar {
+		padding: 4px 6px;
+		padding-left: max(6px, env(safe-area-inset-left, 0px));
+		padding-right: max(6px, env(safe-area-inset-right, 0px));
+	}
+
+	.vtt-mobile-toolbar button {
+		min-width: 40px;
+		min-height: 40px;
+		font-size: 8px;
+	}
+
+	.vtt-mobile-toolbar button svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	/* Bottom sheet: shorter */
+	.vtt-bottom-sheet {
+		max-height: 50vh;
+	}
+
+	/* Dice tray: compact in landscape */
+	.shared-dice-tray {
+		bottom: 0.5rem;
+		left: auto;
+		right: 0.5rem;
+		width: clamp(180px, 35vw, 320px);
+		transform: none;
+	}
+
+	.shared-dice-tray__canvas {
+		max-height: 80px;
+		min-height: 60px;
+	}
+}
+
+/* ── 8. Touch Interaction ────────────────────────────────────────────── */
+
+@media (pointer: coarse) {
+	/* Prevent accidental double-tap zoom on map */
+	.vtt-scene-container,
+	.vtt-mobile-map-fullscreen {
+		touch-action: manipulation;
+	}
+
+	/* No elastic scroll on map viewport */
+	.vtt-scene-container {
+		@supports (overscroll-behavior: none) {
+			overscroll-behavior: none;
+		}
+	}
+
+	/* Disable hover effects that cause 300ms delay */
+	.vtt-token:hover {
+		transform: rotate(var(--token-rotation, 0deg)); /* Cancel scale */
+		box-shadow: none;
+	}
+
+	.vtt-token-inner:hover {
+		transform: none;
+	}
+
+	.vtt-token.active {
+		/* Active selection uses border instead of shadow for perf */
+		border-color: #f59e0b;
+		border-width: 3px;
+	}
+
+	/* Larger dismiss button on dice tray */
+	.shared-dice-tray__dismiss {
+		width: 2rem;
+		height: 2rem;
+		border-radius: 8px;
+	}
+}
+
+/* ── 9. Print / Screenshot ───────────────────────────────────────────── */
+
+@media print {
+	html body .vtt-mobile-toolbar,
+	html body .vtt-bottom-sheet,
+	html body .vtt-context-menu,
+	html body .shared-dice-tray,
+	html body .vtt-ping-pulse,
+	html body .vtt-cursors-overlay,
+	html body .vtt-pings-overlay {
+		display: none;
+	}
+
+	html body .vtt-scene-container {
+		break-inside: avoid;
+	}
+
+	html body .vtt-fog-tile,
+	html body .vtt-fog-cell {
+		background: rgba(0, 0, 0, 0.5);
+	}
+}
+
+/* ── 10. Dark Mode Contrast Boost ────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+	/* Ensure tokens have enough contrast against dark maps */
+	.vtt-token {
+		border-width: 2px;
+	}
+
+	/* HP bars: slightly brighter for visibility */
+	.vtt-hp-bar-fill.high {
+		background-color: #4ade80;
+	}
+	.vtt-hp-bar-fill.low {
+		background-color: #f87171;
+	}
+}
+
+/* ── 11. Safari-specific fixes ───────────────────────────────────────── */
+
+@supports (-webkit-touch-callout: none) {
+	/* Prevent Safari rubber-band on map */
+	.vtt-mobile-map-fullscreen {
+		position: fixed;
+		overflow: hidden;
+	}
+
+	/* Fix Safari backdrop-filter performance */
+	.shared-dice-tray,
+	.vtt-context-menu,
+	.vtt-bottom-sheet,
+	.vtt-annotation {
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}

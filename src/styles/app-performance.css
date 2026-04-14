@@ -1,0 +1,361 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Solo Compendium — Global Performance & Clarity Layer
+   ───────────────────────────────────────────────────────────────────────
+   Applied app-wide: GPU compositing, scroll perf, image sharpness,
+   reduced-motion, touch UX, and responsive text scaling.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Root Performance ─────────────────────────────────────────────── */
+
+html {
+	/* Smooth scrolling for anchor links, disabled when user prefers reduced motion */
+	@supports (scroll-behavior: smooth) {
+		scroll-behavior: smooth;
+	}
+	/* Prevent layout shift from scrollbar appearance */
+	@supports (scrollbar-gutter: stable) {
+		scrollbar-gutter: stable;
+	}
+	/* Enable font metrics override for reduced layout shift */
+	@supports (-webkit-text-size-adjust: 100%) or (text-size-adjust: 100%) {
+		-webkit-text-size-adjust: 100%;
+		text-size-adjust: 100%;
+	}
+}
+
+body {
+	/* Subpixel anti-aliasing on all platforms */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	/* Prevent overscroll bounce on mobile (rubber banding) */
+	@supports (overscroll-behavior-y: none) {
+		overscroll-behavior-y: none;
+	}
+}
+
+/* ── 2. Content Visibility / Lazy Rendering ──────────────────────────── */
+
+/* Cards / list items that are off-screen: skip rendering until visible */
+.glass-card,
+.AscendantWindow,
+.campaign-card,
+.compendium-card,
+.encounter-builder-Anomaly-card,
+.character-sheet-stat-card,
+.character-sheet-ability-card,
+.warden-directive-card {
+	content-visibility: auto;
+	contain-intrinsic-size: auto 200px;
+}
+
+/* Sections that may be off-screen (tabs, accordion content) */
+[data-state="inactive"],
+[hidden],
+.collapse-content:not(.open) {
+	content-visibility: hidden;
+}
+
+/* ── 3. Image Performance ────────────────────────────────────────────── */
+
+/* All images: lazy decode, proper contain */
+img {
+	content-visibility: auto;
+	contain-intrinsic-size: auto 150px;
+}
+
+/* Portrait / avatar images: high quality bicubic */
+img[class*="avatar"],
+img[class*="portrait"],
+img[class*="token"],
+.vtt-token img {
+	image-rendering: auto;
+	will-change: transform;
+}
+
+/* Decorative / background images: lower quality OK */
+img[loading="lazy"] {
+	image-rendering: auto;
+}
+
+/* ── 4. Scroll Performance ───────────────────────────────────────────── */
+
+/* Any scrollable container gets momentum scrolling + containment */
+[class*="overflow-y-auto"],
+[class*="overflow-auto"],
+[class*="overflow-x-auto"],
+.mobile-scroll-x,
+.vtt-tabs,
+.character-sheet-tabs,
+.player-tools-tabs {
+	@supports (overscroll-behavior: contain) {
+		overscroll-behavior: contain;
+	}
+	@supports (scroll-behavior: smooth) {
+		scroll-behavior: smooth;
+	}
+}
+
+/* Scroll snap for horizontal carousels / tab lists */
+.vtt-tab-list,
+.player-tools-tab-list,
+.character-sheet-tab-list {
+	scroll-snap-type: x mandatory;
+}
+
+.vtt-tab-trigger,
+.player-tools-tab-trigger,
+.character-sheet-tab-trigger {
+	scroll-snap-align: start;
+}
+
+/* ── 5. Glassmorphism Performance ────────────────────────────────────── */
+
+/* Promote glass panels to GPU layer to avoid main-thread blur repaints */
+.glass-card,
+.AscendantWindow,
+[class*="backdrop-blur"],
+[class*="bg-opacity"] {
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+/* ── 6. Animation Performance ────────────────────────────────────────── */
+
+/* All animations: use transform/opacity only (compositor-friendly) */
+.holographic-flicker,
+.resurge-text,
+[class*="animate-"],
+[class*="transition-"] {
+	will-change: transform, opacity;
+}
+
+/* Clean up will-change after animation completes */
+.holographic-flicker:not(:hover),
+[class*="animate-"]:not(:hover) {
+	will-change: auto;
+}
+
+/* ── 7. Reduced Motion (Accessibility) ───────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		@supports (scroll-behavior: auto) {
+			scroll-behavior: auto;
+		}
+	}
+
+	html body *,
+	html body *::before,
+	html body *::after {
+		animation-duration: 0.01ms;
+		animation-iteration-count: 1;
+		transition-duration: 0.01ms;
+		@supports (scroll-behavior: auto) {
+			scroll-behavior: auto;
+		}
+	}
+
+	/* Keep opacity transitions for critical UI feedback */
+	html body [data-state] {
+		transition: opacity 0.15s ease;
+	}
+
+	html body .holographic-flicker,
+	html body .system-overlay-scanlines,
+	html body .system-overlay-chromatic,
+	html body .system-overlay-grain {
+		animation: none;
+		opacity: 0;
+	}
+}
+
+/* ── 8. Focus Visibility (Keyboard Nav) ──────────────────────────────── */
+
+/* Only show focus rings for keyboard navigation, not click/touch */
+:focus:not(:focus-visible) {
+	outline: none;
+	box-shadow: none;
+}
+
+:focus-visible {
+	outline: 2px solid hsl(var(--primary, 275 80% 65%));
+	outline-offset: 2px;
+}
+
+/* ── 9. Touch Target Enforcement ─────────────────────────────────────── */
+
+@media (pointer: coarse) {
+	/* Min 44px tap target for all interactive elements */
+	button,
+	a,
+	[role="button"],
+	[role="tab"],
+	[role="menuitem"],
+	input[type="checkbox"],
+	input[type="radio"],
+	select,
+	.touch-button,
+	.touch-target {
+		min-height: 44px;
+		min-width: 44px;
+	}
+
+	/* Prevent accidental double-tap zoom everywhere */
+	button,
+	a,
+	[role="button"] {
+		touch-action: manipulation;
+	}
+
+	/* Disable hover effects that cause 300ms delay on mobile */
+	.glass-card:hover,
+	.AscendantWindow:hover {
+		transform: none;
+	}
+}
+
+/* ── 10. Mobile Typography Scaling ───────────────────────────────────── */
+
+@media (max-width: 475px) {
+	/* Slightly bump base font for readability on small screens */
+	html {
+		font-size: 15px;
+	}
+
+	/* Headings: scale down proportionally */
+	h1 {
+		font-size: 1.5rem;
+	}
+	h2 {
+		font-size: 1.25rem;
+	}
+	h3 {
+		font-size: 1.1rem;
+	}
+
+	/* Compact spacing on small screens */
+	.space-y-6 > * + * {
+		margin-top: 1rem;
+	}
+	.space-y-4 > * + * {
+		margin-top: 0.75rem;
+	}
+	.gap-6 {
+		gap: 1rem;
+	}
+	.gap-4 {
+		gap: 0.75rem;
+	}
+	.p-6 {
+		padding: 1rem;
+	}
+	.p-4 {
+		padding: 0.75rem;
+	}
+}
+
+@media (min-width: 476px) and (max-width: 768px) {
+	html {
+		font-size: 15.5px;
+	}
+}
+
+/* ── 11. Desktop Clarity ─────────────────────────────────────────────── */
+
+@media (min-width: 1025px) and (pointer: fine) {
+	/* Scrollbar: thinner on desktop for more content space */
+	::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+
+	/* Smooth hover transitions on desktop (no touch delay concern) */
+	.glass-card,
+	.AscendantWindow,
+	.campaign-card,
+	.compendium-card,
+	button {
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease,
+			border-color 0.15s ease;
+	}
+}
+
+/* ── 12. High DPI Optimizations ──────────────────────────────────────── */
+
+@media (min-resolution: 2dppx) {
+	/* On retina: sharper borders */
+	.glass-card,
+	.AscendantWindow {
+		border-width: 0.5px;
+	}
+
+	/* Crisper scrollbar on retina */
+	::-webkit-scrollbar-thumb {
+		border-radius: 1px;
+	}
+}
+
+/* ── 13. Landscape Phone Global ──────────────────────────────────────── */
+
+@media (max-width: 900px) and (orientation: landscape) {
+	/* Compact all vertical spacing in landscape */
+	html {
+		font-size: 14px;
+	}
+
+	/* Account for notch/dynamic island on both sides */
+	body {
+		padding-left: env(safe-area-inset-left, 0px);
+		padding-right: env(safe-area-inset-right, 0px);
+	}
+}
+
+/* ── 14. Dialog / Modal Optimization ─────────────────────────────────── */
+
+@media (max-width: 640px) {
+	/* Full-width dialogs on mobile */
+	html body [role="dialog"],
+	html body [data-radix-dialog-content] {
+		width: calc(100vw - 1.5rem);
+		max-width: none;
+		max-height: 85dvh;
+		border-radius: 12px;
+	}
+}
+
+/* ── 15. Print Optimization ──────────────────────────────────────────── */
+
+@media print {
+	/* Remove ALL decorative overlays */
+	html body .system-overlay-scanlines,
+	html body .system-overlay-chromatic,
+	html body .system-overlay-grain,
+	html body .holographic-flicker,
+	html body nav,
+	html body header,
+	html body footer,
+	html body .no-print {
+		display: none;
+	}
+
+	/* Reset backgrounds for ink-saving */
+	html body {
+		background: white;
+		color: black;
+	}
+
+	/* Remove glass effects */
+	html body .glass-card,
+	html body .AscendantWindow {
+		background: white;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
+		border: 1px solid #000;
+		box-shadow: none;
+	}
+}

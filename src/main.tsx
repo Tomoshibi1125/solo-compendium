@@ -9,6 +9,7 @@ verifyCoreDependencies();
 import "./styles/ascendant-ui.css";
 import "./styles/sa-theme.css";
 import "./styles/dropdown-opacity-fix.css";
+import "./styles/app-performance.css";
 
 // Fully wired architectural reference (Type-only, No runtime cost)
 export type _FinalWiring =

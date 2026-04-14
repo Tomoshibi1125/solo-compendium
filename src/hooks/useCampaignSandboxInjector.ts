@@ -6,14 +6,12 @@ import { saveCampaignToolState } from "@/hooks/useToolState";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import {
-	type CampaignWikiArticleRow,
 	readLocalJournals,
 	readLocalWikiArticles,
 	saveLocalJournals,
 	saveLocalWikiArticles,
-	type VttJournalEntryRow,
 } from "@/lib/guestStore";
-import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
+import type { VTTScene } from "@/types/vtt";
 
 const isLocalMode = () => !isSupabaseConfigured;
 
@@ -55,7 +53,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 				let isReady = false;
 				for (let attempt = 0; attempt < 5; attempt++) {
-					const { data: campaignTest, error: testError } = await supabase
+					const { data: campaignTest, error: _testError } = await supabase
 						.from("campaigns")
 						.select("id")
 						.eq("id", targetId)
@@ -81,302 +79,317 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 			}
 
 			// 1. Inject Wiki Chapters (Lore)
-			setInjectionState({
-				isInjecting: true,
-				progressString: `Generating Regional Wiki Lore (0/${massiveSandboxModule.chapters.length})...`,
-			});
+			try {
+				setInjectionState({
+					isInjecting: true,
+					progressString: `Generating Regional Wiki Lore (0/${massiveSandboxModule.chapters.length})...`,
+				});
 
-			if (isLocalMode()) {
-				const existingWiki = readLocalWikiArticles(targetId);
-				for (let i = 0; i < massiveSandboxModule.chapters.length; i++) {
-					const chapter = massiveSandboxModule.chapters[i];
-					if (!existingWiki.find((w) => w.title === chapter.title)) {
-						existingWiki.push({
-							id: crypto.randomUUID(),
-							campaign_id: targetId,
-							title: chapter.title,
-							content: chapter.content,
-							category: "lore",
-							is_public: true,
-							created_at: new Date().toISOString(),
-							updated_at: new Date().toISOString(),
-							created_by: "guest",
-						});
-						wikiCount++;
-					}
-					if (i % 5 === 0) {
-						setInjectionState({
-							isInjecting: true,
-							progressString: `Generating Regional Wiki Lore (${i + 1}/${massiveSandboxModule.chapters.length})...`,
-						});
-					}
-				}
-				if (wikiCount > 0) saveLocalWikiArticles(targetId, existingWiki);
-			} else {
-				for (let i = 0; i < massiveSandboxModule.chapters.length; i++) {
-					const chapter = massiveSandboxModule.chapters[i];
-					const { data: existing } = await supabase
-						.from("campaign_wiki_articles")
-						.select("id")
-						.eq("campaign_id", targetId)
-						.eq("title", chapter.title)
-						.maybeSingle();
-
-					if (!existing) {
-						const { error: wikiError } = await supabase
-							.from("campaign_wiki_articles")
-							.insert({
+				if (isLocalMode()) {
+					const existingWiki = readLocalWikiArticles(targetId);
+					for (let i = 0; i < massiveSandboxModule.chapters.length; i++) {
+						const chapter = massiveSandboxModule.chapters[i];
+						if (!existingWiki.find((w) => w.title === chapter.title)) {
+							// Use staggered timestamps to preserve insertion order
+							const ts = new Date(Date.now() + i).toISOString();
+							existingWiki.push({
+								id: crypto.randomUUID(),
 								campaign_id: targetId,
 								title: chapter.title,
 								content: chapter.content,
 								category: "lore",
 								is_public: true,
-							});
-
-						if (wikiError) {
-							console.error(
-								"[SandboxInjector] Wiki insert failed:",
-								chapter.title,
-								wikiError,
-							);
-							if (i === 0) {
-								toast({
-									title: "Module Import Failed",
-									description: `Database error: ${wikiError.message || "Permission Denied"}. Please ensure you are the Warden.`,
-									variant: "destructive",
-								});
-								return;
-							}
-						} else {
-							wikiCount++;
-						}
-					}
-
-					if (i % 5 === 0) {
-						setInjectionState({
-							isInjecting: true,
-							progressString: `Generating Regional Wiki Lore (${i + 1}/${massiveSandboxModule.chapters.length})...`,
-						});
-					}
-				}
-			}
-
-			// 2. Inject VTT Maps directly into campaign_tool_states (Supabase & Local via saveCampaignToolState)
-			setInjectionState({
-				isInjecting: true,
-				progressString: `Constructing Sandbox VTT Maps (0/${massiveSandboxModule.scenes.length})...`,
-			});
-
-			const scenes: VTTScene[] = massiveSandboxModule.scenes.map((scene) => {
-				const tokens: VTTTokenInstance[] = (scene.tokens || []).map((t) => ({
-					id: crypto.randomUUID(),
-					name: t.name,
-					x: t.x * (scene.gridSize || 100), // Scale map grid correctly
-					y: t.y * (scene.gridSize || 100),
-					size: (t.size as any) || "medium",
-					imageUrl: t.imageUrl,
-					tokenType: (t.tokenType as any) || "npc",
-					visible: !scene.fogOfWar,
-					locked: false,
-					layer: 0,
-					rotation: 0,
-					hp: t.hp,
-					hp_current: t.hp,
-					hp_max: t.maxHp || t.hp,
-					maxHp: t.maxHp || t.hp,
-					ac: t.ac || 10,
-				}));
-
-				return {
-					id: crypto.randomUUID(),
-					name: scene.name,
-					width: 4000,
-					height: 4000,
-					backgroundImage: scene.backgroundImage,
-					gridSize: scene.gridSize || 100,
-					gridType: "square",
-					tokens: tokens,
-					drawings: [],
-					annotations: [],
-					walls: [],
-					lights: [],
-					fogOfWar: scene.fogOfWar,
-				};
-			});
-
-			if (scenes.length > 0) {
-				await saveCampaignToolState<{
-					scenes: VTTScene[];
-					currentSceneId: string | null;
-				}>(targetId, user?.id || "guest", "vtt-scenes", {
-					scenes,
-					currentSceneId: scenes[0].id,
-				});
-				sceneCount = scenes.length;
-			}
-
-			// 3. Inject NPCs
-			setInjectionState({
-				isInjecting: true,
-				progressString: `Sowing NPC Roster...`,
-			});
-
-			if (massiveSandboxModule.npcs && massiveSandboxModule.npcs.length > 0) {
-				if (isLocalMode()) {
-					const existingWiki = readLocalWikiArticles(targetId);
-					for (let i = 0; i < massiveSandboxModule.npcs.length; i++) {
-						const npc = massiveSandboxModule.npcs[i];
-						if (!existingWiki.find((w) => w.title === npc.name)) {
-							const npcContent = [
-								`## ${npc.name}`,
-								`**Role:** ${npc.title}`,
-								`**Affiliation:** ${npc.guildAffiliation ?? "Unaffiliated"}`,
-								``,
-								`**Description:**`,
-								npc.description,
-								``,
-								`### Personality`,
-								npc.personality,
-								``,
-								`### Motivation`,
-								npc.motivation,
-								``,
-								`### Mechanics`,
-								`- **Level:** ${npc.level}`,
-								`- **Class/Job:** ${npc.job}`,
-								`- **HP:** ${npc.hp} | **AC:** ${npc.ac}`,
-							].join("\n");
-
-							existingWiki.push({
-								id: crypto.randomUUID(),
-								campaign_id: targetId,
-								title: npc.name,
-								content: npcContent,
-								category: "npc",
-								is_public: true,
-								created_at: new Date().toISOString(),
-								updated_at: new Date().toISOString(),
+								created_at: ts,
+								updated_at: ts,
 								created_by: "guest",
 							});
-							npcCount++;
+							wikiCount++;
+						}
+						if (i % 5 === 0) {
+							setInjectionState({
+								isInjecting: true,
+								progressString: `Generating Regional Wiki Lore (${i + 1}/${massiveSandboxModule.chapters.length})...`,
+							});
 						}
 					}
-					if (npcCount > 0) saveLocalWikiArticles(targetId, existingWiki);
+					if (wikiCount > 0) saveLocalWikiArticles(targetId, existingWiki);
 				} else {
-					for (let i = 0; i < massiveSandboxModule.npcs.length; i++) {
-						const npc = massiveSandboxModule.npcs[i];
-						const { data: existingNpc } = await supabase
+					for (let i = 0; i < massiveSandboxModule.chapters.length; i++) {
+						const chapter = massiveSandboxModule.chapters[i];
+						const { data: existing } = await supabase
 							.from("campaign_wiki_articles")
 							.select("id")
 							.eq("campaign_id", targetId)
-							.eq("title", npc.name)
+							.eq("title", chapter.title)
 							.maybeSingle();
 
-						if (!existingNpc) {
-							const npcContent = [
-								`## ${npc.name}`,
-								`**Role:** ${npc.title}`,
-								`**Affiliation:** ${npc.guildAffiliation ?? "Unaffiliated"}`,
-								``,
-								`**Description:**`,
-								npc.description,
-								``,
-								`### Personality`,
-								npc.personality,
-								``,
-								`### Motivation`,
-								npc.motivation,
-								``,
-								`### Mechanics`,
-								`- **Level:** ${npc.level}`,
-								`- **Class/Job:** ${npc.job}`,
-								`- **HP:** ${npc.hp} | **AC:** ${npc.ac}`,
-							].join("\n");
-
-							const { error: npcError } = await supabase
+						if (!existing) {
+							const { error: wikiError } = await supabase
 								.from("campaign_wiki_articles")
 								.insert({
+									campaign_id: targetId,
+									title: chapter.title,
+									content: chapter.content,
+									category: "lore",
+									is_public: true,
+								});
+
+							if (wikiError) {
+								console.error(
+									"[SandboxInjector] Wiki insert failed:",
+									chapter.title,
+									wikiError,
+								);
+								if (i === 0) {
+									toast({
+										title: "Module Import Failed",
+										description: `Database error: ${wikiError.message || "Permission Denied"}. Please ensure you are the Warden.`,
+										variant: "destructive",
+									});
+									// Still continue with other sections
+									break;
+								}
+							} else {
+								wikiCount++;
+							}
+						}
+
+						if (i % 5 === 0) {
+							setInjectionState({
+								isInjecting: true,
+								progressString: `Generating Regional Wiki Lore (${i + 1}/${massiveSandboxModule.chapters.length})...`,
+							});
+						}
+					}
+				}
+			} catch (wikiErr) {
+				console.error("[SandboxInjector] Wiki section error:", wikiErr);
+			}
+
+			// 2. Inject VTT Maps — pass sandbox scenes through directly (they are already complete VTTScene objects)
+			try {
+				setInjectionState({
+					isInjecting: true,
+					progressString: `Constructing Sandbox VTT Maps (0/${massiveSandboxModule.scenes.length})...`,
+				});
+
+				// The sandbox scenes are already fully-formed VTTScene objects with correct
+				// dimensions, gridSize, token positions, and fog settings. Pass them through
+				// directly instead of destructively re-mapping.
+				const scenes: VTTScene[] = massiveSandboxModule.scenes.map((scene) => ({
+					id: scene.id || crypto.randomUUID(),
+					name: scene.name,
+					width: scene.width,
+					height: scene.height,
+					backgroundImage: scene.backgroundImage,
+					gridSize: scene.gridSize,
+					gridType: scene.gridType,
+					tokens: scene.tokens || [],
+					drawings: scene.drawings || [],
+					annotations: scene.annotations || [],
+					walls: scene.walls || [],
+					lights: scene.lights || [],
+					fogOfWar: scene.fogOfWar,
+				}));
+
+				if (scenes.length > 0) {
+					await saveCampaignToolState<{
+						scenes: VTTScene[];
+						currentSceneId: string | null;
+					}>(targetId, user?.id || "guest", "vtt-scenes", {
+						scenes,
+						currentSceneId: scenes[0].id,
+					});
+					sceneCount = scenes.length;
+				}
+			} catch (sceneErr) {
+				console.error("[SandboxInjector] VTT scene section error:", sceneErr);
+			}
+
+			// 3. Inject NPCs
+			try {
+				setInjectionState({
+					isInjecting: true,
+					progressString: `Sowing NPC Roster (0/${massiveSandboxModule.npcs?.length ?? 0})...`,
+				});
+
+				if (massiveSandboxModule.npcs && massiveSandboxModule.npcs.length > 0) {
+					if (isLocalMode()) {
+						const existingWiki = readLocalWikiArticles(targetId);
+						for (let i = 0; i < massiveSandboxModule.npcs.length; i++) {
+							const npc = massiveSandboxModule.npcs[i];
+							if (!existingWiki.find((w) => w.title === npc.name)) {
+								const npcContent = [
+									`## ${npc.name}`,
+									`**Role:** ${npc.title}`,
+									`**Affiliation:** ${npc.guildAffiliation ?? "Unaffiliated"}`,
+									``,
+									`**Description:**`,
+									npc.description,
+									``,
+									`### Personality`,
+									npc.personality,
+									``,
+									`### Motivation`,
+									npc.motivation,
+									``,
+									`### Mechanics`,
+									`- **Level:** ${npc.level}`,
+									`- **Class/Job:** ${npc.job}`,
+									`- **HP:** ${npc.hp} | **AC:** ${npc.ac}`,
+								].join("\n");
+
+								existingWiki.push({
+									id: crypto.randomUUID(),
 									campaign_id: targetId,
 									title: npc.name,
 									content: npcContent,
 									category: "npc",
 									is_public: true,
+									created_at: new Date().toISOString(),
+									updated_at: new Date().toISOString(),
+									created_by: "guest",
 								});
+								npcCount++;
+							}
+							if (i % 10 === 0) {
+								setInjectionState({
+									isInjecting: true,
+									progressString: `Sowing NPC Roster (${i + 1}/${massiveSandboxModule.npcs.length})...`,
+								});
+							}
+						}
+						if (npcCount > 0) saveLocalWikiArticles(targetId, existingWiki);
+					} else {
+						for (let i = 0; i < massiveSandboxModule.npcs.length; i++) {
+							const npc = massiveSandboxModule.npcs[i];
+							const { data: existingNpc } = await supabase
+								.from("campaign_wiki_articles")
+								.select("id")
+								.eq("campaign_id", targetId)
+								.eq("title", npc.name)
+								.maybeSingle();
 
-							if (npcError)
-								console.error(
-									"[SandboxInjector] NPC insert failed:",
-									npc.name,
-									npcError,
-								);
-							else npcCount++;
+							if (!existingNpc) {
+								const npcContent = [
+									`## ${npc.name}`,
+									`**Role:** ${npc.title}`,
+									`**Affiliation:** ${npc.guildAffiliation ?? "Unaffiliated"}`,
+									``,
+									`**Description:**`,
+									npc.description,
+									``,
+									`### Personality`,
+									npc.personality,
+									``,
+									`### Motivation`,
+									npc.motivation,
+									``,
+									`### Mechanics`,
+									`- **Level:** ${npc.level}`,
+									`- **Class/Job:** ${npc.job}`,
+									`- **HP:** ${npc.hp} | **AC:** ${npc.ac}`,
+								].join("\n");
+
+								const { error: npcError } = await supabase
+									.from("campaign_wiki_articles")
+									.insert({
+										campaign_id: targetId,
+										title: npc.name,
+										content: npcContent,
+										category: "npc",
+										is_public: true,
+									});
+
+								if (npcError)
+									console.error(
+										"[SandboxInjector] NPC insert failed:",
+										npc.name,
+										npcError,
+									);
+								else npcCount++;
+							}
+
+							if (i % 10 === 0) {
+								setInjectionState({
+									isInjecting: true,
+									progressString: `Sowing NPC Roster (${i + 1}/${massiveSandboxModule.npcs.length})...`,
+								});
+							}
 						}
 					}
 				}
+			} catch (npcErr) {
+				console.error("[SandboxInjector] NPC section error:", npcErr);
 			}
 
 			// 4. Inject Handouts
-			setInjectionState({
-				isInjecting: true,
-				progressString: `Sowing Campaign Handouts...`,
-			});
+			try {
+				setInjectionState({
+					isInjecting: true,
+					progressString: `Sowing Campaign Handouts (0/${massiveSandboxModule.handouts?.length ?? 0})...`,
+				});
 
-			if (
-				massiveSandboxModule.handouts &&
-				massiveSandboxModule.handouts.length > 0
-			) {
-				if (isLocalMode()) {
-					const existingJournals = readLocalJournals(targetId);
-					for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
-						const h = massiveSandboxModule.handouts[i];
-						if (!existingJournals.find((j) => j.title === h.title)) {
-							existingJournals.push({
-								id: crypto.randomUUID(),
-								campaign_id: targetId,
-								title: h.title,
-								content: h.content,
-								category: h.category,
-								visible_to_players: h.visibleToPlayers,
-								created_at: new Date().toISOString(),
-								updated_at: new Date().toISOString(),
-								user_id: "guest",
-							});
-							handoutCount++;
-						}
-					}
-					if (handoutCount > 0) saveLocalJournals(targetId, existingJournals);
-				} else {
-					for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
-						const h = massiveSandboxModule.handouts[i];
-						const { data: existingHandout } = await supabase
-							.from("vtt_journal_entries")
-							.select("id")
-							.eq("campaign_id", targetId)
-							.eq("title", h.title)
-							.maybeSingle();
-
-						if (!existingHandout) {
-							const { error: handoutError } = await supabase
-								.from("vtt_journal_entries")
-								.insert({
+				if (
+					massiveSandboxModule.handouts &&
+					massiveSandboxModule.handouts.length > 0
+				) {
+					if (isLocalMode()) {
+						const existingJournals = readLocalJournals(targetId);
+						for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
+							const h = massiveSandboxModule.handouts[i];
+							if (!existingJournals.find((j) => j.title === h.title)) {
+								existingJournals.push({
+									id: crypto.randomUUID(),
 									campaign_id: targetId,
-									user_id: user?.id || "guest",
 									title: h.title,
 									content: h.content,
-									visible_to_players: h.visibleToPlayers,
 									category: h.category,
+									tags: [],
+									visible_to_players: h.visibleToPlayers,
+									created_at: new Date().toISOString(),
+									updated_at: new Date().toISOString(),
+									user_id: "guest",
 								});
+								handoutCount++;
+							}
+						}
+						if (handoutCount > 0) saveLocalJournals(targetId, existingJournals);
+					} else {
+						for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
+							const h = massiveSandboxModule.handouts[i];
+							const { data: existingHandout } = await supabase
+								.from("vtt_journal_entries")
+								.select("id")
+								.eq("campaign_id", targetId)
+								.eq("title", h.title)
+								.maybeSingle();
 
-							if (handoutError)
-								console.error(
-									"[SandboxInjector] Handout insert failed:",
-									h.title,
-									handoutError,
-								);
-							else handoutCount++;
+							if (!existingHandout) {
+								const { error: handoutError } = await supabase
+									.from("vtt_journal_entries")
+									.insert({
+										campaign_id: targetId,
+										user_id: user?.id || "guest",
+										title: h.title,
+										content: h.content,
+										visible_to_players: h.visibleToPlayers,
+										category: h.category,
+									});
+
+								if (handoutError)
+									console.error(
+										"[SandboxInjector] Handout insert failed:",
+										h.title,
+										handoutError,
+									);
+								else handoutCount++;
+							}
 						}
 					}
 				}
+			} catch (handoutErr) {
+				console.error("[SandboxInjector] Handout section error:", handoutErr);
 			}
 
 			const summary = [
