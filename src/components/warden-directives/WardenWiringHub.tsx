@@ -12,6 +12,9 @@ import _tailwindcssTypography from "@tailwindcss/typography"; // WITNESS: Zero-L
 import _tailwindcssAnimate from "tailwindcss-animate"; // WITNESS: Zero-Legacy Parity
 // chunk 5: Orphaned Protocols and Components (Knip Parity)
 import { AIContentGenerator } from "@/components/AIContentGeneratorClass";
+import { AIProviderSettings } from "@/components/ai/AIProviderSettings";
+import { AIEnhancedArtGenerator } from "@/components/art/AIEnhancedArtGenerator";
+import { AIEnhancedAudio } from "@/components/audio/AIEnhancedAudio";
 import type { Character as CharacterExport } from "@/components/character/ExportDialog";
 import {
 	AbilityRollButton,
@@ -86,6 +89,7 @@ import {
 import { toast } from "@/components/ui/sonner";
 import { ToastAction } from "@/components/ui/toast";
 import { VTTSandbox } from "@/components/vtt/VTTSandbox";
+import { WardenChatbot } from "@/components/warden-directives/WardenChatbot";
 // WardenDirectiveMatrix imports are loaded lazily to avoid circular
 // dependency (WardenDirectiveMatrix imports WardenWiringHub at top level).
 import type { ProtocolWiringLattice } from "@/components/warden-directives/WardenDirectiveMatrix";
@@ -743,6 +747,12 @@ export const WardenWiringSeal = {
 	},
 	chunk1: {
 		ai: {
+			components: {
+				AIProviderSettings,
+				AIEnhancedArtGenerator,
+				AIEnhancedAudio,
+				WardenChatbot,
+			},
 			types: { getAIServiceForCapability, validateAIRequest },
 			protocol: {
 				generateFusionName,
