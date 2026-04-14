@@ -351,7 +351,7 @@ For EACH result, provide:
 											<Button
 												size="sm"
 												variant="ghost"
-												className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
 												onClick={() =>
 													shareToCampaign(
 														"Rift Complication",
@@ -384,7 +384,7 @@ For EACH result, provide:
 											<Button
 												size="sm"
 												variant="ghost"
-												className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
 												onClick={() =>
 													shareToCampaign("Rift Hazard", results.hazard)
 												}
@@ -414,7 +414,7 @@ For EACH result, provide:
 											<Button
 												size="sm"
 												variant="ghost"
-												className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
 												onClick={() =>
 													shareToCampaign("Rift Theme", results.theme)
 												}
@@ -444,7 +444,7 @@ For EACH result, provide:
 											<Button
 												size="sm"
 												variant="ghost"
-												className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
 												onClick={() =>
 													shareToCampaign("Rift Biome", results.biome)
 												}
@@ -510,7 +510,7 @@ For EACH result, provide:
 											<Button
 												size="sm"
 												variant="ghost"
-												className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
 												onClick={() =>
 													shareToCampaign("NPC Motivation", results.motivation)
 												}
@@ -540,7 +540,7 @@ For EACH result, provide:
 											<Button
 												size="sm"
 												variant="ghost"
-												className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
 												onClick={() =>
 													shareToCampaign("NPC Secret", results.secret)
 												}
@@ -584,7 +584,7 @@ For EACH result, provide:
 												<Button
 													size="sm"
 													variant="ghost"
-													className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-6 px-2 text-xs"
+													className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity h-6 px-2 text-xs"
 													onClick={() =>
 														shareToCampaign(
 															`Treasure (${rank})`,

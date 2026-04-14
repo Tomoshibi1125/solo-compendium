@@ -127,8 +127,8 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 	}, [campaignId, isAuthed, loading]);
 
 	const visibleEntries = useMemo(
-		() => entries.filter((entry) => entry.visibleToPlayers),
-		[entries],
+		() => entries.filter((entry) => hasWardenAccess || entry.visibleToPlayers),
+		[entries, hasWardenAccess],
 	);
 
 	const selectedEntry = useMemo(

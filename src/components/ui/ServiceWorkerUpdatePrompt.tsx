@@ -111,16 +111,22 @@ export function ServiceWorkerUpdatePrompt() {
 					window.location.reload();
 				}
 			});
+
+			// Fallback: If statechange takes too long or doesn't fire
+			setTimeout(() => {
+				setUpdateAvailable(false);
+				window.location.reload();
+			}, 1000);
+		} else {
+			// Fallback: If no waiting worker is found (e.g. already skipped waiting), just reload
+			setUpdateAvailable(false);
+			window.location.reload();
 		}
 	};
 
 	const handleDismiss = () => {
 		setUpdateAvailable(false);
 	};
-
-	if (!updateAvailable) {
-		return null;
-	}
 
 	return (
 		<Dialog open={updateAvailable} onOpenChange={setUpdateAvailable}>

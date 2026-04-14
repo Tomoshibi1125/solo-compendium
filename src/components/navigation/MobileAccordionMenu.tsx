@@ -20,8 +20,6 @@ export function MobileAccordionMenu({
 	const [openSection, setOpenSection] = useState<string | null>(null);
 	const location = useLocation();
 
-	if (!isOpen) return null;
-
 	const toggleSection = (title: string) => {
 		setOpenSection((prev) => (prev === title ? null : title));
 	};

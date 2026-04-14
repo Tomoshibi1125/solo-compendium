@@ -439,10 +439,10 @@ export function VTTAssetBrowser({
 								className="w-full h-full object-cover group-hover:scale-105 transition-transform"
 								size="thumbnail"
 							/>
-							<div className="absolute top-0.5 left-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+							<div className="absolute top-0.5 left-0.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
 								<GripVertical className="w-3 h-3 text-white drop-shadow-lg" />
 							</div>
-							<div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+							<div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-0.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
 								<span className="text-[8px] text-white/80">
 									{CATEGORY_ICONS[asset.category]}
 								</span>

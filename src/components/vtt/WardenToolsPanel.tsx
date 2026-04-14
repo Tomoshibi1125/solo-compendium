@@ -8,9 +8,12 @@ import {
 	Coins,
 	Dice1,
 	DoorOpen,
+	ExternalLink,
 	Eye,
 	EyeOff,
 	Heart,
+	Image,
+	Map as MapIcon,
 	Minus,
 	Settings,
 	Skull,
@@ -19,7 +22,14 @@ import {
 	Users,
 } from "lucide-react";
 import type React from "react";
-import { lazy, Suspense, useEffect, useState } from "react";
+import {
+	lazy,
+	Suspense,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -43,6 +53,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
 import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import { useToast } from "@/hooks/use-toast";
+import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { validateDiceString } from "@/lib/advancedDiceEngine";
 import { MOOD_TAGS, SOUND_CATEGORIES } from "@/lib/audio/types";
@@ -54,6 +65,7 @@ import {
 	type RollMacro,
 	saveMacrosToLocal,
 } from "@/lib/vtt/rollMacros";
+import { VTTAssetBrowser } from "./VTTAssetBrowser";
 
 const EncounterBuilder = lazy(
 	() => import("@/pages/warden-directives/EncounterBuilder"),
@@ -76,24 +88,61 @@ const RollableTables = lazy(
 const TreasureGenerator = lazy(
 	() => import("@/pages/warden-directives/TreasureGenerator"),
 );
+const TokenLibrary = lazy(
+	() => import("@/pages/warden-directives/TokenLibrary"),
+);
+const DungeonMapGenerator = lazy(() =>
+	import("@/components/warden-directives/DungeonMapGenerator").then((m) => ({
+		default: m.DungeonMapGenerator,
+	})),
+);
+const AIEnhancedArtGenerator = lazy(() =>
+	import("@/components/art/AIEnhancedArtGenerator").then((m) => ({
+		default: m.AIEnhancedArtGenerator,
+	})),
+);
+
+export interface VTTTokenPayload {
+	name: string;
+	tokenType: "actor" | "prop" | "effect" | "handout";
+	imageUrl?: string;
+	size?: "small" | "medium" | "large" | "huge";
+	id?: string;
+}
+
+export interface VTTEffectPayload {
+	id?: string;
+	name: string;
+	type: "magic" | "light" | "dark" | "terrain" | "ambient" | "image";
+	radius?: number;
+	color?: string;
+	x?: number;
+	y?: number;
+	imageUrl?: string;
+}
 
 interface WardenToolsPanelProps {
 	campaignId?: string;
 	/** Callback to roll dice into VTT chat (typically vttRealtime.rollAndBroadcast) */
 	onRoll?: (formula: string, type?: "dice" | "wardenroll") => void;
-	onAddToken?: (token: unknown) => void;
-	onAddEffect?: (effect: unknown) => void;
+	onAddToken?: (token: VTTTokenPayload) => void;
+	onAddEffect?: (effect: VTTEffectPayload) => void;
 	onPlaySound?: (soundId: string) => void;
 	onMusicChange?: (musicId: string) => void;
+	onChangeMap?: (imageUrl: string, name?: string) => void;
+	onShareHandout?: (imageUrl: string, name?: string) => void;
 	className?: string;
 }
 
 export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 	campaignId,
 	onRoll,
+	onAddToken,
 	onAddEffect,
 	onPlaySound,
 	onMusicChange,
+	onChangeMap,
+	onShareHandout,
 	className,
 }) => {
 	const { toast } = useToast();
@@ -102,6 +151,47 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 	const [quickRollValue, setQuickRollValue] = useState("1d20");
 	const [quickRollResult, setQuickRollResult] = useState<number | null>(null);
 	const [macros, setMacros] = useState<RollMacro[]>([]);
+
+	// Session Notes — React-controlled with localStorage persistence
+	const notesKey = `sa-session-notes-${campaignId || "local"}`;
+	const [sessionNotes, setSessionNotes] = useState("");
+	useEffect(() => {
+		const saved = localStorage.getItem(notesKey);
+		if (saved) setSessionNotes(saved);
+	}, [notesKey]);
+
+	const handleSaveNotes = useCallback(() => {
+		if (sessionNotes.trim()) {
+			localStorage.setItem(notesKey, sessionNotes);
+			toast({
+				title: "Notes Saved",
+				description: "Session notes saved locally.",
+			});
+		}
+	}, [notesKey, sessionNotes, toast]);
+
+	const handleClearNotes = useCallback(() => {
+		setSessionNotes("");
+		localStorage.removeItem(notesKey);
+		toast({ title: "Notes Cleared" });
+	}, [notesKey, toast]);
+
+	// Live Party Status from campaign members
+	const { data: members = [] } = useCampaignMembers(campaignId || "");
+	const partyStats = useMemo(() => {
+		const players = members.filter((m) => m.role === "ascendant");
+		const levels = players
+			.map((m) => (m as Record<string, unknown>).characters)
+			.filter(Boolean)
+			.map((c) => (c as { level?: number }).level ?? 1);
+		const minLevel = levels.length > 0 ? Math.min(...levels) : 1;
+		const maxLevel = levels.length > 0 ? Math.max(...levels) : 1;
+		return {
+			count: players.length,
+			levelRange:
+				minLevel === maxLevel ? `${minLevel}` : `${minLevel}-${maxLevel}`,
+		};
+	}, [members]);
 
 	useEffect(() => {
 		const loadedMacros = loadMacrosFromLocal();
@@ -312,7 +402,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							onValueChange={setActiveTool}
 							className="w-full"
 						>
-							<TabsList className="grid w-full grid-cols-4 h-auto">
+							<TabsList className="grid w-full grid-cols-5 h-auto">
 								<TabsTrigger value="encounter" className="flex-col gap-1 p-2">
 									<Sword className="w-4 h-4" />
 									<span className="text-xs">Encounter</span>
@@ -321,8 +411,12 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									<Sparkles className="w-4 h-4" />
 									<span className="text-xs">Generators</span>
 								</TabsTrigger>
-								<TabsTrigger value="tables" className="flex-col gap-1 p-2">
+								<TabsTrigger value="assets" className="flex-col gap-1 p-2">
 									<BookOpen className="w-4 h-4" />
+									<span className="text-xs">Assets</span>
+								</TabsTrigger>
+								<TabsTrigger value="tables" className="flex-col gap-1 p-2">
+									<Coins className="w-4 h-4" />
 									<span className="text-xs">Tables</span>
 								</TabsTrigger>
 								<TabsTrigger value="tools" className="flex-col gap-1 p-2">
@@ -333,6 +427,46 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 							<TabsContent value="encounter" className="space-y-4">
 								<EncounterBuilder />
+							</TabsContent>
+
+							<TabsContent value="assets" className="space-y-4">
+								<Tabs defaultValue="browser" className="w-full">
+									<TabsList className="w-full grid grid-cols-2">
+										<TabsTrigger value="browser">Asset Browser</TabsTrigger>
+										<TabsTrigger value="tokens">Token Library</TabsTrigger>
+									</TabsList>
+									<TabsContent value="browser" className="pt-2">
+										<VTTAssetBrowser
+											onUseAsMap={(url, name) => onChangeMap?.(url, name)}
+											onUseAsToken={(url, name) => {
+												onAddToken?.({
+													name: name,
+													tokenType: "actor",
+													imageUrl: url,
+													size: "medium",
+												});
+											}}
+											onUseAsEffect={(url, name) => {
+												onAddEffect?.({
+													id: `effect-${Date.now()}`,
+													name: name,
+													type: "image",
+													x: 5,
+													y: 5,
+													radius: 4,
+													color: "#ffffff",
+													imageUrl: url,
+												});
+											}}
+											onShareHandout={(url, name) =>
+												onShareHandout?.(url, name)
+											}
+										/>
+									</TabsContent>
+									<TabsContent value="tokens" className="pt-2">
+										<TokenLibrary />
+									</TabsContent>
+								</Tabs>
 							</TabsContent>
 
 							<TabsContent value="generators" className="space-y-4">
@@ -416,6 +550,46 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 									<Dialog>
 										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-12 flex-col gap-1 border-fuchsia-500/30"
+											>
+												<MapIcon className="w-4 h-4 text-fuchsia-400" />
+												<span className="text-xs text-fuchsia-400">
+													Map Gen
+												</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>Dungeon Topology Synthesizer</DialogTitle>
+											</DialogHeader>
+											<DungeonMapGenerator className="min-h-[500px]" />
+										</DialogContent>
+									</Dialog>
+
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-12 flex-col gap-1 border-blue-500/30"
+											>
+												<Image className="w-4 h-4 text-blue-400" />
+												<span className="text-xs text-blue-400">Art AI</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>AI Enhanced Art Generator</DialogTitle>
+											</DialogHeader>
+											<div className="bg-card/30 backdrop-blur-sm border border-primary/10 rounded-xl p-4">
+												<AIEnhancedArtGenerator entityType="Anomaly" />
+											</div>
+										</DialogContent>
+									</Dialog>
+
+									<Dialog>
+										<DialogTrigger asChild>
 											<Button variant="outline" className="h-12 flex-col gap-1">
 												<BookOpen className="w-4 h-4" />
 												<span className="text-xs">Directives</span>
@@ -494,45 +668,24 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									<AscendantWindow title="SESSION NOTES" compact>
 										<textarea
 											className="w-full h-32 p-2 text-xs bg-background border border-border rounded resize-none"
-											placeholder="Session notes..."
+											placeholder="Jot down key moments, NPC reactions, player decisions..."
+											value={sessionNotes}
+											onChange={(e) => setSessionNotes(e.target.value)}
 										/>
 										<div className="flex gap-2 mt-2">
 											<Button
 												size="sm"
 												className="flex-1"
-												onClick={() => {
-													const textarea = document.querySelector(
-														'[placeholder="Session notes..."]',
-													) as HTMLTextAreaElement;
-													if (textarea?.value.trim()) {
-														localStorage.setItem(
-															`sa-session-notes-${campaignId || "local"}`,
-															textarea.value,
-														);
-														toast({
-															title: "Notes Saved",
-															description: "Session notes saved locally.",
-														});
-													}
-												}}
+												onClick={handleSaveNotes}
+												disabled={!sessionNotes.trim()}
 											>
 												Save
 											</Button>
 											<Button
 												size="sm"
 												variant="outline"
-												onClick={() => {
-													const textarea = document.querySelector(
-														'[placeholder="Session notes..."]',
-													) as HTMLTextAreaElement;
-													if (textarea) {
-														textarea.value = "";
-													}
-													localStorage.removeItem(
-														`sa-session-notes-${campaignId || "local"}`,
-													);
-													toast({ title: "Notes Cleared" });
-												}}
+												onClick={handleClearNotes}
+												disabled={!sessionNotes}
 											>
 												Clear
 											</Button>
@@ -544,13 +697,13 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 											<div className="flex justify-between items-center">
 												<span className="text-xs">Party Level</span>
 												<Badge variant="outline" className="text-xs">
-													5-7
+													{partyStats.levelRange}
 												</Badge>
 											</div>
 											<div className="flex justify-between items-center">
 												<span className="text-xs">Party Size</span>
 												<Badge variant="outline" className="text-xs">
-													4-5
+													{partyStats.count || "—"}
 												</Badge>
 											</div>
 											<div className="flex justify-between items-center border-b border-border/50 pb-2 mb-2">
@@ -582,6 +735,50 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										</div>
 									</AscendantWindow>
 								</div>
+
+								<AscendantWindow title="EXTERNAL SYSTEMS" compact>
+									<div className="space-y-2">
+										<Button
+											variant="outline"
+											className="w-full justify-between h-9 text-xs"
+											onClick={() =>
+												window.open(
+													`/party-tracker?campaignId=${campaignId}`,
+													"_blank",
+												)
+											}
+										>
+											Open Party Tracker
+											<ExternalLink className="w-3 h-3 ml-2" />
+										</Button>
+										<Button
+											variant="outline"
+											className="w-full justify-between h-9 text-xs"
+											onClick={() =>
+												window.open(
+													`/session-planner?campaignId=${campaignId}`,
+													"_blank",
+												)
+											}
+										>
+											Open Session Planner
+											<ExternalLink className="w-3 h-3 ml-2" />
+										</Button>
+										<Button
+											variant="outline"
+											className="w-full justify-between h-9 text-xs"
+											onClick={() =>
+												window.open(
+													`/warden-journal?campaignId=${campaignId}`,
+													"_blank",
+												)
+											}
+										>
+											Open Warden Journal
+											<ExternalLink className="w-3 h-3 ml-2" />
+										</Button>
+									</div>
+								</AscendantWindow>
 
 								<AscendantWindow title="ATMOSPHERE" compact>
 									<div className="space-y-3">
@@ -688,7 +885,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 														onClick={() => {
 															onAddEffect?.({
 																id: `terrain-${Date.now()}`,
-																name: t.label,
+																name: t.label || id,
 																type: "terrain",
 																radius: 8,
 																color: t.fillColor,
@@ -717,7 +914,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 															onClick={() => {
 																onAddEffect?.({
 																	id: `ambient-${Date.now()}`,
-																	name: s.label,
+																	name: s.label || id,
 																	type: "ambient",
 																	radius: Math.floor((s.radius || 10) / 5),
 																	color: "#6366f1",

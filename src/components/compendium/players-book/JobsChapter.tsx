@@ -88,7 +88,7 @@ export const JobsChapter = () => {
 								<h3 className="text-xl font-display text-cyan border-b border-cyan/20 pb-2 mb-4 uppercase">
 									Class Progression
 								</h3>
-								<div className="bg-void/50 border border-white/5 rounded-sm overflow-hidden">
+								<div className="bg-void/50 border border-white/5 rounded-sm overflow-hidden overflow-x-auto">
 									<table className="w-full text-xs font-mono text-left">
 										<thead className="bg-cyan/10 border-b border-cyan/20 text-cyan">
 											<tr>

@@ -31,7 +31,11 @@ import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
 import { VTTInitiativePanel } from "@/components/vtt/VTTInitiativePanel";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
-import { WardenToolsPanel as ProtocolWardenTools } from "@/components/vtt/WardenToolsPanel";
+import {
+	WardenToolsPanel as ProtocolWardenTools,
+	type VTTEffectPayload,
+	type VTTTokenPayload,
+} from "@/components/vtt/WardenToolsPanel";
 import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
 import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
@@ -2997,12 +3001,24 @@ const VTTEnhanced = () => {
 									<ProtocolWardenTools
 										campaignId={campaignId || ""}
 										onRoll={vttRealtime.rollAndBroadcast}
-										onAddToken={(token: unknown) => {
-											const t = token as Record<string, unknown>;
+										onChangeMap={(url) => {
+											if (currentScene) {
+												const nextScene = {
+													...currentScene,
+													backgroundUrl: url,
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													currentScene.id,
+												);
+											}
+										}}
+										onAddToken={(t: VTTTokenPayload) => {
 											if (currentScene) {
 												const newToken = {
 													...t,
-													id: (t.id as string) || `token-${Date.now()}`,
+													id: t.id || `token-${Date.now()}`,
 												} as PlacedToken;
 												updateScene({
 													tokens: [...(currentScene.tokens || []), newToken],
@@ -3010,21 +3026,21 @@ const VTTEnhanced = () => {
 												vttRealtime.broadcastTokenAdd(newToken);
 											}
 										}}
-										onAddEffect={(effect: unknown) => {
-											const e = effect as Record<string, unknown>;
+										onAddEffect={(e: VTTEffectPayload) => {
 											if (!currentScene) return;
 											const cx = Math.floor((currentScene.width || 20) / 2);
 											const cy = Math.floor((currentScene.height || 20) / 2);
 
-											if (e.type === "magic") {
+											if (e.type === "magic" || e.type === "image") {
 												const newToken = {
-													id: (e.id as string) || `effect-${Date.now()}`,
-													name: (e.name as string) || "Effect",
+													id: e.id || `effect-${Date.now()}`,
+													name: e.name || "Effect",
 													tokenType: "effect",
-													x: (e.x as number) ?? cx,
-													y: (e.y as number) ?? cy,
+													imageUrl: e.imageUrl,
+													x: e.x ?? cx,
+													y: e.y ?? cy,
 													size: "large",
-													color: e.color as string,
+													color: e.color || "#ffffff",
 													rotation: 0,
 													layer: 2,
 													locked: false,
@@ -3040,14 +3056,14 @@ const VTTEnhanced = () => {
 												});
 												vttRealtime.broadcastTokenAdd(newToken);
 											} else if (e.type === "light" || e.type === "dark") {
-												const lightRadius = (e.radius as number) || 10;
+												const lightRadius = e.radius || 10;
 												const newLight: LightSource = {
-													id: (e.id as string) || `light-${Date.now()}`,
-													x: (e.x as number) ?? cx,
-													y: (e.y as number) ?? cy,
+													id: e.id || `light-${Date.now()}`,
+													x: e.x ?? cx,
+													y: e.y ?? cy,
 													brightRadius: Math.floor(lightRadius * 0.6),
 													dimRadius: lightRadius,
-													color: (e.color as string) || "#ffffff",
+													color: e.color || "#ffffff",
 													intensity: e.type === "dark" ? 0 : 0.8,
 													type: e.type === "dark" ? "ambient" : "torch",
 												};
@@ -3058,16 +3074,16 @@ const VTTEnhanced = () => {
 												updateScene(nextScene);
 												vttRealtime.broadcastSceneSync(
 													upsertScene(scenes, nextScene),
-													nextScene.id,
+													currentScene.id,
 												);
 											} else if (e.type === "terrain") {
 												const terrainCenter = {
-													x: (e.x as number) ?? cx,
-													y: (e.y as number) ?? cy,
+													x: e.x ?? cx,
+													y: e.y ?? cy,
 												};
-												const terrainRadius = (e.radius as number) || 8;
+												const terrainRadius = e.radius || 8;
 												const newTerrain: TerrainZone = {
-													id: (e.id as string) || `terrain-${Date.now()}`,
+													id: e.id || `terrain-${Date.now()}`,
 													type: "difficult",
 													vertices: [
 														{
@@ -3088,9 +3104,8 @@ const VTTEnhanced = () => {
 														},
 													],
 													movementCost: 2,
-													fillColor:
-														(e.color as string) || "rgba(139,90,43,0.25)",
-													label: (e.name as string) || "Difficult Terrain",
+													fillColor: e.color || "rgba(139,90,43,0.25)",
+													label: e.name || "Difficult Terrain",
 													visible: true,
 												};
 												const nextScene = {
@@ -3107,17 +3122,15 @@ const VTTEnhanced = () => {
 												);
 											} else if (e.type === "ambient") {
 												const newAmbient: AmbientSoundZone = {
-													id: (e.id as string) || `ambient-${Date.now()}`,
-													label: (e.name as string) || "Ambient",
+													id: e.id || `ambient-${Date.now()}`,
+													label: e.name || "Ambient",
 													audioUrl:
 														"library:" +
-														((e.name as string) || "")
-															.toLowerCase()
-															.replace(/\s/g, "-"),
-													x: (e.x as number) ?? cx,
-													y: (e.y as number) ?? cy,
+														(e.name || "").toLowerCase().replace(/\s/g, "-"),
+													x: e.x ?? cx,
+													y: e.y ?? cy,
 													shape: "circle",
-													radius: (e.radius as number) || 10,
+													radius: e.radius || 10,
 													volume: 0.8,
 													loop: true,
 													enabled: true,
@@ -3139,11 +3152,12 @@ const VTTEnhanced = () => {
 													nextScene.id,
 												);
 											}
-
-											toast({
-												title: "Effect Added",
-												description: `${e.name as string} effect placed on map`,
-											});
+										}}
+										onShareHandout={(url: string, name?: string) => {
+											vttRealtime.rollAndBroadcast(
+												`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
+												"wardenroll",
+											);
 										}}
 										onPlaySound={(soundId) => {
 											vttRealtime.broadcastAudioSync("play_sound", soundId);

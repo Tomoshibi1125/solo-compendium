@@ -504,8 +504,6 @@ export function VttPixiStage({
 			const width = (scene?.width ?? 0) * step;
 			const height = (scene?.height ?? 0) * step;
 
-			g.stroke({ width: 1, color, alpha: 0.25 });
-
 			if (gridConfig?.type === "hex") {
 				const { grid: hexGridObj } = createHexGrid({
 					orientation: "flat",
@@ -539,6 +537,8 @@ export function VttPixiStage({
 				}
 			}
 
+			g.stroke({ width: 1, color, alpha: 0.25 });
+
 			grid.addChild(g);
 		};
 
@@ -552,6 +552,11 @@ export function VttPixiStage({
 			const wallColor = isWarden ? 0xef4444 : 0x000000;
 			const wallAlpha = isWarden ? 0.8 : 0.3;
 
+			for (const wall of walls) {
+				wg.moveTo(wall.x1 * gridSize * zoom, wall.y1 * gridSize * zoom);
+				wg.lineTo(wall.x2 * gridSize * zoom, wall.y2 * gridSize * zoom);
+			}
+
 			wg.stroke({
 				width: 4,
 				color: wallColor,
@@ -559,11 +564,6 @@ export function VttPixiStage({
 				join: "miter",
 				cap: "square",
 			});
-
-			for (const wall of walls) {
-				wg.moveTo(wall.x1 * gridSize * zoom, wall.y1 * gridSize * zoom);
-				wg.lineTo(wall.x2 * gridSize * zoom, wall.y2 * gridSize * zoom);
-			}
 
 			wallsLayer.addChild(wg);
 		};
@@ -575,18 +575,16 @@ export function VttPixiStage({
 			const fg = new Graphics();
 			fg.alpha = isWarden ? 0.5 : 0.85;
 			const step = gridSize * zoom;
-			fg.beginFill(0x000000, 0.8);
-
 			for (let y = 0; y < scene.fogData.length; y += 1) {
 				const row = scene.fogData[y];
 				if (!row) continue;
 				for (let x = 0; x < row.length; x += 1) {
 					if (row[x]) continue;
-					fg.drawRect(x * step, y * step, step, step);
+					fg.rect(x * step, y * step, step, step);
 				}
 			}
 
-			fg.endFill();
+			fg.fill({ color: 0x000000, alpha: 0.8 });
 			fog.addChild(fg);
 
 			// Line of Sight masking
