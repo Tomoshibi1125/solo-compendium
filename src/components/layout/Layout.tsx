@@ -146,7 +146,7 @@ export function Layout({ children, className }: LayoutProps) {
 				syncQueueLength={syncQueueLength}
 			/>
 
-			{saZone === "Warden" && <WardenChatbot />}
+			{saZone === "warden" && <WardenChatbot />}
 		</div>
 	);
 }
