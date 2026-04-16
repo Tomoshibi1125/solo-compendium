@@ -1,8 +1,7 @@
 import type { FeatureModifier } from "@/hooks/useCharacterFeatures";
-import type { AscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
-import type { Database, Json } from "@/integrations/supabase/types";
+import type { Json } from "@/integrations/supabase/types";
 import type { AbilityScore } from "@/types/core-rules";
 
 export function normalizeGrants(grants: Json): Array<Record<string, Json>> {
@@ -43,7 +42,7 @@ export type ChoiceOptionExecutionPayload = {
 	characterId: string;
 	groupId: string;
 	featureId: string;
-	option: Database["public"]["Tables"]["compendium_feature_choice_options"]["Row"];
+	option: any; // ChoiceOptionRow
 	levelChosen: number;
 	choiceKey: string;
 };
@@ -53,7 +52,7 @@ export async function executeFeatureChoiceGrants({
 	ascendantTools,
 }: {
 	payloads: ChoiceOptionExecutionPayload[];
-	ascendantTools?: AscendantTools;
+	ascendantTools?: any;
 }) {
 	if (payloads.length === 0) return;
 	const characterId = payloads[0].characterId;

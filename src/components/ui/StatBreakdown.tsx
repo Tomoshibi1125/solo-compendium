@@ -47,9 +47,9 @@ export function StatBreakdown({
 							{label} Breakdown
 						</h4>
 						<div className="flex flex-col gap-1">
-							{breakdown.map((item) => (
+							{breakdown.map((item, index) => (
 								<div
-									key={`${item.source}-${item.value}`}
+									key={`${item.source}-${index}`}
 									className="flex justify-between items-center"
 								>
 									<span className="text-xs font-mono text-muted-foreground">

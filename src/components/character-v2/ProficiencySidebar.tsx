@@ -70,16 +70,12 @@ export function ProficiencySidebar({
 								total={mod}
 								breakdown={breakdown}
 							>
-								<button
-									type="button"
+								<div
 									onClick={(_e) => {
+										// We capture click here to still allow the button role in StatBreakdown to trigger the modal/tooltip
+										// but the actual roll happens on click of the row if not aiming at the tooltip.
+										// Actually, tooltip just works on hover/focus. So it's fine.
 										onRollSave(ability);
-									}}
-									onKeyDown={(e) => {
-										if (e.key === "Enter" || e.key === " ") {
-											e.preventDefault();
-											onRollSave(ability);
-										}
 									}}
 									className="group flex items-center justify-between p-2 rounded-[2px] bg-black/40 border border-primary/5 hover:border-primary/30 hover:bg-primary/5 transition-all text-left w-full cursor-pointer"
 								>
@@ -106,7 +102,7 @@ export function ProficiencySidebar({
 										</span>
 										<Dice6 className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity" />
 									</div>
-								</button>
+								</div>
 							</StatBreakdown>
 						);
 					})}
@@ -275,15 +271,8 @@ export function ProficiencySidebar({
 								total={s.modifier}
 								breakdown={breakdown}
 							>
-								<button
-									type="button"
+								<div
 									onClick={() => onRollSkill(skill.name)}
-									onKeyDown={(e) => {
-										if (e.key === "Enter" || e.key === " ") {
-											e.preventDefault();
-											onRollSkill(skill.name);
-										}
-									}}
 									className="group flex items-center justify-between px-2 py-1.5 rounded-[2px] bg-black/20 border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all text-left w-full cursor-pointer"
 								>
 									<div className="flex items-center gap-2 min-w-0">
@@ -314,7 +303,7 @@ export function ProficiencySidebar({
 											{formatModifier(s.modifier)}
 										</span>
 									</div>
-								</button>
+								</div>
 							</StatBreakdown>
 						);
 					})}

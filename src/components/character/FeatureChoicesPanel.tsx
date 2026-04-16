@@ -40,7 +40,6 @@ type ChoiceOptionRow = {
 	name: string;
 	description: string | null;
 	grants: Json;
-	created_at: string;
 };
 
 type ExtendedDatabase = Database & {

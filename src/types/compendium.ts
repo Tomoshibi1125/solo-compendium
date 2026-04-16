@@ -281,8 +281,6 @@ export interface CompendiumAnomaly extends BaseCompendiumItem {
 
 export interface CompendiumSpell extends BaseCompendiumItem {
 	level?: number | null;
-	spell_level?: number | null;
-	power_level?: number | null;
 	school?: string | null;
 	casting_time?: string | null;
 	range?: CompendiumRange | null;
@@ -298,7 +296,6 @@ export interface CompendiumSpell extends BaseCompendiumItem {
 		damage: string;
 	} | null;
 	activation?: CompendiumActivation | null;
-	atHigherLevels?: string | null;
 	higher_levels?: string | null;
 	saving_throw?: {
 		ability: string;
@@ -308,6 +305,7 @@ export interface CompendiumSpell extends BaseCompendiumItem {
 	} | null;
 	area?: { type: string; size: string; shape: string } | null;
 	type?: string | null;
+	atHigherLevels?: string | null;
 }
 
 export interface CompendiumPower extends BaseCompendiumItem {

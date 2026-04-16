@@ -63,12 +63,7 @@ import { getStaticRegents } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import type {
-	CompendiumFeat,
-	CompendiumPower,
-	CompendiumSpell,
-	JobFeature,
-} from "@/types/compendium";
+import type { CompendiumFeat, JobFeature } from "@/types/compendium";
 import { WizardChoiceEngine } from "./level-up/WizardChoiceEngine";
 import { WizardSpellEngine } from "./level-up/WizardSpellEngine";
 
@@ -113,19 +108,12 @@ export const LevelUpWizardModal = ({
 	const [selectedFeats, setSelectedFeats] = useState<string[]>([]);
 	const [featureChoicesReady, setFeatureChoicesReady] = useState(true);
 	const [selectedFeatureOptions, setSelectedFeatureOptions] = useState<
-		Record<
-			string,
-			{
-				option: Database["public"]["Tables"]["compendium_feature_choice_options"]["Row"];
-				featureId: string;
-				choiceKey: string;
-			}
-		>
+		Record<string, any>
 	>({});
 	const [spellChoicesReady, setSpellChoicesReady] = useState(true);
 	const [selectedSpellsPayload, setSelectedSpellsPayload] = useState<{
-		powers: CompendiumPower[];
-		spells: CompendiumSpell[];
+		powers: any[];
+		spells: any[];
 	}>({ powers: [], spells: [] });
 	const [currentStepIndex, setCurrentStepIndex] = useState(0);
 	const { data: staticJobs, isLoading: jobsLoading } = useStaticJobs();
@@ -376,68 +364,6 @@ export const LevelUpWizardModal = ({
 			setNewLevel(character.level + 1);
 		}
 	}, [character]);
-
-	// Sequence configuration for the Wizard Flow - MOVED TO TOP LEVEL TO COMPLY WITH RULES OF HOOKS
-	const steps = useMemo(() => {
-		const s = [];
-		s.push({ id: "vitality", label: "Vitality & Core" });
-		if (showPathSelection) s.push({ id: "path", label: "Combat Doctrine" });
-		if (showASISection) s.push({ id: "asi", label: "Ability Improvement" });
-		if (
-			newFeatures.length > 0 ||
-			(primaryRegentUnlock && newRegentFeatures.length > 0)
-		) {
-			s.push({ id: "features", label: "Class Features" });
-		}
-		if (availableChoices.powers > 0 || availableChoices.spells > 0) {
-			s.push({ id: "discovery", label: "Magical Discovery" });
-		}
-		s.push({ id: "review", label: "Assimilation Review" });
-		return s;
-	}, [
-		showPathSelection,
-		showASISection,
-		newFeatures.length,
-		primaryRegentUnlock,
-		newRegentFeatures.length,
-		availableChoices,
-	]);
-
-	const activeStep = steps[currentStepIndex] || steps[0];
-
-	const isStepValid = useMemo(() => {
-		if (!activeStep || !character) return false;
-		if (activeStep.id === "vitality") return hpIncrease !== null;
-		if (activeStep.id === "path") return selectedPath !== "";
-		if (activeStep.id === "asi") {
-			const spentInfo = ["STR", "AGI", "VIT", "INT", "SENSE", "PRE"].reduce(
-				(acc, ability) => {
-					const currentScore =
-						(character.abilities as Record<string, number>)[ability] ?? 10;
-					if (currentScore < 20) acc.canSpend += Math.min(2, 20 - currentScore);
-					return acc;
-				},
-				{ canSpend: 0 },
-			);
-			const requiredASI = Math.min(2, spentInfo.canSpend);
-			const spent = Object.values(asiChoices).reduce((s, v) => s + v, 0);
-			const featsSatisfied = selectedFeats.length === availableChoices.feats;
-			return spent === requiredASI && featsSatisfied;
-		}
-		if (activeStep.id === "features") return featureChoicesReady;
-		if (activeStep.id === "discovery") return spellChoicesReady;
-		return true;
-	}, [
-		activeStep,
-		hpIncrease,
-		selectedPath,
-		asiChoices,
-		character,
-		selectedFeats.length,
-		availableChoices.feats,
-		featureChoicesReady,
-		spellChoicesReady,
-	]);
 
 	if (isLoading || jobsLoading || !character || !staticJobs) {
 		return (
@@ -704,17 +630,15 @@ export const LevelUpWizardModal = ({
 			}
 
 			// Bind magical discovery choices
-			const spellsPayload: Database["public"]["Tables"]["character_powers"]["Insert"][] =
-				[];
+			const spellsPayload: any[] = [];
 
-			const formatSpellMetadata = (val: unknown): string | null => {
+			const formatSpellMetadata = (val: any): string | null => {
 				if (!val) return null;
 				if (typeof val === "string") return val;
-				if (typeof val === "object" && !Array.isArray(val) && val !== null) {
-					const obj = val as Record<string, unknown>;
-					if (obj.range) return String(obj.range);
-					if (obj.duration) return String(obj.duration);
-					if (obj.value && obj.unit) return `${obj.value} ${obj.unit}`;
+				if (typeof val === "object") {
+					if (val.range) return String(val.range);
+					if (val.duration) return String(val.duration);
+					if (val.value && val.unit) return `${val.value} ${val.unit}`;
 					return JSON.stringify(val);
 				}
 				return String(val);
@@ -726,8 +650,8 @@ export const LevelUpWizardModal = ({
 					power_level: power.power_level || 0,
 					source: `Level ${newLevel} Discovery`,
 					casting_time: power.casting_time || null,
-					range: formatSpellMetadata(power.range || null),
-					duration: formatSpellMetadata(power.duration || null),
+					range: power.range || null,
+					duration: power.duration || null,
 					concentration: power.concentration || false,
 					is_prepared: true,
 					is_known: true,
@@ -742,20 +666,21 @@ export const LevelUpWizardModal = ({
 					power_level: spell.spell_level || 0,
 					source: `Level ${newLevel} Discovery`,
 					casting_time: spell.casting_time || null,
-					range: formatSpellMetadata(spell.range || null),
-					duration: formatSpellMetadata(spell.duration || null),
+					range: formatSpellMetadata(spell.range),
+					duration: formatSpellMetadata(spell.duration),
 					concentration: spell.concentration || false,
 					is_prepared: true,
 					is_known: true,
 					description: spell.description || null,
-					higher_levels:
-						(spell.atHigherLevels as string) || spell.higher_levels || null,
+					higher_levels: spell.at_higher_levels || spell.higher_levels || null,
 				});
 			}
 
 			if (spellsPayload.length > 0) {
 				try {
-					await supabase.from("character_powers").insert(spellsPayload);
+					await supabase
+						.from("character_powers")
+						.insert(spellsPayload as never[]);
 					toast({
 						title: "Magical Discovery Complete",
 						description: "New powers and incantations inscribed to matrix.",
@@ -862,6 +787,67 @@ export const LevelUpWizardModal = ({
 	};
 
 	const rankInfo = getNewRank();
+
+	// Sequence configuration for the Wizard Flow
+	const steps = useMemo(() => {
+		const s = [];
+		s.push({ id: "vitality", label: "Vitality & Core" });
+		if (showPathSelection) s.push({ id: "path", label: "Combat Doctrine" });
+		if (showASISection) s.push({ id: "asi", label: "Ability Improvement" });
+		if (
+			newFeatures.length > 0 ||
+			(primaryRegentUnlock && newRegentFeatures.length > 0)
+		) {
+			s.push({ id: "features", label: "Class Features" });
+		}
+		if (availableChoices.powers > 0 || availableChoices.spells > 0) {
+			s.push({ id: "discovery", label: "Magical Discovery" });
+		}
+		s.push({ id: "review", label: "Assimilation Review" });
+		return s;
+	}, [
+		showPathSelection,
+		showASISection,
+		newFeatures.length,
+		primaryRegentUnlock,
+		newRegentFeatures.length,
+		availableChoices,
+	]);
+
+	const activeStep = steps[currentStepIndex];
+
+	const isStepValid = useMemo(() => {
+		if (activeStep.id === "vitality") return hpIncrease !== null;
+		if (activeStep.id === "path") return selectedPath !== "";
+		if (activeStep.id === "asi") {
+			const spentInfo = ["STR", "AGI", "VIT", "INT", "SENSE", "PRE"].reduce(
+				(acc, ability) => {
+					const currentScore =
+						(character.abilities as Record<string, number>)[ability] ?? 10;
+					if (currentScore < 20) acc.canSpend += Math.min(2, 20 - currentScore);
+					return acc;
+				},
+				{ canSpend: 0 },
+			);
+			const requiredASI = Math.min(2, spentInfo.canSpend);
+			const spent = Object.values(asiChoices).reduce((s, v) => s + v, 0);
+			const featsSatisfied = selectedFeats.length === availableChoices.feats;
+			return spent === requiredASI && featsSatisfied;
+		}
+		if (activeStep.id === "features") return featureChoicesReady;
+		if (activeStep.id === "discovery") return spellChoicesReady;
+		return true;
+	}, [
+		activeStep.id,
+		hpIncrease,
+		selectedPath,
+		asiChoices,
+		character.abilities,
+		selectedFeats.length,
+		availableChoices.feats,
+		featureChoicesReady,
+		spellChoicesReady,
+	]);
 
 	const handleNext = () => {
 		if (currentStepIndex < steps.length - 1 && isStepValid)

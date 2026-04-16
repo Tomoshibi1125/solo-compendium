@@ -11,13 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import type { CharacterPower as Power } from "@/hooks/usePowers";
 import type { SpellSlotData } from "@/hooks/useSpellSlots";
+import type { Database } from "@/integrations/supabase/types";
+
+export type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
 
 interface SpellCastDialogProps {
 	isOpen: boolean;
 	onClose: () => void;
-	power: Power | null;
+	power: PowerRow | null;
 	availableSlots: SpellSlotData[];
 	onConfirm: (castAtLevel: number, asRitual: boolean) => void;
 }
@@ -55,7 +57,7 @@ export function SpellCastDialog({
 	// We'll allow it if the mechanics contain ritual flags or if forced.
 	// Assuming `power.tags` includes "Ritual" or `power.casting_time?.toLowerCase().includes("ritual")`
 	const canCastAsRitual =
-		power.power?.tags?.includes("Ritual") ||
+		(power as any).power?.tags?.includes("Ritual") ||
 		power.casting_time?.toLowerCase().includes("ritual") ||
 		false;
 

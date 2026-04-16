@@ -929,36 +929,44 @@ const InitiativeTracker = () => {
 		);
 	};
 
-	const toggleLegendaryAction = (
+	const adjustLegendaryResource = (
 		id: string,
-		slotIdx: number,
-		isUsed: boolean,
+		type: "actions" | "resistances",
+		amount: number,
 	) => {
 		setCombatants((prev) =>
 			prev.map((c) => {
-				if (c.id !== id || !c.legendary_actions) return c;
-				const nextUsed = isUsed ? slotIdx : slotIdx + 1;
-				return {
-					...c,
-					legendary_actions: { ...c.legendary_actions, used: nextUsed },
-				};
-			}),
-		);
-	};
-
-	const toggleLegendaryResistance = (
-		id: string,
-		slotIdx: number,
-		isUsed: boolean,
-	) => {
-		setCombatants((prev) =>
-			prev.map((c) => {
-				if (c.id !== id || !c.legendary_resistances) return c;
-				const nextUsed = isUsed ? slotIdx : slotIdx + 1;
-				return {
-					...c,
-					legendary_resistances: { ...c.legendary_resistances, used: nextUsed },
-				};
+				if (c.id !== id) return c;
+				if (type === "actions" && c.legendary_actions) {
+					const nextUsed = Math.max(
+						0,
+						Math.min(
+							c.legendary_actions.used + amount,
+							c.legendary_actions.max,
+						),
+					);
+					return {
+						...c,
+						legendary_actions: { ...c.legendary_actions, used: nextUsed },
+					};
+				}
+				if (type === "resistances" && c.legendary_resistances) {
+					const nextUsed = Math.max(
+						0,
+						Math.min(
+							c.legendary_resistances.used + amount,
+							c.legendary_resistances.max,
+						),
+					);
+					return {
+						...c,
+						legendary_resistances: {
+							...c.legendary_resistances,
+							used: nextUsed,
+						},
+					};
+				}
+				return c;
 			}),
 		);
 	};
@@ -1653,37 +1661,32 @@ const InitiativeTracker = () => {
 															Legendary Acts:
 														</span>
 														<div className="flex gap-1">
-															{([0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const)
-																.slice(0, combatant.legendary_actions?.max || 3)
-																.map((slotIdx) => {
-																	const isUsed =
-																		slotIdx <
-																		(combatant.legendary_actions?.used || 0);
-																	return (
-																		<Button
-																			key={`${combatant.id}-la-slot-${slotIdx}`}
-																			size="icon"
-																			variant="outline"
-																			className={cn(
-																				"h-6 w-6 rounded-full p-0",
-																				isUsed
-																					? "bg-red-500 border-red-400"
-																					: "bg-transparent border-red-500/50 hover:bg-red-500/20",
-																			)}
-																			onClick={() =>
-																				toggleLegendaryAction(
-																					combatant.id,
-																					slotIdx,
-																					isUsed,
-																				)
-																			}
-																		>
-																			{isUsed && (
-																				<div className="h-2 w-2 rounded-full bg-white animate-pulse" />
-																			)}
-																		</Button>
-																	);
-																})}
+															{Array.from({
+																length: combatant.legendary_actions?.max || 3,
+															}).map((_, i) => {
+																const isUsed =
+																	i < (combatant.legendary_actions?.used || 0);
+																return (
+																	<Button
+																		key={`la-${i}`}
+																		size="icon"
+																		variant="outline"
+																		className={cn(
+																			"w-5 h-5 rounded-full border-amber-500/50",
+																			isUsed
+																				? "bg-amber-500/50"
+																				: "bg-transparent",
+																		)}
+																		onClick={() =>
+																			adjustLegendaryResource(
+																				combatant.id,
+																				"actions",
+																				isUsed ? -1 : 1,
+																			)
+																		}
+																	/>
+																);
+															})}
 														</div>
 													</div>
 													<div className="flex items-center gap-2">
@@ -1691,41 +1694,34 @@ const InitiativeTracker = () => {
 															Resistances:
 														</span>
 														<div className="flex gap-1">
-															{([0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const)
-																.slice(
-																	0,
+															{Array.from({
+																length:
 																	combatant.legendary_resistances?.max || 3,
-																)
-																.map((slotIdx) => {
-																	const isUsed =
-																		slotIdx <
-																		(combatant.legendary_resistances?.used ||
-																			0);
-																	return (
-																		<Button
-																			key={`${combatant.id}-lr-slot-${slotIdx}`}
-																			size="icon"
-																			variant="outline"
-																			className={cn(
-																				"h-6 w-6 rounded-full p-0",
-																				isUsed
-																					? "bg-emerald-500 border-emerald-400"
-																					: "bg-transparent border-emerald-500/50 hover:bg-emerald-500/20",
-																			)}
-																			onClick={() =>
-																				toggleLegendaryResistance(
-																					combatant.id,
-																					slotIdx,
-																					isUsed,
-																				)
-																			}
-																		>
-																			{isUsed && (
-																				<div className="h-2 w-2 rounded-full bg-white animate-pulse" />
-																			)}
-																		</Button>
-																	);
-																})}
+															}).map((_, i) => {
+																const isUsed =
+																	i <
+																	(combatant.legendary_resistances?.used || 0);
+																return (
+																	<Button
+																		key={`lr-${i}`}
+																		size="icon"
+																		variant="outline"
+																		className={cn(
+																			"w-5 h-5 rounded border-amber-500/50",
+																			isUsed
+																				? "bg-amber-500/50"
+																				: "bg-transparent",
+																		)}
+																		onClick={() =>
+																			adjustLegendaryResource(
+																				combatant.id,
+																				"resistances",
+																				isUsed ? -1 : 1,
+																			)
+																		}
+																	/>
+																);
+															})}
 														</div>
 													</div>
 												</div>

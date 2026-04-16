@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 
 import { type ACBreakdown, calculateAC } from "@/hooks/useArmorClass";
-import type { CharacterFeature } from "@/hooks/useCharacterFeatures";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import type { EquipmentRow } from "@/hooks/useEquipment";
 import type { CharacterSigilInscriptionRow, SigilRow } from "@/hooks/useSigils";
@@ -108,14 +107,14 @@ export function useCharacterDerivedStats(
 	equipment: EquipmentRow[],
 	activeSigils: CharacterSigilInscriptionRow[],
 	customModifiers: CustomModifier[],
-	features: CharacterFeature[] = [],
+	features: any[] = [],
 ) {
 	return useMemo(() => {
 		if (!character) return null;
 
 		const virtualCustomModifiers: CustomModifier[] = [...customModifiers];
 		const featNames = features
-			.filter((f) => f.source === "feat")
+			.filter((f) => f.source_type === "feat")
 			.map((f) => f.name);
 		const fightingStyles = features
 			.filter((f) => f.name.toLowerCase().includes("fighting style"))
@@ -335,16 +334,8 @@ export function useCharacterDerivedStats(
 		const savingThrowsBreakdown: Record<
 			AbilityScore,
 			{ source: string; value: number }[]
-		> = {} as Record<AbilityScore, { source: string; value: number }[]>;
-		const finalSavingThrows: Record<AbilityScore, number> = {} as Record<
-			AbilityScore,
-			number
-		>;
-
-		ABILITY_KEYS.forEach((k) => {
-			savingThrowsBreakdown[k] = [];
-			finalSavingThrows[k] = 0;
-		});
+		> = {} as any;
+		const finalSavingThrows: Record<AbilityScore, number> = {} as any;
 
 		ABILITY_KEYS.forEach((ability) => {
 			const mod = getAbilityModifier(finalAbilities[ability]);

@@ -11,28 +11,14 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { JobFeature } from "@/types/compendium";
-
-type ChoiceOptionRow =
-	Database["public"]["Tables"]["compendium_feature_choice_options"]["Row"];
-
-interface ChoiceGroup {
-	id: string;
-	feature_id: string;
-	choice_key: string;
-	prompt?: string;
-}
 
 interface WizardChoiceEngineProps {
 	newFeatures: JobFeature[];
 	onChoicesUpdate: (
 		isReady: boolean,
-		selectedOptions: Record<
-			string,
-			{ option: ChoiceOptionRow; featureId: string; choiceKey: string }
-		>,
+		selectedOptions: Record<string, any>,
 	) => void;
 }
 
@@ -59,7 +45,7 @@ export const WizardChoiceEngine = ({
 				.select("*")
 				.in("feature_id", featureIds);
 
-			const groupRows = (groups || []) as ChoiceGroup[];
+			const groupRows = (groups || []) as any[];
 			if (groupRows.length === 0) return null;
 
 			const groupIds = groupRows.map((g) => g.id);
@@ -72,12 +58,12 @@ export const WizardChoiceEngine = ({
 				.order("name");
 
 			const featureById = new Map<string, JobFeature>(
-				newFeatures.filter((f) => !!f.id).map((f) => [f.id as string, f]),
+				newFeatures.map((f) => [f.id!, f]),
 			);
 
 			return {
 				groups: groupRows,
-				options: (options || []) as ChoiceOptionRow[],
+				options: (options || []) as any[],
 				featureById,
 			};
 		},
@@ -88,7 +74,7 @@ export const WizardChoiceEngine = ({
 	const options = choiceData?.options || [];
 
 	const optionsByGroupId = useMemo(() => {
-		const map = new Map<string, ChoiceOptionRow[]>();
+		const map = new Map<string, any[]>();
 		for (const opt of options) {
 			const existing = map.get(opt.group_id) || [];
 			existing.push(opt);
@@ -104,10 +90,7 @@ export const WizardChoiceEngine = ({
 	useEffect(() => {
 		// Provide the selected option rows up to parent LevelUpWizard
 		if (choiceData) {
-			const selectedPayloads: Record<
-				string,
-				{ option: ChoiceOptionRow; featureId: string; choiceKey: string }
-			> = {};
+			const selectedPayloads: Record<string, any> = {};
 			for (const [groupId, optionId] of Object.entries(
 				selectedOptionByGroupId,
 			)) {
@@ -131,7 +114,7 @@ export const WizardChoiceEngine = ({
 		selectedOptionByGroupId,
 		options,
 		onChoicesUpdate,
-		groups,
+		groups.find,
 	]);
 
 	if (isLoading) {

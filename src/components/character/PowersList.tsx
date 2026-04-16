@@ -1,6 +1,5 @@
 import { AlertTriangle, Plus, Trash2, Wand2 } from "lucide-react";
 import { useCallback, useState } from "react";
-import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,11 +15,16 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
-import { type Power, usePowers } from "@/hooks/usePowers";
-export type { Power };
-
+import { usePowers } from "@/hooks/usePowers";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import type { useSpellCasting } from "@/hooks/useSpellCasting";
+import type { Database } from "@/integrations/supabase/types";
+import type { DetailData } from "@/types/character";
+import { SpellCastDialog } from "./SpellCastDialog";
+
+export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
+
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
 import {
 	getAbilityModifier,
@@ -31,9 +35,7 @@ import {
 } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import type { DetailData } from "@/types/character";
 import { AddPowerDialog } from "./AddPowerDialog";
-import { SpellCastDialog } from "./SpellCastDialog";
 
 function CompendiumLink({
 	name,
@@ -615,7 +617,9 @@ export function PowersList({
 																!power.casting_time
 																	?.toLowerCase()
 																	.includes("ritual") &&
-																!power.power?.tags?.includes("Ritual") &&
+																!(power as any).power?.tags?.includes(
+																	"Ritual",
+																) &&
 																!spellSlots.find(
 																	(s) =>
 																		s.level >= power.power_level &&

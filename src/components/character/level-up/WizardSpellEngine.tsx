@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import type { CompendiumPower, CompendiumSpell } from "@/types/compendium";
 
 interface SpellChoicePayload {
 	powers: number;
@@ -22,8 +21,8 @@ interface WizardSpellEngineProps {
 	availableChoices: SpellChoicePayload;
 	onSelectionsUpdate: (
 		isReady: boolean,
-		selectedPowers: CompendiumPower[],
-		selectedSpells: CompendiumSpell[],
+		selectedPowers: any[],
+		selectedSpells: any[],
 	) => void;
 }
 
@@ -62,7 +61,7 @@ export const WizardSpellEngine = ({
 			const existingNames = new Set((existing || []).map((e) => e.name));
 
 			// Fetch Powers if needed
-			let powers: CompendiumPower[] = [];
+			let powers: any[] = [];
 			if (availableChoices.powers > 0) {
 				const maxPowerLevel = Math.ceil(newLevel / 2); // Approximate standard caster level math
 				const orParts = [`job_names.cs.{"${characterJob}"}`];
@@ -73,23 +72,19 @@ export const WizardSpellEngine = ({
 					.select("*")
 					.or(orParts.join(","))
 					.lte("power_level", maxPowerLevel);
-				powers = ((pData as unknown as CompendiumPower[]) || []).filter(
-					(p) => !existingNames.has(p.name),
-				);
+				powers = (pData || []).filter((p) => !existingNames.has(p.name));
 			}
 
 			// Fetch Spells if needed
-			let spells: CompendiumSpell[] = [];
+			let spells: any[] = [];
 			if (availableChoices.spells > 0) {
 				const maxSpellLevel = Math.ceil(newLevel / 2);
 				const { data: sData } = await supabase
 					.from("compendium_spells")
 					.select("*")
 					.contains("classes", [characterJob])
-					.lte("power_level", maxSpellLevel);
-				spells = ((sData as unknown as CompendiumSpell[]) || []).filter(
-					(s) => !existingNames.has(s.name),
-				);
+					.lte("spell_level", maxSpellLevel);
+				spells = (sData || []).filter((s) => !existingNames.has(s.name));
 			}
 
 			return { powers, spells, existingNames };
@@ -329,7 +324,7 @@ export const WizardSpellEngine = ({
 														{formatRegentVernacular(s.name)}
 													</span>
 													<span className="text-xs text-muted-foreground font-heading italic opacity-80">
-														Level {s.power_level} • {s.school}
+														Level {s.spell_level} • {s.school}
 													</span>
 												</div>
 												<p className="text-xs text-muted-foreground/80 line-clamp-2 leading-tight">
